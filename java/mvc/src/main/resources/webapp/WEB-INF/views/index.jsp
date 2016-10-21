@@ -13,7 +13,7 @@
 <h3>Select products</h3>
 <form:form modelAttribute="filter" method="GET" action="/filter-products">
     <form:select path="filter">
-        <form:option value="all">min</form:option>
+        <form:option value="all">all</form:option>
         <form:option value="max">max</form:option>
         <form:option value="min">min</form:option>
     </form:select>
