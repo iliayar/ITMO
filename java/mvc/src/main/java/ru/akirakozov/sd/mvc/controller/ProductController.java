@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.akirakozov.sd.mvc.dao.ProductDao;
+import ru.akirakozov.sd.mvc.logic.DataFilter;
 import ru.akirakozov.sd.mvc.model.Filter;
 import ru.akirakozov.sd.mvc.model.Product;
 
@@ -38,20 +39,9 @@ public class ProductController {
 
     @RequestMapping(value = "/filter-products", method = RequestMethod.GET)
     public String getProducts(@RequestParam String filter, ModelMap map) {
-        if ("all".equals(filter)) {
-            prepareModelMap(map, productDao.getProducts());
-        } else {
-            Optional<Product> product = Optional.empty();
-            if ("max".equals(filter)) {
-                product = productDao.getProductWithMaxPrice();
-            } else if ("min".equals(filter)) {
-                product = productDao.getProductWithMinPrice();
-            }
-            if (product.isPresent()) {
-                prepareModelMap(map, Arrays.asList(product.get()));
-            } else {
-                prepareModelMap(map, new ArrayList<Product>());
-            }
+        Optional<DataFilter> dataFilter = DataFilter.getFilterByName(filter);
+        if (dataFilter.isPresent()) {
+            prepareModelMap(map, dataFilter.get().filter(productDao));
         }
 
         return "index";
