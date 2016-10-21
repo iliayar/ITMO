@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan("ru.akirakozov.sd.mvc.controller")
-@Import({DaoContextConfiguration.class})
+@Import({JdbcDaoContextConfiguration.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

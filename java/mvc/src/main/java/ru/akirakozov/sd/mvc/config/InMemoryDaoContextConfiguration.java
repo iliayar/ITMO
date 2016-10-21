@@ -9,7 +9,7 @@ import ru.akirakozov.sd.mvc.dao.ProductInMemoryDao;
  * @author akirakozov
  */
 @Configuration
-public class DaoContextConfiguration {
+public class InMemoryDaoContextConfiguration {
     @Bean
     public ProductDao productDao() {
         return new ProductInMemoryDao();
