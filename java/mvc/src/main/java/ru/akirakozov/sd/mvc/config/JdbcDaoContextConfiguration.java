@@ -12,9 +12,7 @@ import javax.sql.DataSource;
 public class JdbcDaoContextConfiguration {
     @Bean
     public ProductJdbcDao productJdbcDao(DataSource dataSource) {
-        ProductJdbcDao dao = new ProductJdbcDao();
-        dao.setDataSource(dataSource);
-        return dao;
+        return new ProductJdbcDao(dataSource);
     }
 
     @Bean

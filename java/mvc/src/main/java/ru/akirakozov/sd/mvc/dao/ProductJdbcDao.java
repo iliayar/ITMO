@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import ru.akirakozov.sd.mvc.model.Product;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,12 @@ import java.util.Optional;
  * @author akirakozov
  */
 public class ProductJdbcDao extends JdbcDaoSupport implements ProductDao {
+
+    public ProductJdbcDao(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
+
     @Override
     public int addProduct(Product product) {
         String sql = "INSERT INTO PRODUCT (NAME, PRICE) VALUES (?, ?)";
