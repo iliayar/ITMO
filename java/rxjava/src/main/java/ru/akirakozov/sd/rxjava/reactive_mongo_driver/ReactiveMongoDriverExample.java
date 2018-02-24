@@ -11,17 +11,24 @@ import rx.Observable;
  */
 public class ReactiveMongoDriverExample {
 
-    public static MongoClient client = createMongoClient();
+    private static MongoClient client = createMongoClient();
 
     public static void main(String[] args) throws InterruptedException {
         MongoCollection<Document> collection = client.getDatabase("rxtest").getCollection("user");
         Observable<User> user = getAllUsers(collection);
-        user.subscribe(System.out::println);
+        user.subscribe(ReactiveMongoDriverExample::getPrintln);
+
+        // Wait for asynchronous mongo request processing
+        Thread.sleep(1000);
+    }
+
+    private static void getPrintln(User user) {
+        System.out.println(user);
     }
 
 
-    public static Observable<User> getAllUsers(MongoCollection<Document> collection) {
-        return collection.find().toObservable().map(d -> new User(d));
+    private static Observable<User> getAllUsers(MongoCollection<Document> collection) {
+        return collection.find().toObservable().map(User::new);
     }
 
     private static MongoClient createMongoClient() {
