@@ -21,7 +21,7 @@ public class ProductJdbcDao extends JdbcDaoSupport implements ProductDao {
     @Override
     public int addProduct(Product product) {
         String sql = "INSERT INTO PRODUCT (NAME, PRICE) VALUES (?, ?)";
-        return getJdbcTemplate().update(sql, new Object[] { product.getName(), product.getPrice()});
+        return getJdbcTemplate().update(sql, product.getName(), product.getPrice());
     }
 
     @Override
