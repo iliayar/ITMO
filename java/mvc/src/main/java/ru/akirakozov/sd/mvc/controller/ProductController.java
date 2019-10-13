@@ -1,6 +1,5 @@
 package ru.akirakozov.sd.mvc.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,8 +11,6 @@ import ru.akirakozov.sd.mvc.logic.DataFilter;
 import ru.akirakozov.sd.mvc.model.Filter;
 import ru.akirakozov.sd.mvc.model.Product;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +19,11 @@ import java.util.Optional;
  */
 @Controller
 public class ProductController {
-    @Autowired
-    private ProductDao productDao;
+    private final ProductDao productDao;
+
+    public ProductController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     @RequestMapping(value = "/add-product", method = RequestMethod.POST)
     public String addQuestion(@ModelAttribute("product") Product product) {
@@ -40,9 +40,7 @@ public class ProductController {
     @RequestMapping(value = "/filter-products", method = RequestMethod.GET)
     public String getProducts(@RequestParam String filter, ModelMap map) {
         Optional<DataFilter> dataFilter = DataFilter.getFilterByName(filter);
-        if (dataFilter.isPresent()) {
-            prepareModelMap(map, dataFilter.get().filter(productDao));
-        }
+        dataFilter.ifPresent(value -> prepareModelMap(map, value.filter(productDao)));
 
         return "index";
     }

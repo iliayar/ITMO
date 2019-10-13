@@ -2,7 +2,6 @@ package ru.akirakozov.sd.mvc.dao;
 
 import ru.akirakozov.sd.mvc.model.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -23,7 +22,7 @@ public class ProductInMemoryDao implements ProductDao {
     }
 
     public List<Product> getProducts() {
-        return new ArrayList(products);
+        return List.copyOf(products);
     }
 
     public Optional<Product> getProductWithMaxPrice() {
