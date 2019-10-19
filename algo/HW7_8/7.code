@@ -1,0 +1,18 @@
+next1 = head1.next
+next2 = head2.next
+
+move_after(a1,a2):
+    a1.prev.next = a1.next
+    a1.next.prev = a1.prev
+
+    a1.next = a2.next
+    a1.prev = a2
+    a2.next.prev = a1
+    a2.next = a1
+
+while(не конец списка):
+    if next1.val < next2.val:
+        move_after(next1,next2.prev)
+        next2 = next2.next
+    else
+        next1 = next1.next

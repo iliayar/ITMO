@@ -1,0 +1,9 @@
+foo(x,y):
+    if  y == tail:
+        tail.next = x
+    else:
+        foo(y,y.next)
+        y.next = x
+
+foo(head,head.next)
+head.next = null

@@ -1,0 +1,14 @@
+check(a)
+    if a.color == gray:
+        return false
+    if a.color == black:
+        return true
+    if a.next == null:
+        if до этого был найден другой конец:
+            return false
+        a.color = black
+        return true;
+
+    a.color = gray
+    check(a.next)
+    a.color = black

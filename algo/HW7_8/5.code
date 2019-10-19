@@ -1,0 +1,6 @@
+check(a)
+    if a.color == black or a.next == null:
+        return
+
+    a.color = black
+    check(a.next)

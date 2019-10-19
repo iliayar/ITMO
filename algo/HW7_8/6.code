@@ -1,0 +1,27 @@
+check_forward(x,y):
+    if y.prev != x
+        return false
+
+    if y.color == black or y.color == gray:
+        reutnr false
+
+    if y.next == null:
+        return y
+
+    y.color = gray
+    check_forward(y,y.next)
+    y.color = black
+
+check_backward(x,y):
+    if x.next != y
+        return false
+
+    if x.color == black or x.color == gray:
+        reutnr false
+
+    if x.prev == null:
+        return x
+
+    y.color = gray
+    check_forward(x.prev,x)
+    y.color = black
