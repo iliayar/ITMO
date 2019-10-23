@@ -66,7 +66,10 @@ signed main() {
             char t; cin >> t;
             table = table*2 + (t-'0');
         }
+<<<<<<< HEAD
+=======
     
+>>>>>>> 5b8c3fd9e37492a83005471c990f3c581421e369
     }
 
     return 0;
