@@ -1,90 +1,71 @@
 #include <iostream>
-#include <algorithm>
-#include <cmath>
 #include <vector>
 #include <string>
+#include <map>
+#include <algorithm>
+#include <cmath>
+
+#define int long long
 
 using namespace std;
 
-vector<vector<int>> a;
-vector<bool> vals;
-vector<bool> used;
-
-int n, k;
-
-
-bool getVal(int n, int v) {
-    if(n == 0) {
-        return !v;
-    } else if(n == 1) {
-        return v;
-    } else {
-        return 0;
-    }
+bool calc(int table, int val) {
+    return(( table >> val ) & 1);
 }
 
-int getSingle(int j) {
-    int res = -1;
-    for(int i = 0; i < n; ++i) {
-        if(used[i]){
-            if(getVal(a[j][i],vals[i])) {
-                return -1;
-            }
-            continue;
-        }
-        if(a[j][i] != -1) {
-            if(res != -1)
-                return -1;
-            else
-                res = i;
-        }
-    }
-    return res;
-}
-
-bool check() {
-    for(int i = 0; i < k; ++i) {
-        bool r = false;
-        for(int j = 0; j < n; ++j) {
-            r = r || getVal(a[i][j], vals[j]);
-        }
-        if(!r) {
-            return true;
-        }
+bool checkT0(int n, int table) {
+    if (calc(table,0) == 0) {
+        return true;
     }
     return false;
 }
 
-signed main() {
-    cin >> n >> k;
-    a.resize(k, vector<int>(n));
-    vals.resize(n, 0);
-    used.resize(n, 0);
-
-    for(int i = 0; i < k; ++i){
-        for(int j = 0; j < n; ++j) {
-            cin >> a[i][j];
+bool checkS(int n, int table) {
+    for(int i = 0; i < n; ++i) {
+        if(calc(table,i) == calc(table,~i)) {
+            return false;
         }
     }
-    
-    while(true) {
-        bool flag = false;
-        for(int i = 0; i < k; ++i) {
-            int r = getSingle(i);
-            if(r != -1) {
-                flag = true;
-                used[r] = true;
-                if(a[i][r] == 1)
-                    vals[r] = 1;
+    return true;
+}
+
+bool checkT1(int n, int table) {
+    if(calc(table,pow(2,n) - 1) == 1) {
+        return true;
+    }
+    return false;
+}
+
+
+bool checkM(int n, int table) {
+    bool res = true;
+    for(int i = 0; i < n; ++i) {
+        if(calc(n,i) == 0) {
+            if(calc(table, n | (1<<i)) < calc(table,n)) {
+                return false;
             }
+            res = res & checkM(n | (1<<i),table);
         }
-        if(!flag) break;
     }
+    return res;
 
-    if(check()) {
-        cout << "YES" << endl;
-    } else {
-        cout << "NO" << endl;
+}
+
+
+// bool checkL(..)
+// TODO linear check function
+// and resulting check
+
+signed main() {
+    int n; cin >> n;
+
+    for(int i = 0; i < n; ++i) {
+        int k; cin >> k;
+        int table = 0;
+        for(int j = 0; j < pow(2,k); ++j) {
+            char t; cin >> t;
+            table = table*2 + (t-'0');
+        }
     }
 
     return 0;
