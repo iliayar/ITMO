@@ -1,0 +1,8 @@
+i = 0
+foo():
+    if s[i] == '(':
+        res = calc(foo(s[++i]), foo(s[++i]), foo(s[++i]))
+        #        first operand, operator, second operand
+        i++
+        return res
+    return s[i]

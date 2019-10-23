@@ -1,0 +1,11 @@
+push(x):
+    ...
+    sum += x.value
+
+pop():
+    ...
+    sum -= x.value
+
+getSum():
+    ...
+    return sum

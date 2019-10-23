@@ -1,0 +1,15 @@
+foo():
+    q - очередь
+    a = next()
+    if a - число:
+        return a
+    push(a)
+    a = foo()
+    b = foo()
+    q.push(b)
+    q.push(a)
+    return q
+
+push(self, a):
+    while(a.top != null):
+        self.push(a.pop)

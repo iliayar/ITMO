@@ -1,0 +1,12 @@
+push(x):
+    ...
+    if(min.top >= x):
+        min.push(x)
+
+pop(x):
+    ...
+    if(min.top == x):
+        min.pop()
+
+getMin():
+    return min.top

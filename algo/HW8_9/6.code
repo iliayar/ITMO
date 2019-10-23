@@ -1,0 +1,17 @@
+i = 0
+foo():
+    q - очередь
+    if s[i] - число:
+        return s[i]
+    a = foo(s[++i])
+    oper = foo(s[++i])
+    b = foo(s[++i])
+    q.push(oper)
+    q.push(b)
+    q.push(a)
+    i++;
+    return q
+
+push(self, a):
+    while(a.top != null):
+        self.push(a.pop)

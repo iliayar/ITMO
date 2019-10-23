@@ -1,0 +1,6 @@
+foo():
+    a = read()
+    if a - число:
+        return a
+    else
+        return calc(a, foo(), foo())

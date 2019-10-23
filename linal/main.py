@@ -20,7 +20,7 @@ class Matrix(object):
         for i in range(self.shape()[0]):
             for j in range(self.shape()[1]):
               s += str(self.matrix[i][j]) + " "
-            # s = s[:-1] + "\n"
+            s = s[:-1] + "\n"
 
         return s[:-1]  
 
@@ -155,9 +155,9 @@ with open("input.txt","r") as inp:
         res = C*(A*a + B.transpose()*b).transpose()*D + F*(-1)
         with open("output.txt","w") as out:
             out.write("1 ")            
-            out.write(str(res.shape()[0]) + " " + str(res.shape()[1]) + " ")
-            out.write(str(res)+"\n\n")
+            out.write(str(res.shape()[0]) + " " + str(res.shape()[1]) + "\n")
+            out.write(str(res)+" ")
     except:
         with open("output.txt","w") as out:
-            out.write("0\n\n")            
+            out.write("0")            
     
