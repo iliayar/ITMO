@@ -3,3 +3,6 @@
 !*.*
 *.pyc
 *.out
+*.class
+*.jar
+.vscode/
