@@ -1,0 +1,1 @@
+javac.exe .\Sum.java & java.exe Sum
