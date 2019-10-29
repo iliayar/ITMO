@@ -8,9 +8,6 @@ import java.util.Arrays;
 
 public class WordStatCount {
 
-    public static final String SEPARATORS = " \n\t!\"#$%&()*+,./0123456789:;<=>?@[\\]^_`{|}~ ¡¢£¤¥¦§¨©«¬\u00AD®¯°±²³´¶·¸¹»¼½¾¿×÷˂˃˄˅˒˓˔˕˖˗˘˙˚˛˜˝₴₵₶₷₸₹₺\u20BB\u20BC\u20BD\u20BE";
-
-
     public static WordPair words[] = new WordPair[1 << 10];
 
     static int wordsLength = 0;
