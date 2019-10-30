@@ -1,0 +1,13 @@
+add(v, w):
+    vRoot = find(v)
+    wRoot = find(w)
+    if(vRoot == wRoot):
+        cnt[wRoot]++
+    else:
+        union(v,w) // w <- v
+        cnt[wRoot] += cnt[vRoot] + 1
+        cnt[vRoot] = 0
+
+get(x):
+    xRoot = find(x)
+    return cnt[xRoot]

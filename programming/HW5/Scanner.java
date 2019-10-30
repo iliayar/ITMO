@@ -1,14 +1,14 @@
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 
-public class Scanner {   
+public class Scanner extends Reader {   
 
-    public static String DASH = "\'\u002d\u058a\u05be\u1400\u1806\u2010\u2011\u2012\u2013\u2013\u2014\u2015\u2e17\u2e1a\u2e3a\u2e3b\u2e40\u301c\u3030\u30a0\ufe31\ufe32\ufe58\ufe63\uff0d";
+    public static String DASH = "\u002d\u058a\u05be\u1400\u1806\u2010\u2011\u2012\u2013\u2013\u2014\u2015\u2e17\u2e1a\u2e3a\u2e3b\u2e40\u301c\u3030\u30a0\ufe31\ufe32\ufe58\ufe63\uff0d";
     
-    BufferedReader in;
+    Reader in;
 
     char buffer[];
     int bufferIndex;
@@ -21,17 +21,21 @@ public class Scanner {
 
     boolean EOF;
 
+    public int read(char[] buf, int start, int end) throws IOException {
+        return super.read();
+    }
+
     public Scanner(InputStream in) {
         init();
-        this.in = new BufferedReader(new InputStreamReader(in));
+        this.in = new InputStreamReader(in);
     }
     public Scanner(InputStreamReader in) {
         init();
-        this.in = new BufferedReader(in);
+        this.in = in;
     }
     public Scanner(String line) {
         init();
-        this.in = new BufferedReader(new StringReader(line));
+        this.in = new StringReader(line);
     }
     void init() {
         this.storedType = -1;
@@ -52,7 +56,7 @@ public class Scanner {
             case 1: //string
                 return Character.isWhitespace(c);
             case 2:// word
-                return !(Character.isLetter(c) || DASH.indexOf(c) != -1);
+                return !(Character.isLetter(c) || DASH.indexOf(c) != -1 || c == '\'');
             default:
                 return false;
         }
@@ -184,7 +188,7 @@ public class Scanner {
         return false;
     }
     public String nextWord() throws IOException {
-        if(hasNextString()) {
+        if(hasNextWord()) {
             return next(2);
         }
         return "";

@@ -1,0 +1,11 @@
+cnt = n
+
+add(v,w):
+    vRoot = find(v)
+    wRoot = find(w)
+    if(vRoot == wRoot):
+        cnt--;
+    union(v,w)
+
+get():
+    return cnt
