@@ -1,13 +1,21 @@
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+
+import javax.print.DocFlavor.STRING;
+
 import java.io.IOException;
 import java.io.Reader;
 
 public class Scanner extends Reader {   
 
-    public static String DASH = "\u002d\u058a\u05be\u1400\u1806\u2010\u2011\u2012\u2013\u2013\u2014\u2015\u2e17\u2e1a\u2e3a\u2e3b\u2e40\u301c\u3030\u30a0\ufe31\ufe32\ufe58\ufe63\uff0d";
+    public static final String DASH = "\u002d\u058a\u05be\u1400\u1806\u2010\u2011\u2012\u2013\u2013\u2014\u2015\u2e17\u2e1a\u2e3a\u2e3b\u2e40\u301c\u3030\u30a0\ufe31\ufe32\ufe58\ufe63\uff0d";
     
+    static final int LINE_TYPE = 0;
+    static final int STRING_TYPE = 1;
+    static final int WORD_TYPE = 2;
+    static final int NONE_TYPE = -1;
+
     Reader in;
 
     char buffer[];
@@ -38,7 +46,7 @@ public class Scanner extends Reader {
         this.in = new StringReader(line);
     }
     void init() {
-        this.storedType = -1;
+        this.storedType = NONE_TYPE;
         this.stored = new StringBuffer();
         this.buffer = new char[1 << 10];
         this.bufferIndex = 0;
@@ -51,11 +59,11 @@ public class Scanner extends Reader {
 
     boolean checkSeparator(char c, int type) {
         switch (type) {
-            case 0: // line
+            case LINE_TYPE:
                 return false;
-            case 1: //string
+            case STRING_TYPE:
                 return Character.isWhitespace(c);
-            case 2:// word
+            case WORD_TYPE:
                 return !(Character.isLetter(c) || DASH.indexOf(c) != -1 || c == '\'');
             default:
                 return false;
@@ -110,7 +118,7 @@ public class Scanner extends Reader {
         }
 
         if(EOF && nextStart < 0 || storedIndex < 0) {
-            storedType = -1;
+            storedType = NONE_TYPE;
             return false;
         }
         if(EOF) {
@@ -126,26 +134,26 @@ public class Scanner extends Reader {
             String result = stored.substring(nextStart, nextStart + nextLength);
             // System.out.print("|" + result + "|");
             stored.delete(0, nextStart + nextLength + 1);
-            storedType = -1;
+            storedType = NONE_TYPE;
             return result;
         }
         return "";
     }
 
     public boolean hasNextLine() throws IOException {
-        if(hasNext(0)) {
+        if(hasNext(LINE_TYPE)) {
             return true;
         }
         return false;
     }
     public String nextLine() throws IOException {
         if(hasNextLine()) {
-            return next(0);
+            return next(LINE_TYPE);
         }
         return "";
     }
     public boolean hasNextString() throws IOException {
-        if(hasNext(1)) {
+        if(hasNext(STRING_TYPE)) {
             if(nextLength <= 0) {
                 return false;
             }
@@ -155,7 +163,7 @@ public class Scanner extends Reader {
     }
     public String nextString() throws IOException {
         if(hasNextString()) {
-            return next(1);
+            return next(STRING_TYPE);
         }
         return "";
     }
@@ -175,11 +183,11 @@ public class Scanner extends Reader {
         if(hasNextInt()) {
             return Integer.parseInt(nextString());
         }
-        return -1;
+        return 0;
     }
 
     public boolean hasNextWord() throws IOException {
-        if(hasNext(2)) {
+        if(hasNext(WORD_TYPE)) {
             if(nextLength <= 0) {
                 return false;
             }
@@ -189,7 +197,7 @@ public class Scanner extends Reader {
     }
     public String nextWord() throws IOException {
         if(hasNextWord()) {
-            return next(2);
+            return next(WORD_TYPE);
         }
         return "";
     }
