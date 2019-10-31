@@ -1,13 +1,11 @@
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-
-import javax.print.DocFlavor.STRING;
-
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
-public class Scanner extends Reader {   
+public class Scanner implements Closeable {   
 
     public static final String DASH = "\u002d\u058a\u05be\u1400\u1806\u2010\u2011\u2012\u2013\u2013\u2014\u2015\u2e17\u2e1a\u2e3a\u2e3b\u2e40\u301c\u3030\u30a0\ufe31\ufe32\ufe58\ufe63\uff0d";
     
@@ -29,10 +27,6 @@ public class Scanner extends Reader {
 
     boolean EOF;
 
-    public int read(char[] buf, int start, int end) throws IOException {
-        return super.read();
-    }
-
     public Scanner(InputStream in) {
         init();
         this.in = new InputStreamReader(in);
@@ -53,6 +47,7 @@ public class Scanner extends Reader {
         this.EOF = false;
     }
 
+    @Override
     public void close() throws IOException {
         in.close();
     }
@@ -70,7 +65,7 @@ public class Scanner extends Reader {
         }
     }
 
-    char readChar() throws IOException {
+    private char readChar() throws IOException {
         if(bufferIndex >= bufferLength) {
             bufferLength = in.read(buffer,0,buffer.length);
             if(bufferLength == -1) {
@@ -87,7 +82,7 @@ public class Scanner extends Reader {
             return true;
         }
         
-        char nextChar;
+        // char nextChar;
 
         storedType = type;
         nextLength = 0;
@@ -95,7 +90,7 @@ public class Scanner extends Reader {
         int storedIndex = 0;
         for (;!EOF; storedIndex++) {
             if(storedIndex >= stored.length()) {
-                nextChar = readChar();
+                char nextChar = readChar();
                 stored.append((char)nextChar);
                 // System.out.println();
             }
