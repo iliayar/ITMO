@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.ArrayList;
 
 public class WordStatLastIndex {
     
