@@ -3,59 +3,79 @@
 #include <vector>
  
 #define int long long
- 
+#ifndef LOCAL
+#define filename "huffman"
+#else
+#define filename "test"
+#endif
+
+#define INF 1e9 + 1
+
 using namespace std;
- 
-vector<int> a;
- 
-int n = 0;
- 
-void insert(int x) {
-    a[n++] = x;
- 
-    for(int i  = n -1; i > 0 && a[(i-1)/2] > a[i]; i = (i-1)/2) {
-        swap(a[i],a[(i-1)/2]);
+
+struct Node {
+    int parent;
+    int n;
+    int left;
+    int right;
+};
+
+int res = 0;
+vector<Node> g;
+
+void cnt(int i, int h) {
+    if(g[i].left == -1 || g[i].right == -1) {
+        res += h*g[i].n;
+//        cout <<  "Leaf: " << h << " " << i + 1 << " " << g[i].n << endl;
+        return;
     }
+//    cout << h << " " << i + 1 << " " << g[i].n << endl;
+    cnt(g[i].left,h + 1);
+    cnt(g[i].right,h + 1);
 }
- 
-int extract() {
-    swap(a[0],a[--n]);
-    int i = 0;
-    while(true) {
-        if(2*i + 1 < n && a[2*i + 1] < a[i]) {
-            if(2*i + 2 < n && a[2*i + 2] < a[2*i + 1]) {
-                swap(a[i],a[2*i + 2]);
-                i = 2*i + 2;
-            } else {
-                swap(a[i],a[2*i + 1]);
-                i = 2*i + 1;
+
+signed main() {
+    freopen(filename".in", "r", stdin);
+    freopen(filename".out", "w", stdout);
+    int n; cin >> n;
+    g.resize(2*n);
+    for(int i = 0; i < n; ++i) {
+        int t; cin >> t;
+        g[i].n = t;
+    }
+    for(int i = 0; i < 2*n; ++i) {
+        g[i].parent = -1;
+        g[i].left = -1;
+        g[i].right = -1;
+        if(i >= n) {
+            g[i].n = INF;
+        }
+    }
+    for(int i = n; i < 2*n; ++i) {
+        int imin1, imin2;
+        int min = INF;
+        for(int j = 0; j < 2*n; ++j) {
+            if(g[j].parent != -1) continue;
+            if(min > g[j].n) {
+                min = g[j].n;
+                imin1 = j;
             }
         }
-        else {
-            if(2*i + 2 < n && a[2*i + 2] < a[i]) {
-                swap(a[i],a[2*i + 2]);
-                i = 2*i + 2;
-            } else
-                break;
+        min = INF;
+        for(int j = 0; j < 2*n; ++j) {
+            if(j == imin1 || g[j].parent != -1) continue;
+            if(min > g[j].n) {
+                min = g[j].n;
+                imin2 = j;
+            }
         }
+        g[i].left = imin1;
+        g[i].right = imin2;
+        g[i].n = g[imin1].n + g[imin2].n;
+        g[imin1].parent = i;
+        g[imin2].parent = i;
     }
-    return a[n];
-}
- 
-signed main() {
- 
-    int m; cin >> m;
- 
-    a.resize(2*m);
- 
-    for(int i = 0; i < m; ++i) {
-        int t; cin >> t;
-        insert(t);
-    }
-    for(int i = 0; i < m; ++i) {
-        cout << extract() << " ";
-    }
-    cout << endl;
- 
+    cnt(2*n - 2, 0);
+    cout << res << endl;
     return 0;
 }
