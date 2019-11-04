@@ -1,7 +1,7 @@
 #include <iostream>
 //#include <bits/stdc++.h>
 #include <vector>
- 
+#include <climits>
 #define int long long
 #ifndef LOCAL
 #define filename "huffman"
@@ -9,7 +9,7 @@
 #define filename "test"
 #endif
 
-#define INF 1e9 + 1
+#define INF LLONG_MAX
 
 using namespace std;
 
@@ -20,7 +20,7 @@ struct Node {
     int right;
 };
 
-int res = 0;
+unsigned int res = 0;
 vector<Node> g;
 
 void cnt(int i, int h) {
@@ -77,5 +77,7 @@ signed main() {
     }
     cnt(2*n - 2, 0);
     cout << res << endl;
+    fclose(stdout);
+    fclose(stdin);
     return 0;
 }
