@@ -1,10 +1,10 @@
-import java.util.ArrayList;;
+package markup;
 
+import java.util.*;
 
 public class Test {
 
-    public void main(String[] args) {
-        StringBuilder test = new StringBuilder();
+    public static void main(String[] args) {
         Paragraph paragraph = new Paragraph(List.of(
             new Strong(List.of(
                 new Text("1"),
@@ -19,7 +19,9 @@ public class Test {
                 new Text("6")
             ))
         ));
-        paragraph.toMakdown(test);
-        System.out.println(test.toString());
+        StringBuilder sb = new StringBuilder();
+        paragraph.toMarkdown(sb);
+        System.out.println("sb: " + sb.toString());
     }
+
 }
