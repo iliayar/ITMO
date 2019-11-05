@@ -20,7 +20,7 @@ public class Test {
             ))
         ));
         StringBuilder sb = new StringBuilder();
-        paragraph.toMarkdown(sb);
+        paragraph.toTex(sb);
         System.out.println("sb: " + sb.toString());
     }
 
