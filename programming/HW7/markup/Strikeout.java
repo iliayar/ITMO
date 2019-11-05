@@ -2,16 +2,19 @@ package markup;
 
 import java.util.*;
 
-public class Strikeout extends Text {
+public class Strikeout extends MarkupElement {
 
-    private String markupModifier = "~";
+    protected String ModifierBegin = "\\textst{";
+    protected String ModifierEnd = "}";
 
-    public String getMarkupModifier() {
-        return markupModifier;
+    public String getModifierBegin() {
+        return ModifierBegin;
+    }
+    public String getModifierEnd() {
+        return ModifierEnd;
     }
 
-
-    public Strikeout(List<Text> elements) {
+    public Strikeout(List<MarkupElement> elements) {
         super(elements);
     }
     public Strikeout(String element) {

@@ -2,14 +2,18 @@ package markup;
 
 import java.util.*;
 
-public class Strong extends Text {
-    private String markupModifier = "__";
+public class Strong extends MarkupElement {
+    protected String ModifierBegin = "\\textbf{";
+    protected String ModifierEnd = "}";
 
-    public String getMarkupModifier() {
-        return markupModifier;
+    public String getModifierBegin() {
+        return ModifierBegin;
+    }
+    public String getModifierEnd() {
+        return ModifierEnd;
     }
 
-    public Strong(List<Text> elements) {
+    public Strong(List<MarkupElement> elements) {
         super(elements);
     }
     public Strong(String element) {

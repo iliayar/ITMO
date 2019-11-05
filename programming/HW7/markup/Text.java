@@ -2,39 +2,21 @@ package markup;
 
 import java.util.*;
 
-public class Text{
-    List<Text> elements;
-    
-    String markupModifier = "";
+public class Text extends MarkupElement {
 
-    String element;
-    boolean fromString;
-
-    public Text(List<Text> elements) {
-        this.elements = elements;
-        fromString = false;
+    protected String ModifierBegin = "";
+    protected String ModifierEnd = "";
+    public String getModifierBegin() {
+        return ModifierBegin;
+    }
+    public String getModifierEnd() {
+        return ModifierEnd;
     }
 
+    public Text(List<MarkupElement> elements) {
+        super(elements);
+    }
     public Text(String element) {
-        this.element = element;
-        fromString = true;
+        super(element);
     }
-
-    public String getMarkupModifier() {
-        return markupModifier;
-    }
-
-    public void toMarkdown(StringBuilder sb) {
-        String markupModifier = getMarkupModifier();
-        if(fromString) {
-            sb.append(markupModifier + element + markupModifier);
-            return;
-        }
-        sb.append(markupModifier);
-        for(Text element : elements) {
-            element.toMarkdown(sb);
-        }
-        sb.append(markupModifier);
-    }
-    
 }

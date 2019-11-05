@@ -3,14 +3,19 @@ package markup;
 import java.util.*;
 
 
-public class Emphasis extends Text {
-    private String markupModifier = "*";
+public class Emphasis extends MarkupElement {
 
-    public String getMarkupModifier() {
-        return markupModifier;
+    protected String ModifierBegin = "\\emph{";
+    protected String ModifierEnd = "}";
+
+    public String getModifierBegin() {
+        return ModifierBegin;
+    }
+    public String getModifierEnd() {
+        return ModifierEnd;
     }
 
-    public Emphasis(List<Text> elements) {
+    public Emphasis(List<MarkupElement> elements) {
         super(elements);
     }
     public Emphasis(String element) {
