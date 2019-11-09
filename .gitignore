@@ -1,15 +1,33 @@
+## Visual Studio Code files
+.vscode/
+
+
+# Files without extensions
 *
 !/**/
 !*.*
+
+!Makefile
+
+# Compiled files
 *.pyc
 *.out
 *.class
 *.jar
-.vscode/
 *.pdf
+
+# Java markup tests
 programming/HW7/markup/MarkdownTest.java
 programming/HW7/markup/ListTest.java
 programming/HW7/markup/TexTest.java
 programming/HW7/markup/TexListTest.java
 programming/HW7/AbstractTest.java
 programming/HW7/base/*
+
+# Latex Make files
+*.gz
+*.log
+*.fls
+*.fdb_latexmk
+*.aux
+*.xdv
