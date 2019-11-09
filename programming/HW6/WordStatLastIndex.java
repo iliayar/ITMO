@@ -6,90 +6,82 @@ import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import java.util.ArrayList;
 
 public class WordStatLastIndex {
     
     static Map<String,WordPair> words = new LinkedHashMap<String,WordPair>();
-    
-    static Scanner in;
-    
-    public static void main(String[] args) {
-        try {
-            in = new Scanner( new InputStreamReader(
-                           new FileInputStream(args[0]), "UTF-8"));
+        
+    public static void main(String[] args) throws IOException {
 
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            return;
+        Scanner in = new Scanner( new InputStreamReader(
+                        new FileInputStream(args[0]), "UTF-8"));
+
+
+        while(in.hasNextLine()) {
+            Scanner lineIn = new Scanner(in.nextLine());
+            Map<String,LineWordPair> lineWords = new LinkedHashMap<String,LineWordPair>();
+            int i = 1;
+            while(lineIn.hasNextWord()) {
+                String word = lineIn.nextWord().toLowerCase();
+                if(!lineWords.containsKey(word)) {
+                    lineWords.put(word, new LineWordPair(i));
+                }
+                lineWords.get(word).update(i);
+                i++;
+            }
+            for(String word : lineWords.keySet()) {
+                if(!words.containsKey(word)) {
+                    words.put(word, new WordPair());
+                }
+                words.get(word).add(lineWords.get(word));
+            }
+
+            lineIn.close();
         }
 
-        try {
-            while(in.hasNextLine()) {
-                Scanner lineIn = new Scanner(in.nextLine());
-                Map<String,WordPair> curWords = new LinkedHashMap<String,WordPair>();
-                int i = 1;
-                while(lineIn.hasNextWord()) {
-                    String word = lineIn.nextWord().toLowerCase();
-                    if(!curWords.containsKey(word)) {
-                        curWords.put(word, new WordPair(i));
-                    }
-                    curWords.get(word).update(i);
-                    i++;
-                }
-                for(String word : curWords.keySet()) {
-                    if(!words.containsKey(word)) {
-                        words.put(word, new WordPair());
-                    }
-                    words.get(word).add(curWords.get(word));
-                }
+        BufferedWriter out = new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream(args[1]), "UTF-8")
+        );
 
-                lineIn.close();
+        for(String word : words.keySet()) {
+            WordPair pair = words.get(word);
+            out.write(word + " " + pair.count);
+            for(int i = 0; i < pair.counts.length(); ++i) {
+                out.write(" " + pair.counts.get(i));
             }
-        } catch(IOException e) {}
-
-        BufferedWriter out = null;
-        try {
-            out = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(args[1]), "UTF-8")
-            );
-
-            for(String word : words.keySet()) {
-                WordPair pair = words.get(word);
-                out.write(word + " " + pair.count);
-                for(Integer c : pair.counts) {
-                    out.write(" " + c.toString());
-                }
-                out.write("\n");
-            }
-        } catch (IOException e){
-            System.err.println(e.getMessage());
+            out.write("\n");
         }
 
-        try {
-            words = new LinkedHashMap<String,WordPair>();
-            in.close();
-            out.close();
-        } catch(IOException e) {}
+        words = new LinkedHashMap<String,WordPair>();
+        in.close();
+        out.close();
     }
 
-    static public class WordPair {
+    static public class LineWordPair {
         int count;
         int index;
-        ArrayList<Integer> counts;
-        WordPair() {
-            this.count = 0;
-            this.counts = new ArrayList<Integer>();
-        }
-        WordPair(int index) {
+
+        public LineWordPair(int index) {
             this.index = index;
             this.count = 0;
         }
+
         public void update(int index) {
             this.count++;
             this.index = index;
         }
-        public void add(WordPair cur) {
+    }
+
+    static public class WordPair {
+        int count;
+        IntList counts;
+        public WordPair() {
+            this.count = 0;
+            this.counts = new IntList();
+        }
+        public void add(LineWordPair cur) {
             this.count += cur.count;
             this.counts.add(cur.index);
         }

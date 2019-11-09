@@ -5,20 +5,20 @@ import java.util.*;
 public class OrderedList extends ListItem {
 
  
-    protected String ModifierBegin = "\\begin{enumerate}";
-    protected String ModifierEnd = "\\end{enumerate}";
-    protected String ModifierEach = "";
+    protected String Prefix = "\\begin{enumerate}";
+    protected String Postfix = "\\end{enumerate}";
+    protected String Infix = "";
 
-    public String getModifierBegin() {
-        return ModifierBegin;
+    public String getPrefix() {
+        return Prefix;
     }
 
-    public String getModifierEach() {
-        return ModifierEach;
+    public String getInfix() {
+        return Infix;
     }
 
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
     public OrderedList(List<ListItem> elements) {

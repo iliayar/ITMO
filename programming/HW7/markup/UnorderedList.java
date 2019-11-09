@@ -5,18 +5,18 @@ import java.util.*;
 public class UnorderedList extends ListItem {
 
 
-    protected String ModifierBegin = "\\begin{itemize}";
-    protected String ModifierEnd = "\\end{itemize}";
-    protected String ModifierEach = "";
+    protected String Prefix = "\\begin{itemize}";
+    protected String Postfix = "\\end{itemize}";
+    protected String Infix = "";
 
-    public String getModifierBegin() {
-        return ModifierBegin;
+    public String getPrefix() {
+        return Prefix;
     }
-    public String getModifierEach() {
-        return ModifierEach;
+    public String getInfix() {
+        return Infix;
     }
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
     public UnorderedList(List<ListItem> elements) {

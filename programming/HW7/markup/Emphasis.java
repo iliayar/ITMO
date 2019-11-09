@@ -5,14 +5,14 @@ import java.util.*;
 
 public class Emphasis extends MarkupElement {
 
-    protected String ModifierBegin = "\\emph{";
-    protected String ModifierEnd = "}";
+    protected String Prefix = "\\emph{";
+    protected String Postfix = "}";
 
-    public String getModifierBegin() {
-        return ModifierBegin;
+    public String getPrefix() {
+        return Prefix;
     }
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
     public Emphasis(List<MarkupElement> elements) {
