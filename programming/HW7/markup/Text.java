@@ -4,13 +4,13 @@ import java.util.*;
 
 public class Text extends MarkupElement {
 
-    protected String ModifierBegin = "";
-    protected String ModifierEnd = "";
-    public String getModifierBegin() {
-        return ModifierBegin;
+    protected String Prefix = "";
+    protected String Postfix = "";
+    public String getPrefix() {
+        return Prefix;
     }
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
     public Text(List<MarkupElement> elements) {

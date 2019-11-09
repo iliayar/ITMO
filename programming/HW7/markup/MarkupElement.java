@@ -5,8 +5,8 @@ import java.util.*;
 public abstract class MarkupElement{
     List<MarkupElement> elements;
 
-    protected String ModifierBegin;
-    protected String ModifierEnd;
+    protected String Prefix;
+    protected String Postfix;
 
     String element;
     boolean fromString;
@@ -21,27 +21,27 @@ public abstract class MarkupElement{
         fromString = true;
     }
 
-    public String getModifierBegin() {
-        return ModifierBegin;
+    public String getPrefix() {
+        return Prefix;
     }
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
 
     public void toTex(StringBuilder sb) {
-        String modifierBegin = getModifierBegin();
-        String modifierEnd = getModifierEnd();
+        String Prefix = getPrefix();
+        String Postfix = getPostfix();
 
         if(fromString) {
-            sb.append(modifierBegin + element + modifierEnd);
+            sb.append(Prefix + element + Postfix);
             return;
         }
-        sb.append(modifierBegin);
+        sb.append(Prefix);
         for(MarkupElement element : elements) {
             element.toTex(sb);
         }
-        sb.append(modifierEnd);
+        sb.append(Postfix);
     }
 
 }

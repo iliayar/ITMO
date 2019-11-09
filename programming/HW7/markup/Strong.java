@@ -3,14 +3,14 @@ package markup;
 import java.util.*;
 
 public class Strong extends MarkupElement {
-    protected String ModifierBegin = "\\textbf{";
-    protected String ModifierEnd = "}";
+    protected String Prefix = "\\textbf{";
+    protected String Postfix = "}";
 
-    public String getModifierBegin() {
-        return ModifierBegin;
+    public String getPrefix() {
+        return Prefix;
     }
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
     public Strong(List<MarkupElement> elements) {

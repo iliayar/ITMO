@@ -4,20 +4,20 @@ import java.util.*;
 
 public class ListItem{
 
-    protected String ModifierBegin = "";
-    protected String ModifierEnd = "";
-    protected String ModifierEach = "\\item ";
+    protected String Prefix = "";
+    protected String Postfix = "";
+    protected String Infix = "\\item ";
 
-    public String getModifierBegin() {
-        return ModifierBegin;
+    public String getPrefix() {
+        return Prefix;
     }
 
-    public String getModifierEach() {
-        return ModifierEach;
+    public String getInfix() {
+        return Infix;
     }
 
-    public String getModifierEnd() {
-        return ModifierEnd;
+    public String getPostfix() {
+        return Postfix;
     }
 
     List<ListItem> elements;
@@ -29,12 +29,12 @@ public class ListItem{
     }
 
     public void toTex(StringBuilder sb) {
-        sb.append(getModifierBegin());
+        sb.append(getPrefix());
         for(ListItem element : elements) {
-            sb.append(getModifierEach());
+            sb.append(getInfix());
             element.toTex(sb);
         }
-        sb.append(getModifierEnd());
+        sb.append(getPostfix());
     }
 
 }
