@@ -1,10 +1,12 @@
-all: compile test
+all: build test
 
-compile:
+build:
 	javac AbstractTest.java
 	@cp AbstractTest.class ./markup
-	javac markup/ListTest.java
-	javac markup/TexListTest.java
+	javac markup/*.java
 
 test:
 	java markup.TexListTest
+
+run:
+	java markup.Test

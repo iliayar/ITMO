@@ -1,7 +1,3 @@
-## Visual Studio Code files
-.vscode/
-
-
 # Files without extensions
 *
 !/**/
@@ -16,13 +12,15 @@
 *.jar
 *.pdf
 
-# Java markup tests
+# Java deps
 programming/HW7/markup/MarkdownTest.java
 programming/HW7/markup/ListTest.java
 programming/HW7/markup/TexTest.java
 programming/HW7/markup/TexListTest.java
 programming/HW7/AbstractTest.java
 programming/HW7/base/*
+
+programming/HW9/markup/*
 
 # Latex Make files
 *.gz
@@ -31,3 +29,11 @@ programming/HW7/base/*
 *.fdb_latexmk
 *.aux
 *.xdv
+
+
+# Idea files
+**/.idea/
+*.plantuml
+
+# Visual Studio Code files
+.vscode/

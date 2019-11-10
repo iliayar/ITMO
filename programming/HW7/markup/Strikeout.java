@@ -4,14 +4,23 @@ import java.util.*;
 
 public class Strikeout extends MarkupElement {
 
-    protected String Prefix = "\\textst{";
-    protected String Postfix = "}";
-
-    public String getPrefix() {
-        return Prefix;
+    protected String texPrefix = "\\textst{";
+    protected String texPostfix = "}";
+    protected String htmlPostfix = "</s>";
+    protected String htmlPrefix = "<s>";
+    
+    public String getHtmlPrefix(){
+        return htmlPrefix;
     }
-    public String getPostfix() {
-        return Postfix;
+    public String getHtmlPostfix() {
+        return htmlPostfix;
+    }
+
+    public String getTexPrefix() {
+        return texPrefix;
+    }
+    public String getTexPostfix() {
+        return texPostfix;
     }
 
     public Strikeout(List<MarkupElement> elements) {

@@ -10,17 +10,17 @@ public class Test {
                 new Text("1"),
                 new Strikeout(List.of(
                     new Text("2"),
-                    new Emphasis(List.of(
+                    new Header(List.of(
                         new Text("3"),
                         new Text("4")
-                    )),
+                    ),2),
                     new Text("5")
                 )),
                 new Text("6")
             ))
         ));
         StringBuilder sb = new StringBuilder();
-        paragraph.toTex(sb);
+        paragraph.toHtml(sb);
         System.out.println("sb: " + sb.toString());
     }
 

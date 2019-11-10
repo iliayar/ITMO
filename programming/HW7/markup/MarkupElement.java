@@ -3,13 +3,23 @@ package markup;
 import java.util.*;
 
 public abstract class MarkupElement{
+    enum Markup {
+        HTML,
+        TEX
+    }
+
     List<MarkupElement> elements;
 
-    protected String Prefix;
-    protected String Postfix;
+    protected String texPrefix;
+    protected String texPostfix;
+    protected String htmlPostfix;
+    protected String htmlPrefix;
 
+    
     String element;
     boolean fromString;
+
+
 
     public MarkupElement(List<MarkupElement> elements) {
         this.elements = elements;
@@ -20,28 +30,58 @@ public abstract class MarkupElement{
         this.element = element;
         fromString = true;
     }
-
-    public String getPrefix() {
-        return Prefix;
+    public String getHtmlPrefix(){
+        return htmlPrefix;
     }
-    public String getPostfix() {
-        return Postfix;
+    public String getHtmlPostfix() {
+        return htmlPostfix;
     }
 
+    public String getTexPrefix() {
+        return texPrefix;
+    }
+    public String getTexPostfix() {
+        return texPostfix;
+    }
 
-    public void toTex(StringBuilder sb) {
-        String Prefix = getPrefix();
-        String Postfix = getPostfix();
+    public String getPrefix(Markup markup) {
+        switch(markup) {
+            case HTML:
+                return getHtmlPrefix();
+            case TEX:
+                return getTexPrefix();
+        }
+        return "";
+    }
 
+    public String getPostfix(Markup markup) {
+        switch(markup) {
+            case HTML:
+                return getHtmlPostfix();
+            case TEX:
+                return getTexPostfix();
+        }
+        return "";
+    }
+
+    private void toMarkup(StringBuilder sb, Markup markup) {
         if(fromString) {
-            sb.append(Prefix + element + Postfix);
+            sb.append(getPrefix(markup) + element + getPostfix(markup));
             return;
         }
-        sb.append(Prefix);
+        sb.append(getPrefix(markup));
         for(MarkupElement element : elements) {
-            element.toTex(sb);
+            element.toMarkup(sb,markup);
         }
-        sb.append(Postfix);
+        sb.append(getPostfix(markup));
+    }
+
+    public void toTex(StringBuilder sb) {
+        toMarkup(sb, Markup.TEX);
+    }
+
+    public void toHtml(StringBuilder sb) {
+        toMarkup(sb, Markup.HTML);
     }
 
 }
