@@ -2,23 +2,18 @@ package markup;
 
 import java.util.*;
 
-public class OrderedList extends ListItem {
+public class OrderedList extends MarkupList {
 
  
-    protected String Prefix = "\\begin{enumerate}";
-    protected String Postfix = "\\end{enumerate}";
-    protected String Infix = "";
+    protected String texPrefix = "\\begin{enumerate}";
+    protected String texPostfix = "\\end{enumerate}";
 
-    public String getPrefix() {
-        return Prefix;
+    public String getTexPrefix() {
+        return texPrefix;
     }
 
-    public String getInfix() {
-        return Infix;
-    }
-
-    public String getPostfix() {
-        return Postfix;
+    public String getTexPostfix() {
+        return texPostfix;
     }
 
     public OrderedList(List<ListItem> elements) {

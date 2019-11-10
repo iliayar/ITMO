@@ -2,21 +2,18 @@ package markup;
 
 import java.util.*;
 
-public class UnorderedList extends ListItem {
+public class UnorderedList extends MarkupList {
 
 
-    protected String Prefix = "\\begin{itemize}";
-    protected String Postfix = "\\end{itemize}";
-    protected String Infix = "";
+    protected String texPrefix = "\\begin{itemize}";
+    protected String texPostfix = "\\end{itemize}";
 
-    public String getPrefix() {
-        return Prefix;
+    public String getTexPrefix() {
+        return texPrefix;
     }
-    public String getInfix() {
-        return Infix;
-    }
-    public String getPostfix() {
-        return Postfix;
+    
+    public String getTexPostfix() {
+        return texPostfix;
     }
 
     public UnorderedList(List<ListItem> elements) {

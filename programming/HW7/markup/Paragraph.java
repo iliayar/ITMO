@@ -15,4 +15,9 @@ public class Paragraph extends ListItem {
             t.toTex(sb);
         }
     }
+    public void toHtml(StringBuilder sb) {
+        for(MarkupElement t : elements) {
+            t.toHtml(sb);
+        }
+    }
 }

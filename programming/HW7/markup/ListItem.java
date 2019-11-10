@@ -4,20 +4,10 @@ import java.util.*;
 
 public class ListItem{
 
-    protected String Prefix = "";
-    protected String Postfix = "";
-    protected String Infix = "\\item ";
+    protected String texInfix = "\\item ";
 
-    public String getPrefix() {
-        return Prefix;
-    }
-
-    public String getInfix() {
-        return Infix;
-    }
-
-    public String getPostfix() {
-        return Postfix;
+    public String getTexInfix() {
+        return texInfix;
     }
 
     List<ListItem> elements;
@@ -29,12 +19,10 @@ public class ListItem{
     }
 
     public void toTex(StringBuilder sb) {
-        sb.append(getPrefix());
         for(ListItem element : elements) {
-            sb.append(getInfix());
+            sb.append(getTexInfix());
             element.toTex(sb);
         }
-        sb.append(getPostfix());
     }
 
 }

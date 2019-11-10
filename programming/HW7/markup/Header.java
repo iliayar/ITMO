@@ -2,18 +2,19 @@ package markup;
 
 import java.util.*;
 
-public class Text extends MarkupElement {
 
-    protected String texPrefix = "";
-    protected String texPostfix = "";
+public class Header extends MarkupElement {
+
     protected String htmlPostfix = "";
     protected String htmlPrefix = "";
+    
     public String getHtmlPrefix(){
         return htmlPrefix;
     }
     public String getHtmlPostfix() {
         return htmlPostfix;
     }
+
     public String getTexPrefix() {
         return texPrefix;
     }
@@ -21,10 +22,18 @@ public class Text extends MarkupElement {
         return texPostfix;
     }
 
-    public Text(List<MarkupElement> elements) {
+    private void initSize(int size) {
+        this.htmlPrefix = "<h" + Integer.toString(size) + ">";
+        this.htmlPostfix = "</h" + Integer.toString(size) + ">";
+    }
+
+    public Header(List<MarkupElement> elements, int size) {
         super(elements);
+        initSize(size);
     }
-    public Text(String element) {
+    public Header(String element, int size) {
         super(element);
+        initSize(size);
     }
+
 }
