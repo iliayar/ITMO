@@ -7,8 +7,8 @@ public class Emphasis extends MarkupElement {
 
     protected String texPrefix = "\\emph{";
     protected String texPostfix = "}";
-    protected String htmlPostfix = "<em>";
-    protected String htmlPrefix = "</em>";
+    protected String htmlPostfix = "</em>";
+    protected String htmlPrefix = "<em>";
     
     public String getHtmlPrefix(){
         return htmlPrefix;
