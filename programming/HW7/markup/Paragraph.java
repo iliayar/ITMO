@@ -4,6 +4,9 @@ import java.util.*;
 
 public class Paragraph extends ListItem {
 
+    protected String htmlPrefix = "<p>";
+    protected String htmlPostfix = "</p>";
+
     List<MarkupElement> elements;
 
     public Paragraph(List<MarkupElement> elements) {
@@ -16,8 +19,10 @@ public class Paragraph extends ListItem {
         }
     }
     public void toHtml(StringBuilder sb) {
+        sb.append(htmlPrefix);
         for(MarkupElement t : elements) {
             t.toHtml(sb);
         }
+        sb.append(htmlPostfix);
     }
 }
