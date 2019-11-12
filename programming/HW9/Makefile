@@ -3,7 +3,7 @@ all: build_dep build run
 build: build_dep build_self
 
 build_self:
-	javac Md2Html.java
+	javac md2html/Md2Html.java
 	
 build_dep:
 	javac ../HW5/Scanner.java
@@ -12,4 +12,4 @@ build_dep:
 	@cp ../HW7/markup ./ -r
 
 run:
-	java Md2Html input.txt output.txt
+	java md2html.Md2Html input.md output.html
