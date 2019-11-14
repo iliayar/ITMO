@@ -2,19 +2,13 @@ package markup;
 
 import java.util.*;
 
-public abstract class MarkupList extends ListItem{
+public abstract class MarkupList{
 
     protected String texPrefix;
     protected String texPostfix;
-    protected String htmlPostfix;
-    protected String htmlPrefix;
 
-    public String getHtmlPrefix(){
-        return htmlPrefix;
-    }
-    public String getHtmlPostfix() {
-        return htmlPostfix;
-    }
+    
+    List<ListItem> elements;
 
     public String getTexPrefix() {
         return texPrefix;
@@ -27,7 +21,7 @@ public abstract class MarkupList extends ListItem{
     public MarkupList() {}
 
     public MarkupList(List<ListItem> elements) {
-        super(elements);
+        this.elements = elements;
     }
 
     public void toTex(StringBuilder sb) {

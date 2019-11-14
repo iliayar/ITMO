@@ -13,3 +13,6 @@ build_dep:
 
 run:
 	java md2html.Md2Html input.md output.html
+
+test:
+	java -jar Md2HtmlTest.jar

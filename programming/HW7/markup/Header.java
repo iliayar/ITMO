@@ -3,7 +3,7 @@ package markup;
 import java.util.*;
 
 
-public class Header extends MarkupElement {
+public class Header extends ParagraphElement {
 
     protected String htmlPostfix = "";
     protected String htmlPrefix = "";
@@ -27,7 +27,7 @@ public class Header extends MarkupElement {
         this.htmlPostfix = "</h" + Integer.toString(size) + ">";
     }
 
-    public Header(List<MarkupElement> elements, int size) {
+    public Header(List<ParagraphElement> elements, int size) {
         super(elements);
         initSize(size);
     }

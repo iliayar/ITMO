@@ -2,7 +2,7 @@ package markup;
 
 import java.util.*;
 
-public class Code extends MarkupElement {
+public class Code extends ParagraphElement {
 
     protected String htmlPostfix = "</code>";
     protected String htmlPrefix = "<code>";
@@ -14,7 +14,7 @@ public class Code extends MarkupElement {
         return htmlPostfix;
     }
 
-    public Code(List<MarkupElement> elements) {
+    public Code(List<ParagraphElement> elements) {
         super(elements);
     }
     public Code(String element) {

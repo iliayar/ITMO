@@ -2,54 +2,44 @@ package markup;
 
 import java.util.*;
 
-public abstract class MarkupElement{
+public abstract class ParagraphElement{
     enum Markup {
         HTML,
-        TEX
+        TEX,
+        MARKDOWN
     }
 
-    List<MarkupElement> elements;
+    List<ParagraphElement> elements;
 
     protected String texPrefix;
     protected String texPostfix;
     protected String htmlPostfix;
     protected String htmlPrefix;
-
+    protected String mdPostfix;
+    protected String mdPrefix;
     
     String element;
     boolean fromString;
 
-
-
-    public MarkupElement(List<MarkupElement> elements) {
+    public ParagraphElement(List<ParagraphElement> elements) {
         this.elements = elements;
         fromString = false;
     }
 
-    public MarkupElement(String element) {
+    public ParagraphElement(String element) {
         this.element = element;
         fromString = true;
     }
-    public String getHtmlPrefix(){
-        return htmlPrefix;
-    }
-    public String getHtmlPostfix() {
-        return htmlPostfix;
-    }
 
-    public String getTexPrefix() {
-        return texPrefix;
-    }
-    public String getTexPostfix() {
-        return texPostfix;
-    }
 
     public String getPrefix(Markup markup) {
         switch(markup) {
             case HTML:
-                return getHtmlPrefix();
+                return htmlPrefix;
             case TEX:
-                return getTexPrefix();
+                return texPrefix;
+            case MARKDOWN:
+                return mdPrefix;
         }
         return "";
     }
@@ -57,9 +47,11 @@ public abstract class MarkupElement{
     public String getPostfix(Markup markup) {
         switch(markup) {
             case HTML:
-                return getHtmlPostfix();
+                return htmlPrefix;
             case TEX:
-                return getTexPostfix();
+                return texPostfix;
+            case MARKDOWN:
+                return mdPostfix;    
         }
         return "";
     }
@@ -70,7 +62,7 @@ public abstract class MarkupElement{
             return;
         }
         sb.append(getPrefix(markup));
-        for(MarkupElement element : elements) {
+        for(ParagraphElement element : elements) {
             element.toMarkup(sb,markup);
         }
         sb.append(getPostfix(markup));
@@ -82,6 +74,9 @@ public abstract class MarkupElement{
 
     public void toHtml(StringBuilder sb) {
         toMarkup(sb, Markup.HTML);
+    }
+    public void toMarkdown(StringBuilder sb) {
+        toMarkup(sb, Markup.MARKDOWN);
     }
 
 }
