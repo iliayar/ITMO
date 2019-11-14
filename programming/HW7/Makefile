@@ -13,3 +13,12 @@ test:
 
 run:
 	java markup.Test
+
+compile_pdf:
+	rm test.tex
+	@echo "\documentclass{article}" >> test.tex
+	@echo " \begin{document}" >> test.tex
+	java markup.Test >> test.tex
+	@echo "\end{document}" >> test.tex
+	pandoc -o test.pdf test.tex
+	zathura test.pdf

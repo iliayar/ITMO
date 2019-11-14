@@ -10,16 +10,21 @@ public class ListItem{
         return texInfix;
     }
 
-    List<ListItem> elements;
+    List<MarkupList> elements;
 
     public ListItem() {}
 
-    public ListItem(List<ListItem> elements) {
+    public ListItem(List<MarkupList> elements) {
         this.elements = elements;
     }
 
+    public ListItem(MarkupList element) {
+        elements = new ArrayList<MarkupList>();
+        elements.add(element);
+    }
+
     public void toTex(StringBuilder sb) {
-        for(ListItem element : elements) {
+        for(MarkupList element : elements) {
             sb.append(getTexInfix());
             element.toTex(sb);
         }

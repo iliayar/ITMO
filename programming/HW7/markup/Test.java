@@ -5,23 +5,32 @@ import java.util.*;
 public class Test {
 
     public static void main(String[] args) {
-        Paragraph paragraph = new Paragraph(List.of(
-            new Strong(List.of(
-                new Text("1"),
-                new Strikeout(List.of(
-                    new Text("2"),
-                    new Header(List.of(
-                        new Text("3"),
-                        new Text("4")
-                    ),2),
-                    new Text("5")
-                )),
-                new Text("6")
-            ))
+        OrderedList list = new OrderedList(List.of(
+            new ListItem(new Paragraph(List.of(
+                new Strong("1 "),
+                new Text("2")
+            ))),
+            new ListItem(new UnorderedList(List.of(
+                new ListItem(new Paragraph(List.of(
+                    new Emphasis("Test "),
+                    new Text("test")
+                ))),
+                new ListItem(new Paragraph(List.of(
+                    new Emphasis("Test "),
+                    new Strong("No "),
+                    new Text("Text")
+                )))
+            ))),
+            new ListItem(new OrderedList(List.of(
+                new ListItem(new Paragraph(List.of(
+                    new Emphasis("Emp "),
+                    new Strong("Strong")
+                )))
+            )))
         ));
         StringBuilder sb = new StringBuilder();
-        paragraph.toHtml(sb);
-        System.out.println("sb: " + sb.toString());
+        list.toTex(sb);
+        System.out.println(sb.toString());
     }
 
 }
