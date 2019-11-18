@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from typing import NewType
 import datetime
 import math
@@ -58,28 +59,89 @@ class Vector3:
 def log(*args):
     print("["+str(datetime.datetime.now())+"]", *args)
 
+
+def sign(x):
+    if(x < 0):
+        return -1
+    elif(x > 0):
+        return 1
+    else:
+        return 0
+
 def toDegrees(angle):
-    res =  math.acos(angle)/math.pi*180
+    res =  angle/math.pi*180
 
-    if(res > 90):
-        res = -(res - 90)
+    # if(res > 90):
+    #     res = -(res - 90)
 
-    if(angle < 0):
-        res = -res
+    # if(angle < 0):
+    #     res = -res
     return res
 
-x, y, z = map(float,input().split())
-pos = Vector3(x,y,z)
-x, y, z = map(float,input().split())
-direction = Vector3(x,y,z)
-x, y, z = map(float,input().split())
-vPos = Vector3(x,y,z)
-x, y, z = map(float,input().split())
-enemyPos = Vector3(x,y,z)
+inp = open("input.txt", "r")
+out = open("output.txt", "w")
 
-hAngle = Vector3.angle(direction, pos.sub(enemyPos));
-log(hAngle, toDegrees(hAngle))
+def print_file(d):
+    out.write(str(d) + "\n")
 
-horizont = Vector3(vPos.x, vPos.y, 0)
-vAngle = Vector3.angle(horizont, vPos)
-log(vAngle, toDegrees(vAngle))
+x, y = map(float,inp.readline().split())
+pos = Vector3(x,y,0)
+x, y = map(float,inp.readline().split())
+direction = Vector3(x,y,0)
+x, y = map(float,inp.readline().split())
+vPos = Vector3(x,y,1)
+x, y = map(float,inp.readline().split())
+enemyPos = Vector3(x,y,0)
+
+cos = Vector3.angle(direction.cross(Vector3(0,0,1)), pos.sub(enemyPos));
+sin = Vector3.angle(direction, pos.sub(enemyPos));
+
+
+# log(cos, sin)
+side = 0
+if(sign(sin) != sign(cos)):
+    side = -1
+    if(cos < 0):
+        side = 1
+        # sin = -cos
+    angle = math.asin(sin)
+else:
+    side = -1
+    if(cos < 0):
+        side = 1
+        # sin = cos
+    angle = math.asin(sin)
+angle = toDegrees(angle)
+
+
+vCos = Vector3.angle(Vector3(0,0,1), vPos)
+vAngle = toDegrees(math.acos(vCos))
+
+vCos = Vector3.angle(direction.cross(Vector3(0,0,1)), vPos)
+if sign(vCos) == side:
+    vAngle = - vAngle
+
+log(vCos)
+
+angle = round(angle,2)
+vAngle = round(vAngle, 2)
+
+if vAngle == 0:
+    vAngle = 0
+
+# log(vAngle)
+# log(angle)
+
+if abs(angle) >= 60 or abs(vAngle) >= 60:
+    print_file(0)
+    print_file(0)
+    print_file(0)
+    print_file("Bye")
+else:
+    print_file(side)
+    print_file(angle)
+    print_file(vAngle)
+    print_file("Bye")
+
+inp.close()
+out.close()
