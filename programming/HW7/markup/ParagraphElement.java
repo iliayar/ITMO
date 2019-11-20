@@ -4,7 +4,6 @@ import java.util.*;
 
 public abstract class ParagraphElement{
     enum Markup {
-        HTML,
         TEX,
         MARKDOWN
     }
@@ -13,8 +12,6 @@ public abstract class ParagraphElement{
 
     protected String texPrefix;
     protected String texPostfix;
-    protected String htmlPostfix;
-    protected String htmlPrefix;
     protected String mdPostfix;
     protected String mdPrefix;
     
@@ -31,27 +28,36 @@ public abstract class ParagraphElement{
         fromString = true;
     }
 
+    public String getMdPostfix() {
+        return mdPostfix;
+    }
+    public String getMdPrefix() {
+        return mdPrefix;
+    }
+    public String getTexPostfix() {
+        return texPostfix;
+    }
+    public String getTexPrefix() {
+        return texPrefix;
+    }
 
-    public String getPrefix(Markup markup) {
+
+    private String getPrefix(Markup markup) {
         switch(markup) {
-            case HTML:
-                return htmlPrefix;
             case TEX:
-                return texPrefix;
+                return getTexPrefix();
             case MARKDOWN:
-                return mdPrefix;
+                return getMdPrefix();
         }
         return "";
     }
 
-    public String getPostfix(Markup markup) {
+    private String getPostfix(Markup markup) {
         switch(markup) {
-            case HTML:
-                return htmlPrefix;
             case TEX:
-                return texPostfix;
+                return getTexPostfix();
             case MARKDOWN:
-                return mdPostfix;    
+                return getMdPostfix();    
         }
         return "";
     }
@@ -72,9 +78,6 @@ public abstract class ParagraphElement{
         toMarkup(sb, Markup.TEX);
     }
 
-    public void toHtml(StringBuilder sb) {
-        toMarkup(sb, Markup.HTML);
-    }
     public void toMarkdown(StringBuilder sb) {
         toMarkup(sb, Markup.MARKDOWN);
     }

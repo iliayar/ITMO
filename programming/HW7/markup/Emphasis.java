@@ -7,34 +7,24 @@ public class Emphasis extends ParagraphElement {
 
     protected String texPrefix = "\\emph{";
     protected String texPostfix = "}";
-    protected String htmlPostfix = "</em>";
-    protected String htmlPrefix = "<em>";
     protected String mdPostfix = "_";
     protected String mdPrefix = "_";
  
-    public String getPrefix(Markup markup) {
-        switch(markup) {
-            case HTML:
-                return htmlPrefix;
-            case TEX:
-                return texPrefix;
-            case MARKDOWN:
-                return mdPrefix;
-        }
-        return "";
+
+    public String getMdPostfix() {
+        return mdPostfix;
+    }
+    public String getMdPrefix() {
+        return mdPrefix;
+    }
+    public String getTexPostfix() {
+        return texPostfix;
+    }
+    public String getTexPrefix() {
+        return texPrefix;
     }
 
-    public String getPostfix(Markup markup) {
-        switch(markup) {
-            case HTML:
-                return htmlPrefix;
-            case TEX:
-                return texPostfix;
-            case MARKDOWN:
-                return mdPostfix;    
-        }
-        return "";
-    }
+
 
     public Emphasis(List<ParagraphElement> elements) {
         super(elements);

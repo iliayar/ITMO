@@ -5,33 +5,21 @@ import java.util.*;
 public class Strong extends ParagraphElement {
     protected String texPrefix = "\\textbf{";
     protected String texPostfix = "}";
-    protected String htmlPostfix = "</strong>";
-    protected String htmlPrefix = "<strong>";
     protected String mdPostfix = "**";
     protected String mdPrefix = "**";
     
-    public String getPrefix(Markup markup) {
-        switch(markup) {
-            case HTML:
-                return htmlPrefix;
-            case TEX:
-                return texPrefix;
-            case MARKDOWN:
-                return mdPrefix;
-        }
-        return "";
-    }
 
-    public String getPostfix(Markup markup) {
-        switch(markup) {
-            case HTML:
-                return htmlPrefix;
-            case TEX:
-                return texPostfix;
-            case MARKDOWN:
-                return mdPostfix;    
-        }
-        return "";
+    public String getMdPostfix() {
+        return mdPostfix;
+    }
+    public String getMdPrefix() {
+        return mdPrefix;
+    }
+    public String getTexPostfix() {
+        return texPostfix;
+    }
+    public String getTexPrefix() {
+        return texPrefix;
     }
 
     public Strong(List<ParagraphElement> elements) {
