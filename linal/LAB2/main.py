@@ -84,62 +84,58 @@ out = open("output.txt", "w")
 def print_file(d):
     out.write(str(d) + "\n")
 
-x, y = map(float,inp.readline().split())
-pos = Vector3(x,y,0)
-x, y = map(float,inp.readline().split())
-direction = Vector3(x,y,0)
-x, y = map(float,inp.readline().split())
-vPos = Vector3(x,y,1)
-x, y = map(float,inp.readline().split())
-enemyPos = Vector3(x,y,0)
+x, y, z = map(float,inp.readline().split())
+pos = Vector3(x,y,z)
+x, y, z = map(float,inp.readline().split())
+direction = Vector3(x,y,z)
+x, y, z = map(float,inp.readline().split())
+vPos = Vector3(x,y,z)
+x, y, z = map(float,inp.readline().split())
+enemyPos = Vector3(x,y,z)
 
-cos = Vector3.angle(direction.cross(Vector3(0,0,1)), pos.sub(enemyPos));
-sin = Vector3.angle(direction, pos.sub(enemyPos));
+hCos = Vector3.angle(direction.mul(-1), enemyPos.sub(pos))
+hSin = Vector3.angle(direction.cross(Vector3(0,0,1)), enemyPos.sub(pos))
 
+canon = enemyPos.sub(pos)
 
-# log(cos, sin)
-side = 0
-if(sign(sin) != sign(cos)):
+# log(hSin, hCos)
+hAngle = toDegrees(math.asin(hSin))
+side = 1
+if hAngle < 0:
     side = -1
-    if(cos < 0):
-        side = 1
-        # sin = -cos
-    angle = math.asin(sin)
-else:
-    side = -1
-    if(cos < 0):
-        side = 1
-        # sin = cos
-    angle = math.asin(sin)
-angle = toDegrees(angle)
+
+if hSin > 0 and hCos <= 0:
+    hAngle = hAngle - 90
+if hSin >= 0 and hCos > 0:
+    hAngle = 90 - hAngle
+if hSin <= 0 and hCos < 0:
+    hAngle = -(hAngle + 90)
+if hSin < 0 and hCos >= 0:
+    hAngle = hAngle + 90
 
 
-vCos = Vector3.angle(Vector3(0,0,1), vPos)
-vAngle = toDegrees(math.acos(vCos))
+# log(hAngle)
 
-vCos = Vector3.angle(direction.cross(Vector3(0,0,1)), vPos)
-if sign(vCos) == side:
-    vAngle = - vAngle
 
-log(vCos)
+vCos = Vector3.angle(vPos, canon)
 
-angle = round(angle,2)
-vAngle = round(vAngle, 2)
+# log(vCos)
+vAngle = -toDegrees(math.asin(vCos))
 
-if vAngle == 0:
-    vAngle = 0
+vAngle = round(vAngle,2)
+hAngle = round(hAngle,2)
 
+# log(hAngle)
 # log(vAngle)
-# log(angle)
 
-if abs(angle) >= 60 or abs(vAngle) >= 60:
+if abs(hAngle) >= 60 or abs(vAngle) >= 60:
     print_file(0)
     print_file(0)
     print_file(0)
     print_file("Bye")
 else:
     print_file(side)
-    print_file(angle)
+    print_file(hAngle)
     print_file(vAngle)
     print_file("Bye")
 
