@@ -29,8 +29,11 @@ public class Test {
             )))
         ));
         StringBuilder sb = new StringBuilder();
+        
+        
         list.toTex(sb);
         System.out.println(sb.toString());
+
     }
 
 }
