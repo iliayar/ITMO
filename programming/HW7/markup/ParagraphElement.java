@@ -2,7 +2,7 @@ package markup;
 
 import java.util.*;
 
-public abstract class ParagraphElement{
+public abstract class ParagraphElement {
     enum Markup {
         TEX,
         MARKDOWN

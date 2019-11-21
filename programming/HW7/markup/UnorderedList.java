@@ -5,8 +5,8 @@ import java.util.*;
 public class UnorderedList extends MarkupList {
 
 
-    protected String texPrefix = "\\begin{itemize}";
-    protected String texPostfix = "\\end{itemize}";
+    private String texPrefix = "\\begin{itemize}";
+    private String texPostfix = "\\end{itemize}";
 
     public String getTexPrefix() {
         return texPrefix;
