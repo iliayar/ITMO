@@ -2,21 +2,12 @@ package markup;
 
 import java.util.*;
 
-public abstract class MarkupList{
-
-    protected String texPrefix;
-    protected String texPostfix;
-
-    
+public abstract class MarkupList {
     List<ListItem> elements;
 
-    public String getTexPrefix() {
-        return texPrefix;
-    }
+    protected abstract String getTexPrefix();
 
-    public String getTexPostfix() {
-        return texPostfix;
-    }
+    protected abstract String getTexPostfix();
 
     public MarkupList() {}
 

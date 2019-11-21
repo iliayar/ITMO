@@ -12,8 +12,6 @@ public class ListItem{
 
     List<MarkupList> elements;
 
-    public ListItem() {}
-
     public ListItem(List<MarkupList> elements) {
         this.elements = elements;
     }
