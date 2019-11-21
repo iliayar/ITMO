@@ -57,7 +57,7 @@ public abstract class ParagraphElement{
             case TEX:
                 return getTexPostfix();
             case MARKDOWN:
-                return getMdPostfix();    
+                return getMdPostfix();
         }
         return "";
     }
