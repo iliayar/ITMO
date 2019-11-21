@@ -15,7 +15,7 @@ class Vector3:
         self.z = z
 
     def sub(self, v):
-        return self.mul(-1).add(v)
+        return self.add(v.mul(-1))
 
     def add(self, v):
         nx = self.x + v.x
@@ -36,7 +36,7 @@ class Vector3:
         nx = self.y * vect.z - self.z * vect.y
         ny = self.z * vect.x - self.x * vect.z
         nz = self.x * vect.y - self.y * vect.x
-        return Vector3(nx,ny,nz)
+        return Vector3(nx,ny,nz).mul(-1)
 
     def magnitude(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2) 
@@ -93,10 +93,11 @@ vPos = Vector3(x,y,z)
 x, y, z = map(float,inp.readline().split())
 enemyPos = Vector3(x,y,z)
 
-hCos = Vector3.angle(direction.mul(-1), enemyPos.sub(pos))
+hCos = Vector3.angle(direction, enemyPos.sub(pos))
 hSin = Vector3.angle(direction.cross(Vector3(0,0,1)), enemyPos.sub(pos))
 
 canon = enemyPos.sub(pos)
+canon = canon.mul(1/canon.magnitude())
 
 # log(hSin, hCos)
 hAngle = toDegrees(math.asin(hSin))
@@ -117,10 +118,14 @@ if hSin < 0 and hCos >= 0:
 # log(hAngle)
 
 
-vCos = Vector3.angle(vPos, canon)
+vSin = Vector3.angle(vPos, canon)
 
-# log(vCos)
-vAngle = -toDegrees(math.asin(vCos))
+log(vSin)
+vAngle = toDegrees(math.asin(vSin))
+
+log(canon)
+log(vPos)
+log(Vector3(1,0,0).cross(Vector3(0,0,1)))
 
 vAngle = round(vAngle,2)
 hAngle = round(hAngle,2)
@@ -128,7 +133,7 @@ hAngle = round(hAngle,2)
 # log(hAngle)
 # log(vAngle)
 
-if abs(hAngle) >= 60 or abs(vAngle) >= 60:
+if abs(hAngle) > 60 or abs(vAngle) > 60:
     print_file(0)
     print_file(0)
     print_file(0)
