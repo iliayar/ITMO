@@ -93,11 +93,13 @@ vPos = Vector3(x,y,z)
 x, y, z = map(float,inp.readline().split())
 enemyPos = Vector3(x,y,z)
 
+canon = enemyPos.sub(pos)
+canon = canon.mul(1/canon.magnitude())
+
+
 hCos = Vector3.angle(direction, enemyPos.sub(pos))
 hSin = Vector3.angle(direction.cross(Vector3(0,0,1)), enemyPos.sub(pos))
 
-canon = enemyPos.sub(pos)
-canon = canon.mul(1/canon.magnitude())
 
 # log(hSin, hCos)
 hAngle = toDegrees(math.asin(hSin))
@@ -117,13 +119,16 @@ if hSin < 0 and hCos >= 0:
 
 # log(hAngle)
 
+nCanon = Vector3(canon.x,canon.y,(vPos.x*canon.x + vPos.y*canon.y))
 
-vSin = Vector3.angle(vPos, canon)
+vCos = Vector3.angle(vPos, Vector3(0,0,1))
 
-log(vSin)
-vAngle = toDegrees(math.asin(vSin))
-
-log(canon)
+log(vCos)
+# log(nCanon)
+vAngle = -toDegrees(math.acos(vCos))
+if nCanon.z < 0:
+    vAngle = -vAngle
+# log(canon)
 log(vPos)
 log(Vector3(1,0,0).cross(Vector3(0,0,1)))
 
@@ -133,7 +138,7 @@ hAngle = round(hAngle,2)
 # log(hAngle)
 # log(vAngle)
 
-if abs(hAngle) > 60 or abs(vAngle) > 60:
+if abs(hAngle) >= 60 or abs(vAngle) >= 60:
     print_file(0)
     print_file(0)
     print_file(0)
