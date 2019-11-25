@@ -14,4 +14,5 @@ public class Emphasis extends MarkupElement {
     protected String getPostfix() {
         return "</em>";
     }
+
 }
