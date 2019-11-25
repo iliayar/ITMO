@@ -1,6 +1,5 @@
 package md2html;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 
@@ -14,11 +13,12 @@ public class Parser {
 
 
     public void genHtml(StringBuilder sb) {
-        ArrayList<Token> tokens = new Tokenizer(paragraph).tokenize();
+        ArrayList<Token> tokens = new Tokenizer(paragraph).getTree();
 
         for(Token t : tokens) {
-            sb.append(t.getType().toString());
-            sb.append(" ");
+//            sb.append(t.getType().toString());
+//            sb.append(" ");
+            t.toHtml(sb);
         }
     }
 

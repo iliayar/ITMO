@@ -22,23 +22,26 @@ public enum Type {
     STRONG_UNDERLINE,
     EMPHASIS_UNDERLINE,
     CODE,
+    STRIKEOUT,
+    LINK,
 
     ANY,
     STRONG_EMPHASIS,
-    BEGIN_OF_LINE
+    BEGIN_OF_LINE,
+    END_OF_LINE,
+    MARKUP_ELEMENT,
+    ANY_COUNT
     ;
 
     private boolean not = false;
 
     public boolean equal(Type t) {
         if(not) {
-//            System.out.println(this + " " + t);
             if(this != t) {
                 return true;
             }
             return false;
         }
-
         if(this == STRONG_EMPHASIS) {
             if(t == STRONG_ASTERISK || t == EMPHASIS_ASTERISK ||
             t == STRONG_UNDERLINE || t == EMPHASIS_UNDERLINE) {
@@ -51,8 +54,4 @@ public enum Type {
         return this == t;
     }
 
-    public Type not() {
-        this.not = true;
-        return this;
-    }
 }

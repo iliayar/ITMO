@@ -5,11 +5,13 @@ import java.util.*;
 
 public class Token {
 
-    private Type type = Type.UNDEFINED;
+    protected Type type = Type.UNDEFINED;
 
-    private StringBuilder text = new StringBuilder();
+    protected StringBuilder text = new StringBuilder();
 
-    public ArrayList<Token> inner = new ArrayList<Token>();
+    protected ArrayList<Token> inner = new ArrayList<Token>();
+
+    public Token() {}
 
     public Token(char c) {
         type = matchType(c);
@@ -29,14 +31,12 @@ public class Token {
     }
 
     public void merge(String text, Type type) {
-        this.text.append(text);
+        // FIX???
+        this.text.insert(0,text);
         this.type = type;
     }
 
     private static Type matchType(char c) {
-        if(Character.isWhitespace(c)) {
-            return Type.SEPARATOR;
-        }
         switch(c) {
             case '-':
                 return Type.DASH;
@@ -58,9 +58,27 @@ public class Token {
                 return Type.HASH;
             case '\\':
                 return Type.BACKSLASH;
+            case '\t':
+            case ' ':
+            case '\n':
+            case '\r':
+                return Type.SEPARATOR;
             default:
                 return Type.ALPHABETIC;
         }
+    }
+
+    public void toHtml(StringBuilder sb) {
+        sb.append(text.toString());
+    }
+
+
+    public void setText(String s) {
+        this.text = new StringBuilder(s);
+    }
+
+    public void add(Token t) {
+        inner.add(t);
     }
 
 
