@@ -38,10 +38,11 @@ public class Md2Html {
             }
             
             StringBuilder result = new StringBuilder();
-            new Parser().genHtml(currentParagraph, result);
+            new Parser(currentParagraph).genHtml(result);
             // System.err.println("HTML: " + result.toString() + "\n");
-            out.write(result.toString() + "\n");
-            
+            out.write("Paragraph: " + currentParagraph + "\n");
+            out.write("Tokens: " + result.toString() + "\n");
+            out.write("\n");
             // currentParagraph = readParagraph();
 
         }

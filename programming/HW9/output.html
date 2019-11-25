@@ -1,27 +1,55 @@
-<h1>Заголовок первого уровня</h1>
-<h2>Второго</h2>
-<h3>Третьего ## уровня</h3>
-<h4>Четвертого
-# Все еще четвертого</h4>
-<p>Этот абзац текста,
-содержит две строки.</p>
-<p>    # Может показаться, что это заголовок.
-Но нет, это абзац начинающийся с <code>#</code>.</p>
-<p>#И это не заголовок.</p>
-<h6>Заголовки могут быть многострочными
-(и с пропуском заголовков предыдущих уровней)</h6>
-<p>Мы все любим <em>выделять</em> текст <em>разными</em> способами.
-<strong>Сильное выделение</strong>, используется гораздо реже,
-но <strong>почему бы и нет</strong>?
-Немного <s>зачеркивания</s> еще ни кому не вредило.
-Код представляется элементом <code>code</code>.</p>
-<p>Обратите внимание, как экранируются специальные
-HTML-символы, такие как <code>&lt;</code>, <code>&gt;</code> и <code>&amp;</code>.</p>
-<p>Знаете ли вы, что в Markdown, одиночные * и _
+Paragraph: # Заголовок первого уровня
+Tokens: BEGIN_OF_LINE HEADER SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: ## Второго
+Tokens: BEGIN_OF_LINE HEADER TEXT SEPARATOR TEXT 
+
+Paragraph: ### Третьего ## уровня
+Tokens: BEGIN_OF_LINE HEADER TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: #### Четвертого
+# Все еще четвертого
+Tokens: BEGIN_OF_LINE HEADER TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: Этот абзац текста,
+содержит две строки.
+Tokens: BEGIN_OF_LINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph:     # Может показаться, что это заголовок.
+Но нет, это абзац начинающийся с `#`.
+Tokens: BEGIN_OF_LINE SEPARATOR SEPARATOR SEPARATOR SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR CODE TEXT CODE TEXT 
+
+Paragraph: #И это не заголовок.
+Tokens: BEGIN_OF_LINE HEADER TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: ###### Заголовки могут быть многострочными
+(и с пропуском заголовков предыдущих уровней)
+Tokens: BEGIN_OF_LINE HEADER TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR OP_BRACKET TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT CL_BRACKET 
+
+Paragraph: Мы все любим *выделять* текст _разными_ способами.
+**Сильное выделение**, используется гораздо реже,
+но __почему бы и нет__?
+Немного --зачеркивания-- еще ни кому не вредило.
+Код представляется элементом `code`.
+Tokens: BEGIN_OF_LINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR EMPHASIS_ASTERISK TEXT EMPHASIS_ASTERISK SEPARATOR TEXT SEPARATOR UNDERLINE TEXT UNDERLINE SEPARATOR TEXT SEPARATOR STRONG_ASTERISK TEXT SEPARATOR TEXT STRONG_ASTERISK TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR UNDERLINE UNDERLINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT UNDERLINE UNDERLINE TEXT SEPARATOR TEXT SEPARATOR DASH DASH TEXT DASH DASH SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR CODE TEXT CODE TEXT 
+
+Paragraph: Обратите внимание, как экранируются специальные
+HTML-символы, такие как `<`, `>` и `&`.
+Tokens: BEGIN_OF_LINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT DASH TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR CODE TEXT CODE TEXT SEPARATOR CODE TEXT CODE SEPARATOR TEXT SEPARATOR CODE TEXT CODE TEXT 
+
+Paragraph: Знаете ли вы, что в Markdown, одиночные * и _
 не означают выделение?
 Они так же могут быть заэкранированы
-при помощи обратного слэша: *.</p>
-<h1><em>Выделение</em> и <code>код</code> в заголовках</h1>
-<p>Лишние пустые строки должны игнорироваться.</p>
-<p>Любите ли вы <em>вложеные <strong>выделения</strong></em> так,
-как <strong><s>люблю</s></strong> их я?</p>
+при помощи обратного слэша: \*.
+Tokens: BEGIN_OF_LINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR UNDERLINE SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: # *Выделение* и `код` в заголовках
+Tokens: BEGIN_OF_LINE HEADER SEPARATOR EMPHASIS_ASTERISK TEXT EMPHASIS_ASTERISK SEPARATOR TEXT SEPARATOR CODE TEXT CODE SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: Лишние пустые строки должны игнорироваться.
+Tokens: BEGIN_OF_LINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR TEXT 
+
+Paragraph: Любите ли вы *вложеные __выделения__* так,
+как __--люблю--__ их я?
+Tokens: BEGIN_OF_LINE TEXT SEPARATOR TEXT SEPARATOR TEXT SEPARATOR EMPHASIS_ASTERISK TEXT SEPARATOR UNDERLINE UNDERLINE TEXT UNDERLINE UNDERLINE EMPHASIS_ASTERISK SEPARATOR TEXT SEPARATOR TEXT SEPARATOR UNDERLINE UNDERLINE DASH DASH TEXT DASH DASH UNDERLINE UNDERLINE SEPARATOR TEXT SEPARATOR TEXT 
+
