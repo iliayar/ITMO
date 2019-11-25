@@ -33,22 +33,15 @@ public enum Type {
     ANY_COUNT
     ;
 
-    private boolean not = false;
 
     public boolean equal(Type t) {
-        if(not) {
-            if(this != t) {
-                return true;
-            }
-            return false;
-        }
         if(this == STRONG_EMPHASIS) {
             if(t == STRONG_ASTERISK || t == EMPHASIS_ASTERISK ||
             t == STRONG_UNDERLINE || t == EMPHASIS_UNDERLINE) {
                 return true;
             }
         }
-        if(this == ANY || t == ANY) {
+        if(this == ANY) {
             return true;
         }
         return this == t;
