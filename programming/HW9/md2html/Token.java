@@ -32,7 +32,7 @@ public class Token {
 
     public void merge(String text, Type type) {
         // FIX???
-        this.text.insert(0,text);
+        this.text.insert(0, text);
         this.type = type;
     }
 
