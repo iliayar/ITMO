@@ -23,9 +23,9 @@ public class Link extends MarkupElement {
 
     @Override
     public void toHtml(StringBuilder sb) {
-        sb.append("<a href=\"");
+        sb.append("<a href=\'");
         sb.append(link);
-        sb.append("\" >");
+        sb.append("\'>");
         super.toHtml(sb);
     }
 }

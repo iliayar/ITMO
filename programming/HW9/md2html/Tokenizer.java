@@ -36,38 +36,20 @@ public class Tokenizer {
             tokens.push(t);
             while (pruneInner()) ;
         }
-        pruneInnerAll();
         tmp = tokens;
         tokens = new TokenStack();
         return tmp.toArrayList();
     }
 
-    private void pruneInnerAll() {
+    private void pruneTextUntil(Type t) {
         int n = tokens.getSize();
         for(int i = 0; i < n; ++i) {
-            switch (tokens.getFromEnd(i).getType()) {
-                case CL_SQR_BRACKET:
-                case OP_BRACKET:
-                case OP_SQR_BRACKET:
-                case CL_BRACKET:
-                    tokens.getFromEnd(i).type = Type.TEXT;
+            if(tokens.getFromEnd(i).getType() == t) {
+                break;
             }
-
+            tokens.getFromEnd(i).type = Type.TEXT;
         }
-        boolean flag = false;
-        if(tokens.getTop().getType() == Type.END_OF_LINE) {
-            tokens.pop();
-            flag = true;
-        }
-//        System.out.println("TEST1");
-        while(prune()) {
-//            System.out.println("TEST");
-        }
-//        while(pruneInner());
-        if(flag) {
-            tokens.push(new Token(Type.END_OF_LINE));
-        }
-        while(pruneInner());
+        while(prune());
     }
 
     private boolean pruneInner() {
@@ -126,10 +108,12 @@ public class Tokenizer {
             Token tmp2 = tokens.pop();
             tokens.push(new Text(tmp2));
             tokens.getTop().add(tmp1);
+            return true;
         }
 
         if(matchPattern(List.of(Type.OP_SQR_BRACKET, Type.ANY,Type.CL_SQR_BRACKET,Type.OP_BRACKET,Type.ANY,Type.CL_BRACKET))) {
             tokens.pop();
+            pruneTextUntil(Type.OP_BRACKET);
             Token tmp1 = tokens.pop();
             tokens.pop();
             tokens.pop();
@@ -138,6 +122,7 @@ public class Tokenizer {
             Link e = new Link(tmp2);
             e.setLink(tmp1.getText());
             tokens.push(e);
+            return true;
         }
 
         if(matchPattern(List.of(Type.BEGIN_OF_LINE, Type.ANY, Type.END_OF_LINE))) {
@@ -145,7 +130,18 @@ public class Tokenizer {
             Token tmp1 = tokens.pop();
             tokens.pop();
             tokens.push(new Paragraph(tmp1));
+            return true;
         }
+
+        // if(matchPattern(List.of(Type.ANY, Type.ANY, Type.END_OF_LINE)) &&
+        // !matchPattern(List.of(Type.BEGIN_OF_LINE, Type.ANY, Type.END_OF_LINE)) &&
+        // !matchPattern(List.of(Type.SEPARATOR, Type.ANY, Type.END_OF_LINE)) &&
+        // !matchPattern(List.of(Type.HEADER, Type.ANY, Type.END_OF_LINE))) {
+        //     tokens.pop();
+        //     pruneTextUntil(Type.BEGIN_OF_LINE);
+        //     tokens.push(new Token(Type.END_OF_LINE));
+        //     return true;
+        // }
 
         return false;
     }
@@ -303,6 +299,13 @@ public class Tokenizer {
         }
 
 
+        if(matchPattern(List.of(Type.OP_SQR_BRACKET, Type.ANY_COUNT,Type.CL_SQR_BRACKET,Type.OP_BRACKET,Type.ANY_COUNT,Type.CL_BRACKET))) {
+            Token tmp = tokens.pop();
+            pruneTextUntil(Type.OP_BRACKET);
+            tokens.push(tmp);
+            return true;
+        }
+
         return false;
     }
 
@@ -319,6 +322,10 @@ public class Tokenizer {
             for (int i = pattern.size() - 1; i >= 0; --i) {
 //                System.out.println(Integer.toString(i) + " " + pattern.get(i).toString() + " " + tokens.getFromEnd(pattern.size() - 1 - i).getType());
                 if (!pattern.get(i).equal(tokens.getFromEnd(pattern.size() - 1 - i).getType())) {
+                    if(i < pattern.size() - 1 && pattern.get(i + 1) == Type.ANY_COUNT) {
+                        i++;
+                        continue;
+                    }
                     return false;
                 }
             }
