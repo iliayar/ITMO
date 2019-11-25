@@ -15,11 +15,24 @@ public class Token {
 
     public Token(char c) {
         type = matchType(c);
-        text.append(c);
+        text.append(escapeChars(c));
     }
 
     public Token(Type t) {
         this.type = t;
+    }
+
+    private String escapeChars(char c) {
+        switch(c) {
+            case '<':
+                return "&lt;";
+            case '>':
+                return "&gt;";
+            case '&':
+                return "&amp;";
+            default:
+                return Character.toString(c);
+        }
     }
 
     public String getText() {
