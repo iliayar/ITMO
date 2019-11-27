@@ -45,7 +45,7 @@ public class Token {
 
     public void merge(String text, Type type) {
         // FIX???
-        this.text.insert(0, text);
+        this.text.append(text);
         this.type = type;
     }
 
