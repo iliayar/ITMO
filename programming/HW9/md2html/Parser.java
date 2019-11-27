@@ -3,23 +3,45 @@ package md2html;
 import java.util.*;
 
 
-public class Parser {
+public abstract class Parser {
 
-    String paragraph;
+    protected List<Token> tokens;
+    protected Match[] matches;
+    protected Map<Type, TokenStack> tokenMap;
+    protected List<Pattern> patterns;
 
-    public Parser(String p) {
-        this.paragraph = p;
+
+    public Parser() {
+        tokenMap = genTokenMap();
+        patterns = genPatterns();
     }
 
 
-    public void genHtml(StringBuilder sb) {
-        ArrayList<Token> tokens = new Tokenizer(paragraph).getTree();
-
+    protected void parse() {
+        int i = 0;
         for(Token t : tokens) {
-//            sb.append(t.getType().toString());
-//            sb.append(" ");
-            t.toHtml(sb);
+            tokenMap.get(t.getType()).push(t);
+            tokenMap.get(t.getType()).get(0).setIndex(i);
+            while(fetchMatches());
+            i++;
         }
     }
+
+    private boolean fetchMatches() {
+        for(Pattern p : patterns) {
+            if(p.match()) {
+                Match m = p.fetchMatch();
+//                for(Token t : m.getTokens()) {
+//                    matches[t.getIndex()] = m;
+//                }
+                matches[m.getTokens().get(0).index] = m;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected abstract Map<Type, TokenStack> genTokenMap();
+    protected abstract List<Pattern> genPatterns();
 
 }

@@ -1,10 +1,12 @@
 package md2html;
 
+import java.util.List;
+
 public class Strikeout extends  MarkupElement {
 
 
-    public Strikeout(Token t) {
-        super(t);
+    public Strikeout(List<MarkupElement> elems) {
+        super(elems);
     }
 
     @Override
