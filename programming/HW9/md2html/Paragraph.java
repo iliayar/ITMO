@@ -1,8 +1,11 @@
 package md2html;
 
+import java.util.List;
+
 public class Paragraph extends MarkupElement {
-    public Paragraph(Token t) {
-        super(t);
+
+    public Paragraph(List<MarkupElement> elems) {
+        super(elems);
     }
 
     @Override

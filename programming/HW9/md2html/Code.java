@@ -1,12 +1,11 @@
 package md2html;
 
+import java.util.List;
+
 public class Code extends MarkupElement {
 
-
-
-
-    public Code(Token t) {
-        super(t);
+    public Code(List<MarkupElement> elems) {
+        super(elems);
     }
 
     @Override

@@ -5,13 +5,13 @@ import java.util.*;
 
 public class Token {
 
-    protected Type type = Type.UNDEFINED;
+    private Type type = Type.UNDEFINED;
 
-    protected StringBuilder text = new StringBuilder();
+    private StringBuilder text = new StringBuilder();
 
     protected ArrayList<Token> inner = new ArrayList<Token>();
 
-    public Token() {}
+    int index;
 
     public Token(char c) {
         type = matchType(c);
@@ -20,6 +20,24 @@ public class Token {
 
     public Token(Type t) {
         this.type = t;
+    }
+
+    public Token(String s, Type t) {
+        this.text = new StringBuilder(s);
+        this.type = t;
+    }
+
+    public Token(Token t) {
+        this.type = t.type;
+        this.text = new StringBuilder(t.getText());
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     private String escapeChars(char c) {
@@ -44,7 +62,6 @@ public class Token {
     }
 
     public void merge(String text, Type type) {
-        // FIX???
         this.text.append(text);
         this.type = type;
     }
@@ -84,15 +101,5 @@ public class Token {
     public void toHtml(StringBuilder sb) {
         sb.append(text.toString());
     }
-
-
-    public void setText(String s) {
-        this.text = new StringBuilder(s);
-    }
-
-    public void add(Token t) {
-        inner.add(t);
-    }
-
 
 }

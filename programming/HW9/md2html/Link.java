@@ -1,11 +1,15 @@
 package md2html;
 
+import java.util.List;
+
 public class Link extends MarkupElement {
-    public Link(Token t) {
-        super(t);
-    }
 
     String link;
+
+    public Link(List<MarkupElement> elems, String link) {
+        super(elems);
+        this.link = link;
+    }
 
     @Override
     protected String getPrefix() {
@@ -15,10 +19,6 @@ public class Link extends MarkupElement {
     @Override
     protected String getPostfix() {
         return "</a>";
-    }
-
-    public void setLink(String s) {
-        this.link = s;
     }
 
     @Override

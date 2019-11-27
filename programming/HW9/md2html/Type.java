@@ -23,24 +23,17 @@ public enum Type {
     EMPHASIS_UNDERLINE,
     CODE,
     STRIKEOUT,
+    PARAGRAPH,
     LINK,
 
     ANY,
-    STRONG_EMPHASIS,
     BEGIN_OF_LINE,
     END_OF_LINE,
-    MARKUP_ELEMENT,
     ANY_COUNT
     ;
 
 
     public boolean equal(Type t) {
-        if(this == STRONG_EMPHASIS) {
-            if(t == STRONG_ASTERISK || t == EMPHASIS_ASTERISK ||
-            t == STRONG_UNDERLINE || t == EMPHASIS_UNDERLINE) {
-                return true;
-            }
-        }
         if(this == ANY) {
             return true;
         }

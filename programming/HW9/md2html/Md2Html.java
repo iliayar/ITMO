@@ -10,15 +10,6 @@ public class Md2Html {
     static boolean EOF = false;
 
 
-
-    // private static void printTokens() {
-    //     for(int i = 0; i < tokens.size(); ++i) {
-    //         System.err.println(tokens.get(i).type + " " + tokens.get(i).text);
-    //     }
-    // }
-
-
-   
     
     public static void main(String[] args) throws IOException {
         in = new Scanner( new InputStreamReader(
@@ -38,9 +29,9 @@ public class Md2Html {
             }
             
             StringBuilder result = new StringBuilder();
-            new Parser(currentParagraph).genHtml(result);
+            new MarkdownParser(currentParagraph).genHtml(result);
             // System.err.println("HTML: " + result.toString() + "\n");
-//            System.err.print("Paragraph: " + currentParagraph + "\n");
+//            out.write("Paragraph: " + currentParagraph + "\n");
 //            out.write("Result: " + result.toString() + "\n");
 //            out.write("\n");
             out.write(result.toString() + "\n");
