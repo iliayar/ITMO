@@ -42,6 +42,54 @@ public class Tokenizer {
         return tmp.toArrayList();
     }
 
+
+    private void merge(int n, Type t) {
+        Token nToken = new Token(t);
+        for(int i = 0; i < n; ++i) {
+            Token tmp = tokens.pop();
+            tmp.merge(nToken.getText(), t);
+            nToken = tmp;
+        }
+        tokens.push(nToken);
+    }
+
+    private boolean matchPattern(List<Type> pattern) {
+        try {
+            for (int i = pattern.size() - 1, j = 0; i >= 0; --i, ++j) {
+//                System.out.println(Integer.toString(i) + " " + pattern.get(i).toString() + " " + tokens.getFromEnd(pattern.size() - 1 - i).getType());
+                if(pattern.get(i) == Type.ANY_COUNT) {
+                    --j;
+                    continue;
+                }
+                if (!pattern.get(i).equal(tokens.getFromEnd(j).getType())) {
+                    if(i < pattern.size() - 1 && pattern.get(i + 1) == Type.ANY_COUNT) {
+//                        System.out.println("TEST");
+                        i++;
+                        continue;
+                    }
+                    return false;
+                }
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean prune() {
+
+        if(pruneEscape()) {
+            return true;
+        }
+        if(pruneSymbols()) {
+            return true;
+        }
+        if(pruneInline()) {
+            return true;
+        }
+        return false;
+    }
+
     private void pruneMarkupUntil(Type t) {
         Token nText = new Text(new Token());
         for(int i = 0; i < tokens.getSize();) {
@@ -62,7 +110,9 @@ public class Tokenizer {
             if(tokens.getFromEnd(i).getType() == t) {
                 break;
             }
-            nText.merge(tokens.pop().getText(),Type.TEXT);
+            Token tmp = tokens.pop();
+            tmp.merge(nText.getText(), Type.TEXT);
+            nText = tmp;
         }
         tokens.push(nText);
 //        while(prune());
@@ -175,20 +225,6 @@ public class Tokenizer {
 //             return true;
 //         }
 
-        return false;
-    }
-
-    private boolean prune() {
-
-        if(pruneEscape()) {
-            return true;
-        }
-        if(pruneSymbols()) {
-            return true;
-        }
-        if(pruneInline()) {
-            return true;
-        }
         return false;
     }
 
@@ -331,7 +367,7 @@ public class Tokenizer {
         }
 
 
-        if(matchPattern(List.of(Type.OP_SQR_BRACKET, Type.ANY_COUNT,Type.CL_SQR_BRACKET,Type.OP_BRACKET,Type.ANY_COUNT,Type.CL_BRACKET))) {
+        if(matchPattern(List.of(Type.CL_SQR_BRACKET,Type.OP_BRACKET,Type.ANY_COUNT,Type.CL_BRACKET))) {
             Token tmp = tokens.pop();
             pruneTextUntil(Type.OP_BRACKET);
             tokens.push(tmp);
@@ -340,36 +376,6 @@ public class Tokenizer {
         return false;
     }
 
-    private void merge(int n, Type t) {
-        Token nToken = new Token(t);
-        for(int i = 0; i < n; ++i) {
-            nToken.merge(tokens.pop().getText(), t);
-        }
-        tokens.push(nToken);
-    }
-
-    private boolean matchPattern(List<Type> pattern) {
-        try {
-            for (int i = pattern.size() - 1, j = 0; i >= 0; --i, ++j) {
-//                System.out.println(Integer.toString(i) + " " + pattern.get(i).toString() + " " + tokens.getFromEnd(pattern.size() - 1 - i).getType());
-                if(pattern.get(i) == Type.ANY_COUNT) {
-                    --j;
-                    continue;
-                }
-                if (!pattern.get(i).equal(tokens.getFromEnd(j).getType())) {
-                    if(i < pattern.size() - 1 && pattern.get(i + 1) == Type.ANY_COUNT) {
-//                        System.out.println("TEST");
-                        i++;
-                        continue;
-                    }
-                    return false;
-                }
-            }
-        } catch (IndexOutOfBoundsException e) {
-            return false;
-        }
-        return true;
-    }
 
 
 }
