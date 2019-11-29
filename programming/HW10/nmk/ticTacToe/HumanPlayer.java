@@ -23,7 +23,7 @@ public class HumanPlayer implements Player {
     public Move move(final Position position, final Cell cell) {
         while (true) {
             out.println("Position");
-            out.println(position);
+//            out.println(position);
             out.println(cell + "'s move");
             out.println("Enter row and column");
             final Move move = new Move(in.nextInt(), in.nextInt(), cell);

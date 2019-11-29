@@ -28,27 +28,45 @@ public class Pattern {
             return false;
         }
         List<Token> matches = new ArrayList<Token>();
-        int index = tokens.get(pattern.get(0)).get(tokens.get(pattern.get(0)).size() - 1).getIndex();
-        matches.add(tokens.get(pattern.get(0)).get(tokens.get(pattern.get(0)).size() - 1));
+//        int index = tokens.get(pattern.get(0)).get(tokens.get(pattern.get(0)).size() - 1).getIndex();
+//        matches.add(tokens.get(pattern.get(0)).get(tokens.get(pattern.get(0)).size() - 1));
+        int index = -1;
+//        for(int i = tokens.get(pattern.get(0)).size() - 1; i >= 0; --i) {
+//            if(!tokens.get(pattern.get(0)).get(i).isUsed()){
+//                index = tokens.get(pattern.get(0)).get(i).getIndex();
+//                matches.add(tokens.get(pattern.get(0)).get(i));
+//                break;
+//            }
+//        }
+//        if(index == -1) {
+//            return false;
+//        }
         pattern_for:
-        for(int j = 1; j < pattern.size(); ++j) {
+        for(int j = 0; j < pattern.size(); ++j) {
             Type t = pattern.get(j);
 //            System.out.println("TEST3: " + t.toString() + " " +Integer.toString(index));
             if(t == Type.ANY_COUNT || t == Type.ANY) {
                 continue;
             }
-            for(int i = 0; i < tokens.get(t).size(); ++i) {
+            for(int i =  tokens.get(t).size() - 1; i >= 0 ; --i) {
+                if(index == -1) {
+                    index = tokens.get(t).get(i).getIndex();
+                    matches.add(tokens.get(t).get(i));
+                    continue pattern_for;
+                }
+//                System.out.println(tokens.get(t).get(i).getType().toString() + " " + Boolean.toString(tokens.get(t).get(i).isUsed()));
+//                if(tokens.get(t).get(i).isUsed()) {
+//                    continue;
+//                }
                 if(tokens.get(t).get(i).getIndex() > index) {
                     int dIndex = tokens.get(t).get(i).getIndex() - index;
                     index = tokens.get(t).get(i).getIndex();
-                    if(pattern.get(j - 1) == Type.ANY_COUNT) {
-
-                    } else if(pattern.get(j - 1) == Type.ANY) {
+                    if(pattern.get(j - 1) == Type.ANY) {
                         if(dIndex != 2) {
                             return false;
                         }
-                    } else {
-                        if(dIndex > 1) {
+                    } else if (pattern.get(j - 1) != Type.ANY_COUNT){
+                        if(dIndex != 1) {
                             return false;
                         }
                     }
@@ -69,12 +87,12 @@ public class Pattern {
             List<Token> matches = lastMatch.getTokens();
             for(int j = matches.size() - 1; j >= 0; --j) {
                 Token t = lastMatch.getTokens().get(j);
-                int i = 0;
-                for(; tokens.get(t.getType()).get(i).getIndex() != t.getIndex(); ++i);
+                int i = t.stackIndex;
 //                System.out.println("TEST5: " + Integer.toString(tokens.get(t.getType()).getSize()));
 //                Token tmp = tokens.get(t.getType()).get(i);
                 tokens.get(t.getType()).set(i, tokens.get(t.getType()).get(0));
                 tokens.get(t.getType()).pop();
+//                tokens.get(t.getType()).get(i).use();
             }
             return lastMatch;
         }

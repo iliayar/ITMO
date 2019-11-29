@@ -66,6 +66,7 @@ public class MarkdownParser extends Parser {
     }
 
     private MarkupElement parseElement(Match m) {
+//        System.out.println(m);
         switch (m.getType()) {
             case EMPHASIS_ASTERISK:
             case EMPHASIS_UNDERLINE:
@@ -112,6 +113,7 @@ public class MarkdownParser extends Parser {
             if(matches[i] == null) {
                 elems.add(new Text(tokens.get(i).getText()));
             } else {
+//                System.out.println(matches[i] == null);
                 elems.add(parseElement(matches[i]));
                 i = matches[i].getTokens().get(matches[i].getTokens().size() - 1).index;
             }
@@ -121,6 +123,9 @@ public class MarkdownParser extends Parser {
 
     public void genHtml(StringBuilder sb) {
         super.parse();
+        if(matches[0] == null) {
+            return;
+        }
         paragraph = parseElement(matches[0]);
         paragraph.toHtml(sb);
 //        paragraph = parseElements(matches.get(matches.size() - 1));

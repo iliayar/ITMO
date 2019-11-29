@@ -23,8 +23,8 @@ public class TokenStack {
         if(index >= stack.length) {
             expandToken();
         }
+        t.setStackIndex(index);
         stack[index++] = t;
-        stack[index - 1].setIndex(index - 1);
     }
 
     public int size() {
