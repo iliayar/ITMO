@@ -20,9 +20,9 @@ public abstract class Parser {
     protected void parse() {
         int i = 0;
         for(Token t : tokens) {
-            tokenMap.get(t.getType()).push(t);
+            tokenMap.get(t.getType()).push(new Token(t));
             tokenMap.get(t.getType()).get(0).setIndex(i);
-            while(fetchMatches());
+            fetchMatches();
             i++;
         }
     }

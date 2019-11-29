@@ -9,9 +9,9 @@ public class Token {
 
     private StringBuilder text = new StringBuilder();
 
-    protected ArrayList<Token> inner = new ArrayList<Token>();
-
+    boolean used;
     int index;
+    int stackIndex;
 
     public Token(char c) {
         type = matchType(c);
@@ -30,10 +30,15 @@ public class Token {
     public Token(Token t) {
         this.type = t.type;
         this.text = new StringBuilder(t.getText());
+        this.used = false;
     }
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public void setStackIndex(int stackIndex) {
+        this.stackIndex = stackIndex;
     }
 
     public int getIndex() {
@@ -51,6 +56,14 @@ public class Token {
             default:
                 return Character.toString(c);
         }
+    }
+
+    public void use() {
+        this.used = true;
+    }
+
+    public boolean isUsed() {
+        return used;
     }
 
     public String getText() {
@@ -98,8 +111,8 @@ public class Token {
         }
     }
 
-    public void toHtml(StringBuilder sb) {
-        sb.append(text.toString());
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
     }
-
 }
