@@ -9,11 +9,11 @@ public class Pattern {
 
     private List<Type> pattern;
     private Type type;
-    private Map<Type, TokenStack> tokens;
+    private Map<Type, ArrayList<Token>> tokens;
 
     private Match lastMatch;
 
-    public Pattern(List<Type> pattern, Type t, Map<Type,TokenStack> tokens) {
+    public Pattern(List<Type> pattern, Type t, Map<Type,ArrayList<Token>> tokens) {
         this.pattern = pattern;
         this.type = t;
         this.tokens = tokens;
@@ -48,7 +48,7 @@ public class Pattern {
             if(t == Type.ANY_COUNT || t == Type.ANY) {
                 continue;
             }
-            for(int i =  tokens.get(t).size() - 1; i >= 0 ; --i) {
+            for(int i = 0; i < tokens.get(t).size() ; ++i) {
                 if(index == -1) {
                     index = tokens.get(t).get(i).getIndex();
                     matches.add(tokens.get(t).get(i));
@@ -90,8 +90,9 @@ public class Pattern {
                 int i = t.stackIndex;
 //                System.out.println("TEST5: " + Integer.toString(tokens.get(t.getType()).getSize()));
 //                Token tmp = tokens.get(t.getType()).get(i);
-                tokens.get(t.getType()).set(i, tokens.get(t.getType()).get(0));
-                tokens.get(t.getType()).pop();
+//                tokens.get(t.getType()).set(i, tokens.get(t.getType()).get(0));
+//                tokens.get(t.getType()).pop();
+                tokens.get(t.getType()).remove(i);
 //                tokens.get(t.getType()).get(i).use();
             }
             return lastMatch;
