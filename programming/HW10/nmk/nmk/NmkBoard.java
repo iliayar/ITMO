@@ -34,17 +34,17 @@ public class NmkBoard implements Board, Position {
     }
 
     @Override
-    public Position getPosition() {
+    final public Position getPosition() {
         return this;
     }
 
     @Override
-    public Cell getCell() {
+    final public Cell getCell() {
         return turn;
     }
 
     @Override
-    public Result makeMove(Move move) {
+    final public Result makeMove(Move move) {
         if(!isValid(move)) {
             return Result.LOSE;
         }
@@ -72,7 +72,7 @@ public class NmkBoard implements Board, Position {
     }
 
     @Override
-    public boolean isValid(Move move) {
+    final public boolean isValid(Move move) {
         int y = move.getRow();
         int x = move.getColumn();
 
@@ -90,12 +90,12 @@ public class NmkBoard implements Board, Position {
     }
 
     @Override
-    public Cell getCell(int r, int c) {
+    final public Cell getCell(int r, int c) {
         return board[r][c];
     }
 
     @Override
-    public String toString() {
+    final public String toString() {
         StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < board.length; ++i) {

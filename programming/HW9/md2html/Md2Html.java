@@ -5,14 +5,14 @@ import java.util.*;
 
 public class Md2Html {
 
-    static Scanner in;
+    static BufferedReader in;
 
     static boolean EOF = false;
 
 
     
     public static void main(String[] args) throws IOException {
-        in = new Scanner( new InputStreamReader(
+        in = new BufferedReader( new InputStreamReader(
             new FileInputStream(args[0]), "UTF-8"));
 
         BufferedWriter out = new BufferedWriter(
@@ -50,9 +50,15 @@ public class Md2Html {
 
     private static String readParagraph() throws IOException {
         StringBuilder paragraph = new StringBuilder();
-        while(in.hasNextLine()) {
+        while(!EOF) {
 
-            String line = in.nextLine();
+            String line = in.readLine();
+
+            if(line == null) {
+                EOF = true;
+                break;
+            }
+
             if(line.length() > 0) {
                 paragraph.append(line + "\n");
             } else {
@@ -63,9 +69,6 @@ public class Md2Html {
 
         if(paragraph.length() > 0) {
             paragraph.deleteCharAt(paragraph.length() - 1);
-        }
-        if(!in.hasNextLine() && paragraph.length() == 0) {
-            EOF = true;
         }
 
         return paragraph.toString();
