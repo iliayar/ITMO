@@ -9,23 +9,25 @@
 #define FILENAME "local"
 
 #ifndef LOCAL
-#define FILENAME "chaincode"
+#define FILENAME "telemetry"
 #endif
 
 using namespace std;
 
 bool* was;
 
-void print_bits(int n, int k) {
-    for(int i = k - 1; i >= 0; --i) {
-        cout << ((n >> i) & 1);
+// vector<int> a;
+
+int n, k;
+
+void foo(int i, int j) {
+    if(j == n) {
+        return;
     }
-    cout << endl;
+    foo(i/k, j + 1);
+    cout << ( (i/k) % 2 == 0 ? (i % k) : k - 1 - (i % k));
 }
 
-int cut(int n,int k) {
-    return (n & ((1 << k) - 1));
-}
 
 signed main() {
     ios_base::sync_with_stdio(0);
@@ -34,26 +36,13 @@ signed main() {
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);
 
+    cin >> n >> k;
 
-    int n; cin >> n;
-    
-    was = new bool[(1 << n)];
+    // a.resize(n);
 
-
-    for(int i = 0; i < (1 << n); ++i) was[i] = false;
-
-
-    int k = 0;
-
-
-    for(int i = 0; i < (1 << n); ++i) {
-        was[k] = true;
-        print_bits(k,n);
-        if(!was[cut(k<<1, n) + 1]) {
-            k = cut(k<<1, n) + 1;
-        } else {
-            k = cut(k<<1 , n);
-        }
+    for(int i = 0; i < pow(k,n); ++i) {
+        foo(i, 0);
+        cout << endl;
     }
 
     return 0;
