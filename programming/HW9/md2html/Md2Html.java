@@ -1,7 +1,6 @@
 package md2html;
 
 import java.io.*;
-import java.util.*;
 
 public class Md2Html {
 
@@ -9,7 +8,9 @@ public class Md2Html {
 
     static boolean EOF = false;
 
-
+    public static void test(MutableInteger i) {
+        i.inc();
+    }
     
     public static void main(String[] args) throws IOException {
         in = new BufferedReader( new InputStreamReader(
@@ -19,8 +20,6 @@ public class Md2Html {
             new OutputStreamWriter(new FileOutputStream(args[1]), "UTF-8")
         );
 
-
-        
         while(!EOF) {
             String currentParagraph = readParagraph();
 
@@ -29,7 +28,7 @@ public class Md2Html {
             }
             
             StringBuilder result = new StringBuilder();
-            new MarkdownParser(currentParagraph).genHtml(result);
+            new ParagraphParser(currentParagraph).genHtml(result);
             // System.err.println("HTML: " + result.toString() + "\n");
 //            out.write("Paragraph: " + currentParagraph + "\n");
 //            out.write("Result: " + result.toString() + "\n");

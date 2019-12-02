@@ -14,3 +14,6 @@ run:
 
 test:
 	java -jar Md2HtmlTest.jar
+
+clean:
+	rm -Rf md2html/*.class
