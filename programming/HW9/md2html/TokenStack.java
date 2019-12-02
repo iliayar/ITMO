@@ -44,8 +44,15 @@ public class TokenStack {
         }
     }
 
-    public Token get(int i) throws  IndexOutOfBoundsException {
-        if(index - i - 1 >= 0) {
+    public Token get(int i) throws IndexOutOfBoundsException {
+        if(i >= 0 && i < index) {
+            return stack[i];
+        }
+        throw new IndexOutOfBoundsException();
+    }
+
+    public Token getFromEnd(int i) throws  IndexOutOfBoundsException {
+        if(index - i - 1 >= 0 && index - i - 1 < index) {
             return stack[index - i - 1];
         }
         throw new IndexOutOfBoundsException();
@@ -73,4 +80,28 @@ public class TokenStack {
         }
         return res;
     }
+
+    public int lower_bound(int n) {
+        int l = 0;
+        int r = index;
+        while(r - l > 1) {
+            int m = (l+r)/2;
+            if(stack[m].getIndex() <= n) {
+                l = m;
+            } else {
+                r = m;
+            }
+        }
+        return l;
+    }
+
+    public void remove(int i) {
+        for(int j = i + 1; j < index; ++j) {
+            stack[j - 1] = stack[j];
+            stack[j - 1].setStackIndex(j - 1);
+        }
+//        System.arraycopy(stack, i + 1, stack, i, index - i - 1);
+        index--;
+    }
+
 }
