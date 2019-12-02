@@ -7,7 +7,7 @@ public abstract class Parser {
 
     protected List<Token> tokens;
     protected Match[] matches;
-    protected Map<Type, ArrayList<Token>> tokenMap;
+    protected Map<Type, TokenStack> tokenMap;
     protected List<Pattern> patterns;
 
 
@@ -20,8 +20,8 @@ public abstract class Parser {
     protected void parse() {
         int i = 0;
         for(Token t : tokens) {
-            tokenMap.get(t.getType()).add(new Token(t));
-            tokenMap.get(t.getType()).get(tokenMap.get(t.getType()).size() - 1).setIndex(i);
+            tokenMap.get(t.getType()).push(new Token(t));
+            tokenMap.get(t.getType()).getFromEnd(0).setIndex(i);
             fetchMatches();
             i++;
         }
@@ -41,7 +41,7 @@ public abstract class Parser {
         return false;
     }
 
-    protected abstract Map<Type, ArrayList<Token>> genTokenMap();
+    protected abstract Map<Type, TokenStack> genTokenMap();
     protected abstract List<Pattern> genPatterns();
 
 }

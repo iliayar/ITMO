@@ -1,7 +1,6 @@
 package md2html;
 
 import javax.print.DocFlavor;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import static md2html.Type.PARAGRAPH;
@@ -24,25 +23,25 @@ public class MarkdownParser extends Parser {
 
 
     @Override
-    protected Map<Type, ArrayList<Token>> genTokenMap() {
-        Map<Type, ArrayList<Token>> tokenMap = new LinkedHashMap<Type, ArrayList<Token>>();
+    protected Map<Type, TokenStack> genTokenMap() {
+        Map<Type, TokenStack> tokenMap = new LinkedHashMap<Type, TokenStack>();
 
-        tokenMap.put(Type.BEGIN_OF_LINE,      new ArrayList<Token>());
-        tokenMap.put(Type.END_OF_LINE,        new ArrayList<Token>());
-        tokenMap.put(Type.EMPHASIS_ASTERISK,  new ArrayList<Token>());
-        tokenMap.put(Type.EMPHASIS_UNDERLINE, new ArrayList<Token>());
-        tokenMap.put(Type.STRONG_ASTERISK,    new ArrayList<Token>());
-        tokenMap.put(Type.STRONG_UNDERLINE,   new ArrayList<Token>());
-        tokenMap.put(Type.CODE,               new ArrayList<Token>());
-        tokenMap.put(Type.SEPARATOR,          new ArrayList<Token>());
-        tokenMap.put(Type.HEADER,             new ArrayList<Token>());
-        tokenMap.put(Type.STRIKEOUT,          new ArrayList<Token>());
-        tokenMap.put(Type.TEXT,               new ArrayList<Token>());
-        tokenMap.put(Type.OP_SQR_BRACKET,     new ArrayList<Token>());
-        tokenMap.put(Type.CL_SQR_BRACKET,     new ArrayList<Token>());
-        tokenMap.put(Type.OP_BRACKET,         new ArrayList<Token>());
-        tokenMap.put(Type.CL_BRACKET,         new ArrayList<Token>());
-        tokenMap.put(Type.ANY,                new ArrayList<Token>());
+        tokenMap.put(Type.BEGIN_OF_LINE,      new TokenStack());
+        tokenMap.put(Type.END_OF_LINE,        new TokenStack());
+        tokenMap.put(Type.EMPHASIS_ASTERISK,  new TokenStack());
+        tokenMap.put(Type.EMPHASIS_UNDERLINE, new TokenStack());
+        tokenMap.put(Type.STRONG_ASTERISK,    new TokenStack());
+        tokenMap.put(Type.STRONG_UNDERLINE,   new TokenStack());
+        tokenMap.put(Type.CODE,               new TokenStack());
+        tokenMap.put(Type.SEPARATOR,          new TokenStack());
+        tokenMap.put(Type.HEADER,             new TokenStack());
+        tokenMap.put(Type.STRIKEOUT,          new TokenStack());
+        tokenMap.put(Type.TEXT,               new TokenStack());
+        tokenMap.put(Type.OP_SQR_BRACKET,     new TokenStack());
+        tokenMap.put(Type.CL_SQR_BRACKET,     new TokenStack());
+        tokenMap.put(Type.OP_BRACKET,         new TokenStack());
+        tokenMap.put(Type.CL_BRACKET,         new TokenStack());
+        tokenMap.put(Type.ANY,                new TokenStack());
 
         return tokenMap;
     }
