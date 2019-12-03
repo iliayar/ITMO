@@ -11,15 +11,23 @@ public class LinkParser extends MarkdownParser {
 
     @Override
     public MarkupElement parse(MutableInteger index) {
-        this.terminator = List.of(Type.CL_SQR_BRACKER, Type.OP_BRACKET);
+        int stIndex = index.val();
+        this.terminator = Type.CL_SQRT_BRACKET;
         ArrayList<MarkupElement> elems = parseElems(index);
-        this.terminator = List.of(Type.CL_BRACKET);
+        if(index.val() >= getTokens().size() || getTokens().get(index.val() + 1).getType() != Type.OP_BRACKET) {
+            index.setVal(stIndex - 1);
+            tokens.get(stIndex - 1).setType(Type.TEXT);
+            return new TextParser(getTokens()).parse(index);
+        }
+        index.inc();
+        index.inc();
+        this.terminator = Type.CL_BRACKET;
         String link = parseRaw(index);
         return new Link(elems,link);
     }
 
     @Override
-    protected List<Type> getTerminator() {
+    protected Type getTerminator() {
         return terminator;
     }
 

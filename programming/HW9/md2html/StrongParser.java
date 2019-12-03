@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StrongParser extends MarkdownParser {
-    public StrongParser(ArrayList<Token> tokens, List<Type> term) {
+    public StrongParser(ArrayList<Token> tokens, Type term) {
         super(tokens);
         this.terminator = term;
     }
@@ -15,7 +15,7 @@ public class StrongParser extends MarkdownParser {
     }
 
     @Override
-    protected List<Type> getTerminator() {
+    protected Type getTerminator() {
         return terminator;
     }
 

@@ -1,10 +1,9 @@
 package md2html;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class MarkdownParser {
-    List<Type> terminator;
+    Type terminator;
     String paragraph;
 
     ArrayList<Token> tokens;
@@ -24,18 +23,16 @@ public abstract class MarkdownParser {
     }
     public abstract MarkupElement parse(MutableInteger index);
 
-    protected abstract List<Type> getTerminator();
+    protected abstract Type getTerminator();
     protected abstract String getParagraph();
     protected abstract ArrayList<Token> getTokens();
 
-    protected boolean checkTerminator(Integer index) {
-        if(index >= getTokens().size()) {
-            return false;
+    protected boolean checkTerminator(MutableInteger index) {
+        if(index.val() >= getTokens().size()) {
+            return true;
         }
-        for(int i = index; i > index - getTerminator().size(); --i) {
-            if(tokens.get(i).getType() != getTerminator().get(getTerminator().size() - index + i - 1)) {
-                return false;
-            }
+        if(tokens.get(index.val()).getType() != getTerminator()) {
+            return false;
         }
         return true;
     }
@@ -44,7 +41,9 @@ public abstract class MarkdownParser {
         ArrayList<MarkupElement> elems = new ArrayList<>();
         StringBuilder text = new StringBuilder();
         for(;; index.inc()) {
-            if(!checkTerminator(index.val())) {
+            if(checkTerminator(index)) {
+//                index.inc();
+//                System.out.println(getTerminator().size());
                 elems.add(new Text(text.toString()));
                 break;
             }
@@ -59,6 +58,7 @@ public abstract class MarkdownParser {
                 if(index.val() >= getTokens().size()) {
                     break;
                 }
+                continue;
             }
             text.append(getTokens().get(index.val()).getChar());
         }
@@ -68,8 +68,13 @@ public abstract class MarkdownParser {
     protected String parseRaw(MutableInteger index) {
         StringBuilder text = new StringBuilder();
         for(;; index.inc()) {
-            if(checkTerminator(index.val())) {
+            if(checkTerminator(index)) {
                 break;
+            }
+            if(getTokens().get(index.val()).getType() == Type.DOUBLE_UNDERLINE ||
+                    getTokens().get(index.val()).getType() == Type.DOUBLE_ASTERISK ||
+                    getTokens().get(index.val()).getType() == Type.DOUBLE_DASH) {
+                text.append(getTokens().get(index.val()).getChar());
             }
             text.append(getTokens().get(index.val()).getChar());
         }
@@ -82,32 +87,23 @@ public abstract class MarkdownParser {
             case APOS:
                 return new CodeParser(getTokens());
             case UNDERLINE:
-                return getUnderlineParser(index, getTokens());
+                return new EmphasisParser(getTokens(), Type.UNDERLINE);
+            case DOUBLE_UNDERLINE:
+                return new StrongParser(getTokens(), Type.DOUBLE_UNDERLINE);
             case ASTERISK:
-                return getAsteriskParser(index, getTokens());
+                return new EmphasisParser(getTokens(), Type.ASTERISK);
+            case DOUBLE_ASTERISK:
+                return new StrongParser(getTokens(), Type.DOUBLE_ASTERISK);
+            case DOUBLE_DASH:
+                return new StrikeoutParser(getTokens());
             case HASH:
                 return new HeaderParser(getTokens());
             case OP_SQR_BRACKET:
                 return new LinkParser(getTokens());
             default:
+                getTokens().get(index.val()).setType(Type.TEXT);
+                index.sub(1);
                 return new TextParser(getTokens());
-        }
-    }
-
-    private MarkdownParser getUnderlineParser(MutableInteger index, ArrayList<Token> tokens) {
-
-        if(index.val() + 1 < tokens.size() && tokens.get(index.val() + 1).getType() == Type.UNDERLINE) {
-            return new StrongParser(tokens, List.of(Type.UNDERLINE, Type.UNDERLINE));
-        } else {
-            return new EmphasisParser(tokens, List.of(Type.UNDERLINE));
-        }
-    }
-
-    private MarkdownParser getAsteriskParser(MutableInteger index,  ArrayList<Token> tokens) {
-        if(tokens.get(index.val() + 1).getType() == Type.ASTERISK) {
-            return new StrongParser(tokens, List.of(Type.ASTERISK, Type.ASTERISK));
-        } else {
-            return new EmphasisParser(tokens, List.of(Type.ASTERISK));
         }
     }
 

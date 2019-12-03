@@ -1,20 +1,17 @@
 package md2html;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class TextParser extends MarkdownParser {
+public class StrikeoutParser extends MarkdownParser {
 
-    private Type terminator = Type.NONE;
-
-    public TextParser(ArrayList<Token> tokens) {
+    public StrikeoutParser(ArrayList<Token> tokens) {
         super(tokens);
+        this.terminator = Type.DOUBLE_DASH;
     }
 
     @Override
     public MarkupElement parse(MutableInteger index) {
-//        index.sub(1);
-        return new Text(parseElems(index));
+        return new Strikeout(parseElems(index));
     }
 
     @Override

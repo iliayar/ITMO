@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CodeParser extends MarkdownParser {
 
-    private List<Type> terminator = List.of(Type.APOS);
+    private Type terminator = Type.APOS;
 
     public CodeParser(ArrayList<Token> tokens) {
         super(tokens);
@@ -18,7 +18,7 @@ public class CodeParser extends MarkdownParser {
     }
 
     @Override
-    protected List<Type> getTerminator() {
+    protected Type getTerminator() {
         return terminator;
     }
 
