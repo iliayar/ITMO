@@ -11,10 +11,14 @@ public class Token {
 
 
     public char getChar() {
-        return c;
+        return this.c;
     }
 
     public Type getType() {
         return t;
+    }
+
+    public void setType(Type t) {
+        this.t = t;
     }
 }

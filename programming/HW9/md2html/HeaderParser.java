@@ -5,7 +5,7 @@ import java.util.List;
 
 public class HeaderParser extends MarkdownParser {
 
-    private List<Type> terminator = List.of();
+    private Type terminator = Type.NONE;
 
     public HeaderParser(ArrayList<Token> tokens) {
         super(tokens);
@@ -17,11 +17,16 @@ public class HeaderParser extends MarkdownParser {
 
         while (i < tokens.size() && tokens.get(i).getType() == Type.HASH) {
             headerLevel++;
-//            index.inc();
             i++;
         }
 
         if(i >= tokens.size() || tokens.get(i).getType() != Type.SEPARATOR || index.val() != 0) {
+            if(index.val() > 0) {
+                index.sub(1);
+            }
+            for(i = index.val(); tokens.get(i).getType() == Type.HASH; ++i) {
+                tokens.get(i).setType(Type.TEXT);
+            }
             return -1;
         }
         return  headerLevel;
@@ -33,8 +38,6 @@ public class HeaderParser extends MarkdownParser {
         int headerLevel = isHeader(index);
 
         if(headerLevel == -1) {
-            ArrayList<MarkupElement> elems = new ArrayList<>();
-            elems.add(new Text(parseRaw(index)));
             return new TextParser(getTokens()).parse(index);
         }
         index.add(headerLevel + 1);
@@ -42,7 +45,7 @@ public class HeaderParser extends MarkdownParser {
     }
 
     @Override
-    protected List<Type> getTerminator() {
+    protected Type getTerminator() {
         return terminator;
     }
 

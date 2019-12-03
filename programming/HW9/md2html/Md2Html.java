@@ -30,7 +30,7 @@ public class Md2Html {
             StringBuilder result = new StringBuilder();
             new ParagraphParser(currentParagraph).genHtml(result);
             // System.err.println("HTML: " + result.toString() + "\n");
-//            out.write("Paragraph: " + currentParagraph + "\n");
+//            System.out.println("Paragraph: " + currentParagraph + "\n");
 //            out.write("Result: " + result.toString() + "\n");
 //            out.write("\n");
             out.write(result.toString() + "\n");

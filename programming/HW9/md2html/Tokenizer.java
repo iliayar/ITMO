@@ -14,7 +14,8 @@ public class Tokenizer {
     public ArrayList<Token> tokenize() {
         this.tokens = new ArrayList<>();
 
-        for(int i = 0; i < paragraph.length(); ++i) {
+//        tokens.add(new Token('\b', Type.BEGIN_OF_LINE));
+        for(int i = 0, j = 0; i < paragraph.length(); ++i, ++j) {
             Type t = getType(paragraph.charAt(i));
             if(t == Type.ASTERISK || t == Type.UNDERLINE) {
                 if(checkSeparators(i)) {
@@ -26,13 +27,34 @@ public class Tokenizer {
                 tokens.add(new Token(paragraph.charAt(++i), Type.TEXT));
                 continue;
             }
+            if(j > 0 && t == Type.HASH && tokens.get(j - 1).getType() != Type.HASH) {
+                t = Type.TEXT;
+            }
+
+            if(j > 0 && t == Type.UNDERLINE && tokens.get(j - 1).getType() == Type.UNDERLINE) {
+                tokens.get(j-1).setType(Type.DOUBLE_UNDERLINE);
+                j--;
+                continue;
+            }
+            if(j > 0 && t == Type.ASTERISK && tokens.get(j - 1).getType() == Type.ASTERISK) {
+                tokens.get(j-1).setType(Type.DOUBLE_ASTERISK);
+                j--;
+                continue;
+            }
+            if(t == Type.DASH && j > 0 && tokens.get(j - 1).getType() == Type.DASH) {
+                tokens.get(j-1).setType(Type.DOUBLE_DASH);
+                j--;
+                continue;
+            }
+
             tokens.add(new Token(paragraph.charAt(i), t));
         }
+//        tokens.add(new Token('\b', Type.END_OF_LINE));
         return tokens;
     }
 
     private boolean checkSeparators(int index) {
-        if (getType(paragraph.charAt(index - 1)) == Type.SEPARATOR && getType(paragraph.charAt(index + 1)) == Type.SEPARATOR) {
+        if (index > 0 && index < paragraph.length() - 1 && getType(paragraph.charAt(index - 1)) == Type.SEPARATOR && getType(paragraph.charAt(index + 1)) == Type.SEPARATOR) {
             return true;
         }
         return false;
@@ -53,7 +75,7 @@ public class Tokenizer {
             case '[':
                 return Type.OP_SQR_BRACKET;
             case ']':
-                return Type.CL_SQR_BRACKER;
+                return Type.CL_SQRT_BRACKET;
             case '(':
                 return Type.OP_BRACKET;
             case ')':

@@ -27,6 +27,10 @@ public class MutableInteger {
         this.val += val;
     }
 
+    public void setVal(int val) {
+        this.val = val;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(val);

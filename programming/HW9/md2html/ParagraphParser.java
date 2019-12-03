@@ -1,11 +1,10 @@
 package md2html;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ParagraphParser extends MarkdownParser {
 
-    private List<Type> terminator = List.of();
+    private Type terminator = Type.NONE;
 
     public ParagraphParser(ArrayList<Token> tokens) {
         super(tokens);
@@ -15,13 +14,20 @@ public class ParagraphParser extends MarkdownParser {
         super(paragraph);
     }
 
-    @Override
-    public void genHtml(StringBuilder sb) {
-        parse(new MutableInteger(0)).toHtml(sb);
-    }
+//    @Override
+//    public void genHtml(StringBuilder sb) {
+//        parse(new MutableInteger(0)).toHtml(sb);
+//    }
 
     @Override
     public MarkupElement parse(MutableInteger index) {
+
+//        System.out.print("Tokens: ");
+//        for(int i = 0; i < tokens.size(); ++i) {
+//            System.out.print(tokens.get(i).getType() + " ");
+//        }
+//        System.out.println();
+
         if(tokens.get(index.val()).getType() == Type.HASH) {
             HeaderParser hp = new HeaderParser(getTokens());
             if(hp.isHeader(index) != -1) {
@@ -33,7 +39,7 @@ public class ParagraphParser extends MarkdownParser {
     }
 
     @Override
-    protected List<Type> getTerminator() {
+    protected Type getTerminator() {
         return terminator;
     }
 
