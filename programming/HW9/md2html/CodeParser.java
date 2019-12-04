@@ -13,8 +13,18 @@ public class CodeParser extends MarkdownParser {
 
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
-        return new Code(parseElems(index));
+    public void parse(MutableInteger index, StringBuilder sb) {
+        parseElems(index, sb);
+    }
+
+    @Override
+    protected String getHtmlPrefix() {
+        return "<code>";
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return "</code>";
     }
 
     @Override

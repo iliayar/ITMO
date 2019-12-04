@@ -10,6 +10,16 @@ public class ParagraphParser extends MarkdownParser {
         super(tokens);
     }
 
+    @Override
+    protected String getHtmlPrefix() {
+        return "<p>";
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return "</p>";
+    }
+
     public ParagraphParser(String paragraph) {
         super(paragraph);
     }
@@ -20,7 +30,7 @@ public class ParagraphParser extends MarkdownParser {
 //    }
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
+    public void parse(MutableInteger index, StringBuilder sb) {
 
 //        System.out.print("Tokens: ");
 //        for(int i = 0; i < tokens.size(); ++i) {
@@ -31,11 +41,12 @@ public class ParagraphParser extends MarkdownParser {
         if(tokens.get(index.val()).getType() == Type.HASH) {
             HeaderParser hp = new HeaderParser(getTokens());
             if(hp.isHeader(index) != -1) {
-                return hp.parse(index);
+                hp.parse(index, sb);
+                return;
             }
         }
 //        index.inc();
-        return new Paragraph(parseElems(index));
+        parseElems(index, sb);
     }
 
     @Override

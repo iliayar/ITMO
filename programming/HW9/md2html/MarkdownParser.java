@@ -19,10 +19,12 @@ public abstract class MarkdownParser {
 
 
     public void genHtml(StringBuilder sb) {
-        parse(new MutableInteger(0)).toHtml(sb);
+        parse(new MutableInteger(0), sb);
     }
-    public abstract MarkupElement parse(MutableInteger index);
+    public abstract void parse(MutableInteger index, StringBuilder sb);
 
+    protected abstract String getHtmlPrefix();
+    protected abstract String getHtmlPostfix();
     protected abstract Type getTerminator();
     protected abstract String getParagraph();
     protected abstract ArrayList<Token> getTokens();
@@ -37,32 +39,33 @@ public abstract class MarkdownParser {
         return true;
     }
 
-    protected ArrayList<MarkupElement> parseElems(MutableInteger index) {
-        ArrayList<MarkupElement> elems = new ArrayList<>();
-        StringBuilder text = new StringBuilder();
+    protected void parseElems(MutableInteger index, StringBuilder sb) {
+//        ArrayList<MarkupElement> elems = new ArrayList<>();
+//        StringBuilder text = new StringBuilder();
+        sb.append(getHtmlPrefix());
         for(;; index.inc()) {
             if(checkTerminator(index)) {
 //                index.inc();
 //                System.out.println(getTerminator().size());
-                elems.add(new Text(text.toString()));
+//                elems.add(new Text(text.toString()));
                 break;
             }
             if(tokens.get(index.val()).getType() != Type.SEPARATOR &&
                     tokens.get(index.val()).getType() != Type.TEXT) {
-                elems.add(new Text(text.toString()));
-                text = new StringBuilder();
+//                elems.add(new Text(text.toString()));
+//                text = new StringBuilder();
 //                index.inc();
                 MarkdownParser p = getParser(index);
                 index.inc();
-                elems.add(p.parse(index));
+                p.parse(index, sb);
                 if(index.val() >= getTokens().size()) {
                     break;
                 }
                 continue;
             }
-            text.append(getTokens().get(index.val()).getChar());
+            escape(getTokens().get(index.val()).getChar(), sb);
         }
-        return elems;
+        sb.append(getHtmlPostfix());
     }
 
     protected String parseRaw(MutableInteger index) {
@@ -76,7 +79,7 @@ public abstract class MarkdownParser {
                     getTokens().get(index.val()).getType() == Type.DOUBLE_DASH) {
                 text.append(getTokens().get(index.val()).getChar());
             }
-            text.append(getTokens().get(index.val()).getChar());
+            escape(getTokens().get(index.val()).getChar(), text);
         }
         return text.toString();
 
@@ -104,6 +107,22 @@ public abstract class MarkdownParser {
                 getTokens().get(index.val()).setType(Type.TEXT);
                 index.sub(1);
                 return new TextParser(getTokens());
+        }
+    }
+
+    private void escape(char c, StringBuilder sb) {
+        switch (c) {
+            case '<':
+                sb.append("&lt;");
+                break;
+            case '>':
+                sb.append("&gt;");
+                break;
+            case '&':
+                sb.append("&amp;");
+                break;
+            default:
+                sb.append(c);
         }
     }
 

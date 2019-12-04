@@ -7,6 +7,9 @@ public class HeaderParser extends MarkdownParser {
 
     private Type terminator = Type.NONE;
 
+    private String htmlPrefix = " ";
+    private String htmlPostfix = " ";
+
     public HeaderParser(ArrayList<Token> tokens) {
         super(tokens);
     }
@@ -33,15 +36,27 @@ public class HeaderParser extends MarkdownParser {
     }
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
+    public void parse(MutableInteger index, StringBuilder sb) {
 
         int headerLevel = isHeader(index);
 
         if(headerLevel == -1) {
-            return new TextParser(getTokens()).parse(index);
+            new TextParser(getTokens()).parse(index, sb);
         }
         index.add(headerLevel + 1);
-        return new Header(parseElems(index),headerLevel);
+        htmlPrefix = "<h" + Integer.toString(headerLevel) + ">";
+        htmlPostfix = "</h" + Integer.toString(headerLevel) + ">";
+        parseElems(index, sb);
+    }
+
+    @Override
+    protected String getHtmlPrefix() {
+        return htmlPrefix;
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return htmlPostfix;
     }
 
     @Override

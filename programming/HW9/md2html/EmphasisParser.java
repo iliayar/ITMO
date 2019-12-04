@@ -11,8 +11,18 @@ public class EmphasisParser extends MarkdownParser {
     }
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
-        return new Emphasis(parseElems(index));
+    public void parse(MutableInteger index, StringBuilder sb) {
+        parseElems(index, sb);
+    }
+
+    @Override
+    protected String getHtmlPrefix() {
+        return "<em>";
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return "</em>";
     }
 
     @Override
