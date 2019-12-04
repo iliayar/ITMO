@@ -43,7 +43,7 @@ public class Tokenizer {
         try {
             for (int i = pattern.size() - 1, j = 0; i >= 0; --i, ++j) {
 //                System.out.println(Integer.toString(i) + " " + pattern.get(i).toString() + " " + tokens.getFromEnd(pattern.size() - 1 - i).getType());
-                if (!pattern.get(i).equal(tokens.get(j).getType())) {
+                if (!pattern.get(i).equal(tokens.getFromEnd(j).getType())) {
                     return false;
                 }
             }

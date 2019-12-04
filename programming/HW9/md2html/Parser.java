@@ -21,7 +21,7 @@ public abstract class Parser {
         int i = 0;
         for(Token t : tokens) {
             tokenMap.get(t.getType()).push(new Token(t));
-            tokenMap.get(t.getType()).get(0).setIndex(i);
+            tokenMap.get(t.getType()).getFromEnd(0).setIndex(i);
             fetchMatches();
             i++;
         }

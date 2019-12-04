@@ -1,7 +1,6 @@
 package md2html;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class Pattern {
         List<Token> matches = new ArrayList<Token>();
 //        int index = tokens.get(pattern.get(0)).get(tokens.get(pattern.get(0)).size() - 1).getIndex();
 //        matches.add(tokens.get(pattern.get(0)).get(tokens.get(pattern.get(0)).size() - 1));
-        int index = -1;
+        int index = Integer.MAX_VALUE;
 //        for(int i = tokens.get(pattern.get(0)).size() - 1; i >= 0; --i) {
 //            if(!tokens.get(pattern.get(0)).get(i).isUsed()){
 //                index = tokens.get(pattern.get(0)).get(i).getIndex();
@@ -48,8 +47,15 @@ public class Pattern {
             if(t == Type.ANY_COUNT || t == Type.ANY) {
                 continue;
             }
-            for(int i =  tokens.get(t).size() - 1; i >= 0 ; --i) {
-                if(index == -1) {
+
+
+            for(int i =  tokens.get(t).lower_bound(index - 1) - 1; i < tokens.get(t).size() ; ++i) {
+
+                if(i < 0) {
+                    continue;
+                }
+
+                if(index == Integer.MAX_VALUE) {
                     index = tokens.get(t).get(i).getIndex();
                     matches.add(tokens.get(t).get(i));
                     continue pattern_for;
@@ -90,8 +96,9 @@ public class Pattern {
                 int i = t.stackIndex;
 //                System.out.println("TEST5: " + Integer.toString(tokens.get(t.getType()).getSize()));
 //                Token tmp = tokens.get(t.getType()).get(i);
-                tokens.get(t.getType()).set(i, tokens.get(t.getType()).get(0));
-                tokens.get(t.getType()).pop();
+//                tokens.get(t.getType()).set(i, tokens.get(t.getType()).getFromEnd(0));
+//                tokens.get(t.getType()).pop();
+                tokens.get(t.getType()).remove(i);
 //                tokens.get(t.getType()).get(i).use();
             }
             return lastMatch;
