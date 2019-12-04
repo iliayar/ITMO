@@ -9,22 +9,37 @@
 #define FILENAME "local"
 
 #ifndef LOCAL
-#define FILENAME "chaincode"
+#define FILENAME "vectors"
 #endif
 
 using namespace std;
 
-bool* was;
+vector<int> a;
 
-void print_bits(int n, int k) {
-    for(int i = k - 1; i >= 0; --i) {
-        cout << ((n >> i) & 1);
-    }
-    cout << endl;
-}
 
-int cut(int n,int k) {
-    return (n & ((1 << k) - 1));
+int n;
+
+int k = 0;
+
+void gen(int i, bool log) {
+	if(i == n) {
+		if(!log) {
+			k++;
+			return;
+		}
+		for(int i = 0; i < n; ++i)
+			cout << a[i];
+		cout << endl;
+		k++;
+		return;
+	}
+
+	a[i] = 0;
+	gen(i+1, log);
+	if(a[i - 1] != 1) {
+		a[i] = 1;
+		gen(i+1, log);
+	}
 }
 
 signed main() {
@@ -35,26 +50,18 @@ signed main() {
     freopen(FILENAME".out", "w", stdout);
 
 
-    int n; cin >> n;
+    cin >> n;
     
-    was = new bool[(1 << n)];
+	a.resize(n);
 
-
-    for(int i = 0; i < (1 << n); ++i) was[i] = false;
-
-
-    int k = 0;
-
-
-    for(int i = 0; i < (1 << n); ++i) {
-        was[k] = true;
-        print_bits(k,n);
-        if(!was[cut(k<<1, n) + 1]) {
-            k = cut(k<<1, n) + 1;
-        } else {
-            k = cut(k<<1 , n);
-        }
-    }
-
-    return 0;
+	a[0] = 0;
+	gen(1, false);
+	a[0] = 1;
+	gen(1, false);
+	cout << k << endl;
+	a[0] = 0;
+	gen(1, true);
+	a[0] = 1;
+	gen(1, true);
+	return 0;
 }
