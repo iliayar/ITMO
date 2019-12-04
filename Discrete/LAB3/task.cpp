@@ -9,40 +9,27 @@
 #define FILENAME "local"
 
 #ifndef LOCAL
-#define FILENAME "choose"
+#define FILENAME "brackets"
 #endif
 
 using namespace std;
 
-
-int* order;
-int* out;
-bool* was;
 int n;
-int k;
 
+string s;
 
-void foo(int id, int st) {
-    if(id == k) {
-        int j = 0;
-        for(int i = 0; i < n; ++i) {
-            if(was[i]) out[j++] = i + 1;
-        }
-        if(j < k) return;
-        for(int i = 0; i < k; ++i) {
-            cout << out[i] <<  " "; 
-        }
-        cout << endl;
+void foo(int k, int len) {
+    if(len == n*2) {
+        cout << s << endl;
         return;
     }
-
-    for(int i = st; i < n; ++i) {
-        if(!was[i]) {
-            was[i] = true;
-            foo(id + 1, i);
-            was[i] = false;
-        }
+    if(n*2 - len > k) {
+        s[len] = '('; foo(k + 1, len + 1);
     }
+    if(k > 0) {
+        s[len] = ')'; foo(k - 1, len + 1);
+    }
+
 }
 
 signed main() {
@@ -52,13 +39,9 @@ signed main() {
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);
 
+    cin >> n;
+    for(int i = 0; i < 2*n; ++i) s += ' ';
 
-    cin >> n; cin >> k;
-
-    order = new int[n]; for(int i = 0; i < n; ++i) order[i] = -1;
-    out = new int[n]; for(int i = 0; i < n; ++i) out[i] = -1;
-    was = new bool[n]; for(int i = 0; i < n; ++i) was[i] = false;
-    
     foo(0, 0);
 
     return 0;
