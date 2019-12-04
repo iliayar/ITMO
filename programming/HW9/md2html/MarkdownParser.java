@@ -1,143 +1,130 @@
 package md2html;
 
-import javax.print.DocFlavor;
-import java.util.*;
+import java.util.ArrayList;
 
-import static md2html.Type.PARAGRAPH;
+public abstract class MarkdownParser {
+    Type terminator;
+    String paragraph;
 
-public class MarkdownParser extends Parser {
+    ArrayList<Token> tokens;
 
-    private MarkupElement paragraph;
-
-    public MarkdownParser(String p) {
-        super();
-//        this.p = p;
-        tokens = new Tokenizer(p).tokenize();
-        matches = new Match[tokens.size()];
-
-//        for(Token t : tokens) {
-//            System.out.print(t.getType().toString() + " ");
-//        }
-//        System.out.println();
+    public MarkdownParser(String paragraph) {
+        this.paragraph = paragraph;
+        this.tokens = new Tokenizer(paragraph).tokenize();
     }
 
-
-    @Override
-    protected Map<Type, TokenStack> genTokenMap() {
-        Map<Type, TokenStack> tokenMap = new LinkedHashMap<Type, TokenStack>();
-
-        tokenMap.put(Type.BEGIN_OF_LINE,      new TokenStack());
-        tokenMap.put(Type.END_OF_LINE,        new TokenStack());
-        tokenMap.put(Type.EMPHASIS_ASTERISK,  new TokenStack());
-        tokenMap.put(Type.EMPHASIS_UNDERLINE, new TokenStack());
-        tokenMap.put(Type.STRONG_ASTERISK,    new TokenStack());
-        tokenMap.put(Type.STRONG_UNDERLINE,   new TokenStack());
-        tokenMap.put(Type.CODE,               new TokenStack());
-        tokenMap.put(Type.SEPARATOR,          new TokenStack());
-        tokenMap.put(Type.HEADER,             new TokenStack());
-        tokenMap.put(Type.STRIKEOUT,          new TokenStack());
-        tokenMap.put(Type.TEXT,               new TokenStack());
-        tokenMap.put(Type.OP_SQR_BRACKET,     new TokenStack());
-        tokenMap.put(Type.CL_SQR_BRACKET,     new TokenStack());
-        tokenMap.put(Type.OP_BRACKET,         new TokenStack());
-        tokenMap.put(Type.CL_BRACKET,         new TokenStack());
-        tokenMap.put(Type.ANY,                new TokenStack());
-
-        return tokenMap;
+    public MarkdownParser(ArrayList<Token> tokens) {
+        this.tokens = tokens;
     }
 
-    @Override
-    protected List<Pattern> genPatterns() {
-        List<Pattern> patterns = new ArrayList<Pattern>();
-
-        patterns.add(new Pattern(List.of(Type.EMPHASIS_UNDERLINE,Type.ANY_COUNT,Type.EMPHASIS_UNDERLINE), Type.EMPHASIS_UNDERLINE, tokenMap));
-        patterns.add(new Pattern(List.of(Type.EMPHASIS_ASTERISK,Type.ANY_COUNT,Type.EMPHASIS_ASTERISK), Type.EMPHASIS_ASTERISK, tokenMap));
-        patterns.add(new Pattern(List.of(Type.STRONG_ASTERISK,Type.ANY_COUNT,Type.STRONG_ASTERISK), Type.STRONG_ASTERISK, tokenMap));
-        patterns.add(new Pattern(List.of(Type.STRONG_UNDERLINE,Type.ANY_COUNT,Type.STRONG_UNDERLINE), Type.STRONG_UNDERLINE, tokenMap));
-        patterns.add(new Pattern(List.of(Type.STRIKEOUT,Type.ANY_COUNT, Type.STRIKEOUT), Type.STRIKEOUT, tokenMap));
-        patterns.add(new Pattern(List.of(Type.OP_SQR_BRACKET,Type.ANY_COUNT,Type.CL_SQR_BRACKET,Type.OP_BRACKET,Type.ANY_COUNT,Type.CL_BRACKET), Type.LINK, tokenMap));
-        patterns.add(new Pattern(List.of(Type.CODE,Type.ANY_COUNT, Type.CODE), Type.CODE, tokenMap));
-        patterns.add(new Pattern(List.of(Type.BEGIN_OF_LINE, Type.HEADER, Type.ANY_COUNT, Type.END_OF_LINE), Type.HEADER, tokenMap));
-        patterns.add(new Pattern(List.of(Type.BEGIN_OF_LINE,Type.ANY_COUNT, Type.END_OF_LINE), PARAGRAPH, tokenMap));
-//        patterns.add(new Pattern(List.of(Type.TEXT), Type.TEXT, tokenMap));
-
-
-        return patterns;
-    }
-
-    private MarkupElement parseElement(Match m) {
-//        System.out.println(m);
-        switch (m.getType()) {
-            case EMPHASIS_ASTERISK:
-            case EMPHASIS_UNDERLINE:
-                return new Emphasis(parseInline(m.getTokens().get(0).index + 1,
-                        m.getTokens().get(1).index));
-            case STRONG_ASTERISK:
-            case STRONG_UNDERLINE:
-                return new Strong(parseInline(m.getTokens().get(0).index + 1,
-                        m.getTokens().get(1).index));
-            case CODE:
-                return new Code(parseInline(m.getTokens().get(0).index + 1,
-                        m.getTokens().get(1).index));
-            case STRIKEOUT:
-                return new Strikeout(parseInline(m.getTokens().get(0).index + 1,
-                        m.getTokens().get(1).index));
-            case PARAGRAPH:
-                return new Paragraph(parseInline(m.getTokens().get(0).index + 1,
-                        m.getTokens().get(1).index));
-            case HEADER:
-                return new Header(parseInline(m.getTokens().get(1).index + 2,
-                        m.getTokens().get(2).index),m.getTokens().get(1).getText().length());
-            case LINK:
-                return new Link(parseInline(
-                            m.getTokens().get(0).index + 1,
-                            m.getTokens().get(1).index),
-                        parseRaw(m.getTokens().get(2).index + 1,
-                                m.getTokens().get(3).index));
-        }
-        return null;
-    }
-
-
-    private String parseRaw(int st, int end) {
-        StringBuilder sb = new StringBuilder();
-        for(int i = st; i < end; ++i) {
-            sb.append(tokens.get(i).getText());
-        }
-        return sb.toString();
-    }
-
-    private List<MarkupElement> parseInline(int st, int end) {
-        List<MarkupElement> elems = new ArrayList<MarkupElement>();
-        for(int i = st; i < end; ++i) {
-            if(matches[i] == null) {
-                elems.add(new Text(tokens.get(i).getText()));
-            } else {
-//                System.out.println(matches[i] == null);
-                elems.add(parseElement(matches[i]));
-                i = matches[i].getTokens().get(matches[i].getTokens().size() - 1).index;
-            }
-        }
-        return elems;
-    }
 
     public void genHtml(StringBuilder sb) {
-        super.parse();
-        if(matches[0] == null) {
-            return;
-        }
-        paragraph = parseElement(matches[0]);
-        paragraph.toHtml(sb);
-//        paragraph = parseElements(matches.get(matches.size() - 1));
-//        paragraph.toHtml(sb);
-//        System.out.println(matches.size());
-//        for(int i = 0; i < matches.length; ++i) {
-//            if(matches[i] == null) {
-//                sb.append("NULL ");
-//                continue;
-//            }
-//            sb.append(matches[i].getType().toString() + " ");
-//        }
+        parse(new MutableInteger(0), sb);
     }
+    public abstract void parse(MutableInteger index, StringBuilder sb);
+
+    protected abstract String getHtmlPrefix();
+    protected abstract String getHtmlPostfix();
+    protected abstract Type getTerminator();
+    protected abstract String getParagraph();
+    protected abstract ArrayList<Token> getTokens();
+
+    protected boolean checkTerminator(MutableInteger index) {
+        if(index.val() >= getTokens().size()) {
+            return true;
+        }
+        if(tokens.get(index.val()).getType() != getTerminator()) {
+            return false;
+        }
+        return true;
+    }
+
+    protected void parseElems(MutableInteger index, StringBuilder sb) {
+//        ArrayList<MarkupElement> elems = new ArrayList<>();
+//        StringBuilder text = new StringBuilder();
+        sb.append(getHtmlPrefix());
+        for(;; index.inc()) {
+            if(checkTerminator(index)) {
+//                index.inc();
+//                System.out.println(getTerminator().size());
+//                elems.add(new Text(text.toString()));
+                break;
+            }
+            if(tokens.get(index.val()).getType() != Type.SEPARATOR &&
+                    tokens.get(index.val()).getType() != Type.TEXT) {
+//                elems.add(new Text(text.toString()));
+//                text = new StringBuilder();
+//                index.inc();
+                MarkdownParser p = getParser(index);
+                index.inc();
+                p.parse(index, sb);
+                if(index.val() >= getTokens().size()) {
+                    break;
+                }
+                continue;
+            }
+            escape(getTokens().get(index.val()).getChar(), sb);
+        }
+        sb.append(getHtmlPostfix());
+    }
+
+    protected String parseRaw(MutableInteger index) {
+        StringBuilder text = new StringBuilder();
+        for(;; index.inc()) {
+            if(checkTerminator(index)) {
+                break;
+            }
+            if(getTokens().get(index.val()).getType() == Type.DOUBLE_UNDERLINE ||
+                    getTokens().get(index.val()).getType() == Type.DOUBLE_ASTERISK ||
+                    getTokens().get(index.val()).getType() == Type.DOUBLE_DASH) {
+                text.append(getTokens().get(index.val()).getChar());
+            }
+            escape(getTokens().get(index.val()).getChar(), text);
+        }
+        return text.toString();
+
+    }
+
+    protected MarkdownParser getParser(MutableInteger index) {
+        switch (tokens.get(index.val()).getType()) {
+            case APOS:
+                return new CodeParser(getTokens());
+            case UNDERLINE:
+                return new EmphasisParser(getTokens(), Type.UNDERLINE);
+            case DOUBLE_UNDERLINE:
+                return new StrongParser(getTokens(), Type.DOUBLE_UNDERLINE);
+            case ASTERISK:
+                return new EmphasisParser(getTokens(), Type.ASTERISK);
+            case DOUBLE_ASTERISK:
+                return new StrongParser(getTokens(), Type.DOUBLE_ASTERISK);
+            case DOUBLE_DASH:
+                return new StrikeoutParser(getTokens());
+            case HASH:
+                return new HeaderParser(getTokens());
+            case OP_SQR_BRACKET:
+                return new LinkParser(getTokens());
+            default:
+                getTokens().get(index.val()).setType(Type.TEXT);
+                index.sub(1);
+                return new TextParser(getTokens());
+        }
+    }
+
+    private void escape(char c, StringBuilder sb) {
+        switch (c) {
+            case '<':
+                sb.append("&lt;");
+                break;
+            case '>':
+                sb.append("&gt;");
+                break;
+            case '&':
+                sb.append("&amp;");
+                break;
+            default:
+                sb.append(c);
+        }
+    }
+
 
 }
