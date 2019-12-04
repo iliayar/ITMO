@@ -14,32 +14,33 @@
 
 using namespace std;
 
-vector<int> a;
-
-
+int* out;
+bool* was;
 int n;
+int k;
 
-int k = 0;
 
-void gen(int i, bool log) {
-	if(i == n) {
-		if(!log) {
-			k++;
-			return;
-		}
-		for(int i = 0; i < n; ++i)
-			cout << a[i];
-		cout << endl;
-		k++;
-		return;
-	}
+void foo(int id, int st) {
+    if(id == k) {
+        int j = 0;
+        for(int i = 0; i < n; ++i) {
+            if(was[i]) out[j++] = i + 1;
+        }
+        if(j < k) return;
+        for(int i = 0; i < k; ++i) {
+            cout << out[i] <<  " "; 
+        }
+        cout << endl;
+        return;
+    }
 
-	a[i] = 0;
-	gen(i+1, log);
-	if(a[i - 1] != 1) {
-		a[i] = 1;
-		gen(i+1, log);
-	}
+    for(int i = st; i < n; ++i) {
+        if(!was[i]) {
+            was[i] = true;
+            foo(id + 1, i);
+            was[i] = false;
+        }
+    }
 }
 
 signed main() {
@@ -49,19 +50,13 @@ signed main() {
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);
 
+    cin >> n; cin >> k;
 
-    cin >> n;
+    order = new int[n]; for(int i = 0; i < n; ++i) order[i] = -1;
+    out = new int[n]; for(int i = 0; i < n; ++i) out[i] = -1;
+    was = new bool[n]; for(int i = 0; i < n; ++i) was[i] = false;
     
-	a.resize(n);
+    foo(0, 0);
 
-	a[0] = 0;
-	gen(1, false);
-	a[0] = 1;
-	gen(1, false);
-	cout << k << endl;
-	a[0] = 0;
-	gen(1, true);
-	a[0] = 1;
-	gen(1, true);
-	return 0;
+    return 0;
 }
