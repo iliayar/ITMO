@@ -10,8 +10,18 @@ public class StrikeoutParser extends MarkdownParser {
     }
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
-        return new Strikeout(parseElems(index));
+    protected String getHtmlPrefix() {
+        return "<s>";
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return "</s>";
+    }
+
+    @Override
+    public void parse(MutableInteger index, StringBuilder sb) {
+        parseElems(index, sb);
     }
 
     @Override

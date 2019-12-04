@@ -12,9 +12,19 @@ public class TextParser extends MarkdownParser {
     }
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
+    protected String getHtmlPrefix() {
+        return "";
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return "";
+    }
+
+    @Override
+    public void parse(MutableInteger index, StringBuilder sb) {
 //        index.sub(1);
-        return new Text(parseElems(index));
+        parseElems(index, sb);
     }
 
     @Override

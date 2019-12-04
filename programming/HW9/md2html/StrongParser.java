@@ -10,8 +10,18 @@ public class StrongParser extends MarkdownParser {
     }
 
     @Override
-    public MarkupElement parse(MutableInteger index) {
-        return new Strong(parseElems(index));
+    public void parse(MutableInteger index, StringBuilder sb) {
+        parseElems(index,sb);
+    }
+
+    @Override
+    protected String getHtmlPrefix() {
+        return "<strong>";
+    }
+
+    @Override
+    protected String getHtmlPostfix() {
+        return "</strong>";
     }
 
     @Override
