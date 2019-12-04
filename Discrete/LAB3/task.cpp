@@ -9,7 +9,7 @@
 #define FILENAME "local"
 
 #ifndef LOCAL
-#define FILENAME "brackets"
+define FILENAME "vectors"
 #endif
 
 using namespace std;
@@ -39,9 +39,12 @@ signed main() {
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);
 
-    cin >> n;
-    for(int i = 0; i < 2*n; ++i) s += ' ';
+    cin >> n; cin >> k;
 
+    order = new int[n]; for(int i = 0; i < n; ++i) order[i] = -1;
+    out = new int[n]; for(int i = 0; i < n; ++i) out[i] = -1;
+    was = new bool[n]; for(int i = 0; i < n; ++i) was[i] = false;
+    
     foo(0, 0);
 
     return 0;
