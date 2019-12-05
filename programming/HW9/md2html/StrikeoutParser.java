@@ -30,11 +30,6 @@ public class StrikeoutParser extends MarkdownParser {
     }
 
     @Override
-    protected String getParagraph() {
-        return paragraph;
-    }
-
-    @Override
     protected ArrayList<Token> getTokens() {
         return tokens;
     }

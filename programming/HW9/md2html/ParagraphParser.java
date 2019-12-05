@@ -24,19 +24,8 @@ public class ParagraphParser extends MarkdownParser {
         super(paragraph);
     }
 
-//    @Override
-//    public void genHtml(StringBuilder sb) {
-//        parse(new MutableInteger(0)).toHtml(sb);
-//    }
-
     @Override
     public void parse(MutableInteger index, StringBuilder sb) {
-
-//        System.out.print("Tokens: ");
-//        for(int i = 0; i < tokens.size(); ++i) {
-//            System.out.print(tokens.get(i).getType() + " ");
-//        }
-//        System.out.println();
 
         if(tokens.get(index.val()).getType() == Type.HASH) {
             HeaderParser hp = new HeaderParser(getTokens());
@@ -45,7 +34,6 @@ public class ParagraphParser extends MarkdownParser {
                 return;
             }
         }
-//        index.inc();
         parseElems(index, sb);
     }
 
@@ -54,10 +42,6 @@ public class ParagraphParser extends MarkdownParser {
         return terminator;
     }
 
-    @Override
-    protected String getParagraph() {
-        return paragraph;
-    }
 
     @Override
     protected ArrayList<Token> getTokens() {

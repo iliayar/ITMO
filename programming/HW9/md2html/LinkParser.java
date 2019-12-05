@@ -43,17 +43,11 @@ public class LinkParser extends MarkdownParser {
         sb.append(htmlPrefix);
         sb.append(inner);
         sb.append(htmlPostfix);
-//        parseElems(index, sb);
     }
 
     @Override
     protected Type getTerminator() {
         return terminator;
-    }
-
-    @Override
-    protected String getParagraph() {
-        return paragraph;
     }
 
     @Override

@@ -14,7 +14,6 @@ public class Tokenizer {
     public ArrayList<Token> tokenize() {
         this.tokens = new ArrayList<>();
 
-//        tokens.add(new Token('\b', Type.BEGIN_OF_LINE));
         for(int i = 0, j = 0; i < paragraph.length(); ++i, ++j) {
             Type t = getType(paragraph.charAt(i));
             if(t == Type.ASTERISK || t == Type.UNDERLINE) {
@@ -49,7 +48,6 @@ public class Tokenizer {
 
             tokens.add(new Token(paragraph.charAt(i), t));
         }
-//        tokens.add(new Token('\b', Type.END_OF_LINE));
         return tokens;
     }
 

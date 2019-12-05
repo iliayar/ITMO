@@ -31,11 +31,6 @@ public class EmphasisParser extends MarkdownParser {
     }
 
     @Override
-    protected String getParagraph() {
-        return paragraph;
-    }
-
-    @Override
     protected ArrayList<Token> getTokens() {
         return tokens;
     }

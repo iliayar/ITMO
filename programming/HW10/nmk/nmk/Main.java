@@ -6,19 +6,32 @@ import java.util.Scanner;
 
 public class Main {
 
+    Scanner in;
+
     private void run(String[] argv) {
         int result;
 //        do {
 
         int m, n, k;
-        Scanner s = new Scanner(System.in);
-        System.out.print("Enter m: "); m = s.nextInt();
-        System.out.print("Enter n: "); n = s.nextInt();
-        System.out.print("Enter k: "); k = s.nextInt();
+        in = new Scanner(System.in);
+        m = HumanPlayer.readInt("Enter m: ", in);
+        n = HumanPlayer.readInt("Enter n: ", in);
+        k = HumanPlayer.readInt("Enter k: ", in);
         final Game game = new Game(false, new RandomPlayer(n,m), new HumanPlayer());
 
         result = game.play(new NmkBoard(n,m,k));
-        System.out.println("Game result: " + result);
+        
+        String msg = "";
+        
+        switch(result) {
+            case 0:
+                msg = "Draw"; break;
+            case 1:
+                msg = "Player 1 won"; break;
+            case 2:
+                msg = "Player 2 won"; break;
+        }
+        System.out.println(msg);
 //        } while (result != 0);    }
     }
 
