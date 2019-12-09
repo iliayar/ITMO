@@ -31,12 +31,7 @@ public class CodeParser extends MarkdownParser {
     protected Type getTerminator() {
         return terminator;
     }
-
-    @Override
-    protected String getParagraph() {
-        return paragraph;
-    }
-
+    
     @Override
     protected ArrayList<Token> getTokens() {
         return tokens;

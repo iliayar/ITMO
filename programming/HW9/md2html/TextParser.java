@@ -23,18 +23,12 @@ public class TextParser extends MarkdownParser {
 
     @Override
     public void parse(MutableInteger index, StringBuilder sb) {
-//        index.sub(1);
         parseElems(index, sb);
     }
 
     @Override
     protected Type getTerminator() {
         return terminator;
-    }
-
-    @Override
-    protected String getParagraph() {
-        return paragraph;
     }
 
     @Override
