@@ -26,35 +26,26 @@ public abstract class MarkdownParser {
     protected abstract String getHtmlPrefix();
     protected abstract String getHtmlPostfix();
     protected abstract Type getTerminator();
-    protected abstract String getParagraph();
     protected abstract ArrayList<Token> getTokens();
 
     protected boolean checkTerminator(MutableInteger index) {
         if(index.val() >= getTokens().size()) {
             return true;
         }
-        if(tokens.get(index.val()).getType() != getTerminator()) {
+        if(getTokens().get(index.val()).getType() != getTerminator()) {
             return false;
         }
         return true;
     }
 
     protected void parseElems(MutableInteger index, StringBuilder sb) {
-//        ArrayList<MarkupElement> elems = new ArrayList<>();
-//        StringBuilder text = new StringBuilder();
         sb.append(getHtmlPrefix());
         for(;; index.inc()) {
             if(checkTerminator(index)) {
-//                index.inc();
-//                System.out.println(getTerminator().size());
-//                elems.add(new Text(text.toString()));
                 break;
             }
-            if(tokens.get(index.val()).getType() != Type.SEPARATOR &&
-                    tokens.get(index.val()).getType() != Type.TEXT) {
-//                elems.add(new Text(text.toString()));
-//                text = new StringBuilder();
-//                index.inc();
+            if(getTokens().get(index.val()).getType() != Type.SEPARATOR &&
+                    getTokens().get(index.val()).getType() != Type.TEXT) {
                 MarkdownParser p = getParser(index);
                 index.inc();
                 p.parse(index, sb);
@@ -86,7 +77,7 @@ public abstract class MarkdownParser {
     }
 
     protected MarkdownParser getParser(MutableInteger index) {
-        switch (tokens.get(index.val()).getType()) {
+        switch (getTokens().get(index.val()).getType()) {
             case APOS:
                 return new CodeParser(getTokens());
             case UNDERLINE:

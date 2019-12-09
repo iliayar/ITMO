@@ -13,7 +13,6 @@ public class NmkBoard implements Board, Position {
     );
 
     private int blanks;
-//    private final Counter[][] counts;
     private final Cell[][] board;
     private final int k;
 
@@ -25,17 +24,13 @@ public class NmkBoard implements Board, Position {
         for (Cell[] row : board) {
             Arrays.fill(row, Cell.E);
         }
-//        this.counts = new Counter[n][m];
-//        for (Counter[] row : counts) {
-//            Arrays.fill(row, new Counter());
-//        }
         this.turn = Cell.X;
         blanks = n*m;
     }
 
     @Override
     final public Position getPosition() {
-        return this;
+        return new BoardState(board);
     }
 
     @Override
@@ -116,57 +111,18 @@ public class NmkBoard implements Board, Position {
         int row = 0;
         int col = 0;
 
-        for(int i = y; i < board.length; ++i) {
-            if(board[i][x] != c) {
-                break;
-            }
-            col++;
-        }
-        for(int i = y - 1; i >= 0; --i) {
-            if(board[i][x] != c) {
-                break;
-            }
-            col++;
-        }
 
-        for(int i = x; i < board[0].length; ++i) {
-            if(board[y][i] != c) {
-                break;
-            }
-            row++;
-        }
-        for(int i = x - 1; i >= 0; --i) {
-            if(board[y][i] != c) {
-                break;
-            }
-            row++;
-        }
+        col += subCount(x, y, 0, 1, c);
+        col += subCount(x, y - 1, 0, -1, c);
 
-        for(int i = y, j = x; i < board.length && j < board[0].length; ++i, ++j) {
-            if(board[i][j] != c) {
-                break;
-            }
-            diag1++;
-        }
-        for(int i = y - 1, j = x - 1; i >= 0 && j >= 0; --i, --j) {
-            if(board[i][j] != c) {
-                break;
-            }
-            diag1++;
-        }
+        row += subCount(x, y, 1, 0, c);
+        row += subCount(x - 1, y, -1, 0, c);
 
-        for(int i = y, j = x - 1; i < board.length && j >= 0; ++i, --j) {
-            if(board[i][j] != c) {
-                break;
-            }
-            diag2++;
-        }
-        for(int i = y - 1, j = x; i >= 0 && j < board[0].length; --i, ++j) {
-            if(board[i][j] != c) {
-                break;
-            }
-            diag2++;
-        }
+        diag1 += subCount(x, y, 1, 1, c);
+        diag1 += subCount(x - 1, y - 1, -1, -1, c);
+
+        diag2 += subCount(x - 1, y, -1, 1, c);
+        diag2 += subCount(x, y - 1, 1, -1, c);
 
         int max = 0;
         if(col > max) {
@@ -184,6 +140,20 @@ public class NmkBoard implements Board, Position {
 
         return max;
 
+    }
+
+    private int subCount(int x, int y, int dx, int dy, Cell c) {
+        int cnt = 0;
+    
+        
+        for(int i = y, j = x; i >= 0 && j < board[0].length && j >= 0 && i < board.length; i+=dy, j+=dx) {
+            if(board[i][j] != c) {
+                break;
+            }
+            cnt++;
+        }
+
+        return cnt;
     }
 
 }
