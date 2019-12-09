@@ -30,19 +30,41 @@ public class LinkParser extends MarkdownParser {
         StringBuilder inner = new StringBuilder();
         parseElems(index, inner);
         if(index.val() >= getTokens().size() || getTokens().get(index.val() + 1).getType() != Type.OP_BRACKET) {
-            index.setVal(stIndex - 1);
-            tokens.get(stIndex - 1).setType(Type.TEXT);
-            new TextParser(getTokens()).parse(index, sb);
+            sb.append('[');
+            sb.append(inner);
+            return;
         }
         index.inc();
         index.inc();
         this.terminator = Type.CL_BRACKET;
-        String link = parseRaw(index);
-        htmlPrefix = "<a href='" + link + "'>";
-        htmlPostfix = "</a>";
-        sb.append(htmlPrefix);
-        sb.append(inner);
-        sb.append(htmlPostfix);
+
+        boolean flag = false;
+        for(int i = index.val(); i < getTokens().size(); ++i) {
+            if(getTokens().get(i).getType() == getTerminator()) {
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag) {
+            String link = parseRaw(index);
+
+            htmlPrefix = "<a href='" + link + "'>";
+            htmlPostfix = "</a>";
+            sb.append(htmlPrefix);
+            sb.append(inner);
+            sb.append(htmlPostfix);
+        } else {
+            for(int i = stIndex - 1; i < getTokens().size(); ++i) {
+                if(getTokens().get(i).getType() == Type.CL_SQRT_BRACKET ||
+                        getTokens().get(i).getType() == Type.OP_SQR_BRACKET ||
+                        getTokens().get(i).getType() == Type.OP_BRACKET) {
+                    getTokens().get(i).setType(Type.TEXT);
+                }
+            }
+            index.setVal(stIndex - 1);
+            new TextParser(getTokens()).parse(index, sb);
+        }
 //        parseElems(index, sb);
     }
 
