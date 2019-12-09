@@ -37,7 +37,7 @@ public class LinkParser extends MarkdownParser {
         index.inc();
         index.inc();
         this.terminator = Type.CL_BRACKET;
-        
+
         boolean flag = false;
         for(int i = index.val(); i < getTokens().size(); ++i) {
             if(getTokens().get(i).getType() == getTerminator()) {
