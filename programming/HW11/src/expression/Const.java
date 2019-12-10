@@ -18,7 +18,7 @@ public class Const extends Operand {
         return value;
     }
 
-    @Override
+//    @Override
     public int getPrior() {
         return 0;
     }

@@ -1,7 +1,7 @@
 package expression;
 
 public class Divide extends Operation {
-    public Divide(Expression a, Expression b) {
+    public Divide(ExpressionMember a, ExpressionMember b) {
         super(a, b);
     }
 
@@ -17,6 +17,6 @@ public class Divide extends Operation {
 
     @Override
     public int getPrior() {
-        return 1;
+        return 2;
     }
 }

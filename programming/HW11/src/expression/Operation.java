@@ -1,13 +1,13 @@
 package expression;
 
-public abstract class Operation implements Expression {
+public abstract class Operation implements ExpressionMember {
 
-    Expression a;
-    Expression b;
+    ExpressionMember a;
+    ExpressionMember b;
 
     public Operation(Expression a, Expression b) {
-        this.a = a;
-        this.b = b;
+        this.a = (ExpressionMember) a;
+        this.b = (ExpressionMember) b;
     }
 
     @Override
@@ -25,25 +25,38 @@ public abstract class Operation implements Expression {
     public String toMiniString() {
         String res = "";
 
-        if(a.getPrior() > getPrior() ||
-                (a.getPrior() == getPrior() && (a.getPrior() == 3 || a.getPrior() == 1))) {
+        if(getPrior() < a.getPrior() - 1 + a.getPrior()%2) {
             res += "(" + a.toMiniString() + ")";
         } else {
             res += a.toMiniString();
         }
+
         res += " " + getSymbol() + " ";
-        if(b.getPrior() > getPrior() ||
-                (a.getPrior() == getPrior() && (a.getPrior() == 3 || a.getPrior() == 1))) {
+
+        if(getPrior() < b.getPrior() || (getPrior()%2 == 0 && b.getPrior()%2 == 0 && b.getPrior() != 0) ||
+                (getPrior() == 4 && b.getPrior() >= 3) || (getPrior() == 2 && b.getPrior() < 3 && b.getPrior() != 0)) {
             res += "(" + b.toMiniString() + ")";
         } else {
             res += b.toMiniString();
         }
+
         return res;
     }
 
     @Override
-    public boolean equals(Expression expr) {
-        return toString().equals(expr.toString());
+    public boolean equals(Object expr) {
+        if(!(expr instanceof ExpressionMember)) {
+            return false;
+        }
+//        System.err.println(this.toString());
+//        System.err.println(expr.toString());
+        return ((ExpressionMember)expr).toString().equals(this.toString());
+//        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
     }
 
     protected abstract String getSymbol();

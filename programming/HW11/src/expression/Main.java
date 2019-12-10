@@ -4,15 +4,12 @@ public class Main {
 
 
     private void run(String[] argv) {
-        Expression e = new Subtract(
-                new Multiply(
-                        new Const(2),
-                        new Variable("x")
-                ),
-                new Const(3)
-        );
-        System.out.println(e.evaluate(5));
+        Expression e = new Divide(new Variable("x"), new Const(-2));
+        System.out.println(e.evaluate(2));
         System.out.println(e.toMiniString());
+
+
+        System.out.println(new Add(new Variable("x"), new Variable("x")).equals(new Add(new Variable("x"), new Variable("x"))));
     }
 
     public static void main(String[] argv) {

@@ -2,7 +2,7 @@ package expression;
 
 public class Add extends Operation {
 
-    public Add(Expression a, Expression b) {
+    public Add(ExpressionMember a, ExpressionMember b) {
         super(a,b);
     }
 
@@ -18,6 +18,7 @@ public class Add extends Operation {
 
     @Override
     public int getPrior() {
-        return 4;
+        return 3;
     }
+
 }

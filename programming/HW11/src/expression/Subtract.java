@@ -1,7 +1,7 @@
 package expression;
 
 public class Subtract extends Operation{
-    public Subtract(Expression a, Expression b) {
+    public Subtract(ExpressionMember a, ExpressionMember b) {
         super(a, b);
     }
 
@@ -17,6 +17,6 @@ public class Subtract extends Operation{
 
     @Override
     public int getPrior() {
-        return 3;
+        return 4;
     }
 }
