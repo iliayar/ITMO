@@ -1,7 +1,7 @@
 package expression;
 
 public class Multiply extends Operation {
-    public Multiply(Expression a, Expression b) {
+    public Multiply(ExpressionMember a, ExpressionMember b) {
         super(a, b);
     }
 
@@ -17,6 +17,6 @@ public class Multiply extends Operation {
 
     @Override
     public int getPrior() {
-        return 2;
+        return 1;
     }
 }

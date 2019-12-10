@@ -1,6 +1,6 @@
 package expression;
 
-public abstract class Operand implements Expression {
+public abstract class Operand implements ExpressionMember {
 
     @Override
     public int evaluate(int x) {
@@ -18,8 +18,16 @@ public abstract class Operand implements Expression {
     }
 
     @Override
-    public boolean equals(Expression expr) {
-        return expr.toString().equals(toString());
+    public boolean equals(Object expr) {
+        if( !(expr instanceof ExpressionMember)) {
+            return false;
+        }
+        return ((ExpressionMember)expr).toString().equals(this.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
     }
 
     protected abstract String getSymbol();

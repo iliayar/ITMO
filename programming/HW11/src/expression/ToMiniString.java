@@ -2,7 +2,9 @@ package expression;
 
 public interface ToMiniString {
 
-    public String toMiniString();
-    int getPrior();
+    default String toMiniString() {
+        return toString();
+    };
+//    int getPrior();
 
 }

@@ -18,7 +18,7 @@ public class Variable extends Operand {
         return x;
     }
 
-    @Override
+//    @Override
     public int getPrior() {
         return 0;
     }
