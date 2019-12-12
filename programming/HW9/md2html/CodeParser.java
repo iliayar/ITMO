@@ -7,7 +7,7 @@ public class CodeParser extends MarkdownParser {
 
     private Type terminator = Type.APOS;
 
-    public CodeParser(ArrayList<Token> tokens) {
+    protected CodeParser(ArrayList<Token> tokens) {
         super(tokens);
     }
 

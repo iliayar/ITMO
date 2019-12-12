@@ -52,7 +52,9 @@ public class Tokenizer {
     }
 
     private boolean checkSeparators(int index) {
-        if (index > 0 && index < paragraph.length() - 1 && getType(paragraph.charAt(index - 1)) == Type.SEPARATOR && getType(paragraph.charAt(index + 1)) == Type.SEPARATOR) {
+        if (index > 0 && index < paragraph.length() - 1 &&
+                getType(paragraph.charAt(index - 1)) == Type.SEPARATOR &&
+                getType(paragraph.charAt(index + 1)) == Type.SEPARATOR) {
             return true;
         }
         return false;

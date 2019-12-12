@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class StrikeoutParser extends MarkdownParser {
 
-    public StrikeoutParser(ArrayList<Token> tokens) {
+    protected StrikeoutParser(ArrayList<Token> tokens) {
         super(tokens);
         this.terminator = Type.DOUBLE_DASH;
     }
