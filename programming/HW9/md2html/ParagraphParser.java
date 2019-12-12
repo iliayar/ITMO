@@ -29,7 +29,7 @@ public class ParagraphParser extends MarkdownParser {
 
         if(tokens.get(index.val()).getType() == Type.HASH) {
             HeaderParser hp = new HeaderParser(getTokens());
-            if(hp.isHeader(index) != -1) {
+            if(hp.checkHeader(index) != -1) {
                 hp.parse(index, sb);
                 return;
             }

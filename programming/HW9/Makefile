@@ -13,7 +13,7 @@ run:
 	java md2html.Md2Html input.md output.html
 
 test:
-	java -jar Md2HtmlTest.jar
+	java -jar Md2HtmlLinkTest.jar
 
 clean:
 	rm -Rf md2html/*.class

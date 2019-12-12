@@ -7,7 +7,7 @@ public class TextParser extends MarkdownParser {
 
     private Type terminator = Type.NONE;
 
-    public TextParser(ArrayList<Token> tokens) {
+    protected TextParser(ArrayList<Token> tokens) {
         super(tokens);
     }
 
