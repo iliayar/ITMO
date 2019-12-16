@@ -13,24 +13,39 @@ public class NmkBoard implements Board, Position {
     );
 
     private int blanks;
-    private final Cell[][] board;
-    private final int k;
+    private Cell[][] board;
+    private int k;
 
+    private Cell firstCell;
     private Cell turn;
 
     public NmkBoard(int n, int m, int k) {
+        init(n,m,k, Cell.X);
+    }
+
+    public NmkBoard(int n, int m, int k, Cell first) {
+        init(n,m,k,first);
+    }
+
+    private void init(int n, int m, int k, Cell first) {
         this.k = k;
         this.board = new Cell[n][m];
         for (Cell[] row : board) {
             Arrays.fill(row, Cell.E);
         }
-        this.turn = Cell.X;
+        this.turn = first;
+        this.firstCell = first;
         blanks = n*m;
     }
 
+    public Board newBoard() {
+        return new NmkBoard(board.length, board[0].length , k, firstCell == Cell.X ? Cell.O : Cell.X);
+    }
+
+
     @Override
     final public Position getPosition() {
-        return new BoardState(board);
+        return new BoardState(board, k);
     }
 
     @Override
@@ -90,6 +105,21 @@ public class NmkBoard implements Board, Position {
     }
 
     @Override
+    public int getN() {
+        return board.length;
+    }
+
+    @Override
+    public int getM() {
+        return board[0].length;
+    }
+
+    @Override
+    public int getK() {
+        return k;
+    }
+
+    @Override
     final public String toString() {
         StringBuilder sb = new StringBuilder();
 
@@ -113,17 +143,10 @@ public class NmkBoard implements Board, Position {
 
 
         col += subCount(x, y, 0, 1, c);
-        col += subCount(x, y - 1, 0, -1, c);
-
         row += subCount(x, y, 1, 0, c);
-        row += subCount(x - 1, y, -1, 0, c);
-
         diag1 += subCount(x, y, 1, 1, c);
-        diag1 += subCount(x - 1, y - 1, -1, -1, c);
-
         diag2 += subCount(x - 1, y, -1, 1, c);
-        diag2 += subCount(x, y - 1, 1, -1, c);
-
+        
         int max = 0;
         if(col > max) {
             max = col;
@@ -152,7 +175,12 @@ public class NmkBoard implements Board, Position {
             }
             cnt++;
         }
-
+        for(int i = y - dy, j = x - dx; i >= 0 && j < board[0].length && j >= 0 && i < board.length; i-=dy, j-=dx) {
+            if(board[i][j] != c) {
+                break;
+            }
+            cnt++;
+        }
         return cnt;
     }
 

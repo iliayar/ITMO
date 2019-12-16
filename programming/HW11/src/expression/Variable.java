@@ -17,6 +17,19 @@ public class Variable extends Operand {
     protected int getValue(int x) {
         return x;
     }
+    
+    @Override
+    protected int getValue(int x, int y, int z) {
+        switch(symbol) {
+            case "x":
+                return x;
+            case "y":
+                return y;
+            case "z":
+                return z;
+        }
+        return 0;
+    }
 
 //    @Override
     public int getPrior() {

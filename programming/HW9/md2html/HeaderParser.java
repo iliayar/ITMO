@@ -1,7 +1,6 @@
 package md2html;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HeaderParser extends MarkdownParser {
 
@@ -10,11 +9,11 @@ public class HeaderParser extends MarkdownParser {
     private String htmlPrefix = " ";
     private String htmlPostfix = " ";
 
-    public HeaderParser(ArrayList<Token> tokens) {
+    protected HeaderParser(ArrayList<Token> tokens) {
         super(tokens);
     }
 
-    public int isHeader(MutableInteger index) {
+    protected int checkHeader(MutableInteger index) {
         int i = index.val();
         int headerLevel = 0;
 
@@ -38,7 +37,7 @@ public class HeaderParser extends MarkdownParser {
     @Override
     public void parse(MutableInteger index, StringBuilder sb) {
 
-        int headerLevel = isHeader(index);
+        int headerLevel = checkHeader(index);
 
         if(headerLevel == -1) {
             new TextParser(getTokens()).parse(index, sb);

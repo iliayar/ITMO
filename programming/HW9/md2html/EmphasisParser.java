@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EmphasisParser extends MarkdownParser {
 
-    public EmphasisParser(ArrayList<Token> tokens, Type term) {
+    protected EmphasisParser(ArrayList<Token> tokens, Type term) {
         super(tokens);
         this.terminator = term;
     }
