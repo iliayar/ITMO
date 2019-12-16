@@ -5,9 +5,12 @@ import ticTacToe.*;
 public class BoardState implements Position {
 
     Cell[][] board;
+    int k;
 
-    public BoardState(Cell[][] board) {
+
+    public BoardState(Cell[][] board, int k) {
         this.board = board;
+        this.k = k;
     }
 
     @Override
@@ -31,6 +34,21 @@ public class BoardState implements Position {
     @Override
     final public Cell getCell(int r, int c) {
         return board[r][c];
+    }
+
+    @Override
+    public int getN() {
+        return board.length;
+    }
+
+    @Override
+    public int getM() {
+        return board[0].length;
+    }
+
+    @Override
+    public int getK() {
+        return k;
     }
 
 

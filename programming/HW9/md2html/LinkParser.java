@@ -9,7 +9,7 @@ public class LinkParser extends MarkdownParser {
     private String htmlPostfix = "";
 
 
-    public LinkParser(ArrayList<Token> tokens) {
+    protected LinkParser(ArrayList<Token> tokens) {
         super(tokens);
     }
 

@@ -18,6 +18,11 @@ public class Const extends Operand {
         return value;
     }
 
+    @Override
+    protected int getValue(int x, int y, int z) {
+        return value;
+    }
+
 //    @Override
     public int getPrior() {
         return 0;

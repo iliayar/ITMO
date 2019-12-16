@@ -81,6 +81,11 @@ public class TicTacToeBoard implements Board, Position {
     }
 
     @Override
+    public Board newBoard() {
+        return new TicTacToeBoard();
+    }
+
+    @Override
     public boolean isValid(final Move move) {
         return 0 <= move.getRow() && move.getRow() < 3
                 && 0 <= move.getColumn() && move.getColumn() < 3
@@ -91,6 +96,21 @@ public class TicTacToeBoard implements Board, Position {
     @Override
     public Cell getCell(final int r, final int c) {
         return cells[r][c];
+    }
+
+    @Override
+    public int getN() {
+        return 3;
+    }
+
+    @Override
+    public int getM() {
+        return 3;
+    }
+
+    @Override
+    public int getK() {
+        return 3;
     }
 
     @Override
