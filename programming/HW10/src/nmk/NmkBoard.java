@@ -28,9 +28,13 @@ public class NmkBoard implements Board, Position {
         blanks = n*m;
     }
 
+    public Board newBoard() {
+        return new NmkBoard(board.length, board[0].length , k);
+    }
+
     @Override
     final public Position getPosition() {
-        return new BoardState(board);
+        return new BoardState(board, k);
     }
 
     @Override
@@ -87,6 +91,21 @@ public class NmkBoard implements Board, Position {
     @Override
     final public Cell getCell(int r, int c) {
         return board[r][c];
+    }
+
+    @Override
+    public int getN() {
+        return board.length;
+    }
+
+    @Override
+    public int getM() {
+        return board[0].length;
+    }
+
+    @Override
+    public int getK() {
+        return k;
     }
 
     @Override
