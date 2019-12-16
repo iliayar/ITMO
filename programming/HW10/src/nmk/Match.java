@@ -26,10 +26,11 @@
          player2Wins = 0;
          order = 0;
 
+         Cell first = Cell.X;
+
          while(player1Wins < wins && player2Wins < wins) {
              Game game = new Game(false, player1, player2);
              int result = game.play(board);
-             System.out.print("Player ");
              if(result == 1) {
                  player1Wins++;
              } else if(result == 2) {
@@ -40,6 +41,7 @@
 
              player1Wins = player2Wins;
              player2Wins = tmp;
+             swapPlayers();
              order ^= 1;
              board = board.newBoard();
              System.out.println(board.toString());

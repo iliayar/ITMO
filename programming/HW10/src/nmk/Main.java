@@ -17,10 +17,10 @@ public class Main {
         m = HumanPlayer.readInt("Enter m: ", in);
         n = HumanPlayer.readInt("Enter n: ", in);
         k = HumanPlayer.readInt("Enter k: ", in);
-
+        int wins = HumanPlayer.readInt("Enter max wins: ", in);
         Match match = new Match(new RandomPlayer(n,m), new HumanPlayer(), new NmkBoard(n,m,k));
 
-        match.run(3);
+        match.run(wins);
 //        final Game game = new Game(false, new RandomPlayer(n,m), new HumanPlayer());
 //
 //        result = game.play(new NmkBoard(n,m,k));
