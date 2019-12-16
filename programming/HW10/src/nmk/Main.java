@@ -17,22 +17,26 @@ public class Main {
         m = HumanPlayer.readInt("Enter m: ", in);
         n = HumanPlayer.readInt("Enter n: ", in);
         k = HumanPlayer.readInt("Enter k: ", in);
-        final Game game = new Game(false, new RandomPlayer(n,m), new HumanPlayer());
 
-        result = game.play(new NmkBoard(n,m,k));
-        
-        String msg = "";
-        
-        switch(result) {
-            case 0:
-                msg = "Draw"; break;
-            case 1:
-                msg = "Player 1 won"; break;
-            case 2:
-                msg = "Player 2 won"; break;
-        }
-        System.out.println(msg);
-//        } while (result != 0);    }
+        Match match = new Match(new RandomPlayer(n,m), new HumanPlayer(), new NmkBoard(n,m,k));
+
+        match.run(3);
+//        final Game game = new Game(false, new RandomPlayer(n,m), new HumanPlayer());
+//
+//        result = game.play(new NmkBoard(n,m,k));
+//
+//        String msg = "";
+//
+//        switch(result) {
+//            case 0:
+//                msg = "Draw"; break;
+//            case 1:
+//                msg = "Player 1 won"; break;
+//            case 2:
+//                msg = "Player 2 won"; break;
+//        }
+//        System.out.println(msg);
+////        } while (result != 0);    }
     }
 
     public static void main(String[] argv) {
