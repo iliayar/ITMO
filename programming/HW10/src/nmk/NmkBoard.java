@@ -13,24 +13,35 @@ public class NmkBoard implements Board, Position {
     );
 
     private int blanks;
-    private final Cell[][] board;
-    private final int k;
+    private Cell[][] board;
+    private int k;
 
+    private Cell firstCell;
     private Cell turn;
 
     public NmkBoard(int n, int m, int k) {
+        init(n,m,k, Cell.X);
+    }
+
+    public NmkBoard(int n, int m, int k, Cell first) {
+        init(n,m,k,first);
+    }
+
+    private void init(int n, int m, int k, Cell first) {
         this.k = k;
         this.board = new Cell[n][m];
         for (Cell[] row : board) {
             Arrays.fill(row, Cell.E);
         }
-        this.turn = Cell.X;
+        this.turn = first;
+        this.firstCell = first;
         blanks = n*m;
     }
 
     public Board newBoard() {
-        return new NmkBoard(board.length, board[0].length , k);
+        return new NmkBoard(board.length, board[0].length , k, firstCell == Cell.X ? Cell.O : Cell.X);
     }
+
 
     @Override
     final public Position getPosition() {
