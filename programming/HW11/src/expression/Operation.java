@@ -17,6 +17,12 @@ public abstract class Operation implements ExpressionMember {
     }
 
     @Override
+    public int evaluate(int x, int y, int z) {
+        int resA, resB;
+        return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
+    }
+
+    @Override
     public String toString() {
         return "(" + a.toString() + " " + getSymbol() + " " + b.toString() + ")";
     }
