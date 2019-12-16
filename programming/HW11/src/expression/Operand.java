@@ -7,6 +7,10 @@ public abstract class Operand implements ExpressionMember {
         return getValue(x);
     }
 
+    @Override public int evaluate(int x, int y, int z) {
+        return getValue(x,y,z);
+    }
+
     @Override
     public String toString(){
         return getSymbol();
@@ -32,4 +36,5 @@ public abstract class Operand implements ExpressionMember {
 
     protected abstract String getSymbol();
     protected abstract int getValue(int x);
+    protected abstract int getValue(int x, int y, int z);
 }
