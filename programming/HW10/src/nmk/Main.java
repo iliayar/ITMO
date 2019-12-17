@@ -18,7 +18,7 @@ public class Main {
         n = HumanPlayer.readInt("Enter n: ", in);
         k = HumanPlayer.readInt("Enter k: ", in);
         int wins = HumanPlayer.readInt("Enter max wins: ", in);
-        Match match = new Match(new RandomPlayer(n,m), new HumanPlayer(), new NmkBoard(n,m,k));
+        Match match = new Match(new HumanPlayer(), new HumanPlayer(), new NmkBoard(n,m,k));
 
         match.run(wins);
 //        final Game game = new Game(false, new RandomPlayer(n,m), new HumanPlayer());

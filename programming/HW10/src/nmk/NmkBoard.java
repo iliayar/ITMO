@@ -145,7 +145,7 @@ public class NmkBoard implements Board, Position {
         col += subCount(x, y, 0, 1, c);
         row += subCount(x, y, 1, 0, c);
         diag1 += subCount(x, y, 1, 1, c);
-        diag2 += subCount(x - 1, y, -1, 1, c);
+        diag2 += subCount(x, y, -1, 1, c);
         
         int max = 0;
         if(col > max) {
