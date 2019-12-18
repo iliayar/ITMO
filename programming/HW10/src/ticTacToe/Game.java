@@ -27,15 +27,15 @@ public class Game {
     }
 
     private int move(final Board board, final Player player, final int no) {
+        log("Position:\n" + board);
         final Move move = player.move(board.getPosition(), board.getCell());
         final Result result = board.makeMove(move);
-        log("Player " + no + " move: " + move);
-        log("Position:\n" + board);
+//        log("Player " + no + " move: " + move);
         if (result == Result.WIN) {
-            log("Player " + no + " won");
+            log("Player " + move.getValue() + " won");
             return no;
         } else if (result == Result.LOSE) {
-            log("Player " + no + " lose");
+            log("Player " + move.getValue() + " lose");
             return 3 - no;
         } else if (result == Result.DRAW) {
             log("Draw");

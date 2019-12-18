@@ -38,7 +38,7 @@ public class NmkBoard implements Board, Position {
         blanks = n*m;
     }
 
-    public Board newBoard() {
+    public Board swapBoard() {
         return new NmkBoard(board.length, board[0].length , k, firstCell == Cell.X ? Cell.O : Cell.X);
     }
 
@@ -55,6 +55,7 @@ public class NmkBoard implements Board, Position {
 
     @Override
     final public Result makeMove(Move move) {
+
         if(!isValid(move)) {
             return Result.LOSE;
         }
@@ -65,9 +66,6 @@ public class NmkBoard implements Board, Position {
         blanks--;
 
         board[y][x] = move.getValue();
-
-        System.out.println(this);
-
 
         if(count(x,y,move.getValue()) >= k) {
             return Result.WIN;

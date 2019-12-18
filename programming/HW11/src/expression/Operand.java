@@ -1,6 +1,6 @@
 package expression;
 
-public abstract class Operand implements ExpressionMember {
+public abstract class Operand implements CommonExpression {
 
     @Override
     public int evaluate(int x) {
@@ -23,15 +23,25 @@ public abstract class Operand implements ExpressionMember {
 
     @Override
     public boolean equals(Object expr) {
-        if( !(expr instanceof ExpressionMember)) {
+        if( !(expr instanceof CommonExpression)) {
             return false;
         }
-        return ((ExpressionMember)expr).toString().equals(this.toString());
+        return ((CommonExpression)expr).toString().equals(this.toString());
     }
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        return (getValue(BASE)*BASE + MOD) % MOD;
+    }
+
+    @Override
+    public boolean isCommutative() {
+        return true;
+    }
+
+    @Override
+    public boolean isIntSafe() {
+        return true;
     }
 
     protected abstract String getSymbol();
