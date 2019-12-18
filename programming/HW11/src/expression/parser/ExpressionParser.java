@@ -16,7 +16,7 @@ public class ExpressionParser extends BaseParser {
 
 
     @Override
-    public TripleExpression parse(String src) {
+    public CommonExpression parse(String src) {
         this.src = new StringSource(src);
         nextChar();
         return parseExpression();
@@ -51,7 +51,7 @@ public class ExpressionParser extends BaseParser {
         throw error("One of \'+, -, *, /\' expected");
     }
 
-    private ExpressionMember parseOperand() {
+    private CommonExpression parseOperand() {
         if(between('0','9')) {
             return parseConst(false);
         } else if(test('x')) {
@@ -65,7 +65,7 @@ public class ExpressionParser extends BaseParser {
             if(between('0','9')) {
                 return parseConst(true);
             } else if(test('(')) {
-                ExpressionMember expr = parseExpression();
+                CommonExpression expr = parseExpression();
                 test(')');
                 return new Inverse(expr);
             } else {
@@ -76,11 +76,11 @@ public class ExpressionParser extends BaseParser {
         throw error("Operand expected " + ch + " found");
     }
 
-    public ExpressionMember parseExpression() {
+    public CommonExpression parseExpression() {
 
         skipWhitespace();
 
-        ExpressionMember firstOperand = parseFirstPriorExpression();
+        CommonExpression firstOperand = parseFirstPriorExpression();
 
         skipWhitespace();
 
@@ -89,7 +89,7 @@ public class ExpressionParser extends BaseParser {
         }
 
         while(in("+-")) {
-            ExpressionMember secondOperand = null;
+            CommonExpression secondOperand = null;
 
             char operation = parseOperation();
 
@@ -112,11 +112,11 @@ public class ExpressionParser extends BaseParser {
         return firstOperand;
     }
 
-    private ExpressionMember parseFirstPriorExpression() {
+    private CommonExpression parseFirstPriorExpression() {
 
         skipWhitespace();
 
-        ExpressionMember firstOperand = null;
+        CommonExpression firstOperand = null;
 
         if(test('(')) {
             firstOperand = parseExpression();
@@ -132,7 +132,7 @@ public class ExpressionParser extends BaseParser {
         }
 
         while(in("*/")) {
-            ExpressionMember secondOperand = null;
+            CommonExpression secondOperand = null;
 
             char operation = parseOperation();
 

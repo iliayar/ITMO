@@ -2,7 +2,7 @@ package expression;
 
 public class Add extends Operation {
 
-    public Add(ExpressionMember a, ExpressionMember b) {
+    public Add(CommonExpression a, CommonExpression b) {
         super(a,b);
     }
 

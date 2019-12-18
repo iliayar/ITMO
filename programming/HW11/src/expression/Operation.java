@@ -1,13 +1,13 @@
 package expression;
 
-public abstract class Operation implements ExpressionMember {
+public abstract class Operation implements CommonExpression {
 
-    ExpressionMember a;
-    ExpressionMember b;
+    CommonExpression a;
+    CommonExpression b;
 
     public Operation(Expression a, Expression b) {
-        this.a = (ExpressionMember) a;
-        this.b = (ExpressionMember) b;
+        this.a = (CommonExpression) a;
+        this.b = (CommonExpression) b;
     }
 
     @Override
@@ -51,12 +51,12 @@ public abstract class Operation implements ExpressionMember {
 
     @Override
     public boolean equals(Object expr) {
-        if(!(expr instanceof ExpressionMember)) {
+        if(!(expr instanceof CommonExpression)) {
             return false;
         }
 //        System.err.println(this.toString());
 //        System.err.println(expr.toString());
-        return ((ExpressionMember)expr).toString().equals(this.toString());
+        return ((CommonExpression)expr).toString().equals(this.toString());
 //        return true;
     }
 
