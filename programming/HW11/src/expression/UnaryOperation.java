@@ -1,10 +1,10 @@
 package expression;
 
-public abstract class UnaryOperation implements ExpressionMember {
-    ExpressionMember a;
+public abstract class UnaryOperation implements CommonExpression {
+    CommonExpression a;
 
     public UnaryOperation(Expression a) {
-        this.a = (ExpressionMember) a;
+        this.a = (CommonExpression) a;
     }
 
     @Override
@@ -42,12 +42,12 @@ public abstract class UnaryOperation implements ExpressionMember {
 
     @Override
     public boolean equals(Object expr) {
-        if(!(expr instanceof ExpressionMember)) {
+        if(!(expr instanceof CommonExpression)) {
             return false;
         }
 //        System.err.println(this.toString());
 //        System.err.println(expr.toString());
-        return ((ExpressionMember)expr).toString().equals(this.toString());
+        return ((CommonExpression)expr).toString().equals(this.toString());
 //        return true;
     }
 

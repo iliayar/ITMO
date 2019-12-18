@@ -1,7 +1,7 @@
 package expression;
 
 public class Divide extends Operation {
-    public Divide(ExpressionMember a, ExpressionMember b) {
+    public Divide(CommonExpression a, CommonExpression b) {
         super(a, b);
     }
 

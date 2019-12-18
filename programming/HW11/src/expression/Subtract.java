@@ -1,7 +1,7 @@
 package expression;
 
 public class Subtract extends Operation{
-    public Subtract(ExpressionMember a, ExpressionMember b) {
+    public Subtract(CommonExpression a, CommonExpression b) {
         super(a, b);
     }
 

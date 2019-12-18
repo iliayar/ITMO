@@ -1,7 +1,7 @@
 package expression;
 
 public class Multiply extends Operation {
-    public Multiply(ExpressionMember a, ExpressionMember b) {
+    public Multiply(CommonExpression a, CommonExpression b) {
         super(a, b);
     }
 
