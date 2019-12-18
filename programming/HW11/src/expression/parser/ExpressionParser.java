@@ -5,8 +5,6 @@ import expression.*;
 public class ExpressionParser extends BaseParser {
 
     public ExpressionParser() {
-//        super(src);
-//        nextChar();
     }
 
     public ExpressionParser(ExpressionSource src) {
@@ -77,28 +75,18 @@ public class ExpressionParser extends BaseParser {
     }
 
     public ExpressionMember parseExpression() {
-
         skipWhitespace();
-
         ExpressionMember firstOperand = parseFirstPriorExpression();
-
         skipWhitespace();
-
         if( test('\0')) {
             return firstOperand;
         }
-
         while(in("+-")) {
             ExpressionMember secondOperand = null;
-
             char operation = parseOperation();
-
             skipWhitespace();
-
             secondOperand = parseFirstPriorExpression();
-
             skipWhitespace();
-
             if(operation == '+') {
                 firstOperand = new Add(firstOperand, secondOperand);
             } else {
@@ -106,49 +94,33 @@ public class ExpressionParser extends BaseParser {
             }
 
         }
-
-//        test(')'); test('\0');
-
         return firstOperand;
     }
 
     private ExpressionMember parseFirstPriorExpression() {
-
         skipWhitespace();
-
         ExpressionMember firstOperand = null;
-
         if(test('(')) {
             firstOperand = parseExpression();
             test(')');
         } else {
             firstOperand = parseOperand();
         }
-
         skipWhitespace();
-
         if(test('\0')) {
             return firstOperand;
         }
-
         while(in("*/")) {
             ExpressionMember secondOperand = null;
-
             char operation = parseOperation();
-
             skipWhitespace();
-
             if(test('(')) {
                 secondOperand = parseExpression();
                 test(')');
             } else {
                 secondOperand = parseOperand();
             }
-
             skipWhitespace();
-
-//            test(')');
-
             if(operation == '*') {
                 firstOperand = new Multiply(firstOperand, secondOperand);
             } else {
@@ -156,9 +128,6 @@ public class ExpressionParser extends BaseParser {
             }
 
         }
-
-//        test(')'); test('\0');
-
         return firstOperand;
     }
 
