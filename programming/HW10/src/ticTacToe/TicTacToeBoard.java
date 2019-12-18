@@ -81,7 +81,7 @@ public class TicTacToeBoard implements Board, Position {
     }
 
     @Override
-    public Board newBoard() {
+    public Board swapBoard() {
         return new TicTacToeBoard();
     }
 

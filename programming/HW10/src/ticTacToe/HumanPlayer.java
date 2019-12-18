@@ -3,11 +3,6 @@ package ticTacToe;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-import nmk.NmkBoard;
-
-/**
- * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
- */
 public class HumanPlayer implements Player {
     private final PrintStream out;
     private final Scanner in;
@@ -32,8 +27,8 @@ public class HumanPlayer implements Player {
             if (position.isValid(move)) {
                 return move;
             }
-            final int row = move.getRow();
-            final int column = move.getColumn();
+//            final int row = move.getRow();
+//            final int column = move.getColumn();
             out.println("Move " + move + " is invalid");
         }
     }

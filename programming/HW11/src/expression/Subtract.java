@@ -1,7 +1,7 @@
 package expression;
 
 public class Subtract extends Operation{
-    public Subtract(ExpressionMember a, ExpressionMember b) {
+    public Subtract(CommonExpression a, CommonExpression b) {
         super(a, b);
     }
 
@@ -17,6 +17,11 @@ public class Subtract extends Operation{
 
     @Override
     public int getPrior() {
-        return 4;
+        return 2;
+    }
+
+    @Override
+    public boolean isCommutative() {
+        return false;
     }
 }

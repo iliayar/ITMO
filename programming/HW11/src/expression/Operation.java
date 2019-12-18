@@ -1,13 +1,13 @@
 package expression;
 
-public abstract class Operation implements ExpressionMember {
+public abstract class Operation implements CommonExpression {
 
-    ExpressionMember a;
-    ExpressionMember b;
+    CommonExpression a;
+    CommonExpression b;
 
     public Operation(Expression a, Expression b) {
-        this.a = (ExpressionMember) a;
-        this.b = (ExpressionMember) b;
+        this.a = (CommonExpression) a;
+        this.b = (CommonExpression) b;
     }
 
     @Override
@@ -29,40 +29,56 @@ public abstract class Operation implements ExpressionMember {
 
     @Override
     public String toMiniString() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
-        if(getPrior() < a.getPrior() - 1 + a.getPrior()%2) {
-            res += "(" + a.toMiniString() + ")";
+        if(getPrior() < a.getPrior()) {
+            res.append("(");
+            res.append(a.toMiniString());
+            res.append(")");
         } else {
-            res += a.toMiniString();
+            res.append(a.toMiniString());
         }
 
-        res += " " + getSymbol() + " ";
+        res.append(" " + getSymbol() + " ");
 
-        if(getPrior() < b.getPrior() || (getPrior()%2 == 0 && b.getPrior()%2 == 0 && b.getPrior() != 0) ||
-                (getPrior() == 4 && b.getPrior() >= 3) || (getPrior() == 2 && b.getPrior() < 3 && b.getPrior() != 0)) {
-            res += "(" + b.toMiniString() + ")";
+        if(getPrior() < b.getPrior() ||
+                ((!isCommutative() || !b.isIntSafe()) && getPrior() <= b.getPrior())) {
+            res.append("(");
+            res.append(b.toMiniString());
+            res.append(")");
         } else {
-            res += b.toMiniString();
+            res.append(b.toMiniString());
         }
 
-        return res;
+        return res.toString();
     }
 
     @Override
     public boolean equals(Object expr) {
-        if(!(expr instanceof ExpressionMember)) {
+        if(!(expr instanceof CommonExpression)) {
             return false;
         }
+
 //        System.err.println(this.toString());
 //        System.err.println(expr.toString());
-        return ((ExpressionMember)expr).toString().equals(this.toString());
+        return ((CommonExpression)expr).hashCode() == this.hashCode();
 //        return true;
     }
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        String s = getSymbol();
+        int res = 0;
+        for(int i = 0; i < s.length(); ++i) {
+            res = res*BASE + s.charAt(i);
+            res %= MOD;
+        }
+        return (a.hashCode()*BASE + res + b.hashCode()) % MOD;
+    }
+
+    @Override
+    public boolean isIntSafe() {
+        return true;
     }
 
     protected abstract String getSymbol();

@@ -1,7 +1,7 @@
 package expression;
 
 public class Divide extends Operation {
-    public Divide(ExpressionMember a, ExpressionMember b) {
+    public Divide(CommonExpression a, CommonExpression b) {
         super(a, b);
     }
 
@@ -17,6 +17,16 @@ public class Divide extends Operation {
 
     @Override
     public int getPrior() {
-        return 2;
+        return 1;
+    }
+
+    @Override
+    public boolean isCommutative() {
+        return false;
+    }
+
+    @Override
+    public boolean isIntSafe() {
+        return false;
     }
 }
