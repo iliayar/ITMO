@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Divide extends Operation {
     public Divide(CommonExpression a, CommonExpression b) {
         super(a, b);
@@ -16,10 +18,9 @@ public class Divide extends Operation {
     }
 
     @Override
-    protected long eval(long a, long b) {
-        return (a / b);
+    protected BigInteger eval(BigInteger a, BigInteger b) {
+        return a.divide(b);
     }
-
 
     @Override
     public int getPrior() {

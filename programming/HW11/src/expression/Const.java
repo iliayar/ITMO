@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Const extends Operand {
 
     int value;
@@ -22,18 +24,18 @@ public class Const extends Operand {
         return value;
     }
 
-    @Override
-    protected long getValue(long x, long y, long z) {
-        return value;
-    }
-
 
     @Override
     protected int getValue(int x, int y, int z) {
         return value;
     }
 
-//    @Override
+    @Override
+    protected BigInteger getValue(BigInteger x, BigInteger y, BigInteger z) {
+        return BigInteger.valueOf(value);
+    }
+
+    //    @Override
     public int getPrior() {
         return 0;
     }

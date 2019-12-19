@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class ShiftLeft extends Operation {
 
 
@@ -18,8 +20,8 @@ public class ShiftLeft extends Operation {
     }
 
     @Override
-    protected long eval(long a, long b) {
-        return (a << b);
+    protected BigInteger eval(BigInteger a, BigInteger b) {
+        return a.shiftLeft(b.intValue());
     }
 
 

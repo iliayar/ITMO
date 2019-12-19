@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Variable extends Operand {
 
     String symbol;
@@ -32,19 +34,11 @@ public class Variable extends Operand {
     }
 
     @Override
-    protected long getValue(long x, long y, long z) {
-        switch(symbol) {
-            case "x":
-                return x;
-            case "y":
-                return y;
-            case "z":
-                return z;
-        }
-        return 0;
+    protected BigInteger getValue(BigInteger x, BigInteger y, BigInteger z) {
+        return BigInteger.valueOf(getValue(x.intValue(), y.intValue(), z.intValue()));
     }
 
-//    @Override
+    //    @Override
     public int getPrior() {
         return 0;
     }

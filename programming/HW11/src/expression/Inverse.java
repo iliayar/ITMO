@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Inverse extends UnaryOperation {
     public Inverse(Expression a) {
         super(a);
@@ -16,8 +18,8 @@ public class Inverse extends UnaryOperation {
     }
 
     @Override
-    protected long eval(long a) {
-        return -a;
+    protected BigInteger eval(BigInteger a) {
+        return a.multiply(BigInteger.valueOf(-1));
     }
 
 
