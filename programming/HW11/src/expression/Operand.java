@@ -8,8 +8,12 @@ public abstract class Operand implements CommonExpression {
     }
 
     @Override public int evaluate(int x, int y, int z) {
+        return (int)getValue((long)x,y,z);
+    }
+    @Override public long evaluate(long x, long y, long z) {
         return getValue(x,y,z);
     }
+
 
     @Override
     public String toString(){
@@ -47,4 +51,6 @@ public abstract class Operand implements CommonExpression {
     protected abstract String getSymbol();
     protected abstract int getValue(int x);
     protected abstract int getValue(int x, int y, int z);
+    protected abstract long getValue(long x, long y, long z);
+
 }

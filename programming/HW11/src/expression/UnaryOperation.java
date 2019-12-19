@@ -15,6 +15,12 @@ public abstract class UnaryOperation implements CommonExpression {
     @Override
     public int evaluate(int x, int y, int z) {
         int resA, resB;
+        return (int)eval(a.evaluate((long)x,y,z));
+    }
+
+    @Override
+    public long evaluate(long x, long y, long z) {
+        int resA, resB;
         return eval(a.evaluate(x,y,z));
     }
 
@@ -68,4 +74,5 @@ public abstract class UnaryOperation implements CommonExpression {
 
     protected abstract String getSymbol();
     protected abstract int eval(int a);
+    protected abstract long eval(long a);
 }

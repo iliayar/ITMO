@@ -8,6 +8,10 @@ public class Const extends Operand {
         this.value = v;
     }
 
+    public Const(long v) {
+        this.value = (int)v;
+    }
+
     @Override
     protected String getSymbol() {
         return Integer.toString(value);
@@ -17,6 +21,12 @@ public class Const extends Operand {
     protected int getValue(int x) {
         return value;
     }
+
+    @Override
+    protected long getValue(long x, long y, long z) {
+        return value;
+    }
+
 
     @Override
     protected int getValue(int x, int y, int z) {

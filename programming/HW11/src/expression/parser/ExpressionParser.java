@@ -20,44 +20,33 @@ public class ExpressionParser extends BaseParser {
         return parseExpression();
     }
 
-    private Const parseConst(boolean isMinus) {
+    private long parseNumber() {
         StringBuilder sb = new StringBuilder();
-        if(isMinus) {
-            sb.append('-');
-        }
         while(between('0','9')) {
             sb.append(ch);
             nextChar();
         }
-        try {
-            return new Const(Integer.parseInt(sb.toString()));
-        } catch (NumberFormatException e) {
-            throw error("Integer expected " + ch + " found");
-        }
+        return  Long.parseLong(sb.toString());
     }
 
     private char parseOperation() {
-        if(test('+')) {
-            return '+';
-        } else if(test('-')) {
-            return '-';
-        } else if(test('*')) {
-            return  '*';
-        } else if(test('/')) {
-            return '/';
+        if(in("+-*/")) {
+            char c = ch;
+            nextChar();
+            return c;
         } else if(test('<')) {
-            test('<');
+            expect('<');
             return '<';
         } else if(test('>')) {
-            test('>');
+            expect('>');
             return '>';
         }
-        throw error("One of \'+, -, *, /\' expected");
+        throw error("One of \'+, -, *, <<, >>/\' expected");
     }
 
     private CommonExpression parseOperand() {
         if(between('0','9')) {
-            return parseConst(false);
+            return new Const(parseNumber());
         } else if(test('x')) {
             return new Variable("x");
         } else if(test('y')) {
@@ -67,7 +56,7 @@ public class ExpressionParser extends BaseParser {
         } else if(test('-')) {
             skipWhitespace();
             if(between('0','9')) {
-                return parseConst(true);
+                return new Const(-parseNumber());
             } else if(test('(')) {
                 CommonExpression expr = parseExpression();
                 test(')');
@@ -89,97 +78,63 @@ public class ExpressionParser extends BaseParser {
     }
 
     public CommonExpression parseExpression() {
-        return parse3PriorExpression();
+        return parseExpression(3);
     }
 
-    public CommonExpression parse3PriorExpression() {
-        skipWhitespace();
-
-        CommonExpression firstOperand = parse2PriorExpression();
+    private CommonExpression parseExpression(int prior) {
 
         skipWhitespace();
-        if( test('\0')) {
-            return firstOperand;
+
+        if(prior == 0) {
+            return parseOperand();
         }
-        while(in("<>")) {
+
+        String opers = "";
+        if(prior == 1) {
+            opers = "*/";
+        } else if(prior == 2) {
+            opers = "+-";
+        } else {
+            opers = "<>";
+        }
+
+        CommonExpression firstOperand = null;
+
+        if(prior == 1 && test('(')) {
+            firstOperand = parseExpression();
+            expect(')');
+        } else {
+            firstOperand = parseExpression(prior - 1);
+        }
+        skipWhitespace();
+        while(in(opers)) {
             CommonExpression secondOperand = null;
 
             char operation = parseOperation();
             skipWhitespace();
-            secondOperand = parse2PriorExpression();
+            if(prior == 1 && test('(')) {
+                secondOperand = parseExpression();
+                expect(')');
+            } else {
+                secondOperand = parseExpression(prior - 1);
+            }
             skipWhitespace();
-            if(operation == '<') {
+            if(operation == '*') {
+                firstOperand = new Multiply(firstOperand, secondOperand);
+            } else if(operation == '/') {
+                firstOperand = new Divide(firstOperand, secondOperand);
+            } else if(operation == '+') {
+                firstOperand = new Add(firstOperand, secondOperand);
+            } else if(operation == '-'){
+                firstOperand = new Subtract(firstOperand, secondOperand);
+            } else if(operation == '<') {
                 firstOperand = new ShiftLeft(firstOperand, secondOperand);
             } else {
                 firstOperand = new ShiftRight(firstOperand, secondOperand);
             }
 
         }
-        return firstOperand;
-    }
 
-    public CommonExpression parse2PriorExpression() {
-
-        skipWhitespace();
-
-        CommonExpression firstOperand = parse1PriorExpression();
-
-        skipWhitespace();
-        if( test('\0')) {
-            return firstOperand;
-        }
-        while(in("+-")) {
-            CommonExpression secondOperand = null;
-
-            char operation = parseOperation();
-            skipWhitespace();
-            secondOperand = parse1PriorExpression();
-            skipWhitespace();
-            if(operation == '+') {
-                firstOperand = new Add(firstOperand, secondOperand);
-            } else {
-                firstOperand = new Subtract(firstOperand, secondOperand);
-            }
-
-        }
-        return firstOperand;
-    }
-
-    private CommonExpression parse1PriorExpression() {
-
-        skipWhitespace();
-
-        CommonExpression firstOperand = null;
-
-        if(test('(')) {
-            firstOperand = parseExpression();
-            test(')');
-        } else {
-            firstOperand = parseOperand();
-        }
-        skipWhitespace();
-        if(test('\0')) {
-            return firstOperand;
-        }
-        while(in("*/")) {
-            CommonExpression secondOperand = null;
-
-            char operation = parseOperation();
-            skipWhitespace();
-            if(test('(')) {
-                secondOperand = parseExpression();
-                test(')');
-            } else {
-                secondOperand = parseOperand();
-            }
-            skipWhitespace();
-            if(operation == '*') {
-                firstOperand = new Multiply(firstOperand, secondOperand);
-            } else {
-                firstOperand = new Divide(firstOperand, secondOperand);
-            }
-
-        }
         return firstOperand;
     }
 
