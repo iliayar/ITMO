@@ -45,6 +45,12 @@ public class ExpressionParser extends BaseParser {
             return  '*';
         } else if(test('/')) {
             return '/';
+        } else if(test('<')) {
+            test('<');
+            return '<';
+        } else if(test('>')) {
+            test('>');
+            return '>';
         }
         throw error("One of \'+, -, *, /\' expected");
     }
@@ -69,17 +75,54 @@ public class ExpressionParser extends BaseParser {
             } else {
                 return new Inverse(parseOperand());
             }
+        } else if(test('d')) {
+            expect("igits");
+            skipWhitespace();
+            return new Digits(parseExpression());
+        } else if(test('r')) {
+            expect("everse");
+            skipWhitespace();
+            return new Reverse(parseExpression());
         }
 
         throw error("Operand expected " + ch + " found");
     }
 
-
     public CommonExpression parseExpression() {
+        return parse3PriorExpression();
+    }
+
+    public CommonExpression parse3PriorExpression() {
+        skipWhitespace();
+
+        CommonExpression firstOperand = parse2PriorExpression();
+
+        skipWhitespace();
+        if( test('\0')) {
+            return firstOperand;
+        }
+        while(in("<>")) {
+            CommonExpression secondOperand = null;
+
+            char operation = parseOperation();
+            skipWhitespace();
+            secondOperand = parse2PriorExpression();
+            skipWhitespace();
+            if(operation == '<') {
+                firstOperand = new ShiftLeft(firstOperand, secondOperand);
+            } else {
+                firstOperand = new ShiftRight(firstOperand, secondOperand);
+            }
+
+        }
+        return firstOperand;
+    }
+
+    public CommonExpression parse2PriorExpression() {
 
         skipWhitespace();
 
-        CommonExpression firstOperand = parseFirstPriorExpression();
+        CommonExpression firstOperand = parse1PriorExpression();
 
         skipWhitespace();
         if( test('\0')) {
@@ -90,7 +133,7 @@ public class ExpressionParser extends BaseParser {
 
             char operation = parseOperation();
             skipWhitespace();
-            secondOperand = parseFirstPriorExpression();
+            secondOperand = parse1PriorExpression();
             skipWhitespace();
             if(operation == '+') {
                 firstOperand = new Add(firstOperand, secondOperand);
@@ -102,7 +145,7 @@ public class ExpressionParser extends BaseParser {
         return firstOperand;
     }
 
-    private CommonExpression parseFirstPriorExpression() {
+    private CommonExpression parse1PriorExpression() {
 
         skipWhitespace();
 

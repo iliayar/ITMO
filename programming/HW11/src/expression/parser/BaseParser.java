@@ -22,6 +22,12 @@ public abstract class BaseParser implements expression.parser.Parser {
         return false;
     }
 
+    protected void expect(final String s) {
+        for(int i = 0; i < s.length(); ++i) {
+            expect(s.charAt(i));
+        }
+    }
+
     protected void expect(final char c) {
         if(ch != c) {
             throw error("Expected \'" + c + "\' \'" + ch + "\' found");
