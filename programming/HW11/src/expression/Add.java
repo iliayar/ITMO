@@ -19,11 +19,6 @@ public class Add extends Operation {
     }
 
     @Override
-    protected BigInteger eval(BigInteger a, BigInteger b) {
-        return a.add(b);
-    }
-
-    @Override
     public int getPrior() {
         return 2;
     }

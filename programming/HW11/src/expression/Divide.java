@@ -18,11 +18,6 @@ public class Divide extends Operation {
     }
 
     @Override
-    protected BigInteger eval(BigInteger a, BigInteger b) {
-        return a.divide(b);
-    }
-
-    @Override
     public int getPrior() {
         return 1;
     }

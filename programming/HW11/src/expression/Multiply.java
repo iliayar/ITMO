@@ -17,11 +17,6 @@ public class Multiply extends Operation {
         return a*b;
     }
 
-    @Override
-    protected BigInteger eval(BigInteger a, BigInteger b) {
-        return a.multiply(b);
-    }
-
 
     @Override
     public int getPrior() {

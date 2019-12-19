@@ -14,11 +14,6 @@ public abstract class Operand implements CommonExpression {
     }
 
     @Override
-    public BigInteger evaluate(BigInteger x, BigInteger y, BigInteger z) {
-        return  getValue(x,y,z);
-    }
-
-    @Override
     public String toString(){
         return getSymbol();
     }
@@ -54,5 +49,4 @@ public abstract class Operand implements CommonExpression {
     protected abstract String getSymbol();
     protected abstract int getValue(int x);
     protected abstract int getValue(int x, int y, int z);
-    protected abstract BigInteger getValue(BigInteger x, BigInteger y, BigInteger z);
 }

@@ -15,30 +15,18 @@ public class Reverse extends UnaryOperation {
     @Override
     protected int eval(int a) {
 //        System.out.println("Reversing int " + a);
+        long tmp = a;
         boolean isMinus = a < 0;
-        a = a < 0 ? -a : a;
-        int res = 0;
-        while(a > 0) {
-            res = res*10 + a%10;
-            a /= 10;
+        tmp = tmp < 0 ? -tmp : tmp;
+        long res = 0;
+        while(tmp > 0) {
+            res = res*10 + tmp%10;
+            tmp /= 10;
         }
 
-        return isMinus ? -res : res;
+        return (int) (isMinus ? -res : res);
     }
 
-    @Override
-    protected BigInteger eval(BigInteger a) {
-        boolean isMinus = a.compareTo(BigInteger.ZERO) < 0;
-//        a = a < 0 ? -a : a;
-        a = a.abs();
-        BigInteger res = BigInteger.ZERO;
-        while(a.compareTo(BigInteger.ZERO) > 0) {
-            res = res.multiply(BigInteger.valueOf(10)).add(a.mod(BigInteger.valueOf(10)));
-            a = a.divide(BigInteger.valueOf(10));
-        }
-
-        return isMinus ? res.multiply(BigInteger.valueOf(-1)) : res;
-    }
 
 
     @Override

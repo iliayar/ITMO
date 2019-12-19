@@ -17,10 +17,6 @@ public class Subtract extends Operation{
         return a - b;
     }
 
-    @Override
-    protected BigInteger eval(BigInteger a, BigInteger b) {
-        return a.subtract(b);
-    }
 
     @Override
     public int getPrior() {
