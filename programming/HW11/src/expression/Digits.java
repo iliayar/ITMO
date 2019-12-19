@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Digits extends UnaryOperation {
 
     public Digits(Expression a) {
@@ -24,15 +26,16 @@ public class Digits extends UnaryOperation {
     }
 
     @Override
-    protected long eval(long a) {
-        a = a < 0 ? -a : a;
+    protected BigInteger eval(BigInteger a) {
+        a = a.compareTo(BigInteger.ZERO) < 0 ? a.multiply(BigInteger.valueOf(-1)) : a;
 
-        long res = 0;
-        while(a > 0) {
-            res += a%10;
-            a /=10;
+        BigInteger res = BigInteger.ZERO;
+        while(a.compareTo(BigInteger.ZERO) > 0) {
+            res = res.add(a.mod(BigInteger.valueOf(10)));
+            a = a.divide(BigInteger.valueOf(10));
         }
         return res;
+
     }
 
 

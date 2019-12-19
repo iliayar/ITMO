@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Multiply extends Operation {
     public Multiply(CommonExpression a, CommonExpression b) {
         super(a, b);
@@ -16,8 +18,8 @@ public class Multiply extends Operation {
     }
 
     @Override
-    protected long eval(long a, long b) {
-        return (a * b);
+    protected BigInteger eval(BigInteger a, BigInteger b) {
+        return a.multiply(b);
     }
 
 

@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public abstract class UnaryOperation implements CommonExpression {
     CommonExpression a;
 
@@ -15,12 +17,11 @@ public abstract class UnaryOperation implements CommonExpression {
     @Override
     public int evaluate(int x, int y, int z) {
         int resA, resB;
-        return (int)eval(a.evaluate((long)x,y,z));
+        return (int)eval(a.evaluate(x,y,z));
     }
 
     @Override
-    public long evaluate(long x, long y, long z) {
-        int resA, resB;
+    public BigInteger evaluate(BigInteger x, BigInteger y, BigInteger z) {
         return eval(a.evaluate(x,y,z));
     }
 
@@ -74,5 +75,6 @@ public abstract class UnaryOperation implements CommonExpression {
 
     protected abstract String getSymbol();
     protected abstract int eval(int a);
-    protected abstract long eval(long a);
+    protected abstract BigInteger eval(BigInteger a);
+
 }

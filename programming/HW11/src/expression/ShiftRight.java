@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class ShiftRight extends Operation {
     public ShiftRight(Expression a, Expression b) {
         super(a, b);
@@ -16,10 +18,9 @@ public class ShiftRight extends Operation {
     }
 
     @Override
-    protected long eval(long a, long b) {
-        return (a >> b);
+    protected BigInteger eval(BigInteger a, BigInteger b) {
+        return a.shiftRight(b.intValue());
     }
-
 
     @Override
     public int getPrior() {

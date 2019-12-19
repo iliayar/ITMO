@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public interface CommonExpression extends Expression, TripleExpression {
     final int MOD = 133711;
     final int BASE = 31;
@@ -7,7 +9,6 @@ public interface CommonExpression extends Expression, TripleExpression {
     int getPrior();
     boolean isCommutative();
     boolean isIntSafe();
-//    int evaluate(int x, int y, int z);
-    long evaluate(long x, long y, long z);
 
+    BigInteger evaluate(BigInteger x, BigInteger y, BigInteger z);
 }

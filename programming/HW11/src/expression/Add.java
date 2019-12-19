@@ -1,5 +1,7 @@
 package expression;
 
+import java.math.BigInteger;
+
 public class Add extends Operation {
 
     public Add(CommonExpression a, CommonExpression b) {
@@ -17,10 +19,9 @@ public class Add extends Operation {
     }
 
     @Override
-    protected long eval(long a, long b) {
-        return a + b;
+    protected BigInteger eval(BigInteger a, BigInteger b) {
+        return a.add(b);
     }
-
 
     @Override
     public int getPrior() {
