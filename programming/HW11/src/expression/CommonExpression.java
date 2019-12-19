@@ -10,5 +10,4 @@ public interface CommonExpression extends Expression, TripleExpression {
     boolean isCommutative();
     boolean isIntSafe();
 
-    BigInteger evaluate(BigInteger x, BigInteger y, BigInteger z);
 }

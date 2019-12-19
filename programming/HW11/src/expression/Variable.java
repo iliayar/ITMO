@@ -33,10 +33,6 @@ public class Variable extends Operand {
         return 0;
     }
 
-    @Override
-    protected BigInteger getValue(BigInteger x, BigInteger y, BigInteger z) {
-        return BigInteger.valueOf(getValue(x.intValue(), y.intValue(), z.intValue()));
-    }
 
     //    @Override
     public int getPrior() {

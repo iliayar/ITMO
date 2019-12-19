@@ -17,11 +17,6 @@ public class Inverse extends UnaryOperation {
         return -a;
     }
 
-    @Override
-    protected BigInteger eval(BigInteger a) {
-        return a.multiply(BigInteger.valueOf(-1));
-    }
-
 
     @Override
     public int getPrior() {

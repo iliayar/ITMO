@@ -17,10 +17,6 @@ public class ShiftRight extends Operation {
         return a >> b;
     }
 
-    @Override
-    protected BigInteger eval(BigInteger a, BigInteger b) {
-        return a.shiftRight(b.intValue());
-    }
 
     @Override
     public int getPrior() {

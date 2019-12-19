@@ -24,11 +24,6 @@ public abstract class Operation implements CommonExpression {
     }
 
     @Override
-    public BigInteger evaluate(BigInteger x, BigInteger y, BigInteger z) {
-        return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
-    }
-
-    @Override
     public String toString() {
         return "(" + a.toString() + " " + getSymbol() + " " + b.toString() + ")";
     }
@@ -89,5 +84,4 @@ public abstract class Operation implements CommonExpression {
 
     protected abstract String getSymbol();
     protected abstract int eval(int a, int b);
-    protected abstract BigInteger eval(BigInteger a, BigInteger b);
 }

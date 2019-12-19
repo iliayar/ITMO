@@ -21,11 +21,6 @@ public abstract class UnaryOperation implements CommonExpression {
     }
 
     @Override
-    public BigInteger evaluate(BigInteger x, BigInteger y, BigInteger z) {
-        return eval(a.evaluate(x,y,z));
-    }
-
-    @Override
     public String toString() {
         return "(" + getSymbol() + "(" + a.toString() + "))";
     }
@@ -75,6 +70,5 @@ public abstract class UnaryOperation implements CommonExpression {
 
     protected abstract String getSymbol();
     protected abstract int eval(int a);
-    protected abstract BigInteger eval(BigInteger a);
 
 }

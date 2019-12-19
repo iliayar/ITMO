@@ -67,11 +67,23 @@ public class ExpressionParser extends BaseParser {
         } else if(test('d')) {
             expect("igits");
             skipWhitespace();
-            return new Digits(parseExpression());
+            if(test('(')) {
+                CommonExpression expr = parseExpression();
+                expect(')');
+                return new Digits(expr);
+            } else {
+                return new Digits(parseOperand());
+            }
         } else if(test('r')) {
             expect("everse");
             skipWhitespace();
-            return new Reverse(parseExpression());
+            if(test('(')) {
+                CommonExpression expr = parseExpression();
+                expect(')');
+                return new Reverse(expr);
+            } else {
+                return new Reverse(parseOperand());
+            }
         }
 
         throw error("Operand expected " + ch + " found");
