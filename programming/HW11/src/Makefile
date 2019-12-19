@@ -19,7 +19,7 @@ run:
 run_test:
 	java -ea expression.ExpressionTest hard
 
-build_parser:
+build_parser: build
 	javac expression/parser/*.java
 	
 run_parser:

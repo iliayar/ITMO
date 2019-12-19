@@ -24,6 +24,19 @@ public class Digits extends UnaryOperation {
     }
 
     @Override
+    protected long eval(long a) {
+        a = a < 0 ? -a : a;
+
+        long res = 0;
+        while(a > 0) {
+            res += a%10;
+            a /=10;
+        }
+        return res;
+    }
+
+
+    @Override
     public int getPrior() {
         return 0;
     }

@@ -16,6 +16,12 @@ public class Inverse extends UnaryOperation {
     }
 
     @Override
+    protected long eval(long a) {
+        return -a;
+    }
+
+
+    @Override
     public int getPrior() {
         return 0;
     }

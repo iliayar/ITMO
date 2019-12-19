@@ -16,6 +16,12 @@ public class Subtract extends Operation{
     }
 
     @Override
+    protected long eval(long a, long b) {
+        return (a - b);
+    }
+
+
+    @Override
     public int getPrior() {
         return 2;
     }

@@ -18,7 +18,11 @@ public abstract class Operation implements CommonExpression {
 
     @Override
     public int evaluate(int x, int y, int z) {
-        int resA, resB;
+        return (int)eval(a.evaluate((long)x,y,z), b.evaluate((long)x,y,z));
+    }
+
+    @Override
+    public long evaluate(long x, long y, long z) {
         return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
     }
 
@@ -83,4 +87,5 @@ public abstract class Operation implements CommonExpression {
 
     protected abstract String getSymbol();
     protected abstract int eval(int a, int b);
+    protected abstract long eval(long a, long b);
 }
