@@ -59,7 +59,6 @@ public abstract class Operation implements CommonExpression {
         if(!(expr instanceof CommonExpression)) {
             return false;
         }
-
 //        System.err.println(this.toString());
 //        System.err.println(expr.toString());
         return ((CommonExpression)expr).hashCode() == this.hashCode();

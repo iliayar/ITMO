@@ -4,12 +4,21 @@ public class Main {
 
 
     private void run(String[] argv) {
-        Expression e = new Multiply(new Const(1), new Divide(new Variable("x"), new Const(2)));
-        System.out.println(e.evaluate(2));
-        System.out.println(e.toMiniString());
+        int x = Integer.parseInt(argv[0]);
 
+        CommonExpression expr = new Add(
+            new Multiply(
+                new Variable("x"),
+                new Subtract(
+                    new Variable("x"), 
+                    new Const(2)
+                )
+            ), 
+            new Const(1)
+        );
 
-        System.out.println(e.hashCode());
+        System.out.println(expr.evaluate(x));
+        
     }
 
     public static void main(String[] argv) {
