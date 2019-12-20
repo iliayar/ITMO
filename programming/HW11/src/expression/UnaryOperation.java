@@ -1,7 +1,5 @@
 package expression;
 
-import java.math.BigInteger;
-
 public abstract class UnaryOperation implements CommonExpression {
     CommonExpression a;
 
@@ -68,7 +66,7 @@ public abstract class UnaryOperation implements CommonExpression {
         return true;
     }
 
-    protected abstract String getSymbol();
+    public abstract String getSymbol();
     protected abstract int eval(int a);
 
 }

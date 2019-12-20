@@ -1,7 +1,5 @@
 package expression;
 
-import java.math.BigInteger;
-
 public abstract class Operand implements CommonExpression {
 
     @Override
@@ -28,12 +26,12 @@ public abstract class Operand implements CommonExpression {
         if( !(expr instanceof CommonExpression)) {
             return false;
         }
-        return ((CommonExpression)expr).toString().equals(this.toString());
+        return expr.toString().equals(this.toString());
     }
 
     @Override
     public int hashCode() {
-        return (getValue(BASE)*BASE + MOD) % MOD;
+        return ((getSymbol().length() > 0 ? getSymbol().charAt(0)*BASE : getValue(0))*BASE + MOD) % MOD;
     }
 
     @Override
@@ -46,7 +44,7 @@ public abstract class Operand implements CommonExpression {
         return true;
     }
 
-    protected abstract String getSymbol();
+    public abstract String getSymbol();
     protected abstract int getValue(int x);
     protected abstract int getValue(int x, int y, int z);
 }
