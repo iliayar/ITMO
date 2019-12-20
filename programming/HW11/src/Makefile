@@ -14,7 +14,7 @@ clean:
 	rm base/*.class
 
 run:
-	java expression.Main
+	java expression.Main 123
 
 run_test:
 	java -ea expression.ExpressionTest hard

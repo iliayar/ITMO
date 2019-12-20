@@ -1,15 +1,23 @@
 package expression;
 
-import java.math.BigInteger;
-
 public class Reverse extends UnaryOperation {
     public Reverse(Expression a) {
         super(a);
     }
 
     @Override
-    protected String getSymbol() {
+    public String getSymbol() {
         return "reverse ";
+    }
+
+    @Override
+    public CommonExpression getFirst() {
+        return null;
+    }
+
+    @Override
+    public CommonExpression getSecond() {
+        return null;
     }
 
     @Override
