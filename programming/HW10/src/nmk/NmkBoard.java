@@ -29,6 +29,9 @@ public class NmkBoard implements Board, Position {
 
     private void init(int n, int m, int k, Cell first) {
         this.k = k;
+        if(n <= 0 || m <= 0 || k <=0 ) {
+            throw new IllegalArgumentException("n ,m, k must be gt 0");
+        }
         this.board = new Cell[n][m];
         for (Cell[] row : board) {
             Arrays.fill(row, Cell.E);
