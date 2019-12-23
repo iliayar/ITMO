@@ -1,26 +1,26 @@
 package expression;
 
-import java.math.BigInteger;
+import java.util.Objects;
 
 public abstract class Operation implements CommonExpression {
 
     CommonExpression a;
     CommonExpression b;
 
-    public Operation(Expression a, Expression b) {
+    protected Operation(Expression a, Expression b) {
         this.a = (CommonExpression) a;
         this.b = (CommonExpression) b;
     }
 
     @Override
     public int evaluate(int x) {
-        int resA, resB;
         return eval(a.evaluate(x), b.evaluate(x));
     }
 
+
     @Override
     public int evaluate(int x, int y, int z) {
-        return (int)eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
+        return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
     }
 
     @Override
@@ -40,7 +40,7 @@ public abstract class Operation implements CommonExpression {
             res.append(a.toMiniString());
         }
 
-        res.append(" " + getSymbol() + " ");
+        res.append(" ").append(getSymbol()).append(" ");
 
         if(getPrior() < b.getPrior() ||
                 ((!isCommutative() || !b.isIntSafe()) && getPrior() <= b.getPrior())) {
@@ -55,14 +55,13 @@ public abstract class Operation implements CommonExpression {
     }
 
     @Override
-    public boolean equals(Object expr) {
-        if(!(expr instanceof CommonExpression)) {
-            return false;
-        }
-//        System.err.println(this.toString());
-//        System.err.println(expr.toString());
-        return ((CommonExpression)expr).hashCode() == this.hashCode();
-//        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Operation operation = (Operation) o;
+        return Objects.equals(a, operation.a) &&
+                Objects.equals(b, operation.b) &&
+                Objects.equals(getSymbol(), operation.getSymbol());
     }
 
     @Override
@@ -73,7 +72,8 @@ public abstract class Operation implements CommonExpression {
             res = res*BASE + s.charAt(i);
             res %= MOD;
         }
-        return (a.hashCode()*BASE + res + b.hashCode()) % MOD;
+        return (a.hashCode()*BASE*BASE*BASE + res*BASE*BASE + b.hashCode()*BASE) % MOD;
+//        return toString().hashCode();
     }
 
     @Override
@@ -81,6 +81,17 @@ public abstract class Operation implements CommonExpression {
         return true;
     }
 
-    protected abstract String getSymbol();
+    @Override
+    public CommonExpression getFirst() {
+        return a;
+    }
+
+
+    @Override
+    public CommonExpression getSecond() {
+        return b;
+    }
+
+    public abstract String getSymbol();
     protected abstract int eval(int a, int b);
 }

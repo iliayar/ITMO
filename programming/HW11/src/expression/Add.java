@@ -1,7 +1,5 @@
 package expression;
 
-import java.math.BigInteger;
-
 public class Add extends Operation {
 
     public Add(CommonExpression a, CommonExpression b) {
@@ -9,7 +7,7 @@ public class Add extends Operation {
     }
 
     @Override
-    protected String getSymbol() {
+    public String getSymbol() {
         return "+";
     }
 

@@ -1,7 +1,5 @@
 package expression;
 
-import java.math.BigInteger;
-
 public class Const extends Operand {
 
     int value;
@@ -15,9 +13,28 @@ public class Const extends Operand {
     }
 
     @Override
-    protected String getSymbol() {
+    public String getSymbol() {
         return Integer.toString(value);
     }
+
+    @Override
+    public CommonExpression getFirst() {
+        return this;
+    }
+
+    @Override
+    public CommonExpression getSecond() {
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object expr) {
+        if( !(expr instanceof CommonExpression)) {
+            return false;
+        }
+        return getSymbol().equals(((CommonExpression) expr).getSymbol());
+    }
+
 
     @Override
     protected int getValue(int x) {

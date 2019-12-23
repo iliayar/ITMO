@@ -101,7 +101,7 @@ public class ExpressionParser extends BaseParser {
             return parseOperand();
         }
 
-        String opers = "";
+        String opers;
         if(prior == 1) {
             opers = "*/";
         } else if(prior == 2) {

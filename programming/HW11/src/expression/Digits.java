@@ -1,7 +1,5 @@
 package expression;
 
-import java.math.BigInteger;
-
 public class Digits extends UnaryOperation {
 
     public Digits(Expression a) {
@@ -9,8 +7,18 @@ public class Digits extends UnaryOperation {
     }
 
     @Override
-    protected String getSymbol() {
+    public String getSymbol() {
         return "digits ";
+    }
+
+    @Override
+    public CommonExpression getFirst() {
+        return null;
+    }
+
+    @Override
+    public CommonExpression getSecond() {
+        return null;
     }
 
     @Override
