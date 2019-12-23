@@ -26,8 +26,6 @@
          player2Wins = 0;
          order = 0;
 
-         Cell first = Cell.X;
-
          while(player1Wins < wins && player2Wins < wins) {
              Game game = new Game(true, player1, player2);
              int result = game.play(board);
