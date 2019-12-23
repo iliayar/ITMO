@@ -1,14 +1,12 @@
 package expression;
 
-import java.math.BigInteger;
-
 public class Subtract extends Operation{
     public Subtract(CommonExpression a, CommonExpression b) {
         super(a, b);
     }
 
     @Override
-    protected String getSymbol() {
+    public String getSymbol() {
         return "-";
     }
 

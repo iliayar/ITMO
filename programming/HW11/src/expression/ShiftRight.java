@@ -1,14 +1,12 @@
 package expression;
 
-import java.math.BigInteger;
-
 public class ShiftRight extends Operation {
     public ShiftRight(Expression a, Expression b) {
         super(a, b);
     }
 
     @Override
-    protected String getSymbol() {
+    public String getSymbol() {
         return ">>";
     }
 
