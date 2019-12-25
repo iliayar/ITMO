@@ -1,6 +1,6 @@
 import math
 import datetime
-
+import sys
 
 
 class Vector3:
@@ -37,7 +37,7 @@ class Vector3:
         return Vector3(nx,ny,nz)
 
     def dot(self, v):
-        return abs(v.x*self.x + v.y*self.y + v.z*self.z)
+        return v.x*self.x + v.y*self.y + v.z*self.z
 
     def cross(self,vect):
         nx = self.y * vect.z - self.z * vect.y
@@ -57,14 +57,7 @@ class Vector3:
     def __sub__(self, v):
         return self.sub(v)
 
-def angle(cls, v1, v2):
-    try:
-        cos = (v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/(v1.magnitude()*v2.magnitude())
-        return cos
-    except ZeroDivisionError:
-        return 0.0
-
-class Plane:
+class Polygon:
     points = []
 
     def __init__(self, *points):
@@ -79,7 +72,7 @@ class Plane:
         self.d = -(self.n.x*points[0].x + self.n.y*points[0].y + self.n.z*points[0].z) 
 
     def __str__(self):
-        res = "Plane (\n"
+        res = "Polygon (\n"
         res += "    " + str(self.points[0]) + ",\n"
         res += "    " + str(self.points[1]) + ",\n"
         res += "    " + str(self.points[2]) + ";\n"
@@ -103,13 +96,15 @@ class Plane:
                 return None
             return Vector3(axis['x'], -(n.x*axis['x'] + n.z*axis['z'] + d)/n.y, axis['z'])    
 
+    def containsPoint(self, p):
+        return -EPS <= self.n.x*p.x + self.n.y*p.y + self.n.z*p.z + self.d <= EPS
 
 
 class Line:
 
     def __init__(self, v, p):
-        self.s = v.mul(1/v.magnitude())
-        # self.s = v
+        # self.s = v.mul(1/v.magnitude())
+        self.s = v
         self.p0 = p;
 
     def __str__(self):
@@ -132,20 +127,27 @@ class Line:
         elif('z' in axis):
             if s.z == 0:
                 return None
-            return Vector3((axis['z'] - p0.z)/s.z*s.x + p0.x, (axis['z'] - p0.z)/s.z*s.y + p0.y, axis['z'])    
+            return Vector3((axis['z'] - p0.z)/s.z*s.x + p0.x, (axis['z'] - p0.z)/s.z*s.y + p0.y, axis['z'])
 
-def dist(p1, p2):
+def angle(cls, v1, v2):
+    try:
+        cos = (v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/(v1.magnitude()*v2.magnitude())
+        return cos
+    except ZeroDivisionError:
+        return 0.0
+
+def distance(p1, p2):
     return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
 
-def intersect(line, plane):
+def intersect(line, polygon):
     X = line.p0
-    A = plane.points[0]
+    A = polygon.points[0]
 
     v = A - X
 
-    d = plane.n.dot(v)
+    d = polygon.n.dot(v)
 
-    e = plane.n.dot(line.s)
+    e = polygon.n.dot(line.s)
 
     res = None
 
@@ -159,20 +161,37 @@ def intersect(line, plane):
 def reflect(v,n):
     return v - n.mul(n.dot(v)*2)
 
-def inTriangle(p, plane):
-    
-    A = plane.points[0]
-    B = plane.points[1]
-    C = plane.points[2]
+def inPolygon(p, polygon):
+    side = []
+    for i in range(len(polygon.points)):
+        t0 = polygon.points[(i+1)%len(polygon.points)] - polygon.points[i]
+        t1 = p - polygon.points[i]
 
-    a1 = (A - p).cross(B - p).magnitude()
-    a2 = (B - p).cross(C - p).magnitude()
-    a3 = (C - p).cross(A - p).magnitude()
-    a4 = (B - A).cross(C - A).magnitude()
+        side += [t0.cross(t1).dot(polygon.n)]
 
-    if a1 + a2 + a3 - 1e-4 <= a4:
+    test1 = [1 for c in side if c <= 0]
+    test2 = [1 for c in side if c >= 0]
+
+    if (len(test1) == len(side)) and polygon.containsPoint(p):
         return True
+
     return False
+
+
+# def inTriangle(p, polygon):
+    
+#     A = polygon.points[0]
+#     B = polygon.points[1]
+#     C = polygon.points[2]
+
+#     a1 = (A - p).cross(B - p).magnitude()
+#     a2 = (B - p).cross(C - p).magnitude()
+#     a3 = (C - p).cross(A - p).magnitude()
+#     a4 = (B - A).cross(C - A).magnitude()
+
+#     if a1 + a2 + a3 - 1e-4 <= a4:
+#         return True
+#     return False
 
 def log(*args):
     print("["+str(datetime.datetime.now())+"]", *args)
@@ -182,15 +201,19 @@ def toDegrees(angle):
 
     return res
 
-EPS = 0.01
+DRAWING = "LOCAL" in sys.argv
+
+DRAW_EPS = 0.01
+EPS = 1e-9
 
 inp = open("input.txt", "r")
+out = open("output.txt", "w")
 
 A = Vector3.fromstring(inp.readline());
 B = Vector3.fromstring(inp.readline());
 C = Vector3.fromstring(inp.readline());
-D = A + C - B
 C1 = Vector3.fromstring(inp.readline());
+D = A + C - B
 B1 = B + C1 - C
 A1 = A + B1 - B
 D1 = A1 + D - A
@@ -200,113 +223,121 @@ power = int(inp.readline())
 n = int(inp.readline());
 
 mirrors = []
+cube = [Polygon(A,B,C,D),Polygon(A,A1,B1,B),Polygon(A,A1,D1,D),
+        Polygon(C,C1,B1,B),Polygon(C,C1,D1,D),Polygon(A1,B1,C1,D1)]
 
 for i in range(n):
     p1 = Vector3.fromstring(inp.readline())
     p2 = Vector3.fromstring(inp.readline())
     p3 = Vector3.fromstring(inp.readline())
-    plane = Plane(p1,p2,p3)
-    mirrors += [plane]
+    polygon = Polygon(p1,p2,p3)
+    mirrors += [polygon]
 
 ray = Line(direction, entry)
 
-print(mirrors[0])
 
-# exit()
-
-#############_DRAWING_######################
-from mpl_toolkits.mplot3d import Axes3D
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-import matplotlib.pyplot as plt
-import numpy as np
-#############_DRAWING_######################
+#############_DRAWING_BEGIN_######################
+if DRAWING:
+    from mpl_toolkits.mplot3d import Axes3D
+    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+    import matplotlib.pyplot as plt
+    import numpy as np
 
 
-fig = plt.figure()
-ax = Axes3D(fig)
+    fig = plt.figure()
+    ax = Axes3D(fig)
 
-def draw_line(p1,p2, edgecolor="yellow", linewidths=2, alpha=0.8):
-    x = [p1.x, p2.x]
-    y = [p1.y, p2.y]
-    z = [p1.z, p2.z]
-    verts = [list(zip(x,y,z))]
-    ax.add_collection3d(Poly3DCollection(verts, alpha=alpha, linewidths=linewidths, edgecolor=edgecolor))
+    def draw_polygon(polygon, alpha=0.1, linewidths=2, facecolor='b', edgecolor='black'):
+        x = []
+        y = []
+        z = []
+        for c in polygon.points:
+            x += [c.x]
+            y += [c.y]
+            z += [c.z]
+        verts = [list(zip(x,y,z))]
+        ax.add_collection3d(Poly3DCollection(verts, alpha=alpha, linewidths=linewidths, 
+                    facecolor=facecolor,edgecolor=edgecolor))
 
-def draw_point(p, linewidths=10, edgecolor="r"):
-    x = [p.x + EPS, p.x, p.x]
-    y = [p.y, p.y + EPS, p.y]
-    z = [p.z, p.z, p.z + EPS]
-    verts = [list(zip(x,y,z))]
-    ax.add_collection3d(Poly3DCollection(verts, linewidths=linewidths, edgecolor=edgecolor))
+    def draw_line(p1,p2, edgecolor="yellow", linewidths=2, alpha=1):
+        x = [p1.x, p2.x]
+        y = [p1.y, p2.y]
+        z = [p1.z, p2.z]
+        verts = [list(zip(x,y,z))]
+        ax.add_collection3d(Poly3DCollection(verts, alpha=alpha, linewidths=linewidths, edgecolor=edgecolor))
+
+    def draw_point(p, linewidths=10, edgecolor="r"):
+        x = [p.x + DRAW_EPS, p.x, p.x]
+        y = [p.y, p.y + DRAW_EPS, p.y]
+        z = [p.z, p.z, p.z + DRAW_EPS]
+        verts = [list(zip(x,y,z))]
+        ax.add_collection3d(Poly3DCollection(verts, linewidths=linewidths, edgecolor=edgecolor, facecolor=edgecolor))
 
 
-x = [A.x, B.x, C.x, D.x]
-y = [A.y, B.y, C.y, D.y]
-z = [A.z, B.z, C.z, D.z]
-verts = [list(zip(x,y,z))]
-ax.add_collection3d(Poly3DCollection(verts, alpha=0.1, linewidths=2, facecolor='b',edgecolor='black'))
+    for c in cube:
+        draw_polygon(c)
 
-x = [A.x, A1.x, B1.x, B.x]
-y = [A.y, A1.y, B1.y, B.y]
-z = [A.z, A1.z, B1.z, B.z]
-verts = [list(zip(x,y,z))]
-ax.add_collection3d(Poly3DCollection(verts, alpha=0.1, linewidths=2, facecolor='b',edgecolor='black'))
+    for c in mirrors:
+        draw_polygon(c,alpha=0.5,facecolor='r')
+#############_DRAWING_END_######################
 
-x = [A.x, A1.x, D1.x, D.x]
-y = [A.y, A1.y, D1.y, D.y]
-z = [A.z, A1.z, D1.z, D.z]
-verts = [list(zip(x,y,z))]
-ax.add_collection3d(Poly3DCollection(verts, alpha=0.1, linewidths=2, facecolor='b',edgecolor='black'))
+while True:
+    if power <= 0:
+        if DRAWING:
+            draw_point(ray.p0, edgecolor='b')
+            plt.show()
+        out.write(str(0) + "\n")
+        out.write("%f %f %f" % (ray.p0.x, ray.p0.y, ray.p0.z) + "\n")
+        exit(0)
+        
+    
+    m = 1e10
+    mi = -1
 
-x = [C.x, C1.x, B1.x, B.x]
-y = [C.y, C1.y, B1.y, B.y]
-z = [C.z, C1.z, B1.z, B.z]
-verts = [list(zip(x,y,z))]
-ax.add_collection3d(Poly3DCollection(verts, alpha=0.1, linewidths=2, facecolor='b',edgecolor='black'))
+    for i, mirror in enumerate(mirrors):
+        if inPolygon(ray.p0, mirror):
+            continue
+        p = intersect(ray,mirror)
 
-x = [C.x, C1.x, D1.x, D.x]
-y = [C.y, C1.y, D1.y, D.y]
-z = [C.z, C1.z, D1.z, D.z]
-verts = [list(zip(x,y,z))]
-ax.add_collection3d(Poly3DCollection(verts, alpha=0.1, linewidths=2, facecolor='b',edgecolor='black'))
+        if p != None and inPolygon(p,mirror)  and ray.s.dot(p - ray.p0) >= 0:
+            if distance(p, ray.p0) < m:
+                m = distance(p, ray.p0)
+                mi = i
 
-x = [A1.x, B1.x, C1.x, D1.x]
-y = [A1.y, B1.y, C1.y, D1.y]
-z = [A1.z, B1.z, C1.z, D1.z]
-verts = [list(zip(x,y,z))]
-ax.add_collection3d(Poly3DCollection(verts, alpha=0.1, linewidths=2, facecolor='b',edgecolor='black'))
+    for side in cube:
+        if inPolygon(ray.p0, side):
+            continue
 
-for c in mirrors:
-    x = []
-    y = []
-    z = []
-    for j in range(3):
-        x += [c.points[j].x]
-        y += [c.points[j].y]
-        z += [c.points[j].z]
-    verts = [list(zip(x,y,z))]
-    ax.add_collection3d(Poly3DCollection(verts, alpha=0.5, linewidths=2, facecolor='r',edgecolor='black'))
+        p = intersect(ray,side)
 
-for i in range(2):
-    test_plane = mirrors[i]
 
-    p = intersect(ray, test_plane)
+        if p != None and inPolygon(p,side) and ray.s.dot(p - ray.p0) >= 0:
 
-    print(p)
-    print(inTriangle(p,test_plane))
-    if(p != None and inTriangle(p,test_plane)):
-        draw_line(ray.getPoint(x=entry.x), ray.getPoint(x=p.x))
+            if distance(p, ray.p0) < m:
+                out.write(str(1) + "\n")
+                out.write(str(power) + "\n")
+                out.write("%f %f %f" % (p.x, p.y, p.z) + "\n")
+                out.write("%f %f %f" % (ray.s.x, ray.s.y, ray.s.z) + "\n")
 
+                if DRAWING:
+                    draw_polygon(side, facecolor="cyan")
+                    draw_line(ray.p0,ray.getPoint(x=p.x))
+                    draw_point(p, edgecolor="black")
+                    plt.show()
+
+                exit()
+
+    p = intersect(ray,mirrors[mi])
+
+    if DRAWING:
         draw_point(p)
+        draw_line(ray.p0,ray.getPoint(x=p.x))
 
-        test_r = Line(reflect(ray.s, test_plane.n), p)
-        n_line = Line(test_plane.n, p)
-        yaba = draw_line(n_line.getPoint(x=entry.x), n_line.getPoint(x=p.x), edgecolor="cyan")
-        # print(test_r)
-        # draw_line(test_r.getPoint(x=entry.x), test_r.getPoint(y=p.y))
-
-        ray = test_r
-        entry = p
+    power -= 1
+    ray = Line(reflect(ray.s, mirrors[mi].n),p)
 
 
-plt.show()
+
+#############_DRAWING_FINAL_######################
+if DRAWING:
+    plt.show()
