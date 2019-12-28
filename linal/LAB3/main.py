@@ -97,14 +97,14 @@ class Polygon:
             return Vector3(axis['x'], -(n.x*axis['x'] + n.z*axis['z'] + d)/n.y, axis['z'])    
 
     def containsPoint(self, p):
-        return -EPS <= self.n.x*p.x + self.n.y*p.y + self.n.z*p.z + self.d <= EPS
+        return -2*EPS <= self.n.x*p.x + self.n.y*p.y + self.n.z*p.z + self.d <= 2*EPS
 
 
 class Line:
 
     def __init__(self, v, p):
-        # self.s = v.mul(1/v.magnitude())
-        self.s = v
+        self.s = v.mul(1/v.magnitude())
+        # self.s = v
         self.p0 = p;
 
     def __str__(self):
@@ -172,7 +172,7 @@ def inPolygon(p, polygon):
     test1 = [1 for c in side if c <= 0]
     test2 = [1 for c in side if c >= 0]
 
-    if (len(test1) == len(side)) and polygon.containsPoint(p):
+    if (len(test1) == len(side) or len(test2) == len(side)) and polygon.containsPoint(p):
         return True
 
     return False
@@ -233,6 +233,8 @@ for i in range(n):
     polygon = Polygon(p1,p2,p3)
     mirrors += [polygon]
 
+inp.close()
+
 ray = Line(direction, entry)
 
 
@@ -283,15 +285,17 @@ if DRAWING:
 
 while True:
     if power <= 0:
+        out.write(str(0) + "\n")
+        out.write("%f %f %f" % (ray.p0.x, ray.p0.y, ray.p0.z) + "\n")
+        out.close()
         if DRAWING:
             draw_point(ray.p0, edgecolor='b')
             plt.show()
-        out.write(str(0) + "\n")
-        out.write("%f %f %f" % (ray.p0.x, ray.p0.y, ray.p0.z) + "\n")
+
         exit(0)
         
     
-    m = 1e10
+    m = 1e18
     mi = -1
 
     for i, mirror in enumerate(mirrors):
@@ -299,33 +303,41 @@ while True:
             continue
         p = intersect(ray,mirror)
 
-        if p != None and inPolygon(p,mirror)  and ray.s.dot(p - ray.p0) >= 0:
+        if p != None and mirror.containsPoint(p)  and ray.s.dot(p - ray.p0) > 0:
             if distance(p, ray.p0) < m:
                 m = distance(p, ray.p0)
                 mi = i
 
-    for side in cube:
+    m1 = 1e18
+    mi1 = -1
+
+    for i, side in enumerate(cube):
         if inPolygon(ray.p0, side):
             continue
 
         p = intersect(ray,side)
 
 
-        if p != None and inPolygon(p,side) and ray.s.dot(p - ray.p0) >= 0:
+        if p != None and inPolygon(p,side) and ray.s.dot(p - ray.p0) > 0:
 
-            if distance(p, ray.p0) < m:
-                out.write(str(1) + "\n")
-                out.write(str(power) + "\n")
-                out.write("%f %f %f" % (p.x, p.y, p.z) + "\n")
-                out.write("%f %f %f" % (ray.s.x, ray.s.y, ray.s.z) + "\n")
+            if distance(p, ray.p0) <= m1:
+                m1 = distance(p, ray.p0)
+                mi1 = i
 
-                if DRAWING:
-                    draw_polygon(side, facecolor="cyan")
-                    draw_line(ray.p0,ray.getPoint(x=p.x))
-                    draw_point(p, edgecolor="black")
-                    plt.show()
+    if mi == -1 or m1 <= m:
+        p = intersect(ray, cube[mi1])
+        out.write(str(1) + "\n")
+        out.write(str(power) + "\n")
+        out.write("%f %f %f" % (p.x, p.y, p.z) + "\n")
+        out.write("%f %f %f" % (ray.s.x, ray.s.y, ray.s.z) + "\n")
+        out.close()
+        if DRAWING:
+            draw_polygon(cube[mi1], facecolor="cyan")
+            draw_line(ray.p0,ray.getPoint(x=p.x))
+            draw_point(p, edgecolor="black")
+            plt.show()
 
-                exit()
+        exit()
 
     p = intersect(ray,mirrors[mi])
 
