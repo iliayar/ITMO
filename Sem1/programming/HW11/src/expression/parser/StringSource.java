@@ -10,6 +10,7 @@ public class StringSource implements ExpressionSource {
 
     @Override
     public boolean hasNext() {
+//        System.err.println("hasNext " + src.charAt(index));
         return src.length() > index;
     }
 
@@ -18,13 +19,14 @@ public class StringSource implements ExpressionSource {
         if(index >= src.length()) {
             return '\0';
         }
+//        System.err.println("Next char after " + src.charAt(index));
         return src.charAt(index++);
     }
 
     @Override
     public ExpressionException error(String message) {
         if(index >= src.length()) {
-            return  new ExpressionException(message + " but index out of range");
+            return  new ExpressionException(message + " and end of string reached");
         }
         return new ExpressionException(message + " at " + index + ", which is \'" + src.charAt(index) + "\'");
     }

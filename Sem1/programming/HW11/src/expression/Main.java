@@ -17,8 +17,11 @@ public class Main {
             new Const(1)
         );
 
-        System.out.println(expr.evaluate(x));
-        
+        try {
+            System.out.println(expr.evaluate(x));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] argv) {

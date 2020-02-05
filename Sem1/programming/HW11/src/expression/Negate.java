@@ -1,7 +1,7 @@
 package expression;
 
-public class Inverse extends UnaryOperation {
-    public Inverse(Expression a) {
+public class Negate extends UnaryOperation {
+    public Negate(Expression a) {
         super(a);
     }
 
@@ -21,7 +21,7 @@ public class Inverse extends UnaryOperation {
     }
 
     @Override
-    protected int eval(int a) {
+    protected int eval(int a) throws IntegerOverflowException {
         return -a;
     }
 

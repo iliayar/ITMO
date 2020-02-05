@@ -11,7 +11,7 @@ public class Multiply extends Operation {
     }
 
     @Override
-    protected int eval(int a, int b) {
+    protected int eval(int a, int b) throws IntegerOverflowException {
         return a*b;
     }
 

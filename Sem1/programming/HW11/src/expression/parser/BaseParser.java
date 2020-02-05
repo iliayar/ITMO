@@ -2,7 +2,7 @@ package expression.parser;
 
 import expression.TripleExpression;
 
-public abstract class BaseParser implements expression.parser.Parser {
+public abstract class BaseParser implements expression.exceptions.Parser {
     protected ExpressionSource src;
     protected char ch;
 
@@ -15,6 +15,7 @@ public abstract class BaseParser implements expression.parser.Parser {
     }
 
     protected boolean test(char expect) {
+//        System.err.println("Testing " + expect + " found " + ch);
         if(ch == expect) {
             nextChar();
             return true;
@@ -30,7 +31,7 @@ public abstract class BaseParser implements expression.parser.Parser {
 
     protected void expect(final char c) {
         if(ch != c) {
-            throw error("Expected \'" + c + "\' \'" + ch + "\' found");
+            throw error("Expected \'" + c + "\'");
         }
         nextChar();
     }
