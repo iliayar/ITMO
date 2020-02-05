@@ -22,6 +22,13 @@ run_test:
 build_parser: build
 	javac expression/parser/*.java
 	
+build_exceptions: build_parser
+	javac expression/exceptions/*.java
+run_exceptions_test:
+	java -ea expression.exceptions.ExceptionsTest
+run_exceptions:
+	java expression.exceptions.Main
+
 run_parser:
 	java expression.parser.Main
 run_parser_test:

@@ -11,7 +11,7 @@ public class Divide extends Operation {
     }
 
     @Override
-    protected int eval(int a, int b) {
+    protected int eval(int a, int b) throws DivisonByZeroException, IntegerOverflowException {
         return a / b;
     }
 

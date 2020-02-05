@@ -16,7 +16,6 @@ public class Main {
         System.out.println(expr.toString());
 //        System.out.println(exprString.length());
         System.out.println(expr.toMiniString());
-        System.out.println(expr.evaluate(-1790566155, -443569553, -1808085248));
     }
 
     static public void main(String args[]) {

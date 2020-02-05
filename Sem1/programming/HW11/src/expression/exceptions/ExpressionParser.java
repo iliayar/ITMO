@@ -1,6 +1,9 @@
-package expression.parser;
+package expression.exceptions;
 
 import expression.*;
+import expression.parser.BaseParser;
+import expression.parser.ExpressionSource;
+import expression.parser.StringSource;
 
 public class ExpressionParser extends BaseParser {
 
@@ -15,9 +18,14 @@ public class ExpressionParser extends BaseParser {
 
     @Override
     public CommonExpression parse(String src) {
+//        System.err.println("DEBUG String: " + src);
         this.src = new StringSource(src);
         nextChar();
-        return parseExpression();
+        CommonExpression res = parseExpression();
+        if(ch != '\0') {
+            throw error("End of expression expected");
+        }
+        return res;
     }
 
     private long parseNumber() {
@@ -30,6 +38,7 @@ public class ExpressionParser extends BaseParser {
     }
 
     private char parseOperation() {
+//        System.err.println("DEBUG parsing operation: " + ch);
         if(in("+-*/")) {
             char c = ch;
             nextChar();
@@ -45,8 +54,13 @@ public class ExpressionParser extends BaseParser {
     }
 
     private CommonExpression parseOperand() {
+//        System.err.println("DEBUG parsing operand: " + ch);
         if(between('0','9')) {
-            return new Const(parseNumber());
+            long n = parseNumber();
+            if(n > Integer.MAX_VALUE) {
+                throw error("Too large number");
+            }
+            return new Const(n);
         } else if(test('x')) {
             return new Variable("x");
         } else if(test('y')) {
@@ -56,13 +70,17 @@ public class ExpressionParser extends BaseParser {
         } else if(test('-')) {
             skipWhitespace();
             if(between('0','9')) {
-                return new Const(-parseNumber());
+                long n = parseNumber();
+                if(-n < Integer.MIN_VALUE) {
+                    throw error("Too large number");
+                }
+                return new Const(-n);
             } else if(test('(')) {
                 CommonExpression expr = parseExpression();
-                test(')');
-                return new Negate(expr);
+                expect(')');
+                return new CheckedNegate(expr);
             } else {
-                return new Negate(parseOperand());
+                return new CheckedNegate(parseOperand());
             }
         } else if(test('d')) {
             expect("igits");
@@ -86,7 +104,7 @@ public class ExpressionParser extends BaseParser {
             }
         }
 
-        throw error("Operand expected " + ch + " found");
+        throw error("Operand expected, " + ch + " found");
     }
 
     public CommonExpression parseExpression() {
@@ -96,6 +114,7 @@ public class ExpressionParser extends BaseParser {
     private CommonExpression parseExpression(int prior) {
 
         skipWhitespace();
+//        System.out.println("Testing ayayay:" + ch);
 
         if(prior == 0) {
             return parseOperand();
@@ -111,7 +130,6 @@ public class ExpressionParser extends BaseParser {
         }
 
         CommonExpression firstOperand = null;
-
         if(prior == 1 && test('(')) {
             firstOperand = parseExpression();
             expect(')');
@@ -132,13 +150,13 @@ public class ExpressionParser extends BaseParser {
             }
             skipWhitespace();
             if(operation == '*') {
-                firstOperand = new Multiply(firstOperand, secondOperand);
+                firstOperand = new CheckedMultiply(firstOperand, secondOperand);
             } else if(operation == '/') {
-                firstOperand = new Divide(firstOperand, secondOperand);
+                firstOperand = new CheckedDivide(firstOperand, secondOperand);
             } else if(operation == '+') {
-                firstOperand = new Add(firstOperand, secondOperand);
+                firstOperand = new CheckedAdd(firstOperand, secondOperand);
             } else if(operation == '-'){
-                firstOperand = new Subtract(firstOperand, secondOperand);
+                firstOperand = new CheckedSubtract(firstOperand, secondOperand);
             } else if(operation == '<') {
                 firstOperand = new ShiftLeft(firstOperand, secondOperand);
             } else {
@@ -146,7 +164,6 @@ public class ExpressionParser extends BaseParser {
             }
 
         }
-
         return firstOperand;
     }
 

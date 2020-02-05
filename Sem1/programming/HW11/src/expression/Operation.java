@@ -13,13 +13,13 @@ public abstract class Operation implements CommonExpression {
     }
 
     @Override
-    public int evaluate(int x) {
+    public int evaluate(int x) throws IntegerOverflowException, DivisonByZeroException {
         return eval(a.evaluate(x), b.evaluate(x));
     }
 
 
     @Override
-    public int evaluate(int x, int y, int z) {
+    public int evaluate(int x, int y, int z) throws IntegerOverflowException, DivisonByZeroException {
         return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
     }
 
@@ -93,5 +93,5 @@ public abstract class Operation implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract int eval(int a, int b);
+    protected abstract int eval(int a, int b) throws IntegerOverflowException, DivisonByZeroException;
 }
