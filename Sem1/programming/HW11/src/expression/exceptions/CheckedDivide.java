@@ -16,8 +16,7 @@ public class CheckedDivide extends Divide {
         if(b == 0) {
             throw new DivisonByZeroException(a,b);
         }
-        if((long)a/(long)b > Integer.MAX_VALUE ||
-                (long)a/(long)b < Integer.MIN_VALUE) {
+        if((long)a/(long)b > Integer.MAX_VALUE) {
             throw new IntegerOverflowException(a+"+"+b);
         }
         return a/b;

@@ -23,6 +23,7 @@ public class StringSource implements ExpressionSource {
         return src.charAt(index++);
     }
 
+
     @Override
     public ParserException error(String message) {
         if(index-1 >= src.length()) {
