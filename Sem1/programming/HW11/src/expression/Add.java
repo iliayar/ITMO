@@ -12,7 +12,7 @@ public class Add extends Operation {
     }
 
     @Override
-    protected int eval(int a, int b) throws IntegerOverflowException {
+    protected int eval(int a, int b) {
         return a + b;
     }
 

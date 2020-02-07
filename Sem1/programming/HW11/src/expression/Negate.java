@@ -21,7 +21,7 @@ public class Negate extends UnaryOperation {
     }
 
     @Override
-    protected int eval(int a) throws IntegerOverflowException {
+    protected int eval(int a) {
         return -a;
     }
 
