@@ -1,5 +1,6 @@
 all: build run
-parser: build_parser run_parser
+parser: build_parser run_parser run_parser_test
+exceptions: build_exceptions run_exceptions run_exceptions_test
 
 build_base:
 	javac base/*.java

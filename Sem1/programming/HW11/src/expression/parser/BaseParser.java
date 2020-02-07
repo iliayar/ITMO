@@ -36,7 +36,7 @@ public abstract class BaseParser implements expression.exceptions.Parser {
         nextChar();
     }
 
-    protected ExpressionException error(String message) {
+    protected ParserException error(String message) {
         return src.error(message);
     }
 

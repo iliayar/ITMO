@@ -58,7 +58,7 @@ public class ExpressionParser extends BaseParser {
         if(between('0','9')) {
             long n = parseNumber();
             if(n > Integer.MAX_VALUE) {
-                throw error("Too large number");
+                throw new IntegerOverflowException(Long.toString(n));
             }
             return new Const(n);
         } else if(test('x')) {
@@ -72,7 +72,7 @@ public class ExpressionParser extends BaseParser {
             if(between('0','9')) {
                 long n = parseNumber();
                 if(-n < Integer.MIN_VALUE) {
-                    throw error("Too large number");
+                    throw new IntegerOverflowException(Long.toString(-n));
                 }
                 return new Const(-n);
             } else if(test('(')) {
@@ -104,7 +104,7 @@ public class ExpressionParser extends BaseParser {
             }
         }
 
-        throw error("Operand expected, " + ch + " found");
+        throw error("Operand expected ");
     }
 
     public CommonExpression parseExpression() {
