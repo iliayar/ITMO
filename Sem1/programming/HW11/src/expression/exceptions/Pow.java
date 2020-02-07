@@ -1,6 +1,7 @@
 package expression.exceptions;
 
 import expression.CommonExpression;
+import expression.DivisonByZeroException;
 import expression.IntegerOverflowException;
 import expression.Operation;
 
@@ -30,14 +31,18 @@ public class Pow extends Operation {
 
     public int eval(int a, int b) {
 
-        int res = a;
+        if(b < 0 || (a == 0 && b == 0)) {
+            throw new DivisonByZeroException(a,b);
+        }
 
-        for(int i = 0; i < b - 1; ++i) {
-            if((long)res * (long)res > Integer.MAX_VALUE ||
-                    (long)res * (long)res < Integer.MIN_VALUE) {
+        int res = 1;
+
+        for(int i = 0; i < b; ++i) {
+            if((long)res * (long)a > Integer.MAX_VALUE ||
+                    (long)res * (long)a < Integer.MIN_VALUE) {
                 throw new IntegerOverflowException(a + "**" + b);
             }
-            res *= res;
+            res *= a;
         }
 
         return res;

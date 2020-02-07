@@ -7,6 +7,8 @@ import expression.parser.StringSource;
 
 public class ExpressionParser extends BaseParser {
 
+    private String parsedOperation = null;
+
     public ExpressionParser() {
     }
 
@@ -37,28 +39,47 @@ public class ExpressionParser extends BaseParser {
     }
 
     private String parseOperation() {
+        if(parsedOperation != null) {
+            return parsedOperation;
+        }
         if(in("+-*/")) {
             char c = ch;
             if(test('*')) {
                 if(test('*')) {
-                    return "**";
+                    parsedOperation = "**";
+                    return parsedOperation;
                 }
             } else if(test('/')) {
                 if(test('/')) {
-                    return "//";
+                    parsedOperation = "//";
+                    return parsedOperation;
                 }
             } else {
                 nextChar();
             }
-            return Character.toString(c);
+            parsedOperation = Character.toString(c);
         } else if(test('<')) {
             expect('<');
-            return "<<";
+            parsedOperation = "<<";
         } else if(test('>')) {
             expect('>');
-            return ">";
+            parsedOperation = ">>";
+        } else {
+            throw error("One of \'+, -, *, <<, >>, /\' operation expected");
         }
-        throw error("One of \'+, -, *, <<, >>, /\' operation expected");
+
+        return parsedOperation;
+    }
+
+    private boolean testOperation(String expect) {
+//        System.out.println(parsedOperation + " Testing operation " + ch + " " + expect);
+        if(in("*+-<>/")) {
+            parseOperation();
+        }
+        if(parsedOperation != null && parsedOperation.equals(expect)) {
+            return true;
+        }
+        return false;
     }
 
     private CommonExpression parseOperand() {
@@ -118,45 +139,71 @@ public class ExpressionParser extends BaseParser {
         return parse3PriorExpression();
     }
 
+//
+//    private CommonExpression parse0PriorExpression() {
+//
+//        skipWhitespace();
+//        return parseOperand();
+//    }
 
-    private CommonExpression parse0PriorExpression() {
+    private  CommonExpression parse0PriorExpression() {
 
         skipWhitespace();
-        return parseOperand();
+
+        CommonExpression firstOperand = null;
+
+        if(test('(')) {
+            firstOperand = parseExpression();
+            expect(')');
+        } else {
+            firstOperand = parseOperand();
+        }
+        skipWhitespace();
+        while(testOperation("**") || testOperation("//")) {
+
+            CommonExpression secondOperand = null;
+
+            String operation = parsedOperation;
+            parsedOperation = null;
+
+            skipWhitespace();
+            if(test('(')) {
+                secondOperand = parseExpression();
+                expect(')');
+            } else {
+                secondOperand = parseOperand();
+            }
+            skipWhitespace();
+            if(operation.equals("**")) {
+                firstOperand = new Pow(firstOperand, secondOperand);
+            } else {
+                firstOperand = new Log(firstOperand, secondOperand);
+            }
+        }
+        return firstOperand;
+
     }
 
     private CommonExpression parse1PriorExpression() {
 
         skipWhitespace();
 
-        String opers = "*/";
-
         CommonExpression firstOperand = null;
-        if(test('(')) {
-            firstOperand = parseExpression();
-            expect(')');
-        } else {
-            firstOperand = parse0PriorExpression();
-        }
+        firstOperand = parse0PriorExpression();
         skipWhitespace();
-        while(in(opers)) {
+        while(testOperation("*") || testOperation("/")) {
             CommonExpression secondOperand = null;
 
-            String operation = parseOperation();
+            String operation = parsedOperation;
+            parsedOperation = null;
             skipWhitespace();
-            if(test('(')) {
-                secondOperand = parseExpression();
-                expect(')');
-            } else {
-                secondOperand = parse0PriorExpression();
-            }
+            secondOperand = parse0PriorExpression();
             skipWhitespace();
             if(operation.equals("*")) {
                 firstOperand = new CheckedMultiply(firstOperand, secondOperand);
-            } else if(operation.equals("/")) {
+            } else {
                 firstOperand = new CheckedDivide(firstOperand, secondOperand);
             }
-
         }
         return firstOperand;
     }
@@ -165,23 +212,21 @@ public class ExpressionParser extends BaseParser {
 
         skipWhitespace();
 
-
-        String opers = "+-";
-
-
         CommonExpression firstOperand = null;
         firstOperand = parse1PriorExpression();
         skipWhitespace();
-        while(in(opers)) {
+        while(testOperation("+") || testOperation("-")) {
             CommonExpression secondOperand = null;
 
-            String operation = parseOperation();
+            String operation = parsedOperation;
+            parsedOperation = null;
+
             skipWhitespace();
             secondOperand = parse1PriorExpression();
             skipWhitespace();
             if(operation.equals("+")) {
                 firstOperand = new CheckedAdd(firstOperand, secondOperand);
-            } else if(operation.equals("-")){
+            } else {
                 firstOperand = new CheckedSubtract(firstOperand, secondOperand);
             }
         }
@@ -192,16 +237,16 @@ public class ExpressionParser extends BaseParser {
 
         skipWhitespace();
 
-        String opers = "<>";
-
         CommonExpression firstOperand = null;
 
         firstOperand = parse2PriorExpression();
         skipWhitespace();
-        while(in(opers)) {
+        while(testOperation("<<") || testOperation(">>")) {
             CommonExpression secondOperand = null;
 
-            String operation = parseOperation();
+            String operation = parsedOperation;
+            parsedOperation = null;
+
             skipWhitespace();
             secondOperand = parse2PriorExpression();
             skipWhitespace();
@@ -210,41 +255,8 @@ public class ExpressionParser extends BaseParser {
             } else {
                 firstOperand = new ShiftRight(firstOperand, secondOperand);
             }
-
         }
         return firstOperand;
-    }
-
-    private  CommonExpression parseM1PriorExpression() {
-
-        skipWhitespace();
-
-        String opers = "*/";
-
-        CommonExpression firstOperand = null;
-
-        firstOperand = parse3PriorExpression();
-        skipWhitespace();
-        while(in(opers)) {
-
-            CommonExpression secondOperand = null;
-
-            String operation = parseOperation();
-            if(!operation.equals("**") && !operation.equals("//")) {
-                break;
-            }
-            skipWhitespace();
-            secondOperand = parse2PriorExpression();
-            skipWhitespace();
-            if(operation.equals("**")) {
-                firstOperand = new ShiftLeft(firstOperand, secondOperand);
-            } else {
-                firstOperand = new ShiftRight(firstOperand, secondOperand);
-            }
-
-        }
-        return firstOperand;
-
     }
 
     private void skipWhitespace() {
