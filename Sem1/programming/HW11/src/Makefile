@@ -25,6 +25,8 @@ build_parser: build
 	
 build_exceptions: build_parser
 	javac expression/exceptions/*.java
+run_exceptions_test_powlog:
+	java -ea expression.exceptions.ExceptionsPowLogTest
 run_exceptions_test:
 	java -ea expression.exceptions.ExceptionsTest
 run_exceptions:

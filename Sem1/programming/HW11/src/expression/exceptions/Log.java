@@ -16,7 +16,7 @@ public class Log extends Operation {
 
     @Override
     public int getPrior() {
-        return 4;
+        return -1;
     }
 
     @Override
