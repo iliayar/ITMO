@@ -86,7 +86,7 @@ public class ExpressionParser extends BaseParser {
             }
         }
 
-        throw error("Operand expected " + ch + " found");
+        throw error("Operand expected");
     }
 
     public CommonExpression parseExpression() {

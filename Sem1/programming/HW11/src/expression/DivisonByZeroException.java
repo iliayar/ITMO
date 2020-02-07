@@ -1,17 +1,8 @@
 package expression;
 
-public class DivisonByZeroException  extends  Exception{
-
-    private int a, b;
+public class DivisonByZeroException  extends  ExpressionException{
 
     public DivisonByZeroException(int a, int b) {
-        this.a = a;
-        this.b = b;
+        super("Divison by zero happens when: " + a + "/" + b);
     }
-
-    @Override
-    public String getMessage() {
-        return "Divison by zero happens when: " + a + "/" + b;
-    }
-
 }

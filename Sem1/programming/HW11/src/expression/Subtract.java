@@ -11,7 +11,7 @@ public class Subtract extends Operation{
     }
 
     @Override
-    protected int eval(int a, int b) throws IntegerOverflowException {
+    protected int eval(int a, int b) throws IntegerOverflowException, DivisonByZeroException {
         return a - b;
     }
 
