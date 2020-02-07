@@ -10,7 +10,7 @@ public class CheckedNegate extends Negate {
     }
 
     @Override
-    protected int eval(int a) throws IntegerOverflowException {
+    protected int eval(int a) {
         if(-(long)a > Integer.MAX_VALUE) {
             throw new IntegerOverflowException("-"+a);
         }

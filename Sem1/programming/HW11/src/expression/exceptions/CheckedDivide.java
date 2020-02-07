@@ -12,7 +12,7 @@ public class CheckedDivide extends Divide {
 
 
     @Override
-    public int eval(int a, int b) throws DivisonByZeroException, IntegerOverflowException {
+    public int eval(int a, int b) {
         if(b == 0) {
             throw new DivisonByZeroException(a,b);
         }

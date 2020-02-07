@@ -12,7 +12,7 @@ public class CheckedAdd extends Add {
     }
 
 
-    public int eval(int a, int b) throws IntegerOverflowException {
+    public int eval(int a, int b) {
 
         if((long)a + (long)b > Integer.MAX_VALUE ||
                 (long)a + (long)b < Integer.MIN_VALUE) {

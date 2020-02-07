@@ -8,12 +8,12 @@ public abstract class UnaryOperation implements CommonExpression {
     }
 
     @Override
-    public int evaluate(int x) throws DivisonByZeroException, IntegerOverflowException {
+    public int evaluate(int x) {
         return eval(a.evaluate(x));
     }
 
     @Override
-    public int evaluate(int x, int y, int z) throws DivisonByZeroException, IntegerOverflowException {
+    public int evaluate(int x, int y, int z) {
         int resA, resB;
         return (int)eval(a.evaluate(x,y,z));
     }
@@ -67,6 +67,6 @@ public abstract class UnaryOperation implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract int eval(int a) throws IntegerOverflowException;
+    protected abstract int eval(int a);
 
 }
