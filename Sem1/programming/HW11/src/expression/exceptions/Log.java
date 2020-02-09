@@ -1,8 +1,6 @@
 package expression.exceptions;
 
 import expression.CommonExpression;
-import expression.DivisonByZeroException;
-import expression.IntegerOverflowException;
 import expression.Operation;
 
 public class Log extends Operation {
@@ -34,7 +32,7 @@ public class Log extends Operation {
         int res = 0;
 
         if(b <= 0 || b == 1 || a <= 0) {
-            throw new DivisonByZeroException(a,b);
+            throw new LogException(a,b);
         }
 
         while(a > 0) {

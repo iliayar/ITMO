@@ -25,10 +25,10 @@ public class StringSource implements ExpressionSource {
 
 
     @Override
-    public ParserException error(String message) {
-        if(index-1 >= src.length()) {
-            return  new ParserException(message + " and end of string reached");
-        }
-        return new ParserException(message + " at " + (index-1) + ", which is \'" + src.charAt(index-1) + "\'");
+    public String error(String message) {
+//        if(index-1 >= src.length()) {
+//            return message + " and end of string reached";
+//        }
+        return message + " at " + (index-1) + ", which is \'" + src.charAt(index-1) + "\'";
     }
 }
