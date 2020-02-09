@@ -1,6 +1,7 @@
 package expression.parser;
 
 import expression.TripleExpression;
+import expression.exceptions.MissingOperandException;
 
 public abstract class BaseParser implements expression.exceptions.Parser {
     protected ExpressionSource src;
@@ -37,7 +38,7 @@ public abstract class BaseParser implements expression.exceptions.Parser {
     }
 
     protected ParserException error(String message) {
-        return src.error(message);
+        return new ParserException(src.error(message));
     }
 
     protected boolean between(final char from, final char to) {

@@ -3,6 +3,7 @@ package expression.exceptions;
 import expression.*;
 import expression.parser.BaseParser;
 import expression.parser.ExpressionSource;
+import expression.parser.ParserException;
 import expression.parser.StringSource;
 
 public class ExpressionParser extends BaseParser {
@@ -24,6 +25,9 @@ public class ExpressionParser extends BaseParser {
         nextChar();
         CommonExpression res = parseExpression();
         if(ch != '\0') {
+            if(ch == ')') {
+                throw bracketError();
+            }
             throw error("End of expression expected");
         }
         return res;
@@ -132,7 +136,7 @@ public class ExpressionParser extends BaseParser {
             }
         }
 
-        throw error("Operand expected");
+        throw operandError();
     }
 
     public CommonExpression parseExpression() {
@@ -257,6 +261,29 @@ public class ExpressionParser extends BaseParser {
             }
         }
         return firstOperand;
+    }
+
+    @Override
+    protected void expect(final char c) {
+        if(ch != c) {
+            if(c == ')') {
+                throw bracketError();
+            }
+            if(ch == ')') {
+                throw bracketError();
+            }
+            throw error("Expected \'" + c + "\'");
+        }
+        nextChar();
+    }
+
+
+    private MissingOperandException operandError() {
+        return new MissingOperandException(error(""));
+    }
+
+    private MissingBracketException bracketError() {
+        return new MissingBracketException(error(""));
     }
 
     private void skipWhitespace() {
