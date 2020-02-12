@@ -31,3 +31,7 @@
 
 # Visual Studio Code files
 .vscode/
+
+# eclim
+eclimd.log
+.metadata
