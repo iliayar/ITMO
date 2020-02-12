@@ -35,7 +35,7 @@ public class BinarySearch {
         int l = 0, r = a.length;
 
 
-        // inv: [l' : r') subset I and a[r'] <= x < a[l']
+        // inv: [l' : r') subset I and a[r'] <= x <= a[l']
         // Pre: l = 0 and r = max(I) + 1 and [l : r) = I
         // Post: |[l' : r')| = 1 and
         //     ( (exists j in I: a[j] > x and l' = max({j in I: a[j] > x})) or
@@ -46,7 +46,7 @@ public class BinarySearch {
             // Post l < m < r
             int m = (l + r)/2;
 
-            // Pre: l < m < r and a[r] <= x < a[l]
+            // Pre: l < m < r and a[r] <= x <= a[l]
             // Post: |[l' : r')| < |[l : r)| and  a[r'] <= x < a[l']
             if(x < a[m]) {
 
@@ -63,46 +63,62 @@ public class BinarySearch {
         }
 
         // Pre:
-        // ( (exists j in I: a[j] > x and l = max({j in I: a[j] > x})) or
-        // (not exists j in I: a[j] > x and l = 0)
+        //     ( (exists j in I: a[j] > x and l = max({j in I: a[j] > x})) or
+        //     (not exists j in I: a[j] > x and l = 0)
         // Post: l' = min({j in i: a[j] <= x})
         if(a[l] <= x) {
 
-            // Pre: not exists j in I: a[j] > x and l = 0 => forall j in I: a[j] <= x
+            // Pre: not exists j in I: a[j] > x and l = 0 |=> forall j in I: a[j] <= x
             // Post: l = min({j in I: a[j] <= x})
             l += 0;
         } else {
 
-            // Pre: l = max({j in I: a[j] > x}) and forall j in I: j > l a[j] < a[l] => not a[j] > x => a[j] <= x
+            // Pre: l = max({j in I: a[j] > x}) and forall j in I: j > l a[j] < a[l] |=> not a[j] > x |=> a[j] <= x
             // Post: l = min({j in I: a[j] <= x})
             l += 1;
         }
-        // if(l >= a.length) {
-        //     l = a.length - 1;
-        // }
 
         return l;
     }
 
+    // Pre: l >= 0 and [l : r) subset [l' : r') subset I and a[r] <= x <= a[l] and exists j in [l : r): a[j] <= x
+    // Post: i = min({j in I: a[j] <= x}
     private int recBSearch(int x, int[] a, int l, int r) {
 
+        // Pre: r - l = 1 and
+        //     ( (exists j in I: a[j] > x and l = max({j in I: a[j] > x})) or
+        //     (not exists j in I: a[j] > x and l = 0)
+        // Post: i = min(j in I: a[j] <= x)
         if(r - l <= 1) {
-            if(a.length > 1 && l == 0 && a[l+1] != x) {
+            if(a[l] <= x) {
+
+                // Pre: not exists j in I: a[j] > x and l = 0 |=> forall j in I: a[j] <= x
+                // Post: l = min({j in I: a[j] <= x})
                 l += 0;
             } else {
+
+                // Pre: l = max({j in I: a[j] > x}) and forall j in I: j > l a[j] < a[l] |=> not a[j] > x |=> a[j] <= x
+                // Post: l = min({j in I: a[j] <= x})
                 l += 1;
             }
-            // if(l >= a.length) {
-            //     l = a.length - 1;
-            // }
             return l;
         }
 
+        // Pre: [l : r) subset I
+        // Post l < m < r
         int m = (l + r)/2;
 
+        // Pre: l < m < r and a[r] <= x <= a[l]
+        // Post: i = min({j in I: a[j] <= x})
         if(x < a[m]) {
+
+            // Pre: l < m < r and x < a[m] and [m : r) subset [l : r) and a[r] <= x < a[l]
+            // Post: i = min({j in I: a[j] <= x}
             return recBSearch(x, a, m, r);
         } else {
+
+            // Pre: l < m < r and x >= a[m] and [l : m) subset [l : r) and a[m] <= x <= a[l]
+            // Post: i = min({j in I: a[j] <= x}
             return recBSearch(x, a, l, m);
         }
 
