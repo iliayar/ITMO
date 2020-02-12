@@ -29,6 +29,9 @@ public class BinarySearch {
     // Pre: I = [0 : a.length) and exists j in I: a[j] <= x and forall j,k in I: j > k a[j] <= a[k]
     // Post: i: i = min({j in I: a[j] <= x})
     private int bSearch(int x, int[] a) {
+        if(a[a.length - 1] > x) {
+            throw new RuntimeException("a[j] <= x doesn't exist");
+        }
 
         // Pre: a.length > 0
         // Post: l = 0 and r = max(I) + 1 and [l : r) = I
@@ -81,9 +84,12 @@ public class BinarySearch {
         return l;
     }
 
-    // Pre: l >= 0 and [l : r) subset [l' : r') subset I and a[r] <= x <= a[l] and exists j in [l : r): a[j] <= x
+    // Pre: l >= 0 and [l : r) subset [l' : r') subset I and a[r] <= x <= a[l] and exists x0 in a: a0 <= x
     // Post: i = min({j in I: a[j] <= x}
     private int recBSearch(int x, int[] a, int l, int r) {
+        if(a[a.length - 1] > x) {
+            throw new RuntimeException("a[j] <= x doesn't exist");
+        }
 
         // Pre: r - l = 1 and
         //     ( (exists j in I: a[j] > x and l = max({j in I: a[j] > x})) or
