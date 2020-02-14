@@ -46,7 +46,7 @@ public class ExpressionParser extends BaseParser {
 
     private CommonExpression parseOperand() {
         if(between('0','9')) {
-            return new Const(parseNumber());
+            return new Const((int)parseNumber());
         } else if(test('x')) {
             return new Variable("x");
         } else if(test('y')) {
@@ -56,7 +56,7 @@ public class ExpressionParser extends BaseParser {
         } else if(test('-')) {
             skipWhitespace();
             if(between('0','9')) {
-                return new Const(-parseNumber());
+                return new Const((int)-parseNumber());
             } else if(test('(')) {
                 CommonExpression expr = parseExpression();
                 test(')');

@@ -13,7 +13,7 @@ public class ShiftLeft extends Operation {
     }
 
     @Override
-    protected int eval(int a, int b) throws IntegerOverflowException, DivisonByZeroException{
+    protected int eval(int a, int b) {
         return a << b;
     }
 
