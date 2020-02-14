@@ -12,8 +12,9 @@ public class CheckedMultiply extends Multiply {
 
     @Override
     public int eval(int a, int b) {
-        if((long)a * (long)b > Integer.MAX_VALUE ||
-                (long)a * (long)b < Integer.MIN_VALUE) {
+        if((a > 0 && ((b > 0 && b > Integer.MAX_VALUE/a) || (b < 0 && b < Integer.MIN_VALUE/a))) ||
+                (a < 0 && ((b > 0 && a < Integer.MIN_VALUE/b) || (b < 0 && b < Integer.MAX_VALUE/a)))) {
+
             throw new IntegerOverflowException(a+"*"+b);
         }
 

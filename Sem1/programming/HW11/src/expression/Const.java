@@ -7,11 +7,7 @@ public class Const extends Operand {
     public Const(int v) {
         this.value = v;
     }
-
-    public Const(long v) {
-        this.value = (int)v;
-    }
-
+    
     @Override
     public String getSymbol() {
         return Integer.toString(value);

@@ -11,7 +11,7 @@ public class CheckedNegate extends Negate {
 
     @Override
     protected int eval(int a) {
-        if(-(long)a > Integer.MAX_VALUE) {
+        if(a == Integer.MIN_VALUE) {
             throw new IntegerOverflowException("-"+a);
         }
 

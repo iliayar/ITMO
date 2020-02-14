@@ -14,8 +14,8 @@ public class CheckedAdd extends Add {
 
     public int eval(int a, int b) {
 
-        if((long)a + (long)b > Integer.MAX_VALUE ||
-                (long)a + (long)b < Integer.MIN_VALUE) {
+        if((a > 0 && b > 0 && a > Integer.MAX_VALUE - b) ||
+                (a < 0 && b < 0 && a < Integer.MIN_VALUE - b)) {
             throw new IntegerOverflowException(a+"+"+b);
         }
 
