@@ -1,0 +1,24 @@
+expression
+    operand
+    expression ws operation ws expression
+    '(' ws expression ws ')'
+
+operation
+    '-'
+    '+'
+    '*'
+    '/'
+
+operand
+    const
+    var
+    unary_operand
+
+unary_operand
+    '-' operand
+
+var
+    'x'
+
+const
+    '0-9'*

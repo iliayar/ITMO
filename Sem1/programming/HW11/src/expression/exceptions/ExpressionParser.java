@@ -94,9 +94,6 @@ public class ExpressionParser extends BaseParser {
     private CommonExpression parseOperand() {
         if(between('0','9')) {
             int n = parseNumber(false);
-            if(n > Integer.MAX_VALUE) {
-                throw new IntegerOverflowException(Integer.toString(n));
-            }
             return new Const(n);
         } else if(test('x')) {
             return new Variable("x");
