@@ -3,7 +3,6 @@ package expression.exceptions;
 import expression.*;
 import expression.parser.BaseParser;
 import expression.parser.ExpressionSource;
-import expression.parser.ParserException;
 import expression.parser.StringSource;
 
 public class ExpressionParser extends BaseParser {
@@ -33,13 +32,19 @@ public class ExpressionParser extends BaseParser {
         return res;
     }
 
-    private long parseNumber() {
-        StringBuilder sb = new StringBuilder();
+    private int parseNumber(boolean isOtr) {
+        int res = 0;
+
         while(between('0','9')) {
-            sb.append(ch);
+            if((!isOtr && Integer.MAX_VALUE/10 <= res && Integer.MAX_VALUE%10 < ch-'0') ||
+            isOtr && Integer.MIN_VALUE/10 >= res && Integer.MIN_VALUE%10 > -ch+'0' ) {
+                throw new IntegerOverflowException("Parsing const");
+            }
+            res *= 10;
+            res += (isOtr ? -1 : 1)*(ch - '0');
             nextChar();
         }
-        return  Long.parseLong(sb.toString());
+        return  res;
     }
 
     private String parseOperation() {
@@ -88,10 +93,7 @@ public class ExpressionParser extends BaseParser {
 
     private CommonExpression parseOperand() {
         if(between('0','9')) {
-            long n = parseNumber();
-            if(n > Integer.MAX_VALUE) {
-                throw new IntegerOverflowException(Long.toString(n));
-            }
+            int n = parseNumber(false);
             return new Const(n);
         } else if(test('x')) {
             return new Variable("x");
@@ -102,11 +104,8 @@ public class ExpressionParser extends BaseParser {
         } else if(test('-')) {
             skipWhitespace();
             if(between('0','9')) {
-                long n = parseNumber();
-                if(-n < Integer.MIN_VALUE) {
-                    throw new IntegerOverflowException(Long.toString(-n));
-                }
-                return new Const(-n);
+                int n = parseNumber(true);
+                return new Const(n);
             } else if(test('(')) {
                 CommonExpression expr = parseExpression();
                 expect(')');
