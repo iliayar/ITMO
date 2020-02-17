@@ -35,3 +35,4 @@
 # eclim
 eclimd.log
 .metadata
+^TAGS
