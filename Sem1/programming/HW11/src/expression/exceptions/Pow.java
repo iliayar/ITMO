@@ -37,9 +37,9 @@ public class Pow extends Operation {
         int res = 1;
 
         for(int i = 0; i < b; ++i) {
-            if((long)res * (long)a > Integer.MAX_VALUE ||
-                    (long)res * (long)a < Integer.MIN_VALUE) {
-                throw new IntegerOverflowException(a + "**" + b);
+            if((res > 0 && ((a > 0 && a > Integer.MAX_VALUE/res) || (a < 0 && a < Integer.MIN_VALUE/res))) ||
+                    (res < 0 && ((a > 0 && res < Integer.MIN_VALUE/a) || (a < 0 && a < Integer.MAX_VALUE/res)))) {
+                throw new IntegerOverflowException(a+"**"+b);
             }
             res *= a;
         }

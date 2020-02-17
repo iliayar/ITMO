@@ -6,6 +6,8 @@ public class Main {
     private void run(String[] argv) {
         int x = Integer.parseInt(argv[0]);
 
+        String t;
+
         CommonExpression expr = new Add(
             new Multiply(
                 new Variable("x"),
