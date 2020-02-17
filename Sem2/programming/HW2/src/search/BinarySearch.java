@@ -1,3 +1,5 @@
+package search;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -12,10 +14,15 @@ public class BinarySearch {
 
     private void run(String[] args) {
 
+        if(args.length <= 1) {
+            System.out.println("0");
+            return;
+        }
 
         int x = Integer.parseInt(args[0]);
 
         int[] a = new int[args.length - 1];
+
 
         for(int i = 1; i < args.length; ++i) {
             a[i - 1] = Integer.parseInt(args[i]);
@@ -23,14 +30,16 @@ public class BinarySearch {
 
         int i1 = bSearch(x,a);
         int i2 = recBSearch(x, a, 0, a.length);
-        System.out.println("Non recursive: a[" + i1 + "] = " + a[i1] + ", Recursive: a[" + i2 + "] = " + a[i2]);
+        // System.out.println("Non recursive: a[" + i1 + "] = " + a[i1] + ", Recursive: a[" + i2 + "] = " + a[i2]);
+        System.out.println(i1);
     }
 
     // Pre: I = [0 : a.length) and exists j in I: a[j] <= x and forall j,k in I: j > k a[j] <= a[k]
     // Post: i: i = min({j in I: a[j] <= x})
     private int bSearch(int x, int[] a) {
         if(a[a.length - 1] > x) {
-            throw new RuntimeException("a[j] <= x doesn't exist");
+            // throw new RuntimeException("a[j] <= x doesn't exist");
+            return a.length;
         }
 
         // Pre: a.length > 0
@@ -88,7 +97,8 @@ public class BinarySearch {
     // Post: i = min({j in I: a[j] <= x}
     private int recBSearch(int x, int[] a, int l, int r) {
         if(a[a.length - 1] > x) {
-            throw new RuntimeException("a[j] <= x doesn't exist");
+            // throw new RuntimeException("a[j] <= x doesn't exist");
+            return a.length;
         }
 
         // Pre: r - l = 1 and
