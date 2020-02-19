@@ -74,14 +74,13 @@ public class ExpressionParser extends BaseParser {
             expect('>');
             parsedOperation = ">>";
         } else {
-            throw error("One of \'+, -, *, <<, >>, /\' operation expected");
+             throw operatorError();
         }
 
         return parsedOperation;
     }
 
     private boolean testOperation(String expect) {
-//        System.out.println(parsedOperation + " Testing operation " + ch + " " + expect);
         if(in("*+-<>/")) {
             parseOperation();
         }
@@ -279,6 +278,10 @@ public class ExpressionParser extends BaseParser {
 
     private MissingOperandException operandError() {
         return new MissingOperandException(error(""));
+    }
+
+    private MissingOperatorException operatorError() {
+        return new MissingOperatorException(error(""));
     }
 
     private MissingBracketException bracketError() {
