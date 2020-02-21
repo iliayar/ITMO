@@ -85,7 +85,8 @@ public class BinarySearch {
             l += 0;
         } else {
 
-            // Pre: l = max({j in I: a[j] > x}) and forall j in I: j > l a[j] < a[l] |=> not a[j] > x |=> a[j] <= x
+            // Pre:l = max({j in I: a[j] > x}) and
+            //     forall j in I: j > l a[j] < a[l] |=> not a[j] > x |=> a[j] <= x
             // Post: l = min({j in I: a[j] <= x})
             l += 1;
         }
