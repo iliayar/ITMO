@@ -32,7 +32,12 @@
 # Visual Studio Code files
 .vscode/
 
-# eclim
+# emacs
 eclimd.log
 .metadata
 ^TAGS
+.project
+.classpath
+*.iml
+*.xmi
+bin/

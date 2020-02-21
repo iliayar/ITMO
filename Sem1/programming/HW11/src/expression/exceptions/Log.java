@@ -31,11 +31,11 @@ public class Log extends Operation {
 
         int res = 0;
 
-        if(b <= 0 || b == 1 || a <= 0) {
+        if (b <= 0 || b == 1 || a <= 0) {
             throw new LogException(a,b);
         }
 
-        while(a > 0) {
+        while (a > 0) {
             a /= b;
             res++;
         }

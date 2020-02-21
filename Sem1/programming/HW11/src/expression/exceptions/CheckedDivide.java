@@ -13,10 +13,10 @@ public class CheckedDivide extends Divide {
 
     @Override
     public int eval(int a, int b) {
-        if(b == 0) {
+        if (b == 0) {
             throw new DivisonByZeroException(a,b);
         }
-        if(b == -1 && a == Integer.MIN_VALUE) {
+        if (b == -1 && a == Integer.MIN_VALUE) {
             throw new IntegerOverflowException(a+"+"+b);
         }
         return a/b;
