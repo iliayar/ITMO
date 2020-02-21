@@ -9,7 +9,7 @@ public class ExpressionParser extends BaseParser {
 
     private String parsedOperation = null;
 
-    public ExpressionParser() {
+   public ExpressionParser() {
     }
 
     public ExpressionParser(ExpressionSource src) {
@@ -24,7 +24,7 @@ public class ExpressionParser extends BaseParser {
         nextChar();
         CommonExpression res = parseExpression();
         if (ch != '\0') {
-            if (ch == ')') {
+             if (ch == ')') {
                 throw bracketError();
             }
             throw error("End of expression expected");
@@ -275,15 +275,15 @@ public class ExpressionParser extends BaseParser {
 
 
     private MissingOperandException operandError() {
-        return new MissingOperandException(error(""));
+        return new MissingOperandException(error("").getMessage());
     }
 
     private MissingOperatorException operatorError() {
-        return new MissingOperatorException(error(""));
+        return new MissingOperatorException(error("").getMessage());
     }
 
     private MissingBracketException bracketError() {
-        return new MissingBracketException(error(""));
+        return new MissingBracketException(error("").getMessage());
     }
 
     private void skipWhitespace() {

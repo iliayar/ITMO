@@ -12,7 +12,7 @@ public class CheckedSubtract extends Subtract {
 
     @Override
     public int eval(int a, int b) {
-        if((long)a - (long)b < Integer.MIN_VALUE ||
+        if ((long)a - (long)b < Integer.MIN_VALUE ||
                 (long)a - (long)b > Integer.MAX_VALUE) {
             throw new IntegerOverflowException(a+"-"+b);
         }
