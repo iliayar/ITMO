@@ -3,7 +3,7 @@ package queue;
 
 // inv: length < array.size and
 //      tail != head and
-public class ArrayQueue {
+public class ArrayQueue extends AbstractArrayQueue {
 
     private int tail = 0;
     private int head = 0;
@@ -12,27 +12,20 @@ public class ArrayQueue {
 
     private Object[] array = new Object[2];
 
-    private void expandArrayNeeded() {
-        if(tail != head || length == 0) {
-            return;
-        }
-        Object[] temp = new Object[this.array.length*2];
-        System.arraycopy(this.array, this.head, temp, this.array.length + this.head, this.array.length - this.head);
-        System.arraycopy(this.array, 0, temp, 0, this.tail);
-        this.head = this.array.length + this.head;
-        this.array = temp;
-    }
-
     // Pre: ?
     // Post: array[tail] = x
     public void enqueue(Object x) {
-        expandArrayNeeded();
+        if(head == tail && length != 0) {
+            array = expandArray(head, tail, array);
+            head = array.length/2 + head;
+        }
         this.array[this.tail] = x;
         this.tail = (this.tail+1) % this.array.length;
         this.length++;
         // printArray();
     }
 
+    // Pre:  
     public Object dequeue() {
         if(this.array[this.head] == null) {
             return null;

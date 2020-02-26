@@ -2,28 +2,13 @@ package queue;
 
 
 
-public class ArrayQueueADT {
-
-    private int tail = 0;
-    private int head = 0;
-
-    private int length = 0;
-
-    private Object[] array = new Object[2];
-
-    private static void expandArrayNeeded(ArrayQueueADT queue) {
-        if(queue.array[queue.tail] == null) {
-            return;
-        }
-        Object[] temp = new Object[queue.array.length*2];
-        System.arraycopy(queue.array, queue.head, temp, queue.array.length + queue.head, queue.array.length - queue.head);
-        System.arraycopy(queue.array, 0, temp, 0, queue.tail);
-        queue.head = queue.array.length + queue.head;
-        queue.array = temp;
-    }
+public class ArrayQueueADT extends AbstractArrayQueue {
 
     public static void enqueue(ArrayQueueADT queue, Object x) {
-        expandArrayNeeded(queue);
+        if(queue.head == queue.tail && queue.length != 0) {
+            queue.array = expandArray(queue.head, queue.tail, queue.array);
+            queue.head = queue.array.length/2 + queue.head;
+        }
         queue.array[queue.tail] = x;
         queue.tail = (queue.tail+1) % queue.array.length;
         queue.length++;
