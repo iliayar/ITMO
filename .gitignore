@@ -28,6 +28,7 @@
 # Idea files
 **/.idea/
 *.plantuml
+.gradle
 
 # Visual Studio Code files
 .vscode/

@@ -1,9 +1,15 @@
-#include "template.cpp"
 
-#define FILE_IO ON
-#define FILENAME "crypto"
-#undef int
+// Generated at 2020-02-24 04:17:28.330777 
+// By iliayar
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <algorithm>
+#include <cstdio>
 
+
+using namespace std;
+//##################CODE BEGIN#############
 class Matrix {
 public:
     int a[2][2];
@@ -63,21 +69,35 @@ Matrix mult(int l, int r, int v, int lx, int rx) {
 
 //entry
 void sol() {
+    FILE* finp = fopen("crypto.in", "r");
+    FILE* fout = fopen("crypto.out", "w");
+
     int n, m;
-    cin >> MOD >> n >> m;
+    // cin >> MOD >> n >> m;
+    fscanf(finp, "%Ld %Ld %Ld\n", &MOD, &n, &m);
+    // fprintf(fout, "%d %d %d\n", MOD, n, m);
     tree.resize(n*4,I);
     for(int i = 0; i < n; ++i) {
         int a11, a12, a21, a22;
-        cin >> a11 >> a12 >> a21 >> a22;
+        // cin >> a11 >> a12 >> a21 >> a22;
+        fscanf(finp ,"%Ld %Ld\n", &a11, &a12);
+        fscanf(finp ,"%Ld %Ld\n\n", &a21, &a22);
+        // fprintf(fout, "%d", MOD);
         set(i, Matrix(a11,a12, a21, a22), 0, 0, n);
     }
     for(int i = 0; i < m; ++i) {
         int l ,r;
-        cin >> l >> r; l--;
+        // cin >> l >> r; l--;
+        fscanf(finp, "%Ld %Ld", &l, &r); l--;
         Matrix t = mult(l,r,0,0,n);
-        cout << t.a[0][0] << " " << t.a[0][1] << endl;
-        cout << t.a[1][0] << " " << t.a[1][1] << endl << endl;
+        // cout << t.a[0][0] << " " << t.a[0][1] << endl;
+        // cout << t.a[1][0] << " " << t.a[1][1] << endl << endl;
+        fprintf(fout, "%d %d\n", t.a[0][0], t.a[0][1]);
+        fprintf(fout, "%d %d\n\n", t.a[1][0], t.a[1][1]);
     }
 
 }
-
+//##################CODE END###############
+signed main() {
+    sol();
+}

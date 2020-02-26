@@ -7,6 +7,9 @@ public class BinarySearchSpan {
         new BinarySearchSpan().run(args);
     }
 
+
+    // Pre: |args| > 1 for all v in a: v - Integer
+    // Post: i1 = i2 = i: i = min({j in I: a[j] <= x})
     private void run(String[] args) {
 
         if (args.length <= 1) {
