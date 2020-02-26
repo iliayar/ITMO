@@ -35,14 +35,19 @@ public class ExpressionParser extends BaseParser {
     private int parseNumber(boolean isInverse) {
         int res = 0;
 
+
+        String errorMessage = "Parsing const, starts" + src.error("");
+
         while (between('0','9')) {
-            if((!isInverse && Integer.MAX_VALUE/10 <= res && Integer.MAX_VALUE%10 < ch-'0') ||
-            isInverse && Integer.MIN_VALUE/10 >= res && Integer.MIN_VALUE%10 > -ch+'0' ) {
-                throw new IntegerOverflowException("Parsing const" + error("").getMessage());
-            }
-//            CheckedMultiply.checkOverflow((isInverse ? -res : res));
+            // if((!isInverse && Integer.MAX_VALUE/10 <= res && Integer.MAX_VALUE%10 < ch-'0') ||
+            // isInverse && Integer.MIN_VALUE/10 >= res && Integer.MIN_VALUE%10 > -ch+'0' ) {
+            //     throw new IntegerOverflowException("Parsing const" + error("").getMessage());
+            // }
+            int add = (isInverse ? -1 : 1)*(ch - '0');
+            CheckedMultiply.checkOverflow(res, 10, errorMessage);
+            CheckedAdd.checkOverflow(res*10, add, errorMessage);
             res *= 10;
-            res += (isInverse ? -1 : 1)*(ch - '0');
+            res += add;
             nextChar();
         }
         return  res;
@@ -138,13 +143,6 @@ public class ExpressionParser extends BaseParser {
     public CommonExpression parseExpression() {
         return parse3PriorExpression();
     }
-
-//
-//    private CommonExpression parse0PriorExpression() {
-//
-//        skipWhitespace();
-//        return parseOperand();
-//    }
 
     private  CommonExpression parse0PriorExpression() {
 
@@ -275,15 +273,15 @@ public class ExpressionParser extends BaseParser {
 
 
     private MissingOperandException operandError() {
-        return new MissingOperandException(error("").getMessage());
+        return new MissingOperandException(src.error(""));
     }
 
     private MissingOperatorException operatorError() {
-        return new MissingOperatorException(error("").getMessage());
+        return new MissingOperatorException(src.error(""));
     }
 
     private MissingBracketException bracketError() {
-        return new MissingBracketException(error("").getMessage());
+        return new MissingBracketException(src.error(""));
     }
 
     private void skipWhitespace() {
