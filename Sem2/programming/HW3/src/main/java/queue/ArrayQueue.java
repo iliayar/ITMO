@@ -1,7 +1,8 @@
 package queue;
 
 
-
+// inv: length < array.size and
+//      tail != head and
 public class ArrayQueue {
 
     private int tail = 0;
@@ -12,7 +13,7 @@ public class ArrayQueue {
     private Object[] array = new Object[2];
 
     private void expandArrayNeeded() {
-        if(this.array[this.tail] == null) {
+        if(tail != head || length == 0) {
             return;
         }
         Object[] temp = new Object[this.array.length*2];
@@ -22,6 +23,8 @@ public class ArrayQueue {
         this.array = temp;
     }
 
+    // Pre: ?
+    // Post: array[tail] = x
     public void enqueue(Object x) {
         expandArrayNeeded();
         this.array[this.tail] = x;

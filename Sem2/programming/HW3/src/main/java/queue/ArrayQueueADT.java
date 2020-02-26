@@ -22,7 +22,7 @@ public class ArrayQueueADT {
         queue.array = temp;
     }
 
-    public static void enqueue(Object x, ArrayQueueADT queue) {
+    public static void enqueue(ArrayQueueADT queue, Object x) {
         expandArrayNeeded(queue);
         queue.array[queue.tail] = x;
         queue.tail = (queue.tail+1) % queue.array.length;
