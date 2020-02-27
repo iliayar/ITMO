@@ -2,7 +2,7 @@ package queue;
 
 
 
-public class ArrayQueueModule {
+public class ArrayQueueModule extends AbstractArrayQueue {
 
     private static int tail = 0;
     private static int head = 0;
@@ -18,19 +18,12 @@ public class ArrayQueueModule {
         }
         System.err.println( );
     }
-    private static void expandArrayNeeded() {
-        if(array[tail] == null) {
-            return;
-        }
-        Object[] temp = new Object[array.length*2];
-        System.arraycopy(array, head, temp, array.length + head, array.length - head);
-        System.arraycopy(array, 0, temp, 0, tail);
-        head = array.length + head;
-        array = temp;
-    }
 
     public static void enqueue(Object x) {
-        expandArrayNeeded();
+        if(head == tail && length != 0) {
+            array = expandArray(head, tail, array);
+            head = array.length/2 + head;
+        }
         array[tail] = x;
         tail = (tail+1) % array.length;
         length++;
