@@ -2,6 +2,10 @@ package queue;
 
 
 
+
+// inv: length < array.size and
+//      tail != head or length = 0
+//      0 <= tail,head < array.size
 public class ArrayQueueADT {
 
     private int tail = 0;
@@ -22,6 +26,9 @@ public class ArrayQueueADT {
         queue.array = temp;
     }
 
+
+    // Pre: ?
+    // Post: array[tail] = x and tail' = tail + 1 % array.size
     public static void enqueue(ArrayQueueADT queue, Object x) {
         expandArrayNeeded(queue);
         queue.array[queue.tail] = x;
@@ -30,6 +37,9 @@ public class ArrayQueueADT {
         // printArray();
     }
 
+
+    // Pre: ?
+    // Post: array[head] head' = head + 1 % array.size
     public static Object dequeue(ArrayQueueADT queue) {
         if(queue.array[queue.head] == null) {
             return null;
@@ -42,17 +52,28 @@ public class ArrayQueueADT {
         return t;
     }
 
+
+    // Pre:
+    // Post: array[head]
     public static Object element(ArrayQueueADT queue) {
         return queue.array[queue.head];
     }
 
+
+    // Pre:
+    // Post array.size
     public static int size(ArrayQueueADT queue) {
         return queue.length;
     }
 
+    // Pre:
+    // false if a - empty true else
     public static boolean isEmpty(ArrayQueueADT queue) {
         return queue.length == 0;
     }
+
+    // Pre:
+    // queue.length = 0 and queue.head = 0 and queue.tail = 0
     public static void clear(ArrayQueueADT queue) {
         queue.array = new Object[2];
         queue.length = 0;
