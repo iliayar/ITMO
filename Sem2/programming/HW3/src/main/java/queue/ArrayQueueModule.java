@@ -20,18 +20,43 @@ public class ArrayQueueModule extends AbstractArrayQueue {
     }
 
     public static void enqueue(Object x) {
+        array[tail] = x;
+        tail = (tail+1) % array.length;
         if(head == tail && length != 0) {
             array = expandArray(head, tail, array);
             head = array.length/2 + head;
         }
-        array[tail] = x;
-        tail = (tail+1) % array.length;
         length++;
         // printArray();
     }
 
+    public static void push(Object x) {
+        head = (head - 1 + array.length) % array.length;
+        array[head] = x;
+        if(head == tail && length != 0) {
+            array = expandArray(head, tail, array);
+            head = array.length/2 + head;
+        }
+        length++;
+    }
+
+    public static Object peek() {
+        return array[(tail - 1 + array.length) % array.length];
+    }
+
+    public static Object remove() {
+        if (length == 0) {
+            return null;
+        }
+        tail = (tail - 1 + array.length) % array.length;
+        Object tmp =  array[tail];
+        array[tail] = null;
+        length--;
+        return tmp;
+    }
+
     public static Object dequeue() {
-        if(array[head] == null) {
+        if(length == 0) {
             return null;
         }
         Object t = array[head];
