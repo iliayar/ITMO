@@ -1,4 +1,4 @@
-all: build test
+all: build run
 
 build:
 	javac src/search/BinarySearch.java
