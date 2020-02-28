@@ -2,19 +2,13 @@
 #include <vector>
 #include <chrono>
 #include <algorithm>
+#include <cstdio>
 
 
 using namespace std;
 
 #define ON 1
 #define OFF 0
-#ifdef LOCAL
-#define FILE_IO ON
-#define FILENAME "local"
-#else
-#define FILE_IO  OFF
-#define FILENAME "smth"
-#endif
 
 #define int long long
 #define vint vector<int>
@@ -26,7 +20,16 @@ using namespace std;
 
 //CODE_HERE
 
+#ifdef LOCAL
+#undef FILE_IO
+#undef FILENAME
+#define FILE_IO ON
+#define FILENAME "local"
+#endif
+
 signed main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
     #if FILE_IO == ON
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);
