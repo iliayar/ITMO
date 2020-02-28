@@ -3,6 +3,7 @@ package expression.exceptions;
 import expression.*;
 import expression.parser.BaseParser;
 import expression.parser.ExpressionSource;
+import expression.parser.ParserException;
 import expression.parser.StringSource;
 
 public class ExpressionParser extends BaseParser {
@@ -30,30 +31,35 @@ public class ExpressionParser extends BaseParser {
     }
 
     private int parseNumber(boolean isInverse) {
-        int res = 0;
         StringBuilder parsedNum = new StringBuilder(isInverse ? "-" : "");
         while (between('0','9')) {
             parsedNum.append(ch);
             nextChar();
         }
-        return Integer.parseInt(parsedNum.toString());
+        int res;
+        try {
+            res = Integer.parseInt(parsedNum.toString());
+        } catch (NumberFormatException e) {
+            throw error("Wrong Integer: " + parsedNum.toString());
+        }
+        return res;
     }
 
-    private String parseOperation() {
+    private void parseOperation() {
         if (parsedOperation != null) {
-            return parsedOperation;
+            return;
         }
         if (in("+-*/")) {
             char c = ch;
             if (test('*')) {
                 if (test('*')) {
                     parsedOperation = "**";
-                    return parsedOperation;
+                    return;
                 }
             } else if (test('/')) {
                 if (test('/')) {
                     parsedOperation = "//";
-                    return parsedOperation;
+                    return;
                 }
             } else {
                 nextChar();
@@ -69,7 +75,6 @@ public class ExpressionParser extends BaseParser {
              throw operatorError();
         }
 
-        return parsedOperation;
     }
 
     private boolean testOperation(String expect) {
@@ -89,7 +94,7 @@ public class ExpressionParser extends BaseParser {
             CommonExpression expr = parseExpression();
             expect(')');
             return  expr;
-        } else if (between('0','9')) {
+        } else if (between('0', '9')) {
             int n = parseNumber(false);
             return new Const(n);
         } else if (test('x')) {
@@ -165,8 +170,7 @@ public class ExpressionParser extends BaseParser {
 
         skipWhitespace();
 
-        CommonExpression firstOperand = null;
-        firstOperand = parse0PriorExpression();
+        CommonExpression firstOperand = parse0PriorExpression();
         skipWhitespace();
         while (true) {
             if (testOperation("*")) {
