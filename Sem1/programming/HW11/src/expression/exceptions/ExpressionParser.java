@@ -24,9 +24,9 @@ public class ExpressionParser extends BaseParser {
         nextChar();
         CommonExpression res = parseExpression();
         if (ch != '\0') {
-            if (ch == ')') {
-                throw bracketError();
-            }
+//            if (ch == ')') {
+//                throw bracketError();
+//            }
             throw error("End of expression expected");
         }
         return res;
@@ -237,26 +237,33 @@ public class ExpressionParser extends BaseParser {
 
         skipWhitespace();
 
-        CommonExpression firstOperand = null;
-
-        firstOperand = parse2PriorExpression();
+        CommonExpression firstOperand = parse2PriorExpression();
         skipWhitespace();
-        while (testOperation("<<") || testOperation(">>")) {
-            CommonExpression secondOperand = null;
-
-            String operation = parsedOperation;
-            parsedOperation = null;
-
-            skipWhitespace();
-            secondOperand = parse2PriorExpression();
-            skipWhitespace();
-            if (operation.equals("<<")) {
-                firstOperand = new ShiftLeft(firstOperand, secondOperand);
+        while (true)  {
+            if (testOperation("<<")) {
+                firstOperand = new ShiftLeft(firstOperand, parse2PriorExpression());
+            } else if (testOperation(">>")) {
+                firstOperand = new ShiftRight(firstOperand, parse2PriorExpression());
             } else {
-                firstOperand = new ShiftRight(firstOperand, secondOperand);
+                return firstOperand;
             }
         }
-        return firstOperand;
+//        while (testOperation("<<") || testOperation(">>")) {
+//            CommonExpression secondOperand = null;
+//
+//            String operation = parsedOperation;
+//            parsedOperation = null;
+//
+//            skipWhitespace();
+//            secondOperand = parse2PriorExpression();
+//            skipWhitespace();
+//            if (operation.equals("<<")) {
+//                firstOperand = new ShiftLeft(firstOperand, secondOperand);
+//            } else {
+//                firstOperand = new ShiftRight(firstOperand, secondOperand);
+//            }
+//        }
+//        return firstOperand;
     }
 
     @Override
