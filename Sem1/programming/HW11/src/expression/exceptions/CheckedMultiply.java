@@ -19,6 +19,6 @@ public class CheckedMultiply extends Multiply {
     public int eval(int a, int b) {
         checkOverflow(a,b, a + "*" + b);
 
-        return a*b;
+        return a * b;
     }
 }
