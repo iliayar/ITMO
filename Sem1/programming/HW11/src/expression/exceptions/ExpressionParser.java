@@ -24,9 +24,6 @@ public class ExpressionParser extends BaseParser {
         nextChar();
         CommonExpression res = parseExpression();
         if (ch != '\0') {
-//            if (ch == ')') {
-//                throw bracketError();
-//            }
             throw error("End of expression expected");
         }
         return res;
@@ -34,18 +31,12 @@ public class ExpressionParser extends BaseParser {
 
     private int parseNumber(boolean isInverse) {
         int res = 0;
-
+        StringBuilder parsedNum = new StringBuilder(isInverse ? "-" : "");
         while (between('0','9')) {
-            if((!isInverse && Integer.MAX_VALUE/10 <= res && Integer.MAX_VALUE%10 < ch-'0') ||
-            isInverse && Integer.MIN_VALUE/10 >= res && Integer.MIN_VALUE%10 > -ch+'0' ) {
-                throw new IntegerOverflowException("Parsing const" + error("").getMessage());
-            }
-//            CheckedMultiply.checkOverflow((isInverse ? -res : res));
-            res *= 10;
-            res += (isInverse ? -1 : 1)*(ch - '0');
+            parsedNum.append(ch);
             nextChar();
         }
-        return  res;
+        return Integer.parseInt(parsedNum.toString());
     }
 
     private String parseOperation() {
@@ -85,11 +76,20 @@ public class ExpressionParser extends BaseParser {
         if (in("*+-<>/")) {
             parseOperation();
         }
-        return parsedOperation != null && parsedOperation.equals(expect);
+        if(parsedOperation != null && parsedOperation.equals(expect)) {
+            parsedOperation = null;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private CommonExpression parseOperand() {
-        if (between('0','9')) {
+        if (test('(')) {
+            CommonExpression expr = parseExpression();
+            expect(')');
+            return  expr;
+        } else if (between('0','9')) {
             int n = parseNumber(false);
             return new Const(n);
         } else if (test('x')) {
@@ -139,49 +139,26 @@ public class ExpressionParser extends BaseParser {
         return parse3PriorExpression();
     }
 
-//
-//    private CommonExpression parse0PriorExpression() {
-//
-//        skipWhitespace();
-//        return parseOperand();
-//    }
-
     private  CommonExpression parse0PriorExpression() {
 
         skipWhitespace();
 
         CommonExpression firstOperand = null;
 
-        if (test('(')) {
-            firstOperand = parseExpression();
-            expect(')');
-        } else {
-            firstOperand = parseOperand();
-        }
+        firstOperand = parseOperand();
         skipWhitespace();
-        while (testOperation("**") || testOperation("//")) {
-
-            CommonExpression secondOperand = null;
-
-            String operation = parsedOperation;
-            parsedOperation = null;
-
-            skipWhitespace();
-            if (test('(')) {
-                secondOperand = parseExpression();
-                expect(')');
+        while (true) {
+            if (testOperation("**")) {
+                skipWhitespace();
+                firstOperand = new Pow(firstOperand, parseOperand());
+            } else if (testOperation("//")) {
+                skipWhitespace();
+                firstOperand = new Log(firstOperand, parseOperand());
             } else {
-                secondOperand = parseOperand();
+                return firstOperand;
             }
             skipWhitespace();
-            if (operation.equals("**")) {
-                firstOperand = new Pow(firstOperand, secondOperand);
-            } else {
-                firstOperand = new Log(firstOperand, secondOperand);
-            }
         }
-        return firstOperand;
-
     }
 
     private CommonExpression parse1PriorExpression() {
@@ -191,46 +168,37 @@ public class ExpressionParser extends BaseParser {
         CommonExpression firstOperand = null;
         firstOperand = parse0PriorExpression();
         skipWhitespace();
-        while (testOperation("*") || testOperation("/")) {
-            CommonExpression secondOperand = null;
-
-            String operation = parsedOperation;
-            parsedOperation = null;
-            skipWhitespace();
-            secondOperand = parse0PriorExpression();
-            skipWhitespace();
-            if (operation.equals("*")) {
-                firstOperand = new CheckedMultiply(firstOperand, secondOperand);
+        while (true) {
+            if (testOperation("*")) {
+                skipWhitespace();
+                firstOperand = new CheckedMultiply(firstOperand, parse0PriorExpression());
+            } else if (testOperation("/")) {
+                skipWhitespace();
+                firstOperand = new CheckedDivide(firstOperand, parse0PriorExpression());
             } else {
-                firstOperand = new CheckedDivide(firstOperand, secondOperand);
+                return firstOperand;
             }
+            skipWhitespace();
         }
-        return firstOperand;
     }
 
     private CommonExpression parse2PriorExpression() {
 
         skipWhitespace();
-
-        CommonExpression firstOperand = null;
-        firstOperand = parse1PriorExpression();
+        CommonExpression firstOperand = parse1PriorExpression();
         skipWhitespace();
-        while (testOperation("+") || testOperation("-")) {
-            CommonExpression secondOperand = null;
-
-            String operation = parsedOperation;
-            parsedOperation = null;
-
-            skipWhitespace();
-            secondOperand = parse1PriorExpression();
-            skipWhitespace();
-            if (operation.equals("+")) {
-                firstOperand = new CheckedAdd(firstOperand, secondOperand);
+        while (true) {
+            if (testOperation("+")) {
+                skipWhitespace();
+                firstOperand = new CheckedAdd(firstOperand, parse1PriorExpression());
+            } else if (testOperation("-")) {
+                skipWhitespace();
+                firstOperand = new CheckedSubtract(firstOperand, parse1PriorExpression());
             } else {
-                firstOperand = new CheckedSubtract(firstOperand, secondOperand);
+                return firstOperand;
             }
+            skipWhitespace();
         }
-        return firstOperand;
     }
 
     private CommonExpression parse3PriorExpression() {
@@ -241,29 +209,16 @@ public class ExpressionParser extends BaseParser {
         skipWhitespace();
         while (true)  {
             if (testOperation("<<")) {
+                skipWhitespace();
                 firstOperand = new ShiftLeft(firstOperand, parse2PriorExpression());
             } else if (testOperation(">>")) {
+                skipWhitespace();
                 firstOperand = new ShiftRight(firstOperand, parse2PriorExpression());
             } else {
                 return firstOperand;
             }
+            skipWhitespace();
         }
-//        while (testOperation("<<") || testOperation(">>")) {
-//            CommonExpression secondOperand = null;
-//
-//            String operation = parsedOperation;
-//            parsedOperation = null;
-//
-//            skipWhitespace();
-//            secondOperand = parse2PriorExpression();
-//            skipWhitespace();
-//            if (operation.equals("<<")) {
-//                firstOperand = new ShiftLeft(firstOperand, secondOperand);
-//            } else {
-//                firstOperand = new ShiftRight(firstOperand, secondOperand);
-//            }
-//        }
-//        return firstOperand;
     }
 
     @Override
