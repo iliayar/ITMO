@@ -42,3 +42,6 @@ eclimd.log
 *.iml
 *.xmi
 bin/
+
+# build
+target
