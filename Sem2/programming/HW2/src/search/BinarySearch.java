@@ -52,8 +52,8 @@ public class BinarySearch {
         // inv: [l' : r') subset I and a[r'] <= x <= a[l'] and |[l' : r')| > 1 and |[l' : r')| < |[l : r)|
         // Pre: l = 0 and r = max(I) + 1 and [l : r) = I
         // Post: |[l' : r')| = 1 and
-        //     ( (exists j in I: a[j] > x and l' = max({j in I: a[j] > x}) Д-во от обратного a[l+1 = r] > x) or
-        //     (not exists j in I: a[j] > x and l' = 0)
+        //     ( (exists j in I: a[j] > x and l' = max({j in I: a[j] > x}) Д-во от обратного a[l+1 = r] > x or
+        //     (not exists j in I: a[j] >= x and l' = 0) <= ни разу не выполнится x < a[m]
         while(r - l > 1) {
 
             // Pre: |[l' : r')| > 1
@@ -78,15 +78,10 @@ public class BinarySearch {
 
         // Pre:
         //     ( (exists j in I: a[j] > x and l = max({j in I: a[j] > x})) or
-        //     (not exists j in I: a[j] > x and l = 0)
+        //     (not exists j in I: a[j] >= x and l = 0)
         // Post: l' = min({j in i: a[j] <= x})
-        if(a[l] <= x) {
-
-            // Pre: not exists j in I: a[j] > x and l = 0 |=> forall j in I: a[j] <= x
-            // Post: l = min({j in I: a[j] <= x})
-            l += 0;
-        } else {
-
+        if(a[l] > x) {
+            
             // Pre:l = max({j in I: a[j] > x}) and
             //     forall j in I: j > l a[j] < a[l] |=> not a[j] > x |=> a[j] <= x
             // Post: l = min({j in I: a[j] <= x})
@@ -96,7 +91,7 @@ public class BinarySearch {
         return l;
     }
 
-    // inv: [l : r) subset I and a[r] <= x <= a[l] and |[l' : r')| < |[l : r)| and |[l : r)| > 1;
+    // inv: a[r] <= x <= a[l] and |[l' : r')| < |[l : r)| and |[l : r)| > 1 and forall i,j in [l' : r') i < j a[i] >= a[j];
     // Pre: exists x0 in a: a0 <= x [l : r) = [0 : a.length)
     // Post: i = min({j in I: a[j] <= x}
     private int recBSearch(int x, int[] a, int l, int r) {
@@ -110,14 +105,9 @@ public class BinarySearch {
         //     (not exists j in I: a[j] > x and l = 0)
         // Post: i = min(j in I: a[j] <= x)
         if(r - l <= 1) {
-            if(a[l] <= x) {
+            if(a[l] > x) {
 
-                // Pre: not exists j in I: a[j] > x and l = 0 |=> forall j in I: a[j] <= x
-                // Post: l = min({j in I: a[j] <= x})
-                l += 0;
-            } else {
-
-                // Pre: l = max({j in I: a[j] > x}) and forall j in I: j > l a[j] < a[l] |=> not a[j] > x |=> a[j] <= x
+                // Pre: l = max({j in I: a[j] > x}) and forall j in I: j > l a[j] < a[l] => not a[j] > x => a[j] <= x
                 // Post: l = min({j in I: a[j] <= x})
                 l += 1;
             }

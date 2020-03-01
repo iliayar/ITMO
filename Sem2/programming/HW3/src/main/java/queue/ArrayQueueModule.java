@@ -11,43 +11,41 @@ public class ArrayQueueModule extends AbstractArrayQueue {
 
     private static Object[] array = new Object[2];
 
-    private static void printArray() {
-        System.err.println(tail + " " + head);
-        for(int i = 0; i < array.length; ++i) {
-            System.err.print(array[i] + " ");
+    private static void expandArrayNeeded() {
+        if (head == tail && length != 0) {
+            array = expandArray(head, tail, array);
+            head = array.length / 2 + head;
         }
-        System.err.println( );
     }
 
+    // Pre: x != null
+    // Post: array[tail] = x and tail' = tail + 1 % array.size
     public static void enqueue(Object x) {
         array[tail] = x;
         tail = (tail+1) % array.length;
-        if(head == tail && length != 0) {
-            array = expandArray(head, tail, array);
-            head = array.length/2 + head;
-        }
+        expandArrayNeeded();
         length++;
         // printArray();
     }
 
+    // Pre: x != null
+    // Post: array[head'] = x and head' = head - 1 % array.size
     public static void push(Object x) {
         head = (head - 1 + array.length) % array.length;
         array[head] = x;
-        if(head == tail && length != 0) {
-            array = expandArray(head, tail, array);
-            head = array.length/2 + head;
-        }
+        expandArrayNeeded();
         length++;
     }
 
+    // Pre:
+    // Post: array[tail - 1 % array.size]
     public static Object peek() {
         return array[(tail - 1 + array.length) % array.length];
     }
 
+    // Pre: queue.size > 0
+    // Post: array[tail] and tail' = tail - 1 % array.size
     public static Object remove() {
-        if (length == 0) {
-            return null;
-        }
         tail = (tail - 1 + array.length) % array.length;
         Object tmp =  array[tail];
         array[tail] = null;
@@ -55,10 +53,9 @@ public class ArrayQueueModule extends AbstractArrayQueue {
         return tmp;
     }
 
+    // Pre: queue.size > 0
+    // Post: array[head] head' = head + 1 % array.size
     public static Object dequeue() {
-        if(length == 0) {
-            return null;
-        }
         Object t = array[head];
         array[head] = null;
         head = (head + 1) % array.length;
@@ -67,17 +64,26 @@ public class ArrayQueueModule extends AbstractArrayQueue {
         return t;
     }
 
+    // Pre:
+    // Post: array[head]
     public static Object element() {
         return array[head];
     }
 
+    // Pre:
+    // Post array.size
     public static int size() {
         return length;
     }
 
+    // Pre:
+    // Post: false if length == 0 true else
     public static boolean isEmpty() {
         return length == 0;
     }
+
+    // Pre:
+    // Post: queue.length = 0 and queue.head = 0 and queue.tail = 0
     public static void clear() {
         array = new Object[2];
         length = 0;

@@ -9,7 +9,7 @@ public class BinarySearchSpan {
 
 
     // Pre: |args| > 1 for all v in a: v - Integer
-    // Post: i1 = i2 = i: i = min({j in I: a[j] <= x})
+    // Post: let e = {i in indexes(args[1:]): args[i] = args[0]} l = min(e) r = max(e)
     private void run(String[] args) {
 
         if (args.length <= 1) {

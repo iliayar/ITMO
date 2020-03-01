@@ -16,15 +16,14 @@ public class LinkedQueue extends AbstractQueue {
     @Override
     public void enqueue(Object x) {
         Node t = new Node(null, x);
-        if (length == 0) {
+        length++;
+        if (length - 1 == 0) {
             tail = t;
             head = t;
-            length++;
             return;
         }
         tail.prev = t;
         tail = t;
-        length++;
     }
 
     @Override
@@ -34,9 +33,6 @@ public class LinkedQueue extends AbstractQueue {
 
     @Override
     public Object dequeue() {
-        if (length == 0) {
-            return null;
-        }
         Node t = head;
         head = head.prev;
         length--;

@@ -1,36 +1,34 @@
 package queue;
 
-
-
-
-// inv: length < array.size and
+// inv: 0 <= length < array.size and
 //      tail != head or length = 0
 //      0 <= tail,head < array.size
+//      array[tail : head] != null
 public class ArrayQueueADT extends AbstractArrayQueue {
 
+    private static void expandArrayNeeded(ArrayQueueADT queue) {
+        if (queue.head == queue.tail && queue.length != 0) {
+            queue.array = expandArray(queue.head, queue.tail, queue.array);
+            queue.head = queue.array.length / 2 + queue.head;
+        }
+    }
 
-    // Pre: queue != null
+    // Pre: queue != null x != null
     // Post: array[tail] = x and tail' = tail + 1 % array.size
     public static void enqueue(ArrayQueueADT queue, Object x) {
         queue.array[queue.tail] = x;
         queue.tail = (queue.tail+1) % queue.array.length;
-        if(queue.head == queue.tail && queue.length != 0) {
-            queue.array = expandArray(queue.head, queue.tail, queue.array);
-            queue.head = queue.array.length/2 + queue.head;
-        }
+        expandArrayNeeded(queue);
         queue.length++;
         // printArray();
     }
 
-    // Pre: queue != null
+    // Pre: queue != null x != null
     // Post: array[head'] = x and head' = head - 1 % array.size
     public static void push(ArrayQueueADT queue, Object x) {
         queue.head = (queue.head - 1 + queue.array.length) % queue.array.length;
         queue.array[queue.head] = x;
-        if(queue.head == queue.tail && queue.length != 0) {
-            queue.array = expandArray(queue.head, queue.tail, queue.array);
-            queue.head = queue.array.length/2 + queue.head;
-        }
+        expandArrayNeeded(queue);
         queue.length++;
     }
 
@@ -41,12 +39,9 @@ public class ArrayQueueADT extends AbstractArrayQueue {
     }
 
 
-    // Pre: queue != null
+    // Pre: queue != null and queue.size > 0
     // Post: array[tail] and tail' = tail - 1 % array.size
     public static Object remove(ArrayQueueADT queue) {
-        if(queue.length == 0) {
-            return null;
-        }
         queue.tail = (queue.tail - 1 + queue.array.length) % queue.array.length;
         Object tmp =  queue.array[queue.tail];
         queue.array[queue.tail] = null;
@@ -54,12 +49,9 @@ public class ArrayQueueADT extends AbstractArrayQueue {
         return tmp;
     }
 
-    // Pre: queue != null
+    // Pre: queue != null and queue.size > 0
     // Post: array[head] head' = head + 1 % array.size
     public static Object dequeue(ArrayQueueADT queue) {
-        if(queue.length == 0) {
-            return null;
-        }
         Object t = queue.array[queue.head];
         queue.array[queue.head] = null;
         queue.head = (queue.head + 1) % queue.array.length;
