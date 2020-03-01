@@ -1,8 +1,5 @@
 package queue;
 
-
-// inv: length < array.size and
-//      tail != head and
 public class ArrayQueue extends AbstractQueue {
 
     private int tail = 0;
@@ -17,8 +14,6 @@ public class ArrayQueue extends AbstractQueue {
         return temp;
     }
 
-    // Pre: ?
-    // Post: array[tail] = x
     public void enqueue(Object x) {
         this.array[this.tail] = x;
         this.tail = (this.tail+1) % this.array.length;
@@ -27,43 +22,13 @@ public class ArrayQueue extends AbstractQueue {
             head = array.length/2 + head;
         }
         this.length++;
-        // printArray();
-    }
-
-    public void push(Object x) {
-        head = (head - 1 + this.array.length) % this.array.length;
-        this.array[head] = x;
-        if(this.head == this.tail && this.length != 0) {
-            this.array = expandArray(this.head, this.tail, this.array);
-            this.head = this.array.length/2 + this.head;
-        }
-        this.length++;
-    }
-
-    public Object peek() {
-        return this.array[(tail - 1 + this.array.length) % this.array.length];
-    }
-
-    public Object remove() {
-        if(this.length == 0) {
-            return null;
-        }
-        this.tail = (this.tail - 1 + this.array.length) % this.array.length;
-        Object tmp =  this.array[this.tail];
-        this.array[this.tail] = null;
-        this.length--;
-        return tmp;
     }
 
     public Object dequeue() {
-        if(this.length == 0) {
-            return null;
-        }
         Object t = this.array[this.head];
         this.array[this.head] = null;
         this.head = (this.head + 1) % this.array.length;
         this.length--;
-        // printArray();
         return t;
     }
 

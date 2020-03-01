@@ -2,10 +2,8 @@ package queue;
 
 
 
-
 abstract class AbstractQueue implements Queue {
     protected int length;
-
 
     @Override
     public int size() {
@@ -16,4 +14,8 @@ abstract class AbstractQueue implements Queue {
     public boolean isEmpty() {
         return length == 0;
     }
+
+
+
+
 }

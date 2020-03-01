@@ -12,6 +12,8 @@ public class AbstractArrayQueue {
 
     protected Object[] array = new Object[2];
 
+    // Pre: 0 <= head = tail < array.size
+    // Post array.size = 2*array.size
     protected static Object[] expandArray(int head, int tail, Object[] array) {
         Object[] temp = new Object[array.length*2];
         System.arraycopy(array, head, temp, array.length + head, array.length - head);
