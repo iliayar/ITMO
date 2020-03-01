@@ -13,9 +13,11 @@ using namespace std;
 #define int long long
 #define vint vector<int>
 #ifdef LOCAL
-#define DBG(x) cout << "DBG: " << x << endl;
+#define DBG(x) cout << "DBG: " << x << endl
+#define DBG_CODE(x) x
 #else
 #define DBG(x)
+#define DBG_CODE(x)
 #endif
 
 //CODE_HERE
