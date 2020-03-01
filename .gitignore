@@ -10,7 +10,6 @@
 *.out
 *.class
 *.jar
-*.pdf
 
 # Java tests
 *Test.java
@@ -23,6 +22,7 @@
 *.fdb_latexmk
 *.aux
 *.xdv
+*.el
 
 
 # Idea files
