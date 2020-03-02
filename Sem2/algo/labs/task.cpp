@@ -1,5 +1,5 @@
 
-// Generated at 2020-03-02 18:37:38.078644 
+// Generated at 2020-03-02 19:05:06.259474 
 // By iliayar
 #include <iostream>
 #include <vector>
@@ -56,7 +56,7 @@ void propagate(int v, int lx, int rx) {
     tree[v * 2 + 1].isset = true;
     tree[v * 2 + 1].set = tree[v].set;
     tree[v * 2 + 1].sum = tree[v].set*(m - lx);
-    if(tree[v].set > 0)
+    if(tree[v].set > 0 || (m - lx) <= 1)
         tree[v * 2 + 1].max = tree[v * 2 + 1].sum;
     else
         tree[v * 2 + 1].max = 0;
@@ -64,7 +64,7 @@ void propagate(int v, int lx, int rx) {
     tree[v * 2 + 2].isset = true;
     tree[v * 2 + 2].set = tree[v].set;
     tree[v * 2 + 2].sum = tree[v].set * (rx - m);
-    if(tree[v].set > 0)
+    if(tree[v].set > 0 || (rx - m) <= 1)
         tree[v * 2 + 2].max = tree[v * 2 + 2].sum;
     else
         tree[v * 2 + 2].max = 0;
@@ -74,7 +74,7 @@ void propagate(int v, int lx, int rx) {
 }
 
 void t_set(int l, int r, int x, int s, int v, int lx, int rx) {
-    // DBG("t_set[" << l << ", " << r << "]");
+    DBG("t_set[" << l << ", " << r << "]");
     if(r <= l) {
         return;
     }
@@ -83,7 +83,7 @@ void t_set(int l, int r, int x, int s, int v, int lx, int rx) {
         tree[v].isset = true;
         tree[v].set = x;
         tree[v].sum = (rx-lx)*x;
-        if(x > 0)
+        if(x > 0 || (rx - lx) == 1)
             tree[v].max = tree[v].sum;
         else
             tree[v].max = 0;
