@@ -1,128 +1,138 @@
 #include "template.cpp"
-
-const int INF = 1e+9;
+#include <exception>
 
 struct Node {
-    int sum;
-    int max;
 
-    int set;
-    bool isset;
+  int max = 0;
+  int add = 0;
+  bool isadd = false;
+
+  int x = -1;
+  int y = -1;
 };
 
-vector<Node> tree;
+vector<vector<Node>> tree;
 
-Node E = {0, -INF, 0, false};
+Node E = Node();
 
-Node eval(Node left, Node right) {
-    // DBG("Eval");
-    Node res = E;
-    res.sum = left.sum + right.sum;
-    res.max = max(left.max, right.max);
-    return res;
-}
+int n;
 
-void propagate(int v, int lx, int rx) {
-    // DBG("Propagate");
-    if(v*2 + 2 >= tree.size()) return;
-    if(!tree[v].isset) return;
-
-    int m = (lx + rx)/2;
-
-    tree[v * 2 + 1].isset = true;
-    tree[v * 2 + 1].set = tree[v].set;
-    tree[v * 2 + 1].sum = tree[v].set*(m - lx);
-    if(tree[v].set > 0 || (m - lx) <= 1)
-        tree[v * 2 + 1].max = tree[v * 2 + 1].sum;
-    else
-        tree[v * 2 + 1].max = 0;
-
-    tree[v * 2 + 2].isset = true;
-    tree[v * 2 + 2].set = tree[v].set;
-    tree[v * 2 + 2].sum = tree[v].set * (rx - m);
-    if(tree[v].set > 0 || (rx - m) <= 1)
-        tree[v * 2 + 2].max = tree[v * 2 + 2].sum;
-    else
-        tree[v * 2 + 2].max = 0;
-
-
-    tree[v] = eval(tree[v*2 + 1], tree[v*2 + 2]);
-}
-
-void t_set(int l, int r, int x, int s, int v, int lx, int rx) {
-    DBG("t_set[" << l << ", " << r << "]");
-    if(r <= l) {
-        return;
-    }
-    propagate(v, lx, rx);
-    if((r == rx) && (l == lx)) {
-        tree[v].isset = true;
-        tree[v].set = x;
-        tree[v].sum = (rx-lx)*x;
-        if(x > 0 || (rx - lx) == 1)
-            tree[v].max = tree[v].sum;
-        else
-            tree[v].max = 0;
-        return;
-    }
-    int m = (lx + rx)/2;
-    t_set(l, min(m,r), x, s, v * 2 + 1, lx, m);
-    t_set(max(l,m), r, x, s + tree[v*2 + 1].sum, v * 2 + 2, m, rx);
-    tree[v] = eval(tree[v*2 + 1], tree[v*2 + 2]);
-}
-
-int t_find(int h, int s, int v, int lx, int rx) {
-    // DBG("t_find");
-    if(rx - lx == 1) {
-        if(tree[v].max + s > h) {
-            return lx;
-        }
-        return rx;
-    }
-    propagate(v, lx, rx);
-    int m = (lx + rx)/2;
-    int lmax = tree[v*2 + 1].max + s;
-    int rmax = tree[v*2 + 2].max + tree[v*2 + 1].sum + s;
-    if(lmax > h) {
-        return t_find(h, s, v*2 + 1, lx, m);
-    } else {
-        return t_find(h, s + tree[v*2 + 1].sum, v*2 + 2, m, rx);
-    }
-
-}
-
-void t_print(int s, int v, int lx, int rx) {
-    DBG("t_print[" << lx << ", " << rx << "] " << tree[v].sum << " " << tree[v].max + s);
-  if (rx - lx == 1) {
-      DBG(tree[v].max + s);
-      return;
+Node eval(Node a, Node b, Node c, Node d) {
+  Node t = E;
+  t.max = a.max;
+  t.x = a.x;
+  t.y = a.y;
+  if (b.max > t.max) {
+    t.max = b.max;
+    t.x = b.x;
+    t.y = b.y;
   }
-  propagate(v, lx, rx);
-  int m = (lx + rx) / 2;
-  t_print(s, v * 2 + 1, lx, m);
-  t_print(s + tree[v * 2 + 1].sum, v * 2 + 2, m, rx);
-  return;
+  if (c.max > t.max) {
+    t.max = c.max;
+    t.x = c.x;
+    t.y = c.y;
+  }
+  if (d.max > t.max) {
+    t.max = d.max;
+    t.x = d.x;
+    t.y = d.y;
+  }
+  return t;
 }
 
-//entry
+void propagate(int vx, int vy) {
+  if (!tree[vx][vy].isadd)
+    return;
+  if ((vx * 2 + 2 > tree.size()) || (vy * 2 + 2) > tree[vx].size())
+    return;
+
+  tree[vx * 2 + 1][vy * 2 + 1].add += tree[vx][vy].add;
+  tree[vx * 2 + 1][vy * 2 + 1].max += tree[vx][vy].add;
+  tree[vx * 2 + 1][vy * 2 + 1].isadd = true;
+
+  tree[vx * 2 + 2][vy * 2 + 1].add += tree[vx][vy].add;
+  tree[vx * 2 + 2][vy * 2 + 1].max += tree[vx][vy].add;
+  tree[vx * 2 + 2][vy * 2 + 1].isadd = true;
+
+  tree[vx * 2 + 1][vy * 2 + 2].add += tree[vx][vy].add;
+  tree[vx * 2 + 1][vy * 2 + 2].max += tree[vx][vy].add;
+  tree[vx * 2 + 1][vy * 2 + 2].isadd = true;
+
+  tree[vx * 2 + 2][vy * 2 + 2].add += tree[vx][vy].add;
+  tree[vx * 2 + 2][vy * 2 + 2].max += tree[vx][vy].add;
+  tree[vx * 2 + 2][vy * 2 + 2].isadd = true;
+
+  tree[vx][vy].isadd = false;
+  tree[vx][vy].add = 0;
+}
+
+void t_add(int slx, int srx, int sly, int sry, int vx, int vy, int lx, int rx,
+           int ly, int ry) {
+  if ((srx <= slx) || (sry <= sly)) {
+    return;
+  }
+  DBG("t_add (" << lx << ", " << rx << ") (" << ly << ", " << ry << ")");
+  propagate(vx, vy);
+  if ((slx == lx) && (srx == rx) && (sly == ly) && (sry == ry)) {
+      DBG("Found");
+    tree[vx][vy].add += 1;
+    tree[vx][vy].max += 1;
+    tree[vx][vy].isadd = true;
+    tree[vx][vy].x = lx;
+    tree[vx][vy].y = ly;
+    return;
+  }
+  int mx = (lx + rx) / 2;
+  int my = (ly + ry) / 2;
+  t_add(slx, min(srx, mx), sly, min(sry, my), vx * 2 + 1, vy * 2 + 1, lx, mx,
+        ly, my);
+  t_add(slx, min(srx, mx), max(sly, my), sry, vx * 2 + 1, vy * 2 + 2, lx, mx,
+        my, ry);
+  t_add(max(slx, mx), srx, sly, min(sry, my), vx * 2 + 2, vy * 2 + 1, mx, rx,
+        ly, my);
+  t_add(max(slx, mx), srx, max(sly, my), sry, vx * 2 + 2, vy * 2 + 2, mx, rx,
+        my, ry);
+  tree[vx][vy] =
+      eval(tree[vx * 2 + 1][vy * 2 + 1], tree[vx * 2 + 2][vy * 2 + 1],
+           tree[vx * 2 + 1][vy * 2 + 2], tree[vx * 2 + 2][vy * 2 + 2]);
+}
+
+struct Request {
+  int slx;
+  int srx;
+  int sly;
+  int sry;
+};
+
+// entry
 void sol() {
-    int n; cin >> n;
-    tree.resize(n*4, E);
+  int m;
+  cin >> m;
+  vector<Request> requests(0);
 
-    char op;
-    while(cin >> op) {
-        if(op == 'Q') {
-            int h; cin >> h;
-            // DBG("Running cart...");
-            cout << t_find(h, 0, 0, 0, n) << endl;
-        } else if(op == 'I') {
-            int l, r, x; cin >> l >> r >> x; l--;
-            // DBG("Lifting rails");
-            t_set(l, r, x, 0, 0, 0, n);
-            t_print(0, 0, 0, n);
-        } else {
-            break;
-        }
-    }
+  int mi = 0, ma = 0;
 
+  for (int i = 0; i < m; ++i) {
+    Request t;
+    cin >> t.slx >> t.sly >> t.srx >> t.sry;
+    t.srx++;
+    t.sry++;
+    mi = min(mi, min(min(t.slx, t.srx), min(t.sly, t.sry)));
+    ma = max(ma, max(max(t.slx, t.srx), max(t.sly, t.sry)));
+    requests.push_back(t);
+  }
+
+  mi = abs(mi);
+
+  n = ma + mi;
+  DBG(ma << " " << mi);
+
+  tree.resize(n * 8, vector<Node>(n * 8, E));
+  for (Request r : requests) {
+    DBG("Request");
+    t_add(r.slx + mi, r.srx + mi, r.sly + mi, r.sry + mi, 0, 0, 0, n, 0, n);
+    DBG(tree[0][0].max);
+  }
+  cout << tree[0][0].max << endl;
+  cout << tree[0][0].x << " " << tree[0][0].y << endl;
 }
