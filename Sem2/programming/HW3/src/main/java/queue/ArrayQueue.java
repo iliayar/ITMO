@@ -4,7 +4,7 @@ package queue;
 //      tail != head or length = 0
 //      0 <= tail,head < array.size
 //      array[tail : head] != null
-public class ArrayQueue extends AbstractArrayQueue {
+public class ArrayQueue {
 
     private int tail = 0;
     private int head = 0;
@@ -15,7 +15,11 @@ public class ArrayQueue extends AbstractArrayQueue {
 
     private void expandArrayNeeded() {
         if(this.head == this.tail && this.length != 0) {
-            this.array = expandArray(this.head, this.tail, this.array);
+            Object[] temp = new Object[this.array.length * 2];
+            System.arraycopy(this.array, this.head, temp,
+                             this.array.length + this.head, this.array.length - this.head);
+            System.arraycopy(this.array, 0, temp, 0, this.tail);
+            this.array = temp;
             this.head = this.array.length/2 + this.head;
         }
     }
@@ -40,15 +44,21 @@ public class ArrayQueue extends AbstractArrayQueue {
     }
 
 
-    // Pre:
+    // Pre: this.size > 0
     // Post: array[tail - 1 % array.size]
     public Object peek() {
+        if (this.length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         return this.array[(tail - 1 + this.array.length) % this.array.length];
     }
 
     // Pre: queue.size > 0
     // Post: array[tail] and tail' = tail - 1 % array.size
     public Object remove() {
+        if (this.length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         this.tail = (this.tail - 1 + this.array.length) % this.array.length;
         Object tmp =  this.array[this.tail];
         this.array[this.tail] = null;
@@ -59,6 +69,9 @@ public class ArrayQueue extends AbstractArrayQueue {
     // Pre: queue.size > 0
     // Post: array[head] head' = head + 1 % array.size
     public Object dequeue() {
+        if (this.length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         Object t = this.array[this.head];
         this.array[this.head] = null;
         this.head = (this.head + 1) % this.array.length;
@@ -67,9 +80,12 @@ public class ArrayQueue extends AbstractArrayQueue {
         return t;
     }
 
-    // Pre:
+    // Pre: this.size > 0
     // Post: array[head]
     public Object element() {
+        if (this.length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         return this.array[this.head];
     }
 

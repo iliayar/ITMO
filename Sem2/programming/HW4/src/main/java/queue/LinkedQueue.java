@@ -58,5 +58,8 @@ public class LinkedQueue extends AbstractQueue {
         }
     }
 
+    protected Queue getNewInstance() {
+        return new LinkedQueue();
+    }
 
 }

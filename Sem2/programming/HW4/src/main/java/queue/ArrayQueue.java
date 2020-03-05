@@ -49,4 +49,9 @@ public class ArrayQueue extends AbstractQueue {
         this.head = 0;
         this.tail = 0;
     }
+
+    protected Queue getNewInstance() {
+        return new ArrayQueue();
+    }
+
 }
