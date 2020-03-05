@@ -1,5 +1,7 @@
 package queue;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 // inv: size >= 0
 public interface Queue {
@@ -27,4 +29,12 @@ public interface Queue {
     // Pre:
     // Post: size == 0
     public void clear();
+
+    // Pre: predicate != null
+    // Post: Очередь в которой каждый элемент удовлетворяет предикату, порядок сохранен, того же типа
+    public Queue filter(Predicate<Object> predicate);
+
+    // Pre: function != null
+    // Post: Очередь, к каждому элементу применена функция, порядок сохранен, того же типа
+    public Queue map(Function<Object, Object> function);
 }

@@ -2,7 +2,7 @@ package queue;
 
 
 
-public class ArrayQueueModule extends AbstractArrayQueue {
+public class ArrayQueueModule {
 
     private static int tail = 0;
     private static int head = 0;
@@ -13,7 +13,10 @@ public class ArrayQueueModule extends AbstractArrayQueue {
 
     private static void expandArrayNeeded() {
         if (head == tail && length != 0) {
-            array = expandArray(head, tail, array);
+            Object[] temp = new Object[array.length * 2];
+            System.arraycopy(array, head, temp, array.length + head, array.length - head);
+            System.arraycopy(array, 0, temp, 0, tail);
+            array = temp;
             head = array.length / 2 + head;
         }
     }
@@ -37,15 +40,21 @@ public class ArrayQueueModule extends AbstractArrayQueue {
         length++;
     }
 
-    // Pre:
+    // Pre: size > 0
     // Post: array[tail - 1 % array.size]
     public static Object peek() {
+        if (length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         return array[(tail - 1 + array.length) % array.length];
     }
 
-    // Pre: queue.size > 0
+    // Pre: size > 0
     // Post: array[tail] and tail' = tail - 1 % array.size
     public static Object remove() {
+        if (length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         tail = (tail - 1 + array.length) % array.length;
         Object tmp =  array[tail];
         array[tail] = null;
@@ -53,9 +62,12 @@ public class ArrayQueueModule extends AbstractArrayQueue {
         return tmp;
     }
 
-    // Pre: queue.size > 0
+    // Pre: size > 0
     // Post: array[head] head' = head + 1 % array.size
     public static Object dequeue() {
+        if (length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         Object t = array[head];
         array[head] = null;
         head = (head + 1) % array.length;
@@ -64,9 +76,12 @@ public class ArrayQueueModule extends AbstractArrayQueue {
         return t;
     }
 
-    // Pre:
+    // Pre: size > 0
     // Post: array[head]
     public static Object element() {
+        if (length == 0) {
+            throw new RuntimeException("Queue is empty");
+        }
         return array[head];
     }
 
