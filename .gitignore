@@ -12,7 +12,6 @@
 *.jar
 
 # Java tests
-*Test.java
 /**/base/*
 
 # Latex Make files
