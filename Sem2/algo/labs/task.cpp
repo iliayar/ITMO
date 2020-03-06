@@ -1,5 +1,5 @@
 
-// Generated at 2020-03-05 17:14:39.012009 
+// Generated at 2020-03-06 03:59:11.083274 
 // By iliayar
 #include <iostream>
 #include <vector>
@@ -25,144 +25,192 @@ using namespace std;
 #endif
 
 //##################CODE BEGIN#############
-
 struct Node {
-
-    int max = 0;
-    int add = 0;
-    bool isadd = false;
-
-    int x = -1;
-    int y = -1;
-};
-
-vector<vector<Node>> tree;
-
-Node E = Node();
-
-int n;
-
-Node eval(Node a, Node b) {
-    Node t = E;
-    if (a.max > b.max) {
-        t.max = a.max;
-        t.x = a.x;
-        t.y = a.y;
-    } else {
-        t.max = b.max;
-        t.x = b.x;
-        t.y = b.y;
-    }
-
-    return t;
-}
-
-void t_propagate(int vx, int vy) {
-    if (!tree[vx][vy].isadd)
-        return;
-    DBG("Propagate");
-
-    if (vx * 2 + 2 < tree.size()) {
-        tree[vx * 2 + 1][vy].add += tree[vx][vy].add;
-        tree[vx * 2 + 1][vy].max += tree[vx][vy].add;
-        tree[vx * 2 + 1][vy].isadd = true;
-        tree[vx * 2 + 2][vy].add += tree[vx][vy].add;
-        tree[vx * 2 + 2][vy].max += tree[vx][vy].add;
-        tree[vx * 2 + 2][vy].isadd = true;
-    }
-    if (vy * 2 + 2 < tree.size()) {
-        tree[vx][vy * 2 + 1].add += tree[vx][vy].add;
-        tree[vx][vy * 2 + 1].max += tree[vx][vy].add;
-        tree[vx][vy * 2 + 1].isadd = true;
-        tree[vx][vy * 2 + 2].add += tree[vx][vy].add;
-        tree[vx][vy * 2 + 2].max += tree[vx][vy].add;
-        tree[vx][vy * 2 + 2].isadd = true;
-    }
-    tree[vx][vy].isadd = true;
-}
-
-void t_add_y(int slx, int srx, int sly, int sry, int x, int lx, int rx, int vx,
-             int v, int ly, int ry) {
-    if ((srx < slx) || (sry < sly)) {
-        return;
-    }
-    DBG("t_add_y (" << lx << ", " << rx << ") (" << ly << ", " << ry << ")");
-    DBG("t_add_y (" << sly << ", " << sry << ")");
-    t_propagate(vx, v);
-    if ((sly == ly) && (sry == ry)) {
-        DBG("t_add_y end");
-        if ((srx == rx) && (slx == lx)) {
-            DBG("t_add END");
-            tree[vx][v].isadd = true;
-            tree[vx][v].add += x;
-            tree[vx][v].max += x;
-            tree[vx][v].x = slx;
-            tree[vx][v].y = sly;
-        } else {
-            tree[vx][v] = eval(tree[vx * 2 + 1][v], tree[vx * 2 + 2][v]);
+    Node() {
+        for(int i = 0; i < 8; ++i) {
+            to[i] = nullptr;
         }
-        return;
     }
-    int m = (ly + ry) / 2;
-    t_add_y(slx, srx, sly, min(sry, m), x, lx, rx, vx, v * 2 + 1, ly, m);
-    t_add_y(slx, srx, max(sly, m + 1), sry, x, lx, rx, vx, v * 2 + 2, m + 1, ry);
-    tree[vx][v] = eval(tree[vx][v * 2 + 1], tree[vx][v * 2 + 2]);
-}
 
-void t_add_x(int slx, int srx, int sly, int sry, int x, int v, int lx, int rx) {
-    if (srx < slx) {
-        return;
-    }
-    DBG("t_add_x (" << lx << ", " << rx << ")");
-    if ((srx == rx) && (slx == lx)) {
-        DBG("t_add_x end");
-        t_add_y(slx, srx, sly, sry, x, lx, rx, v, 0, 0, n);
-        return;
-    }
-    int m = (lx + rx) / 2;
-    t_add_x(slx, min(m, srx), sly, sry, x, v * 2 + 1, lx, m);
-    t_add_x(max(slx, m + 1), srx, sly, sry, x, v * 2 + 2, m + 1, rx);
-    t_add_y(slx, srx, sly, sry, x, lx, rx, v, 0, 0, n);
-}
-
-struct Request {
-    int slx;
-    int srx;
-    int sly;
-    int sry;
+    int x = 0;
+    Node* to[8];
 };
 
-// entry
+
+void create_childs(Node *v)
+{
+    for(int i = 0; i < 8; ++i) {
+        if(v->to[i] == nullptr) {
+            v->to[i] = new Node();
+        }
+    }
+}
+
+void eval(Node* v, int lx, int rx, int ly, int ry, int lz, int rz) {
+    v->x = 0;
+    int mx = (lx + rx)/2;
+    int my = (ly + ry)/2;
+    int mz = (lz + rz)/2;
+    if((lx <= mx) && (ly <= my) && (lz <= mz)) {
+        v->x += v->to[0]->x;
+    }
+    if ((mx + 1 <= rx) && (ly <= my) && (lz <= mz)) {
+        v->x += v->to[1]->x;
+    }
+    if ((lx <= mx) && (my + 1 <= ry) && (lz <= mz)) {
+        v->x += v->to[2]->x;
+    }
+    if ((mx + 1 <= rx) && (my + 1 <= ry) && (lz <= mz)) {
+        v->x += v->to[3]->x;
+    }
+    if ((lx <= mx) && (ly <= my) && (mz + 1 <= rz)) {
+        v->x += v->to[4]->x;
+    }
+    if ((mx + 1 <= rx) && (ly <= my) && (mz + 1 <= rz)) {
+        v->x += v->to[5]->x;
+    }
+    if ((lx <= mx) && (my + 1 <= ry) && (mz + 1 <= rz)) {
+        v->x += v->to[6]->x;
+    }
+    if ((mx + 1 <= rx) && (my + 1 <= ry) && (mz + 1 <= rz)) {
+        v->x += v->to[7]->x;
+    }
+}
+
+Node *tree = new Node();
+void tree_print(Node *v, int lx, int rx, int ly, int ry, int lz, int rz) {
+  if ((rx < lx) || (ry < ly) || (rz < lz))
+    return;
+  DBG("tree_print " << lx << ", " << rx << "; " << ly << ", " << ry << "; "
+                    << lz << ", " << rz);
+  if (((rx - lx) == 0) && ((ry - ly) == 0) && ((rz - lz) == 0)) {
+    cout << v->x << " ";
+    return;
+  }
+  // DBG("tree_add");
+  create_childs(v);
+  int mx = (lx + rx) / 2;
+  int my = (ly + ry) / 2;
+  int mz = (lz + rz) / 2;
+
+  tree_print(v->to[0], lx, mx, ly, my, lz, mz);
+  tree_print(v->to[1], mx + 1, rx, ly, my, lz, mz);
+  tree_print(v->to[2], lx, mx, my + 1, ry, lz, mz);
+  tree_print(v->to[3], mx + 1, rx, my + 1, ry, lz, mz);
+  tree_print(v->to[4], lx, mx, ly, my, mz + 1, rz);
+  tree_print(v->to[5], mx + 1, rx, ly, my, mz + 1, rz);
+  tree_print(v->to[6], lx, mx, my + 1, ry, mz + 1, rz);
+  tree_print(v->to[7], mx + 1, rx, my + 1, ry, mz + 1, rz);
+}
+void tree_add(int x, int y, int z, int k, Node *v, int lx, int rx, int ly,
+              int ry, int lz, int rz)
+{
+  if ((rx < lx) || (ry < ly) || (rz < lz))
+    return;
+  // DBG("tree_add enter " << lx << ", " << rx << "; " << ly << ", " << ry << "; "
+  //                     << lz << ", " << rz << "; " << v->x);
+  if (((rx - lx) == 0) && ((ry - ly) == 0) && ((rz - lz) == 0)) {
+      v->x += k;
+      return;
+  }
+    // DBG("tree_add");
+    create_childs(v);
+    int mx = (lx + rx)/2;
+    int my = (ly + ry)/2;
+    int mz = (lz + rz)/2;
+
+    if(lx <= x && x <= mx) {
+        if(ly <= y && y <= my) {
+            if(lz <= z && z <= mz) {
+                tree_add(x, y, z, k, v->to[0], lx, mx, ly, my, lz, mz);
+            } else {
+                tree_add(x , y, z, k, v->to[4], lx, mx, ly, my, mz + 1, rz);
+            }
+        } else {
+            if (lz <= z && z <= mz) {
+                tree_add(x, y, z, k, v->to[2], lx, mx, my + 1, ry, lz, mz);
+            } else {
+                tree_add(x, y, z, k, v->to[6], lx, mx, my + 1, ry, mz + 1, rz);
+            }
+        }
+    } else {
+        if (ly <= y && y <= my) {
+            if (lz <= z && z <= mz) {
+                tree_add(x, y, z, k, v->to[1], mx + 1, rx, ly, my, lz, mz);
+            } else {
+                tree_add(x, y, z, k, v->to[5], mx + 1, rx, ly, my, mz + 1, rz);
+            }
+        } else {
+            if (lz <= z && z <= mz) {
+                tree_add(x, y, z, k, v->to[3], mx + 1, rx, my + 1, ry, lz, mz);
+            } else {
+                tree_add(x, y, z, k, v->to[7], mx + 1, rx, my + 1, ry, mz + 1, rz);
+            }
+        }
+    }
+    eval(v, lx, rx, ly, ry, lz, rz);
+    // DBG("tree_add quit " << lx << ", " << rx << "; " << ly << ", " << ry << "; "
+    //                 << lz << ", " << rz << "; " << v->x);
+}
+
+int tree_sum(int flx, int frx, int fly, int fry, int flz, int frz,
+             Node* v, int lx, int rx, int ly, int ry, int lz, int rz)
+{
+  if ((frx < flx) || (fry < fly) || (frz < flz))
+    return 0;
+  // DBG("tree_sum enter" << lx << ", " << rx << "; " << ly << ", " << ry << "; " << lz
+  //     << ", " << rz << "; " << v->x);
+  if ((flx == lx) && (frx == rx) && (fly == ly) && (fry == ry) && (flz == lz) &&
+      (frz == rz)) {
+      // DBG("tree_sum fin " << tree->x);
+    return v->x;
+    }
+    // DBG("tree_sum");
+    create_childs(v);
+    int mx = (lx + rx)/2;
+    int my = (ly + ry)/2;
+    int mz = (lz + rz)/2;
+    
+    int res = 
+        tree_sum(flx, min(frx, mx), fly, min(fry, my), flz, min(frz, mz), v->to[0], lx, mx, ly, my, lz, mz) +
+        tree_sum(max(flx, mx + 1), frx, fly, min(fry, my), flz, min(frz, mz), v->to[1], mx + 1, rx, ly, my, lz, mz) +
+        tree_sum(flx, min(frx, mx), max(fly, my + 1), fry, flz, min(frz, mz), v->to[2], lx, mx, my + 1, ry, lz, mz) +
+        tree_sum(max(flx, mx + 1), frx, max(fly, my + 1), fry, flz, min(frz, mz), v->to[3], mx + 1, rx, my + 1, ry, lz, mz) +
+        tree_sum(flx, min(frx, mx), fly, min(fry, my), max(flz, mz + 1), frz, v->to[4], lx, mx, ly, my, mz + 1, rz) +
+        tree_sum(max(flx, mx + 1), frx, fly, min(fry, my), max(flz, mz + 1), frz, v->to[5], mx + 1, rx, ly, my, mz + 1, rz) +
+        tree_sum(flx, min(frx, mx), max(fly, my + 1), fry, max(flz, mz + 1), frz, v->to[6], lx, mx, my + 1, ry, mz + 1, rz) +
+        tree_sum(max(flx, mx + 1), frx, max(fly, my + 1), fry, max(flz, mz + 1), frz, v->to[7], mx + 1, rx, my + 1, ry, mz + 1, rz);
+
+    // DBG("tree_sum quit " << res);
+    return res;
+}
+
+//entry
 void sol() {
-    int m;
-    cin >> m;
-    vector<Request> requests(0);
-
-    int mi = 0, ma = 0;
-
-    for (int i = 0; i < m; ++i) {
-        Request t;
-        cin >> t.slx >> t.sly >> t.srx >> t.sry;
-        t.srx++;
-        t.sry++;
-        mi = min(mi, min(min(t.slx, t.srx), min(t.sly, t.sry)));
-        ma = max(ma, max(max(t.slx, t.srx), max(t.sly, t.sry)));
-        requests.push_back(t);
+    int n; cin >> n;
+    char op;
+    // for(int x = 0; x < n; ++x) {
+    //     for(int y = 0; y < n; ++y) {
+    //         for(int z = 0; z < n; ++z) {
+    //           tree_add(x, y, z, 0, tree, 0, n, 0, n, 0, n);
+    //         }
+    //     }
+    // }
+    while(true) {
+        cin >> op;
+        if(op == '1') {
+            int x, y, z, k;
+            cin >> x >> y >> z >> k;
+            tree_add(x, y, z, k, tree, 0, n-1, 0, n-1, 0, n-1);
+        } else if(op == '2') {
+            int lx, ly, lz, rx, ry, rz;
+            cin >> lx >> ly >> lz >> rx >> ry >> rz;
+            cout << tree_sum(lx, rx, ly, ry, lz, rz, tree, 0, n-1, 0, n-1, 0, n-1) << endl;
+        } else {
+            break;
+        }
     }
-
-    mi = abs(mi);
-
-    n = ma + mi;
-    DBG(ma << " " << mi);
-
-    tree.resize(n * 8, vector<Node>(n * 8, E));
-
-    for (Request r : requests) {
-        DBG("Request");
-        t_add_x(r.slx + mi, r.srx + mi, r.sly + mi, r.sry + mi, 1, 0, 0, n);
-    }
-    cout << tree[0][0].max << endl;
-    cout << tree[0][0].x - mi << " " << tree[0][0].y - mi << endl;
+    // tree_print(tree,  0, n, 0, n, 0, n);
 }
 //##################CODE END###############
 #ifdef LOCAL
