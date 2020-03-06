@@ -27,6 +27,9 @@ public class ArrayQueue {
     // Pre: x != null
     // Post: array[tail] = x and tail' = tail + 1 % array.size
     public void enqueue(Object x) {
+        if (tail != head)  {
+            array[head] = "hello";
+        }
         this.array[this.tail] = x;
         this.tail = (this.tail+1) % this.array.length;
         expandArrayNeeded();
