@@ -8,7 +8,7 @@ public class BinarySearch {
     }
 
 
-    // Pre: |args| > 1 for all v in a: v - Integer
+    // Pre: |args| > 1 for all v in args: v - Integer
     // Post: i1 = i2 = i: i = min({j in I: a[j] <= x})
     private void run(String[] args) {
 
@@ -29,16 +29,12 @@ public class BinarySearch {
         int i1 = bSearch(x,a);
         int i2 = recBSearch(x, a, 0, a.length);
         // System.out.println("Non recursive: a[" + i1 + "] = " + a[i1] + ", Recursive: a[" + i2 + "] = " + a[i2]);
-        System.out.println(i1);
+        System.out.println(i2);
     }
 
     // Pre: I = [0 : a.length) and exists j in I: a[j] <= x and forall j,k in I: j > k a[j] <= a[k]
     // Post: i: i = min({j in I: a[j] <= x})
     private int bSearch(int x, int[] a) {
-        if(a[a.length - 1] > x) {
-            // throw new RuntimeException("a[j] <= x doesn't exist");
-            return a.length;
-        }
 
         // Pre: a.length > 0
         // Post: l = 0 and r = max(I) + 1 and [l : r) = I
@@ -87,14 +83,13 @@ public class BinarySearch {
         return l;
     }
 
-    // inv: a[r] <= x <= a[l] and |[l' : r')| < |[l : r)| and |[l : r)| > 1 and forall i,j in [l' : r') i < j a[i] >= a[j];
-    // Pre: exists x0 in a: a0 <= x [l : r) = [0 : a.length)
+    // Pre: exists a0 in a: a0 <= x and for all i,j in [l : r) i < j a[i] >= a[j]
     // Post: i = min({j in I: a[j] <= x}
     private int recBSearch(int x, int[] a, int l, int r) {
-        if(a[a.length - 1] > x) {
-            // throw new RuntimeException("a[j] <= x doesn't exist");
-            return a.length;
-        }
+//        if(a[a.length - 1] > x) {
+//            // throw new RuntimeException("a[j] <= x doesn't exist");
+//            return a.length;
+//        }
 
         // Pre: |[l : r)| <= 1 and
         //     ( (exists j in I: a[j] > x and l = max({j in I: a[j] > x})) or
@@ -110,7 +105,7 @@ public class BinarySearch {
             return l;
         }
 
-        // Pre: [l : r) subset I
+        // Pre: r - l > 1
         // Post l < m < r
         int m = (l + r)/2;
 
@@ -118,7 +113,7 @@ public class BinarySearch {
         // Post: i = min({j in I: a[j] <= x})
         if(x < a[m]) {
 
-            // Pre: x < a[m] and |[m : r)| < |[l : r)| subset [l : r) and a[r] <= x < a[l]
+            // Pre: x < a[m] and |[m : r)| < |[l : r)| and a[r] <= x < a[l]
             // Post: i = min({j in I: a[j] <= x}
             return recBSearch(x, a, m, r);
         } else {
