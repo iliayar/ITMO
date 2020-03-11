@@ -14,7 +14,7 @@ public class Add extends Operation {
     }
 
     @Override
-    protected <T extends Number> T eval(T a, T b) {
+    protected Number eval(Number a, Number b) {
         return calc.add(a,b);
     }
 

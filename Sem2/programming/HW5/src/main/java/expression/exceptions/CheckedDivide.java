@@ -13,7 +13,7 @@ public class CheckedDivide extends Divide {
 
 
     @Override
-    public <T extends Number> T eval(T a, T b) {
+    public Number eval(Number a, Number b) {
         // if(b == 0) {
         //     throw new DivisonByZeroException(a,b);
         // }

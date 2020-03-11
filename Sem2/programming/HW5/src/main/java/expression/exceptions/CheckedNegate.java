@@ -11,7 +11,7 @@ public class CheckedNegate extends Negate {
     }
 
     @Override
-    protected <T extends Number> T eval(T a) {
+    protected Number eval(Number a) {
         // if(a == Integer.MIN_VALUE) {
         //     throw new IntegerOverflowException("-"+a);
         // }

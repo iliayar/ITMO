@@ -4,7 +4,7 @@ public class Const extends Operand {
 
     Number value;
 
-    public <T extends Number> Const(T v) {
+    public Const(Number v) {
         this.value = v;
     }
     
@@ -33,13 +33,13 @@ public class Const extends Operand {
 
 
     @Override
-    protected <T extends Number> T getValue(T x) {
+    protected Number getValue(Number x) {
         return value;
     }
 
 
     @Override
-    protected <T extends Number> T getValue(T x, T y, T z) {
+    protected Number getValue(Number x, Number y, Number z) {
         return value;
     }
 

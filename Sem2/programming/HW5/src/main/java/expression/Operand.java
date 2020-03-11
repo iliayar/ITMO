@@ -3,11 +3,11 @@ package expression;
 public abstract class Operand implements CommonExpression {
 
     @Override
-    public <T extends Number> T evaluate(T x) {
+    public Number evaluate(Number x) {
         return getValue(x);
     }
 
-    @Override public <T extends Number> T evaluate(T x, T y, T z) {
+    @Override public Number evaluate(Number x, Number y, Number z) {
         return getValue(x,y,z);
     }
 
@@ -31,7 +31,7 @@ public abstract class Operand implements CommonExpression {
 
     @Override
     public int hashCode() {
-        return ((getSymbol().length() > 0 ? getSymbol().charAt(0)*BASE : getValue(0))*BASE + MOD) % MOD;
+        return ((getSymbol().length() > 0 ? getSymbol().charAt(0)*BASE : (int)getValue(0))*BASE + MOD) % MOD;
     }
 
     @Override
@@ -45,6 +45,6 @@ public abstract class Operand implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract <T extends Number> T getValue(T x);
-    protected abstract <T extends Number> T getValue(T x, T y, T z);
+    protected abstract Number getValue(Number x);
+    protected abstract Number getValue(Number x, Number y, Number z);
 }

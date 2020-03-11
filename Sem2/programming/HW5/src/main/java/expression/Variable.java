@@ -24,12 +24,12 @@ public class Variable extends Operand {
     }
 
     @Override
-    protected <T extends Number> T getValue(T x) {
+    protected Number getValue(Number x) {
         return x;
     }
-    
+
     @Override
-    protected <T extends Number> T getValue(T x, T y, T z) {
+    protected Number getValue(Number x, Number y, Number z) {
         switch(symbol) {
             case "x":
                 return x;

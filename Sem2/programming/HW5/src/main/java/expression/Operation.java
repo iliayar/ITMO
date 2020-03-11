@@ -9,7 +9,7 @@ public abstract class Operation implements CommonExpression {
     CommonExpression b;
 
 
-    protected Calculator calc;
+    protected Calculator<Number> calc;
 
     public Operation(Expression a, Expression b, Calculator calc) {
         this.a = (CommonExpression)a;
@@ -18,13 +18,13 @@ public abstract class Operation implements CommonExpression {
     }
 
     @Override
-    public <T extends Number> T evaluate(T x) {
+    public Number evaluate(Number x) {
         return eval(a.evaluate(x), b.evaluate(x));
     }
 
 
     @Override
-    public <T extends Number> T evaluate(T x, T y, T z) {
+    public Number evaluate(Number x, Number y, Number z) {
         return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
     }
 
@@ -98,5 +98,5 @@ public abstract class Operation implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract <T extends Number> T eval(T a, T b);
+    protected abstract Number eval(Number a, Number b);
 }

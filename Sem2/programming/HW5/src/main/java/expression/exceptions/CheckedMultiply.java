@@ -17,7 +17,7 @@ public class CheckedMultiply extends Multiply {
         }
     }
     @Override
-    public <T extends Number> T eval(T a, T b) {
+    public Number eval(Number a, Number b) {
         // checkOverflow(a,b, a + "*" + b);
 
         return calc.multiply(a,b);

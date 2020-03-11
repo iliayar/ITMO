@@ -2,7 +2,7 @@ package expression;
 
 public interface Expression extends ToMiniString {
 
-    <T extends Number> T evaluate(T x);
+    Number evaluate(Number x);
 //    String toString();
 //    boolean equals(Expression expr);
 
