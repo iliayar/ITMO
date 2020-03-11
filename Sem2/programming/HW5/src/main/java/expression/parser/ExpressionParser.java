@@ -2,7 +2,7 @@ package expression.parser;
 
 import expression.*;
 
-public class ExpressionParser<T extends Number> extends BaseParser {
+public class ExpressionParser extends BaseParser {
 
     Calculator calc;
 
@@ -23,7 +23,7 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         return parseExpression();
     }
 
-    private T parseNumber(boolean isNegate) {
+    private Number parseNumber(boolean isNegate) {
         StringBuilder sb = new StringBuilder();
         if(isNegate) {
             sb.append('-');

@@ -12,7 +12,7 @@ public class Multiply extends Operation {
         return "*";
     }
 
-    protected <T extends Number> T eval(T a, T b) {
+    protected Number eval(Number a, Number b) {
         return calc.multiply(a, b);
     }
 

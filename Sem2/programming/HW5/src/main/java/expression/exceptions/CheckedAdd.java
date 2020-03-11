@@ -13,7 +13,7 @@ public class CheckedAdd extends Add {
     }
 
 
-    public <T extends Number> T eval(T a, T b) {
+    public Number eval(Number a, Number b) {
 
         // if((a > 0 && b > 0 && a > calc.MAX_VALUE - b) ||
         //         (a < 0 && b < 0 && a < calc.MIN_VALUE - b)) {

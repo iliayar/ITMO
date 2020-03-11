@@ -11,13 +11,13 @@ public abstract class UnaryOperation implements CommonExpression {
     }
 
     @Override
-    public <T extends Number> T evaluate(T x) {
+    public Number evaluate(Number x) {
         return eval(a.evaluate(x));
     }
 
     @Override
-    public <T extends Number> T evaluate(T x, T y, T z) {
-        T resA, resB;
+    public Number evaluate(Number x, Number y, Number z) {
+        Number resA, resB;
         return eval(a.evaluate(x,y,z));
     }
 
@@ -70,6 +70,6 @@ public abstract class UnaryOperation implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract <T extends Number> T eval(T a);
+    protected abstract Number eval(Number a);
 
 }

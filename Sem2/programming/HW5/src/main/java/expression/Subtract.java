@@ -11,7 +11,7 @@ public class Subtract extends Operation{
     }
 
     @Override
-    protected <T extends Number> T eval(T a, T b) {
+    protected Number eval(Number a, Number b) {
         return calc.substract(a, b);
     }
 

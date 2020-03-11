@@ -22,7 +22,7 @@ public class Negate extends UnaryOperation {
         return null;
     }
 
-    protected <T extends Number> T eval(T a) {
+    protected Number eval(Number a) {
         return calc.negate(a);
     }
 
