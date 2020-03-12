@@ -1,8 +1,8 @@
 package expression;
 
 public class ExpressionException extends RuntimeException {
-
-    String msg;
+	private static final long serialVersionUID = 1L;
+	String msg;
 
     public ExpressionException(String msg) {
         this.msg = msg;
