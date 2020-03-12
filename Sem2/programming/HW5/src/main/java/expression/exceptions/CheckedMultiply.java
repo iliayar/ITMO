@@ -2,7 +2,7 @@ package expression.exceptions;
 
 import expression.Calculator;
 import expression.CommonExpression;
-import expression.IntegerOverflowException;
+import expression.NumberOverflowException;
 import expression.Multiply;
 
 public class CheckedMultiply<T extends Number> extends Multiply<T> {
@@ -13,7 +13,7 @@ public class CheckedMultiply<T extends Number> extends Multiply<T> {
     public static void checkOverflow(int a, int b, String msg) {
         if ((a > 0 && ((b > 0 && b > Integer.MAX_VALUE / a) || (b < 0 && b < Integer.MIN_VALUE / a))) ||
                 (a < 0 && ((b > 0 && a < Integer.MIN_VALUE / b) || (b < 0 && b < Integer.MAX_VALUE / a)))) {
-            throw new IntegerOverflowException(msg);
+            throw new NumberOverflowException(msg);
         }
     }
     @Override

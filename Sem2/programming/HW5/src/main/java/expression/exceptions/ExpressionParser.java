@@ -55,26 +55,35 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         }
         if (in("+-*/")) {
             char c = ch;
-            if (test('*')) {
-                if (test('*')) {
-                    parsedOperation = "**";
-                    return;
-                }
-            } else if (test('/')) {
-                if (test('/')) {
-                    parsedOperation = "//";
-                    return;
-                }
-            } else {
-                nextChar();
-            }
+            // if (test('*')) {
+            //     if (test('*')) {
+            //         parsedOperation = "**";
+            //         return;
+            //     }
+            // } else if (test('/')) {
+            //     if (test('/')) {
+            //         parsedOperation = "//";
+            //         return;
+            //     }
+            // } else {
+            //     nextChar();
+            // }
+            nextChar();
             parsedOperation = Character.toString(c);
-        } else if (test('<')) {
-            expect('<');
-            parsedOperation = "<<";
-        } else if (test('>')) {
-            expect('>');
-            parsedOperation = ">>";
+        } else if (test('m')) {
+            if(test('i')) {
+                expect('n');
+                parsedOperation = "min";
+            } else if(test('a')) {
+                expect('x');
+                parsedOperation = "max";
+            }
+        // } else if (test('<')) {
+        //     expect('<');
+        //     parsedOperation = "<<";
+        // } else if (test('>')) {
+        //     expect('>');
+        //     parsedOperation = ">>";
         } else {
              throw operatorError();
         }
@@ -82,7 +91,8 @@ public class ExpressionParser<T extends Number> extends BaseParser {
     }
 
     private boolean testOperation(String expect) {
-        if (in("*+-<>/")) {
+        // if (in("*+-<>/")) {
+        if (in("*+-m/")) {
             parseOperation();
         }
         if(parsedOperation != null && parsedOperation.equals(expect)) {
@@ -100,13 +110,13 @@ public class ExpressionParser<T extends Number> extends BaseParser {
             return  expr;
         } else if (between('0', '9')) {
             T n = parseNumber(false);
-            return new Const(n);
+            return new Const<T>(n);
         } else if (test('x')) {
-            return new Variable("x");
+            return new Variable<T>("x");
         } else if (test('y')) {
-            return new Variable("y");
+            return new Variable<T>("y");
         } else if (test('z')) {
-            return new Variable("z");
+            return new Variable<T>("z");
         } else if (test('-')) {
             skipWhitespace();
             if (between('0','9')) {
@@ -118,6 +128,16 @@ public class ExpressionParser<T extends Number> extends BaseParser {
                 return new CheckedNegate<T>(expr, calc);
             } else {
                 return new CheckedNegate<T>(parseOperand(), calc);
+            }
+        } else if(test('c')) {
+            expect("ount");
+            skipWhitespace();
+            if(test('(')) {
+                CommonExpression expr = parseExpression();
+                expect(')');
+                return new Count<T>(expr, calc);
+            } else {
+                return new Count<T>(parseOperand(), calc);
             }
         }
         // } else if (test('d')) {
@@ -146,30 +166,30 @@ public class ExpressionParser<T extends Number> extends BaseParser {
     }
 
     public CommonExpression parseExpression() {
-        return parse2PriorExpression();
+        return parse3PriorExpression();
     }
 
-    // private  CommonExpression parse0PriorExpression() {
+    private  CommonExpression parse3PriorExpression() {
 
-    //     skipWhitespace();
+        skipWhitespace();
 
-    //     CommonExpression firstOperand = null;
+        CommonExpression firstOperand = null;
 
-    //     firstOperand = parseOperand();
-    //     skipWhitespace();
-    //     while (true) {
-    //         if (testOperation("**")) {
-    //             skipWhitespace();
-    //             firstOperand = new Pow(firstOperand, parseOperand());
-    //         } else if (testOperation("//")) {
-    //             skipWhitespace();
-    //             firstOperand = new Log(firstOperand, parseOperand());
-    //         } else {
-    //             return firstOperand;
-    //         }
-    //         skipWhitespace();
-    //     }
-    // }
+        firstOperand = parse2PriorExpression();
+        skipWhitespace();
+        while (true) {
+            if (testOperation("min")) {
+                skipWhitespace();
+                firstOperand = new Min<T>(firstOperand, parse2PriorExpression(), calc);
+            } else if (testOperation("max")) {
+                skipWhitespace();
+                firstOperand = new Max<T>(firstOperand, parse2PriorExpression(), calc);
+            } else {
+                return firstOperand;
+            }
+            skipWhitespace();
+        }
+    }
 
     private CommonExpression parse1PriorExpression() {
 

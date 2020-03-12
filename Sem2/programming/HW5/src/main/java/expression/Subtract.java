@@ -12,7 +12,7 @@ public class Subtract<T extends Number> extends Operation<T>{
 
     @Override
     protected T eval(T a, T b) {
-        System.err.println("TEST");
+        // System.err.println("TEST");
         return calc.subtract(a, b);
     }
 

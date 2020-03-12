@@ -2,7 +2,7 @@ package expression.exceptions;
 
 import expression.Calculator;
 import expression.CommonExpression;
-import expression.IntegerOverflowException;
+import expression.NumberOverflowException;
 import expression.Subtract;
 
 public class CheckedSubtract<T extends Number> extends Subtract<T> {
