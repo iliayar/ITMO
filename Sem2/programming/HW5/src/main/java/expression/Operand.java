@@ -1,13 +1,14 @@
 package expression;
 
-public abstract class Operand implements CommonExpression {
+public abstract class Operand<T extends Number> implements CommonExpression<T> {
 
     @Override
-    public Number evaluate(Number x) {
+    public T evaluate(T x) {
         return getValue(x);
     }
 
-    @Override public Number evaluate(Number x, Number y, Number z) {
+    @Override
+    public T evaluate(T x, T y, T z) {
         return getValue(x,y,z);
     }
 
@@ -30,11 +31,6 @@ public abstract class Operand implements CommonExpression {
     }
 
     @Override
-    public int hashCode() {
-        return ((getSymbol().length() > 0 ? getSymbol().charAt(0)*BASE : (int)getValue(0))*BASE + MOD) % MOD;
-    }
-
-    @Override
     public boolean isCommutative() {
         return true;
     }
@@ -45,6 +41,6 @@ public abstract class Operand implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract Number getValue(Number x);
-    protected abstract Number getValue(Number x, Number y, Number z);
+    protected abstract T getValue(T x);
+    protected abstract T getValue(T x, T y, T z);
 }

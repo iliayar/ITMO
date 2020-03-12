@@ -1,7 +1,7 @@
 package expression;
 
-public class Subtract extends Operation{
-    public Subtract(CommonExpression a, CommonExpression b, Calculator calc) {
+public class Subtract<T extends Number> extends Operation<T>{
+    public Subtract(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
         super(a, b, calc);
     }
 
@@ -11,8 +11,9 @@ public class Subtract extends Operation{
     }
 
     @Override
-    protected Number eval(Number a, Number b) {
-        return calc.substract(a, b);
+    protected T eval(T a, T b) {
+        System.err.println("TEST");
+        return calc.subtract(a, b);
     }
 
 

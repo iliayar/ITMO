@@ -5,15 +5,15 @@ import expression.Calculator;
 import expression.CommonExpression;
 import expression.IntegerOverflowException;
 
-public class CheckedAdd extends Add {
+public class CheckedAdd<T extends Number> extends Add<T> {
 
 
-    public CheckedAdd(CommonExpression a, CommonExpression b, Calculator calc) {
+    public CheckedAdd(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
         super(a, b, calc);
     }
 
 
-    public Number eval(Number a, Number b) {
+    public T eval(T a, T b) {
 
         // if((a > 0 && b > 0 && a > calc.MAX_VALUE - b) ||
         //         (a < 0 && b < 0 && a < calc.MIN_VALUE - b)) {

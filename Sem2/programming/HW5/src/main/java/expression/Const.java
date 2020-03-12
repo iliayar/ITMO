@@ -1,10 +1,10 @@
 package expression;
 
-public class Const extends Operand {
+public class Const<T extends Number> extends Operand<T> {
 
-    Number value;
+    T value;
 
-    public Const(Number v) {
+    public Const(T v) {
         this.value = v;
     }
     
@@ -33,13 +33,13 @@ public class Const extends Operand {
 
 
     @Override
-    protected Number getValue(Number x) {
+    protected T getValue(T x) {
         return value;
     }
 
 
     @Override
-    protected Number getValue(Number x, Number y, Number z) {
+    protected T getValue(T x, T y, T z) {
         return value;
     }
 
@@ -47,4 +47,9 @@ public class Const extends Operand {
     public int getPrior() {
         return 0;
     }
+
+	@Override
+	public int hashCode() {
+      return (value.intValue()*BASE + MOD) % MOD;
+	}
 }

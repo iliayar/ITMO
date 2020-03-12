@@ -1,31 +1,36 @@
 package expression;
 
-import expression.Calculator;
+
 
 public class IntegerCalculator implements Calculator<Integer> {
 
-    public Integer add(Integer a, Integer b) {
-        return a + b;
-    }
+	@Override
+	public Integer add(Integer a, Integer b) {
+		return a + b;
+	}
 
-    public Integer multiply(Integer a, Integer b) {
-        return a * b;
-    }
+	@Override
+	public Integer divide(Integer a, Integer b) {
+		return a / b;
+	}
 
-    public Integer divide(Integer a, Integer b) {
-        return a / b;
-    }
+	@Override
+	public Integer multiply(Integer a, Integer b) {
+		return a * b;
+	}
 
-    public Integer substract(Integer a, Integer b) {
-        return a - b;
-    }
+	@Override
+	public Integer negate(Integer a) {
+		return -a;
+	}
 
-    public Integer negate(Integer a) {
-        return -a;
-    }
+	@Override
+	public Integer parseNumber(String s) {
+		return Integer.parseInt(s);
+	}
 
-    public Integer parseNumber(String s) {
-        return Integer.parseInt(s);
-    }
-
+	@Override
+	public Integer subtract(Integer a, Integer b) {
+		return a - b;
+	}
 }

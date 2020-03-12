@@ -6,14 +6,14 @@ import expression.Divide;
 import expression.DivisonByZeroException;
 import expression.IntegerOverflowException;
 
-public class CheckedDivide extends Divide {
-    public CheckedDivide(CommonExpression a, CommonExpression b, Calculator calc) {
+public class CheckedDivide<T extends Number> extends Divide<T> {
+    public CheckedDivide(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
         super(a, b, calc);
     }
 
 
     @Override
-    public Number eval(Number a, Number b) {
+    public T eval(T a, T b) {
         // if(b == 0) {
         //     throw new DivisonByZeroException(a,b);
         // }

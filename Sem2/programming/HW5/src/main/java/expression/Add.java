@@ -2,10 +2,10 @@ package expression;
 
 import java.math.BigInteger;
 
-public class Add extends Operation {
+public class Add<T extends Number> extends Operation<T> {
 
-    public Add(CommonExpression a, CommonExpression b, Calculator calc) {
-        super(a,b, calc);
+    public Add(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
+        super(a,b,calc);
     }
 
     @Override
@@ -14,7 +14,7 @@ public class Add extends Operation {
     }
 
     @Override
-    protected Number eval(Number a, Number b) {
+    protected T eval(T a, T b) {
         return calc.add(a,b);
     }
 
