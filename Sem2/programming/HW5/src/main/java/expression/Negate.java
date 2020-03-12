@@ -2,8 +2,8 @@ package expression;
 
 import java.math.BigInteger;
 
-public class Negate extends UnaryOperation {
-    public Negate(Expression a, Calculator calc) {
+public class Negate<T extends Number> extends UnaryOperation<T> {
+    public Negate(CommonExpression<T> a, Calculator<T> calc) {
         super(a, calc);
     }
 
@@ -22,7 +22,7 @@ public class Negate extends UnaryOperation {
         return null;
     }
 
-    protected Number eval(Number a) {
+    protected T eval(T a) {
         return calc.negate(a);
     }
 

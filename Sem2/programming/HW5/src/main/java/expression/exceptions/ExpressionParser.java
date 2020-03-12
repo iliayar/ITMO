@@ -9,13 +9,14 @@ import expression.parser.StringSource;
 public class ExpressionParser<T extends Number> extends BaseParser {
 
     private String parsedOperation = null;
+    Calculator<T> calc;
 
-    public ExpressionParser() {
+    public ExpressionParser(Calculator<T> calc) {
+        this.calc = calc;
     }
 
-    Calculator calc;
 
-    public ExpressionParser(ExpressionSource src, Calculator calc) {
+    public ExpressionParser(ExpressionSource src, Calculator<T> calc) {
         this.src = src;
         this.calc = calc;
         nextChar();
@@ -33,17 +34,17 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         return res;
     }
 
-    private int parseNumber(boolean isInverse) {
+    private T parseNumber(boolean isInverse) {
         StringBuilder parsedNum = new StringBuilder(isInverse ? "-" : "");
-        while (between('0','9')) {
+        while (between('0','9') || in(".")) {
             parsedNum.append(ch);
             nextChar();
         }
-        int res;
+        T res = null;
         try {
-            res = Integer.parseInt(parsedNum.toString());
+            res = calc.parseNumber(parsedNum.toString());
         } catch (NumberFormatException e) {
-            throw error("Wrong Integer: " + parsedNum.toString());
+            throw error("Wrong Number: " + parsedNum.toString());
         }
         return res;
     }
@@ -98,7 +99,7 @@ public class ExpressionParser<T extends Number> extends BaseParser {
             expect(')');
             return  expr;
         } else if (between('0', '9')) {
-            int n = parseNumber(false);
+            T n = parseNumber(false);
             return new Const(n);
         } else if (test('x')) {
             return new Variable("x");
@@ -109,14 +110,14 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         } else if (test('-')) {
             skipWhitespace();
             if (between('0','9')) {
-                int n = parseNumber(true);
+                T n = parseNumber(true);
                 return new Const(n);
             } else if (test('(')) {
                 CommonExpression expr = parseExpression();
                 expect(')');
-                return new CheckedNegate(expr, calc);
+                return new CheckedNegate<T>(expr, calc);
             } else {
-                return new CheckedNegate(parseOperand(), calc);
+                return new CheckedNegate<T>(parseOperand(), calc);
             }
         }
         // } else if (test('d')) {
@@ -181,11 +182,11 @@ public class ExpressionParser<T extends Number> extends BaseParser {
             if (testOperation("*")) {
                 skipWhitespace();
                 // firstOperand = new CheckedMultiply(firstOperand, parse0PriorExpression());
-                firstOperand = new CheckedMultiply(firstOperand, parseOperand(), calc);
+                firstOperand = new CheckedMultiply<T>(firstOperand, parseOperand(), calc);
             } else if (testOperation("/")) {
                 skipWhitespace();
                 // firstOperand = new CheckedDivide(firstOperand, parse0PriorExpression());
-                firstOperand = new CheckedDivide(firstOperand, parseOperand(), calc);
+                firstOperand = new CheckedDivide<T>(firstOperand, parseOperand(), calc);
             } else {
                 return firstOperand;
             }
@@ -201,10 +202,10 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         while (true) {
             if (testOperation("+")) {
                 skipWhitespace();
-                firstOperand = new CheckedAdd(firstOperand, parse1PriorExpression(), calc);
+                firstOperand = new CheckedAdd<T>(firstOperand, parse1PriorExpression(), calc);
             } else if (testOperation("-")) {
                 skipWhitespace();
-                firstOperand = new CheckedSubtract(firstOperand, parse1PriorExpression(), calc);
+                firstOperand = new CheckedSubtract<T>(firstOperand, parse1PriorExpression(), calc);
             } else {
                 return firstOperand;
             }

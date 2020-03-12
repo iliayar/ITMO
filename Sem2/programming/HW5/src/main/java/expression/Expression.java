@@ -1,8 +1,8 @@
 package expression;
 
-public interface Expression extends ToMiniString {
+public interface Expression<T extends Number> extends ToMiniString {
 
-    Number evaluate(Number x);
+    T evaluate(T x);
 //    String toString();
 //    boolean equals(Expression expr);
 

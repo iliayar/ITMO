@@ -2,8 +2,8 @@ package expression;
 
 import java.math.BigInteger;
 
-public class Divide extends Operation {
-    public Divide(CommonExpression a, CommonExpression b, Calculator calc) {
+public class Divide<T extends Number> extends Operation<T> {
+    public Divide(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
         super(a, b, calc);
     }
 
@@ -13,7 +13,7 @@ public class Divide extends Operation {
     }
 
     @Override
-    protected Number eval(Number a, Number b) {
+    protected T eval(T a, T b) {
         return calc.divide(a, b);
     }
 

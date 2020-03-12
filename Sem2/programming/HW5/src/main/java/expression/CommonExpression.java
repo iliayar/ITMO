@@ -2,7 +2,7 @@ package expression;
 
 import java.math.BigInteger;
 
-public interface CommonExpression extends Expression, TripleExpression {
+public interface CommonExpression<T extends Number> extends Expression<T>, TripleExpression<T> {
     int MOD = 133711;
     int BASE = 31;
 

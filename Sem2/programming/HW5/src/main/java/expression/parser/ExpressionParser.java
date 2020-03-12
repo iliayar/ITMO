@@ -2,16 +2,17 @@ package expression.parser;
 
 import expression.*;
 
-public class ExpressionParser extends BaseParser {
+public class ExpressionParser<T extends Number> extends BaseParser {
 
-    Calculator calc;
+    Calculator<T> calc;
 
-    public ExpressionParser() {
+    public ExpressionParser(Calculator<T> calc) {
+        this.calc = calc;
     }
 
-    public ExpressionParser(ExpressionSource src, Calculator calc) {
-        this.src = src;
+    public ExpressionParser(ExpressionSource src, Calculator<T> calc) {
         this.calc = calc;
+        this.src = src;
         nextChar();
     }
 
@@ -23,7 +24,7 @@ public class ExpressionParser extends BaseParser {
         return parseExpression();
     }
 
-    private Number parseNumber(boolean isNegate) {
+    private T parseNumber(boolean isNegate) {
         StringBuilder sb = new StringBuilder();
         if(isNegate) {
             sb.append('-');
@@ -32,7 +33,7 @@ public class ExpressionParser extends BaseParser {
             sb.append(ch);
             nextChar();
         }
-        return  calc.parseNumber(sb.toString());
+        return calc.parseNumber(sb.toString());
     }
 
     private char parseOperation() {
@@ -66,9 +67,9 @@ public class ExpressionParser extends BaseParser {
             } else if(test('(')) {
                 CommonExpression expr = parseExpression();
                 test(')');
-                return new Negate(expr, calc);
+                return new Negate<T>(expr, calc);
             } else {
-                return new Negate(parseOperand(), calc);
+                return new Negate<T>(parseOperand(), calc);
             }
         }
         // } else if(test('d')) {
@@ -139,13 +140,13 @@ public class ExpressionParser extends BaseParser {
             }
             skipWhitespace();
             if(operation == '*') {
-                firstOperand = new Multiply(firstOperand, secondOperand, calc);
+                firstOperand = new Multiply<T>(firstOperand, secondOperand, calc);
             } else if(operation == '/') {
-                firstOperand = new Divide(firstOperand, secondOperand, calc);
+                firstOperand = new Divide<T>(firstOperand, secondOperand, calc);
             } else if(operation == '+') {
-                firstOperand = new Add(firstOperand, secondOperand, calc);
+                firstOperand = new Add<T>(firstOperand, secondOperand, calc);
             } else if(operation == '-'){
-                firstOperand = new Subtract(firstOperand, secondOperand, calc);
+                firstOperand = new Subtract<T>(firstOperand, secondOperand, calc);
             }
             // } else if(operation == '<') {
             //     firstOperand = new ShiftLeft(firstOperand, secondOperand, calc);

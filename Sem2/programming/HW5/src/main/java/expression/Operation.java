@@ -3,28 +3,28 @@ package expression;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public abstract class Operation implements CommonExpression {
+public abstract class Operation<T extends Number> implements CommonExpression<T> {
 
-    CommonExpression a;
-    CommonExpression b;
+    CommonExpression<T> a;
+    CommonExpression<T> b;
 
 
-    protected Calculator<Number> calc;
+    protected Calculator<T> calc;
 
-    public Operation(Expression a, Expression b, Calculator calc) {
-        this.a = (CommonExpression)a;
-        this.b = (CommonExpression)b;
+    public Operation(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
+        this.a = a;
+        this.b = b;
         this.calc = calc;
     }
 
     @Override
-    public Number evaluate(Number x) {
+    public T evaluate(T x) {
         return eval(a.evaluate(x), b.evaluate(x));
     }
 
 
     @Override
-    public Number evaluate(Number x, Number y, Number z) {
+    public T evaluate(T x, T y, T z) {
         return eval(a.evaluate(x,y,z), b.evaluate(x,y,z));
     }
 
@@ -98,5 +98,5 @@ public abstract class Operation implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract Number eval(Number a, Number b);
+    protected abstract T eval(T a, T b);
 }

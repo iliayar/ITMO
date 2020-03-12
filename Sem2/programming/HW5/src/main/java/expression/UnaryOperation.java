@@ -1,22 +1,22 @@
 package expression;
 
-public abstract class UnaryOperation implements CommonExpression {
-    CommonExpression a;
+public abstract class UnaryOperation<T extends Number> implements CommonExpression<T> {
+    CommonExpression<T> a;
 
-    protected Calculator calc;
+    protected Calculator<T> calc;
 
-    public UnaryOperation(Expression a, Calculator calc) {
-        this.a = (CommonExpression) a;
+    public UnaryOperation(CommonExpression<T> a, Calculator<T> calc) {
+        this.a = a;
         this.calc = calc;
     }
 
     @Override
-    public Number evaluate(Number x) {
+    public T evaluate(T x) {
         return eval(a.evaluate(x));
     }
 
     @Override
-    public Number evaluate(Number x, Number y, Number z) {
+    public T evaluate(T x, T y, T z) {
         Number resA, resB;
         return eval(a.evaluate(x,y,z));
     }
@@ -70,6 +70,6 @@ public abstract class UnaryOperation implements CommonExpression {
     }
 
     public abstract String getSymbol();
-    protected abstract Number eval(Number a);
+    protected abstract T eval(T a);
 
 }

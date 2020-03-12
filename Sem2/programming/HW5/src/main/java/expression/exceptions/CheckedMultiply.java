@@ -5,9 +5,9 @@ import expression.CommonExpression;
 import expression.IntegerOverflowException;
 import expression.Multiply;
 
-public class CheckedMultiply extends Multiply {
-    public CheckedMultiply(CommonExpression a, CommonExpression b, Calculator calc) {
-        super(a, b, calc);
+public class CheckedMultiply<T extends Number> extends Multiply<T> {
+    public CheckedMultiply(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
+        super(a, b,calc );
     }
 
     public static void checkOverflow(int a, int b, String msg) {
@@ -17,7 +17,7 @@ public class CheckedMultiply extends Multiply {
         }
     }
     @Override
-    public Number eval(Number a, Number b) {
+    public T eval(T a, T b) {
         // checkOverflow(a,b, a + "*" + b);
 
         return calc.multiply(a,b);

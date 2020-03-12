@@ -2,8 +2,8 @@ package expression;
 
 import java.math.BigInteger;
 
-public class Multiply extends Operation {
-    public Multiply(CommonExpression a, CommonExpression b, Calculator calc) {
+public class Multiply<T extends Number> extends Operation<T> {
+    public Multiply(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {
         super(a, b, calc);
     }
 
@@ -12,7 +12,7 @@ public class Multiply extends Operation {
         return "*";
     }
 
-    protected Number eval(Number a, Number b) {
+    protected T eval(T a, T b) {
         return calc.multiply(a, b);
     }
 

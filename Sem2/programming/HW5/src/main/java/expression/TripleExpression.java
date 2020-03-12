@@ -3,6 +3,6 @@ package expression;
 /**
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
-public interface TripleExpression extends ToMiniString {
-    Number evaluate(Number x, Number y, Number z);
+public interface TripleExpression<T extends Number> extends ToMiniString {
+    T evaluate(T x, T y, T z);
 }

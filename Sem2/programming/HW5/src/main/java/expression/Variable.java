@@ -1,6 +1,6 @@
 package expression;
 
-public class Variable extends Operand {
+public class Variable<T extends Number> extends Operand<T> {
 
     String symbol;
 
@@ -24,12 +24,12 @@ public class Variable extends Operand {
     }
 
     @Override
-    protected Number getValue(Number x) {
+    protected T getValue(T x) {
         return x;
     }
 
     @Override
-    protected Number getValue(Number x, Number y, Number z) {
+    protected T getValue(T x, T y, T z) {
         switch(symbol) {
             case "x":
                 return x;
@@ -38,7 +38,7 @@ public class Variable extends Operand {
             case "z":
                 return z;
         }
-        return 0;
+        return null;
     }
 
     @Override
@@ -54,5 +54,10 @@ public class Variable extends Operand {
     public int getPrior() {
         return 0;
     }
+
+	@Override
+	public int hashCode() {
+      return (symbol.codePointAt(0)*BASE*BASE + MOD) % MOD;
+	}
 
 }

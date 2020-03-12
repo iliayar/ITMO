@@ -1,17 +1,17 @@
 package expression.exceptions;
 
 import expression.Calculator;
-import expression.Expression;
+import expression.CommonExpression;
 import expression.IntegerOverflowException;
 import expression.Negate;
 
-public class CheckedNegate extends Negate {
-    public CheckedNegate(Expression a, Calculator calc) {
+public class CheckedNegate<T extends Number> extends Negate<T> {
+    public CheckedNegate(CommonExpression<T> a, Calculator<T> calc) {
         super(a, calc);
     }
 
     @Override
-    protected Number eval(Number a) {
+    protected T eval(T a) {
         // if(a == Integer.MIN_VALUE) {
         //     throw new IntegerOverflowException("-"+a);
         // }
