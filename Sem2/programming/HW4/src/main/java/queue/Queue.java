@@ -6,35 +6,35 @@ import java.util.function.Predicate;
 // inv: size >= 0
 public interface Queue {
 
-    // Pre: x != null
-    // Post: x в конце очереди
+    // Pre: x != null queue = {q1(tail), q1, .., qn(head)}
+    // Post: queue' = {x(tail), q1, q2, .. , qn(head)}
     public void enqueue(Object x);
 
-    // Pre: size > 0
-    // Post: result == элемент в начале очереди
+    // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
+    // Post: qn
     public Object element();
 
-    // Pre: size > 0
-    // Post: result == элемент из начала очереди and удаление 1 элемента из начала
+    // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
+    // Post: queue' = {q1(tail), q2, .., q(n-1)(head)}
     public Object dequeue();
 
     // Pre:
-    // Post: result == size
+    // Post |queue|
     public int size();
 
     // Pre:
-    // Post result == true if size == 0 else false
+    // Post: true if |queue| == 0 else false
     public boolean isEmpty();
 
     // Pre:
-    // Post: size == 0
+    // Post: queue = {} |queue| = 0
     public void clear();
 
     // Pre: predicate != null
-    // Post: Очередь в которой каждый элемент удовлетворяет предикату, порядок сохранен, того же типа
+    // Post: queue' = {q in queue: predicate(q) == true}
     public Queue filter(Predicate<Object> predicate);
 
     // Pre: function != null
-    // Post: Очередь, к каждому элементу применена функция, порядок сохранен, того же типа
+    // Post: queue' = {function(q): q in queue }
     public Queue map(Function<Object, Object> function);
 }
