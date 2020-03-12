@@ -4,7 +4,7 @@ import expression.Calculator;
 import expression.CommonExpression;
 import expression.Divide;
 import expression.DivisonByZeroException;
-import expression.IntegerOverflowException;
+import expression.NumberOverflowException;
 
 public class CheckedDivide<T extends Number> extends Divide<T> {
     public CheckedDivide(CommonExpression<T> a, CommonExpression<T> b, Calculator<T> calc) {

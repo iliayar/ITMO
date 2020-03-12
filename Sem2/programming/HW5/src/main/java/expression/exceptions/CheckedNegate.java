@@ -2,7 +2,7 @@ package expression.exceptions;
 
 import expression.Calculator;
 import expression.CommonExpression;
-import expression.IntegerOverflowException;
+import expression.NumberOverflowException;
 import expression.Negate;
 
 public class CheckedNegate<T extends Number> extends Negate<T> {

@@ -3,7 +3,7 @@ package expression.exceptions;
 import expression.Add;
 import expression.Calculator;
 import expression.CommonExpression;
-import expression.IntegerOverflowException;
+import expression.NumberOverflowException;
 
 public class CheckedAdd<T extends Number> extends Add<T> {
 
