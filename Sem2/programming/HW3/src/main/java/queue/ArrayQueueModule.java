@@ -2,6 +2,8 @@ package queue;
 
 
 
+// inv: queue = {q1(tail), q2, .. , qn(head)}
+//      |q| >= 0
 public class ArrayQueueModule {
 
     private static int tail = 0;
@@ -11,6 +13,8 @@ public class ArrayQueueModule {
 
     private static Object[] array = new Object[2];
 
+    // Pre:
+    // Post: |queue'| = 2*|queue| if array.length == |queue|
     private static void expandArrayNeeded() {
         if (head == tail && length != 0) {
             Object[] temp = new Object[array.length * 2];
@@ -21,8 +25,8 @@ public class ArrayQueueModule {
         }
     }
 
-    // Pre: x != null
-    // Post: array[tail] = x and tail' = tail + 1 % array.size
+    // Pre: x != null queue = {q1(tail), q2, .., qn(head)}
+    // Post: queue' = {x(tail), q1, q2, .. , qn(head)}
     public static void enqueue(Object x) {
         array[tail] = x;
         tail = (tail+1) % array.length;
@@ -31,8 +35,8 @@ public class ArrayQueueModule {
         // printArray();
     }
 
-    // Pre: x != null
-    // Post: array[head'] = x and head' = head - 1 % array.size
+    // Pre: x != null queue = {q1(tail), q2, .., qn(head)}
+    // Post: queue' = {q1(tail), q2, .., qn, x(head)}
     public static void push(Object x) {
         head = (head - 1 + array.length) % array.length;
         array[head] = x;
@@ -40,8 +44,8 @@ public class ArrayQueueModule {
         length++;
     }
 
-    // Pre: size > 0
-    // Post: array[tail - 1 % array.size]
+    // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
+    // Post: q1
     public static Object peek() {
         if (length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -49,8 +53,8 @@ public class ArrayQueueModule {
         return array[(tail - 1 + array.length) % array.length];
     }
 
-    // Pre: size > 0
-    // Post: array[tail] and tail' = tail - 1 % array.size
+    // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
+    // Post: queue' = {q2(tail), q3, .., qn(head)}
     public static Object remove() {
         if (length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -62,8 +66,8 @@ public class ArrayQueueModule {
         return tmp;
     }
 
-    // Pre: size > 0
-    // Post: array[head] head' = head + 1 % array.size
+    // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
+    // Post: queue' = {q1(tail), q2, .., q(n-1)(head)}
     public static Object dequeue() {
         if (length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -76,8 +80,8 @@ public class ArrayQueueModule {
         return t;
     }
 
-    // Pre: size > 0
-    // Post: array[head]
+    // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
+    // Post: qn
     public static Object element() {
         if (length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -86,19 +90,19 @@ public class ArrayQueueModule {
     }
 
     // Pre:
-    // Post array.size
+    // Post |queue|
     public static int size() {
         return length;
     }
 
     // Pre:
-    // Post: false if length == 0 true else
+    // Post: true if |queue| == 0 else false
     public static boolean isEmpty() {
         return length == 0;
     }
 
     // Pre:
-    // Post: queue.length = 0 and queue.head = 0 and queue.tail = 0
+    // Post: queue = {} |queue| = 0
     public static void clear() {
         array = new Object[2];
         length = 0;
