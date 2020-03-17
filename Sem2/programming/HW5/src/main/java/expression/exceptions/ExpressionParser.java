@@ -9,7 +9,7 @@ import expression.parser.StringSource;
 public class ExpressionParser<T extends Number> extends BaseParser {
 
     private String parsedOperation = null;
-    Calculator<T> calc;
+    public Calculator<T> calc;
 
     public ExpressionParser(Calculator<T> calc) {
         this.calc = calc;
