@@ -22,7 +22,7 @@ abstract class AbstractQueue implements Queue {
 
         for(int i = 0, end = this.size(); i < end; ++i) {
             Object x = this.dequeue();
-            if(predicate.test(x)) {
+            if (predicate.test(x)) {
                 resQueue.enqueue(x);
             }
             this.enqueue(x);
@@ -35,7 +35,8 @@ abstract class AbstractQueue implements Queue {
     public Queue map(Function<Object, Object> function) {
         Queue resQueue = this.getNewInstance();
 
-        for (int i = 0, end = this.size(); i < end; ++i) {
+        int size = this.size();
+        for (int i = 0; i < size; ++i) {
             Object x = this.dequeue();
             resQueue.enqueue(function.apply(x));
             this.enqueue(x);

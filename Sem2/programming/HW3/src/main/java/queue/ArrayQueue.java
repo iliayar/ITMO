@@ -1,7 +1,8 @@
 package queue;
 
-// inv: queue = {q1(tail), q2, .. , qn(head)}
-//      |q| >= 0
+// inv: queue = {q1, q2, .. , qn}
+//      |queue| >= 0
+//      tail != head
 public class ArrayQueue {
 
     private int tail = 0;
@@ -11,8 +12,8 @@ public class ArrayQueue {
 
     private Object[] array = new Object[2];
 
-    // Pre: 
-    // Post: |queue'| = 2*|queue| if array.length == |queue|
+    // Pre:
+    // Post: |queue'| = 2*|queue| if array.length == |queue| tail != head
     private void expandArrayNeeded() {
         if (this.head == this.tail && this.length != 0) {
             Object[] temp = new Object[this.array.length * 2];
@@ -26,9 +27,6 @@ public class ArrayQueue {
     // Pre: x != null queue = {q1(tail), q2, .., qn(head)}
     // Post: queue' = {x(tail), q1, q2, .. , qn(head)}
     public void enqueue(Object x) {
-        if (tail != head)  {
-            array[head] = "hello";
-        }
         this.array[this.tail] = x;
         this.tail = (this.tail + 1) % this.array.length;
         expandArrayNeeded();
@@ -55,7 +53,7 @@ public class ArrayQueue {
     }
 
     // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
-    // Post: queue' = {q2(tail), q3, .., qn(head)}
+    // Post: q1 queue' = {q2(tail), q3, .., qn(head)}
     public Object remove() {
         if (this.length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -68,7 +66,7 @@ public class ArrayQueue {
     }
 
     // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
-    // Post: queue' = {q1(tail), q2, .., q(n-1)(head)}
+    // Post: R = qn && queue' = {q1(tail), q2, .., q(n-1)(head)}
     public Object dequeue() {
         if (this.length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -97,7 +95,7 @@ public class ArrayQueue {
     }
 
     // Pre:
-    // Post: true if |queue| == 0 else false
+    // Post: R = (|queue| == 0)
     public boolean isEmpty() {
         return this.length == 0;
     }

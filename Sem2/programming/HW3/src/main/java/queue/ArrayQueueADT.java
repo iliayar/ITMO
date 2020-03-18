@@ -1,7 +1,8 @@
 package queue;
 
 // inv: queue = {q1(tail), q2, .. , qn(head)}
-//      |q| >= 0
+//      |queue| >= 0
+//      tail != head
 public class ArrayQueueADT {
 
     private int tail = 0;
@@ -12,7 +13,7 @@ public class ArrayQueueADT {
     private Object[] array = new Object[2];
 
     // Pre: queue != null
-    // Post: |queue'| = 2*|queue| if array.length == |queue|
+    // Post: |queue'| = 2*|queue| if array.length == |queue| tail != head
     private static void expandArrayNeeded(ArrayQueueADT queue) {
         if (queue.head == queue.tail && queue.length != 0) {
             Object[] temp = new Object[queue.array.length * 2];
@@ -53,7 +54,7 @@ public class ArrayQueueADT {
 
 
     // Pre: queue != null |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
-    // Post: queue' = {q2(tail), q3, .., qn(head)}
+    // Post: q1 queue' = {q2(tail), q3, .., qn(head)}
     public static Object remove(ArrayQueueADT queue) {
         if (queue.length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -66,7 +67,7 @@ public class ArrayQueueADT {
     }
 
     // Pre: queue != null |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
-    // Post: queue' = {q1(tail), q2, .., q(n-1)(head)}
+    // Post: qn queue' = {q1(tail), q2, .., q(n-1)(head)}
     public static Object dequeue(ArrayQueueADT queue) {
         if(queue.length == 0) {
             throw new RuntimeException("Queue is empty"); 
