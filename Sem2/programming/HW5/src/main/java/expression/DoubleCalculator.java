@@ -37,7 +37,7 @@ public class DoubleCalculator extends AbstractCalculator<Double> {
 
     @Override
     public Double valueOf(int n) {
-        return Double.valueOf(n);
+        return (double) n;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DoubleCalculator extends AbstractCalculator<Double> {
 
 	@Override
 	public Double count(Double a) {
-      return Double.valueOf(Long.bitCount(Double.doubleToLongBits(a)));
+      return (double) Long.bitCount(Double.doubleToLongBits(a));
 	}
 
 }

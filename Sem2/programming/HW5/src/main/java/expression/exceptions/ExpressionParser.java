@@ -9,7 +9,7 @@ import expression.parser.StringSource;
 public class ExpressionParser<T extends Number> extends BaseParser {
 
     private String parsedOperation = null;
-    Calculator<T> calc;
+    public Calculator<T> calc;
 
     public ExpressionParser(Calculator<T> calc) {
         this.calc = calc;
@@ -24,10 +24,10 @@ public class ExpressionParser<T extends Number> extends BaseParser {
 
 
     @Override
-    public CommonExpression parse(String src) {
+    public CommonExpression<T> parse(String src) {
         this.src = new StringSource(src);
         nextChar();
-        CommonExpression res = parseExpression();
+        CommonExpression<T> res = parseExpression();
         if (ch != '\0') {
             throw error("End of expression expected");
         }
@@ -103,9 +103,9 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         }
     }
 
-    private CommonExpression parseOperand() {
+    private CommonExpression<T> parseOperand() {
         if (test('(')) {
-            CommonExpression expr = parseExpression();
+            CommonExpression<T> expr = parseExpression();
             expect(')');
             return  expr;
         } else if (between('0', '9')) {
@@ -121,9 +121,9 @@ public class ExpressionParser<T extends Number> extends BaseParser {
             skipWhitespace();
             if (between('0','9')) {
                 T n = parseNumber(true);
-                return new Const(n);
+                return new Const<T>(n);
             } else if (test('(')) {
-                CommonExpression expr = parseExpression();
+                CommonExpression<T> expr = parseExpression();
                 expect(')');
                 return new CheckedNegate<T>(expr, calc);
             } else {
@@ -133,7 +133,7 @@ public class ExpressionParser<T extends Number> extends BaseParser {
             expect("ount");
             skipWhitespace();
             if(test('(')) {
-                CommonExpression expr = parseExpression();
+                CommonExpression<T> expr = parseExpression();
                 expect(')');
                 return new Count<T>(expr, calc);
             } else {
@@ -165,15 +165,15 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         throw operandError();
     }
 
-    public CommonExpression parseExpression() {
+    public CommonExpression<T> parseExpression() {
         return parse3PriorExpression();
     }
 
-    private  CommonExpression parse3PriorExpression() {
+    private  CommonExpression<T> parse3PriorExpression() {
 
         skipWhitespace();
 
-        CommonExpression firstOperand = null;
+        CommonExpression<T> firstOperand = null;
 
         firstOperand = parse2PriorExpression();
         skipWhitespace();
@@ -191,12 +191,12 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         }
     }
 
-    private CommonExpression parse1PriorExpression() {
+    private CommonExpression<T> parse1PriorExpression() {
 
         skipWhitespace();
 
         // CommonExpression firstOperand = parse0PriorExpression();
-        CommonExpression firstOperand = parseOperand();
+        CommonExpression<T> firstOperand = parseOperand();
         skipWhitespace();
         while (true) {
             if (testOperation("*")) {
@@ -214,10 +214,10 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         }
     }
 
-    private CommonExpression parse2PriorExpression() {
+    private CommonExpression<T> parse2PriorExpression() {
 
         skipWhitespace();
-        CommonExpression firstOperand = parse1PriorExpression();
+        CommonExpression<T> firstOperand = parse1PriorExpression();
         skipWhitespace();
         while (true) {
             if (testOperation("+")) {
