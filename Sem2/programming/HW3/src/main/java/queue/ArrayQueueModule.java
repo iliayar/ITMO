@@ -3,7 +3,8 @@ package queue;
 
 
 // inv: queue = {q1(tail), q2, .. , qn(head)}
-//      |q| >= 0
+//      |queue| >= 0
+//      tail != head
 public class ArrayQueueModule {
 
     private static int tail = 0;
@@ -14,7 +15,7 @@ public class ArrayQueueModule {
     private static Object[] array = new Object[2];
 
     // Pre:
-    // Post: |queue'| = 2*|queue| if array.length == |queue|
+    // Post: |queue'| = 2*|queue| if array.length == |queue| tail != head
     private static void expandArrayNeeded() {
         if (head == tail && length != 0) {
             Object[] temp = new Object[array.length * 2];
@@ -54,7 +55,7 @@ public class ArrayQueueModule {
     }
 
     // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
-    // Post: queue' = {q2(tail), q3, .., qn(head)}
+    // Post: q1 queue' = {q2(tail), q3, .., qn(head)}
     public static Object remove() {
         if (length == 0) {
             throw new RuntimeException("Queue is empty");
@@ -67,7 +68,7 @@ public class ArrayQueueModule {
     }
 
     // Pre: |queue| > 0 queue = {q1(tail), q2, .., qn(head)}
-    // Post: queue' = {q1(tail), q2, .., q(n-1)(head)}
+    // Post: qn queue' = {q1(tail), q2, .., q(n-1)(head)}
     public static Object dequeue() {
         if (length == 0) {
             throw new RuntimeException("Queue is empty");
