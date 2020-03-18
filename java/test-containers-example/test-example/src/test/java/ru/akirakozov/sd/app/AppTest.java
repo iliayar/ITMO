@@ -15,7 +15,7 @@ public class AppTest {
 
     @ClassRule
     public static GenericContainer simpleWebServer
-            = new FixedHostPortGenericContainer("test-containers-example:1.0-SNAPSHOT")
+            = new FixedHostPortGenericContainer("hello-app:1.0-SNAPSHOT")
             .withFixedExposedPort(8080, 8080)
             .withExposedPorts(8080);
 
