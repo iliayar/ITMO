@@ -43,6 +43,7 @@ public class ArrayQueue extends AbstractQueue {
     public boolean isEmpty() {
         return this.length == 0;
     }
+
     public void clear() {
         this.array = new Object[2];
         this.length = 0;
