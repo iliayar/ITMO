@@ -1,0 +1,73 @@
+% Drawing a graph using the PG 3.0 graphdrawing library
+% Author: Mark Wibrow
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian]{babel}
+
+\usetikzlibrary{graphdrawing}
+\usetikzlibrary{graphs}
+\usegdlibrary{trees}
+
+\tikzset {
+  delete/.style = {fill=red},
+  rot/.style = {fill=yellow},
+  ok/.style = {fill=green}
+}
+% \tikzset{fontscale/.style = {font=0.01}
+% }
+\begin{document}
+\section{Задача 5.12}
+Удаляем вершину 4
+\begin{center}
+\begin{tikzpicture}[every node/.style={circle, draw}]
+  \graph [binary tree layout, grow=down, fresh nodes, level distance=0.2in, sibling distance=0.2in]
+  {
+    5 -- { 3 -- {2 -- {1,}, 4 [delete]}, 8 -- {7 -- {6,}, 10 -- {9, 11 -- {,12}}}
+    } 
+  };
+\end{tikzpicture}
+\end{center}
+
+Поворачиваем ребро 3-2 \\
+\begin{center}
+\begin{tikzpicture}[>=stealth, every node/.style={circle, draw, minimum size=0.2cm}]
+  \graph [binary tree layout, grow=down, fresh nodes, level distance=0.2in, sibling distance=0.2in]
+  {
+    5 -- { 3[rot] -- {2 -- {1,},}, 8 -- {7 -- {6,}, 10 -- {9, 11 -- {,12}}}
+    } 
+  };
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}[>=stealth, every node/.style={circle, draw, minimum size=0.2cm}]
+  \graph [binary tree layout, grow=down, fresh nodes, level distance=0.2in, sibling distance=0.2in]
+  {
+    5 -- { 2[ok] -- {1, 3}, 8 -- {7 -- {6,}, 10 -- {9, 11 -- {,12}}}
+    } 
+  };
+\end{tikzpicture}
+\end{center}
+
+Поворачиваем ребро 5-8
+\begin{center}
+\begin{tikzpicture}[>=stealth, every node/.style={circle, draw, minimum size=0.2cm}]
+  \graph [binary tree layout, grow=down, fresh nodes, level distance=0.2in, sibling distance=0.2in]
+  {
+    5[rot] -- { 2 -- {1, 3}, 8 -- {7 -- {6,}, 10 -- {9, 11 -- {,12}}}
+    } 
+  };
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}[>=stealth, every node/.style={circle, draw, minimum size=0.2cm}]
+  \graph [binary tree layout, grow=down, fresh nodes, level distance=0.2in, sibling distance=0.2in]
+  {
+    8[ok] -- {5 -- {2 -- {1,3}, 7 -- 6}, 10 -- {9, 11 -- {,12}}
+    }
+  };
+\end{tikzpicture}
+\end{center}
+\end{document}
+
