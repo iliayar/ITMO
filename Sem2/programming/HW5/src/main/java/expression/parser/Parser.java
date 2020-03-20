@@ -1,10 +1,10 @@
 package expression.parser;
 
-import expression.TripleExpression;
+import expression.ITripleExpression;
 
 /**
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
 public interface Parser {
-    TripleExpression parse(String expression) throws ParserException;
+    ITripleExpression parse(String expression) throws /* Change me */ Exception;
 }

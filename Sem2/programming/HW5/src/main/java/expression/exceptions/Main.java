@@ -1,6 +1,6 @@
 package expression.exceptions;
 
-import expression.exceptions.ExpressionParser;
+import expression.parser.ExpressionParser;
 
 public class Main {
 

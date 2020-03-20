@@ -1,9 +1,9 @@
 package expression.parser;
 
-import expression.TripleExpression;
+import expression.ITripleExpression;
 import expression.exceptions.MissingOperandException;
 
-public abstract class BaseParser implements expression.exceptions.Parser {
+public abstract class BaseParser implements expression.parser.Parser {
     protected ExpressionSource src;
     protected char ch;
 
@@ -49,5 +49,5 @@ public abstract class BaseParser implements expression.exceptions.Parser {
         return s.indexOf(ch) != -1;
     }
 
-    public abstract TripleExpression parse(String src);
+    public abstract ITripleExpression parse(String src);
 }
