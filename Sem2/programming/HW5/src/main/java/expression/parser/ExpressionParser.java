@@ -1,10 +1,8 @@
-package expression.exceptions;
+package expression.parser;
 
 import expression.*;
-import expression.parser.BaseParser;
-import expression.parser.ExpressionSource;
-import expression.parser.ParserException;
-import expression.parser.StringSource;
+import expression.parser.*;
+import expression.exceptions.*;
 
 public class ExpressionParser<T extends Number> extends BaseParser {
 
@@ -55,19 +53,6 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         }
         if (in("+-*/")) {
             char c = ch;
-            // if (test('*')) {
-            //     if (test('*')) {
-            //         parsedOperation = "**";
-            //         return;
-            //     }
-            // } else if (test('/')) {
-            //     if (test('/')) {
-            //         parsedOperation = "//";
-            //         return;
-            //     }
-            // } else {
-            //     nextChar();
-            // }
             nextChar();
             parsedOperation = Character.toString(c);
         } else if (test('m')) {
@@ -78,12 +63,6 @@ public class ExpressionParser<T extends Number> extends BaseParser {
                 expect('x');
                 parsedOperation = "max";
             }
-        // } else if (test('<')) {
-        //     expect('<');
-        //     parsedOperation = "<<";
-        // } else if (test('>')) {
-        //     expect('>');
-        //     parsedOperation = ">>";
         } else {
              throw operatorError();
         }
@@ -91,7 +70,6 @@ public class ExpressionParser<T extends Number> extends BaseParser {
     }
 
     private boolean testOperation(String expect) {
-        // if (in("*+-<>/")) {
         if (in("*+-m/")) {
             parseOperation();
         }
@@ -125,9 +103,9 @@ public class ExpressionParser<T extends Number> extends BaseParser {
             } else if (test('(')) {
                 CommonExpression<T> expr = parseExpression();
                 expect(')');
-                return new CheckedNegate<T>(expr, calc);
+                return new Negate<T>(expr, calc);
             } else {
-                return new CheckedNegate<T>(parseOperand(), calc);
+                return new Negate<T>(parseOperand(), calc);
             }
         } else if(test('c')) {
             expect("ount");
@@ -140,28 +118,6 @@ public class ExpressionParser<T extends Number> extends BaseParser {
                 return new Count<T>(parseOperand(), calc);
             }
         }
-        // } else if (test('d')) {
-        //     expect("igits");
-        //     skipWhitespace();
-        //     if (test('(')) {
-        //         CommonExpression expr = parseExpression();
-        //         expect(')');
-        //         return new Digits(expr);
-        //     } else {
-        //         return new Digits(parseOperand());
-        //     }
-        // } else if (test('r')) {
-        //     expect("everse");
-        //     skipWhitespace();
-        //     if (test('(')) {
-        //         CommonExpression expr = parseExpression();
-        //         expect(')');
-        //         return new Reverse(expr);
-        //     } else {
-        //         return new Reverse(parseOperand());
-        //     }
-        // }
-
         throw operandError();
     }
 
@@ -195,18 +151,15 @@ public class ExpressionParser<T extends Number> extends BaseParser {
 
         skipWhitespace();
 
-        // CommonExpression firstOperand = parse0PriorExpression();
         CommonExpression<T> firstOperand = parseOperand();
         skipWhitespace();
         while (true) {
             if (testOperation("*")) {
                 skipWhitespace();
-                // firstOperand = new CheckedMultiply(firstOperand, parse0PriorExpression());
-                firstOperand = new CheckedMultiply<T>(firstOperand, parseOperand(), calc);
+                firstOperand = new Multiply<T>(firstOperand, parseOperand(), calc);
             } else if (testOperation("/")) {
                 skipWhitespace();
-                // firstOperand = new CheckedDivide(firstOperand, parse0PriorExpression());
-                firstOperand = new CheckedDivide<T>(firstOperand, parseOperand(), calc);
+                firstOperand = new Divide<T>(firstOperand, parseOperand(), calc);
             } else {
                 return firstOperand;
             }
@@ -222,36 +175,16 @@ public class ExpressionParser<T extends Number> extends BaseParser {
         while (true) {
             if (testOperation("+")) {
                 skipWhitespace();
-                firstOperand = new CheckedAdd<T>(firstOperand, parse1PriorExpression(), calc);
+                firstOperand = new Add<T>(firstOperand, parse1PriorExpression(), calc);
             } else if (testOperation("-")) {
                 skipWhitespace();
-                firstOperand = new CheckedSubtract<T>(firstOperand, parse1PriorExpression(), calc);
+                firstOperand = new Subtract<T>(firstOperand, parse1PriorExpression(), calc);
             } else {
                 return firstOperand;
             }
             skipWhitespace();
         }
     }
-
-    // private CommonExpression parse3PriorExpression() {
-
-    //     skipWhitespace();
-
-    //     CommonExpression firstOperand = parse2PriorExpression();
-    //     skipWhitespace();
-    //     while (true)  {
-    //         if (testOperation("<<")) {
-    //             skipWhitespace();
-    //             firstOperand = new ShiftLeft(firstOperand, parse2PriorExpression(), calc);
-    //         } else if (testOperation(">>")) {
-    //             skipWhitespace();
-    //             firstOperand = new ShiftRight(firstOperand, parse2PriorExpression(), calc);
-    //         } else {
-    //             return firstOperand;
-    //         }
-    //         skipWhitespace();
-    //     }
-    // }
 
     @Override
     protected void expect(final char c) {

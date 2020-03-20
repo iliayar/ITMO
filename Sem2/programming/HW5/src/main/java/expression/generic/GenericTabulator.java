@@ -3,7 +3,7 @@ package expression.generic;
 import java.math.BigInteger;
 
 import expression.*;
-import expression.exceptions.ExpressionParser;
+import expression.parser.ExpressionParser;
 
 public class GenericTabulator implements Tabulator {
 
@@ -36,7 +36,7 @@ public class GenericTabulator implements Tabulator {
 	}
 
     private <T extends Number> Object[][][] getTable(ExpressionParser<T> parser, String expression, int x1, int y1, int z1, int x2, int y2, int z2) {
-        TripleExpression<T> e = parser.parse(expression);
+        CommonExpression<T> e = parser.parse(expression);
         Object[][][] table = new Object[x2 - x1 + 1][y2 - y1 + 1][z2 - z1 + 1];
         for (int x = 0; x < table.length; ++x) {
             for(int y = 0; y < table[x].length; ++y) {
