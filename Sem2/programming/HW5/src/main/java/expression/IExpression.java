@@ -1,6 +1,6 @@
 package expression;
 
-public interface Expression<T extends Number> extends ToMiniString {
+public interface IExpression<T extends Number> extends ToMiniString {
 
     T evaluate(T x);
 //    String toString();

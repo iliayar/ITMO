@@ -16,33 +16,25 @@ public class LongCalculator extends AbstractCalculator<Long> {
 
     @Override
     public Long add(Long a, Long b) {
-        if(!checkAdd(a, b, Long.MAX_VALUE, Long.MIN_VALUE)) {
-            return null;
-        }
+        checkAdd(a, b, Long.MAX_VALUE, Long.MIN_VALUE);
         return a + b;
     }
 
     @Override
     public Long divide(Long a, Long b) {
-        if(!checkDivide(a, b, Long.MAX_VALUE, Long.MIN_VALUE)) {
-            return null;
-        }
+        checkDivide(a, b, Long.MAX_VALUE, Long.MIN_VALUE);
         return a / b;
     }
 
     @Override
     public Long multiply(Long a, Long b) {
-        if(!checkMultiply(a, b, Long.MAX_VALUE, Long.MIN_VALUE)) {
-            return null;
-        }
+        checkMultiply(a, b, Long.MAX_VALUE, Long.MIN_VALUE);
         return a * b;
     }
 
     @Override
     public Long negate(Long a) {
-        if(!checkNegate(a, Long.MAX_VALUE, Long.MIN_VALUE)) {
-            return null;
-        }
+        checkNegate(a, Long.MAX_VALUE, Long.MIN_VALUE);
         return -a;
     }
 
@@ -53,9 +45,7 @@ public class LongCalculator extends AbstractCalculator<Long> {
 
     @Override
     public Long subtract(Long a, Long b) {
-        if(!checkSubtract(a, b, Long.MAX_VALUE, Long.MIN_VALUE)) {
-            return null;
-        }
+        checkSubtract(a, b, Long.MAX_VALUE, Long.MIN_VALUE);
         return a - b;
     }
 

@@ -3,7 +3,7 @@ package expression.parser;
 import expression.ITripleExpression;
 import expression.exceptions.MissingOperandException;
 
-public abstract class BaseParser implements expression.parser.Parser {
+public abstract class BaseParser implements expression.parser.IParser {
     protected ExpressionSource src;
     protected char ch;
 

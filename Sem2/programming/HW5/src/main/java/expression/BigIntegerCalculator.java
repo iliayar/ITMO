@@ -17,9 +17,7 @@ public class BigIntegerCalculator extends AbstractCalculator<BigInteger> {
 
     @Override
     public BigInteger divide(BigInteger a, BigInteger b) {
-        if(!checkDivide(a, b, null, null)) {
-            return null;
-        }
+        checkDivide(a, b, null, null);
         return a.divide(b);
     }
 
