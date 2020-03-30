@@ -16,33 +16,25 @@ public class IntegerCalculator extends AbstractCalculator<Integer> {
 
     @Override
     public Integer add(Integer a, Integer b) {
-        if(!checkAdd(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE)) {
-            return null;
-        }
+        checkAdd(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE);
         return a + b;
     }
 
     @Override
     public Integer divide(Integer a, Integer b) {
-        if(!checkDivide(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE)) {
-            return null;
-        }
+        checkDivide(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE);
         return a / b;
     }
 
     @Override
     public Integer multiply(Integer a, Integer b) {
-        if(!checkMultiply(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE)) {
-            return null;
-        }
+        checkMultiply(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE);
         return a * b;
     }
 
     @Override
     public Integer negate(Integer a) {
-        if(!checkNegate(a, Integer.MAX_VALUE, Integer.MIN_VALUE)) {
-            return null;
-        }
+        checkNegate(a, Integer.MAX_VALUE, Integer.MIN_VALUE);
         return -a;
     }
 
@@ -53,9 +45,7 @@ public class IntegerCalculator extends AbstractCalculator<Integer> {
 
     @Override
     public Integer subtract(Integer a, Integer b) {
-        if(!checkSubtract(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE)) {
-            return null;
-        }
+        checkSubtract(a, b, Integer.MAX_VALUE, Integer.MIN_VALUE);
         return a - b;
     }
 

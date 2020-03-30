@@ -16,36 +16,28 @@ public class ShortCalculator extends AbstractCalculator<Short> {
 
     @Override
     public Short add(Short a, Short b) {
-        if(!checkAdd(a, b, Short.MAX_VALUE, Short.MIN_VALUE)) {
-            return null;
-        }
+        checkAdd(a, b, Short.MAX_VALUE, Short.MIN_VALUE);
         // return Short.valueOf(Integer.valueOf(a + b).toString());
         return (short) (a + b);
     }
 
     @Override
     public Short divide(Short a, Short b) {
-        if(!checkDivide(a, b, Short.MAX_VALUE, Short.MIN_VALUE)) {
-            return null;
-        }
+        checkDivide(a, b, Short.MAX_VALUE, Short.MIN_VALUE);
         // return Short.valueOf(Integer.valueOf(a / b).toString());
         return (short) (a / b);
     }
 
     @Override
     public Short multiply(Short a, Short b) {
-        if(!checkMultiply(a, b, Short.MAX_VALUE, Short.MIN_VALUE)) {
-            return null;
-        }
+        checkMultiply(a, b, Short.MAX_VALUE, Short.MIN_VALUE);
         // return Short.valueOf(Integer.valueOf(a * b).toString());
         return (short) (a * b);
     }
 
     @Override
     public Short negate(Short a) {
-        if(!checkNegate(a, Short.MAX_VALUE, Short.MIN_VALUE)) {
-            return null;
-        }
+        checkNegate(a, Short.MAX_VALUE, Short.MIN_VALUE);
         // return Short.valueOf(Integer.valueOf(-a).toString());
         return (short) (-a);
     }
@@ -65,9 +57,7 @@ public class ShortCalculator extends AbstractCalculator<Short> {
 
     @Override
     public Short subtract(Short a, Short b) {
-        if(!checkSubtract(a, b, Short.MAX_VALUE, Short.MIN_VALUE)) {
-            return null;
-        }
+        checkSubtract(a, b, Short.MAX_VALUE, Short.MIN_VALUE);
         // return Short.valueOf(Integer.valueOf(a - b).toString());
         return (short) (a - b);
     }
