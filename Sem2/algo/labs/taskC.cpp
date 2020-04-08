@@ -1,174 +1,167 @@
 
-// Generated at 2020-02-18 01:16:09.062927 
+// Generated at 2020-04-07 00:30:43.540142 
 // By iliayar
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
+#include <cstdio>
+#include <map>
+#include <ctime>
+#include <cstdlib>
 
 
 using namespace std;
 
 #define ON 1
 #define OFF 0
-#ifdef LOCAL
-#define FILE_IO ON
-#define FILENAME "local"
-#else
-#define FILE_IO  OFF
-#define FILENAME "smth"
-#endif
 
 #define int long long
 #define vint vector<int>
 #ifdef LOCAL
-#define DBG(x) cout << "DBG: " << x << endl;
+#define DBG(x) cout << "DBG: " << x << endl
+#define DBG_CODE(x) x
 #else
 #define DBG(x)
+#define DBG_CODE(x)
 #endif
 
 //##################CODE BEGIN#############
-
 struct Node {
+  int value;
+  int size;
+  int y;
+  bool has_zero;
+  Node * right;
+  Node * left;
 
-    bool isset;
-    int add;
-
-    int min;
+  Node(int value) :
+    value(value), size(1), y(rand()), has_zero(false), right(nullptr), left(nullptr)
+  {}
 };
 
 
-vector<Node> tree;
+int y_max = 1000000000;
 
 
-const int INF = 1e+18;
+Node * root = nullptr;
 
+int size(Node *x) { return x == nullptr ? 0 : x->size; }
 
-int log2(int x) {
-    int c = 0;
-    while(x != 0) {
-        c++;
-        x >>= 1;
-    }
-    return c;
+Node *update(Node *x) {
+  if (x == nullptr)
+    return x;
+  x->size = size(x->left) + size(x->right) + 1;
+  x->has_zero = (x->value == 0 || (x->left != nullptr && x->left->has_zero) ||
+                 (x->right != nullptr && x->right->has_zero));
+  return x;
+}
+
+Node * merge(Node * a, Node * b) {
+  if(a == nullptr) return b;
+  if(b == nullptr) return a;
+  if (a->y > b->y) {
+    a->right = merge(a->right, b);
+    return update(a);
+  } else {
+    b->left = merge(a, b->left);
+    return update(b);
+  }
 }
 
 
-void print_tree() {
-    for(int i = 0, j = 0; i < log2(tree.size()); ++i) {
-        for(int q = 0; q < (1 << i); ++q, ++j) {
-            for(int k = 0; k < (1 << (log2(tree.size()) -i))/2; ++k) cout << " ";
-            if(tree[j].min >= INF) {
-                cout << "INF";
-            } else {
-                cout << tree[j].min;
-            }
-            cout << "," << tree[j].isset << "," << tree[j].add;
-            for(int k = 0; k < (1 << (log2(tree.size()) -i))/2; ++k) cout << " ";
-        }
-        cout << endl;
-    }
+pair<Node*, Node*> split(Node * v, int k) {
+  if(v == nullptr) return make_pair(nullptr, nullptr);
+  if(size(v->left) >= k) {
+    auto p = split(v->left, k);
+    v->left = p.second;
+    return make_pair(p.first, update(v));
+  } else {
+    auto p = split(v->right, k - size(v->left) - 1);
+    v->right = p.first;
+    return make_pair(update(v), p.second);
+  }
 }
 
-/*
-v1
- \
-  +->v2 = res
-*/
-Node eval(Node v1, Node v2) {
-    Node res = {false, 0, INF};
-
-    if(v1.isset) {
-        res = {true, 0, v1.min};
-    } else if(v2.isset) {
-        res = {true, 0, v2.min + v1.add};
-    } else {
-        res = {false, v1.add + v2.add, v2.min + v1.add};
-    }
-    return res;
+Node *get(int k, Node *v) {
+  if(v == nullptr) return v;
+  if (size(v->left) == k)
+    return v;
+  if (size(v->left) > k) {
+    return get(k, v->left);
+  } else {
+    return get(k - size(v->left) - 1, v->right);
+  }
 }
 
-void sift(int v) {
-    if(v*2 + 2 >= tree.size()) {
-        return;
-    }
-    tree[v*2 + 1] = eval(tree[v], tree[v*2 + 1]);
-    tree[v*2 + 2] = eval(tree[v], tree[v*2 + 2]);
-    tree[v] = {false, 0, tree[v].min};
-}
-void set_tree(int l, int r, int x, int v, int lx, int rx) {
-    if(r <= l) {
-        return;
-    }
-    sift(v);
-    if(l == lx && r == rx) {
-        tree[v] = eval({true, 0, x}, tree[v]);
-        return;
-    }
-    int m  = (lx + rx)/2;
-    set_tree(l, min(m,r), x, v*2 + 1, lx, m);
-    set_tree(max(l, m), r,  x , v*2 + 2, m, rx);
-    tree[v].min = min(tree[v*2 + 1].min, tree[v*2 + 2].min);
+Node * insert(Node * x, Node * v, int k) {
+  auto p = split(v, k);
+  return merge(merge(p.first, x), p.second);
 }
 
-void add(int l, int r, int x, int v, int lx, int rx) {
-    if(r <= l) {
-        return;
-    }
-    sift(v);
-    if(l == lx && r == rx) {
-        tree[v] = eval({false, x, 0}, tree[v]);
-        return;
-    }
-    int m  = (lx + rx)/2;
-    add(l, min(m,r), x, v*2 + 1, lx, m);
-    add(max(l, m), r,  x , v*2 + 2, m, rx);
-    tree[v].min = min(tree[v*2 + 1].min, tree[v*2 + 2].min);
-}
-int tree_min(int l, int r, int v, int lx, int rx) {
-    if(r <= l) {
-        return INF;
-    }
-    if(l == lx && r == rx) {
-        return tree[v].min;
-    }
-    sift(v);
-    int m  = (lx + rx)/2;
-    return min(tree_min(l, min(m,r), v*2 + 1, lx, m),
-               tree_min(max(l, m), r , v*2 + 2, m, rx));
+int next(Node * v, int k) {
+  if(v == nullptr) return -1;
+  if(size(v) < k) return -1;
+  int t = -1;
+  if(v->left != nullptr && v->left->has_zero) t = next(v->left, k);
+  if(t != -1) return t;
+  if(size(v->left) >= k && v->value == 0) return size(v->left);
+  if(v->right != nullptr && v->right->has_zero) t = next(v->right, k - size(v->left) - 1);
+  if(t != -1) return t + size(v->left) + 1;
+  return -1;
 }
 
+void print(Node * v, int k, ostream & out) {
+  if(v == nullptr) return;
+  if(k <= 0) return;
+  print(v->left, k, out);
+  if(size(v->left) < k) out << v->value << " ";
+  print(v->right, k - size(v->left) - 1, out);
+}
+
+Node * remove_min(Node * v) {
+  if(v->left == nullptr) return v->right;
+  v->left = remove_min(v->left);
+  return update(v);
+}
+
+Node * remove(Node * v, int k) {
+  auto p = split(v, k);
+  if(p.second == nullptr) return p.first;
+  return merge(p.first, remove_min(p.second));
+}
 
 //entry
 void sol() {
-
-    int n; cin >> n;
-    tree.resize(4*n, {false, 0,  INF});
-
-    for(int i = 0; i < n; ++i) {
-        int x; cin >> x;
-        set_tree(i,i+1,x, 0, 0, n);
-    }
-
-    string oper;
-    // print_tree();
-    while(cin >> oper) {
-        if(oper == "set") {
-            int l, r, x; cin >> l >> r >> x; l--;
-            set_tree(l, r, x, 0, 0, n);
-        } else if(oper == "add") {
-            int l, r, x; cin >> l >> r >> x; l--;
-            add(l, r, x, 0, 0, n);
-        } else if(oper == "min") {
-            int l, r; cin >> l >> r; l--;
-            cout << tree_min(l, r, 0, 0, n) << endl;
-        }
-        // print_tree();
-    }
-
+  int n, m; cin >> n >> m;
+  srand(time(nullptr));
+  int ma = 0;
+  for(int i = 0; i < n; ++i) {
+    int t; cin >> t; t--;
+    DBG(t);
+    while(size(root) < t) root = insert(new Node(0), root, size(root));
+    int k = next(root, t);
+    DBG(k);
+    if(k != - 1)
+      root = remove(root, k);
+    root = insert(new Node(i + 1), root, t);
+    // DBG_CODE(print(root, size(root), cout); cout << endl);
+  }
+  cout << size(root) << endl;
+  print(root, size(root), cout);
+  cout << endl;
 }
 //##################CODE END###############
+#ifdef LOCAL
+#undef FILE_IO
+#undef FILENAME
+#define FILE_IO ON
+#define FILENAME "local"
+#endif
+
 signed main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
     #if FILE_IO == ON
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);
