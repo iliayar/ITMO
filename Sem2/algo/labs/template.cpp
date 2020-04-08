@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <cstdio>
 #include <map>
+#include <ctime>
+#include <cstdlib>
 
 
 using namespace std;
@@ -32,7 +34,7 @@ using namespace std;
 
 signed main() {
     ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    cin.tie(0); cout.tie(0);
     #if FILE_IO == ON
     freopen(FILENAME".in", "r", stdin);
     freopen(FILENAME".out", "w", stdout);

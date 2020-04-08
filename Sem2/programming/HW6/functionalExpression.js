@@ -64,7 +64,7 @@ let parseArray = function(arr) {
     var stack = [];
     for(const token of arr) {
         if(token.length == 0) continue;
-        stack.push(parseToken(token, stack));
+        stack.push(processToken(token, stack));
         // console.log(stack);
     }
     return stack[0];
