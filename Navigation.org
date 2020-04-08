@@ -3,9 +3,9 @@
 ** TODO Semester 1
 ** Semester 2
 *** Programming
-[[http://www.kgeorgiy.info/courses/paradigms/homeworks.html][Homeworks]]\
-[[https://www.kgeorgiy.info/git/geo/paradigms-2020][Homeworks github(Tests, modifications)]]\
-[[http://www.kgeorgiy.info/courses/paradigms/][Course stuff]]\
+[[http://www.kgeorgiy.info/courses/paradigms/homeworks.html][Homeworks]] \\
+[[https://www.kgeorgiy.info/git/geo/paradigms-2020][Homeworks github(Tests, modifications)]] \\
+[[http://www.kgeorgiy.info/courses/paradigms/][Course stuff]] \\
 **** Homework
 1. TODO
 2. TODO
@@ -16,8 +16,8 @@
 7. [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
 8. [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
 *** Algo
-Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/sol.cpp][file]]\
-Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]]\
+Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/sol.cpp][file]] \\
+Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]] \\
 **** Labs
 1. [[file:Sem2/algo/labs/lab1/][Дерево отрезков]]
 2. Деревья поиска [4/9]
