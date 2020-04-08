@@ -18,7 +18,7 @@
 7. [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
 8. [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
 *** Algo
-Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/sol.cpp][file]]
+Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/sol.cpp][file]]\\
 Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]]
 **** Labs
 1. [[file:Sem2/algo/labs/lab1/][Дерево отрезков]]
