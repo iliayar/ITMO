@@ -4,7 +4,9 @@
 ** Semester 2
 *** Programming
 [[http://www.kgeorgiy.info/courses/paradigms/homeworks.html][Homeworks]]
+
 [[https://www.kgeorgiy.info/git/geo/paradigms-2020][Homeworks github(Tests, modifications)]]
+
 [[http://www.kgeorgiy.info/courses/paradigms/][Course stuff]]
 **** Homework
 1. TODO
