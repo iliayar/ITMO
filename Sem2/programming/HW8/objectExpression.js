@@ -6,127 +6,160 @@ let variables = {
     "z": 2
 }
 
-function Operation(symbol, evaluation, arity, ...operands) {
-    this.symbol = symbol;
+const ANY_ARITY = -1;
+
+function AbstractOperation(...operands) {
     this.operands = operands;
-    this.evaluate = (...args) => evaluation(...operands.map(operand => operand.evaluate(...args)));
-    this.arity = arity;
 }
-Operation.prototype.toString = function() {
-    var res = "";
-    for(const operand of this.operands) {
-        res += operand.toString() + " ";
-    }
-    return res + this.symbol;
+AbstractOperation.prototype.evaluate = function(...args ){
+    return this._evaluate(...this.operands.map(operand => operand.evaluate(...args)));
 }
-Operation.prototype.prefix = function() {
-    var res = "(";
-    res += this.symbol;
-    for(const operand of this.operands) {
-        res += " " + operand.prefix();
-    }
-    return res + ")";
+AbstractOperation.prototype.toString = function() {
+    return this.operands.map(a => a.toString()).join(" ").concat(" ", this.symbol);
+}
+AbstractOperation.prototype.diff = function(arg) {
+    return this._diff(arg, ...this.operands.concat(this.operands.map(a => a.diff(arg))));
+}
+AbstractOperation.prototype.prefix = function() {
+    return "(".concat(this.symbol, " ", this.operands.map(a => a.prefix()).join(" "), ")");
+}
+AbstractOperation.prototype.postfix = function() {
+    return "(".concat(this.operands.map(a => a.postfix()).join(" "), " ", this.symbol + ")");
 }
 
-function BinaryOperation(symbol, evaluation, a, b) {
-    Operation.call(this, symbol, evaluation, 2, a, b);
-}
-BinaryOperation.prototype = Object.create(Operation.prototype);
 
-function UnaryOperation(symbol, evaluation, a) {
-    Operation.call(this, symbol, evaluation, 1, a);
-}
-UnaryOperation.prototype = Object.create(Operation.prototype);
 
-function Operand(symbol, evaluation) {
+function Operation(symbol, arity, evaluate, diff) {
     this.symbol = symbol;
-    this.evaluate = evaluation;
+    this.arity = arity;
+    this._evaluate = evaluate;
+    this._diff = diff;
 }
-Operand.prototype.toString = function() {
-    return this.symbol;
-}
-Operand.prototype.prefix = function() {
-    return this.symbol;
-}
+Operation.prototype = AbstractOperation.prototype
 
-function Add(a, b) {
-    BinaryOperation.call(this, "+", (a, b) => a + b, a, b);
-    this.diff = arg => new Add(a.diff(arg), b.diff(arg));
-}
-Add.prototype = Object.create(BinaryOperation.prototype);
-
-function Subtract(a, b) {
-    BinaryOperation.call(this, "-", (a, b) => a - b, a, b);
-    this.diff = arg => new Subtract(a.diff(arg), b.diff(arg));
-}
-Subtract.prototype = Object.create(BinaryOperation.prototype);
-
-function Multiply(a, b) {
-    BinaryOperation.call(this, "*", (a, b) => a * b, a, b);
-    this.diff = arg => new Add(new Multiply(a, b.diff(arg)), new Multiply(a.diff(arg), b));
-}
-Multiply.prototype = Object.create(BinaryOperation.prototype);
-
-function Divide(a, b) {
-    BinaryOperation.call(this, "/", (a, b) => a / b, a, b);
-    this.diff = arg => new Divide(new Subtract(new Multiply(a.diff(arg),b), new Multiply(a,b.diff(arg))), new Multiply(b,b));
-}
-Divide.prototype = Object.create(BinaryOperation.prototype);
-
-function Log(a, b) {
-    BinaryOperation.call(this, "log", (a, b) => Math.log(Math.abs(b))/Math.log(Math.abs(a)), a, b);
-    this.diff = arg => new Divide(
-        new Subtract(
-            new Divide(new Multiply(b.diff(arg), new Log(E, a)), b),
-            new Divide(new Multiply(a.diff(arg), new Log(E, b)), a)
-        ),
-        new Power(new Log(E, a), new Const(2))
-    );
-}
-Log.prototype = Object.create(BinaryOperation.prototype);
-
-function Power(a, b) {
-    BinaryOperation.call(this, "pow", (a, b) => Math.pow(a, b), a, b);
-    this.diff = arg => new Multiply(
-        new Power(a, b),
-        new Multiply(b,new Log(E, a)).diff(arg)
-    );
-}
-Power.prototype = Object.create(BinaryOperation.prototype);
-
-function Negate(a) {
-    UnaryOperation.call(this, "negate", a => -a, a);
-    this.diff = arg => new Negate(a.diff(arg));
-}
-Negate.prototype = Object.create(UnaryOperation.prototype);
-
-function Sinh(a) {
-    UnaryOperation.call(this, "sinh", a => Math.sinh(a), a);
-    this.diff = arg => new Multiply(new Cosh(a), a.diff(arg));
-}
-Sinh.prototype = Object.create(UnaryOperation.prototype);
-
-function Cosh(a) {
-    UnaryOperation.call(this, "cosh", a => Math.cosh(a), a);
-    this.diff = arg => new Multiply(new Sinh(a), a.diff(arg));
-}
-Cosh.prototype = Object.create(UnaryOperation.prototype);
-
-function Const(a) {
-    Operand.call(this, a.toString(), () => a);
-    this.diff = () => new Const(0);
-}
-Const.prototype = Object.create(Operand.prototype);
-
-function Variable(a) {
-    Operand.call(this, a, (...args) => args[variables[a]]);
-    this.diff = function(arg) {
-        return arg == this.symbol ? new Const(1) : new Const(0);
+function createOperation(symbol, arity, evaluate, diff) {
+    function op(...operands) {
+        AbstractOperation.call(this, ...operands);
     }
+    op.prototype = new Operation(symbol, arity, evaluate, diff);
+    return op;
 }
-Variable.prototype = Object.create(Operand.prototype);
 
-let E = new Const(Math.E);
+function createBinaryOperation(symbol, evaluate, diff) {
+    return createOperation(symbol, 2, evaluate, diff);
+}
+
+function createUnaryOperation(symbol, evaluate, diff) {
+    return createOperation(symbol, 1, evaluate, diff);
+}
+
+function AbstractOperand(value) {
+    this.value = value;
+}
+AbstractOperand.prototype.toString = function() {
+    return this.value.toString();
+}
+AbstractOperand.prototype.prefix = AbstractOperand.prototype.toString
+AbstractOperand.prototype.postfix = AbstractOperand.prototype.toString
+AbstractOperand.prototype.evaluate = function(...args) {
+    return this._evaluate(this.value, ...args);
+}
+AbstractOperand.prototype.diff = function(arg) {
+    return this._diff(this.value, arg);
+}
+
+function Operand(evaluate, diff) {
+    this._evaluate = evaluate;
+    this._diff = diff;
+}
+Operand.prototype = AbstractOperand.prototype;
+
+function createOperand(evaluate, diff) {
+    function op(value) {
+        AbstractOperand.call(this, value);
+    }
+    op.prototype = new Operand(evaluate, diff);
+    return op;
+}
+
+const Add = createBinaryOperation('+',
+                                  (a, b) => a + b,
+                                  (arg, a, b, da, db) => new Add(da, db)
+                                 );
+const Subtract = createBinaryOperation('-',
+                                       (a, b) => a - b,
+                                       (arg, a, b, da, db) => new Subtract(da, db),
+                                      );
+const Multiply = createBinaryOperation('*',
+                                       (a, b) => a * b,
+                                       (arg, a, b, da, db) => new Add(
+                                           new Multiply(a, db),
+                                           new Multiply(da, b)
+                                       )
+                                      );
+const Divide = createBinaryOperation('/',
+                                     (a, b) => a / b,
+                                     (arg, a, b, da, db) => new Divide(
+                                         new Subtract(
+                                             new Multiply(da,b),
+                                             new Multiply(a,db)
+                                         ),
+                                         new Multiply(b,b)
+                                     )
+                                    );
+const Log = createBinaryOperation('log',
+                                  (a, b) => Math.log(Math.abs(b))/Math.log(Math.abs(a)),
+                                  (arg, a, b, da, db) => new Divide(
+                                      new Subtract(
+                                          new Divide(new Multiply(db, new Log(Const.E, a)), b),
+                                          new Divide(new Multiply(da, new Log(Const.E, b)), a)
+                                      ),
+                                      new Multiply(new Log(Const.E, a), new Log(Const.E, a))
+                                  )
+                                 );
+const Power = createBinaryOperation('pow',
+                                    (a, b) => Math.pow(a, b),
+                                    (arg, a, b, da, db) => new Multiply(
+                                        new Power(a, b),
+                                        new Add(
+                                            new Multiply(db, new Log(Const.E, a)),
+                                            new Divide(new Multiply(b, da), a)
+                                        )
+                                    )
+                                   );
+const Negate = createUnaryOperation('negate',
+                                    a => -a,
+                                    (arg, a, da) => new Negate(da)
+                                   );
+const Sumexp = createOperation('sumexp',
+                               ANY_ARITY,
+                               (...operands) => operands.reduce((a, b) => a + Math.exp(b), 0),
+                               (arg, ...operands) => {
+                                   var res = Const.ZERO;
+                                   var diff_operands = operands.splice(operands.length / 2);
+                                   for(const i in operands) {
+                                       res = new Add(new Multiply(diff_operands[i], new Power(Const.E, operands[i])), res);
+                                   }
+                                   return res;
+                               }
+                              );
+const Softmax = createOperation('softmax',
+                                ANY_ARITY,
+                                (...operands) => Math.exp(operands[0])/operands.reduce((a, b) => a + Math.exp(b), 0),
+                                (arg, ...operands) => {
+                                    operands.splice(operands.length / 2);
+                                    return new Divide(new Power(Const.E, operands[0]), new Sumexp(...operands)).diff(arg);
+                                }
+                               );
+const Const = createOperand(a => a,
+                            () => Const.ZERO
+                           );
+const Variable = createOperand((a, ...args) => args[variables[a]],
+                               (a, arg) => arg == a ? Const.ONE : Const.ZERO
+                              );
+Const.E = new Const(Math.E);
+Const.ZERO = new Const(0);
+Const.ONE = new Const(1);
 
 let cachedVariables = {}
 Object.keys(variables).forEach(v => cachedVariables[v] = new Variable(v));
@@ -134,29 +167,32 @@ Object.keys(variables).forEach(v => cachedVariables[v] = new Variable(v));
 // Parser
 
 let tokens = {}
-let addOperation = (token, arity, func) => tokens[token] = {"arity": arity, "func": func};
-addOperation("sinh",   1, Sinh);
-addOperation("cosh",   1, Cosh);
-addOperation("negate", 1, Negate);
-addOperation("+",      2, Add);
-addOperation("-",      2, Subtract);
-addOperation("/",      2, Divide);
-addOperation("*",      2, Multiply);
-addOperation("log",    2, Log);
-addOperation("pow",    2, Power);
+let addOperation = (token, func) => tokens[token] = {"arity": func.prototype.arity, "func": func};
+addOperation("negate", Negate);
+addOperation("+",      Add);
+addOperation("-",      Subtract);
+addOperation("/",      Divide);
+addOperation("*",      Multiply);
+addOperation("log",    Log);
+addOperation("pow",    Power);
+addOperation("sumexp", Sumexp);
+addOperation("softmax",Softmax);
 
-let processToken = function(token, stack) {
+let processToken = function(token, stack, iterator) {
     // console.log(token);
    if(token in tokens) {
        var oper = tokens[token];
        // console.log(oper);
-        return new oper.func(...stack.splice(stack.length - oper.arity));
+       if(oper.arity == ANY_ARITY) {
+           return new oper.func(...stack);
+       }
+       return new oper.func(...stack.splice(stack.length - oper.arity));
    } else if(!isNaN(token)) {
        return new Const(+token);
    } else if(token in variables) {
        return cachedVariables[token];
    } else {
-       throw new Error("Unkown token: " + token);
+       throw new UnknownTokenError(iterator, token);
    }
 }
 
@@ -172,20 +208,80 @@ let parseArray = function(arr) {
 
 let parse = expressionString => parseArray(expressionString.split(' '));
 
-// Prefix Parser
+// Errors, Postfix, Prefix
 
-function PrefixParserError(msg, iterator) {
-    this.message = msg + iterator.errorMessage();
+function AbstractParserError(iterator, ...args) {
+    this.message = this.getMessage(...args) + iterator.errorMessage();
 }
-PrefixParserError.prototype = Object.create(Error.prototype);
+AbstractParserError.prototype = Object.create(Error.prototype);
+AbstractParserError.prototype.constructor = AbstractParserError;
 
+function createError() {
+    return function(iterator, ...args) {
+        AbstractParserError.call(this, iterator, ...args);
+    }
+}
+function initError(err, getMessage) {
+    err.prototype = Object.create(AbstractParserError.prototype);
+    err.prototype.getMessage = getMessage;
+    err.prototype.constructor = err;
+}
+
+function ParserError(iterator, ...args) {
+    AbstractParserError.call(this, iterator, ...args);
+}
+initError(ParserError, msg => msg);
+
+function UnmatchedParenthesisError(iterator, ...args) {
+    AbstractParserError.call(this, iterator, ...args);
+}
+initError(UnmatchedParenthesisError, (parenthesis, operation) =>
+            "Miss " + (parenthesis == "(" ? "open" : "close") + " parenthesis for operation " + operation
+           );
+
+function UnknownTokenError(iterator, ...args) {
+    AbstractParserError.call(this, iterator, ...args);
+}
+initError(UnknownTokenError, (symb) =>
+            "Unknown token: " + symb
+           );
+
+function InvalidOperationError(iterator, ...args) {
+    AbstractParserError.call(this, iterator, ...args);
+}
+initError(InvalidOperationError, (symb) => {
+    if(symb == undefined) {
+        return "Empty operation";
+    } else {
+        return "Invalid operation " + symb;
+    }
+});
+
+function InvalidOperandError(iterator, ...args) {
+    AbstractParserError.call(this, iterator, ...args);
+}
+initError(InvalidOperandError, (symb) =>
+            "invalid operand " + symb
+           );
+
+function InvalidArgsCountError(iterator, ...args) {
+    AbstractParserError.call(this, iterator, ...args);
+}
+initError(InvalidArgsCountError, (need, passed, operation) => {
+    if(need < passed) {
+        return "Too many operands for " + operation + ". Need " + need + ", but " + passed + " provided";
+    }
+    if(need > passed) {
+        return "Too few operands for " + operation + ". Need " + need + ", only " + passed + " provided";
+    }
+});
 
 function Iterator(expression) {
     this.expression = expression;
     this.it = 0;
     this.next = () => this.it >= this.expression.length ? '\x00' : this.expression[this.it++];
     this.getChar = () => this.it >= this.expression.length ? '\x00' : this.expression[this.it];
-    this.errorMessage = () => " at " + this.it + ", which is " + this.getChar();
+    this.errorMessage = () => " at position " + this.it;
 }
 
 let skipWhitespaces = function(iterator) {
@@ -214,60 +310,103 @@ let getArity = function(stringToken) {
     }
 }
 
-
 let parseOperand = function(operandString, iterator) {
     if(getArity(operandString) == 0) {
-        return processToken(operandString);
+        return processToken(operandString, undefined, iterator);
     }
-    throw new PrefixParserError("Invalid operand " + operandString, iterator);
+    throw new InvalidOperandError(iterator, operandString);
 }
 
-let parseOperation = function(iterator) {
+let parsePrefixOperation = function(iterator) {
     var operationString = parseStringToken(iterator);
     var operationArity = getArity(operationString);
     var operands = [];
     if(operationArity == 0) {
-        throw new PrefixParserError("Invalid operation " + operationString, iterator);
+        throw new InvalidOperationError(iterator, operationString);
     }
-    for(var i = 0; i < operationArity; ++i){
+    for(var i = 0; operationArity == ANY_ARITY || i < operationArity; ++i){
         var operand = parseStringToken(iterator);
         if(operand == '(') {
-            operand = parseOperation(iterator);
+            operand = parsePrefixOperation(iterator);
             if(parseStringToken(iterator) != ')') {
-                throw new PrefixParserError("Miss close parenthesis for operation " + operand.symbol, iterator);
+                throw new UnmatchedParenthesisError(iterator, ")", operand.symbol);
             }
             operands.push(operand);
             continue;
         }
         if(operand == ')') {
-            throw new PrefixParserError("Too few operands for " + operationString + ". Need " + operationArity + ", only " + i + " provided", iterator);
+            if(operationArity == ANY_ARITY) {
+                break;
+            }
+            throw new InvalidArgsCountError(iterator, operationArity, i, operationString)
         }
         operands.push(parseOperand(operand, iterator));
     }
     // console.log(operands);
-    return processToken(operationString, operands);
+    return processToken(operationString, operands, iterator);
 
 }
 
-let parsePrefixExpression = function(iterator) {
+let parsePostfixOperation = function(iterator) {
+    var operands = [];
+    var operationString;
+    for(;;){
+        var operand = parseStringToken(iterator);
+        if(operand == '(') {
+            operand = parsePostfixOperation(iterator);
+            if(parseStringToken(iterator) != ')') {
+                throw new UnmatchedParenthesisError(iterator, ")", operand.symbol);
+            }
+            operands.push(operand);
+            continue;
+        }
+        if(operand == ')') {
+            break;
+        }
+        operationString = operand;
+        if(operationString in tokens) {
+            break;
+        }
+        operands.push(parseOperand(operand, iterator));
+    }
+    var operationArity = getArity(operationString);
+    if(operationArity == 0) {
+        throw new InvalidOperationError(iterator, operationString);
+    }
+    if(operationArity != ANY_ARITY) {
+        if(operationArity < operands.length) {
+            throw new InvalidArgsCountError(iterator, operationArity, operands.length, operationString)
+        }
+        if(operationArity > operands.length) {
+            throw new InvalidArgsCountError(iterator, operationArity, operands.length, operationString)
+        }
+    }
+
+    // console.log(operands);
+    return processToken(operationString, operands, iterator);
+
+}
+
+let parseExpression = function(iterator, parser) {
     var token = parseStringToken(iterator);
     if(token == '(') {
-        var res = parseOperation(iterator);
+        var res = parser(iterator);
         if(parseStringToken(iterator) != ')') {
-            throw new PrefixParserError("Miss close parenthesis for operation " + res.symbol, iterator);
+                throw new UnmatchedParenthesisError(iterator, ")", res.symbol);
         }
     } else {
         var res = parseOperand(token, iterator);
     }
     if(parseStringToken(iterator) != '\x00') {
-        throw new PrefixParserError("End of expression expected", iterator);
+        throw new ParserError(iterator, "End of expression expected");
     }
     return res;
 }
 
-let parsePrefix = prefixExpressionString => parsePrefixExpression(new Iterator(prefixExpressionString));
+let parsePrefix = prefixExpressionString => parseExpression(new Iterator(prefixExpressionString), parsePrefixOperation);
+let parsePostfix = prefixExpressionString => parseExpression(new Iterator(prefixExpressionString), parsePostfixOperation);
 
-console.log(parsePrefix('(+ x 2)').prefix());
+console.log(Sumexp.prototype.arity);
 
 // module.exports = {
 //     parse: parse,

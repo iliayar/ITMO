@@ -48,7 +48,7 @@ addOperation("pi",     0, () => pi);
 addOperation("e",      0, () => e);
 addVariables();
 
-let parseToken = function(token, stack) {
+let processToken = function(token, stack) {
    if(token in tokens) {
        var oper = tokens[token];
        // console.log(oper);
