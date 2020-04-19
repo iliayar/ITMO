@@ -13,23 +13,24 @@
 3. TODO
 4. TODO
 5. TODO
-6. [[file:Sem2/programming/HW6/functionalExpression.js][Functional Expression]]
-7. [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
-8. [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
+6. [X] [[file:Sem2/programming/HW6/functionalExpression.js][Functional Expression]]
+7. [ ] [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
+8. [ ] [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
+9. [ ] [[file:Sem2/programming/HW9/][Clojure linear]]
 *** Algo
 Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/sol.cpp][file]] \\
 Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]]
 **** Labs
 1. [[file:Sem2/algo/labs/lab1/][Дерево отрезков]]
-2. Деревья поиска [6/9]
+2. Деревья поиска [8/9]
   - [X] A
   - [X] B
   - [X] C
   - [X] D
   - [X] E
   - [X] F
-  - [ ] G
-  - [ ] H
+  - [X] G
+  - [X] H
   - [ ] I
 **** Homework
-- 8.5
+- [X] 8.5

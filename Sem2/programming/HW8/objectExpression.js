@@ -4,7 +4,7 @@ let variables = {
     "x": 0,
     "y": 1,
     "z": 2
-}
+};
 
 const ANY_ARITY = -1;
 
@@ -15,7 +15,7 @@ AbstractOperation.prototype.evaluate = function(...args ){
     return this._evaluate(...this.operands.map(operand => operand.evaluate(...args)));
 }
 AbstractOperation.prototype.toString = function() {
-    return this.operands.map(a => a.toString()).join(" ").concat(" ", this.symbol);
+    return this.operands.join(" ").concat(" ", this.symbol);
 }
 AbstractOperation.prototype.diff = function(arg) {
     return this._diff(arg, ...this.operands.concat(this.operands.map(a => a.diff(arg))));
@@ -29,44 +29,37 @@ AbstractOperation.prototype.postfix = function() {
 
 
 
-function Operation(symbol, arity, evaluate, diff) {
+function Operation(symbol, evaluate, diff) {
     this.symbol = symbol;
-    this.arity = arity;
     this._evaluate = evaluate;
     this._diff = diff;
 }
 Operation.prototype = AbstractOperation.prototype
 
-function createOperation(symbol, arity, evaluate, diff) {
+function createOperation(symbol, evaluate, diff) {
     function op(...operands) {
         AbstractOperation.call(this, ...operands);
     }
-    op.prototype = new Operation(symbol, arity, evaluate, diff);
+    op.prototype = new Operation(symbol, evaluate, diff);
+    op.prototype.constructor = op;
     return op;
-}
-
-function createBinaryOperation(symbol, evaluate, diff) {
-    return createOperation(symbol, 2, evaluate, diff);
-}
-
-function createUnaryOperation(symbol, evaluate, diff) {
-    return createOperation(symbol, 1, evaluate, diff);
 }
 
 function AbstractOperand(value) {
     this.value = value;
+    this.index = variables[value];
 }
 AbstractOperand.prototype.toString = function() {
     return this.value.toString();
-}
-AbstractOperand.prototype.prefix = AbstractOperand.prototype.toString
-AbstractOperand.prototype.postfix = AbstractOperand.prototype.toString
+};
+AbstractOperand.prototype.prefix = AbstractOperand.prototype.toString;
+AbstractOperand.prototype.postfix = AbstractOperand.prototype.toString;
 AbstractOperand.prototype.evaluate = function(...args) {
     return this._evaluate(this.value, ...args);
-}
+};
 AbstractOperand.prototype.diff = function(arg) {
     return this._diff(this.value, arg);
-}
+};
 
 function Operand(evaluate, diff) {
     this._evaluate = evaluate;
@@ -79,25 +72,26 @@ function createOperand(evaluate, diff) {
         AbstractOperand.call(this, value);
     }
     op.prototype = new Operand(evaluate, diff);
+    op.prototype.constructor = op;
     return op;
 }
 
-const Add = createBinaryOperation('+',
+const Add = createOperation('+',
                                   (a, b) => a + b,
                                   (arg, a, b, da, db) => new Add(da, db)
                                  );
-const Subtract = createBinaryOperation('-',
+const Subtract = createOperation('-',
                                        (a, b) => a - b,
                                        (arg, a, b, da, db) => new Subtract(da, db),
                                       );
-const Multiply = createBinaryOperation('*',
+const Multiply = createOperation('*',
                                        (a, b) => a * b,
                                        (arg, a, b, da, db) => new Add(
                                            new Multiply(a, db),
                                            new Multiply(da, b)
                                        )
                                       );
-const Divide = createBinaryOperation('/',
+const Divide = createOperation('/',
                                      (a, b) => a / b,
                                      (arg, a, b, da, db) => new Divide(
                                          new Subtract(
@@ -107,17 +101,21 @@ const Divide = createBinaryOperation('/',
                                          new Multiply(b,b)
                                      )
                                     );
-const Log = createBinaryOperation('log',
-                                  (a, b) => Math.log(Math.abs(b))/Math.log(Math.abs(a)),
-                                  (arg, a, b, da, db) => new Divide(
-                                      new Subtract(
-                                          new Divide(new Multiply(db, new Log(Const.E, a)), b),
-                                          new Divide(new Multiply(da, new Log(Const.E, b)), a)
-                                      ),
-                                      new Multiply(new Log(Const.E, a), new Log(Const.E, a))
-                                  )
-                                 );
-const Power = createBinaryOperation('pow',
+const Log = createOperation('log',
+                            (a, b) => Math.log(Math.abs(b))/Math.log(Math.abs(a)),
+                            function(arg, a, b, da, db){
+                                var LnA = new Log(Const.E, a);
+                                var LnB = new Log(Const.E, b);
+                                return new Divide(
+                                    new Subtract(
+                                        new Divide(new Multiply(db, LnA), b),
+                                        new Divide(new Multiply(da, LnB), a)
+                                    ),
+                                    new Multiply(LnA, LnA)
+                                );
+                            }
+                           );
+const Power = createOperation('pow',
                                     (a, b) => Math.pow(a, b),
                                     (arg, a, b, da, db) => new Multiply(
                                         new Power(a, b),
@@ -127,12 +125,11 @@ const Power = createBinaryOperation('pow',
                                         )
                                     )
                                    );
-const Negate = createUnaryOperation('negate',
+const Negate = createOperation('negate',
                                     a => -a,
                                     (arg, a, da) => new Negate(da)
                                    );
 const Sumexp = createOperation('sumexp',
-                               ANY_ARITY,
                                (...operands) => operands.reduce((a, b) => a + Math.exp(b), 0),
                                (arg, ...operands) => {
                                    var res = Const.ZERO;
@@ -144,7 +141,6 @@ const Sumexp = createOperation('sumexp',
                                }
                               );
 const Softmax = createOperation('softmax',
-                                ANY_ARITY,
                                 (...operands) => Math.exp(operands[0])/operands.reduce((a, b) => a + Math.exp(b), 0),
                                 (arg, ...operands) => {
                                     operands.splice(operands.length / 2);
@@ -154,20 +150,22 @@ const Softmax = createOperation('softmax',
 const Const = createOperand(a => a,
                             () => Const.ZERO
                            );
-const Variable = createOperand((a, ...args) => args[variables[a]],
+const Variable = createOperand(function(a, ...args) {
+                                   return args[this.index];
+                               },
                                (a, arg) => arg == a ? Const.ONE : Const.ZERO
                               );
 Const.E = new Const(Math.E);
 Const.ZERO = new Const(0);
 Const.ONE = new Const(1);
 
-let cachedVariables = {}
+let cachedVariables = {};
 Object.keys(variables).forEach(v => cachedVariables[v] = new Variable(v));
 
 // Parser
 
-let tokens = {}
-let addOperation = (token, func) => tokens[token] = {"arity": func.prototype.arity, "func": func};
+let tokens = {};
+let addOperation = (token, func) => tokens[token] = {"arity": func.prototype._evaluate.length, "func": func};
 addOperation("negate", Negate);
 addOperation("+",      Add);
 addOperation("-",      Subtract);
@@ -178,7 +176,7 @@ addOperation("pow",    Power);
 addOperation("sumexp", Sumexp);
 addOperation("softmax",Softmax);
 
-let processToken = function(token, stack, iterator) {
+function processToken(token, stack, iterator) {
     // console.log(token);
    if(token in tokens) {
        var oper = tokens[token];
@@ -196,7 +194,7 @@ let processToken = function(token, stack, iterator) {
    }
 }
 
-let parseArray = function(arr) {
+function parseArray (arr) {
     var stack = [];
     for(const token of arr) {
         if(token.length == 0) continue;
@@ -217,7 +215,7 @@ AbstractParserError.prototype = Object.create(Error.prototype);
 AbstractParserError.prototype.constructor = AbstractParserError;
 
 function createError() {
-    return function(iterator, ...args) {
+    var err = function(iterator, ...args) {
         AbstractParserError.call(this, iterator, ...args);
     }
 }
