@@ -22,7 +22,7 @@ Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/so
 Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]]
 **** Labs
 1. [[file:Sem2/algo/labs/lab1/][Дерево отрезков]]
-2. Деревья поиска [8/9]
+2. Деревья поиска [9/9]
   - [X] A
   - [X] B
   - [X] C
@@ -31,6 +31,6 @@ Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]]
   - [X] F
   - [X] G
   - [X] H
-  - [ ] I
+  - [X] I
 **** Homework
 - [X] 8.5

@@ -7,25 +7,27 @@ let variables = {
 };
 
 const ANY_ARITY = -1;
+const PREFIX = 0;
+const POSTFIX = 1;
 
 function AbstractOperation(...operands) {
     this.operands = operands;
 }
 AbstractOperation.prototype.evaluate = function(...args ){
     return this._evaluate(...this.operands.map(operand => operand.evaluate(...args)));
-}
+};
 AbstractOperation.prototype.toString = function() {
-    return this.operands.join(" ").concat(" ", this.symbol);
-}
+    return this.operands.join(" ") + " " + this.symbol;
+};
 AbstractOperation.prototype.diff = function(arg) {
     return this._diff(arg, ...this.operands.concat(this.operands.map(a => a.diff(arg))));
-}
+};
 AbstractOperation.prototype.prefix = function() {
-    return "(".concat(this.symbol, " ", this.operands.map(a => a.prefix()).join(" "), ")");
-}
+    return "(" + this.symbol + " " + this.operands.map(a => a.prefix()).join(" ") + ")";
+};
 AbstractOperation.prototype.postfix = function() {
-    return "(".concat(this.operands.map(a => a.postfix()).join(" "), " ", this.symbol + ")");
-}
+    return "(" + this.operands.map(a => a.postfix()).join(" ") + " " + this.symbol + ")";
+};
 
 
 
@@ -34,7 +36,7 @@ function Operation(symbol, evaluate, diff) {
     this._evaluate = evaluate;
     this._diff = diff;
 }
-Operation.prototype = AbstractOperation.prototype
+Operation.prototype = AbstractOperation.prototype;
 
 function createOperation(symbol, evaluate, diff) {
     function op(...operands) {
@@ -153,7 +155,7 @@ const Const = createOperand(a => a,
 const Variable = createOperand(function(a, ...args) {
                                    return args[this.index];
                                },
-                               (a, arg) => arg == a ? Const.ONE : Const.ZERO
+                               (a, arg) => arg === a ? Const.ONE : Const.ZERO
                               );
 Const.E = new Const(Math.E);
 Const.ZERO = new Const(0);
@@ -165,7 +167,10 @@ Object.keys(variables).forEach(v => cachedVariables[v] = new Variable(v));
 // Parser
 
 let tokens = {};
-let addOperation = (token, func) => tokens[token] = {"arity": func.prototype._evaluate.length, "func": func};
+let addOperation = (token, func) => tokens[token] = {"arity": func.prototype._evaluate.length === 0
+                                                     ? ANY_ARITY
+                                                     : func.prototype._evaluate.length,
+                                                     "func": func};
 addOperation("negate", Negate);
 addOperation("+",      Add);
 addOperation("-",      Subtract);
@@ -178,26 +183,26 @@ addOperation("softmax",Softmax);
 
 function processToken(token, stack, iterator) {
     // console.log(token);
-   if(token in tokens) {
-       var oper = tokens[token];
-       // console.log(oper);
-       if(oper.arity == ANY_ARITY) {
-           return new oper.func(...stack);
-       }
-       return new oper.func(...stack.splice(stack.length - oper.arity));
-   } else if(!isNaN(token)) {
-       return new Const(+token);
-   } else if(token in variables) {
-       return cachedVariables[token];
-   } else {
-       throw new UnknownTokenError(iterator, token);
-   }
+    if (token in tokens) {
+        var oper = tokens[token];
+        // console.log(oper);
+        if (oper.arity === ANY_ARITY) {
+            return new oper.func(...stack);
+        }
+        return new oper.func(...stack.splice(stack.length - oper.arity));
+    } else if (!isNaN(token)) {
+        return new Const(+token);
+    } else if (token in variables) {
+        return cachedVariables[token];
+    } else {
+        throw new UnknownTokenError(iterator, token);
+    }
 }
 
 function parseArray (arr) {
     var stack = [];
     for(const token of arr) {
-        if(token.length == 0) continue;
+        if (token.length === 0) continue;
         stack.push(processToken(token, stack));
         // console.log(stack);
     }
@@ -234,7 +239,7 @@ function UnmatchedParenthesisError(iterator, ...args) {
     AbstractParserError.call(this, iterator, ...args);
 }
 initError(UnmatchedParenthesisError, (parenthesis, operation) =>
-            "Miss " + (parenthesis == "(" ? "open" : "close") + " parenthesis for operation " + operation
+            "Miss " + (parenthesis === "(" ? "open" : "close") + " parenthesis for operation " + operation
            );
 
 function UnknownTokenError(iterator, ...args) {
@@ -248,7 +253,7 @@ function InvalidOperationError(iterator, ...args) {
     AbstractParserError.call(this, iterator, ...args);
 }
 initError(InvalidOperationError, (symb) => {
-    if(symb == undefined) {
+    if(symb === undefined) {
         return "Empty operation";
     } else {
         return "Invalid operation " + symb;
@@ -286,7 +291,7 @@ let skipWhitespaces = function(iterator) {
     while(/\s/.test(iterator.getChar())) {
         iterator.next();
     }
-}
+};
 
 let parseStringToken = function(iterator) {
     var res = "";
@@ -298,7 +303,7 @@ let parseStringToken = function(iterator) {
         res += iterator.next();
     }
     return res;
-}
+};
 
 let getArity = function(stringToken) {
     if(stringToken in tokens) {
@@ -306,107 +311,71 @@ let getArity = function(stringToken) {
     } else {
         return 0;
     }
-}
+};
 
 let parseOperand = function(operandString, iterator) {
-    if(getArity(operandString) == 0) {
+    if(getArity(operandString) === 0) {
         return processToken(operandString, undefined, iterator);
     }
     throw new InvalidOperandError(iterator, operandString);
-}
+};
 
-let parsePrefixOperation = function(iterator) {
-    var operationString = parseStringToken(iterator);
-    var operationArity = getArity(operationString);
-    var operands = [];
-    if(operationArity == 0) {
-        throw new InvalidOperationError(iterator, operationString);
-    }
-    for(var i = 0; operationArity == ANY_ARITY || i < operationArity; ++i){
-        var operand = parseStringToken(iterator);
-        if(operand == '(') {
-            operand = parsePrefixOperation(iterator);
-            if(parseStringToken(iterator) != ')') {
-                throw new UnmatchedParenthesisError(iterator, ")", operand.symbol);
-            }
-            operands.push(operand);
-            continue;
-        }
-        if(operand == ')') {
-            if(operationArity == ANY_ARITY) {
-                break;
-            }
-            throw new InvalidArgsCountError(iterator, operationArity, i, operationString)
-        }
-        operands.push(parseOperand(operand, iterator));
-    }
-    // console.log(operands);
-    return processToken(operationString, operands, iterator);
-
-}
-
-let parsePostfixOperation = function(iterator) {
-    var operands = [];
+let parseOperation = function(iterator, mode) {
     var operationString;
+    var operationArity;
+    if(mode === PREFIX) {
+        operationString = parseStringToken(iterator);
+        operationArity = getArity(operationString);
+    }
+    var operands = [];
     for(;;){
         var operand = parseStringToken(iterator);
-        if(operand == '(') {
-            operand = parsePostfixOperation(iterator);
-            if(parseStringToken(iterator) != ')') {
+        if(operand === '(') {
+            operand = parseOperation(iterator, mode);
+            if(parseStringToken(iterator) !== ')') {
                 throw new UnmatchedParenthesisError(iterator, ")", operand.symbol);
             }
             operands.push(operand);
             continue;
         }
-        if(operand == ')') {
+        if(operand === ')' || operand === '\x00') {
             break;
         }
-        operationString = operand;
-        if(operationString in tokens) {
-            break;
+        if(mode === POSTFIX) {
+            operationString = operand;
+            operationArity = getArity(operationString);
+            if(operand in tokens) {
+                break;
+            }
         }
         operands.push(parseOperand(operand, iterator));
     }
-    var operationArity = getArity(operationString);
-    if(operationArity == 0) {
+    if(operationArity === 0) {
         throw new InvalidOperationError(iterator, operationString);
     }
-    if(operationArity != ANY_ARITY) {
-        if(operationArity < operands.length) {
-            throw new InvalidArgsCountError(iterator, operationArity, operands.length, operationString)
-        }
-        if(operationArity > operands.length) {
-            throw new InvalidArgsCountError(iterator, operationArity, operands.length, operationString)
-        }
+    if(operationArity !== ANY_ARITY && operationArity != operands.length) {
+        throw new InvalidArgsCountError(iterator, operationArity, operands.length, operationString)
     }
-
-    // console.log(operands);
     return processToken(operationString, operands, iterator);
 
-}
-
-let parseExpression = function(iterator, parser) {
+};
+let parseExpression = function(iterator, mode) {
     var token = parseStringToken(iterator);
-    if(token == '(') {
-        var res = parser(iterator);
-        if(parseStringToken(iterator) != ')') {
+    if(token === '(') {
+        var res = parseOperation(iterator, mode);
+        if(parseStringToken(iterator) !== ')') {
                 throw new UnmatchedParenthesisError(iterator, ")", res.symbol);
         }
     } else {
         var res = parseOperand(token, iterator);
     }
-    if(parseStringToken(iterator) != '\x00') {
+    if(parseStringToken(iterator) !== '\x00') {
         throw new ParserError(iterator, "End of expression expected");
     }
     return res;
-}
+};
 
-let parsePrefix = prefixExpressionString => parseExpression(new Iterator(prefixExpressionString), parsePrefixOperation);
-let parsePostfix = prefixExpressionString => parseExpression(new Iterator(prefixExpressionString), parsePostfixOperation);
+let parsePrefix  = expression => parseExpression(new Iterator(expression), PREFIX);
+let parsePostfix = expression => parseExpression(new Iterator(expression), POSTFIX);
 
 console.log(Sumexp.prototype.arity);
-
-// module.exports = {
-//     parse: parse,
-//     parsePrefix: parsePrefix
-// };
