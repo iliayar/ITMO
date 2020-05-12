@@ -11,8 +11,9 @@
     (fn [args] (apply f (mapv (fn [g] (g args)) operands)))))
 
 (defn my-divide [& xs]
-  (cond (= (count xs) 1) (/ 1.0 (double (first xs)))
-        :else (/ (double (first xs)) (double (apply * (rest xs))))))
+  (if (= (count xs) 1)
+    (/ 1.0 (double (first xs)))
+    (/ (double (first xs)) (double (apply * (rest xs))))))
 
 (def add (operation +))
 (def subtract (operation -))
@@ -20,7 +21,7 @@
 (def divide (operation my-divide))
 ;; (def divide (operation (fn [& xs] (apply / (map double xs)))))
 (def avg (operation (fn [& xs] (/ (apply + xs) (count xs)))))
-(def med (operation (fn [& xs] (nth (sort xs) (int (/ (count xs) 2))))))
+(def med (operation (fn [& xs] (nth (sort xs) (quot (count xs) 2)))))
 (def negate subtract)
 
 (def operations
