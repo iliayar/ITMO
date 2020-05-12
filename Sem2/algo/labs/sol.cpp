@@ -3,4 +3,5 @@
 //entry
 void sol() {
 
+    DBG("TEST");
 }
