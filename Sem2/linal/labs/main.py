@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import math
 import datetime
 import sys
@@ -6,6 +8,7 @@ DRAWING = "LOCAL" in sys.argv
 
 DRAW_EPS = 0.01
 EPS = 1e-9
+PREC = 3
 
 
 def angle(cls, v1, v2):
@@ -43,7 +46,7 @@ class Vector3:
         return cls(x,y,z)
 
     def sub(self, v):
-        return self.add(v.mul(-1))
+        return self.add(v.mul(-1.0))
 
     def add(self, v):
         nx = self.x + v.x
@@ -58,7 +61,7 @@ class Vector3:
         return Vector3(nx,ny,nz)
 
     def dot(self, v):
-        return v.x*self.x + v.y*self.y + v.z*self.z
+        return round(v.x*self.x + v.y*self.y + v.z*self.z, PREC)
 
     def cross(self,vect):
         nx = self.y * vect.z - self.z * vect.y
@@ -79,12 +82,14 @@ class Vector3:
         return self.sub(v)
 
     def __eq__(self, other):
-        return (self.x - EPS <= other.x <= self.x + EPS
-    and self.y - EPS <= other.y <= self.y + EPS
-    and self.z - EPS <= other.z <= self.z + EPS)
+        if(other == None):
+            return False
+        return (round(self.x, 2) == round(other.x, 2)
+    and round(self.y, 2) == round(other.y, 2)
+    and round(self.z, 2) == round(other.z, 2))
 
     def __hash__(self):
-        return (int(self.x)*133711**4 + int(self.y)*133711**3 + int(self.z)*133711**2) % 133711
+        return int(round(self.x, 2)*1337269**4 + round(self.y, 2)*1337269**3 + round(self.z, 2)*1337269**2) % 1337269
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -105,6 +110,20 @@ class Line:
         res += "  intersects ( \n    " + '    '.join([str(i) for i in self.intersects]) + "  )\n"
         res += ")\n"
         return res
+
+    def filterIntersects(self):
+        m_dist = 0.0
+        res = []
+        for p1 in self.intersects:
+            for p2 in self.intersects:
+                if(p1 == p2):
+                    continue
+                if(round(distance(p1, p2), PREC) > m_dist):
+                    m_dist = round(distance(p1, p2), PREC)
+                    res = [p1, p2]
+        self.intersects = res
+
+
 
     def getPoint(self, **axis):
         r = self.r
@@ -164,7 +183,7 @@ class Plane:
     def intersect(self, other):
         s = self.n.cross(other.n)
 
-        if(s.magnitude()**2 == 0.0):
+        if(round(s.magnitude(), PREC) == 0.0):
             return None
 
         r = (s.cross(other.n).mul(self.d) + self.n.cross(s).mul(other.d)).mul(1/s.magnitude()**2);
@@ -174,7 +193,7 @@ class Plane:
     def getPoint(self, **axis):
         n = self.n
         d = self.d
-        if('x' in axis and 'y' != None):
+        if('x' in axis and 'y' in axis):
             if n.z == 0:
                 return None
             return Vector3(axis['x'], axis['y'], -(n.x*axis['x'] + n.y*axis['y'] + d)/n.z)
@@ -196,7 +215,7 @@ def inFigure(figure, p):
     # log("inFigure " + str(p)[:-1])
     for plane in figure:
         # log(plane.n.dot(p - plane.r))
-        if(plane.n.dot(p - plane.r) > 2*EPS):
+        if(plane.n.dot(p - plane.r) > 0):
             return False
 
     return True
@@ -221,15 +240,28 @@ if DRAWING:
     import matplotlib.pyplot as plt
     import numpy as np
 
+    MAX_COORD = 1
 
     fig = plt.figure()
     ax = Axes3D(fig)
+
+
+    def draw_plane(plane, alpha=0.1, linewidths=2, facecolor='b', edgecolor='black'):
+        points = [ plane.getPoint(x = 0, y = MAX_COORD)
+                 , plane.getPoint(x = MAX_COORD, y = 0)
+                 , plane.getPoint(x = MAX_COORD, z = 0)
+                 , plane.getPoint(x = 0, z = MAX_COORD)
+                 , plane.getPoint(y = 0, z = MAX_COORD)
+                 , plane.getPoint(y = MAX_COORD, z = 0) ]
+        draw_polygon(points, alpha, linewidths, facecolor, edgecolor)
 
     def draw_polygon(polygon, alpha=0.1, linewidths=2, facecolor='b', edgecolor='black'):
         x = []
         y = []
         z = []
-        for c in polygon.points:
+        for c in polygon:
+            if(c == None):
+                continue
             x += [c.x]
             y += [c.y]
             z += [c.z]
@@ -237,7 +269,7 @@ if DRAWING:
         ax.add_collection3d(Poly3DCollection(verts, alpha=alpha, linewidths=linewidths, 
                     facecolor=facecolor,edgecolor=edgecolor))
 
-    def draw_line(p1,p2, edgecolor="yellow", linewidths=2, alpha=1):
+    def draw_line(p1,p2, edgecolor="r", linewidths=2, alpha=1):
         x = [p1.x, p2.x]
         y = [p1.y, p2.y]
         z = [p1.z, p2.z]
@@ -259,14 +291,20 @@ for i in range(len(planes)):
         p1 = planes[i]
         p2 = planes[j]
         l = p1.intersect(p2)
+        if(l == None):
+            continue
         for p3 in planes:
             if(p1 == p3 or p2 == p3):
                 continue
-            if(inFigure(planes, l.intersect(p3))):
-                l.intersects += [l.intersect(p3)]
+            intersection = l.intersect(p3);
+            if(intersection == None):
+                continue
+            if(inFigure(planes, intersection)):
+                l.intersects += [intersection]
+        l.filterIntersects()
         if(len(l.intersects) == 2):
             edges += [l]
-# log(*edges)
+log(*edges)
 
 F = len(planes)
 E = len(edges)
@@ -274,10 +312,20 @@ v = []
 for e in edges:
     v += [e.intersects[0]]
     v += [e.intersects[1]]
-# log(*set(v))
+log(*set(v))
 V = len(set(v))
 
-# log(F, E, V)
+log(F, V, E)
+
+if DRAWING:
+    for p in planes:
+        draw_plane(p)
+    for e in edges:
+        int1 = e.intersects[0]
+        int2 = e.intersects[1]
+        draw_line(int1, int2)
+    plt.show()
+
 
 if F + V - E != 2:
     out.write("0\n")
@@ -289,10 +337,11 @@ out.write(str(len(edges)) + '\n')
 for e in edges:
     int1 = e.intersects[0]
     int2 = e.intersects[1]
-    out.write(str(round(int1.x,3)) + ' ' + str(round(int1.y,3)) + ' ' + str(round(int1.z,3)) + ' ' +
-              str(round(int2.x,3)) + ' ' + str(round(int2.y,3)) + ' ' + str(round(int2.z,3)) + '\n')
+    out.write(str(round(int1.x,PREC)) + ' ' + str(round(int1.y,PREC)) + ' ' + str(round(int1.z,PREC)) + ' ' +
+              str(round(int2.x,PREC)) + ' ' + str(round(int2.y,PREC)) + ' ' + str(round(int2.z,PREC)) + '\n')
 
 out.close()
+exit(0)
 #############_DRAWING_FINAL_######################
 if DRAWING:
     plt.show()

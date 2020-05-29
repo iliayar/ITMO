@@ -71,7 +71,7 @@
          (matrix? m)]
    :post [(= (first (shape %)) (second (shape m)))
           (vec? %)]}
-  (mapv (apply partial scalar vs) m))
+  (let [v (apply v* vs)] (mapv (partial scalar v) m)))
 
 (defn transpose [m]
   {:pre [(matrix? m)]

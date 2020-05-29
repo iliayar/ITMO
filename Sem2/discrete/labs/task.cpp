@@ -1,3 +1,6 @@
+
+// Generated at 2020-05-20 16:44:40.535907 
+// By iliayar
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -26,8 +29,12 @@ using namespace std;
 #define DBG_CODE(x)
 #endif
 
-//CODE_HERE
+//##################CODE BEGIN#############
+//entry
+void sol() {
 
+}
+//##################CODE END###############
 #ifdef LOCAL
 #undef FILE_IO
 #undef FILENAME
