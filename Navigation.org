@@ -14,9 +14,9 @@
 4. TODO
 5. TODO
 6. [X] [[file:Sem2/programming/HW6/functionalExpression.js][Functional Expression]]
-7. [ ] [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
-8. [ ] [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
-9. [ ] [[file:Sem2/programming/HW9/][Clojure linear]]
+7. [X] [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
+8. [X] [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
+9. [X] [[file:Sem2/programming/HW9/][Clojure linear]]
 *** Algo
 Labs [[file:Sem2/algo/labs/][folder]] and main solution [[file:Sem2/algo/labs/sol.cpp][file]] \\
 Codeforces [[https://codeforces.com/group/QmrArgR1Jp/contests][group]]

@@ -1,9 +1,11 @@
+#pragma comment(linker, "/STACK:36777216")
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
 #include <cstdio>
 #include <map>
+#include <unordered_set>
 #include <ctime>
 #include <cstdlib>
 #include <queue>
@@ -15,7 +17,6 @@ using namespace std;
 #define OFF 0
 
 #define int long long
-#define vint vector<int>
 #ifdef LOCAL
 #define DBG(x) cout << "DBG: " << x << endl
 #define DBG_CODE(x) x
@@ -23,6 +24,9 @@ using namespace std;
 #define DBG(x)
 #define DBG_CODE(x)
 #endif
+
+using vint = vector<int>;
+using vint2 = vector<vint>;
 
 //CODE_HERE
 
