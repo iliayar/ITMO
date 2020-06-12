@@ -1,6 +1,3 @@
-
-// Generated at 2020-05-20 16:44:40.535907 
-// By iliayar
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -9,9 +6,11 @@
 #include <unordered_set>
 #include <cstdio>
 #include <map>
+#include <cctype>
 #include <ctime>
 #include <cstdlib>
 #include <queue>
+#include <cassert>
 
 
 using namespace std;
@@ -29,12 +28,8 @@ using namespace std;
 #define DBG_CODE(x)
 #endif
 
-//##################CODE BEGIN#############
-//entry
-void sol() {
+//CODE_HERE
 
-}
-//##################CODE END###############
 #ifdef LOCAL
 #undef FILE_IO
 #undef FILENAME
