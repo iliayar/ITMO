@@ -89,7 +89,7 @@ class Vector3:
     and round(self.z, 2) == round(other.z, 2))
 
     def __hash__(self):
-        return int(round(self.x, 2)*1337269**4 + round(self.y, 2)*1337269**3 + round(self.z, 2)*1337269**2) % 1337269
+        return int(round(self.x, 2)*31**4 + round(self.y, 2)*31**3 + round(self.z, 2)*31**2) % 1337269
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -160,6 +160,17 @@ class Line:
                             X.z + self.s.z*d/e)
 
         return res
+    def __eq__(self, other):
+        if(other == None):
+            return False
+        return self.r == other.r and (self.s.mul(1/self.s.magnitude()) == other.s.mul(1/other.s.magnitude()) or
+                                      self.s.mul(1/self.s.magnitude()) == other.s.mul(-1/other.s.magnitude()))
+
+    def __hash__(self):
+        if(self.s.dot(Vector3(1,1,1)) > 0):
+            return (self.s.mul(1/self.s.magnitude()).__hash__()*31**2 + self.r.__hash__()*31) % 1337269
+        else:
+            return (self.s.mul(-1/self.s.magnitude()).__hash__()*31**2 + self.r.__hash__()*31) % 1337269
 
 class Plane:
 
@@ -234,6 +245,10 @@ for i in range(m):
 
 inp.close()
 #############_DRAWING_BEGIN_######################
+def draw():
+    if DRAWING:
+        plt.show()
+
 if DRAWING:
     from mpl_toolkits.mplot3d import Axes3D
     from mpl_toolkits.mplot3d.art3d import Poly3DCollection
@@ -304,6 +319,7 @@ for i in range(len(planes)):
         l.filterIntersects()
         if(len(l.intersects) == 2):
             edges += [l]
+edges = list(set(edges))
 log(*edges)
 
 F = len(planes)
@@ -324,8 +340,7 @@ if DRAWING:
         int1 = e.intersects[0]
         int2 = e.intersects[1]
         draw_line(int1, int2)
-    plt.show()
-
+draw()
 
 if F + V - E != 2:
     out.write("0\n")
@@ -341,7 +356,5 @@ for e in edges:
               str(round(int2.x,PREC)) + ' ' + str(round(int2.y,PREC)) + ' ' + str(round(int2.z,PREC)) + '\n')
 
 out.close()
-exit(0)
 #############_DRAWING_FINAL_######################
-if DRAWING:
-    plt.show()
+draw()
