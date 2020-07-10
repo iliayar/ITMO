@@ -2,5 +2,31 @@
 \usepackage{prelude}
 
 \begin{document}
-\section{}
+\section{Монотонность. Экстремумы}
+\begin{theorem}[Критерий монотонности]
+$f \in C(\langle a, b \rangle)$ $f$ - диф. на $(a, b)$, тогда $f \uparrow \Leftrightarrow$ $f'(x) \ge 0, \forall x \in (a, b)$
+\end{theorem}
+\begin{proof}
+  $\Rightarrow$ по определению производной \\
+  $\Leftarrow x_1 > x_2$ по т. Лагранжа $\exists c: f(x_1) - f(x_2) = f(c)\cdot(x_1 - x_2) \ge 0$ 
+\end{proof}
+\begin{corollary}
+  $f: \langle a, b \rangle \rightarrow \mathbb{R}$, тогда \\
+  $f = const \Leftrightarrow f \in C(\langle a, b \rangle )$, дифф на $(a, b) f' = 0$
+\end{corollary}
+\begin{corollary}
+  $f \in C(\langle a, b \rangle)$, дифф на $(a, b)$, тогда $f$ - строго возрастает $\Leftrightarrow$
+  \begin{enumerate}
+  \item $f' \ge 0$ на $(a, b)$
+  \item $f' \not = 0$ ни на каком промежутке
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  $\Rightarrow$ очев. \\
+  $\Leftarrow$ по Лемме о возрастании в точке
+\end{proof}
+\begin{corollary}[Доказательство неравенств]
+  $g, f \in C(\langle a, b \rangle)$, дифф. на $(a, b)$ \\
+  $f(a) \le g(a), \forall x \in (a, b) f'(x) \le g'(x)$, тогда $\forall \alpha \in (a, b) f(\alpha) \le g(\alpha)$
+\end{corollary}
 \end{document}
