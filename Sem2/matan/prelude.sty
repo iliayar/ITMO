@@ -5,6 +5,9 @@
 % \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{mathtools}
 
 \newtheorem{theorem}{Теорема}[section]
 \newtheorem{corollary}{Следствие}[theorem]
@@ -13,3 +16,20 @@
 
 \theoremstyle{remark}
 \newtheorem*{example}{Пример}
+
+\theoremstyle{remark}
+\newtheorem*{note}{Замечание}
+
+% \theoremstyle{remark}
+% \newtheorem*{feature}{Свойства}
+
+\newcommand\eqdef{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+
+\newenvironment{features}
+{\begin{flushleft}
+ \emph{Свойства:}
+ \begin{enumerate}[label=\large\protect\textcircled{\small\arabic*}]
+}
+{\end{enumerate}
+ \end{flushleft}
+}
