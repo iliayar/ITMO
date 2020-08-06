@@ -26,7 +26,284 @@ $f \in C(\langle a, b \rangle)$ $f$ - диф. на $(a, b)$, тогда $f \upar
   $\Leftarrow$ по Лемме о возрастании в точке
 \end{proof}
 \begin{corollary}[Доказательство неравенств]
-  $g, f \in C(\langle a, b \rangle)$, дифф. на $(a, b)$ \\
-  $f(a) \le g(a), \forall x \in (a, b) f'(x) \le g'(x)$, тогда $\forall \alpha \in (a, b) f(\alpha) \le g(\alpha)$
+  $g, f \in C(\langle a, b \rangle)$, дифф. на $(a, b)$ $f(a) \le g(a), \forall x \in (a, b) f'(x) \le g'(x)$, тогда $\forall \alpha \in (a, b) f(\alpha) \le g(\alpha)$
 \end{corollary}
+\begin{definition}[Локальный максимум функции]
+  $f: E \subset \mathbb{R} \rightarrow \mathbb{R}$ $x_0 \in E$ - локальный максимум \\
+  $\exists U(x_0) \forall x \in U(x_0) \cap E\ F(x) \le f(x_0)$
+\end{definition}
+\begin{theorem}[Необходимые и достаточные условия локального экстремума]
+  $f: (a, b) \rightarrow \mathbb{R}$ \\
+  $x_0 \in (a, b)\ f$ - дифф на $(a, b)$ \\
+  Тогда:
+  \begin{enumerate}
+  \item $x_0$ - локальный жкстремум $\Rightarrow f'(x_0) = 0$
+  \item $f$ - $n$ раз дифф. на $x_0$ \\
+    $f'(x_0) = f''(x_0) = \dots = f^{(n)}(x_0) = 0$
+  \end{enumerate}
+  Если:
+  \begin{itemize}
+  \item $f^{(n)}(x_0) > 0$, то
+    \begin{itemize}
+    \item $n$ - чет: $x_0$ - локальный минимум
+    \item $n$ - нечет: $x_0$ - не экстремум
+    \end{itemize}
+  \item $f^{(n)}(x_0) < 0$, то
+    \begin{itemize}
+    \item $n$ - чет: $x_0$ - локальный максимум
+    \item $n$ - нечет: $x_0$ - не экстремум
+    \end{itemize}
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  \begin{enumerate}
+  \item по т. Ферма
+  \item по ф. Тейлора \\
+    $$f(x) = T_n(f, x_0)(x) + o((x - x_0)^n)$$
+    $$f(x) = f(x_0) + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + o((x - x_0)^n)$$
+    При $x$ близких в $x_0$
+    $$sign(f(x) - f(x_0)) = sign(\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n)$$
+  \end{enumerate}
+\end{proof}
+\section{Неопределенный интеграл}
+\begin{definition}[Первообразная]
+  $F, f: \langle a, b \rangle \rightarrow \mathbb{R}$ \\ 
+  $F$ - первообразная $f$ на $\langle a, b \rangle$ \\
+  $\forall x \in \langle a, b \rangle F'(x) = f(x)$
+\end{definition}
+\begin{theorem}
+ $f \in C(\langle a, b \rangle)$, Тогда у $f$ сущесвует первообразная 
+\end{theorem}
+\begin{proof}
+  \textcolor{red}{Нету} % TODO %
+\end{proof}
+\begin{theorem}
+  $F$ - первообразная $f$ на $\langle a, b \rangle$
+  \begin{enumerate}
+  \item $\forall c \in \mathbb{R}\ F + c$ - тоже первообразная
+  \item других первообразных \textbf{нет} \\
+    т.е. если $G$ - первообразная, то $\exists c: G = F + c$
+  \end{enumerate}
+  \begin{proof}
+    \begin{enumerate}
+    \item очев.
+    \item $F' = f; G' = f$ \\
+      $(F - G)' = 0 \Rightarrow F - G = const$
+    \end{enumerate}
+  \end{proof}
+  \begin{definition}
+    Неопределенный интеграл $f$ на $\langle a, b \rangle$ = \\
+    Мн-во всех первообразных = \\
+    $\{F + c, c \in \mathbb{R}\}, F$ - первообразная \\
+    $\int{f}\ \int{f(x) dx}$
+  \end{definition}
+  \begin{theorem}[О свойствах неопределенных интегралов]
+    $f, g$ - имеют первообразную на $\langle a, b)$, тогда \\
+    \begin{enumerate}
+    \item $\int f + g = \int f + \int g$ \\
+      $\forall \alpha \in \mathbb{R}\ \int \alpha \cdot f = \alpha \cdot \int f$
+    \item $\phi: \langle c, d \rangle \rightarrow \langle a, b \rangle$ \\
+      $\int f(\phi (t)) \cdot \phi '(t) dt = (\int f(x) dx) \Big|_{x = \phi (t)} = F(\phi(t))$  \\
+      Частный случай: $\alpha, \beta \in \mathbb{R}$ \\
+      $\int f(\alpha \cdot t + \beta) dt = \frac{1}{\alpha}F(\alpha \cdot t + \beta)$
+    \item $f, g$ - дифф. на $\langle a, b): f' \cdot g$ - имеет первообразную \\
+      Тогда $f \cdot g'$ - имеет первообразную и \\
+      $\int f \cdot g' = f \cdot g - \int f' \cdot g$ - интегрирование по частям
+    \end{enumerate}
+  \end{theorem}
+  \begin{proof}
+    \begin{enumerate}
+    \item ...
+    \item $F(\phi(t))' = f(\phi(t))\cdot \phi'(t)$
+    \item $(fg - \int f'g) = f'g + fg' - f'g = fg'$
+    \end{enumerate}
+  \end{proof}
+\end{theorem}
+\begin{note}
+  Если $\phi$ - обратная \\
+  \textcolor{red}{Не понел} % TODO %
+\end{note}
+\subsection{Равномерно непрерывные функции}
+Мне вдруг стало лень писать доказательства %TODO%
+\begin{definition}
+  $f: \langle a, b \rangle \subset \mathbb{R} \rightarrow \mathbb{R}$ \\
+  павномерно непр. на $\langle a, b \rangle$ \\
+  $\forall \varepsilon > 0 \exists \delta > 0\ \forall x_1, x_2 \in \langle a, b \rangle\ |x_1 - x_2| < \delta f(x_1) - f(x_2) < \varepsilon$
+\end{definition}
+\begin{theorem}[Кантора]
+  $f: X \rightarrow Y\ X$ - ?полн.?, $f$ непр $X$ \\
+  $f$ - равномерно непрерывна
+\end{theorem}
+\begin{theorem}
+  $f: [0, 1] \times [0, 1] \rightarrow [0, 1] \times [0, 1]$ непр \\
+  Тогда $\exists x \in [0, 1]^2\ f(x) = x$ \\
+  Общ вариант:
+  \begin{enumerate}
+  \item $f: [0, 1]^m \rightarrow [0, 1]^m$ непр
+  \item $f: B(0, 1) \subset \mathbb{R}^m \rightarrow B(0,1)$ непр
+  \item $f: S(0, 1) \subset \mathbb{R}^m \rightarrow S$
+  \end{enumerate}
+\end{theorem}
+\section{Определенный интеграл}
+\begin{enumerate}
+\item Площадь \\
+  $\mathcal{E}$ - мн-во ограниченых ??? фигур $\mathbb{R}^2$ \\
+  $\sigma: \mathcal{E} \rightarrow \mathbb{R}_+$ \\
+  \begin{enumerate}
+  \item $A \in \mathcal{E}\ A = A_1 \sqcup A_2 (A_1 \cap A_2 = \emptyset)$\\
+    $\sigma A = \sigma A_1 + \sigma A_2$ - аддитивность
+  \item $\sigma([a, b] \times [c, d])=(b - a) \cdot (d - c)$
+  \item
+    \begin{note}
+      $A \subset B\ \sigma A \le \sigma B$
+    \end{note}
+  \item
+    \begin{note}
+      $\sigma($вертикальный отрезок$) = 0$
+    \end{note}
+  \end{enumerate}
+  \item Ослабленная площадь \\
+    $\sigma: \mathcal{E} \rightarrow \mathbb{R}_+$
+    \begin{enumerate}
+    \item монотонная
+    \item ?нормирована?
+    \item ослабленная аддитивность \\
+      $E \in \mathcal{E}$ \\
+      $E = E_1 \cup E_2$ \\
+      $E_1 \cap E_2 = $вертикальный отрезок \\
+      Тогда $\sigma E = \sigma E_1 + \sigma E_2$
+    \end{enumerate}
+\end{enumerate}
+\begin{definition}
+  $f: \langle a, b \rangle \rightarrow \mathbb{R}$ \\
+  $f_+ := max(f, 0)$ \\
+  $f_- := min(-f, 0)$
+\end{definition}
+\begin{definition}
+  $f: (a,b) \rightarrow \mathbb{R}\ f \ge 0$ \\
+  ПГ $(f, [a, b]) = \{(x, y): x \in [a,b], 0 \le y \le f(x)\}$
+\end{definition}
+\begin{definition}
+  $f: [a, b] \rightarrow \mathbb{R}$ \\
+  $$\int_a^bf=\int_a^bf(x)dx := \sigma \textrm{ПГ}(f_+,[a,b])-\sigma \textrm{ПГ}(f_-, [a,b])$$
+\end{definition}
+\begin{note}
+  \begin{enumerate}
+  \item $$f \ge 0 \Rightarrow \int_a^bf \ge 0$$
+  \item $f = c$ \\\
+    $$\int_a^bf = c \cdot (b - a)$$
+  \item $$\int_a^b-f = -\int_a^bf$$
+  \item $$\int_a^b0 = 0$$
+  \end{enumerate}
+\end{note}
+\begin{features}
+  \item аддитивность $c \in [a, b]$ \\
+    $$\int_a^bf = \int_a^cf + \int_c^bf$$
+    $$\sigma \textrm{ПГ}(f_+, [a, b]) = \sigma \textrm{ПГ}(f_+, [a, c]) + \sigma \textrm{ПГ}(f_+, [c, b])$$
+  \item Монотонность $f, g \in C([a, b])\ f \le g$ \\
+    $$\textrm{Тогда } \int_a^bf \le \int_a^bg$$
+  \item $$\left| \int_a^b f \right| \le \int_a^b\left| f \right|$$
+\end{features}
+\begin{theorem}[О среднем]
+  $f \in C([a, b])$ Тогда $\exists c \in [a, b]$
+  $$\int_a^bf = f(c) \cdot (b - a)$$
+  $$min f \le \frac{1}{b-a}\int_a^bf \le max f$$
+  Где $\frac{1}{b-a}\int_a^bf$ - среднее арифметическое функции $f$ на $[a, b]$ 
+\end{theorem}
+\begin{definition}
+  $f \in C([a, b])\ \Phi: [a,b] \rightarrow \mathbb{R}$
+  $$\Phi(x) = \int_a^bf\ \Phi(a) = 0$$
+\end{definition}
+\begin{theorem}[Барроу]
+  $f \in C([a, b])\ \Phi$ - \textcolor{red}{???} \\
+  Тогда $\forall x \in [a, b]\ \Phi'(x) = f(x)$
+\end{theorem}
+\begin{theorem}[Ньютона-Лейбница]
+  $f \in C([a, b])\ F$ - первообразная $f$ \\
+  Тогда $\int_a^bf=F(b) - F(a)$
+\end{theorem}
+\section{Правило Лопиталя}
+\begin{lemma}[Об ускоренной сходимости]
+  \begin{enumerate}
+  \item $f, g: D \subset X \rightarrow \mathbb{R}$ \\
+    $a$ - предельная точка $D$ \\
+    $\exists V(a): x \in \dot{V}(a) \cap D\ f(x) \not= 0\ g(x) \not= 0$ \\
+    $$\lim_{x \to a}f(x) = 0\ \lim_{x \to a}g(x) = 0\ (\cdot)$$
+    Тогда $\forall x_n \to a\ x_n \not= a\ x_n \in D$
+    $] y_n \to a\ y_n \not= 0\ y_n \in D$
+    $$\lim_{n \to +\infty}\frac{f(y_n)}{g(x_n)}=0$$
+    $$\lim_{n \to +\infty}\frac{g(y_n)}{g(x_n)}=0\textrm{\textcolor{red}{Не точно}}$$
+  \item Все то же кроме $(\cdot)$ \\
+    $$\lim f(x) \not= \infty\ \lim g(x) = +\infty$$
+  \end{enumerate}
+\end{lemma}
+\begin{theorem}
+  $f, g: (a, b) \rightarrow \mathbb{R}\ a \in \overline{\mathbb{R}}$ \\
+  $f, g$ - дифф. $g' \not= 0$ на $(a, b)$ \\
+  $$] \frac{f'(x)}{g'(x)} \xrightarrow[{x \to a \to 0}]{}A \in \overline{\mathbb{R}}$$
+  $$]\lim_{x \to a}\frac{f(x)}{g(x)} \textrm{- Неопр.}(\frac{0}{0}, \frac{\infty}{\infty})$$
+  $$\textrm{Тогда}\lim_{x \to a}\frac{f(x)}{g(x)}=A$$
+\end{theorem}
+\begin{theorem}[Штольца]
+  $\{x_n\}, \{y_n\} \to 0$
+  $$\lim \frac{x_n - x_{n-1}}{y_n - y_{n-1}}=a \in \overline{\mathbb{R}}$$
+  $$\textrm{Тогда } \exists \lim \frac{x_n}{y_n}=a$$
+\end{theorem}
+\begin{features}
+  \item
+    $$\int_a^b\alpha f + \beta y dx = \alpha \int_a^b f + \beta \int_a^b y$$
+    $\forall \alpha, \beta \ f,y \in C([a,b])$
+  \item Замена переменных \\
+    $\phi: \langle a, b \rangle \rightarrow [a, b]\ \phi \in C'$ \\
+    $\langle p , a \rangle \subset \langle a, b \rangle$ \\
+    $$\textrm{Тогда } \int_p^af(\phi(t))\phi'(t)dt=\int_{\phi(p)}^{\phi(a)}f(\alpha)d\alpha$$
+  \item Интегрирование по частям
+    $f\Big|_a^b\eqdef f(b) - f(a)$
+    $$\int_a^bfg'=fg\Big|_a^b - \int_a^bf'g$$
+\end{features}
+\begin{definition}[Инегральное среднее]
+  $$\frac{1}{a-b}\int_a^bf = I_f$$
+\end{definition}
+\begin{theorem}
+  Число $\pi$ - иррациональное
+\end{theorem}
+\begin{definition}[$f$ - кусочно непрерывна]
+  $f$ - непрерывна на $[a,b]$ \\
+  за исключением конечного числа точек с разрывами I рода
+\end{definition}
+\begin{definition}
+  $F: [a, b] \rightarrow \mathbb{R}$ - почти первообразная
+  \begin{features}
+  \item непрерывная
+  \item $\exists F = -f$ ???
+  \end{features}
+  $f$ - кусочно непрерывна \\
+  $$\int_a^bf = \sum_{k=1}^n\int_{x_{k-1}}^{x_k}f$$
+\end{definition}
+\section{Продолжение определенного интеграла}
+$\langle a, b \rangle$ \\
+$Segm \langle a ,b \rangle$ - множество всевозможных отрезков из $\langle a, b \rangle$
+\begin{definition}
+  \hfill \break
+  \begin{enumerate}
+  \item Функции промежутка \\
+    $\Phi: Seg \langle a, b \rangle \rightarrow \mathbb{R}$
+  \item Аддитивная функция промежутка
+    $\Phi$
+  \end{enumerate}
+  $\forall [p, q] \in Segm \langle a, b \rangle\ \forall r: p < r < q$ \\
+  $\Phi([p, q]) = \Phi([p, r]) + \Phi([r, q])$
+\end{definition}
+\begin{definition}[Плотность аддитивной функции промежутка]
+  $f: \langle a, b \rangle \rightarrow \mathbb{R}$ - плотность $\Phi$ \\
+  $$\forall \Delta \varepsilon\ Segm \langle a, b \rangle \inf_{x \in \Delta}f(x)\cdot l_{\Delta}\le \Phi_{\Delta} \le \sup f \cdot l_{\Delta}$$
+\end{definition}
+\begin{theorem}[Вычисление аддитивной функции по площади]
+  $f: \langle a, b \rangle \rightarrow \mathbb{R}$ - непр \\
+  $\Phi: Segm \langle a, b \rangle \rightarrow \mathbb{R}$ \\
+  $f$ - плотность $\Phi$ \\
+  Тогда: $\Phi([p, q]) = \int_b^qf$ \\
+  $[p, q] \subset [a, b \rangle$
+\end{theorem}
 \end{document}
+ 
