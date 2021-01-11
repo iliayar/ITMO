@@ -1,0 +1,93 @@
+% Created 2020-11-04 Wed 17:49
+% Intended LaTeX compiler: pdflatex
+\documentclass{article}
+       \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian, english]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{grffile}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage{capt-of}
+       
+       \usepackage{geometry}
+       \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{11.04 Практика}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={11.04 Практика},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.1 (Org mode 9.3)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Занятие}
+\label{sec:orgde3c081}
+\(f(x, y, z) \righarrow\) экстремум \\
+\(g(x, y, z) = 0\) \\
+\[ F := f + \lambda g \]
+
+\begin{cases}
+\case F_x' = 0 \\
+\case F_y' = 0 \\
+\case F_z' = 0 \\
+\case g = 0 \\
+\end{cases}
+
+Решение: неизвестные: \(x, y, z, \lambda\) \\
+\(x_0, y_0, z_0, \lambda_0\) \\
+Нужно ответить на вопрос: \\
+\(d^2F > 0\) или \(< 0\) или бывает и такой и такой \\
+если мы подставмм в него \(dx, dy, dz\) \\
+связанные соотношением \(dg(x_0, y_0, z_0)\)
+
+\subsection{3661}
+\label{sec:org96855ae}
+\[ u = x^2 + y^2 + z^2 \]
+\[ \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} \]
+\[ a > b > c > 0 \]
+
+\begin{center}
+\includegraphics[scale=0.7]{/home/iliayar/Pictures/screenshots/2020-11-04-173648_235x126_scrot.png}
+\end{center}
+
+\[ F = x^2 + y ^2 + z^2 + \lambda(\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} - 1)\]
+
+\begin{cases}
+\case 2x(1 + \frac{\lambda}{a^2}) = 0 \\
+\case 2y(1 + \frac{\lambda}{b^2}) = 0 \\
+\case 2z(1 + \frac{\lambda}{c^2}) = 0 \\
+\case \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1
+\end{cases}
+
+\(x = \pm a, y = z = 0\ \lambda = -a^2\) \\
+\(y = \pm b, x = z = 0\ \lambda = -b^2\) \\
+\(z = \pm c, x = y = 0\ \lambda = -c^2\) \\
+
+Изучаем подозрительные точки: \\
+(ref:1) \[ d^2F = 0 \cdot dx^2 + (1 - \frac{a^2}{b^2})2dy^2 + (1 - \frac{a^2}{c^2})2dz^2 \]
+
+???, что \(d^2F \le 0\) но, возможно иметт место вырожденности
+
+\emph{Примеание:} \\
+\(> 0\) min, \(< 0\) max, \(> 0, < 0\) нет экстремума \\
+\(> 0\), вырожд. - недостаточно информации
+\end{document}

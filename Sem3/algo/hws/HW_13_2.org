@@ -1,0 +1,26 @@
+#+LATEX_CLASS: general
+#+TITLE: Задание 13.2
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+OPTIONS: toc:nil
+
+Найти общий префикс максимальной длины подстрок $s[i : n]$ и $s[j : n]$ \\
+
+Из первого задания знаем, что можем находить $hash(s[i:j])$ за $O(1)$. \\
+Так как функция $y(l) = hash(s[i : i + l]) == hash(s[j : j + l])$ убывает и
+начиная с какого-то места будет равна $0$, то будем искать
+максимальную длину префикса $l$ бин. поиском
+
+#+BEGIN_SRC python :export code
+  l = 0
+  r = n - max(i, j)
+
+  while r - l > 1:
+      m = (l + r) / 2
+      if hash(s[i : i + m]) == hash(s[j : j + m]):
+          l = m
+      else:
+          r = m
+#+END_SRC
+
+Время работы бин. поиска $O(\log{n})$

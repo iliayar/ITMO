@@ -1,0 +1,129 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 10
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Гомотопия путей
+#+ATTR_LATEX: :options [Гомотопия двух путей]
+#+begin_definition org
+$\gamma_0, \gamma_1: [a, b] \to O \subset \R^m$ --- непрерывны \\
+$\Gamma: \underset{t}{[a, b]}\times\underset{u}{[0, 1]}$ - непрерывное, такое что: \\
+$\Gamma(\cdot,0) = \gamma_0,\ \Gamma(\cdot,1) = \gamma_1$ \\
+- Гомотопия связанная, если $\gamma_0(a) = \gamma_1(a),\ \gamma_0(b) = \gamma_1(b)$, \\
+  $\forall u \in [0, 1]\quad \Gamma(a, u) = \gamma_0(a),\ \Gamma(b,u) = \gamma_0(b)$ 
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw[->-] (-1, -1) .. controls (0, 1) .. (1 , 1) node[above left] {$\gamma_0$};
+\draw[->-] (-1, -1) .. controls (0, -1) .. (1 , 1) node[below right] {$\gamma_1$};
+\draw[dashed, ->-] (-1, -1) .. controls (0.5, -0.5) and (0, 0.5) .. (1 , 1);
+\draw[dashed, ->-] (-1, -1) .. controls (0.5, 0.5) and (0, 1) .. (1 , 1);
+\draw[fill=black] (-1, -1) circle[radius=1pt] node[below] {$A$};
+\draw[fill=black] (1, 1) circle[radius=1pt] node[above right] {$B$};
+\end{tikzpicture}
+\end{center}
+#+end_export
+- Гомотопия петельная $\gamma_0(a) = \gamma_0(b), \gamma_1(a) = \gamma_1(b)$ \\
+  $\forall u \in [0, 1]\quad \Gamma(a, u) = \Gamma(b, u)$
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw[->-] (0, 0) to [bend left] (1, 1) to [bend left] (1, 0) to [bend left] (0, 0);
+\draw[->-] (-1, -1) to [bend left] (1, 3) to [bend left] (3, -1) to [bend left] (-1, -1);
+\draw[dashed, ->-] (-0.8, -0.8) to [bend left] (1, 2) to [bend left] (2.5, -0.5) to [bend left] (-0.8, -0.8);
+\draw[dashed, ->-] (-0.4, -0.4) to [bend left] (1, 1.5) to [bend left] (2.15, -0.1) to [bend left] (-0.4, -0.4);
+\draw[fill=black] (0, 0) circle[radius=1pt] node[below] {$\gamma_1$};
+\draw[fill=black] (-1, -1) circle[radius=1pt] node[left] {$\gamma_0$};
+\end{tikzpicture}
+\end{center}
+#+end_export
+#+end_definition
+#+begin_theorem org
+$V$ - локально потенциальное векторное поле в $O \subset \R^m$ \\
+$\gamma_0, \gamma_1$ --- связанно гомотопные пути \\
+Тогда $\int_{\gamma_0}\sun V_i dx_0 = \int_{\gamma_1}\sum V_i dx_i$
+#+end_theorem
+#+begin_remark org
+То же самое выполнено для петельных гомотопий
+#+end_remark
+#+begin_proof org
+$\gamma_u(t) := \Gamma(t, u),\ t \in [a, b]\ u\in[0, 1]$ \\
+$\Phi(u) = \int_{\gamma_u}\sum V_i dx_i$ \\
+Проверим: \Phi - локально постоянна \\
+$\forall u_0 \in [0, 1]\ \exists W(u_0): \forall u \in W(u_0) \cap [0, 1]\quad \Phi(u) = \Phi(u_0)$ \\
+$\Gamma$ - непрерывна на $[a, b] \times [0, 1]$ - компакт \Rightarrow \Gamma - равномерно непрерывна \\
+$\forall \delta > 0\ \exists \sigma > 0\ \forall t, t'\ |t - t'| < \sigma\ \forall u, u'\ |u - u'| < \sigma\quad|\Gamma(t, u) - \Gamma(t', u')| < \frac{\delta}{2}$ \\
+#+ATTR_LATEX: :options {blue}
+#+begin_colored org
+Лемма 3 $\gamma: [a, b] \to O$ \\
+Тогда $\exists \delta > 0$ со свойством \\
+Если $\tilde{\gamma}, \tilde{\tilde{\gamma}}$ --- близки к $\gamma$ \\
+т.е. $\forall t \in [a, b]$
+- $|\tilde{\gamma}(t) - \gamma(t)| < \delta$
+- $|\tilde{\tilde{\gamma}} - \gamma(t)| < \delta$
+то $\gamma, \tilde{\gamma}, \tilde{\tilde{\gamma}}$ --- $V$ - похожие \\
+#+end_colored
+Возьмем параметр $\delta$ из Леммы 3 для пути $\gamma_{u_0}$ \\
+Если $|u - u_0| < \sigma\quad|\Gamma(t, u) - \Gamma(t, u_0)| < \frac{\delta}{2}$, при $t \in [a, b]$, т.е. $\gamma_u$ и $\gamma_{u_0}$ --- похожи по Лемме 3 \\
+Построим кусочно гладкий путь $\tilde{\gamma}_{u_0}\ \frac{\delta}{4}$ - близкий к $\gamma_{u_0}$
+$\begin{colored}{gray}\forall t \in [a, b]\quad |\gamma_{u_0}(t) - \tilde{\gamma}_{u_0}| < \frac{\delta}{4}\end{colored}$ \\
+и кусочно гладкий путь $\tilde{\gamma}_u\ \frac{\delta}{4}$ - близкий к $\gamma_u$ \\
+Тогда $\tilde{\gamma}_{u_0}$ и $\tilde{\gamma}_u$ --- \delta - близкие к $\gamma_{u_0} \Rightarrow$ они $V$ - похожие \Rightarrow \\
+\Rightarrow $\int_{\gamma_u} \sum V_i dx_i \xlongequal{\text{def}} \int_{\tilde{\gamma}_u}\dots = \int_{\tilde{\gamma}_{u_0}} \dots \xlongequal{\text{def}} \int_{\gamma_{u_0}} \dots$ \\
+т.е. $\Phi(u) = \Phi(u_0)$, при $|u - u_0| < \delta$
+#+end_proof
+#+begin_definition org
+Область $O\subset\R^m$ - называется *односвязной* если в ней любой замкнутый путь гомотопен постоянному пути
+#+end_definition
+#+begin_remark org
+Выпуклая облать --- одновязна
+#+end_remark
+#+begin_remark org
+Гомеоморфный образ однозвязного множества односвязный \\
+$\Phi: O \to O'$ --- гомеоморфизм, $\gamma$ - петля в $O'$, $\Phi^{-1}$ --- петля в $O$ \\
+$\Gamma: [a, b] \to [0, 1] \to O$ - гомотопия $\Phi^{-1}(\gamma)$ и постоянного пути $\tilde{\gamma} \equiv A$ \\
+$\Phi \circ \Gamma$ --- гомотопия $\gamma$ с постоянным путем $\Phi(A)$
+#+end_remark
+#+begin_theorem org
+$O \subset \R^m$ --- односвязная область \\
+$V$ --- локально потенциальное векторное поле в $O$ \\
+Тогда $V$ --- потенциальное в $O$
+#+end_theorem
+#+begin_proof org
+#+ATTR_LATEX: :options {blue}
+#+begin_colored org
+/Теорема./ Эквивалентны:
+1. $V$ --- потенциальное
+2. \dots
+3. $\forall$ кусочно гладкой петли \gamma: $\int_\gamma \sum V_i dx_i = 0$
+#+end_colored
+$V$ - локально постояно, $\gamma_0$ --- кусочно гладкая петля, тогда $\gamma_0$
+гомотопна постоянному пути $\gamma_1$ \Rightarrow $\int_{\gamma_0} = \int_{\gamma_1} = \int_a^b\langle V(\gamma_1|t|), \underbrace{\gamma'_1(t)}_{\equiv 0} \rangle dt = 0 \Rightarrow V$ --- потенциально 
+#+end_proof
+#+begin_corollary org
+Теорема Пуанкаре верна в односвязной области \\
+#+ATTR_LATEX: :options {blue}
+#+begin_colored org
+Дифференциальный критерий:
+\[ \frac{\partial V_i}{\partial x_j} = \frac{\partial V_j}{\partial x_j} \addtag \]
+Лемма Пуанкаре: (1) \Rightarrow $V$ --- локально потенциально
+#+end_colored
+#+end_corollary
+#+ATTR_LATEX: :options [о веревочке]
+#+begin_theorem org
+- $O  = \R^2 \textbackslash \{(0, 0)\}$
+- $\gamma: [0, 2\pi] \to O$ \\
+  $t \mapsto (\cos t, \sin t)$
+Тогда эта петля не стягиваема
+#+end_theorem
+#+begin_proof org
+$V(x, y) = (\frac{-y}{x^2 + y^2}, \frac{x}{x^2 + y^2})$ --- векторное поле в $\R^2$ \\
+
+Проверим что $\frac{\partial V_1}{\partial y} = \frac{\partial V_2}{\partial x}$: \\
+\[ \frac{\partial V_1}{\partial y} = \frac{-(x^2 + y^2) + 2y^2}{(x^2 + y^2)^2},\quad\frac{\partial V_2}{\partial x} = \frac{(x^2 + y^2) - 2x^2}{(x^2 + y^2)^2} \addtag \]
+Равенство частных производных выполняется если $(x, y) \neq (0, 0)$ \Rightarrow $V$ --- локально потенциально
+
+При этом 
+\[ \int_\gamma \sum V_i dx_i = \int_0^{2\pi} \left(\frac{-\sin t}{\cos^2t+\sin^2t}\cdot(-\sin t) + \frac{\cos t}{\cos^2t + \sin^2t}\cdot\cos t\right) dt = \int_0^{2\pi} 1 dt = 2\pi\addtag \]
+(3) \Rightarrow петля не стягиваема(Если бы была стягиваема, tо интеграл изначально должен был быть равен 0, т.к. интеграл при гомотопиях не меняется), а поле $V$ --- не потенциально
+#+end_proof
+

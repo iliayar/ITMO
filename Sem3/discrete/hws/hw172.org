@@ -1,0 +1,68 @@
+#+LATEX_CLASS: general
+#+TITLE: 172-187
+#+AUTHOR: Ilya Yaroshevskiy
+
+* 172
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+$M = \langle X, I \rangle$, 
+$$X = \left\{{\begin{pmatrix} 1 \\ 0 \end{pmatrix}}
+, \begin{pmatrix} 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 1 \\ 1 \end{pmatrix}
+, \begin{pmatrix} 2 \\ 2 \end{pmatrix}\right\}$$
+Независимое множество - линейно независимое  \\
+Базы: $$
+\left\{\begin{pmatrix} 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \end{pmatrix}\right\}, 
+\left\{\begin{pmatrix} 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 1 \\ 1 \end{pmatrix}\right\},
+\left\{\begin{pmatrix} 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix}\right\},
+\left\{\begin{pmatrix} 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 1 \\ 1 \end{pmatrix}\right\},
+\left\{\begin{pmatrix} 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix}\right\}
+$$
+Цикл: $\left\{\begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix}\right\}$
+* 174
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+$M = \langle X, I \rangle$ \\
+$M / x = \langle X\textbackslash x, \underbrace{\{ A \textbackslash x \mid A \in I,\ x \in A \}}_{I_1} \rangle$, $\{x\} \in I$ \\
+Пользуемся тем, что $\forall A : x \not\in A$, выполняется $A\cup x \in I \Leftrightarrow A \in I_1$
+1. $\{x\} \in I \Rightarrow \{x\} \textbackslash x = \emptyset \in I_1$
+2. $A \in I_1,\ B \subset A \Rightarrow A \cup x \in I,\ B\cup x \subset A\cup x \Rightarrow B\cup x \in I \Rightarrow B \in I_1$
+3. $A, B \in I_1, |A| > |B| \Rightarrow A\cup x, B\cup x \in I,\ |A\cup x| > |B\cup x| \Rightarrow \\ \Rightarrow \exists y \in (A\cup x) \textbackslash (B\cup x) : B\cup \{x, y\} \in I \Rightarrow \exists y \in A \textbackslash B : B \cup y \in I_1$
+* 175
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+$M_1 = \langle X, I_1 \rangle$, $M_2 = \langle Y, I_2 \rangle$, $X \cap Y = \emptyset$ \\
+$M = \langle X \cup Y, \underbrace{\{A \cup B \mid A \in I_1,\ B \in I_2\}}_{I} \rangle$ \\
+Пользуемся тем что, если $A \in I$, то $\exists X_1 \in I_1, Y_1 \in I_2 : X_1 \cup Y_1 = A$ \\
+и если $X_1 \in I_1,\ Y_1 \in I_2$, то $X_1 \cup Y_1 \in I$ \\
+1. $\emptyset \in I_1,\ \emptyset \in I_2 \Rightarrow \emptyset \cup \emptyset = \emptyset \in I$
+2. $A \in I,\ B \subset A \Rightarrow \exists X_1 \in I_1, Y_1 \in I_2 : X_1 \cup Y_2 = A$ \\
+   $\exists X_2 \subseteq X_1,\ Y_2 \subseteq Y_1 : X_2 \cup Y_2 = B \Rightarrow X_2 \in I_1,\ Y_2 \in I_2 \Rightarrow B \in I$
+3. $A, B \in I,\ |A| > |B| \Rightarrow \exists X_1, X_2 \in I_1,\ Y_1,Y_2 \in I_2: A = X_1 \cup Y_1,\ B = X_2 \cup Y_2$
+   1. $|X_1| > |X_2|$:
+      $\Rightarrow \exists x \in X_1 \textbackslash X_2: X_2 \cup x \in I_1 \Rightarrow (X_2 \cup x) \cup Y_2 = B \cup x \in I$
+   2. $|Y_1| > |Y_2|$ - аналогично
+   
+* 180
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+$M = \langle X, I \rangle$ \\
+$M|_k = \langle X, \underbrace{\{A \mid A \in I, |A| \le k\}}_{I_1} \rangle$ \\
+Пользуемся тем, что $|A| \le k,\ A \in I \Leftrightarrow A \in I_1$
+1. $|\emptyset| = 0 \le k \Rightarrow \emptyset \in I_1$
+2. $A \in I_1,\ B \subset A \Rightarrow A \in I \Rightarrow B \in I, |B| < |A| \le k \Rightarrow B \in I_1$
+3. $A, B \in I_1,\ |A| > |B| \Rightarrow A, B \in I \Rightarrow \exists x \in A \textbackslash B : B\cup x \in I,\ |B\cup x| \le |A| \le k \Rightarrow B\cup x \in I_1$
+* 192
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+1) $\langle A \rangle \subseteq \langle \langle A \rangle \rangle$
+2) $x \in \langle \langle A \rangle \rangle \Rightarrow r(\langle A \rangle \cup x) = r(\langle A \rangle) = r(A)$ \\
+   Заметим, что $A\cup x \subseteq \langle A \rangle \cup x$ \\
+   Тогда $r(A \cup x ) \le r(\langle A \rangle \cup x) = r(A)$ \\
+   $r(A \cup x) \le r(A) \Rightarrow r(A) = r(A \cup x) \Rightarrow x \in \langle A \rangle$ \\
+   Так как это верно для всех $x$ из $\langle \langle A \rangle \rangle$, то $\langle \langle A \rangle \rangle \subseteq \langle A \rangle$
+1, 2 $\Rightarrow \langle \langle A \rangle \rangle = \langle A \rangle$

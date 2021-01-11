@@ -1,0 +1,26 @@
+#+LATEX_CLASS: general
+#+TITLE: Схрдимотсь полследовательности функций
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Сходимость посл. фунцкий
+$f_n \rightarrow f$ на $E \Leftrightarrow \rho(f_n, f) \rightarrow 0$  \\
+$\rho(f_n, f) = \sup_{x \in E}|f_n(x) - f(x)|$ \\ 
+/Пример/ *2749* \\
+$f_n(x) = \frac{1}{x + n}\ E=(0, +\infty)$ \\
+Есть ли равномерную сходимость \\
+/Напоминание/: Равномерная сходимость $F_n \rightarrow f \Rightarrow \forall x \in E f_n(x) \rightarrow f(x)$
+1. Ищем $f$ \\
+фиксируем x: $\lim\limits_{n \to +\infty} f_n(x) = \lim\limits_{n \to +\infty} \frac{1}{x + n} = 0$, т.е $f(x) = 0$ \\
+2. Проверяем равномерную сходимость \\
+$\rho(f_n, f) = \sup\limits_{x \in (0, +\infty)}\left|\frac{1}{x + n} - 0\right| = \sup\limits_{x\in(0, +\infty)}\frac{1}{x + n} = \frac{1}{n} \xrightarrow[n \to +\infty]{} 0$
+Равномерно сходится
+
+* Занятие
+*2756а* \\
+$f_n(x) = arctg x \xrightarrow[n \to +\infty]{} \frac{\pi}{2}$ \\
+$\sup\limits_{x \in (0, +\infty)} \left|f_n(x) - \frac{\pi}{2}\right| = sup \left| arcrg x - \frac{\pi}{2}\right| \ge \lim\limits_{x \to 0} \left| arctg(nx) - \frac{\pi}{2} = \frac{\pi}{2} \right|$ \not\to 0\\
+$\ge \left| arctg(nx) - \frac{\pi}{2} \right|\Big|_{x = \frac{1}{n}} = \frac{\pi}{4} \not\to 0$ \\
+*2756б* \\
+$f_n(x) = x arctg(nx) \to \frac{n}{2}x$ \\
+$\sup\limits_{n \in (0, +\infty)}\left|x(arctg(nx) - \frac{\pi}{4})\right|$
+

@@ -1,0 +1,22 @@
+#+LATEX_CLASS: general
+#+TITLE: Functional sequences
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Признаки
+\[ \sum a_n(x)b_n(x) \]
+** Дирихле
+1) Частичные суммы ряда $\sum a_n$ равномерно органичены \\
+   $\exists C_a\ \forall N\ \forall x \in E\ |\sum_{k=1}^{N}a_k(x)| \le C_a$
+2) Фиксируем $x$ b_n(x) монотонна по $n$ \\
+   b_n(x) \rightarrow 0 
+1), 2) $\Rightarrow$ ряд равномерно сходится
+
+** Абеля
+1) $\sum a_n(x)$ равномерно сходится
+2) $b_n(x)$ монотонна по $n$ \\
+   $b_n(x)$ равномерно ограничена \\
+   $\exists C_b\ \forall n\ \forall x\ |b_n(x)| < C_b$
+** Вейерштрасса
+\[ \sum u_n(x)\ x \in E \]
+1) $\forall x \in E\ |u_n(x)\le C_n|$
+2) $\sum C_n$ - сходится

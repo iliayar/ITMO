@@ -1,0 +1,727 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sat Oct 10 19:48:20 2020
+;; Desktop file format version 208
+;; Emacs version 27.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (24449 58836 417708 813000) (desktop . "208") "iliayar@ArchLaptop" nil nil ((((minibuffer . t) (undecorated) (override-redirect) (font . "-CTDB-Fira Code-normal-normal-normal-*-13-*-*-*-d-0-iso10646-1") (font-parameter . "-CTDB-Fira Code-normal-normal-normal-*-13-*-*-*-d-0-iso10646-1") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#F8F8F2") (background-color . "#272822") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-special-glyphs) (scroll-bar-foreground . "#d5c4a1") (scroll-bar-background . "#d5c4a1") (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 65) (tool-bar-lines . 0) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha) (no-focus-on-map) (no-accept-focus) (fullscreen) (visibility . t) (skip-taskbar) (z-group) (environment "OLDPWD=/home/iliayar" "MAIL=/var/spool/mail/iliayar" "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus" "PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin" "BROWSER=brave" "XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop" "XDG_RUNTIME_DIR=/run/user/1000" "XDG_SESSION_ID=2" "XDG_VTNR=1" "SHLVL=0" "DISPLAY=:0" "PAM_KWALLET5_LOGIN=/run/user/1000/kwallet5.socket" "USER=iliayar" "XDG_SESSION_CLASS=user" "XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0" "XDG_CURRENT_DESKTOP=" "LANG=en_US.UTF-8" "HOME=/home/iliayar" "MOTD_SHOWN=pam" "XAUTHORITY=/home/iliayar/.Xauthority" "_=/usr/bin/emacsclient" "XDG_SESSION_TYPE=x11" "XDG_SESSION_DESKTOP=" "LOGNAME=iliayar" "PWD=/home/iliayar" "XDG_SEAT=seat0" "GTK_MODULES=canberra-gtk-module" "DESKTOP_SESSION=/usr/share/xsessions/xmonad" "GRADLE_HOME=/usr/share/java/gradle" "XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session1" "SHELL=/bin/zsh") (display-type . color) (background-mode . dark) (cursor-color . "#F92660") (last-focus-update . t) (company-box-window . "Unprintable entity") (tabs (current-tab (name . "local.in") (explicit-name))) (frameset--id . "9530-38CD-B0D3-0062") (frameset--mini t) (width . 238) (modeline . t) (unsplittable) (left . 0) (top . 20) (icon-name) (display . ":0") (explicit-name)) ((min-height . 12) (min-width . 57) (min-height-ignore . 9) (min-width-ignore . 11) (min-height-safe . 3) (min-width-safe . 6) (min-pixel-height . 192) (min-pixel-width . 456) (min-pixel-height-ignore . 144) (min-pixel-width-ignore . 88) (min-pixel-height-safe . 48) (min-pixel-width-safe . 48)) hc (pixel-width . 1920) (pixel-height . 1025) (total-width . 240) (total-height . 64) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 296) (pixel-height . 1025) (total-width . 37) (total-height . 64) (normal-height . 1.0) (normal-width . 0.15416666666666667) (parameters (window-side . left) (window-slot . 0)) (buffer " *Treemacs-Scoped-Buffer-#<frame lab1.tex 0x55db33d4d090>*" (selected) (hscroll . 0) (fringes 3 0 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated . t) (point . 174) (start . 1)) (prev-buffers (" *Treemacs-Scoped-Buffer-#<frame lab1.tex 0x55db33d4d090>*" 1 131))) (vc (last . t) (pixel-width . 1624) (pixel-height . 1025) (total-width . 203) (total-height . 64) (normal-height . 1.0) (normal-width . 0.8458333333333333) (combination-limit) (hc (pixel-width . 1624) (pixel-height . 883) (total-width . 203) (total-height . 55) (normal-height . 0.8595121951219515) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 1088) (pixel-height . 883) (total-width . 136) (total-height . 55) (normal-height . 1.0) (normal-width . 0.6724137931034481) (buffer "template.cpp" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 1) (start . 1)) (prev-buffers ("sol.cpp" 1 196) ("Makefile" 1 1) ("local.in" 1 29) ("README.org<ITMO>" 1 129) ("lab1.tex" 1 1) ("*dashboard*" 1 1))) (vc (last . t) (pixel-width . 536) (pixel-height . 883) (total-width . 67) (total-height . 55) (normal-height . 1.0) (normal-width . 0.32758620689655193) (combination-limit) (leaf (pixel-width . 536) (pixel-height . 434) (total-width . 67) (total-height . 27) (normal-height . 0.5005662514156285) (normal-width . 1.0) (buffer "local.in" (selected) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 3) (start . 1)) (prev-buffers ("local.in" 1 3) ("local.out" 1 1) ("sol.cpp" 286 396))) (leaf (last . t) (pixel-width . 536) (pixel-height . 449) (total-width . 67) (total-height . 28) (normal-height . 0.49943374858437145) (normal-width . 1.0) (buffer "local.out" (selected) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 1) (start . 1)) (prev-buffers ("local.out" 1 1))))) (leaf (last . t) (pixel-width . 1624) (pixel-height . 142) (total-width . 203) (total-height . 9) (normal-height . 0.14048780487804846) (normal-width . 1.0) (buffer "*compilation*" (selected) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 240) (start . 131)) (prev-buffers ("*compilation*" 131 240))))) (((minibuffer . t) (undecorated) (override-redirect) (font . "-CTDB-Fira Code-normal-normal-normal-*-13-*-*-*-d-0-iso10646-1") (font-parameter . "-CTDB-Fira Code-normal-normal-normal-*-13-*-*-*-d-0-iso10646-1") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#F8F8F2") (background-color . "#272822") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-special-glyphs) (scroll-bar-foreground . "#d5c4a1") (scroll-bar-background . "#d5c4a1") (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 60) (tool-bar-lines . 0) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha) (no-focus-on-map) (no-accept-focus) (fullscreen) (visibility . icon) (skip-taskbar) (z-group) (environment "OLDPWD=/home/iliayar" "MAIL=/var/spool/mail/iliayar" "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus" "PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin" "BROWSER=brave" "XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop" "XDG_RUNTIME_DIR=/run/user/1000" "XDG_SESSION_ID=2" "XDG_VTNR=1" "SHLVL=0" "DISPLAY=:0" "PAM_KWALLET5_LOGIN=/run/user/1000/kwallet5.socket" "USER=iliayar" "XDG_SESSION_CLASS=user" "XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0" "XDG_CURRENT_DESKTOP=" "LANG=en_US.UTF-8" "HOME=/home/iliayar" "MOTD_SHOWN=pam" "XAUTHORITY=/home/iliayar/.Xauthority" "_=/usr/bin/emacsclient" "XDG_SESSION_TYPE=x11" "XDG_SESSION_DESKTOP=" "LOGNAME=iliayar" "PWD=/home/iliayar" "XDG_SEAT=seat0" "GTK_MODULES=canberra-gtk-module" "DESKTOP_SESSION=/usr/share/xsessions/xmonad" "GRADLE_HOME=/usr/share/java/gradle" "XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session1" "SHELL=/bin/zsh") (display-type . color) (background-mode . dark) (cursor-color . "#F92660") (last-focus-update) (frameset--id . "032D-E9EA-7991-E7F2") (frameset--mini t . t) (width . 213) (modeline . t) (unsplittable) (icon-name) (display . ":0") (explicit-name . t)) ((min-height . 4) (min-width . 47) (min-height-ignore . 3) (min-width-ignore . 7) (min-height-safe . 1) (min-width-safe . 4) (min-pixel-height . 64) (min-pixel-width . 376) (min-pixel-height-ignore . 48) (min-pixel-width-ignore . 56) (min-pixel-height-safe . 16) (min-pixel-width-safe . 32)) hc (pixel-width . 1720) (pixel-height . 944) (total-width . 215) (total-height . 59) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 296) (pixel-height . 944) (total-width . 37) (total-height . 59) (normal-height . 1.0) (normal-width . 0.1697674418604651) (parameters (window-side . left) (window-slot . 0)) (buffer " *Treemacs-Scoped-Buffer-#<frame emacs-notes 0x55db339ad980>*" (selected) (hscroll . 0) (fringes 3 0 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated . t) (point . 97) (start . 1)) (prev-buffers (" *Treemacs-Scoped-Buffer-#<frame emacs-notes 0x55db339ad980>*" 1 97))) (leaf (last . t) (pixel-width . 1424) (pixel-height . 944) (total-width . 178) (total-height . 59) (normal-height . 1.0) (normal-width . 0.8302325581395349) (buffer "Study.org" (selected) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 4551) (start . 1)) (prev-buffers ("Notes.org" 1 5593) ("Study.org" 1 537) ("*dashboard*" 1 1)))) (((minibuffer . t) (display-type . mono) (background-mode . dark) (cursor-color . "white") (vertical-scroll-bars) (tool-bar-lines . 0) (menu-bar-lines . 0) (foreground-color . "unspecified-fg") (background-color . "unspecified-bg") (font . "tty") (height . 11) (width . 10) (modeline . t) (unsplittable) (tab-bar-lines . 0) (frameset--id . "DA96-032B-8B9A-42E7") (frameset--mini t)) ((min-height . 4) (min-width . 10) (min-height-ignore . 2) (min-width-ignore . 2) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 4) (min-pixel-width . 10) (min-pixel-height-ignore . 2) (min-pixel-width-ignore . 2) (min-pixel-height-safe . 1) (min-pixel-width-safe . 2)) leaf (pixel-width . 10) (pixel-height . 10) (total-width . 10) (total-height . 10) (normal-height . 1.0) (normal-width . 1.0) (buffer "*dashboard*" (selected) (hscroll . 0) (fringes 0 0 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 1) (start . 1)) (prev-buffers ("*scratch*" 1 146))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name "/home/iliayar/Documents/alloc-iliayar/TAGS")
+(setq tags-table-list '("/home/iliayar/Documents/alloc-iliayar/TAGS"))
+(setq search-ring nil)
+(setq regexp-search-ring '(#("scheduler" 0 9 (isearch-case-fold-search t)) #("wakeup_re" 0 9 (isearch-case-fold-search t)) #("wakeup_rec" 0 10 (isearch-case-fold-search t)) #("printf" 0 6 (isearch-case-fold-search t)) #("p->childs" 0 9 (isearch-case-fold-search t)) #("wakeup_rev" 0 10 (isearch-case-fold-search t)) #("allocproc" 0 9 (isearch-case-fold-search t)) #("freeproc" 0 8 (isearch-case-fold-search t)) #("\\_<iunlock\\_>" 0 13 (isearch-case-fold-search t)) #("release" 0 7 (isearch-case-fold-search t)) #("open" 0 4 (isearch-case-fold-search t)) #("print" 0 5 (isearch-case-fold-search t)) #("kstack_lock" 0 11 (isearch-case-fold-search t)) #("pr" 0 2 (isearch-case-fold-search t)) #("file.c" 0 6 (isearch-case-fold-search t)) #("maxpro" 0 6 (isearch-case-fold-search t))))
+(setq register-alist '((48 . "     Makefile\n     local.in\n     local.out\n      	manage.sh\n      	precompile.py\n     sol.cpp\n     task\n     task.cpp\n     template.cpp\n")))
+(setq file-name-history '(#("/home/iliayar/Documents/ITMO/Sem1/algo/labs/" 0 44 (ivy-index 0)) #("/home/iliayar/Documents/ITMO/Sem1/algo/labs/local.in" 0 52 (ivy-index 0)) #("/home/iliayar/Documents/ITMO/Sem1/algo/labs/local.out" 0 53 (ivy-index 1)) #("/home/iliayar/Documents/ITMO/Sem1/algo/labs" 0 43 (ivy-index 0)) #("/home/iliayar/Documents/ITMO/Sem1/algo" 0 38 (ivy-index 0)) #("/home/iliayar/Documents/ITMO/Sem1/diffur/" 0 41 (ivy-index 2)) #("/home/iliayar/Documents/ITMO/README.org" 0 39 (ivy-index 0)) #("/home/iliayar/Documents/kcs-2020/src/main/kotlin/Main.kt" 0 56 (ivy-index 2)) #("/home/iliayar/Documents/alloc-iliayar/my.gdbinit" 0 48 (ivy-index 0)) "/home/iliayar/.xmonad/xmonad.hs" #("/home/iliayar/Documents/MainSite/public/old.html" 0 48 (ivy-index 0)) #("/home/iliayar/Documents/MainSite/public/archive.org" 0 51 (ivy-index 0)) "/home/iliayar/Dropbox/org/Notes.org" "~/Dropbox/org/Notes.org" "~/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgMarkup.kt" "~/Documents/kotlin-org-mode/src/test/kotlin/orgmode/OrgParserTest.kt" "~/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgBase.kt" "~/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgList.kt" "~/Documents/kotlin-org-mode/README.org" "~/Documents/kotlin-org-mode/src/main/kotlin/orgmode/App.kt" "~/Documents/kotlin-org-mode/README.md" "~/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgSection.kt" "~/Documents/alloc-iliayar/kernel/trampoline.S" "~/Documents/alloc-iliayar/kernel/proc.c" "~/Documents/alloc-iliayar/kernel/main.c" "~/Dropbox/org/Study.org" "~/Documents/alloc-iliayar/kernel/proc.h" "~/Documents/alloc-iliayar/kernel/file.c" "~/Documents/alloc-iliayar/kernel/buddy.c" "~/Documents/dotfiles/home/.xmonad/xmonad.hs" "~/.xmonad/xmonad.hs" "~/.emacs.d/elpa/latex-pretty-symbols-20151112.1044/latex-pretty-symbols-autoloads.el" "~/Documents/dotfiles/home/.emacs.d/init.el"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/Sem1/algo/labs/template.cpp"
+  "template.cpp"
+  'c++-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 58805 95856 118000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/Sem1/algo/labs/sol.cpp"
+  "sol.cpp"
+  'c++-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  196
+  '(196 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 58518 909416 7000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (196 196 196 196 196 196 196 196 196 196 196 196 196 196 196 196))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/Sem1/algo/labs/local.in"
+  "local.in"
+  'fundamental-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  3
+  '(29 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 58805 95856 245000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (1))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/Sem1/algo/labs/local.out"
+  "local.out"
+  'fundamental-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 58805 95856 333000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/Sem1/algo/labs/Makefile"
+  "Makefile"
+  'makefile-gmake-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode . t) (buffer-display-time 24449 58002 8516 596000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/README.org"
+  "README.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  129
+  '(151 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24449 57418 349814 311000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring (109 109 109 109 79 35))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/ITMO/Sem1/safety/lab1.tex"
+  "lab1.tex"
+  'latex-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24449 56799 498075 704000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/proc.c"
+  "proc.c"
+  'c-mode
+  '(abbrev-mode eldoc-mode company-mode yas-minor-mode lsp-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode flycheck-mode general-override-mode company-box-mode rainbow-delimiters-mode lsp-modeline-code-actions-mode lsp-modeline-diagnostics-mode lsp-diagnostics-mode lsp-completion-mode)
+  10769
+  '(10767 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 53322 456671 385000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (8513 13081 13081 13164 10187 10767 11031 13164 14054 14054 5252 5252 5251 13164 13164 13164))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/spinlock.c"
+  "spinlock.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  371
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 51774 279050 584000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/proc.h"
+  "proc.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  2578
+  '(50 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48362 894635 574000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (50 50 2578 49 49 49 49 49 49 49 2578 2586 49 49 49 49))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/uart.c"
+  "uart.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  156
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48287 599120 522000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/exec.c"
+  "exec.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  103
+  '(103 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48259 755421 688000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (103 103 103 155))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/syscall.c"
+  "syscall.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  103
+  '(159 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48258 381556 336000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (2111 2829 2816 2111 2829 2816 2111 2829 2816 2111 1 1))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/main.c"
+  "main.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  126
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48212 232708 386000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/printf.c"
+  "printf.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  74
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48207 177081 822000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/start.c"
+  "start.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48199 373864 358000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/syscall.h"
+  "syscall.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  68
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48180 509207 838000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/defs.h"
+  "defs.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  6238
+  '(4858 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48036 692282 978000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (4858 4858 4858 4858 4858 4858 591 591 591 6182 3479 3479 3479 3479 3479 3479))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/types.h"
+  "types.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  121
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48028 449038 159000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/console.d"
+  "console.d"
+  'fundamental-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  38
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 48012 168158 992000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/MainSite/public/archive.org"
+  "archive.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  98
+  '(98 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24449 46219 651426 93000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring (98 231 202 202 202 202 202 266 265 265 19 19 372 324 16 16))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/MainSite/public/archive.html"
+  "archive.html"
+  'css-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  7621
+  '(238 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 46219 651426 410000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (238 2))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kcs-2020/src/main/kotlin/Main.kt"
+  "Main.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  671
+  '(671 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 45685 455714 802000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (678 678 678 678 1 1154 1154 1142 1145 1127 1335 467 467 1335 88 88))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kcs-2020/build/index.html"
+  "index.html"
+  'mhtml-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 45235 762754 158000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/README.md"
+  "README.md"
+  'markdown-mode
+  '(eldoc-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  37
+  '(37 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-display-time 24449 43195 197465 445000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (37 37))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/vm.c"
+  "vm.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  3297
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 41947 438522 699000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/sysfile.c"
+  "sysfile.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  5387
+  '(5435 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 41736 349451 471000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (5435 5435 5144 5144 1348 1348 343 343 1008 923 899 899 1008 5626 5624 5624))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Dropbox/org/Study.org"
+  "Study.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  4551
+  '(537 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24449 3659 607145 750000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring (537 2781 2781 535))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/memlayout.h"
+  "memlayout.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1674
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24449 40087 600827 120000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/param.h"
+  "param.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  23
+  '(9 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 40085 869171 122000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/fs.c"
+  "fs.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  8056
+  '(9121 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 39543 496747 330000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (9135))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/file.c"
+  "file.c"
+  'c-mode
+  '(abbrev-mode eldoc-mode company-mode yas-minor-mode lsp-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode flycheck-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  295
+  '(295 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 39499 158557 831000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (1308 1308 1308 1308 1124 1124 918 571 571 571 317 317 317 317 1799 918))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/buddy.c"
+  "buddy.c"
+  'c-mode
+  '(abbrev-mode eldoc-mode company-mode yas-minor-mode lsp-signature-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode flycheck-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  6272
+  '(3661 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 38716 767543 955000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (3659 3779 7478 8096 9580 9682 9682 9682 9580 8096 8096 8096 7478 7125 4064 4064))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/list.c"
+  "list.c"
+  'c-mode
+  '(abbrev-mode eldoc-mode company-mode yas-minor-mode lsp-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode flycheck-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  784
+  '(826 nil)
+  nil
+  nil
+  '((buffer-display-time 24449 37676 483878 368000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (826 286 286 286 286 286 286 286 286 286 286 286 286))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/imagestorebot/Bot/src/Lib.hs"
+  "Lib.hs"
+  'haskell-mode
+  '(eldoc-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  4991
+  '(9183 nil)
+  nil
+  nil
+  '((tab-width . 8) (indent-tabs-mode) (buffer-display-time 24449 4645 414654 681000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (8484 8499 5643 558 418 5628 9107 5643 5643 9057 5409))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/user/usys.S"
+  "usys.S"
+  'asm-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  517
+  '(517 nil)
+  nil
+  nil
+  '((buffer-display-time 24448 64282 511907 275000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/user/alloctest.c"
+  "alloctest.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  563
+  '(563 nil)
+  nil
+  nil
+  '((buffer-display-time 24448 64271 858054 56000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (563 563))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/.gdbinit"
+  ".gdbinit"
+  'gdb-script-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  339
+  '(294 nil)
+  nil
+  nil
+  '((buffer-display-time 24448 62463 818624 568000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (205 144))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/kalloc.c"
+  "kalloc.c"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  439
+  '(439 nil)
+  nil
+  nil
+  '((buffer-display-time 24448 55859 559891 162000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (439 439 439 439 439))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/file.h"
+  "file.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  8
+  '(15 nil)
+  nil
+  nil
+  '((buffer-display-time 24448 52646 505725 349000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (15))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/dotfiles/home/.emacs.d/config.org"
+  "config.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  12857
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24448 47518 687065 298000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/dotfiles/home/.config/xmobar/xmobar.hs"
+  "xmobar.hs"
+  'haskell-mode
+  '(eldoc-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  2941
+  '(2912 nil)
+  nil
+  nil
+  '((tab-width . 8) (indent-tabs-mode) (buffer-display-time 24448 37746 719950 175000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (15 15))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/buddy.o"
+  "buddy.o"
+  'fundamental-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24448 35272 667374 316000) (buffer-file-coding-system . no-conversion) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/bio.o"
+  "bio.o"
+  'fundamental-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  143
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24448 34678 158955 741000) (buffer-file-coding-system . no-conversion) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/spinlock.h"
+  "spinlock.h"
+  'c-mode
+  '(abbrev-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24448 24800 777028 938000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Dropbox/org/Notes.org"
+  "Notes.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  5593
+  '(5595 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24448 726 210459 928000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring (3484 1))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/imagestorebot/Bot/src/Storage.hs"
+  "Storage.hs"
+  'haskell-mode
+  '(eldoc-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1830
+  '(1830 nil)
+  nil
+  nil
+  '((tab-width . 8) (indent-tabs-mode) (buffer-display-time 24447 30062 417109 412000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (1766 298 298 1766 1766 1752 105 1838 1838 1953))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/README.md"
+  "README.md"
+  'markdown-mode
+  '(eldoc-mode company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  137
+  '(137 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 27394 902289 923000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (1 262))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/parser/RegexOrgParser.kt"
+  "RegexOrgParser.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  13728
+  '(13728 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 27380 217538 279000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (5118 5118 9381 5118 9381 5118 9381 5118 9381 5118 9381 5118 9381 5118 9381 5118))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/README.org"
+  "README.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  113
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 27098 241260 404000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/App.kt"
+  "App.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  724
+  '(772 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 26856 201362 623000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (465 470 724 724 772 1))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgMarkup.kt"
+  "OrgMarkup.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1081
+  '(4111 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 26617 415084 86000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (1 1))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgSection.kt"
+  "OrgSection.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  5004
+  '(4902 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 26535 910472 552000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (4902 464 464))))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/OrgBase.kt"
+  "OrgBase.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1747
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 26396 880611 229000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/parser/Parser.kt"
+  "Parser.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  18
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 25744 211221 578000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/kotlin-org-mode/src/main/kotlin/orgmode/Exception.kt"
+  "Exception.kt"
+  'kotlin-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-display-time 24447 25734 582110 518000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/MainSite/public/Edved.html"
+  "Edved.html"
+  'mhtml-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode auto-revert-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode hl-todo-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode rainbow-delimiters-mode)
+  49
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24447 14209 97603 214000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Dropbox/org/Test.org"
+  "Test.org"
+  'org-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode org-indent-mode company-box-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time) (buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/iliayar/Documents/alloc-iliayar/kernel/printf.o"
+  "printf.o"
+  'fundamental-mode
+  '(company-mode yas-minor-mode ivy-mode which-key-mode projectile-mode magit-file-mode undo-tree-mode evil-snipe-local-mode evil-mc-mode smartparens-mode editorconfig-mode general-override-mode company-box-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time) (buffer-file-coding-system . no-conversion) (overwrite-mode))
+  '((mark-ring nil)))
+

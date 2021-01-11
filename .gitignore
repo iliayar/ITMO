@@ -22,6 +22,7 @@
 *.aux
 *.xdv
 *.el
+_minted*
 
 
 # Idea files
@@ -42,7 +43,13 @@ eclimd.log
 *.xmi
 bin/
 .settings
+/**/#*#
 
 # build
 target
 /#Navigation.org#
+
+# Temporaly
+/**/.ipynb_checkpoints
+/**/ltximg
+/**/obipy-resources

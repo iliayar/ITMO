@@ -1,0 +1,143 @@
+% Created 2020-12-29 Tue 19:05
+% Intended LaTeX compiler: pdflatex
+\documentclass{article}
+       \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian, english]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{grffile}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+       
+       \usepackage{geometry}
+       \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Матан КР 1}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Матан КР 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.3)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Пределы}
+\label{sec:org0e850b7}
+\(\displaystyle{\lim_{(x, y) \to (a, b)}f(x, y)} = L\), \(\forall U(L)\ \exists w((a, b))\ \forall x \in w\ f(x) \in U(L)\) \\
+\begin{itemize}
+\item Повторный \(\displaystyle{\lim_{y \to b}\lim_{x \to a}f \overset{?}{=} L}\)
+\item По направлению \(\displaystyle{\lim_{r \to 0}f(a + r\cos\varphi, b + r\sin\varphi)}\)
+\item Вдоль кривой \(\displaystyle{\lim_{t \to t_0}}f(x(t), y(t))\)
+\item Двойной \(\displaystyle{{\lim_\substack{x \to a \\ y \to b}}}f(x,y)\), \(\forall U(L)\ \exists U(a), V(b)\ \forall x \in \dot{U}(a)\ y \in \dot{V}(b)\ f(x, y) \in U(L)\)
+\end{itemize}
+\section{Дифференцирование}
+\label{sec:orgfb36047}
+\(df(x, y) = f'_xdx + f'_ydy\) \\
+\(u(x, y) = f(g(x, y), h(x, y))\) \\
+\(du = f'_Idg + f'_{II}dh\)
+\section{Тейлор}
+\label{sec:org827773c}
+\(f(a + h) = f(a) + df(a, h) + \frac{d^2f(a, g)}{2!} + \dots + \frac{d^nf(a, h)}{n!} + d^{n + 1}f(a + \Theta h, h) * \frac{1}{(n + 1)!}\) \\
+\textbf{Че такое \(h\)?} Вместо \(dx\) ставим \(h_1\), вместо \(dy\) \(h_2\)
+\section{Замена переменных}
+\label{sec:orgf4414ba}
+\(z'_x = xz'_y\) \\
+\(x = x(u ,v)\) \\
+\(y = y(u ,v)\) \\
+Пересчитать \\
+\(\tilde{z}(u, v) = z(x(u ,v), y(u, v))\) \\
+\(\tilde{z}'_u = z'_x x'_u + z'_y y'_u\) \\
+\(\tilde{z}'_v = z'_x x'_v + z'_y y'_v\) \\
+Из этой системы находим \(z'_x,\ z'_y\) \\
+Обратная задача: \\
+Можно свести к предыдущей, выразив \(x\) и \(y\) \\
+\(z'_x \rightarrow ?\) \\
+\(u = u(x, y)\) \\
+\(v = v(x, y)\) \\
+\(z(x, y) = \tilde{z}(u(x, y), v(x, y))\) \\
+\(z'_x = \tilde{z}'_u u'_x + \tilde{z}'_v v'_x\) - Ответ(но кривой) \\
+Другая задача \\
+\(z'_x\) \\
+\(x = x(u, v, w)\) \\
+\(y = y(u, v, w)\) \\
+\(z = \tilde{z}(u, v, w)\) \\
+\(w\) - функция \\
+\(z(x(u, v, w), y(u, v, w)) = \tilde{z}(u, v, w)\) \\
+\(z'_x(x'_u + x'_w w'_u) + z'_y(y'_u + y'_w w'_u) = \tilde{z}'_u + \tilde{z}'_w w'_u\) \\
+\(z'_x(x'_v + x'_w w'_v) + z'_y(y'_v + y'_w w'_v) = \tilde{z}'_v + \tilde{z}'_w w'_v\) \\
+Из системы находим \(z'_x\)
+\section{Эктремумы}
+\label{sec:orgee2dcf3}
+\href{http://mathprofi.ru/extremumy\_funkcij\_dvuh\_i\_treh\_peremennyh.html}{Mathprofi}
+\subsection{Функция вида \(z = f(x, y)\)}
+\label{sec:org3dd096c}
+\subsubsection{Необходимое условие экстремума}
+\label{sec:org1212596}
+Точка \(M_0\) - подозрительная(критическая, стационарная) на эктремум
+если \(f'_x(M_0) = 0, f'_y(M_0) = 0\)
+Находим: 
+\begin{gather*}
+A = f''_{xx}(M_0) \\
+B = f''_{xy}(M_0) \\
+C = f''_{yy}(M_0) \\
+\end{gather*}
+
+\begin{enumerate}
+\item \(AC - B^2 > 0\) - экстремум
+\begin{enumerate}
+\item \(A > 0\) - минимум
+\item \(A < 0\) - максимум
+\end{enumerate}
+\item \(AC - B^2 < 0\) - нет экстремума
+\item \(AC - B^2 = 0\) - доп. исследование
+\end{enumerate}
+\section{Геометрия}
+\label{sec:org30dce11}
+Демидович стр. 360
+\begin{enumerate}
+\item Параметрическое
+\(x = x(t)\) \\
+\(y = y(t)\) \\
+\(z = z(t)\) \\
+\(\begin{pmatrix} x(t) \\ y(t) \\ z(t) \end{pmatrix} = \begin{pmatrix} x(t_0) \\ y(t_0) \\ z(t_0) \end{pmatrix} + \begin{pmatrix} x'(t_0) \\ y'(t_0) \\ z'(t_0) \end{pmatrix}(t - t_0)\) \\
+\(\begin{pmatrix} x' \\ y' \\ z'\end{pmatrix}\) - направление касательной \\
+\(\frac{x - x(t_0)}{x'(t_0)} = \frac{y - y(t_0)}{y'(y_0)} = \frac{z - z(t_0)}{z'(t_0)}\) - уравнение касательной прямой \\
+\(x'(t_0)(x - x(t_0)) + y'(t_0)(y - y(t_0)) + z'(t_0)(z - z(t_0)) = 0\) - нормальная плоскость
+\item Поверхность
+\(x = x(u, v)\) \\
+\(y = y(u, v)\) \\
+\(z = z(u, v)\) \\
+\(\begin{pmatrix} x(u, v) \\ y(u, v) \\ z(u, v) \end{pmatrix} = \begin{pmatrix} x(u_0, v_0) \\ y(u_0, v_0) \\ z(u_0, v_0) \end{pmatrix} + \begin{pmatrix} x'_u \\ y'_u \\ z'_u \end{pmatrix}(u - u_0) + \begin{pmatrix} x'_v \\ y'_v \\ z'_v \end{pmatrix}(v - v_0)\) \\
+\(\vec{n} = \begin{pmatrix} y'_uz'_v - z'_uy'_v \\ z'_ux'_v - x'_uz'_v \\ x'_uy'_v - x'_vy'_u \end{pmatrix}\) - вектор нормали \\
+\(n_1(x - x(u_0, v_0)) + n_2(y - y(u_0, v_0)) + n_3(z - z(u_0, v_0)) = 0\) - касательная плоскость
+\item \(F(x, y, z) = 0\) \\
+\(F'_x(x - x_0) + F'_y(y - y_0) + F'_z(z - z_0) = 0\) \\
+\(\vec{n} = \begin{pmatrix} F'_x & F'_y & F'_z \end{pmatrix}\) - Вектор нормали
+\item \begin{cases}
+F(x, y, z) = 0 \\
+G(x, y, z) = 0
+\end{cases}
+
+\begin{cases}
+\(F'_x(x - x_0) + F'_y(y - y_0) + F'_z(z - z_0) = 0\) \\
+\(G'_x(x - x_0) + G'_y(y - y_0) + G'_z(z - z_0) = 0\) \\
+\end{cases} - это уранение прямой
+\end{enumerate}
+\end{document}

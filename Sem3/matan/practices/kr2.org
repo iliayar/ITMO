@@ -1,0 +1,58 @@
+#+LATEX_CLASS: general
+#+TITLE: КР 2
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Степенные ряды
+$\sum a_n(x - x_0)^n$ - сходится при $|x - x_0| < R$ \\
+$R = \frac{1}{\lim{\sqrt[n]{|a_n|}}}[= \lim{\left|\frac{a_n}{a_{n + 1}}\right|}]$
+
+/Прим./ $\sum e^{-\ln{n}p}$, при $p > 1$ сходится, $p \le 1$ расходится
+
+* Признаки
+\[ \sum a_n(x)b_n(x) \]
+** Дирихле
+1) Частичные суммы ряда $\sum a_n$ равномерно органичены \\
+   $\exists C_a\ \forall N\ \forall x \in E\ |\sum_{k=1}^{N}a_k(x)| \le C_a$
+2) Фиксируем $x$ b_n(x) монотонна по $n$ \\
+   b_n(x) \rightarrow 0 
+1), 2) $\Rightarrow$ ряд равномерно сходится
+
+** Абеля
+1) $\sum a_n(x)$ равномерно сходится
+2) $b_n(x)$ монотонна по $n$ \\
+   $b_n(x)$ равномерно ограничена \\
+   $\exists C_b\ \forall n\ \forall x\ |b_n(x)| < C_b$
+** Вейерштрасса
+\[ \sum u_n(x)\ x \in E \]
+1) $\forall x \in E\ |u_n(x)\le C_n|$
+2) $\sum C_n$ - сходится
+* Непрерывность и дифференцируемость
+$\sum u_n(x) = f(x)$
+1. 
+  1. $u_n(x)$ - непрерывна в $x_0$
+  2. ряд равномерно сходится в $u(x_0)$
+  Тогда $f$ - непрерывна в $x_0$
+2. $\sum u_n'(x) = \varphi(x)$ \\
+   $\sum u_n'(x)$ - равномерно сходится в $u(x_0)$ \\
+   Тогда $f$ - дифференцируема в $x_0$ и $f'(x) = \varphi(x) = \sum u_n'(x)$
+3. Ряд $\sum u_n(x)$ - равномерно сходится на $[a, b]$ \\
+   $u_n(x)$ - непрерывна на $[a, b]$ \\
+   Тогда $\int^a_b f(x) = \sum \int^a_b u_n(x)dx$
+* Критерий Больциано-Коши
+$\exists \varepsilon > 0\ \forall N\ \exists n > N,\ \exists m \in \mathbb{N},\ \exists x$ \\
+$|u_{n + 1}(x) + \dots + u_{n + m}(x)| > \varepsilon$ \\
+Если выполняеся то ряд сходится не равномерно \\
+Можно выбрать $m = 1$, тогда если $\underset{x \in E}{\sup} u_n(x) \not \xrightarrow[x \to \infty]{} 0$, то ряд не равномерно сходящийся
+* Разложение в ряд
+[[http://www.math24.ru/%D1%80%D0%B0%D0%B7%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B9-%D0%B2-%D1%81%D1%82%D0%B5%D0%BF%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%80%D1%8F%D0%B4%D1%8B.html][Известные ряды]] 
+
+$(1 + x)^\alpha = 1 + \alpha x + \frac{\alpha(\alpha - 1)}{2!}x^2 + \frac{\alpha(\alpha - 1)(\alpha - 2)}{3!}x^3 + \dots,\ -1 < x < 1$ 
+* Числовые ряды
+1. Прогрессия
+   \[ \sum_{n = 0}^{+\infty} q^n = \frac{1}{1 - q} \]
+2. \[ e = 1 + \frac{1}{1!} + \frac{1}{2!} + \frac{1}{3!} + \dots \]
+3. \[ \sum \frac{1}{n^2} = \frac{\pi^2}{6} \]
+4. \[ \sum \frac{(-1)^{n + 1}}{n} = \ln 2 \]
+5. \[ 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \dots = \frac{\pi}{4} \]
+6. Телескопические
+   \[ \sum_{k = 1}^{+\infty} (a_k - a_{k + 1}) = a_1 - \lim_{n \to +\infty} a_n \]

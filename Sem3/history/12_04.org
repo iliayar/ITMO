@@ -1,0 +1,7 @@
+#+LATEX_CLASS: general
+#+TITLE: Полсевоеенное время
+#+AUTHOR: Ilya Yaroshevskiy
+
+* США
+научно-тхзнический прогресс
+этотизация
