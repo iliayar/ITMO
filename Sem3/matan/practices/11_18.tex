@@ -1,0 +1,68 @@
+% Created 2020-12-21 Mon 14:37
+% Intended LaTeX compiler: pdflatex
+\documentclass{article}
+       \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian, english]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{grffile}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+       
+       \usepackage{geometry}
+       \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Схрдимотсь полследовательности функций}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Схрдимотсь полследовательности функций},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.3)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Сходимость посл. фунцкий}
+\label{sec:orgb274afa}
+\(f_n \rightarrow f\) на \(E \Leftrightarrow \rho(f_n, f) \rightarrow 0\)  \\
+\(\rho(f_n, f) = \sup_{x \in E}|f_n(x) - f(x)|\) \\
+\emph{Пример} \textbf{2749} \\
+\(f_n(x) = \frac{1}{x + n}\ E=(0, +\infty)\) \\
+Есть ли равномерную сходимость \\
+\emph{Напоминание}: Равномерная сходимость \(F_n \rightarrow f \Rightarrow \forall x \in E f_n(x) \rightarrow f(x)\)
+\begin{enumerate}
+\item Ищем \(f\) \\
+\end{enumerate}
+фиксируем x: \(\lim\limits_{n \to +\infty} f_n(x) = \lim\limits_{n \to +\infty} \frac{1}{x + n} = 0\), т.е \(f(x) = 0\) \\
+\begin{enumerate}
+\item Проверяем равномерную сходимость \\
+\end{enumerate}
+\(\rho(f_n, f) = \sup\limits_{x \in (0, +\infty)}\left|\frac{1}{x + n} - 0\right| = \sup\limits_{x\in(0, +\infty)}\frac{1}{x + n} = \frac{1}{n} \xrightarrow[n \to +\infty]{} 0\)
+Равномерно сходится
+
+\section{Занятие}
+\label{sec:orgf0e461e}
+\textbf{2756а} \\
+\(f_n(x) = arctg x \xrightarrow[n \to +\infty]{} \frac{\pi}{2}\) \\
+\(\sup\limits_{x \in (0, +\infty)} \left|f_n(x) - \frac{\pi}{2}\right| = sup \left| arcrg x - \frac{\pi}{2}\right| \ge \lim\limits_{x \to 0} \left| arctg(nx) - \frac{\pi}{2} = \frac{\pi}{2} \right|\) \textlnot{}\(\to\) 0\\
+\(\ge \left| arctg(nx) - \frac{\pi}{2} \right|\Big|_{x = \frac{1}{n}} = \frac{\pi}{4} \not\to 0\) \\
+\textbf{2756б} \\
+\(f_n(x) = x arctg(nx) \to \frac{n}{2}x\) \\
+\(\sup\limits_{n \in (0, +\infty)}\left|x(arctg(nx) - \frac{\pi}{4})\right|\)
+\end{document}

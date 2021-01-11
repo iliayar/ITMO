@@ -1,0 +1,236 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 5
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+LATEX_HEADER:  \usepackage[bb=boondox]{mathalfa}
+
+* Многообразия
+#+begin_lemma
+$\Phi: O \subset \mathbb{R}^k \rightarrow \mathbb{R}^m\quad C^r\text{-гладкое}$ - парметризация иноогбразия $U(p)\cap M$, где $p \in M$, $M$ - гладкое $k\text{-мерное}$ многообразие, $\Phi(t^0) = p$ \\
+Тогда образ $\Phi'(t^0): \mathbb{R}^k \rightarrow \mathbb{R}^M$ есть $k\text{-мерное}$ линейное подпространство в $\mathbb{R}^m$. Оно не зависит от $\Phi$ \\
+#+end_lemma
+#+begin_proof
+$\text{rank}\ \Phi'(t^0) = k$ \\
+Если взять другую параметризацию $\Phi_1\quad \Phi = \Phi_1 \circ \Psi$ \\
+$\Phi' = \Phi'_1 \cdot \Psi\quad \Psi'(t^0)$ - невырожденный оператор \\
+#+end_proof
+
+** Касательные пространства
+#+begin_definition
+$k\text{-мерное}$ пространство из Леммы - касательное пространство в $M$ в точке $p$
+#+end_definition
+#+begin_symb
+$T_pM$
+#+end_symb
+
+#+begin_examp
+$M$ - окружность в $\mathbb{R}^2$ \\
+$\Phi: t \mapsto (\cos t, \sin t)^T\quad t^0 = \frac{\pi}{4}$ \\
+$\Phi'(t^0) = (-\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2})^T$ \\
+$h \in \mathbb{R} \mapsto \begin{pmatrix} -\frac{\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} \end{pmatrix} h$
+#+end_examp
+Афинное подпространство $\{p + v,\ v\in T_pM\}$ - называется афинным касательное пространство
+#+begin_remark
+$v \in T_pM$. Тогда $\exists$ путь $\gamma_v: [-\varepsilon, \varepsilon] \rightarrow M$, такой что $\gamma(0) = p,\ \gamma'(0) = v$
+#+begin_proof
+$u := (\Phi'(t^0))^{-1}(v)$ \\
+$\tilde{\gamma}_v(s) := t^0 + s\cdot u,\quad s \in [-\varepsilon, \varepsilon]$ \\
+$\gamma_v(s) := \Phi(\tilde{\gamma}_v(s))$ \\
+$\gamma'_v(0) = \Phi'(\underbrace{\tilde{\gamma}_v(0)}_{t^0})\cdot u = v$
+#+end_proof
+#+end_remark
+#+begin_remark
+Пусть $\gamma: [-\varepsilon, \varepsilon] \rightarrow M,\ \gamma(0) = p$ - гладкий путь \\
+Тогда $\gamma'(0) \in T_pM$
+#+begin_proof
+$\gamma(s) = (\Phi \circ \Psi \circ L)(\gamma(s))$ \\
+$\gamma' = \Phi'\cdot \Psi'\cdot L' \cdot \gamma'(s) \in T_pM$
+#+end_proof
+#+end_remark
+#+begin_remark
+$f: O \subset \R^m \rightarrow \R$ - гладкая, $y = f(x)$ - поверхность в $\R^{m + 1}\quad(x, y)$ \\
+Тогда (афииная) касательная плоскость в $(a, b)$ задается уравнением $y - b = f'_{x_1}(a)(x_1 - a_1) + f'_{x_2}(a)(x_2 - a_2) + \dots + f'_{x_m}(a)(x_m - a_m)$ \\
+#+begin_proof
+$\Phi: O \subset \R^m \rightarrow \R^{m + 1}\quad \Phi(x) = (x, f(x))$ \\
+$\Phi' =$ 
+$\begin{pmatrix}
+1 & 0 & \dots & 0 \\
+0 & 1 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 1 \\
+f'_{x_1} & f'_{x_2} & \dots & f'_{x_m}
+\end{pmatrix}
+\cdot\begin{pmatrix}
+x_1 \\
+\vdots \\
+x_m
+\end{pmatrix} =
+\begin{pmatrix}
+x_1 \\
+\vdots \\
+x_m \\
+x_1f'_{x_1} + \dots + x_mf'_{x_m}
+\end{pmatrix} \cdot
+\begin{pmatrix}
+\alpha_1 \\
+\vdots \\
+\alpha_m \\
+\beta
+\end{pmatrix}$ \\
+$\beta = \alpha_1f'_{x_1} + \dots + \alpha_mf'_{x_m}$
+#+end_proof
+/Примечание./ $y = f(a) + f'_{x_1}(a)(x_1 - a_1) + \dots + f'_{x_m}(a)(x_m - a_m)$ \\
+$f(x) - y(x) = o(x-a)$
+#+end_remark
+#+begin_remark
+$\Phi(x_1, \dots, x_m) = 0\quad \Phi: O \subset \R^m\rightarrow \R\quad \Phi(a) = 0$ \\
+Уравнение касательной плоскости $\Phi'_{x_1}(a)(x_1 - a_1) + \dots + \Phi'_{x_m}(a)(x_m - a_m) = 0$ \\
+$\gamma$ - путь в $M\quad \Phi(\gamma(s)) = 0,\ \Phi'(\gamma(s))\gamma'(s) = 0$ \\
+$\Phi'_{x_1}\cdot\gamma'_1 + \dots + \Phi'_{x_m}\cdot\gamma'_m = 0$ \\
+Определение дифференцируемости \Phi в точке $a$ \\
+$\Phi(x) = \Phi(a) + \Phi'_{x_1}\cdot(x_1 - a_1) + \dots + \Phi'_{x_m}\cdot(x_m - a_m) + o$
+#+end_remark
+* Относительный экстремум
+#+begin_examp
+Найти наибольшее/наименьшее значение выражения $f(x, y) = x + y$, при условии $x^2 + y^2 = 1$ \\
+$f = \const$ - линии уровня(прямые в данном случае) \\
+В точке $\max$ линии уровня $f = \max$ \\
+$\Phi(x, y) = 0\quad \Phi'_x(x - a) + \Phi'_y(y - b) = 0$ \\
+$(\Phi'_x, \Phi'_y)$ - вектор нормали к касательной прямой \\
+#+end_examp
+#+begin_definition
+$f: O \subset \R^{m + n}\rightarrow \R\quad\Phi: O \rightarrow \R^n$ \\
+$M_\Phi \subset O := \{x\vert \Phi(x) = 0\}$ \\
+$x_0 \in M_\Phi$, т.е. $\Phi(x_0) = 0$ \\
+$x_0$ - точка локального относительного $\max,\min,\text{строгого }\max,\text{строгого }\min$ \\
+Если $\exists U(x_0) \subset \R^{m + n}$ \\
+$\forall x \in U \cap M_\Phi$(т.е. $\Phi(x) = 0$) $f(x_0) \ge f(x)$(для максимума) \\
+т.е. $x_0$ - локальный экстремум $f|_{M_\Phi}$ \\
+Уравнения $\Phi(x) = 0$ - уравнения связи
+#+end_definition
+Как можно решать эту задачу \\
+Если $\rank\Phi'(x_0) = n$, выполнено условие теоремы о неявном отображении \\
+#+begin_theorem 
+(Необходиое условие относительно экстремума) \\
+$f: O \subset \R^{m + n} \rightarrow \R\quad \Phi: O \rightarrow \R^n$ - гладкое в $O$ \\
+$a \in O\quad \Phi(a) = 0$ - точка относительного экстремума \\
+$\rank\Phi'(a) = n$ Тогда $\exists \lambda = (\lambda_1\ \dots\ \lambda_n) \in \R^n$ \\
+$\begin{cases}
+f'(a) - \lambda \cdot \Phi'(a) = 0\quad \in \R^{m + n} \\
+\Phi(a) = 0
+\end{cases}$ \\
+В координатах:  \\
+$\begin{cases}
+f'_{x_1}(a) - \lambda_1(\Phi_1)'_{x_1} - \labmda_2(\Phi_2)'_{x_1} - \dots - \lambda_m(\Phi_n)'_{x_1} = 0 \\
+\vdots \\
+f'_{x_{m + n}}(a) - \lambda_1(\Phi_1)'_{x_{m + n}} - \labmda_2(\Phi_2)'_{x_{m + n}} - \dots - \lambda_m(\Phi_n)'_{x_{m+n}} = 0 \\
+\Phi_1(a) = 0 \\
+\vdots \\
+\Phi_n(a) = 0
+\end{cases}$ \\
+Неизветсные: $a_1, \dots, a_{m + n}\quad\lambda_1,\dots,\lambda_n$
+#+end_theorem
+#+begin_proof
+Пусть \rank реализуется на столбцах $x_{m + 1}, \dots, x_{m + n}$, обозначим $y_1 = x_{m+1}, \dots, y_m=x_{m+n}$ \\
+$(x_1\ \dots\ x_{m+n}) \leftrightarrow (x, y)\quad a=(a_x, a_y)$ \\
+$\det\frac{\partial \Phi}{\partial y}(a) = 0\quad$ По теореме о неявном отображении $\exists U(a_x)\ \exists V(a_y)$ \\
+$\exists \varphi: U(a_x) \rightarrow V(a_y):\ \Phi(x,\varphi(x)) = 0$ \\
+отображение $x \mapsto (x, \varphi(x))$ есть параметризация $M_\varphi \cap (U(a_x) \times V(a_y))$ \\
+$a$ - точка относительного локального экстремума \Rightarrow $a_x$ - точка локального экстремума функции $g(x) = f(x, \varphi(x))$ \\
+Необходимое условие экстремума $(f'_x + f'_y\cdot\varphi'_x)(a_x) = 0$ (1) \\
+$\Phi(x, \varphi(x)) = 0$ \\
+$\Phi'_x + \Phi'_y\cdot\varphi'_x = 0$ - в точке $(a_x, a_y)$ \\
+Тогда $\forall \lambda \in \R^m\quad \lambda\cdot\Phi'_x + \lambda\cdot\Phi'_y\varphi'_x(a_x) = 0$ (2) \\
+(1) + (2): $f'_x + \lambda\Phi'_x + (f'_y + \lambda\Phi'_y)\varphi'_x = 0$ \\
+Пусть $\lambda = -f'_y(\Phi'_y(a_x, a_y))^{-1}$ \\
+Тогда $f'_y + \lambda\Phi'_y = 0$ и $f'_x + \lambda\Phi'_x = 0$(из (1) + (2))
+#+end_proof
+#+begin_definition
+$G := f - \lambda_1\Phi_1 - \lambda_2\Phi_2 - \dots - \lambda_n\Phi_n$ - Функция Лагранжа \\
+$\lambda_1, \dots, \lambda_n$ - множители Лагранжа \\
+$\begin{cases} G' = 0 \\ \Phi = 0 \end{cases}$ - то что в теореме
+#+end_definition
+#+begin_examp
+A = (a_{ij}) - симметричная вещественная матрица \\
+$f(x) = \langle Ax,x \rangle, \quad x \in \R^m$ - квадратичная форма \\
+Найти $\max f(x),\ x \in S^{m - 1}$ - существует по теореме Вейрештрасса \\
+$G(x) = \displaystyle{\sum_{i, j = 1}^m a_{ij}x_ix_j - \lambda(\underbrace{\sum_{i = 1}^m x_i^2 - 1}_{\text{уравнение сферы}})}$ \\
+$\Phi' = (2x_1,\ 2x_2,\ \dots,\ 2x_m)^T$, на сфере $\rank\Phi' = 1$ \\
+$G'_{x_k} = \displaystyle{\sum_{j - 1}^ma_{kj}x_j - 2\lambda x_k}\quad k = 1\dots m$, т.е. $Ax = \lambda x$ \\
+$\lambda$ - собственное число $A$, $x$ - собственный вектор \\
+$f(x) = \langle Ax, x \rangle = \langle \lambda x, x\rangle = \lambda |x|^2 = \lambda$
+#+end_examp
+#+begin_theorem
+$A \in \mathcal{L}(\R^m, \R^n)$. Тогда $\Vert A \Vert = \max \{\sqrt{\lambda}\vert \lambda - \text{собственное число оператора }A^TA\}$ \\
+$\langle Ax, y \rangle = \langle x, A^Ty\rangle$ \\
+$\langle A^TAx, x \rangle = \langle Ax, Ax \rangle \ge 0$
+#+end_theorem
+#+begin_proof
+$x \in S^{m - 1}$ \\
+$|Ax|^2 = \langle Ax, Ax \rangle = \langle \underbrace{ A^TA }_\text{симм.}x, x \rangle\qquad (A^TA)^T = A^TA$ \\
+$\max |Ax|^2 = \max \langle A^TAx, x \rangle = \lambda_\max$
+#+end_proof
+* Функциональные последовательности и ряды
+** Равномерная сходимость последовательности функций
+#+begin_definition
+Последовательность функций \\
+$\mathbb{N} \rightarrow \mathcal{F}\quad n \mapsto f_n$
+#+end_definition
+
+$\mathcal{F}: \{f\vert \underbrace{X}_\text{м.п.} \rightarrow \R\}$ \\
+Пусть $E \subset X$
+#+begin_definition
+Поточечная сходимость последовательности функций на множестве $E$ \\
+Последовательность $f_n$ сходится поточечно к $f$ на множестве $E$, $\forall x \in E\ f_n(x) \rightarrow f(x)$ \\
+$\forall x \in R \forall \varepsilon > 0\ \exists N\ \forall n > N\ |f_n(x) - f(x)| < \varepsilon$
+#+end_definition
+#+begin_examp
+$f_n: \R_+ \rightarrow \R\quad f_n(x) = \frac{x^n}{n}$ \\
+Тогда $E = [0, 1]\quad f_n(x) \to \mathbb{0}$ \\
+Если $E \cap (1, +\infty) \neq \o$ то нет поточечной сходимости ни к какой функции
+#+end_examp
+#+begin_examp
+$f_n(x) = \frac{n^\alpha x}{1 + n^2x^2}\quad x \in [0, 1]\quad 0 < \alpha < 2$ \\
+Ясно, что $\forall \alpha\quad f_n(x) \to \mathbb{0}$ поточечно на $[0, 1]$ \\
+$\displaystyle{\max_{x\in[0, 1]}\frac{n^\alpha x}{1 + n^2x^2} = n^\alpha\cdot\max\frac{x}{1 + n^2x^2} = n^\alpha \cdot \frac{1}{2n}=\frac{1}{2}n^\alpha - 1}$ \\
+#+end_examp
+#+begin_definition
+$f_n$ равномерно сходится к $f$ на $E\subset X$ если $M_n := \displaystyle{\sup_{x \in E}f_n(x) - f(x)} \xrightarrow{n \to +\infty} 0$ \\
+$\forall \varepsilon > 0\ \exists N\ \forall n > N\ 0\le M_n < \varepsilon$, т.е. $\forall x \in E\ |f_n(x) - f(x)| < \varepsilon$
+#+end_definition
+#+begin_symb
+$f_n \underset{E}{\rightrightarrows} f$
+#+end_symb
+#+begin_remark
+$x_0 \in E\ f_n \underset{E}{\rightrightarrows} f$ Тогда $f_n(x_0) \to f(x_0)$ \\
+равномерная сходимость \Rightarrow поточечная сходимость к тому же пределу
+#+end_remark
+#+begin_remark
+$E_0 \subset E\quad f_n \underset{E}{\rightrightarrows} f \Rightarrow f_n \underset{E_0}{\rightrightarrows} f$
+#+end_remark
+#+begin_examp
+$f_n(x) = \frac{n^\alpha x}{1 + n^2 x^2}\quad E = [\frac{1}{10}, 1]$ \\
+Тогда $f_n \rightrightarrows \mathbb{0}$ \\
+$f = 0\quad \displaystyle{\sup_{x \in [\frac{1}{10}, 1]} \frac{n^\alpha x}{1 + n^2 x^2} \le \frac{n^\alpha}{1 + \frac{1}{100}n^2} \to 0}$
+#+end_examp
+#+begin_remark
+$\mathcal{F} = \{f\vert X \rightarrow \R - \text{ограничены} \}$ \\
+Тогда $\rho_X(f_1, f_2) := \displaystyle{\sup_{x \in X} |f_1(x) - f_2(x)|}$ - метрика в $\mathcal{F}$(Чебышевское растояние)
+1. $\rho(f_1, f_2) \ge 0$
+2. $\rho(f_1, f_2) = 0 \Leftrightarrow f_1 = f_2$
+3. $\rho(f_1, f_2) = \rho(f_2, f_1)$
+4. $\rho(f_1, f_2) \le \rho(f_1, f_3) + \rho(f_3, f_2)$
+   #+begin_proof
+   Берем $\varepsilon > 0\ \exists x: \rho(f_1, f_2) - \varepsilon = \sup|f_1 - f_2| - \varepsilon < |f_1(x) - f_2(x)| \le |f_1(x) - f_3(x)| + |f_3(x) - f_2(x)| \le \rho(f_1, f_2) + \rho(f_3, f_2)$
+   #+end_proof
+#+end_remark
+#+begin_remark
+$f_n \underset{E}{\rightrightarrows} f\quad f_n \to f$ по метрике $\rho_E$
+#+end_remark
+#+begin_remark
+$E = E_1 \cap E_2\quad f_n \underset{E_1}{\rightrightarrows} f$ и $f_n \underset{E_2}{\rightrightarrows} f \Rightarrow f_n \underset{E}{\rightrightarrows} f$ \\
+#+begin_proof
+$M^{(1)}_n \to 0\quad M^{(2)}_n \to 0$ \\
+$\max(M^{(1)}_n, M^{(2)}_n) \to 0$
+#+end_proof
+#+end_remark

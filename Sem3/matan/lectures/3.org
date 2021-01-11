@@ -1,0 +1,123 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 3
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Диффеоморфизмы
+** Определение
+1. Область - открытое связное множество
+2. $F: \underbrace{O}_{\text{обл.}} \subset \mathbb{R}^m \rightarrow \mathbb{R}^m$ - диффеоморфизм если
+   1. $F$ - обратимо
+   2. $F$ - дифференцируеое
+   3. $F^{-1}$ - дифференцируемое
+     
+/Замечание/ $\text{Id} = F \circ F^{-1} = F^{-1} \circ F$ \\
+$E = F' \cdot (F^{-1})' = (F^{-1})'\cdot F'$ \\
+$\forall x \det F'(x) \neq 0$
+
+** Лемма о почти локальной инъективности
+$F: O \subset \mathbb{R}^m \rightarrow \mathbb{R}^m$ - дифф. в $x_0 \in O$, $\det F'(x_0) \neq 0$ \\
+Тогда $\exists C > 0\ \exists \delta > 0\quad \forall x_0+h \in B(x_0, \delta)$ \\
+$|F(x_0 + h) - F(x_0)| > C|h|$
+
+*Доказательство* $|h| = |A^{-1}\cdot Ah| \le \Vert A^{-1} \Vert \cdot |Ah|$ \\
+$c|h| \le |Ah|$, где $c = \frac{1}{\Vert A^{-1} \Vert}$ \\
+$F'(x) = F$ \\
+Если $F$ - линейное отображение $|F(x_0 + h) - f(x_0)| = |F(h)| = |F'(x_0)h| \ge \frac{h}{\vert (F'(x_0))^{-1} \vert }$ \\
+$|F(x_0+h) - F(x_0)| = \big|F'(x_0)h + \alpha(h)\cdot|h|\big| \ge c|h| - \frac{c}{2}|h| = \frac{c}{2}|h|$ - работает в шаре
+** Теорема о сохранении области
+$F: O \subset \mathbb{R}^m \rightarrow \mathbb{R}$ - дифф \\
+$\forall x \in O\quad \det F'(x) \neq 0$ \\
+Тогда $F(O)$ - открыто
+
+/Замечание/ $O$ - связно, $F$ - непрырвно $\Rightarrow$ $F(O)$ - связно 
+
+*Доказательство* $x_0 \in O\quad y_0 := F(x_0) \in F(O)$ \\
+Проверим, что $y_0$ - внутр точка $F(O)$ \\
+По лемме $\exists c,\delta:\ \forall h \in \overline{B(0, \delta)}\quad |F(x_0 + h) - F(x_0)| > C|h|$ \\
+В частности $F(x_0 + h) \neq F(x_0)$, при $|h| = \delta$ \\
+$r = \frac{1}{2}\text{dist}(y_0, F(S(x_0, \delta)))$ \\
+Если $y \in B(y_0, r)$, то $\text{dist}(y, F(S(x_0, \delta))) > r$ (*) \\
+Проверим, что $B(y_0, r) \subset F(O)\quad \forall y \in B(y_0, r)\ \exists x \in B(x_0, \delta)$ F(x) = y\\
+Рассмотрим функцию $g(x) = |F(x) - y|$, при $x \in \overline{B(x_0, \delta)}$ \\
+$g(x_0) = |F(x_0) - y|^2 = |y_0 - y|^2 < r$ \\
+при $x \in S(x_0, \delta):\quad g(x) > r^2$, по (*) \\
+$g(x) = (F_1(x) - y_1)^2 + \dots + (F_m(x) - y_m)^2$ \\
+$(\frac{\partial g}{\partial x_i} = 0)$ \\
+$\begin{cases} 
+2(F_1(x) - y)\cdot F'_{x_1}(x) + \dots + 2(F_m(x) - y)\cdot F'_{x_1} = 0 \\
+\vdots \\
+2(F_1(x) - y)\cdot F'_{x_m}(x) + \dots + 2(F_m(x) - y)\cdot F'_{x_m} = 0
+\end{cases}$ \\
+$F'(x)\cdot 2(F(x) - y) = 0 \Rightarrow \forall x \det F' \neq 0 \Rightarrow F(x) - y= 0$
+
+*** Следствие
+$F: O \subset \mathbb{R}^m \rightarrow \mathbb{R}^l,\ l < m$, дифф в $O$, $F \in C^1(O)$ \\
+$\text{rg} F(x) = l$, при всех $x \in O$ \\
+Тогда $F(O)$ - открытое
+
+*Доказательство* Фиксируем $x_0$. Пусть ранг $F'(x_0)$ реализуется на столбцах с $1$ по $l$, т.е. $A:=\det(\frac{\partial F_i}{\partial x_j})_{i,j = 1\dots l}(x_0) \neq 0$ - и для близких точек \\
+$\tilde{F}: O \rightarrow \mathbb{R}^m\quad \tilde{F}(x) = \begin{pmatrix} \overbrace{F(x)}^{\text{Исходные } l \text{ координат}} \\ x_{l + 1} \\ \vdots \\x_m \end{pmatrix}$ \\
+$\det \tilde{F}'(x) = \det A(x)\cdot\det E_{m - l} \neq 0$ в окрестности точки $x_0$ \\
+$\tilde{F}|_{U(x_0)}$ - удовлетворяет теореме \Rightarrow $\tilde{F}(U(x_0))$ - открыто в $\mathbb{R}^m$ \\
+$F(U(x_0)) = \underbrace{\text{Pr}_{\mathbb{R}^l}}_{(x_1\ \dots\ x_m) \mapsto (x_1\ \dots\ x_l)}(\tilde{F}(U(x_0)))$
+
+** Теорема о гладкости обратного отображения
+$C^r(O,\mathbb{R}^m)$ \\
+$T \in \underbrace{C^r(O, \mathbb{R}^m)}_{O \subset \mathbb{R}^m}$ \\
+$T$ - обратимо, $\det T'(x) \neq 0$, при всех $x \in O$ \\
+Тогда $T^{-1} \in C^r$ и $(T^{-1})'(y_0) = (T'(x_0))^{-1}$, где $y_0 = T(x_0)$
+
+*Доказательство* индукция по $r$, база $r = 1$ \\
+/Напоминание/ $f: X \rightarrow Y$ - непр \Leftrightarrow $\forall B - \text{откр} \subset Y\ f^{-1}(B) - \text{откр}$ \\
+$S = T^{-1}$, $S$ - непрерывна по т. о сохранении области \\
+$T'(x_0) = A$ - невыроженый оператор \\
+По лемме о почти локальной инъективноси $\exists C, \delta:\ \forall x \in B(x_0, \delta)\ |T(x) - T(x_0)| > C|x - x_0|$  (*) \\
+Опр диффернцируемости $T(x) - T(x_0)=A(x-x_0) + o(x)\cdot |x - x_0|$ \\
+$T(x) = y\ T(x_0) = y_0\ x = S(y)\ x_0 = S(y_0)$ \\
+В терминах $y, S$: $S(y) - S(y_0) = A^{-1}(y - y_0) - \underbrace{A^{-1}\omega(S(y))\cdot |S(y) - S(y_0)|}_{\text{Проверим, что это }o(|y - y_0|)}$ \\
+Пусть $y$ близко к $y_0$ \dots $|x - x_0| = |S(y) - S(y_0)| < \delta$ \\
+$\big|A^{-1}\cdot o(S(y))\cdot |S(y) - S(y_0)|\big| = |S(y) -S(y_0)|\cdot |A^{-1}\cdot \omega(S(y))| \le |x - x_0| \cdot \Vert A^{-1} \Vert \cdot |\omega(S(y))| \le \frac{1}{c}\Vert A^{-1} \Vert \cdot |y - y_0|\cdot |\omega(S(y))|$ \\
+Гладкость $S$: $S'(y_0) = A^{-1}$ \\
+$y\mapsto T^{-1}(y) = x \mapsto T'(x) = A \mapsto A^{-1}$ - все шаги непрерывны \\
+Переход $r \rightarrow r + 1$ \\
+$F \in C^{r + 1}\quad F': O \rightarrow \mathcal{L}(\mathbb{R}^m, \mathbb{R}^m)\ F' \in C^{r}$ \\
+Проверим, что $S^{-1} \in C^{r + 1}\quad y \underset{C^r}{\rightarrow} S(y) \underset{C^r}{\rightarrow}F'(x) \underset{C^\infty}{\rightarrow} ?$
+
+** Теорема о локальной обратимости
+$T \in C^r(O, \mathbb{R}^m)\ x \in O\ \det T'(x_0) \neq 0$ \\
+Тогда $\exists U(x_0)\ T|_U$ - диффеоморфизм
+
+*Доказательство* $F(x_0 + h) = F(x_0) + F'(x_0)h + o(h)$ \\
+\vdots \\
+*НЕТУ*
+
+/Формулировка в терминах системмы уравнений/ \\
+$\begin{cases}
+f_1(x1, \dots, x_m) = y_1 \\
+f_2(x1, \dots, x_m) = y_2 \\
+\vdots \\
+f_m(x1, \dots, x_m) = y_m \\
+\end{cases}$ \\
+Пусть $(x^0, y^0)$ - ее решение $f \in C^r$ \\
+$\det F'(x^0)\neq0\qquad F = (f_1\ \dots\ f_m)$ \\
+Тогда $\exists U(y^0)\ \forall y \in U(y^0)$ система имеет решение и эти решения $C^r\text{-гладко}$ зависят от $y$
+
+** Теорема о неявном отображении
+$F: O\subset \mathbb{R}^{m + n} \rightarrow \underbrace{\mathbb{R}^n}_{(x_1 \dots y_n)}\ F \in C^r$ \\
+$(a, b) \in O\ F(a, b) = 0$ \\
+Допустим $\det(\frac{\partial F_i}{\partial y_j}(a, b))_{i,j=1\dots n} \neq 0$ \\
+Тогда 
+1. $\exists P \subset \mathbb{R}^m\quad a \in P$ - откр. \\
+   $\exists Q \subset \mathbb{R}^n\quad b \in Q$ - откр. \\
+   $\exists! \Phi: P \rightarrow Q$ - $C^r\text{-гладкое}$ \\
+   такие что $\forall x \in P(a)\quad F(x, \varphi(x)) = 0$
+2. $\Phi'(x) = -\Big(F'_y(x, \Phi(x))\Big)^{-1}\cdot F'_x(x, \Phi(x))$
+
+/В терминах систем уранений/ \\
+$\begin{cases}
+f_1(x1, \dots, x_m, y_1, \dots, y_n) = 0 \\
+f_2(x1, \dots, x_m, y_1, \dots, y_n) = 0 \\
+\vdots \\
+f_n(x1, \dots, x_m, y_1, \dots, y_n) = 0 \\
+\end{cases}$ \\
+$a = (x^0_1\ \dots\ x^0_m)\quad b = (y^0_1\ \dots\ y^0_n)\quad F(x, \varphi(x)) = 0$

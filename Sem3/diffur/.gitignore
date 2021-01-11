@@ -1,0 +1,9 @@
+ltximg
+*.aux
+*.log
+*.out
+*.tex
+*.toc
+
+*.html
+*.pdf

@@ -1,0 +1,104 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 1
+#+AUTHOR: Ilya Yaroshevskiy
+
+\[ (a_1 + a_2 + \dots + a_n)^m = \sum^m_{c_1 = 1} \sum^m_{c_2 = 1} \dots \sum^m_{c_n = 1} a_{c_1} a_{c_2} \dots a_{c_n}\ (1)\]
+* Мультииндекс
+$\alpha = (\alpha_1 \alpha_2 \dots \alpha_m)$ \\
+$|\alpha| = \alpha_1 + \alpha_2 + \dots + \alpha_m$ \\
+$x\in \mathbb{R}^m\ x^\alpha = x_1^{\alpha_1}x_2^{\alpha_2}\dots x_m^{\alpha_m}$ \\
+$\alpha! = \alpha_1!\alpha_2!\dots \alpha_m!$ \\
+$f^{(\alpha)} = \frac{\partial^{|\alpha|}f}{(\partial x_1)^{\alpha_1}\dots(\partial x_m)^{\alpha_m}}$ \\
+$(1)\ = \displaystyle{\sum_{\alpha: |\alpha| = r} \frac{r!}{\alpha!} a^\alpha}$
+* Дифференцирование
+** *Лемма* 
+$f: E \subset \mathbb{R}^m \rightarrow \amthbb{R}$  $f \in C^r(E)$ - $r$ раз дифференцируема на $E$, $a \in E$ \\
+$h \in \mathbb{R}^m$ $\forall t \in [-1, 1]$ $a + th \in E$ \\
+$\varphi(t) = f(a + th)$ Тогда при $1 \le k \le r$ \\
+$\varphi^{(r)}(0) = \displaystyle{\sum_{j: |j|=r}}\frac{r!}{j!}h^j\frac{\partial^rf}{\partial x^j}(a)$
+
+/Пример/ $\varphi'(t) = \displaystyle{\sum^m_{i = 1} \underbrace{\frac{\partial f}{\partial x_i}(a + th)}_{\text{Производная в точке }a+th}\cdot h_i}$ \\
+$\varphi'' = \displaystyle{\sum^m_{i = 1}\sum^m_{i_2 = 1}\frac{\partial^2 f}{\partial x_i \partial x_{i_2}}(a + th)\cdot h_i h_{i_2}}$ \\
+$\varphi''(0) = \frac{\partial^2 f}{\partial x_1^2}h_1^2 + \frac{\partial^2 f}{\partial x_2^2}h_2^2 + \dots + \frac{\partial^2 f}{\partial x_m^2}h_m^2 + 2(\frac{\partial^2 f}{\partial x_1 \partial x_2}h_1h_2 + \frac{\partial^2 f}{\partial x_1 \partial x_3}h_1h_3 + \dots)$
+
+/Продолжение/ $\varphi^k(t) = \displaystyle{\sum^m_{i_1 = 1}\sum^m_{i_2 = 1}\dots\sum^m_{i_r = 1}\frac{\partial^r f}{\partial x_{i_1}\partial x_{i_2}\dots\partial x_{i_r}}(a + th)\cdot h_{i_1}h_{i_2}\dots h_{i_3}}$
+* *Теорема* (формула Тейлора)
+$f \in C^{r + 1}(E)$ $E \subset \mathbb{R}^m,\ f: E \rightarrow \mathbb{R},\ a \in E$ \\
+$x \in B(a, R) \subset E$ Тогда $\exists \theta \in (0, 1)$ \\
+\[ f(x) = \sum_{\alpha: 0 \le |\alpha| \le r} \frac{f^{(\alpha)}(a)}{\alpha !}(x - a)^\alpha + \sum_{\alpha: |\alpha| = r + 1} \frac{f^{(\alpha)}(a+ \theta(x-a))}{\alpha!}(x - a)^\alpha \] \\
+\[ f(x) = \sum_{k = 0}^r(\sum_{(\alpha_1 \dots \alpha_m): \alpha_i \ge 0, \sum \alpha_1 = k} \frac{1}{\alpha_1! \alpha_2 ! \dots \alpha_m!} \frac{\partial^k f(a)}{(\partial x_1)^{\alpha_1}\dots(\partial x_m)^{\alpha_m}}(x_1 - a_1)^{\alpha_1}\dots(x_m - a_m)^{\alpha_m}) + \text{аналогичный остаток}\]
+\[ f(a + h) = \sum^r_{k - 1}\sum_{\dots}\frac{1}{\alpha_1! \dots \alpha_m !} \frac{\partial^k f}{(\partial x_1)^{\alpha_1} \dots (\partial x_m)^{\alpha_m}}(a)h_1^{\alpha_1}\dots h_m^{\alpha_m} + \text{остаток}\] 
+
+*Доказательство*
+$\varphi(t) = f(a + th)$, где $h = x - a$, $\varphi(0) = f(a)$, $\varphi(1) = f(x)$ \\
+$\varphi(t) = \varphi(0) + \frac{\varphi'(0)}{1!}t + \dots + \frac{\varphi^{(r)}(0)}{r!}t^r + \frac{\varphi^{(r + 1)}(\bar{t})}{(r + 1)!}t^{r + 1}$ \\
+Из леммы $f(x) = f(a) + \displaystyle{\sum_{k  = 1}^r \frac{1}{k!}\underbrace{ \sum_{\alpha: |\alpha| = k} k!\frac{f^{(\alpha)}(a)}{\alpha!}h^\alpha }_{\text{однородный многочлен степени }k} + \sum_{\alpha: |\alpha| = r + 1}\frac{f^{(\alpha)}(a + \theta(x - a))}{\alpha!}h^\alpha}$ \\
+
+/Примечание/ о дифференциале \\
+Где однородный многочлен степени $k$ это $k$ -ый дифференциал функции $f$ в точке $a$, обозначается $d^k f(a, h)$ \\
+$\displaystyle{f(x) = \sum^r_{k = 1} \frac{d^k f(a, h)}{k!} + \frac{1}{(k + 1)!}d^{k + 1}f(a + \theta h, h)}$ \\
+$d^2 f = f''_{x_1 x_1}(a)h_1^2 + f''_{x_2 x_2}(a)h_2^2 + \dots + f''_{x_m x_m}(a)h_m^2 + 2\sum_{i < j} f''_{x_i x_j}(a)h_i h_j$
+$d^{k + 1} f = d(d^kf)$ \\
+$df = f'_{x_1}h_1 + f'_{x_2}h_2 + \dots + f'_{x_m}h_m$ \\
+$d^2f = (f''_{x_1 x_1}h_1 + f''_{x_1 x_2}h_2 + \dots + f''_{x_1 x_m}h_m)h_1 + (f''_{x_2 x_1}h_1 + f''_{x_2 x_2}h_2 + \dots + f''_{x_2 x_m}h_m)h_2 + \dots$
+
+/Продолжение/ \\
+$f(x) = \displaystyle{\sum \frac{f^{(\alpha)}(a)}{\alpha!}h^\alpha + o(|h|^r)}$ \\
+
+* Линейные отображения
+** *Определение* 
+$\mathcal{L}(\mathbb{R}^m, \mathbb{R}^n)$ - множество линейных отображений $\mathbb{R}^m \rightarrow \mathbb{R}^n$ - это линейное простарнство \\
+Обозначение $A \in \mathcal{L}(\mathbb{R}^m, \mathbb{R}^n)\quad \Vert A\Vert \overset{\text{def}}{=} \displaystyle{\sup_{x \in \mathbb{R}^m: |x| = 1} |Ax|}$
+
+/Замечания/ 
+1. $\sup \leftrightarrow \max$, т.к. сфера компактна
+2. $A = (a_{ij})\quad \Vert A \Vert \le \sqrt{\sum a_{ij}^2}$ - по Лемме об оценке нормы линейного отображения
+3. $\forall x \in \mathbb{R}^m\quad \vert Ax \vert \le \Vert A \Vert \cdot \vert x \vert$
+   $x = 0$ - тривиально \\
+   $x \neq 0\quad \tilde{x} = \frac{x}{|x|}\quad |Ax| = |A(|x| \cdot \tilde{x})| = \big||x|\cdot A\tilde{x}\big| = |x|\cdot|A\tilde{x}| \le \Vert A \Vert \cdot |x|$
+4. Если $\exists C > 0:\quad \forall x \in \mathbb{R}^m |Ax| \le C\cdot |x|$, то $\Vert A \Vert \le C$
+
+/Примеры/
+1. $m = l = 1$ \\
+   $A$ - линейный оператор - задается числом $a$ $x \mapsto ax\ \Vert A \Vert = |a|$ \\
+2. $m = 1\ l - \text{любое}$ \\
+   $A: \mathbb{R} \rightarrow \mathbb{R}^l\ A \leftrightarrow \begin{pmatrix} a_1 \\ \vdots \\ a_l \end{pmatrix}\ \Vert A \Vert = |a|$ 
+3. $m - \text{любое}\ l = 1$ \\
+   $A: \mathbb{R}^m \rightarrow \mathbb{R}\ A \leftrightarrow \vec{a}$ \\
+   $x \mapsto (\vec{a}, x)\ \Vert A \Vert = \displaystyle{\sup_{x \in \mathbb{R}^m: |x| = 1} |\langle \vec{a}, x \rangle | = |\vec{a}|}$
+4. $m - \text{любое}\ l - \text{любое}$ \\
+   $\Vert A \Vert = \displaystyle{\sup_{x: |x| = 1} |Ax|} =$ :(
+
+** *Лемма* 
+$X, Y$ - линейные нормированные пространства  $A \in \mathcal{L}(X, Y)$ \\
+1. $A$ - ограниченый оператор, т.е. $\Vert A \Vert$ - конечное
+2. $A$ - непрерывен в нуле
+3. $A$ - непрерывен всюду в $X$
+4. $A$ - равномерно непрерывен \\
+   $f: X \rightarrow Y$ - метрические пространства, равномерно непрерывно \\ 
+   $\forall \varepsilon > 0\ \exists \delta > 0:\ \forall x, x_0: \rho(x, x_0) < \delta\quad \rho(f(x), f(x_0)) < \varepsilon$ \\
+   $\forall \varepsilon > 0\ \exists \delta > 0:\ \forall x_0, x_1:\ |x_1 - x_0| < \delta\quad |Ax_1 - Ax_2| < \varepsilon$
+
+*Доказательство*
+1. $4 \Rightarrow 3 \Rightarrow 2$ - очевидно
+2. $2 \Rightarrow 1$ непрерывность в нуле: Для $\varepsilon = 1\ \exists \delta: \forall x: |x| \le \delta\quad |Ax| < 1$
+   при $|x| = 1\quad |Ax| = |A\frac{1}{\delta}(\delta\cdot x)| = \frac{1}{\delta}\cdot|A\cdot \delta x| \le \frac{1}{\delta}$
+3. $1 \Rightarrow 4$ $|Ax_1  - Ax_0| = |A(x_1 - x_0)| \le \Vert A \Vert\cdot |x_1 - x_0|$ \\
+  $\forall \varepsilon > 0\ \exists \delta: = \frac{\varepsilon}{\Vert A \Vert}\quad \forall x_1, x_0\ |x_1 - x_0| < \delta\quad |Ax_1 - Ax_0| \le \Vert A \Vert \cdot|x_1 - x_0| < \varepsilon$ 
+  
+** *Теорема* о пространстве линейных отображений
+1. Отображение $A \rightarrow \Vert A \Vert$ в $\mathcal{L}(\mathbb{R}^m, \mathbb{R}^n)$ является нормой, т.е выполнятеся
+   1) $\Vert A \Vert \ge 0$ если $\Vert A \Vert = 0 \Rightarrow A - 0_{m, n}$
+   2) $\forall \lambda \in \mathbb{R}\quad \Vert \lambda A \Vert = |\lambda|\cdot \Vert A \Vert$
+   3) $\Vert A + B \Vert \le \Vert A \Vert + \Vert B \Vert$
+2. $A \in \mathcal{L}(\mathbb{R}^m, \mathbb{R}^n),\ B \in \mathcal{L}(\mathbb{R}^n, \mathbb{R}^k)\quad \Vert AB \Vert \le \Vert B \Vert \cdot \Vert A \Vert$
+
+*Доказательство* 
+1. 
+   1) $\displaystyle{\Vert A \Vert = \sup_{|x| = 1}|Ax|}$, очев
+   2) очев
+   3) $|(A + B)\cdot x| = |Ax + Bx| \le |Ax| + |Bx| \le (\Vert A \Vert + \Vert B \Vert)\cdot|x|$ по замечанию 3 $\Vert A + B \Vert \le \Vert A \Vert + \Vert B \Vert$
+2. $|BAx| = |B\cdot(Ax)| \le \Vert B \Vert \cdot |Ax| \le \Vert B \Vert \cdot \Vert A \Vert \cdot |x|$ по замечанию 3
+
+/Замечание/ в $\dim(X, Y)$ \\
+$\Vert A \Vert = \displaystyle{\sup_{|x| = 1}|Ax| = \sup_{|x| \le 1}|Ax|=\sup_{|x| < 1}|Ax|} = \sup_{x \neq 0}\frac{|Ax|}{|x|} = \inf\{C \in \mathbb{R}: \forall x\ |Ax| \le C\cdot|x|\}$

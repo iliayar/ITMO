@@ -1,0 +1,101 @@
+#+LATEX_CLASS: general
+#+TITLE: Home work 11
+#+AUTHOR: Ilya Yaroshevskiy
+
+* 
+$\overrightarrow{F} = \alpha^2rm$
+
+\begin{gather*}
+m\overrightarrow{a} = \overrightarrow{F} \\
+ma_x = -\alpha^2rm\cos{\varphi} \\
+ma_y = -\alpha^2rm\sin{\varphi} \\
+\cos{\varphi} = \frac{x}{r} \\
+\sin{\varphi} = \frac{y}{r} \\
+a_x = -\alpha^2x \\
+a_y = -\alpha^2y  \\
+\ddot{x} + \alpha^2x = 0 \\
+\Downarrow \\
+\lambda_{1,2} = \pm i\alpha \\
+x = C_1\sin{\alpha t} + C_2\cos{\alpha t} \\
+\end{gather*}
+Аналогично $y = C_3\sin{\alpha t} + C_4\cos{\alpha t}$ \\
+Найдем коэффиценты: 
+\begin{gather*}
+\begin{cases}
+C_2 = x_0 \\
+\alpha C_1 = V_{x_0}
+\end{cases} \Rightarrow
+x = \frac{V_{x_0}}{\alpha}\sin{\alpha t} + x_0\cos{\alpha t} \\
+\begin{cases}
+C_4 = y_0 \\
+\alpha C_3 = V_{y_0}
+\end{cases} \Rightarrow
+y = \frac{V_{y_0}}{\alpha}\sin{\alpha t} + y_0\cos{\alpha t} \\
+\end{gather*}
+
+#+BEGIN_SRC  gnuplot :exports none :file plot1.png :var a=2.0 vx0=10.0 vy0=0.0 x0=10.0 y0=10.0 T=50.0
+  set parametric
+  set autoscale
+  set trange [0:T]
+  plot vx0/a*sin(a*t) + x0*cos(a*t), vy0/a*sin(a*t) + y0*cos(a*t)
+#+END_SRC
+
+#+attr_latex: :scale 0.3
+#+CAPTION: $\alpha=2.0\ v_{x_0}=10.0\ v_{y_0}=0.0\ x_0=10.0\ y_0=10.0$
+#+RESULTS:
+[[file:plot1.png]]
+
+* 
+\begin{align*}
+\begin{cases}
+3\ddot{x_1} = - \alpha^2x_1 + \alpha^2(x_2 - x_1) \\
+2\ddot{x_2} = - \alpha^2(x_2 - x_1)
+\end{cases}
+\end{align*}
+решим уравнение вида $\ddot{X} = KX$, где $X = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}$, 
+$K = \begin{bmatrix}-\frac{2}{3}\alpha^2 & \frac{1}{3}\alpha^2 \\ \frac{1}{2}\alpha^2 & -\frac{1}{2}\alpha^2 \end{bmatrix}$ \\
+Найдем собмтвенные значения матрицы $K$, они равны $\omega_1 = \alpha,\ \omega_2 = \frac{\alpha}{\sqrt{3}}$, 
+а также соответствующие собственные вектора $H_1, H_2$, получим $H1 = \begin{bmatrix} 1 \\ -1 \end{bmatrix}$,
+$H_2 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ \\
+Теперь найдем решение в виде $X = A_1 H_1\cos\omega_1 t + A_2 H_2 \cos\omega_2 t$ \\
+$A_1, A_2$ будут зависеть от начального полложения тел и равны $A_1 = \frac{x_{10} - x_{20}}{2}, A_2 = \frac{x_{10} + x_{20}}{2}$ \\
+\begin{align*}
+\begin{cases}
+x_1 = \frac{x_{10} + x_{20}}{2}\cos{\alpha t} + \frac{x_{10} - x_{20}}{2}\cos{\frac{\alpha}{\sqrt{3}} t} \\
+x_2 = \frac{x_{10} + x_{20}}{2}\cos{\alpha t} - \frac{x_{10} - x_{20}}{2}\cos{\frac{\alpha}{\sqrt{3}} t} \\
+\end{cases}
+\end{align*}
+* 
+* 
+$I_C,\ I_L,\ I_R$ - соответсвенно токи через конденсатор, катушку, резистор \\
+По правилу Киргофа: $I_L + I_C - I_R = 0$ \\
+А также $\begin{cases}U_R + U_L = E \\ U_R + U_C = E \end{cases}$ \\
+То есть $\begin{cases}I_R R + \frac{1}{C}\int I_C dt - E = 0\\ I_R R + L \frac{dI_L}{dt} - E = 0 \end{cases}$ \\
+Будем находить $I_R$ из уравнения $I_R R + L I_L' = V\sin \omega t$, принимая $I_R = A\sin(\omega t - \varphi)$ \\
+\begin{gather*}
+I_C' = C(E'' - I_R''R) \\
+I_L' = I_R' + C(I_R''R - E'') \\
+I_R R + L(I_R' + C(I_R''R - E'')) = E \\
+I_R R + I_R'L + I_R''LRC = E + LCE'' \\
+RA\sin(\omega t - \varphi) + LA\omega \cos(\omega t - \varphi) - LCRA\omega^2\sin(\omega t - \varphi) = V\sin(\omega t) - LCV\omega^2\sin(\omega t)
+\end{gather*}
+Найдем коэффиценты при $\cos(\omega t)$ и $\sin(\omega t)$ в обеих частях, получим: \\
+\begin{align*}
+\begin{cases}
+RA\cos \varphi + LA\omega\sin \varphi - LCRA\omega^2\cos \varphi = V - LCV\omega^2 \\
+-RA\sin \varphi + LA\omega\cos \varphi + LCRA\omega^2\sin \varphi = 0
+\end{cases}
+\end{align*}
+Отсюда: 
+\begin{align*}
+\begin{cases}
+A = \frac{V - LCV\omega^2}{R\cos \varphi + L\omega\sin \varphi - LCR\omega^2\cos \varphi} \\
+\tg\varphi = \frac{L\omega}{R(1 - LC\omega^2)}
+\end{cases}
+\end{align*}
+\begin{gather*}
+\cos\varphi = \frac{R(1 - LC\omega^2)}{\sqrt{L^2\omega^2 + R^2(1-LC\omega^2)^2}} \\
+A = \frac{V(1-LC\omega^2)}{\sqrt{L^2\omega^2 + R^2(1 - LC\omega^2)^2}}
+\end{gather*}
+$\frac{dA}{dw} = 0 \Rightarrow \omega^2 = -\frac{1}{LC}$
+* 

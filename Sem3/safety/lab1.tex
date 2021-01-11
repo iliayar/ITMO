@@ -1,0 +1,17 @@
+\documentclass[12pt]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian]{babel}
+% \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+\begin{document}
+\[Q(\text{ПЗ}) = 1 - \prod_{i=1}^{n}[1 - Q_i(\text{ПП})]\]
+\[Q_i(\text{ПП}) = 1 - \{\prod_{i=1}^{m}[1 - Q(\text{ПТА}_j)]\}\cdot[1 - Q_i(\text{ПО})]\]
+\[Q_i(\text{ПО}) = Q_i[\bigcup_{k=1}^{K}\bigcup_{n=1}^{N}(\text{ГС}_{\text{k}}\bigcap\cdot\text{ИЗ}_{\text{n}})]\]
+\[Q_i(\text{ПО}) = 1 - \prod_{k=1}^{K}\prod_{n=1}^{N}[1 - Q_i(\text{ГС}_k)\cdot Q_i(\text{ИЗ}/\text{ГС}_k)]\]
+\end{document}

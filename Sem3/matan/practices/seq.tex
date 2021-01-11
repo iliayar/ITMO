@@ -1,0 +1,69 @@
+% Created 2020-12-01 Tue 20:36
+% Intended LaTeX compiler: pdflatex
+\documentclass{article}
+       \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian, english]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{grffile}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+       
+       \usepackage{geometry}
+       \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Functional sequences}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Functional sequences},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.3)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Признаки}
+\label{sec:org1196bac}
+\[ \sum a_n(x)b_n(x) \]
+\subsection{Дирихле}
+\label{sec:org4d3ddae}
+\begin{enumerate}
+\item Частичные суммы ряда \(\sum a_n\) равномерно органичены \\
+\(\exists C_a\ \forall N\ \forall x \in E\ |\sum_{k=1}^{N}a_k(x)| \le C_a\)
+\item Фиксируем \(x\) b\textsubscript{n}(x) монотонна по \(n\) \\
+b\textsubscript{n}(x) \(\rightarrow\) 0
+\end{enumerate}
+1), 2) \(\Rightarrow\) ряд равномерно сходится
+
+\subsection{Абеля}
+\label{sec:orgad1fcd3}
+\begin{enumerate}
+\item \(\sum a_n(x)\) равномерно сходится
+\item \(b_n(x)\) монотонна по \(n\) \\
+\(b_n(x)\) равномерно ограничена \\
+\(\exists C_b\ \forall n\ \forall x\ |b_n(x)| < C_b\)
+\end{enumerate}
+\subsection{Вейерштрасса}
+\label{sec:org425bd88}
+\[ \sum u_n(x)\ x \in E \]
+\begin{enumerate}
+\item \(\forall x \in E\ |u_n(x)\le C_n|\)
+\item \(\sum C_n\) - сходится
+\end{enumerate}
+\end{document}
