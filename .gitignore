@@ -23,7 +23,8 @@
 *.xdv
 *.el
 _minted*
-
+*.out
+*.toc
 
 # Idea files
 **/.idea/

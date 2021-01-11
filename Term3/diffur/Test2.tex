@@ -1,0 +1,100 @@
+% Created 2020-12-24 Thu 15:32
+% Intended LaTeX compiler: pdflatex
+\documentclass{article}
+       \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian, english]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{grffile}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+       
+       \usepackage{geometry}
+       \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Test 2}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Test 2},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.3)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Неоднородные \(n\) -го порядка}
+\label{sec:org0e46468}
+\href{http://www.math24.ru/\%D0\%BD\%D0\%B5\%D0\%BE\%D0\%B4\%D0\%BD\%D0\%BE\%D1\%80\%D0\%BE\%D0\%B4\%D0\%BD\%D1\%8B\%D0\%B5-\%D0\%B4\%D0\%B8\%D1\%84\%D1\%84\%D0\%B5\%D1\%80\%D0\%B5\%D0\%BD\%D1\%86\%D0\%B8\%D0\%B0\%D0\%BB\%D1\%8C\%D0\%BD\%D1\%8B\%D0\%B5-\%D1\%83\%D1\%80\%D0\%B0\%D0\%B2\%D0\%BD\%D0\%B5\%D0\%BD\%D0\%B8\%D1\%8F-n-\%D0\%B3\%D0\%BE-\%D0\%BF\%D0\%BE\%D1\%80\%D1\%8F\%D0\%B4\%D0\%BA\%D0\%B0-\%D1\%81-\%D0\%BF\%D0\%BE\%D1\%81\%D1\%82\%D0\%BE\%D1\%8F\%D0\%BD\%D0\%BD\%D1\%8B\%D0\%BC\%D0\%B8-\%D0\%BA\%D0\%BE\%D1\%8D\%D1\%84\%D1\%84\%D0\%B8\%D1\%86\%D0\%B8\%D0\%B5\%D0\%BD\%D1\%82\%D0\%B0\%D0\%BC\%D0\%B8.html}{Читать больше}
+
+Уравнения вида \(y^{(n)} + a_1y^{(n - 1)} + \dots + a_{n - 2}y' + a_{n - 1}y = f(x)\) \\
+Его решение будет \(y = y_0 + y_1\), где \(y_0\) - решение
+соответствующего одноролного, а \(y_1\) - частное(хуй его че значит) решение неоднородного \\
+\emph{Алгоритм}
+\begin{enumerate}
+\item Находим \(y_0 = C_1Y_1 + C_2Y_2 + \dots + C_nY_n\)
+\item Принимаем \(C_m\) за функцию от \(x\). Решаем систему \\
+\begin{cases}
+C_1'Y_1 + C_2'Y_2 + \dots + C_n'Y_n = 0 \\
+C_1'Y_1' + C_2'Y_2' + \dots + C_n'Y_n' = 0 \\
+\vdots \\
+C_1'Y_1^{(n-1)} + C_2'Y_2^{(n-1)} + \dots + C_n'Y_n^{(n-1)} = f(x) \\
+\end{cases}
+\end{enumerate}
+Елси правая часть предсавляет собой \(P_n(x)e^{\alpha x}\) или \((P_n(x)\sin(\beta x) + Q_m(x)\cos(\beta x))e^{\alpha x}\) \\
+Тогда ищем решение, например,  так:
+\begin{enumerate}
+\item Для \(f(x) = P_n(x)e^{\alpha x}\ y_1 = x^sA_n(x)e^{\alpha x}\)
+, где \(A_n(x)\) - многочлен той-же степени что и \(P_n(x)\), коээффиценты ищем из кравнения \(y_1 = f(x)\) \\
+Если \(\alpha\) совпадает с каким либо корнем \(y_0\), то \(s\) равно кратности этого корня, иначе \(s = 0\)
+\item Для \(f(x) = (P_n\sin(\beta x) + Q_m\cos(\beta x))e^{\alpha x}\), \(y_1 = x^s(A_n\sin(\beta x) + B_m\cos(\beta x))e^{\alpha x}\) \\
+Остальное аналогично предыдущему пункту
+\end{enumerate}
+
+\section{Неодноролные 2-го порядка}
+\label{sec:orga5cda0e}
+\href{http://www.math24.ru/\%D0\%BD\%D0\%B5\%D0\%BE\%D0\%B4\%D0\%BD\%D0\%BE\%D1\%80\%D0\%BE\%D0\%B4\%D0\%BD\%D1\%8B\%D0\%B5-\%D0\%B4\%D0\%B8\%D1\%84\%D1\%84\%D0\%B5\%D1\%80\%D0\%B5\%D0\%BD\%D1\%86\%D0\%B8\%D0\%B0\%D0\%BB\%D1\%8C\%D0\%BD\%D1\%8B\%D0\%B5-\%D1\%83\%D1\%80\%D0\%B0\%D0\%B2\%D0\%BD\%D0\%B5\%D0\%BD\%D0\%B8\%D1\%8F-\%D0\%B2\%D1\%82\%D0\%BE\%D1\%80\%D0\%BE\%D0\%B3\%D0\%BE-\%D0\%BF\%D0\%BE\%D1\%80\%D1\%8F\%D0\%B4\%D0\%BA\%D0\%B0-\%D1\%81-\%D0\%BF\%D0\%BE\%D1\%81\%D1\%82\%D0\%BE\%D1\%8F\%D0\%BD\%D0\%BD\%D1\%8B\%D0\%BC\%D0\%B8-\%D0\%BA\%D0\%BE\%D1\%8D\%D1\%84\%D1\%84\%D0\%B8\%D1\%86\%D0\%B8\%D0\%B5\%D0\%BD\%D1\%82\%D0\%B0\%D0\%BC\%D0\%B8.html}{Читать больше}
+
+\section{Системы}
+\label{sec:org8369600}
+\href{http://www.math24.ru/\%D0\%BC\%D0\%B5\%D1\%82\%D0\%BE\%D0\%B4-\%D1\%81\%D0\%BE\%D0\%B1\%D1\%81\%D1\%82\%D0\%B2\%D0\%B5\%D0\%BD\%D0\%BD\%D1\%8B\%D1\%85-\%D0\%B7\%D0\%BD\%D0\%B0\%D1\%87\%D0\%B5\%D0\%BD\%D0\%B8\%D0\%B9-\%D0\%B8-\%D1\%81\%D0\%BE\%D0\%B1\%D1\%81\%D1\%82\%D0\%B2\%D0\%B5\%D0\%BD\%D0\%BD\%D1\%8B\%D1\%85-\%D0\%B2\%D0\%B5\%D0\%BA\%D1\%82\%D0\%BE\%D1\%80\%D0\%BE\%D0\%B2.html}{Читать больше}
+
+\section{Устойчивость}
+\label{sec:orgfcc2560}
+\begin{cases}
+\dot{x} = ax + by \\
+\dot{y} = cx + dy
+\end{cases}
+
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+
+\(\Re \lambda_1 > 0\ or\ \Re \lambda 2 > 0\) - неустойчивое
+
+
+\(v(t, x, y),\ v > 0,\ x, y \ne 0,\ v(0) = 0\), тогда:
+\begin{itemize}
+\item \(\frac{dv}{dt} \le 0\) - устойчивость
+\item \(\frac{dv}{dt} < 0\) - ассимптотически устойчивость
+\end{itemize}
+
+\href{http://www.math24.ru/\%D0\%BF\%D0\%BE\%D0\%BB\%D0\%BE\%D0\%B6\%D0\%B5\%D0\%BD\%D0\%B8\%D1\%8F-\%D1\%80\%D0\%B0\%D0\%B2\%D0\%BD\%D0\%BE\%D0\%B2\%D0\%B5\%D1\%81\%D0\%B8\%D1\%8F-\%D0\%BB\%D0\%B8\%D0\%BD\%D0\%B5\%D0\%B9\%D0\%BD\%D1\%8B\%D1\%85-\%D0\%B0\%D0\%B2\%D1\%82\%D0\%BE\%D0\%BD\%D0\%BE\%D0\%BC\%D0\%BD\%D1\%8B\%D1\%85-\%D1\%81\%D0\%B8\%D1\%81\%D1\%82\%D0\%B5\%D0\%BC.html}{Читать больше} \\
+\href{http://www.math24.ru/\%D0\%BE\%D1\%81\%D0\%BD\%D0\%BE\%D0\%B2\%D0\%BD\%D1\%8B\%D0\%B5-\%D0\%BF\%D0\%BE\%D0\%BD\%D1\%8F\%D1\%82\%D0\%B8\%D1\%8F-\%D1\%82\%D0\%B5\%D0\%BE\%D1\%80\%D0\%B8\%D0\%B8-\%D1\%83\%D1\%81\%D1\%82\%D0\%BE\%D0\%B9\%D1\%87\%D0\%B8\%D0\%B2\%D0\%BE\%D1\%81\%D1\%82\%D0\%B8.html\#:\~:text=\%D0\%A1\%D1\%82\%D1\%80\%D0\%BE\%D0\%B3\%D0\%BE\%D0\%B5\%20\%D0\%BE\%D0\%BF\%D1\%80\%D0\%B5\%D0\%B4\%D0\%B5\%D0\%BB\%D0\%B5\%D0\%BD\%D0\%B8\%D0\%B5\%20\%D1\%83\%D1\%81\%D1\%82\%D0\%BE\%D0\%B9\%D1\%87\%D0\%B8\%D0\%B2\%D0\%BE\%D1\%81\%D1\%82\%D0\%B8\%20\%D0\%B2\%20\%D1\%82\%D0\%B5\%D1\%80\%D0\%BC\%D0\%B8\%D0\%BD\%D0\%B0\%D1\%85,1892\%20\%D0\%B3\%D0\%BE\%D0\%B4\%D1\%83\%20\%D1\%80\%D1\%83\%D1\%81\%D1\%81\%D0\%BA\%D0\%B8\%D0\%BC\%20\%D0\%BC\%D0\%B0\%D1\%82\%D0\%B5\%D0\%BC\%D0\%B0\%D1\%82\%D0\%B8\%D0\%BA\%D0\%BE\%D0\%BC\%20\%D0\%90.\&text=\%D0\%92\%20\%D1\%81\%D0\%BB\%D1\%83\%D1\%87\%D0\%B0\%D0\%B5\%20n\%3D2\%20\%D1\%83\%D1\%81\%D1\%82\%D0\%BE\%D0\%B9\%D1\%87\%D0\%B8\%D0\%B2\%D0\%BE\%D1\%81\%D1\%82\%D1\%8C,\%E2\%89\%A50\%20(\%D1\%80\%D0\%B8\%D1\%81\%D1\%83\%D0\%BD\%D0\%BE\%D0\%BA\%201).}{Еще больше}
+\end{document}
