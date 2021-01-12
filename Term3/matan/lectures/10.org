@@ -110,12 +110,14 @@ $V$ - локально постояно, $\gamma_0$ --- кусочно глад�
 #+end_corollary
 #+ATTR_LATEX: :options [о веревочке]
 #+begin_theorem org
+\-\\
 - $O  = \R^2 \textbackslash \{(0, 0)\}$
 - $\gamma: [0, 2\pi] \to O$ \\
   $t \mapsto (\cos t, \sin t)$
 Тогда эта петля не стягиваема
 #+end_theorem
 #+begin_proof org
+\-\\
 $V(x, y) = (\frac{-y}{x^2 + y^2}, \frac{x}{x^2 + y^2})$ --- векторное поле в $\R^2$ \\
 
 Проверим что $\frac{\partial V_1}{\partial y} = \frac{\partial V_2}{\partial x}$: \\
@@ -124,7 +126,77 @@ $V(x, y) = (\frac{-y}{x^2 + y^2}, \frac{x}{x^2 + y^2})$ --- векторное �
 
 При этом 
 \[ \int_\gamma \sum V_i dx_i = \int_0^{2\pi} \left(\frac{-\sin t}{\cos^2t+\sin^2t}\cdot(-\sin t) + \frac{\cos t}{\cos^2t + \sin^2t}\cdot\cos t\right) dt = \int_0^{2\pi} 1 dt = 2\pi\addtag \]
-(3) \Rightarrow петля не стягиваема(Если бы была стягиваема, tо интеграл изначально должен был быть равен 0, т.к. интеграл при гомотопиях не меняется), а поле $V$ --- не потенциально
+(3) \Rightarrow петля не стягиваема(Если бы была стягиваема, то интеграл изначально должен был быть равен 0, т.к. интеграл при гомотопиях не меняется), а поле $V$ --- не потенциально
 #+end_proof
 
-* Степенеы ряды
+* Степенные ряды
+#+ATTR_LATEX: :options [о равномерной сходимости и непрерывности степенного ряда]
+#+begin_theorem org
+\-\\
+$\sum a_n(z - z_0)^n\quad0 < R \le +\infty$
+1. $\forall r:\ 0 < r < R$ Ряд сходится равномерно в шаре $\overline{B(z_0, r)}$
+2. $f(z) = \sum_{n = 0}^{+\infty} a_n(z - z_0)^n$ --- непрерывна в $B(z_0, R)$
+#+end_theorem
+#+begin_proof org
+\-
+1. Если $0 < r < R$, то при $z = z_0 + r$ ряд абсолютно сходится(по теореме о радиусе сходимости), т.е. $\sum |a_n|\cdot r^n$ --- конечна \\
+   признак Вейрештрасса:
+   - при $|z - z_0 \le r|\quad|a_n(z - z_0)^n| \le |a_n|\cdot r^n$
+   - $\sum |a_n|r^n$ - конечна
+   \Rightarrow есть равномерная сходимость на $\overline{B(z_0, r)}$
+2. Следует из 1. и теоремы Стокса-Зайдля \\
+   Если $z$ удовлетворяет $|z - z_0| < R\Rightarrow \exists r_0 < R\quad z \in B(z_0, r_0)$ \\
+   На $B(z_0, r_0)$ есть равномерная сходимость \Rightarrow $f$ --- непрерывна в $z$
+#+end_proof
+#+begin_definition org
+$f: \C \to \C$ Произвдоная:
+\[ f'(z_0) = \lim_{z \to z_0}\frac{f(z) - f(z_0)}{z - z_0} \addtag \]
+#+end_definition
+#+begin_remark org
+$f(z_0 + h)=f(z_0) + f'(z_0)h + o(|h|)$
+#+end_remark
+#+begin_lemma org
+$w, w_0 \in \C,\ |w| < r,\ |w_0| < r$ \\
+Тогда $|w^n - w_0^n| \le n\cdot r^{n - 1}\cdot|w - w_0|,\ n \in \N$
+#+end_lemma
+#+begin_proof org
+$w^n - w_0^n = (w - w_0)(w^{n - 1} + \underbrace{w^{n - 2}w_0}_{\text{по модулю}\le r^{n-1}} + \dots + w_0^{n - 1})$
+#+end_proof
+#+ATTR_LATEX: :options [о дифференцируемости степенного ряды]
+#+begin_theorem org
+\[ \sum_{n = 0}^\infty a_n(z - z_0)^n\quad 0 < R < +\infty\quad f(z) = \sum a_n(z - z_0)^n \addtag \]
+\[ \sum_{n = 1}^\infty n a_n (z - z_0)^{n - 1} \addtag \]
+Тогда:
+1. Радиус сходимости ряда (6) равен $R$
+2. $\forall z \in B(z_0, R)\ \exists f'(z)$ и $f'(z)$ = (6)
+#+end_theorem
+#+begin_proof org
+\-
+1. По формуле Адамара $\begin{colored}{blue}R=\frac{1}{\lim\sqrt[n]{a_n}}\end{colored}$ \\
+   Ряд (6) сходится при каком-то $z$ \Leftrightarrow $\sum n a_n(z-z_0)^n$ --- сходится \\
+   $\begin{colored}{gray}\text{Смторим на частичные суммы}\end{colored}$ 
+   \[ \frac{1}{\lim\sqrt[n]{na_n}} = \frac{1}{1\cdot\lim\sqrt[n]{a_n}} = R \addtag \]
+2. $a\in B(z_0, R),\ \exists x < R,\ a \in B(z_0, r)$ \\
+   $a = z_0 + w_0\quad,|w_0| < r$ \\
+   $z = z_0 + w\quad,|w| < r$
+   #+begin_export latex
+   \begin{center}
+   \begin{tikzpicture}
+   \draw[color=black] (0, 0) circle[radius=2cm];
+   \draw[color=black!30!green] (0, 0) circle[radius=1.5cm];
+   \draw[fill=black] (0,0) circle[radius=1pt] node[below left] {$z_0$};
+   \draw[fill=black] (0.5,1.3) circle[radius=1pt] node[below right] {$z$};
+   \draw[fill=black] (0.7,0.3) circle[radius=1pt] node[below right] {$a$};
+   \draw[->] (0, 0) -- (0.5, 1.3);
+   \draw[->] (0, 0) -- (0.7, 0.3);
+   \node at (0.1, 0.7) {$w$};
+   \node at (0.4, -0.1) {$w_0$};
+   \node[color=black!30!green] at (0, -1.7) {$B(z_0, r)$};
+   \end{tikzpicture}
+   \end{center}
+   #+end_export
+   \[ \frac{f(z) - f(a)}{z - a} = \sum_{n = 0}^{+\infty}a_n\cdot\frac{(z - z_0)^n - (a - z_0)^n}{z - a} = \sum_{n = 1}^{ +\infty} a_n\cdot\frac{w^n - w_0^n}{w - w_0} \addtag \]
+   Последнее выражение по модулю по Лемме $\le n\cdot r^{n - 1}\cdot|a_n|$, ряд $\sum n r^{n - 1}|a_n|$ --- сходится по 1., т.е. ряд (8) равномерно сходится в круге $z \in B(z_0, r)$
+   \[ \lim \frac{f(z) - f(a)}{z - a} = \sum_{n = 1}^{ +\infty}a_n\cdot\lim\frac{(z - z_0)^n - (a - z_0)^n}{z - a} = \sum n a_n(a - z_0)^{n-1}\addtag \]
+#+end_proof
+

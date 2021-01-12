@@ -1,0 +1,85 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 12
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Экспонента
+#+begin_theorem org
+$\exp(z + w) = \exp(z)\cdot\exp(w)$
+#+end_theorem
+#+begin_proof org
+\[ \exp(z)\cdot\exp(w) = \sum_{n = 0}^{+\infty}\frac{z^n}{n!}\cdot\sum_{n = 0}^{ +\infty} \frac{w^n}{n!} = \sum c_n \addtag \]
+\[ \text{, где }c_n = \frac{1}{n!}\sum_{k = 0}^n \frac{z^k}{k!}\cdot\frac{w^{n -k}}{(n - k)!}\cdot n! = \frac{(z + w)^n}{n!} \addtag \]
+\[ \sum c_n = \sum \frac{(z + w)^n}{n!} = \exp(z + w) \addtag \]
+#+end_proof
+#+begin_corollary org
+$\forall z \in \C\quad\exp(z) \neq 0$
+#+end_corollary
+4. [@4]
+   $\overline{\exp(z)} = \exp(\overline{z})$
+   #+begin_proof org
+   $\color{gray} \overline{w_1 + w_2} = \overline{w_1} + \overline{w_2}$ \\
+   Потому что коэффицент вещественный:
+   \[ \overline{\sum_{n = 0}^N \frac{z^n}{n!}} = \sum_{n = 0}^N  \frac{(\overline{z})^n}{n!} \addtag \]
+   #+end_proof
+** Замечания о тригонометрических функциях
+#+begin_export latex
+\newcommand{\Cos}[1]{\text{Cos}(#1)}
+\newcommand{\Sin}[1]{\text{Sin}(#1)}
+#+end_export
+Пусть $\exp(ix) = \Cos x + i\Sin{x},\ x \in \R$ \\
+Тогда $\exp(-ix) = \Cos x - i\Sin x$ \\
+\[ \Cos x = \frac{\exp(ix) + \exp(-ix)}{2}\quad \Sin x = \frac{\exp(ix) - \exp(-iz)}{2i} \addtag \] \\
+Следовательно:
+\[ \Cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} + \dots\quad \Sin x = x - \frac{x^3}{3!} + \dots \addtag \]
+Пусть $T(x) = \exp(ix)$ Тогда $T(x + y) = T(x)T(y)$ \\
+\[ \Cos{x + y} + i\Sin{x + y} = (\Cos{x} + i\Sin{x})(\Cos{y} + i\Sin{y}) \addtag \]
+$\Cos{x + y} = \Cos x \Cos y - \Sin x \Sin y$ \\
+$\Sin{x + y} = \Cos x \Sin y + \Sin x \Cos y$
+\[ |T(x)|^2 = T(x)\cdot\overline{T(x)} = \exp(ix)\cdot\exp(-ix) = \exp(0) = 1 \addtag \]
+т.е. $(\Cos x, \Sin x)$ --- точка на единичной окружности \\
+$T' = iT$, т.е. $x \mapsto T(x)$ --- движение по единичной окружности c единичным вектором скорости, вектор скорости \perp радуис-вектору
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw[dashed] (0, 0) circle[radius=2cm];
+\draw[fill=black] (0,0) circle[radius=1pt];
+\draw[fill=black] (1.414,1.414) circle[radius=1pt];
+\draw[->] (0,0) -- (1.414, 1.414) node[right] {$T(x)$};
+\draw[->] (1.414, 1.41) -- (0.414, 2.414) node[right] {$T'(x)$};
+\end{tikzpicture}
+\end{center}
+#+end_export
+* Ряды Тейлора
+*Все вещественно*
+#+begin_definition org
+$f$ --- *разлагается в степенной ряд* в окрестности $x_0$ если: \\
+$\exists \varepsilon > 0\ \exists C_n$ --- вещественная последовательность $\forall x \in (x_0 - \varepsilon, x_0 + \varepsilon)\ f(x) = \displaystyle{\sum_{n = 0}^{+\infty} C_n(x - x_0)^n}$ (*)
+#+end_definition
+#+begin_remark org
+Тогда $f \in C^\infty(x_0 - \varepsilon, x_0 + \varepsilon)$ по [[file:11.org::10][следствию]]
+#+end_remark
+#+ATTR_LATEX: :options [единственности]
+#+begin_theorem org
+$f$ --- разлагается в сепенной ряд в окресности $x_0$ \\
+Тогда разложение единственно
+#+end_theorem
+#+begin_proof org
+выполняется (*) \\
+\[ c_0 = f(x_0),\quad f'(x) = \sum_{n = 1}^{+\infty}nC_n(x-x_0)^{n - 1} \addtag \]
+\[ c_1 = f'(x_0),\quad f''(x) = \dots \addtag \]
+\[ f^{(k)}(x) = \sum_{n = k}^{+\infty} n(n - 1)\dots(n - k + 1)C_n(x - x_0)^{n - k} \addtag \]
+\[ c_k = \frac{f^{(k)}(x_0)}{k!} \addtag \]
+#+end_proof
+#+begin_definition org
+Ряд Тейлора функции $f$ в точке $x_0$ --- формальный ряд $\sum_{n = 0}^{+\infty} \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$
+#+end_definition
+#+begin_remark org
+Ряд Тейлора может оказаться сходящимся только в точке $x_0$
+#+end_remark
+#+begin_remark org
+Ряд Тейлора может сходится /не туда/
+#+end_remark
+#+begin_examp org
+$f(x) = \begin{cases} e^\frac{-1}{x^2} & , x\neq0 \\ 0 & , x = 0\end{cases}$. Тогда $f \in C^\infty(\R)$ \\
+при $x = 0\quad \forall n\ f^{(n)}(0) = 0 \color{gray}\text{ --- мы это доказывали}$ \Rightarrow Ряд Тейлора в $x_0 = 0$ тождественно равен нулю
+#+end_examp
