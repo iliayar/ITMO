@@ -56,7 +56,7 @@ $f$ --- *разлагается в степенной ряд* в окрестн�
 $\exists \varepsilon > 0\ \exists C_n$ --- вещественная последовательность $\forall x \in (x_0 - \varepsilon, x_0 + \varepsilon)\ f(x) = \displaystyle{\sum_{n = 0}^{+\infty} C_n(x - x_0)^n}$ (*)
 #+end_definition
 #+begin_remark org
-Тогда $f \in C^\infty(x_0 - \varepsilon, x_0 + \varepsilon)$ по [[file:11.org::10][следствию]]
+Тогда $f \in C^\infty(x_0 - \varepsilon, x_0 + \varepsilon)$ по [[степенныерядыследствие1][следствию]]
 #+end_remark
 #+ATTR_LATEX: :options [единственности]
 #+begin_theorem org
@@ -83,3 +83,118 @@ $f$ --- разлагается в сепенной ряд в окресност�
 $f(x) = \begin{cases} e^\frac{-1}{x^2} & , x\neq0 \\ 0 & , x = 0\end{cases}$. Тогда $f \in C^\infty(\R)$ \\
 при $x = 0\quad \forall n\ f^{(n)}(0) = 0 \color{gray}\text{ --- мы это доказывали}$ \Rightarrow Ряд Тейлора в $x_0 = 0$ тождественно равен нулю
 #+end_examp
+* Теория меры
+#+begin_export latex
+\newcommand{\A}{\mathfrak{A}}
+#+end_export
+
+#+begin_definition org
+\sigma - алгебра $\mathfrak{A} \subset 2^X$
+1. $\mathfrak{A}$ --- алгебра
+2. $A_1,A_2,\dots \in \mathfrak{A} \Rightarrow \displaystyle{\bigcup_{i = 1}^\infty A_i \in \A}$
+#+end_definition
+#+begin_remark org
+$A_1,A_2,\dots \in \A$ Тогда $\displaystyle{\bigcap_{i = 1}^\infty A_i \in \A}$ \\
+$\displaystyle{X\setminus \bigcap_{i = 1}^\infty A_i = \bigcup_{i = 1}^\infty(X\setminus A_i)}$
+#+end_remark
+#+begin_remark org
+$E \in \underset{\sigma\text{-алгебра}}{\A}$ Тогда $\A_E := \{A \in \A\big\vert A \subset R\}$ --- \sigma - алгебра подмножеств множества $E$
+#+end_remark
+#+begin_examp org
+$2^X$
+#+end_examp
+#+begin_examp org
+X - бесконечное множество $\A =$ не более чем счетные множества и их дополнения \\
+Аналогично примеру 2 для алгебр
+#+end_examp
+#+begin_examp org
+$X = \R^2$ $\A$ --- ограниченое множество и их дополнение --- не \sigma-алгебра
+#+end_examp
+<<теориямеры12>>
+** Объем
+#+begin_export latex
+\renewcommand{\P}{\mathcal{P}}
+#+end_export
+
+#+begin_definition org
+$\mu: \underset{\text{полукольцо}}{\P} \to \overline{\R}$ --- *аддитивная функция множества*, если:
+1. $\mu$ --- не должна принимать значение $\pm\infty$ одновременно(если принимает одно на каком либо множестве, не должно принимать другое на любом другом множестве)
+2. $\mu(\emptyset) = 0$
+3. $\forall A_1,\dots,A_n\in\P$ --- дизъюнктны. Если $A = \bigsqcup A_i \in \P$, то $\mu(A) = \sum_{i = 1}^n\mu(A_i)$
+#+end_definition
+#+begin_definition org
+$\mu:\P\to\R$ --- *объем*, если $\mu \ge 0$ и $\mu$ --- аддитивная
+#+end_definition
+#+begin_remark org
+Если $X \in \P,\ \mu(X) < +\infty$, то говорят, что $\mu$ --- конечный объем
+#+end_remark
+#+begin_remark org
+$\mu$ --- задано на $\A$: свойство 3 можно заменить на 3' \\
+3'. $\forall A, B \in \A,\ A\cap B = \emptyset\quad \mu(A \cup B) = \mu(A) = \mu(B)$
+#+end_remark
+#+begin_symb org
+$\mu(A) = \mu A$
+#+end_symb
+#+begin_examp org
+$\P^1$ --- ячейки в $\R$, $\mu[a, b) = b - a,\ b \ge a$ \\
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (0, 0) -- (0.5, 0) node {$\big[$} -- (2.5, 0) node {$\big)$} -- (3, 0);
+\node at (0.5, -0.4) {$a$};
+\node at (2.5, -0.4) {$b$};
+\end{tikzpicture}
+\end{center}
+#+end_export
+$a = x_0 < x_1 < \dots < x_n = b$ \\
+$[a, b) = \bigsqcup_{i = 1}^n [x_{i - 1}, x_i)$ \\
+$\sum_{i = 1}^n\mu[x_{i - 1}, x_i) = \sum_{i = 1}^n (x_i - x_{i - 1}) \xlongequal[\text{телескоп.}]{} x_n - x_0 = b - a = \mu[a, b)$
+#+end_examp
+#+begin_examp org
+Классический объем в $\R^m\quad \mu: \P^m \to \R$ \\
+$\mu[a, b) = \displaystyle{\prod_{i = 1}^m(b_i - a_i)}$ \\
+$\mu$ не является конечным объемом
+#+end_examp
+#+begin_definition org
+$A \subset B \Rightarrow \mu A \le \mu B$ --- *монотонность объема*
+#+end_definition
+#+ATTR_LATEX: :options [о свойствах объема]
+#+begin_theorem org
+$\mu: \P \to \overline{\R}$ --- объем \\
+Тогда он имеет свойства:
+1. Уиленная монотонность \\
+   $\forall A,\underbrace{A_1, A_2, \dots, A_n}_\text{дизъюнктны}\in\P\quad\bigsqcup_{i = 1}^n A_i \subset A\quad \sum_{i = 1}^n \mu A_i \le \mu A$
+2. Конечная полуаддитивность \\
+   $\forall A, A_1, A_2, \dots, A_n \in \P\quad A \subset \bigcup_{i = 1}^n A_i \quad \mu A \le \sum_{i = 1}^n A_i$
+3. $\forall A, B \in \P$ пусть еще известно: $A \setminus B \in \P,\ \mu B$ --- конечный \\
+   Тогда $\mu(A \setminus B)\ge\mu A - \mu B$
+#+end_theorem
+#+begin_remark org
+\-
+- в пунктах 1 и 2 не предполагается, что $\bigcup A_i \in P$
+- в пункте 3 если $\P$ --- алгебра то условие $A\setminus B \in P$ можно убрать(оно выполняется автоматически)
+#+end_remark
+#+begin_proof org
+\-
+1. Усиление аксиомы 3 из определения полукольца:
+   $A\setminus (\bigcup_{i = 1}^n A_i) = \bigsqcup_{l = 1}^S B_l$ --- [[file:11.org::98][доказано ранее]] \\
+   таким образом $A = (\bigsqcup A_i)\cup(\bigsqcup B_l)$ --- дизъюнктное объединение конечного числа множеств \\
+   $\mu A = \sum \mu A_i + \sum \mi B_l \ge \sum \mu A_i$
+2. объем \Rightarrow конечная полуаддитивность
+   \[ A \subset \bigcup_\text{кон.} A_k \Rightarrpw \mu A \le \sum \mu A_k \quad (A, A_1, \dots, A_n \in \P)\addtag \]
+   \[ B_k := A\cap A_k \in \P\quad A = \bigcup_\text{кон.} B_k \addtag \]
+   Сделаем эти множества дизъюнктными
+   \[ C_1 := B_1, \dots, C_k := B_k \setminus (\bigcup_{i = 1}^{k - 1} B_i)\quad A = \bigsqcup_\text{кон.}C_k \addtag \]
+   Но эти $C_k$ вообще говоря $\not\in \P$
+   \[ C_k = B_k\setminus(\bigcup_{i = 1}^{k - 1} B_i) = \bigsqcup_{i} D_{kj},\ D_{kj} \in \P \addtag \]
+   Тогда:
+   \[ A = \bigsqcup_{k, j} D_{kj}\qquad\mu A = \sum \mu D_{kj} \addtag \]
+   При этом $\forall k$:
+   \[ \sum_j \mu D_{kj} = \mu C_k \le \mu A_k \addtag \]
+   Неравенство в (18) в силу монотонности объема(п.1 теоремы).
+   Итого
+   \[ \mu A = \sum_k\sum_j \mu D_{kj} = \sum \mu C_k \le \sum \mu A_k \addtag \]
+3. 
+   1. $B \subset A\quad A = B \sqcup (A \setminus B)\quad \mu A = \mu B + \mu(A \setminus B)$
+   2. $B \not\subset A\quad A\setminus B=A\setminus\underbrace{(A\cap B)}_{\in \P}\quad \mu(A\setminus B) \xlongequal[\text{(a)}]{} \mu A - \mu(A\cap B) \underset{\text{монот.}}{\ge} \mu A - \mu B$
+#+end_proof
