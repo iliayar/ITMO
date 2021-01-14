@@ -1,0 +1,217 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 15
+#+AUTHOR: Ilya Yaroshevskiy
+
+
+* Мера Лебега
+#+begin_export latex
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\M}{\mathfrak{M}}
+#+end_export
+
+#+begin_corollary org
+$\forall A \in \M^m\quad \exists B, C$ --- борелевские \\
+$B \subset A \subset C\quad \lambda(C\setminus A) = 0,\ \lambda(A\setminus B) = 0$
+#+end_corollary
+#+begin_proof org
+\[ C := \bigcap_{n = 1}^{+\infty} G_{\frac{1}{n}} \addtag \]
+\[ B \subset \bigcup_{n = 1}^{ +\infty}F_{\frac{1}{n}} \addtag \]
+#+end_proof
+#+begin_corollary org
+$\forall A \subset \M^m\ \exists B, \mathcal{N}$ --- $B$ - борелевское, $\mathcal{N} \in \M^m,\ \lambda \mathcal{N} = 0$ \\
+$A = B \cup \mathcal{N}$
+#+end_corollary
+#+begin_proof org
+$B$ --- из следствия 1, $\mathcal{N} := A \setminus B$
+#+end_proof
+#+begin_remark org
+Обозначим $|X|$ --- мощность множества $X$ \\
+$\forall X\quad |2^X| > |X|$ \\
+$X = \R^m\quad |2^{\R^m}| >$ континуум \\
+$\B \subset 2^{R^m}$ --- борелевская \sigma-алгебра, $|\B|$ = континуум \\
+$|M^m| >$ континуума \\
+$\mathfrak{K}$ --- канторово множество. $|\mathfrak{K}|$ = континуум, $\lambda\mathfrak{K} = 0$ \\
+$\forall D \subset \mathfrak{K}\ D \in \M^m,\ \lambda D = 0$(полнота \lambda) \\
+$2^\mathfrak{K} \subset M^m$
+#+end_remark
+#+begin_corollary org
+$\forall A \in \M^m$ \\
+\[ \lambda A = \inf_{\substack{ G: A \subset G\\ G\text{ --- откр.} }} \lambda(G) = \overset{(*)}{\sup_{\substack{F: F \subset A \\ F\text{--- замкн.}}} \lambda(F)} = \sup_{\substack{K: K\subset A \\ K\text{--- компакт.}}} \lambda(K) \addtag \]
+#+end_corollary
+#+begin_proof org
+(*) следует из \sigma-конечности \[ \R^m = \bigcup_{n = 1}^{ +\infty} Q(0, n) \addtag \]
+\[ \color{gray} Q(a, R) = \bigtimes_{i = 1}^n[a_i - R, a_i + R] \]
+\[ \lambda(A \cap Q(0, n)) \to \lambda A\text{ --- по непрерывности снизу} \addtag \]
+#+end_proof
+#+begin_definition org
+Свойства из следствия 3 называются *регулярностью меры Лебега*
+#+end_definition
+** Преобразования меры Лебега при сдвигах и линейных отображениях
+#+begin_lemma org
+$(X', \A', \mu')$ --- пространство с мерой \\
+$(X, \A, \cdot)$ --- "заготовка"$\+$ пространства \\
+$T: X \to X'$ --- биекция; $\forall A \in \A\ TA \in \A'\ (T\emptyset \xlongequal{\text{def}} \emptyset)$ \\
+Положим $\mu A = \mu' (TA)$ \\
+Тогда $\mu$ --- мера
+#+end_lemma
+#+begin_proof org
+Проверим счетную аддитивность: \[ A = \bigsqcup A_i\quad \mu A =\mu'(TA) = \mu'(\bigsqcup TA_i) = \sum \mu'(TA_i) \xlongequal{\text{def}} \sum \mu A_i\addtag \]
+#+end_proof
+#+begin_remark org
+$T: X\to X'$ --- произвольное отображение, $T\A$ вообще говоря не алгебра \\
+$T^{-1}(\A')$ --- всегда \sigma-алгебра(если исходное \sigma-алгебра)
+#+end_remark
+#+begin_lemma org
+$T: \R^m \to \R^n$ --- непрерывное \\
+Пусть $\forall E \in \M^m:\ \lambda E = 0$ выполняется $\lambda( TE )= 0$ \\
+Тогда $\forall A \in \M^m\quad TA \in \M^n$
+#+end_lemma
+#+begin_proof org
+\[ A = \bigcup_{j = 1}^{ +\infty} K_j \cup \mathcal{N} \addtag \]
+, где $K_j$ --- компактное множество, $\lambda(\mathcal{N}) = 0$ \\
+\[ TA =\bigcup_{j = 1}^{ +\infty} \underbrace{TK_j}_{\substack{\text{комп.}}} \cup \underbrace{T\mathcal{N}}_{\lambda(T\mathcal{N}) = 0}\addtag \]
+$TK_j$ --- компактно, как образ компакта при непрерывном отображении \\
+(8) \Rightarrow $TA$ --- измеримо
+#+end_proof
+#+begin_examp org
+Канторова лестница
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-0.5, 0) -- (3.5, 0);
+\draw[->] (0, -0.5) -- (0, 3.5);
+\draw[thick] (-0.1, 3) node[left] {$1$} -- ++(0.2, 0);
+\draw[thick] (-0.1, 3/2) node[left] {$\frac{1}{2}$} -- ++(0.2, 0);
+\draw[thick] (-0.1, 9/4) node[left] {$\frac{3}{4}$} -- ++(0.2, 0);
+\draw[thick] (-0.1, 3/4) node[left] {$\frac{1}{4}$} -- ++(0.2, 0);
+\draw[thick] (3, -0.1) node[below] {$1$} -- ++(0, 0.2);
+\draw[thick] (1, -0.1) node[below] {$\frac{1}{3}$} -- ++(0, 0.2);
+\draw[thick] (2, -0.1) node[below] {$\frac{2}{3}$} -- ++(0, 0.2);
+\draw[thick] (1, 3/2) -- (2, 3/2);
+\draw[thick] (1/3, -0.05) -- ++(0, 0.1);
+\draw[thick] (2/3, -0.05) -- ++(0, 0.1);
+\draw[thick] (7/3, -0.05) -- ++(0, 0.1);
+\draw[thick] (8/3, -0.05) -- ++(0, 0.1);
+\draw[thick] (1/3, 3/4) -- (2/3, 3/4);
+\draw[thick] (7/3, 9/4) -- (8/3, 9/4);
+\draw[thick] (1/9, 3/8) -- (2/9, 3/8);
+\draw[thick] (7/9, 9/8) -- (8/9, 9/8);
+\draw[thick] (1/9+2, 15/8) -- (2/9+2, 15/8);
+\draw[thick] (7/9+2, 21/8) -- (8/9+2, 21/8);
+\draw[dashed] (1/3, 0) -- (1/3, 3/4);
+\draw[dashed] (2/3, 0) -- (2/3, 3/4);
+\draw[dashed] (7/3, 0) -- (7/3, 9/4);
+\draw[dashed] (8/3, 0) -- (8/3, 9/4);
+\draw[dashed] (1, 0) -- (1, 3/2);
+\draw[dashed] (2, 0) -- (2, 3/2);
+\draw[dashed] (0, 3/4) -- (1/3, 3/4);
+\draw[dashed] (0, 3/2) -- (1, 3/2);
+\draw[dashed] (0, 9/4) -- (7/3, 9/4);
+\draw[fill=black] (3, 3) circle[radius=1pt];
+\draw[dashed] (0, 3) -- (3, 3);
+\draw[dashed] (3, 0) -- (3, 3);
+\end{tikzpicture}
+\end{center}
+#+end_export
+\[ \def\arraystretch{1.5}
+f(x) = \left[\begin{array}{ll}
+\frac{1}{2} & x \in \Delta \setminus \mathfrak{K}_1 \\
+\frac{1}{4} & x \in \Delta_0 \setminus \mathfrak{K}_2 \\
+\frac{3}{4} & x \in \Delta_1 \setminus \mathfrak{K}_3 \\
+\vdots & \\
+\sup f(t) & t \le x,\ t \not\in \mathfrak{K}
+\end{array} \]
+, где $\Delta = [0, 1],\ \Delta_0 = [0, \frac{1}{3}],\ \Delta_1 = [\frac{2}{3}, 1],\ \Delta_{00} = [0, \frac{1}{9}],\ \Delta_{01} = [\frac{2}{9}, \frac{1}{3}], \dots$, а $\mathfrak{K}_0 = \Delta,\ \mathfrak{K}_1 = \Delta_0\cup\Delta_1,\ \mathfrak{K}_2 = \Delta_{00}\cup\Delta_{01}\cup\Delta_{10}\cup\Delta_{11},\quad \mathfrak{K}_i = \displaystyle{\bigcup_{\varepsilon_1,\dots,\varepsilon_n \in \{0, 1\}} \Delta_{\varepsilon_0\dots\varepsilon_n}}$ \\
+$f([0, 1] \setminus \mathfrak{K})$ --- счетное = множество двоично рациональных чисел из $[0, 1]$ \\
+$\lambda f([0, 1]\setminus\mathfrak{K}) = 0$ \\
+$\lambda f(\mathfrak{K}) = 1$, т.к. $\forall y\in[0, 1]\ \exists x:\ f(x) = y$, при этом $f$ --- непрерывна, т.к. образом функции является весь промежуток \\
+_Тогда_ пусть $E \subset [0, 1] \not\in \M^m$ \\
+$f^{-1}(E)=$ подиножество множества $\mathfrak{K}\cup$ промежутки прообраза двоично рациональных точек из $E$ --- измеримо, т.к. $\lambda\mathfrak{K} = 0$ \\
+Еще наблюдение $x\not\in\mathfrak{K}\Rightarrow f$ --- дифференцируема в $x$ и $f' = 0$
+#+end_examp
+#+begin_theorem org
+$O \subset \R^m$ --- открытое, $\Phi: O \to \R^m,\ \Phi \in C^1(O)$ \\
+_Тогда_  $\forall A \subset O,\ A\in\M^m\quad \Phi(A) \in \M^m$
+#+end_theorem
+#+begin_proof org
+Достаточно проверить свойство: $\lambda E = 0 \Rightarrow \lambda\Phi(E) = 0$ \\
+#+ATTR_LATEX: :options {blue}
+#+begin_colored org
+$\lambda E = 0 \Leftrightarrow \forall \varepsilon > 0\ \exists$ шары $B_i:\ E \subset \bigsqcup_{i = 1}^{ +\infty} B_i\quad \sum \lambda B_i < \varepsilon$
+- ($\Rightarrow$) :: из Т. о лебеговском продолжении меры
+- ($\Leftarrow$) :: используем полноту меры Лебега
+#+end_colored
+1. $E \subset \underset{\text{ячейка}}{P} \subset \overline{P} \subset O,\ \lambda E = 0$ \\
+   \[ L := \max_{x\in\overline{P}}\Vert \Phi'(x) \Vert \addtag \]
+   Тогда $\forall x, y \in P\quad |\Phi(x) - \Phi(y)| \le L|x-y|$ --- неравенство Лагранжа \\
+   \[ \Phi(B(x_0, r)) \subset B(\Phi(x_0), Lr) \subset Q(\Phi(x_0), Lr) \addtag \]
+   \[ Q(x_0, \frac{r}{\sqrt{m}}) \subset B(x_0, r) \Rightarrow \left(\frac{2r}{\sqrt{m}}\right)^m < \lambda B(x_0, r) \addtag \]
+   \[ \Phi(E) \subset \bigcup\Phi(B_i) \subset \bigcup B(y_i, Lr) \subset \bigcup Q(y_i, Lr) \addtag \]
+   \[ \sum \lambda \Phi(B_i) < \sum \lambda Q(y_i, Lr_i) = \sum(2Lr_i)^m = L^m\sum (2r_i)^m \addtag \]
+   \[ E \subset \bigcup B_i\quad\sum\lambda B_i < \varepsilon \Rightarrow \sum\left(\frac{2r_i}{\sqrt{m}}\right)^m < \varepsilon \Rightarrow \sum (2r_i)^m < \varepsilon(\sqrt{m})^m\addtag \]
+   \[ \sum \lambda B(y_i, Lr) < L^m\sum(2r_i)^m < \varepsilon(\sqrt{m}L)^m \addtag \]
+
+   , где $B_i = B(x_i, r_i),\ y_i=\Phi(x_i)$
+2. $E \subset O$ --- произвольное, $\lambda E = 0$ \\
+   $O = \bigsqcup Q_i$, где $Q_i$ --- кубические ячейки, $Q_i \subset \overline{Q_i} \subset O$ \\
+   $E = \bigsqcup(E \cap Q_i)$ по п.1 $\lambda(\Phi(E \cap Q_i)) = 0$ \\
+   $\Phi(E) = \bigcup\Phi(E \cap Q_i) \Rightarrow \lambda \Phi(E) = 0$
+#+end_proof
+#+begin_corollary org
+$\lambda$ --- инвариантна относительно сдвигов(и $\M^m$ тоже инвариантна) \\
+т.е. $\forall a \in \R^m$: $\forall A \in \M^m\quad A + a\in\M^m$ и $\lambda A = \lambda(A + a)$
+#+end_corollary
+#+begin_proof org
+$\Phi: x\mapsto x + a\quad \Phi \in C^1(R^m)$ по теореме $\Rightarrow A + a\in\M^m$, \\
+$\lambda A = \lambda(A+a)$ следует из теоремы о лебеговском продолжении: \\
+$A \subset \bigcup P_k \Leftrightarrow A + a\subset \bigcup(P_k + a)$ \\
+очевидно, что для ячейки при сдвиге $\lambda P_k = \lambda(P_k + a)$ \\
+\Rightarrow $\lambda A = \inf(\sum \lambda P_k) = \inf(\sum(P_k + a)) = \lambda(A + a)$
+#+end_proof
+#+begin_theorem org
+$\mu$ --- мера на $\M^m$:
+1. $\mu$ --- инвариантна относительно сдвига \\
+   $\forall a \in \R^m\ \forall E \in \M^m\quad \mu(E + a) = \mu E$
+2. Для любого ограниченого множества $E \in \M^m\quad \mu(E) < +\infty$
+_Тогда_ $\exists l \in [0, +\infty):\ \mu = k\cdot\lmabda$ \\
+т.е. $\forall E\quad \mu E = k\cdot \lambda E\quad(0\cdot\infty = 0)$
+#+end_theorem
+#+begin_remark org
+$\mu A := \lambda_1 A$, если $\exists y_0\quad A\subset\{(x, y_0)\big\vert x \in \R\}$
+#+end_remark
+#+begin_proof org
+\color{red} Нет\color{black} \\
+Посмотрим как мера \mu задается на рациональных ячейках \\
+В $\R^2\ Q_1$ --- единичная квадратная ячейка $\mu Q_1 = V$ \\
+$Q_2$ --- ячейки со стороной 2 $\mu Q_2 = 4V\quad \mu Q_n = n^2V\ \mu Q_{\frac{1}{n}} = \frac{1}{n^2}V$ \\
+На $\P^m \mu$ пропорциональна \lambda, $k = V$ 
+#+end_proof
+#+ATTR_LATEX: :options [инвариантность меры Лебега относительно линейных ортогональных преобразований]
+#+begin_theorem org
+$T: \R^m \to \R^m$ --- ортогональное преобразование \\
+_Тогда_ $\forall A \in \M^m$
+1. $TA \in \M^m$
+2. $\lambda(TA) = \lambda A$
+#+end_theorem
+#+begin_proof org
+\-
+1. $T\in C^1$ --- поэтому измеримость сохраняется
+2. $\mu A := \lambda(TA)$, \mu --- мера на $\M^m$ по Лемме 1, при этом \mu --- инвариантна относительно сдвигов \\
+   $\mu(A + a) = \lambda(T(A + a)) = \lambda(TA + Ta) = \lambda(TA) = \lambda A$ \\
+   $A$ --- ограничена \Rightarrow $TA$ --- ограничена \Rightarrow $\mu A < +\infty$ \\
+   по теореме $\lambda(TA) = k\cdot\lambda A$ \\
+   Найдем $k$: возьмем шар $B$, $TB$ = шар того же радиуса = $B + x_0$, таким образом $\mu B = \lambda(TB) = \lambda(B+x_0) = \lambda B \Rightarrow k = 1$
+#+end_proof
+#+begin_corollary org
+\lambda(прямоугольного параллелепипеда) = произведению сторон
+#+end_corollary
+#+begin_corollary org
+Любое собственное линейное подпространство в $\R^m$ имеет меру 0
+#+end_corollary
+#+begin_proof org
+Достаточно доказать, что $\lambda\{x\big\vert x_m = 0\} = 0$ \\
+$\{x\big\vert x_m = 0\} \simeq \R^{m - 1} = \bigsqcup Q_i$ --- единичные кубы $L \subset \bigsqcup Q_i\times[-\frac{\varepsilon}{2^i}, \frac{\varepsilon}{2^i}]$ \\
+$\lambda_\M(Q_i\times [-\frac{\varepsilon}{2^i}, \frac{\varepsilon}{2^i}]) = \frac{2\varepsilon}{2^i}$
+#+end_proof

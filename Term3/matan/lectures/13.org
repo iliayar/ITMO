@@ -1,0 +1,192 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 13
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Ряды Тейлора
+#+begin_examp org
+\[ e^x = \sum_{n = 0}^{+\infty}\quad x\in\R \addtag \]
+\[ \sin x = \sum_{n = 1}^{ +\infty} (-1)^{n - 1}\frac{x^{2n - 1}}{(2n - 1)!}\quad x\in\R \addtag \]
+\[ \cos x = \sum_{n = 0}^{ +\infty} (-1)^{n}\frac{x^{2n}}{(2n)!}\quad x\in\R \addtag \]
+\[ \frac{1}{1 + x} = \sum_{n = 0}^{ +\infty} (-1)^nx^n\quad x \in (-1, 1) \addtag \]
+\[ \ln(1 + x) = \sum(-1)^{n - 1}\frac{x^n}{n}\quad x \in (-1, 1) \addtag \]
+\[ \arctg x = \sum (-1)^{n - 1}\frac{x^{2n - 1}}{2n - 1}\quad x\in(-1, 1) \addtag \]
+#+end_examp
+#+begin_theorem org
+$\forall \sigma \in \R\ \forall x \in (-1, 1)$ \\
+$(1 + x)^\sigma = 1 + \sigma x + \frac{\sigma(\sigma - 1)}{2}x^2 + \dots$
+#+end_theorem
+#+begin_proof org
+при $|x| < 1$ ряд сходится по ризнаку Деламбера \\
+\[ \left|\frac{a_{n + 1}}{a_{n}}\right| = \left|\frac{(\sigma - n)x}{n + 1}\right| \xrightarrow[n \to +\infty]{} |x| < 1 \addtag \]
+Обозначим сумму ряда через $S(x)$ \\
+#+ATTR_LATEX: :options {blue}
+#+begin_colored org
+/Наблюдение/: $S'(x)(1 + x) = \sigma S(x)$ \\
+\[ \sum a_n \leftrightarrow \sum a_n x^n = f(x) \addtag \]
+\[ \sum a_n n  x^{n - 1} = f'(x) \addtag \]
+#+end_colored
+\[ S'(x) = \dots + \frac{\sigma(\sigma - 1)\dots(\sigma - n)}{n!}x^n + \dots \addtag \] \\
+\[ S(x) = \dots + \frac{\sigma(\sigma - 1)\dots(\sigma -n + 1)}{n!}x^n \addtag \]
+\[ (1 + x)S' = \dots + (\frac{\sigma(\sigma - 1)\dots(\sigma - n)}{n!} + \frac{\sigma(\sigma - 1)\dots(\sigma -n + 1)}{n!}\cdot n)x^n + \dots = \addtag \]
+\[ = \dots + \frac{\sigma(\sigma - 1)\dots(\sigma - n + 1)}{n!}\cdot\sigma x^n + \dots \addtag \]
+$f(x) = \frac{S(x)}{(1 + x)^\sigma} \quad f'(x) = \frac{S'\cdot(1 + x)^\sigma - \sigma(1 + x)^{\sigma - 1}\cdot S}{(1 + x)^{2\sigma}} = 0 \Rightarrow f = \const\ f(0) = 1\ \Rightarrow f \equiv 1$
+#+end_proof
+#+begin_corollary org
+\[ \arcsin x = \sum \frac{(2n - 1)!!}{(2n)!!}\cdot\frac{(x^{2n + 1})}{2n + 1} \addtag \]
+#+end_corollary
+#+begin_proof org
+\[ (\arcsin x)' = \frac{1}{\sqrt{1 - x^2}} = \sum_{n = 0}^{+\infty}\binom{\sigma}{n}(-x^2)^n\Big|_{\sigma = -\frac{1}{2}} = \sum \frac{(2n - 1)!!}{(2n)!!} x^{2n} \addtag \] \\
+последнее выражение при $n = 0$ равно 1, и тогда (14): $\arcsin x = x + \dots$  \\
+$\arcsin x = \const +$ нужный ряд, при $x:=0\ \const = 0$ 
+#+end_proof
+#+begin_corollary org
+\[ \sum_{n =m}^{+\infty} n(n - 1)\dots(n - m + 1)\cdot t^{n - m} = \frac{m!}{(1 - t)^{m + 1}}\quad |t| < 1 \addtag \]
+#+end_corollary
+#+begin_proof org
+\[ \sum_{n = 0}^{+\infty} t^n = \frac{1}{1 - t} \addtag \]
+дифференцируем $m$ раз
+#+end_proof
+#+begin_theorem org
+$f \in C^\infty(x_0 - h, x_0 + h)$ \\
+$f$ --- раскладывается в ряд Тейлора в окрестности $x_0$ \Leftrightarrow \\
+$\exists \delta, C, A > 0\ \forall n\ \forall x: |x - x_0| < \delta\quad |f^{(n)}(x)| < C\cdot A^n \cdot n!$
+#+end_theorem
+#+begin_proof org
+\-
+- ($\Leftarrow$) :: формула Тейлора:
+  \[ f(x) = \sum_{k = 0}^{n - 1} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + \frac{f^{(n)}(c)}{n!}(x - x_0)^n \addtag \]
+  \[ \left|\frac{f^{(n)}(с)}{n!}(x - x_0)^n\right|\le C\cdot|A(x - x_0)|^n \xrightarrow[n \to +\infty]{} 0 \addtag \]
+  Разложение имеет место при $|x - x_0| < \min(\delta,\frac{1}{A})$
+- ($\Rightarrow$) ::
+  \[ f(x) = \sum\frac{f^{(n)}(x_0)}{n!}(x - x_0)^n \addtag \]
+  Возьмем $x_1 \neq x_0$, для которого это верно \\
+  - при $x = x_0$, ряд сходится \Rightarrow слагаемые \rightarrow 0 \Rightarrow ограничены
+    \[ \left|\frac{f^{(n)}(x_0)}{n!}(x_1 - x_0)^n\right| \le C_1 \Leftrightarrow |f^{(n)}(x_0)| \le C_1 n! B^n| \addtag \]
+    , где $B = \frac{1}{|x_1 - x_0|}$
+  - \[ f^{(m)}(x) = \sum \frac{f^{(n)}(x_0)}{n!}n(n - 1)\dots(n - m + 1)(x - x_0)^{n - m} =  \addtag \]
+    \[ = \sum_{n = m}^{+\infty}\frac{f^{(n)}}{(n - m)!}(x - x_0)^{n - m} \addtag \]
+  Пусть $|x - x_0| < \frac{1}{2B}$
+  \[ |f^{(n)}(x)|\le\sum\left|\frac{f^{(n)}(x_0)}{(n - m)!}|(x - x_0)^{n - m}\right| \le \sum\frac{C_1n!B^n}{(n -m)!} = \addtag \]
+  \[ = C_1B^m\sum\frac{n!}{(n - m)!}\cdot(\underbrace{B|x - x_0|}_{< \frac{1}{2}})^{n - m} \xlongequal[\text{Сл. 2}]{} \frac{C_1B^nm!}{(\underbrace{1 - \underbrace{B|x-x_0|}_{<\frac{1}{2}}}_{>\frac{1}{2}})^{m + 1}} < \addtag \]
+  \[ < C_12^{m + 1}B^mm! = \underbrace{(2C_1)}_{C}\cdot(\underbrace{2B}_A)^mm!\addtag \]
+  Эта оценк выполнятется при $|x - x_0| < \delta = \frac{1}{2B}$
+#+end_proof
+* Теория меры
+#+begin_export latex
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\A}{\mathfrak{A}}
+#+end_export
+
+[[теориямеры12][предыдущее]]
+** Мера
+#+begin_definition org
+$\mu: \underset{\text{п/к}}{\P} \to \overline{\R}$ --- мера, если $\mu$ --- объем и $\mu$ --- счетно аддитивна: $\forall A, A_1, \dots, A_n \in \P$ \\
+$A = \bigsqcup_{i = 1}^{+\infty} A_i\qquad \mu A = \sum_{i = 1}^{ +\infty}\mu A_i$
+#+end_definition
+#+begin_remark org
+$(a_\omega)_{\omega \in \Omega}$ --- счетное множество чисел(т.е. \Omega --- счетно) $\forall \omega\ a_\omega \ge 0$ \\
+Тогда определена:
+\[ \sum_{\omega \in \Omega}a_\omega=\sup(\sum_\text{кон.}a_\omega) \addtag \]
+Значит можно счетную аддитивность понимать обобщеноо:
+\[ A = \bigsqcup_\text{кон.} A_\omega \Rightarrow \mu A = \sum \mu A_\omega\quad(A, A_\omega \in \P) \addtag \]
+#+end_remark
+#+begin_remark org
+Счетная аддитивность *не* следует из конечной аддитивности
+#+end_remark
+#+begin_examp org
+$X = \R^2\quad \P$ = ограниченые множества и их дополнения \\
+$\mu A = \begin{cases} 0 & , A \text{ --- огр.} \\ 1 & ,A^C \text{ --- огр.} \end{cases}$ \\
+$\R^2 = \text{"лист в клетку"} = \bigcup_\text{счетное}\text{клеток} = \bigsqcup \text{ячеек} \xlongequal{\text{обозн.}} \bigsqcup A_i$ \\
+$\mu(\R^2) = 1\quad \sum \mu A_i = 0$ *Это не мера*
+#+end_examp
+#+begin_examp org
+$X$ --- (бесконечное) множество \\
+$a_1, a_2, a_3, \dots$ --- набор попарно различных точек \\
+$h_1, h_2, h_3, \dots$ --- положительные числа \\
+Для $A \subset X$
+\[ \mu A := \sum_{k: a_k \in A} h_k \addtag \]
+Счетная аддитивность $\mu$ \Leftrightarrow Теорема о группировке слагаемых \\
+$\mu$ --- *дискретная мера*
+#+end_examp
+#+ATTR_LATEX: :options {1}
+#+begin_manualtheorem org
+$\mu: \underset{\text{п/к}}{\P} \to \overline{\R}$ --- объем \\
+Тогда эквивалентны:
+1. $\mu$ --- мера, т.е. $\mu$ --- счетно аддитивна
+2. $\mu$ -- счетно аддитивна: \\
+   $A, A_1, A_2, \dots \in \P\quad A \subset \bigcup A_i \Rightarrow \mu A \le \sum \mu A_i$
+#+end_manualtheorem
+#+begin_proof org
+\-
+- ($1 \Rightarrow 2$) :: Как в предыдущей теореме(доказательство п.2) в формклах 15, 17, 19 вместо конечных объединений и сумм надо рассматривать счетные
+- ($2 \Rightarrow 1$) :: $A = \bigsqcup_{i = 1}^{+\infty} A_i$ проверим $\mu A = \sum \mu A_i$: \\
+  \[ \forall N\quad A \supset \bigsqcup_{i = 1}^N A_i\quad \mu A \ge \sum_{i = 1}^{N} \mu A_i \addtag \]
+  \[ A \subset \bigcup A_i\quad \mu A \le \sum \mu A_i \addtag \]
+  Тогда $\mu A = \sum \mu A_i$
+#+end_proof
+#+begin_corollary org
+$A \in \P\quad A_n \in \P:\ A \in \bgicup A_n,\ \mu A_n = 0$, при этом $\mu$ --- мера \\
+Тогда $\mu A = 0$
+#+end_corollary
+#+begin_proof org
+$\mu A \le \sum \mu A_i = 0$
+#+end_proof
+#+ATTR_LATEX: :options {2}
+#+begin_manualtheorem org
+$\A$ --- алгебра, $\mu: \A \to \overline{\R}$ --- объем \\
+Тогда эквивалентны:
+1. $\mu$ --- мера
+2. $\mu$ --- непрерывна снизу: \\
+   $A, A_1, A_2, \dots \in \A\quad A_1 \subset A_2 \subset A_3 \subset \dots$ \\
+   \[ A = \bigcup_{i = 1}^{+\infty} A_i \Rightarrow \mu A = \lim_{i \to +\infty} \mu A_i \addtag \]
+#+end_manualtheorem
+#+begin_proof org
+\color{red} нет(см доказательство Т. 3)
+#+end_proof
+
+#+ATTR_LATEX: :options {3}
+#+begin_manualtheorem org
+$\A$ --- алгебра $\mu: \A \to \R$ --- конечный объем \\
+Тогда эквивалентны:
+1. $\mu$ --- мера, т.е. счетно аддитивная функцяи множества \\
+2. $\mu$ --- непрерывна сверху: $A, A_1, A_2, \dots \in \A$ \\
+   $A_1 \supset A_2 \supset \dots\quad A = \bigcap A_i \Rightarrow \mu A = \lim \mu A_i$
+#+end_manualtheorem
+#+ATTR_LATEX: :options {blue}
+#+begin_colored org
+$x = \R\quad A_k = [k, +\infty]\quad \bigcap A_k = \emptyset = A\quad \mu A = 0\ \mu a_k = +\infty$ \\
+$\mu$ --- мера Лебега в $R^2$
+#+end_colored
+#+begin_proof org
+\-
+- ($1 \Rightarrow 2$) :: $B_k = A_k \setminus A_{k + 1}\quad A_1 = \bigsqcup B_k \sqcup A$ \\
+  $\underbrace{\mu A_1}_{\text{кон.}} = \underset{\Rightarrow \text{сх.}}{\sum \mu B_k} + \mu A$  \\
+  \[ A_n = \bigsqcup_{k \ge n} B_k \sqcup A\quad \mu A_n = \sum_{k\ge n}\mu B_k + \mu A \xrightarrow[n \to +\infty]{} \mu A \addtag \]
+- ($2 \Rightarrow 1$) :: Дана непрерывность сверху. Воспользуемся ей для случая $A = \emptyset$ \\
+  Проверяем счетную аддитивность: $C = \bigsqcup C_i \xRightarrow{?} \mu C = \sum \mu C_i$ \\
+  \[ A_k := \bigsqcup_{i = k + 1}^\infty C_i \addtag \]
+  Тогда:
+  \[ A_k \in \A:\ A_k = C\setminus \bigsqcup_{i = 1}^k C_i \addtag \]
+  последнее выражение содержит конечное число операций \\
+  $A_1 \supset A_2 \supset \dots,\ \bigcap A_k = \emptyset \Rightarrow \mu A_k \xrightarrow[k \to +\infty]{} 0$ \\
+  \[ C = \bigsqcup_{i = 1}^{k} C_i \sqcup A_k\quad \mu C= \sum_{i =1}^k \mu C_i + \mu A_k \xrightarrow[k \to +\infty]{} \sum \mu C_i \addtag \]
+
+#+end_proof 
+** Теорема о продолжении меры
+#+begin_definition org
+$\mu: \P \to \overline{\R}$ --- мера *\sigma - конечна*, если:
+$\exists A_1, A_2, \dots \in \P:\ X = \bigcup A_i,\ \mu A_i < +\infty$
+#+end_definition
+#+begin_examp org
+$X = \R^m,\ \P = \P^m$ --- полукольцо ячеек \\
+$\mu$ --- класичекий объем, $\mu$ --- \sigma-конечный объем \\
+$\R^m = \bigcup\text{Куб}(0, 2R) = \bigcup\text{целочисленных единичных ячеек}$ \\
+#+end_examp
+#+begin_definition org
+$\mu: \P \to \overline{\R}$ --- мера \\
+$\mu$ --- *полная*, если $\forall A \in \P\ \mu A = 0\ \forall B \subset A$ выолняется $B \in \P$ и (тогда автоматически) $\mu B = 0$ \\
+Совместное свойство $\mu$ и $\P$
+#+end_definition
+#+begin_definition org
+*Пространство с мерой* --- это тройка $(\underset{\text{множество}}{X}, \underset{\sigma\text{-алгебра}, \A \subset 2^X}{\A}, \underset{\text{мера на }\A}{\mu})$
+#+end_definition

@@ -5,6 +5,7 @@
 * Степенные ряды
 \[ f(z) = \sum a_n(z - z_0)^n\quad |z - z_0| < R \addtag \]
 \[ f'(z) = \sum n a_n(z -z_0)^{n - 1}\quad |z - z_0 < R| \addtag \]
+<<степенныерядыследствие1>>
 #+begin_corollary org
 $f = \sum a_n (z - z_0)^n,\ 0 < R< +\infty$ \\
 Тогда $f \in C^{\infty}(B(z_0, R))$ и все производные можно найти почленным дифференцированием
@@ -95,7 +96,7 @@ $\mathcal{P} \subset 2^X$ --- полукольцо елси:
 1. $\emptyset \in \mathcal{P}$
 2. $\forall A, B \in \mathcal{P}\quad A \cap B \in \mathcal{P}$
 3. $\forall A, A' \in \mathcal{P}\ \exists$ конечное $B_1,\dots,B_2 \in \mathcal{P}$ -- дизьюнктны \\
-   $A \setminus B = \displaystyle{\bigsqcup_{i = 1}^nB_i}$
+   $A \setminus A' = \displaystyle{\bigsqcup_{i = 1}^nB_i}$
 #+end_definition
 #+begin_examp org
 $2^X$ --- полукольцо
@@ -237,14 +238,14 @@ $\mathcal{P} = \{X_\sigma\}_\sigma$, $X_\sigma = \{a \in X\big\vert a_{i_1} = \a
    #+end_export
    #+end_proof
 #+begin_definition org
-$\mathcal{A} \subset 2^X$ --- алгебра подмножеств в $X$:
-1. $\forall A, B \in \mathcal{A}\quad A\setminus B \in \mathcal{A}$
+$\mathfrak{A} \subset 2^X$ --- алгебра подмножеств в $X$:
+1. $\forall A, B \in \mathfrak{A}\quad A\setminus B \in \mathcal{A}$
 2. $X\in A$
 #+end_definition
 /Свойства/
-1. $\emptyset = X\setminus X \in \mathcal{A}$
-2. $A \cap B = A \setminus(A \setminus B) \in \mathcal{A}$
-3. $A^C = X \setminus A \in \mathcal{A}$
-4. $A \cup B \in \mathcal{A}$, потому что $(A \cup B)^C = A^C \cap B^C$
-5. $A_1,\dots,A_n \in \mathcal{A} \Rightarrow \displaystyle{\bigcup_{i=1}^n A_i,\ \bigcap_{i = 1}^n A_i \in \mathcal{A}}$ --- по индукции
+1. $\emptyset = X\setminus X \in \mathfrak{A}$
+2. $A \cap B = A \setminus(A \setminus B) \in \mathfrak{A}$
+3. $A^C = X \setminus A \in \mathfrak{A}$
+4. $A \cup B \in \mathfrak{A}$, потому что $(A \cup B)^C = A^C \cap B^C$
+5. $A_1,\dots,A_n \in \mathfrak{A} \Rightarrow \displaystyle{\bigcup_{i=1}^n A_i,\ \bigcap_{i = 1}^n A_i \in \mathcal{A}}$ --- по индукции
 6. Всякая алгебра есть полукольцо, обратное не верно

@@ -1,0 +1,20 @@
+#+LATEX_CLASS: general
+#+TITLE: Матан 3 семестр
+#+AUTHOR: Ilya Yaroshevskiy
+
+
+#+INCLUDE: "1.org" :lines "4-"
+#+INCLUDE: "2.org" :lines "4-"
+#+INCLUDE: "3.org" :lines "4-"
+#+INCLUDE: "4.org" :lines "4-"
+#+INCLUDE: "5.org" :lines "4-"
+#+INCLUDE: "6.org" :lines "4-"
+#+INCLUDE: "7.org" :lines "4-"
+#+INCLUDE: "8.org" :lines "4-"
+#+INCLUDE: "9.org" :lines "4-"
+#+INCLUDE: "10.org" :lines "4-"
+#+INCLUDE: "11.org" :lines "4-"
+#+INCLUDE: "12.org" :lines "4-"
+#+INCLUDE: "13.org" :lines "4-"
+#+INCLUDE: "14.org" :lines "4-"
+#+INCLUDE: "15.org" :lines "4-"
