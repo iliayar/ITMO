@@ -5,21 +5,30 @@
 * Функциональные последовательности и ряды
 $u_n: X \to Y$, где $Y$ - нормированное пространство \\
 $S_n \rightrightarrows S$ на $E$ $M_n := \displaystyle{\sup_{x \in E}|S_n(x) - S|} \xrightarrow[n \to +\infty]{} 0$ \\
-Критерий Больциано-Коши $\forall \varepsilon > 0\ \exists N\ \forall n, m > N\ \forall x \in E\quad |S_n(x) - S_m(x)| < \varepsilon$ \\
+#+NAME: определение18
+#+ATTR_LATEX: [Критерий Больциано-Коши]
+#+begin_definition org
+$\forall \varepsilon > 0\ \exists N\ \forall n, m > N\ \forall x \in E\quad |S_n(x) - S_m(x)| < \varepsilon$ \\
 $\forall \varepsilon > 0\ \exists N\ \forall n > N\ \forall p \in \mathbb{N}\ \forall x \in E\quad |u_{n + 1}(x) + u_{n + 2}(x) + \dots + u_{n + p}(x)| < \varepsilon$ \\
+#+end_definition
+#+begin_remark org
 Отрицание критерия Больциано-Коши $\exists \varpepsilon > 0\ \forall N\ \eixsts n > N\ \exists p \in \mathbb{N}\ \exists x \in E\quad |u_{n + 1}(x) + u_{n + 2}(x) + \dots + u_{n + p}(x)| \ge \varepsilon$ \\
+#+end_remark
 #+begin_examp
 $\sum x^n\quad x \in (0, 1)$ нет равномерной сходимотсти \\
 $\exists \varepsilon = \frac{1}{10}\ \forall N\ \exists n > N - \text{любое}\ > 100\ \exists p = 1\ \exists x = 1 - \frac{1}{n+1}\quad |u_{n + 1}(x)| \ge \varepsilon$, т.е. $(1-\frac{1}{n + 1})^{n + 1}=\frac{1}{e}>\frac{1}{10}$
 #+end_examp
+#+NAME: теорема28
+#+ATTR_LATEX: :options [признак Вейерштрасса]
 #+begin_theorem
-(признак Вейерштрасса) \\
 $\sum u_n(x)\quad x\in X$ \\
-Пусть $\exists C_n$ - вещественная последовательность, $\begin{cases} u_n(x) \le C_n \\ \sum c_n \text{--- сходится}\end{cases}$, тогда $\sum u_n(x)$ равномерно сходится на $E$
+Пусть $\exists C_n$ - вещественная последовательность, $\begin{cases} u_n(x) \le C_n \\ \sum C_n \text{--- сходится}\end{cases}$ \\
+_Тогда_ $\sum u_n(x)$ равномерно сходится на $E$
 #+end_theorem
+#+NAME: теорема28док
 #+begin_proof
 $|u_{n + 1}(x) + \dots + u_{n + p}(x)| \le C_{n + 1} + \dots + C_{n + p}$ - Тривиально \\
-$\sum c_n$ - сходится \Rightarrow удовлетворяет критерию Больциано-Коши: $\forall \varepsilon > 0\ \exists N\ \forall n > N\ \forall p \in \mathbb{N}\ \forall x \in E\quad C_{n+1} + \dots + C_{n + p} < \varepsilon$ \\
+$\sum C_n$ - сходится \Rightarrow удовлетворяет критерию Больциано-Коши: $\forall \varepsilon > 0\ \exists N\ \forall n > N\ \forall p \in \mathbb{N}\ \forall x \in E\quad C_{n+1} + \dots + C_{n + p} < \varepsilon$ \\
 Тогда $\sum u_n(x)$ удовлетворяет критерию Больциано-Коши равномерной сходимости
 #+end_proof
 #+begin_examp
@@ -31,12 +40,14 @@ $\sum\frac{x}{1 + x^2n^2}\quad x \in [\frac{1}{2020}, 2020]$ \\
 $C_n:=\displaystyle{\sup\frac{x}{1 + x^2n^2} \le \frac{2020}{1 + \frac{1}{2020}\cdot n^2} \underset{n \to +\infty}{\simeq} \frac{c}{n^2}}$, $\sum C_n$ - сходится \Rightarrow есть равномерная сходимость
 #+end_examp
 ** Приложение равномерной сходимости для рядов
-#+begin_theorem
-1'(Стокса, Зайдля для рядов) \\
+#+NAME: теорема23доп
+#+ATTR_LATEX: :options {1'}[Стокса, Зайдля для рядов]
+#+begin_manualtheorem org
 $u_n: \underbrace{X}_{\text{метр. пр.}} \to \underbrace{Y}_{\text{норм. пр.}} \quad x_0\in X\ u_n$ - непрерывно в $x_0$ \\
 Пусть $\sum u_n(x)$ - равномерно сходится на $X$, $S(x) := \sum u_n(x)$ \\
-Тогда $S(x)$ - непрерывна в $x_0$
-#+end_theorem
+_Тогда_ $S(x)$ - непрерывна в $x_0$
+#+end_manualtheorem
+#+NAME: теорема23допдок
 #+begin_proof
 по теореме 1(Стокса, Зайдля). $S_n(x) \rightrightarrows S(x)$, $S_n(x)$ непрерывна в $x_0$ \Rightarrow $S(x)$ непрывна в $x_0$
 #+end_proof
@@ -46,15 +57,17 @@ $u_n: \underbrace{X}_{\text{метр. пр.}} \to \underbrace{Y}_{\text{норм
 #+begin_remark
 $u_n \in C(x)$, $\sum u_n$ - равномерно сходится на $X$ \Rightarrow $S(x) \in C(X)$
 #+end_remark
-#+begin_theorem
-2'(о почленном интегрировании ряда) \\
+#+NAME: теорема25доп
+#+ATTR_LATEX: :options {2'}[о почленном интегрировании ряда]
+#+begin_manualtheorem org
 $u_n: [a, b] \to \R$, непрерывные на $[a, b]$ \\
 Пусть $\displaystyle{\sum_{n = 0}^{+\infty} u_n}$ - равномерно сходится на $[a, b]$, $S(x) = \sum u_n(x)$ \\
-Тогда $\displaystyle{\int_a^b S(x) dx = \sum_{n =0}^{ +\infty} \int_a^b u_n(x)}$ \\
+_Тогда_ $\displaystyle{\int_a^b S(x) dx = \sum_{n =0}^{ +\infty} \int_a^b u_n(x)}$ \\
 $S(x)$ - непрерывно на $[a, b]$ по теореме 1' \Rightarrow можно интегрировать \\
-#+end_theorem
+#+end_manualtheorem
+#+NAME: теорема25допдок
 #+begin_proof
-По теореме 2' $S_n \rightrightarrows S$ на $[a, b]$ $\displaystyle{\sum_{k = 0}^n \int_a^bu_k = \int_a^bS_ndx \to \int_a^b S(x)dx}$ \\
+По теореме 2 $S_n \rightrightarrows S$ на $[a, b]$ $\displaystyle{\sum_{k = 0}^n \int_a^bu_k = \int_a^bS_ndx \to \int_a^b S(x)dx}$ \\
 #+end_proof
 #+begin_examp
 $\sum (-1)^nx^n$ - равномерно сходится при $|x| \le q < 1$ по признаку Вейершрасса: $|(-1)^nx^n| \le q^n\quad \sum q^n$ - сходится \\
@@ -76,25 +89,32 @@ $\gamma([a, b])$ - носитель пути \\
 $\gamma(t) = (\gamma_1(t),\ \gamma_2(t),\ \dots,\ \gamma_m(t))\quad \gamma' = (\gamma_1',\ \dots,\ \gamma_m')$ \\
 Длина гладкого пути $l(\gamma) = \displaystyle{\int_a^b|\gamma'(t)|dt}$
 #+end_definition
+#+NAME: определение21
 #+begin_definition
-Путь $\gamma$ - кусочно гладкий \\
+Путь $\gamma$ - *кусочно гладкий* \\
 $a = t_0 < t_1 < \dots < t_n = b$ \\
 $\gamma$ - дифф. на $(t_k, t_{k + 1})\ \forall k,\ 0 \le k \le n - 1$ \\
 $\exists$ односторонние производные в точках $t_i$ \\
 можно считать $\gamma|_{[t_{k - 1}, t_k]}$ - гладкое отображение
 #+end_definition
+#+NAME: определение22
 #+begin_definition
-Векторное поле: $V: E \subset \R^m \to \R^m$ - непрерывное \\
+*Векторное поле*: $V: E \subset \R^m \to \R^m$ - непрерывное \\
 $\forall x \in E\quad V(x) \in \R^m$ - вектор приложенный к точке $x$
 #+end_definition
+#+NAME: определение23
+#+ATTR_LATEX: :options [Интеграл векторного поля по кусочно гладкому пути]
 #+begin_definition
-Интеграл векторного поля по кусочно гладкому пути \\
+\- \\
 $I(V, \gamma) = \displaystyle{\int_a^b\langle V(\gamma(t)), \gamma'(t) \rangle dt = \int_a^b\sum_{i = 1}^m V_i(\gamma(t))\cdot \gamma_i'(t)dt} = \int_a^bV_1d\gamma_1+V_2d\gamma_2 + \dots + V_md\gamma_m$ \\
 Используется обозначение $I(V, \gamma) = \displaystyle{\int_\gamma V_1dx_1 + \dots + V_mdx_m}$ --- аналогично последнему выражению в равенстве \\
-Второе выражение в равенстве запишем так: $\displaystyle{\sum_{k = 1}^n \langle V(\gamma(\xi_k)), \gamma'(\xi_k)\rangle\cdot(t_k - t_{k - 1})}$, где $\xi_k$ - точки оснащния \\
+Второе выражение в равенстве запишем так: $\displaystyle{\sum_{k = 1}^n \langle V(\gamma(\xi_k)), \gamma'(\xi_k)\rangle\cdot(t_k - t_{k - 1})}$, где $\xi_k$ - точки оснащения \\
 $= \displaystyle{\sum \underbrace{\langle V(\gamma(\xi_k)), \frac{\gamma'(\xi_k)}{|\gamma'(\xi_k)|} \rangle}_\text{проекция силы на касательное направление} \cdot \underbrace{|\gamma'(\xi_k)|\cdot(t_k - t_{k - 1})}_\text{пройденный путь}}$
 #+end_definition
-/Свойства/:
+#+NAME: теорема41
+#+ATTR_LATEX: [Свойства интеграла]
+#+begin_theorem org
+\-
 1. Линейность интгрела по полю: \\
    $\forall \alpha, \beta \in \R\ \forall U, V$ - векторных полей $I(\alpha U + \beta V, \gamma) = \alpha I(U, \gamma) + \beta I(V, \gamma)$
    #+begin_proof
@@ -102,13 +122,13 @@ $= \displaystyle{\sum \underbrace{\langle V(\gamma(\xi_k)), \frac{\gamma'(\xi_k)
    #+end_proof
 2. Аддитивность интеграла при дроблении пути: \\
    $\gamma: [a, b] \to \R^m\quad c \in [a, b]\quad \gamma^1=\gamma|_{[a, c]}\ \gamma^2=\gamma|_{[c, b]}$ \\
-   Тогда $I(V, \gamma) = I(V, \gamma^1) + I(V, \gamma^2)$
+   _Тогда_ $I(V, \gamma) = I(V, \gamma^1) + I(V, \gamma^2)$
    #+begin_proof
    По аддитивности интеграла(первый двух выражений в равенстве)
    #+end_proof
 3. Замена параметра \\
    $\varphi: [p, q] \to [a, b]\ \varphi \in C^1\ \varphi(p) = a,\ \varphi(q) = b\quad \gamma: [a, b] \to \R^m\ \tilde{\gamma} = \gamma \circ \varphi$ \\
-   Тогда $I(V, \gamma) = I(V, \tilde{\gamma})$ - это замена переменных в интеграле \\
+   _Тогда_ $I(V, \gamma) = I(V, \tilde{\gamma})$ - это замена переменных в интеграле \\
    #+begin_proof
    $I(V, \tilde{\gamma}) =$ \\
    $=\displaystyle{\int_p^q \langle V(\gamma(\varphi(S))), \underbrace{\tilde{\gamma}'(S)}_{\gamma'(\varphi(S))\cdot\varphi'(S)} \rangle ds = \int_p^q \langle V(\gamma(\varphi(S))), \gamma'(\varphi(S)) \rangle \cdot \varphi'(s)ds \underset{t:=\varphi(s)}{=} \underbrace{\int_a^b \langle V(\gamma(t)), \gamma'(t) \rangle dt}_{I(V, \gamma)}}$
@@ -122,14 +142,14 @@ $= \displaystyle{\sum \underbrace{\langle V(\gamma(\xi_k)), \frac{\gamma'(\xi_k)
    $\gamma^1: [a, b] \to \R^m\quad \gamma^2: [c, d] \to \R^m\quad \gamma^1(b) = \gamma^2(c)$ \\
    Зададим новый путь $\gamma = \gamma^2\gamma^1: [a, b + d - c] \to \R^m\quad \gamma(t)=\left[\begin{array}{ll} \gamma^1(t) & ,t \in [a, b] \\ \gamma^2(t + c - b) & ,t\in[b, b + d - c] \end{array}$ \\
    В точке $b$ излом. Если $\gamma^1,\ \gamma^2$ - кусочно гладкие, то $\gamma$ - кусочно гладкий \\
-   Тогда $I(V, \gamma^2\gamma^1) = I(V, \gamma^1) + I(V, \gamma^2)$
+   _Тогда_ $I(V, \gamma^2\gamma^1) = I(V, \gamma^1) + I(V, \gamma^2)$
    #+begin_proof
    $I(V, \gamma) = \displaystyle{\int_a^{b +d -c} \dots = \int_a^b\dots + \underbrace{\int _b^{b + d -c } \dots}_{\text{замена }\tau = t - b + c}= I(V, \gamma^1) + \int_c^d \langle V(\gamma^2(\tau)), (\gamma^2)'(\tau) \rangle d\tau = I(V, \gamma^1) + I(V, \gamma^2)}$ \\
    При замене: $\gamma(t) = \gamma^2(t + c - b) = \gamma^2(\tau)\quad \gamma'(t) = (\gamma^2)'(t + c - b) = (\gamma^2)'(\tau)$
    #+end_proof
 5. Противоположный путь \\
    $\gamma: [a, b] \to \R^m\quad \gamma^-: [a, b] \to \R^m\quad \gamma^-(t)=\gamma(a + b - t)$ - противоположный путь \\
-   Тогда $I(V, \gamma) = -I(V, \gamma^-)$
+   _Тогда_ $I(V, \gamma) = -I(V, \gamma^-)$
    #+begin_proof
    $I(V, \gamma^-) =$ \\
    $= \displaystyle{\int_a^b \langle V(\gamma(a + b - \tau)), -\gamma'(a + b - \tau) \rangle d\tau} \underset{t = a + b - \tau}{=} = \int_a^b \langle V(\gamma(t)), -\gamma'(t) \rangle \cdot (-dt) = -I(V, \gamma)$ \\
@@ -139,19 +159,24 @@ $= \displaystyle{\sum \underbrace{\langle V(\gamma(\xi_k)), \frac{\gamma'(\xi_k)
    $|I(V, \gamma)| \le \displaystyle{\max_{x \in L}|V(x)| \cdot l(\gamma)}$, гдe $L = \gamma([a, b])$ - носитель пути \\
    $\displaystyle{\int_a^b \langle V(\gamma(t)), \gamma'(t) \rangle dt} \le \int_a^b |\langle V(\gamma(t)), \gamma'(t) \rangle|dt \le \int_a^b |V(\gamma(t))|\cdot |\gamma'(t)| dt \le \max_{x \in L}|V(x)| \cdot \underbrace{\int_a^b |\gamma'(t)|dt}_{l(\gamma)}$ \\
    Можем писать $\max$, т.к. $V$ - непрерывна, $L$ - компакт(путь непрерывен, образ замкнутого отрезка под действием непрерывного отображения(носитель) компакт)
+#+end_theorem
 ** Потенциальное поле
+#+NAME: определение24
 #+begin_definition
 $V: \underbrace{O}_\text{область} \subset \R^m \to \R^m$ - в поле \\
-$V$ - потенциально, если оно имеет потенциал \\
+$V$ - *потенциально*, если оно имеет потенциал \\
 $\exists \underbrace{f}_\text{потенциал} \in C^1(O):\quad \grad f = V$ в области O
 #+end_definition
+#+NAME: теорема42
 #+begin_theorem
 (обобщеная формула Ньютона-Лейбница) \\
 $V: O\subset\R^M\to\R^m$, потенциально, $f$ --- потенциал $V$ \\
 $\gamma: [a, b] \to O\quad \gamma(a) = A,\ \gamma(b) = B$ \\
-Тогда $\displaystyle{I(V, \gamma) = \int_\gamma \sum u_k dx_k} = f(B) - f(A)$
+_Тогда_ $\displaystyle{I(V, \gamma) = \int_\gamma \sum v_k dx_k} = f(B) - f(A)$
 #+end_theorem
+#+NAME: теорема42док
 #+begin_proof
+\-
 1. $\gamma$ - гладкий $\Phi(t) = f(\gamma(t))\quad \Phi' = \frac{\partial f}{\partial x_1}(\gamma(t))\cdot\gamma_1(t) + \dots + \frac{\partial f}{\partial x_m}(\gamma(t))\cdot\gamma_m'(t)$ \\
    Учитывая что $\grad f = (\frac{\partial f}{\partial x_1},\ \dots,\ \frac{\partial f}{\partial x_m})= V$ \\
    $\displaystyle{\int_\gamma \sum u_k dx_k = \int_a^b \Phi'(t)dt = \Phi(b) - \Phi(a) = f(b) - f(a)}$

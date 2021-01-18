@@ -9,6 +9,7 @@ $\displaystyle{\int_\gamma \sum V_i dx_i = F(\gamma(b)) - F(\gamma(a))}$
 $\forall A, B \in O\ \forall \gamma^1, \gamma^2$ - кусочно гладкие пути из $A$ в $B$ \\
 $\displaystyle{\int_{\gamma^1} \sum V_i dx_i = \int_{\gamma^2} \sum V_i dx_i}$
 #+end_definition
+#+NAME: теорема43
 #+ATTR_LATEX: :options [характеризация потенциальных векторных полей в терминах интегралов]
 #+begin_theorem
 $V$ - векторное поле в области $O$. Тогда эквивалентны:
@@ -16,7 +17,9 @@ $V$ - векторное поле в области $O$. Тогда эквива
 2. $\displaystyle{\int_\gamma\sum V_idx_i}$ не зависит от пути в области $O$
 3. $\forall \gamma$ - кусочно гладкого, замкнутого в $O$ $\displaystyle{\int_\gamma \sum V_i dx_i = 0}$
 #+end_theorem
+#+NAME: теорема43док
 #+begin_proof org
+\-
 + 1 \Rightarrow 2: обобщенная формула Ньютона-Лейбница
 + 2 \Rightarrow 3: $\gamma$ - петля: $[a, b] \to O\quad \gamma(a)=\gamma(b) = A$ \\
   Рассмторим простой птуь $\tilde{\gamma}: [a, b] \to O\quad \gamma(t) = A$ \\
@@ -55,19 +58,23 @@ $V$ - векторное поле в области $O$. Тогда эквива
   Таким образом $\frac{f(x + he_1) - f(x)}{h} \xrightarrow[h \to 0]{} V_1(x)$
 #+end_proof
 ** Локально потенциальные векторные поля
+#+NAME: теорема44
 #+begin_lemma org
-$V$ - гладкое, отенциальное в $O$ \\
-Тогда $\forall x \in O\ \forall k, j\quad \frac{\partial V_k}{\partial x_j} = \frac{\partial V_j}{\partial x_k}$
+$V$ - гладкое, потенциальное в $O$ \\
+_Тогда_ $\forall x \in O\ \forall k, j\quad \frac{\partial V_k}{\partial x_j} = \frac{\partial V_j}{\partial x_k}$
 #+end_lemma
+#+NAME: теорема44док
 #+begin_proof org
 $\dots = \frac{\partial^2 f}{\partial x_k \partial x_j}(x)$
 #+end_proof
+#+NAME: теорема44доп
 #+ATTR_LATEX: :options [лемма Пуанкаре]
 #+begin_theorem org
 $O \in \R^m$ - выпуклая область $V: O \to \R^m$ - векторное поле \\
 $V$ - удовлетворяет условиям леммы($V$ - гладкое) \\
-Тогда $V$ - потенциальное
+_Тогда_ $V$ - потенциальное
 #+end_theorem
+#+NAME: теорема44допдок
 #+begin_proof org
 Фиксируем $A \in O$ \\
 $\forall x \in O\ \gamma_x(t) := A + t\cdot(x - a)\quad, t\in[0, 1]$ \\
@@ -98,8 +105,9 @@ $= \displaystyle{\int_0^1(tV_j(A + t(x - A))'_tdt) =t\cdot V_j(A + t(x - A))\big
 #+end_export
 Существует точка из которой видны все остальные
 #+end_remark
+#+NAME: определение25
 #+begin_definition org
-$V$ - локально потенциальное векторное поле в $O$, если $\forall x \in O\ \exists U(x)\ V$ потенциально в $U(x)$
+$V$ - *локально потенциальное векторное поле в $O$*, если $\forall x \in O\ \exists U(x)\ V$ потенциально в $U(x)$
 #+end_definition
 #+ATTR_LATEX: :options [лемма Пуанкаре]
 #+begin_corollary org
@@ -108,24 +116,28 @@ $V \in C^1(O)$, удовлетворяет Лемме 1 \\
 Тогда $V$ - локально потенциально
 #+end_corollary
 * Равномерная сходимость функциональных рядов(продолжение)
+#+NAME: теорема27доп
 #+ATTR_LATEX: :options {3'}[о дифференцировании ряда по параметру]
 #+begin_manualtheorem org
 $u_n \in C^1(\langle a, b \rangle)$ \\
 Путсть:
 1. $\sum u_n(x) = S(x)$ - поточенчная сходимость
 2. $\sum u'_n(x) = \varphi(x)$ - равномерно сходится на $\langle a, b \rangle$
-Тогда:
+_Тогда_:
 1. $S(x) \in C^1(\langle a, b \rangle)$
 2. $S' = \varphi$ на $\langle a, b \rangle$
 т.е $(\sum u_n(x))' = \sum u'_n(x)$
 #+end_manualtheorem
+#+NAME: теорема27допдок
 #+begin_proof org
+\-
 - $f_n \to f$ --- поточечно \\
 - $f'_n \rightrightarrows f$ \\
 Тогда $f' = \varphi,\ f \in C^1$
 - $S_n \to S$ --- поточечно
 - $S'_n \rightrightarrows \varphi$
 #+end_proof
+#+NAME: теорема29
 #+begin_examp org
 Формула Вейерштрасса:
 $$\frac{1}{\Gamma(x)} = xe^{\gamma x}\cdot \prod_{k = 1}^{+\infty}(1 + \frac{x}{k})e^{\frac{x}{k}$$, где $\gamma$ - постоянная Эйлера \\
@@ -139,12 +151,15 @@ $\sum \frac{M}{k^2}$ - сходится \\
 #+begin_remark org
 Фактически теорема устанавливает, что $\sum u'_n(x)$ - непрерывна
 #+end_remark
+#+NAME: теорема29доп
 #+ATTR_LATEX: :options [к примеру]
 #+begin_remark org
 $$-\frac{\Gamma'(x)}{\Gamma(x)} = \frac{1}{x} + \gamma - \sum_{k + 1}^{+\infty}\frac{x}{(x + k)k}$$
 \[ \Gamma'(x) = -\Gamma(x)\cdot(\frac{1}{x} + \gamma - \sum \dots) \addtag \]
-$$\Gamma''(x) = \dots$$
+$$\Gamma''(x) = \dots$$ \\
+Получается, что $\Gamma \in C^\infty(0, +\infty)$
 #+end_remark
+#+NAME: теорема30
 #+ATTR_LATEX: :options {4'}[о почленном переходе в суммах]
 #+begin_manualtheorem org
 $u_n: E \subset \underset{\text{м.п.}}{X} \to \R,\quad x_0$ - предельная точка $E$ \\
@@ -157,7 +172,9 @@ $u_n: E \subset \underset{\text{м.п.}}{X} \to \R,\quad x_0$ - предельн
 \[ \lim_{x\to x_0}\sum_{n = 0}^{ +\infty} u_n(x) = \sum_{n = 0}^{ +\infty}(\lim_{x \to x_0}u_n(x)) \addtag \]
 
 #+end_manualtheorem
+#+NAME: теорема30док
 #+begin_proof org
+\-
 1. $\sum a_n$ - сходится \\
    #+ATTR_LATEX: :options {blue}
    #+begin_colored org
@@ -188,6 +205,7 @@ $u_n: E \subset \underset{\text{м.п.}}{X} \to \R,\quad x_0$ - предельн
 #+begin_remark org
 Теорема 4' верна для случая, когда $u_n: E\subset X \to Y$, где $Y$ - полное нормированное пространство
 #+end_remark
+#+NAME: теорема31
 #+ATTR_LATEX: :options {4}[о перестановке двух предельных переходов]
 #+begin_manualtheorem org
 $f_n: E \subset X \to \R,\ x_0$ - предельная точка $E$ \\
@@ -209,6 +227,7 @@ A_n \arrow[r, labels=below, dashed]{}{n \to +\infty}                            
 \end{tikzcd}
 #+end_export
 #+end_manualtheorem
+#+NAME: теорема31док
 #+begin_proof org
 $u_1 = f_1,\ \dots,\ u_k = f_k - f_{k -1},\dots$ Тогда $f_n = u_1 + u_2 + \dots + u_n$ \\
 $a_1 = A_1,\ \dots,\ a_k = A_k - A_{k - 1},\dots$, $A_n = a_1 + a_2 + \dots + a_n$ \\

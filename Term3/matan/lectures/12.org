@@ -6,21 +6,16 @@
 #+begin_theorem org
 $\exp(z + w) = \exp(z)\cdot\exp(w)$
 #+end_theorem
+#+NAME: теорема36допдок
 #+begin_proof org
 \[ \exp(z)\cdot\exp(w) = \sum_{n = 0}^{+\infty}\frac{z^n}{n!}\cdot\sum_{n = 0}^{ +\infty} \frac{w^n}{n!} = \sum c_n \addtag \]
 \[ \text{, где }c_n = \frac{1}{n!}\sum_{k = 0}^n \frac{z^k}{k!}\cdot\frac{w^{n -k}}{(n - k)!}\cdot n! = \frac{(z + w)^n}{n!} \addtag \]
 \[ \sum c_n = \sum \frac{(z + w)^n}{n!} = \exp(z + w) \addtag \]
 #+end_proof
+#+NAME: теорема36допслед
 #+begin_corollary org
 $\forall z \in \C\quad\exp(z) \neq 0$
 #+end_corollary
-4. [@4]
-   $\overline{\exp(z)} = \exp(\overline{z})$
-   #+begin_proof org
-   $\color{gray} \overline{w_1 + w_2} = \overline{w_1} + \overline{w_2}$ \\
-   Потому что коэффицент вещественный:
-   \[ \overline{\sum_{n = 0}^N \frac{z^n}{n!}} = \sum_{n = 0}^N  \frac{(\overline{z})^n}{n!} \addtag \]
-   #+end_proof
 ** Замечания о тригонометрических функциях
 #+begin_export latex
 \newcommand{\Cos}[1]{\text{Cos}(#1)}
@@ -51,20 +46,23 @@ $T' = iT$, т.е. $x \mapsto T(x)$ --- движение по единичной 
 #+end_export
 * Ряды Тейлора
 *Все вещественно*
+#+NAME: теорема38доп
 #+begin_definition org
 $f$ --- *разлагается в степенной ряд* в окрестности $x_0$ если: \\
-$\exists \varepsilon > 0\ \exists C_n$ --- вещественная последовательность $\forall x \in (x_0 - \varepsilon, x_0 + \varepsilon)\ f(x) = \displaystyle{\sum_{n = 0}^{+\infty} C_n(x - x_0)^n}$ (*)
+$\exists \varepsilon > 0\ \exists C_n$ --- вещественная последовательность \[ \forall x \in (x_0 - \varepsilon, x_0 + \varepsilon)\ f(x) = \displaystyle{\sum_{n = 0}^{+\infty} C_n(x - x_0)^n} \addtag\label{ryad1} \]
 #+end_definition
 #+begin_remark org
-Тогда $f \in C^\infty(x_0 - \varepsilon, x_0 + \varepsilon)$ по [[степенныерядыследствие1][следствию]]
+Тогда $f \in C^\infty(x_0 - \varepsilon, x_0 + \varepsilon)$ по [[file:11.org::степенныерядыследствие1][следствию]]
 #+end_remark
+#+NAME: теорема38
 #+ATTR_LATEX: :options [единственности]
 #+begin_theorem org
 $f$ --- разлагается в сепенной ряд в окресности $x_0$ \\
-Тогда разложение единственно
+_Тогда_ разложение единственно
 #+end_theorem
+#+NAME: теорема38док
 #+begin_proof org
-выполняется (*) \\
+выполняется $\eqref{ryad1}$ \\
 \[ c_0 = f(x_0),\quad f'(x) = \sum_{n = 1}^{+\infty}nC_n(x-x_0)^{n - 1} \addtag \]
 \[ c_1 = f'(x_0),\quad f''(x) = \dots \addtag \]
 \[ f^{(k)}(x) = \sum_{n = k}^{+\infty} n(n - 1)\dots(n - k + 1)C_n(x - x_0)^{n - k} \addtag \]
@@ -88,8 +86,9 @@ $f(x) = \begin{cases} e^\frac{-1}{x^2} & , x\neq0 \\ 0 & , x = 0\end{cases}$. Т
 \newcommand{\A}{\mathfrak{A}}
 #+end_export
 
+#+NAME: определение29.3
 #+begin_definition org
-\sigma - алгебра $\mathfrak{A} \subset 2^X$
+*\sigma - алгебра* $\mathfrak{A} \subset 2^X$
 1. $\mathfrak{A}$ --- алгебра
 2. $A_1,A_2,\dots \in \mathfrak{A} \Rightarrow \displaystyle{\bigcup_{i = 1}^\infty A_i \in \A}$
 #+end_definition
@@ -116,12 +115,14 @@ $X = \R^2$ $\A$ --- ограниченое множество и их допол
 \renewcommand{\P}{\mathcal{P}}
 #+end_export
 
+#+NAME: определение30доп
 #+begin_definition org
 $\mu: \underset{\text{полукольцо}}{\P} \to \overline{\R}$ --- *аддитивная функция множества*, если:
 1. $\mu$ --- не должна принимать значение $\pm\infty$ одновременно(если принимает одно на каком либо множестве, не должно принимать другое на любом другом множестве)
 2. $\mu(\emptyset) = 0$
 3. $\forall A_1,\dots,A_n\in\P$ --- дизъюнктны. Если $A = \bigsqcup A_i \in \P$, то $\mu(A) = \sum_{i = 1}^n\mu(A_i)$
 #+end_definition
+#+NAME: определение30
 #+begin_definition org
 $\mu:\P\to\R$ --- *объем*, если $\mu \ge 0$ и $\mu$ --- аддитивная
 #+end_definition
@@ -150,6 +151,7 @@ $a = x_0 < x_1 < \dots < x_n = b$ \\
 $[a, b) = \bigsqcup_{i = 1}^n [x_{i - 1}, x_i)$ \\
 $\sum_{i = 1}^n\mu[x_{i - 1}, x_i) = \sum_{i = 1}^n (x_i - x_{i - 1}) \xlongequal[\text{телескоп.}]{} x_n - x_0 = b - a = \mu[a, b)$
 #+end_examp
+#+NAME: определение32
 #+begin_examp org
 Классический объем в $\R^m\quad \mu: \P^m \to \R$ \\
 $\mu[a, b) = \displaystyle{\prod_{i = 1}^m(b_i - a_i)}$ \\
@@ -158,22 +160,25 @@ $\mu$ не является конечным объемом
 #+begin_definition org
 $A \subset B \Rightarrow \mu A \le \mu B$ --- *монотонность объема*
 #+end_definition
+#+NAME: теорема51
 #+ATTR_LATEX: :options [о свойствах объема]
 #+begin_theorem org
 $\mu: \P \to \overline{\R}$ --- объем \\
-Тогда он имеет свойства:
+_Тогда_ он имеет свойства:
 1. Уиленная монотонность \\
    $\forall A,\underbrace{A_1, A_2, \dots, A_n}_\text{дизъюнктны}\in\P\quad\bigsqcup_{i = 1}^n A_i \subset A\quad \sum_{i = 1}^n \mu A_i \le \mu A$
 2. Конечная полуаддитивность \\
-   $\forall A, A_1, A_2, \dots, A_n \in \P\quad A \subset \bigcup_{i = 1}^n A_i \quad \mu A \le \sum_{i = 1}^n A_i$
+   $\forall A, A_1, A_2, \dots, A_n \in \P\quad A \subset \bigcup_{i = 1}^n A_i \quad \mu A \le \sum_{i = 1}^n \mu A_i$
 3. $\forall A, B \in \P$ пусть еще известно: $A \setminus B \in \P,\ \mu B$ --- конечный \\
    Тогда $\mu(A \setminus B)\ge\mu A - \mu B$
 #+end_theorem
+#+NAME: теорема51доп
 #+begin_remark org
 \-
 - в пунктах 1 и 2 не предполагается, что $\bigcup A_i \in P$
 - в пункте 3 если $\P$ --- алгебра то условие $A\setminus B \in P$ можно убрать(оно выполняется автоматически)
 #+end_remark
+#+NAME: теорема51док
 #+begin_proof org
 \-
 1. Усиление аксиомы 3 из определения полукольца:

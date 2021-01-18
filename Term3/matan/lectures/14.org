@@ -10,12 +10,14 @@
 #+end_export
 
 * Теория меры
+#+NAME: определение39доп
 #+begin_definition org
 $\mu_0: \P_0 \to \overline{\R}\quad\P_0 \subset \P\quad\mu:\P \to \R$ --- *продолжает* $u_0\quad \mu\Big|_{\P_0} = \mu_0$
 #+end_definition
+#+NAME: определение38
 #+ATTR_LATEX: :options [о Лебеговском продлжении меры]
 #+begin_theorem org олебеговскомпродолжениимеры
-$\P_0$ --- полукольцо подмножеств пространства $X$, $\mu_0: \P_0 \to \overline{\R}$ --- \delta-конечная мера \\
+$\P_0$ --- полукольцо подмножеств пространства $X$, $\mu_0: \P_0 \to \overline{\R}$ --- \sigma-конечная мера \\
 Тогда $\exists$ \sigma-алгебра $\A \supset \P_0$, $\exists \mu$ --- мера на $\A$:
 1. $\mu$ --- продолжение $\mu_0$ на $\A$
 2. $\mu$ --- полная мера
@@ -34,10 +36,12 @@ $A \subset \bigcup A_k\quad \mu^\star A \le \sum \mu^\star A_k$
 $A \in \A,\ \mu A < +\infty,\ \forall \varepsilon > 0,\ \exists P_k \in \P:\ A \subset \bigcup P_k\quad\mu A < \sum \mu P_k < \mu A + \varepsilon$
 #+end_corollary
 ** Мера Лебега
+#+NAME: теорема54
 #+begin_theorem org
 $\mu: \P^m \to \R$ --- классический объем в $\R^m$ \\
 Тогда $\mu$ --- \sigma-конечная мера
 #+end_theorem
+#+NAME: теорема54док
 #+begin_proof org
 \sigma-конечность очевидна \\
 Проверим, что $\mu$ --- счетно адддитивна, для этого достаточно проверить счетную полуаддитивность \\
@@ -52,8 +56,9 @@ $P = [a, b),\ P_n = [a_n, b_n)\ P \subset \bigcup P_n$, проверить $\mu 
   \[ \mu P - \varepsilon \le \sum_{n=1}^N(\mu P_n + \frac{\varepsilon}{2^n}) \addtag \]
   \[ \mu P - \varepsilon \le \sum_{n = 1}^{+\infty} \mu P_n + \varepsilon \addtag \]
 #+end_proof
+#+NAME: определение39
 #+begin_definition org
-*Мера Лебега* в $\R^m$ --- Лебеговское продлжение классического объема получается \sigma-алгебра $\M^m$, на которой задана мера Лебега --- *множества измеримые по Лебегу*
+*Мера Лебега* в $\R^m$ --- Лебеговское продолжение классического объема образует \sigma-алгебру $\M^m$, на которой задана мера Лебега --- *множества измеримые по Лебегу*
 #+end_definition
 #+begin_symb org
 Мера Лебега --- \lambda или $\lambda_m$
@@ -74,19 +79,21 @@ $P = [a, b),\ P_n = [a_n, b_n)\ P \subset \bigcup P_n$, проверить $\mu 
    $\mathbb{Q}$ --- счетное объединение одноточечных множеств
    #+end_proof
 2. $\M^m$ содержит все открытые и замкнцтые множества
+   #+NAME: теорема55
    #+begin_lemma org
    \-
    1. $O \subset \R^m$ --- открыто \\
-      Тогда $O = \bigsqcup Q_i$, где $Q_i$ --- ячейки с рациональными координатами(можно считать $Q_i$ --- кубические ячейки, двоичные рациональные координаты)
+      _Тогда_ $O = \bigsqcup Q_i$, где $Q_i$ --- ячейки с рациональными координатами(можно считать $Q_i$ --- кубические ячейки, двоичные рациональные координаты)
    2. Можно считать, что $\overline{Q_i} \subset O$
    3. $E$ --- измеримо, $\lambda E = 0$ \\
-      Тогда $\forall \varepsilon > 0\quad E \subset \bigcup Q_i:\ Q_i$ --- кубическая ячейка и $\sum \lambda Q_i < \varepsilon$
+      _Тогда_ $\forall \varepsilon > 0\quad E \subset \bigcup Q_i:\ Q_i$ --- кубическая ячейка и $\sum \lambda Q_i < \varepsilon$
    #+end_lemma
    #+begin_remark org
-   $\forall \varepsilon > 0\quad \exists (B_i)$ --- шары: $E \subset \bigcup B_i,\ \sum \lambda B_i M \varepsilon$ \\
+   $\forall \varepsilon > 0\quad \exists (B_i)$ --- шары: $E \subset \bigcup B_i,\ \sum \lambda B_i < \varepsilon$ \\
    $\color{gray}Q(x, \frac{R}{\sqrt{m}}) \subset B(x, R) \subset Q(x, R)$ \\
    $\left(\frac{2R}{\sqrt{m}}\right)^m \le \lambda B \le \lambda Q(x, R) = (2R)^m$
    #+end_remark
+   #+NAME: теорема55док
    #+begin_proof org
    \-
    1) $\forall x \in O$, пусть $Q(x)$ --- какая-то ячейка с рациональными координатами, $Q(x) \subset O$(можно потребовать $\overline{Q(x)} \subset O$; $Q$ --- куб; двоично рациональные координаты) \\
@@ -106,6 +113,7 @@ $P = [a, b),\ P_n = [a_n, b_n)\ P \subset \bigcup P_n$, проверить $\mu 
       $\exists \tilde{P}_k$ --- двоично рациональные ячейки: $P_k \subset \tilde{P}_k\ 0 =\lambda E \le \sum \lambda_k \tilde{P}_k \le 2\varepsilon$ \\
       Можно разбить $P_k$ на конечное число кубов
    #+end_proof
+   #+NAME: определение40
    #+begin_definition org
    $\B$ --- *борелевская \sigma-алгебра* (в $\R^m$ или в метрическом пространстве)
    --- минимальная \sigma-алгебра, которая содержит все открытые множества \\
@@ -137,6 +145,8 @@ $P = [a, b),\ P_n = [a_n, b_n)\ P \subset \bigcup P_n$, проверить $\mu 
    \color{blue}$\mathfrak{K}$ --- замкнутое
    #+end_examp
 3. $\exists$ неизмеримые по Лебегу множества(т.е. не принадлежат $\M$) \\
+   #+NAME: теорема56
+   #+begin_examp org
    $x, y \in \R\quad x \sim y$ если $x - y \in \mathbb{Q}$ \\
    $\R\big|_\mathbb{Q} = A$ --- из каждого класса эквивалентности взяли по одной точке. Можно считать $A \subset [0, 1]$ \\
    Очевидно, что:
@@ -147,6 +157,7 @@ $P = [a, b),\ P_n = [a_n, b_n)\ P \subset \bigcup P_n$, проверить $\mu 
    из (1*): $\lambda [0, 1]= 1\le \sum_q\lambda(A + q) = \sum_q\lambda(A) \Rightarrow \lambda A > 0$ \\
    из (2*): $\lambda(\binsqcup(A + q)) = \sum_q\lambda A \le \lambda[-1, 2] = 3 \Rightarrow \lambda A = 0$ \\
    Противречие \Rightarrow $A$ --- не измеримо
+   #+end_examp
 4. $A \in \M$ \\
    - $A$ --- ограничено \Rightarrow $\lambda A < +\infty$
    - $A$ --- открыто \Rightarrow $\lambda A > 0$ --- из леммы

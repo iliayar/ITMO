@@ -21,16 +21,18 @@ $f: E \subset \mathbb{R}^m \rightarrow \mathbb{R}$  $f \in C^r(E)$ - $r$ раз 
 $h \in \mathbb{R}^m$ $\forall t \in [-1, 1]$ $a + th \in E$ \\
 $\varphi(t) := f(a + th)$ \\
 _Тогда_ при $1 \le k \le r$ \\
-\[ \varphi^{(r)}(0) = \displaystyle{\sum_{j: |j|=r}}\frac{r!}{j!}h^j\frac{\partial^rf}{\partial x^j}(a) \addtag \]
-\[ \varphi^{(k)}(t) = \displaystyle{\sum^m_{i_1 = 1}\sum^m_{i_2 = 1}\dots\sum^m_{i_r = 1}\frac{\partial^r f}{\partial x_{i_1}\partial x_{i_2}\dots\partial x_{i_r}}(a + th)\cdot h_{i_1}h_{i_2}\dots h_{i_3}} \addtag \]
+\[ \varphi^{(k)}(0) = \displaystyle{\sum_{j: |j|=k}}\frac{k!}{j!}h^j\frac{\partial^kf}{\partial x^j}(a) \addtag \]
 #+end_lemma
+#+NAME: теорема1док
+#+begin_proof org
+\[ \varphi^{(k)}(t) = \displaystyle{\sum^m_{i_1 = 1}\sum^m_{i_2 = 1}\dots\sum^m_{i_r = 1}\frac{\partial^r f}{\partial x_{i_1}\partial x_{i_2}\dots\partial x_{i_r}}(a + th)\cdot h_{i_1}h_{i_2}\dots h_{i_3}} \addtag \]
+#+end_proof
 
 #+begin_examp org
 $\varphi'(t) = \displaystyle{\sum^m_{i = 1} \underbrace{\frac{\partial f}{\partial x_i}(a + th)}_{\text{Производная в точке }a+th}\cdot h_i}$ \\
 $\varphi'' = \displaystyle{\sum^m_{i = 1}\sum^m_{i_2 = 1}\frac{\partial^2 f}{\partial x_i \partial x_{i_2}}(a + th)\cdot h_i h_{i_2}}$ \\
 $\varphi''(0) = \frac{\partial^2 f}{\partial x_1^2}h_1^2 + \frac{\partial^2 f}{\partial x_2^2}h_2^2 + \dots + \frac{\partial^2 f}{\partial x_m^2}h_m^2 + 2(\frac{\partial^2 f}{\partial x_1 \partial x_2}h_1h_2 + \frac{\partial^2 f}{\partial x_1 \partial x_3}h_1h_3 + \dots)$
 #+end_examp
-
 * *Теорема* (формула Тейлора)
 #+NAME: определение2
 #+NAME: теорема2
@@ -48,7 +50,7 @@ $\varphi(t) = f(a + th)$, где $h = x - a$, $\varphi(0) = f(a)$, $\varphi(1) =
 Из [[теорема1][леммы]] \\
 \[ \varphi(t) = \varphi(0) + \frac{\varphi'(0)}{1!}t + \dots + \frac{\varphi^{(r)}(0)}{r!}t^r + \frac{\varphi^{(r + 1)}(\bar{t})}{(r + 1)!}t^{r + 1} \addtag \]
 \[ f(x) = f(a) + \displaystyle{\sum_{k  = 1}^r \frac{1}{k!}\underbrace{ \sum_{\alpha: |\alpha| = k} k!\frac{f^{(\alpha)}(a)}{\alpha!}h^\alpha }_{\text{однородный многочлен степени }k} + \sum_{\alpha: |\alpha| = r + 1}\frac{f^{(\alpha)}(a + \theta(x - a))}{\alpha!}h^\alpha} \addtag \]
-\[ f(x) = \displaystyle{\sum \frac{f^{(\alpha)}(a)}{\alpha!}h^\alpha + o(|h|^r)} \addtag \]
+\[ f(a + h) = \displaystyle{\sum \frac{f^{(\alpha)}(a)}{\alpha!}h^\alpha + o(|h|^r)} \addtag \]
 Где однородный многочлен степени $k$ это $k$ -ый дифференциал функции $f$ в точке $a$, обозначается $d^k f(a, h)$ \\
 $\displaystyle{f(x) = \sum^r_{k = 1} \frac{d^k f(a, h)}{k!} + \frac{1}{(k + 1)!}d^{k + 1}f(a + \theta h, h)}$ \\
 #+end_proof
@@ -70,6 +72,7 @@ $A \in \mathcal{L}(\mathbb{R}^m, \mathbb{R}^n)\quad \Vert A\Vert \overset{\text{
 #+end_definition
 #+NAME: теорема3замеч
 #+begin_remark org
+\-
 1. $\sup \leftrightarrow \max$, т.к. сфера компактна
 2. $A = (a_{ij})\quad \Vert A \Vert \le \sqrt{\sum a_{ij}^2}$ - по Лемме об оценке нормы линейного отображения
 3. $\forall x \in \mathbb{R}^m\quad \vert Ax \vert \le \Vert A \Vert \cdot \vert x \vert$

@@ -15,8 +15,9 @@ $f'(a) -\labmda \Phi'(a) = 0$ \\
 f'(a) - \lambda\Phi'(a) = 0 \\
 \Phi(a) = 0
 #+end_cases
+#+NAME: определение14
+#+ATTR_LATEX: :options [О достаточном условии экстремума]
 #+begin_theorem
-(О достаточном условии экстремума) \\
 Пусть выполнено условие для точки $a$ \\
 $\forall h = (h_x, h_y) \in \R^{m + n}$: если $\Phi'(a)h = 0$($n$ уранений с $m + n$ неизвестными) \\
 То можно выразить $h_y = \Psi(h_x)$(решим линейную систему) \\
@@ -61,16 +62,19 @@ $a = (1, 2, 3)\quad \lambda = 1$ \\
 $f \in C^1([a, b])\quad \displaystyle{F(f) = \int_a^bxf(x)dx + f(a)} \to \max$
 * Функциональные последовательности и ряды
 $f_n \to f$ - поточечно на $E$ \quad $f,f_n: E\subset X \rightarrow R$ \\
-$f_n \rightrightarrows f$ на $E$\\
+$f_n \rightrightarrows f$ на $E$ \\
 $\forall x \in E\ \forall \varepsilon > 0\ \exists N\ \forall n > N\quad |f_n(x) - f(x)| < \varepsilon$ \\
 $M_n \displaystyle{\sup_{x \in E}|f_n - f| \xrightarrow[n \to +\infty]{} 0}$ \\
 $\rho(f_n, f) = \displaystyle{\sup_{x \in E}|f_n(x) - f(x)}$ - метрика в $\mathcal{F} =\{f\vert E \rightarrow \R,\ f-\text{огр.}\}$, в $C([a, b])$ - непрерывные функции на $[a, b]$ \\
+#+NAME: теорема23
+#+ATTR_LATEX: :options [Стокса--Зайдля]
 #+begin_theorem
-(Стокс, Зайдля) \\
 $f_n, f: X \rightarrow \R$ ($X$ - метр. пр-во) \\
 $x_0 \in X\quad f_n$ - непрерывно в $x_0$ \\
-$f_n \underset{X}{\rightrightarrows} f$ Тогда $f$ - непрерывно в $x_0$
+$f_n \underset{X}{\rightrightarrows} f$ \\
+_Тогда_ $f$ - непрерывно в $x_0$
 #+end_theorem
+#+NAME: теорема23док
 #+begin_proof
 $|f(x) - f(x_0)| \le |f(x) - f_n(x)| + |f(x)-f_n(x_0)| + |f_n(x_0) - f(x_0)|$ (неравенство треугольника) - верно $\forall x\ \forall n$ \\
 $f_n \underset{X}{\rightrightarrows} f: \forall \varepsilon > 0\ \exists N\ \forall n > N\ \displaystyle{\sup_X|f_n - f| < \frac{\varepsilon}{3}}$ \\
@@ -99,22 +103,26 @@ $f_n \not\rightrightarrows 0$ \\
 Тогда $f_n \rightrightarrows g$ на $(\alpha, \beta): \quad \displaystyle{\sup_{x \in (\alpha, \beta)}|f_n(x) - f(x)| = \sup_{x \in (\alpha, \beta)}x^n = \beta^n \xrightarrow[n \to +\infty]{} 0}$
 и предельная функция непрерывна
 #+end_examp
+#+NAME: теорема24
 #+begin_theorem
 $X$ - компактное $\rho(f_1, f_2) = \displaystyle{\sup_{x \in X}}|f_1(x) - f_2(x)|$, где $f_1, f_2 \in C(X)$ \\
-Тогда пространство $C(X)$ - полное матрическое пространство \\
+_Тогда_ пространство $C(X)$ - полное метрическое пространство \\
 #+end_theorem
+#+NAME: теорема24доп
 #+begin_remark
 $x_n \to a$ в ($X,\ \rho$) \Rightarrow $x_n$ - фунд. $\forall \varepsilon\ \exists N\ \forall n, m > M\quad \rho(x_n, x_m) < \varepsilon$ \\
 $X$ - полное, если каждая фундаментальная последовательность сходится
 #+end_remark
+#+NAME: теорема24док
 #+begin_proof
 $f_n$ - фунд. в $C(X) \Rightarrow \forall x_0 \in X$ вещ. последовательность $(f_n(x_0))$ - фундаментальна \Rightarrow \\
-/Напоминание./ $f_n$ - фунд. $\Rightarrow \forall \varepsilon > 0\ \exists N\ \forall n, m > N\ \forall x \in X\quad |f_n(x) - f_m(x)| < \varepsilon$ (*) \\
+\color{blue} $f_n$ - фунд. \Rightarrow \[ \forall \varepsilon > 0\ \exists N\ \forall n, m > N\ \forall x \in X\quad |f_n(x) - f_m(x)| < \varepsilon \addtag\label{241} \] \color{black}
 $\Rightarrow \exists \displaystyle{\lim_{n \to +\infty}f_n(x) =: f(x_0)}\quad f$ - поточечный предел $f_n$ \\
 Проверим: $f_n \rightrightarrows f,\ f \in C(X)$ \\
-В (*) перейдем к пределу при $m \to +\infty$ \\
+В $\eqref{241}$ перейдем к пределу при $m \to +\infty$ \\
 $\forall \varepsilon > 0\ \exists N\ \forall n > N\ \forall x \in X\quad |f_n(x) - f(x)| \le \varepsilon$, т.е. $f_n \rightrightarrows f$ на $X$ и тогда $f \in C(X)$
 #+end_proof
+#+NAME: теорема24след
 #+begin_corollary
 $(\mathcal{F}, \rho)$ - полное
 #+end_corollary
@@ -137,36 +145,43 @@ $\displaystyle{\sup_{x \in X}|f_n - f| < \varepsilon}$ \\
 $[a, b] = [0, 1]\quad f_n(x) = nx^{n - 1}(1 - x^n) \xrightarrow[n \to +\infty]{} f(x) \equiv 0$ \\
 \[ \int_a^Bf_n = \int_0^1nx^{n - 1}(1 - x^n)dx = \int_0^1(1 - y)dy = \frac{1}{2} \qquad \int_0^1f(x) = 0 \]
 #+end_examp
-#+begin_theorem
-(2)
-$f_1, f_2 \in C([a, b])\quad f_n \rightrightarrows f$ на $[a, b]$ \\
-Тогда $\displaystyle{\int_a^bf_n \rightarrow \int_a^bf}$
-#+end_theorem
+#+NAME: теорема25
+#+ATTR_LATEX: :options {2}
+#+begin_manualtheorem
+$f_n, f \in C([a, b])\quad f_n \rightrightarrows f$ на $[a, b]$ \\
+_Тогда_ $\displaystyle{\int_a^bf_n \rightarrow \int_a^bf}$
+#+end_manualtheorem
+#+NAME: теорема25док
 #+begin_proof
 $\displaystyle{\left|\int_a^bf_n - \int_a^bf\right| \le \int_a^b|f_n - f| \le \sup_{[a, b]}|f_n - f|\cdot(b - a) = \rho(f_n, f)\cdot(b - a) \to 0}$
 #+end_proof
+#+NAME: теорема26
+#+ATTR_LATEX: :options [Правило Лейбница]
 #+begin_corollary
-(Правило Лейбница) \\
 $f: \underbrace{[a, b]}_x \times \underbrace{[c, d]}_y \rightarrow \R\quad f, f'_y$ - непрерывна на $[a,b]\times[c,d]$ \\
-$\Phi(y) = \displaystyle{\int_a^bf(x, y)dx\quad y \in [c, d]\quad}$ Тогда $\Phi$ - дифф. на $[c, d]$ и $\Phi'(y) = \displaystyle{\int_a^bf'_y(x, y)dx}$
+$\Phi(y) = \displaystyle{\int_a^bf(x, y)dx\quad y \in [c, d]\quad}$ \\
+_Тогда_ $\Phi$ - дифф. на $[c, d]$ и $\Phi'(y) = \displaystyle{\int_a^bf'_y(x, y)dx}$
 #+end_corollary
+#+NAME: теорема26док
 #+begin_proof
 $\frac{\Phi(y + \frac{1}{n}) - \Phi(y)}{\frac{1}{n}} = \displaystyle{\int_a^b\frac{f(x, y + \frac{1}{n}) - f(x, y)}{\frac{1}{n}}dx \overset{\text{т. Лагранжа}}{=} \int_a^b\underbrace{f'_y(x, y + \frac{\Theta}{n})}_{g_n(x, y)}dx}$ \\
 /Утв./ $f_n(x, y) \underset{x \to +\infty}{\rightrightarrows} f'_y(x, y)$ на $x \in [a, b]$, а $y$ считаем фиксированным --- по теореме Кантора о равномерной непрерывности \\
 $\forall \varepsilon > 0\ \exists N: \frac{1}{N} < \delta(\varepsilon) \text{--- из теоремы Кантора}\ \forall n > N\ \forall x \in [a, b]\ |f'_t(x, y + \frac{\delta}{n)} - f'_y(x, y)| < \varepsilon$ \\
 Таким образом $\frac{\Phi(y + \frac{1}{n}) - \Phi(y)}{\frac{1}{n}} \to \displaystyle{\int_a^bf'_y(x, y)dx} = \Phi'(y)$
 #+end_proof
-#+begin_theorem
-(3, О предельном переходе под знаком производной) \\
+#+NAME: теорема27
+#+ATTR_LATEX: :options {3}[О предельном переходе под знаком производной]
+#+begin_manualtheorem
 $f_n \in C^1(\langle a, b \rangle),\quad f_n \to f$ поточечно, $f'_n \rightrightarrows \varphi$ на $\langle a, b\rangle$ \\
-Тогда $f\inC^1(\langle a, b\rangle)$ и $f' \equiv \varphi$ на $\langle a, b \rangle$ \\
+_Тогда_ $f\in C^1(\langle a, b\rangle)$ и $f' \equiv \varphi$ на $\langle a, b \rangle$ \\
 $\begin{array}{ccc}
 f_n & \xrightarrow[n \to +\infty]{} & f \\
 D\downarrow & & \downarrow \\
 f'_n & \rightrightarrows & \varphi
 \end{array}$ \\
 \[ \lim_{n\to+\infty}(f'_n(x)) = (\lim_{n\to+\infty}f_n(x))' \]
-#+end_theorem
+#+end_manualtheorem
+#+NAME: теорема27док
 #+begin_proof
 $x_0, x_1 \in \langle a, b \rangle\quad f'_n \rightrightarrows \varphi$ на $[a, b]\ \xRightarrow{\text{Т.} 2}\displaystyle{\int_{x_0}^{x_1}f_n' \to \int_{x_0}^{x_1}\varphi}$, т.е. \\
 $\begin{cases}
@@ -182,9 +197,10 @@ f - \text{первообразная}\ \varphi \\
 #+end_proof
 ** Равномерная сходимость функциональных рядов
 #+begin_definition
-$u_n: X \rightarrow \R(\R^m)\quad \sum u_n(x)$ сходится поточечно(к сумме $S(x)$) на $X$ \\
+$u_n: X \rightarrow \R(\R^m)\quad \sum u_n(x)$ *сходится поточечно(к сумме $S(x)$) на $X$* \\
 $S_N(x) := \displaystyle{\sum_{n = 0}^{N}u_n(x)}\quad S_N(x) \to S(x)$ поточечно на $X$
 #+end_definition 
+#+NAME: определение17
 #+begin_definition
 $\displaystyle{\sum_{n = 1}^{+\infty}u_n(x)\quad \text{сходится к}\ S(x)\ \text{равномерно на }E \subset X:\quad S_N \underset{N \to +\infty}{\rightrightarrows} S\ \text{на}\ E}$ \\
 #+end_definition

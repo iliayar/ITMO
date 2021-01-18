@@ -11,10 +11,12 @@
 \[ \ln(1 + x) = \sum(-1)^{n - 1}\frac{x^n}{n}\quad x \in (-1, 1) \addtag \]
 \[ \arctg x = \sum (-1)^{n - 1}\frac{x^{2n - 1}}{2n - 1}\quad x\in(-1, 1) \addtag \]
 #+end_examp
+#+NAME: теорема39
 #+begin_theorem org
 $\forall \sigma \in \R\ \forall x \in (-1, 1)$ \\
 $(1 + x)^\sigma = 1 + \sigma x + \frac{\sigma(\sigma - 1)}{2}x^2 + \dots$
 #+end_theorem
+#+NAME: теорема39док
 #+begin_proof org
 при $|x| < 1$ ряд сходится по ризнаку Деламбера \\
 \[ \left|\frac{a_{n + 1}}{a_{n}}\right| = \left|\frac{(\sigma - n)x}{n + 1}\right| \xrightarrow[n \to +\infty]{} |x| < 1 \addtag \]
@@ -46,11 +48,13 @@ $\arcsin x = \const +$ нужный ряд, при $x:=0\ \const = 0$
 \[ \sum_{n = 0}^{+\infty} t^n = \frac{1}{1 - t} \addtag \]
 дифференцируем $m$ раз
 #+end_proof
+#+NAME: теорема40
 #+begin_theorem org
 $f \in C^\infty(x_0 - h, x_0 + h)$ \\
 $f$ --- раскладывается в ряд Тейлора в окрестности $x_0$ \Leftrightarrow \\
 $\exists \delta, C, A > 0\ \forall n\ \forall x: |x - x_0| < \delta\quad |f^{(n)}(x)| < C\cdot A^n \cdot n!$
 #+end_theorem
+#+NAME: теорема40док
 #+begin_proof org
 \-
 - ($\Leftarrow$) :: формула Тейлора:
@@ -77,10 +81,10 @@ $\exists \delta, C, A > 0\ \forall n\ \forall x: |x - x_0| < \delta\quad |f^{(n)
 \newcommand{\A}{\mathfrak{A}}
 #+end_export
 
-[[теориямеры12][предыдущее]]
 ** Мера
+#+NAME: определение34
 #+begin_definition org
-$\mu: \underset{\text{п/к}}{\P} \to \overline{\R}$ --- мера, если $\mu$ --- объем и $\mu$ --- счетно аддитивна: $\forall A, A_1, \dots, A_n \in \P$ \\
+$\mu: \underset{\text{п/к}}{\P} \to \overline{\R}$ --- *мера*, если $\mu$ --- объем и $\mu$ --- счетно аддитивна: $\forall A, A_1, \dots \in \P$ \\
 $A = \bigsqcup_{i = 1}^{+\infty} A_i\qquad \mu A = \sum_{i = 1}^{ +\infty}\mu A_i$
 #+end_definition
 #+begin_remark org
@@ -99,6 +103,7 @@ $\mu A = \begin{cases} 0 & , A \text{ --- огр.} \\ 1 & ,A^C \text{ --- огр
 $\R^2 = \text{"лист в клетку"} = \bigcup_\text{счетное}\text{клеток} = \bigsqcup \text{ячеек} \xlongequal{\text{обозн.}} \bigsqcup A_i$ \\
 $\mu(\R^2) = 1\quad \sum \mu A_i = 0$ *Это не мера*
 #+end_examp
+#+NAME: определение37
 #+begin_examp org
 $X$ --- (бесконечное) множество \\
 $a_1, a_2, a_3, \dots$ --- набор попарно различных точек \\
@@ -108,14 +113,16 @@ $h_1, h_2, h_3, \dots$ --- положительные числа \\
 Счетная аддитивность $\mu$ \Leftrightarrow Теорема о группировке слагаемых \\
 $\mu$ --- *дискретная мера*
 #+end_examp
+#+NAME: теорема52
 #+ATTR_LATEX: :options {1}
 #+begin_manualtheorem org
 $\mu: \underset{\text{п/к}}{\P} \to \overline{\R}$ --- объем \\
 Тогда эквивалентны:
 1. $\mu$ --- мера, т.е. $\mu$ --- счетно аддитивна
-2. $\mu$ -- счетно аддитивна: \\
+2. $\mu$ -- счетно полу-аддитивна: \\
    $A, A_1, A_2, \dots \in \P\quad A \subset \bigcup A_i \Rightarrow \mu A \le \sum \mu A_i$
 #+end_manualtheorem
+#+NAME: теорема52док
 #+begin_proof org
 \-
 - ($1 \Rightarrow 2$) :: Как в предыдущей теореме(доказательство п.2) в формклах 15, 17, 19 вместо конечных объединений и сумм надо рассматривать счетные
@@ -131,6 +138,7 @@ $A \in \P\quad A_n \in \P:\ A \in \bgicup A_n,\ \mu A_n = 0$, при этом $\
 #+begin_proof org
 $\mu A \le \sum \mu A_i = 0$
 #+end_proof
+#+NAME: определение33
 #+ATTR_LATEX: :options {2}
 #+begin_manualtheorem org
 $\A$ --- алгебра, $\mu: \A \to \overline{\R}$ --- объем \\
@@ -144,6 +152,7 @@ $\A$ --- алгебра, $\mu: \A \to \overline{\R}$ --- объем \\
 \color{red} нет(см доказательство Т. 3)
 #+end_proof
 
+#+NAME: теорема53
 #+ATTR_LATEX: :options {3}
 #+begin_manualtheorem org
 $\A$ --- алгебра $\mu: \A \to \R$ --- конечный объем \\
@@ -157,6 +166,7 @@ $\A$ --- алгебра $\mu: \A \to \R$ --- конечный объем \\
 $x = \R\quad A_k = [k, +\infty]\quad \bigcap A_k = \emptyset = A\quad \mu A = 0\ \mu a_k = +\infty$ \\
 $\mu$ --- мера Лебега в $R^2$
 #+end_colored
+#+NAME: теорема53док
 #+begin_proof org
 \-
 - ($1 \Rightarrow 2$) :: $B_k = A_k \setminus A_{k + 1}\quad A_1 = \bigsqcup B_k \sqcup A$ \\
@@ -173,6 +183,7 @@ $\mu$ --- мера Лебега в $R^2$
 
 #+end_proof 
 ** Теорема о продолжении меры
+#+NAME: определение36
 #+begin_definition org
 $\mu: \P \to \overline{\R}$ --- мера *\sigma - конечна*, если:
 $\exists A_1, A_2, \dots \in \P:\ X = \bigcup A_i,\ \mu A_i < +\infty$
@@ -182,11 +193,13 @@ $X = \R^m,\ \P = \P^m$ --- полукольцо ячеек \\
 $\mu$ --- класичекий объем, $\mu$ --- \sigma-конечный объем \\
 $\R^m = \bigcup\text{Куб}(0, 2R) = \bigcup\text{целочисленных единичных ячеек}$ \\
 #+end_examp
+#+NAME: определение35
 #+begin_definition org
 $\mu: \P \to \overline{\R}$ --- мера \\
 $\mu$ --- *полная*, если $\forall A \in \P\ \mu A = 0\ \forall B \subset A$ выолняется $B \in \P$ и (тогда автоматически) $\mu B = 0$ \\
 Совместное свойство $\mu$ и $\P$
 #+end_definition
+#+NAME: определение34доп
 #+begin_definition org
-*Пространство с мерой* --- это тройка $(\underset{\text{множество}}{X}, \underset{\sigma\text{-алгебра}, \A \subset 2^X}{\A}, \underset{\text{мера на }\A}{\mu})$
+*Пространство с мерой* --- это тройка $(\underset{\text{множество}}{X}, \underset{\substack{\sigma\text{-алгебра} \\ \A \subset 2^X}}{\A}, \underset{\text{мера на }\A}{\mu})$
 #+end_definition
