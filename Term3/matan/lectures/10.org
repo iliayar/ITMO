@@ -3,6 +3,7 @@
 #+AUTHOR: Ilya Yaroshevskiy
 
 * Гомотопия путей
+#+NAME: определение27
 #+ATTR_LATEX: :options [Гомотопия двух путей]
 #+begin_definition org
 $\gamma_0, \gamma_1: [a, b] \to O \subset \R^m$ --- непрерывны \\
@@ -37,14 +38,17 @@ $\Gamma(\cdot,0) = \gamma_0,\ \Gamma(\cdot,1) = \gamma_1$ \\
 \end{center}
 #+end_export
 #+end_definition
+#+NAME: теорема48
 #+begin_theorem org
 $V$ - локально потенциальное векторное поле в $O \subset \R^m$ \\
 $\gamma_0, \gamma_1$ --- связанно гомотопные пути \\
-Тогда $\int_{\gamma_0}\sun V_i dx_0 = \int_{\gamma_1}\sum V_i dx_i$
+_Тогда_ $\int_{\gamma_0}\sun V_i dx_0 = \int_{\gamma_1}\sum V_i dx_i$
 #+end_theorem
+#+NAME: теорема48доп
 #+begin_remark org
 То же самое выполнено для петельных гомотопий
 #+end_remark
+#+NAME: теорема48док
 #+begin_proof org
 $\gamma_u(t) := \Gamma(t, u),\ t \in [a, b]\ u\in[0, 1]$ \\
 $\Phi(u) = \int_{\gamma_u}\sum V_i dx_i$ \\
@@ -71,6 +75,7 @@ $\begin{colored}{gray}\forall t \in [a, b]\quad |\gamma_{u_0}(t) - \tilde{\gamma
 \Rightarrow $\int_{\gamma_u} \sum V_i dx_i \xlongequal{\text{def}} \int_{\tilde{\gamma}_u}\dots = \int_{\tilde{\gamma}_{u_0}} \dots \xlongequal{\text{def}} \int_{\gamma_{u_0}} \dots$ \\
 т.е. $\Phi(u) = \Phi(u_0)$, при $|u - u_0| < \delta$
 #+end_proof
+#+NAME: определение28
 #+begin_definition org
 Область $O\subset\R^m$ - называется *односвязной* если в ней любой замкнутый путь гомотопен постоянному пути
 #+end_definition
@@ -83,11 +88,13 @@ $\Phi: O \to O'$ --- гомеоморфизм, $\gamma$ - петля в $O'$, $\
 $\Gamma: [a, b] \to [0, 1] \to O$ - гомотопия $\Phi^{-1}(\gamma)$ и постоянного пути $\tilde{\gamma} \equiv A$ \\
 $\Phi \circ \Gamma$ --- гомотопия $\gamma$ с постоянным путем $\Phi(A)$
 #+end_remark
+#+NAME: теорема49
 #+begin_theorem org
 $O \subset \R^m$ --- односвязная область \\
 $V$ --- локально потенциальное векторное поле в $O$ \\
-Тогда $V$ --- потенциальное в $O$
+_Тогда_ $V$ --- потенциальное в $O$
 #+end_theorem
+#+NAME: теорема49док
 #+begin_proof org
 #+ATTR_LATEX: :options {blue}
 #+begin_colored org
@@ -99,23 +106,26 @@ $V$ --- локально потенциальное векторное поле 
 $V$ - локально постояно, $\gamma_0$ --- кусочно гладкая петля, тогда $\gamma_0$
 гомотопна постоянному пути $\gamma_1$ \Rightarrow $\int_{\gamma_0} = \int_{\gamma_1} = \int_a^b\langle V(\gamma_1|t|), \underbrace{\gamma'_1(t)}_{\equiv 0} \rangle dt = 0 \Rightarrow V$ --- потенциально 
 #+end_proof
+#+NAME: теорема49след
 #+begin_corollary org
 Теорема Пуанкаре верна в односвязной области \\
 #+ATTR_LATEX: :options {blue}
 #+begin_colored org
 Дифференциальный критерий:
-\[ \frac{\partial V_i}{\partial x_j} = \frac{\partial V_j}{\partial x_j} \addtag \]
-Лемма Пуанкаре: (1) \Rightarrow $V$ --- локально потенциально
+\[ \frac{\partial V_i}{\partial x_j} = \frac{\partial V_j}{\partial x_j} \addtag\label{krit} \]
+Лемма Пуанкаре: $\eqref{krit}$ \Rightarrow $V$ --- локально потенциально
 #+end_colored
 #+end_corollary
+#+NAME: теорема50
 #+ATTR_LATEX: :options [о веревочке]
 #+begin_theorem org
 \-\\
 - $O  = \R^2 \textbackslash \{(0, 0)\}$
 - $\gamma: [0, 2\pi] \to O$ \\
   $t \mapsto (\cos t, \sin t)$
-Тогда эта петля не стягиваема
+_Тогда_ эта петля не стягиваема
 #+end_theorem
+#+NAME: теорема50док
 #+begin_proof org
 \-\\
 $V(x, y) = (\frac{-y}{x^2 + y^2}, \frac{x}{x^2 + y^2})$ --- векторное поле в $\R^2$ \\
@@ -130,6 +140,7 @@ $V(x, y) = (\frac{-y}{x^2 + y^2}, \frac{x}{x^2 + y^2})$ --- векторное �
 #+end_proof
 
 * Степенные ряды
+#+NAME: теорема34
 #+ATTR_LATEX: :options [о равномерной сходимости и непрерывности степенного ряда]
 #+begin_theorem org
 \-\\
@@ -137,6 +148,7 @@ $\sum a_n(z - z_0)^n\quad0 < R \le +\infty$
 1. $\forall r:\ 0 < r < R$ Ряд сходится равномерно в шаре $\overline{B(z_0, r)}$
 2. $f(z) = \sum_{n = 0}^{+\infty} a_n(z - z_0)^n$ --- непрерывна в $B(z_0, R)$
 #+end_theorem
+#+NAME: теорема34док
 #+begin_proof org
 \-
 1. Если $0 < r < R$, то при $z = z_0 + r$ ряд абсолютно сходится(по теореме о радиусе сходимости), т.е. $\sum |a_n|\cdot r^n$ --- конечна \\
@@ -162,18 +174,20 @@ $w, w_0 \in \C,\ |w| < r,\ |w_0| < r$ \\
 #+begin_proof org
 $w^n - w_0^n = (w - w_0)(w^{n - 1} + \underbrace{w^{n - 2}w_0}_{\text{по модулю}\le r^{n-1}} + \dots + w_0^{n - 1})$
 #+end_proof
+#+NAME: теорема35
 #+ATTR_LATEX: :options [о дифференцируемости степенного ряды]
 #+begin_theorem org
 \[ \sum_{n = 0}^\infty a_n(z - z_0)^n\quad 0 < R < +\infty\quad f(z) = \sum a_n(z - z_0)^n \addtag \]
-\[ \sum_{n = 1}^\infty n a_n (z - z_0)^{n - 1} \addtag \]
-Тогда:
-1. Радиус сходимости ряда (6) равен $R$
-2. $\forall z \in B(z_0, R)\ \exists f'(z)$ и $f'(z)$ = (6)
+\[ \sum_{n = 1}^\infty n a_n (z - z_0)^{n - 1} \addtag\label{mem} \]
+_Тогда_:
+1. Радиус сходимости ряда $\eqref{mem}$ равен $R$
+2. $\forall z \in B(z_0, R)\ \exists f'(z)$ и $f'(z) = \eqref{mem}$
 #+end_theorem
+#+NAME: теорема35док
 #+begin_proof org
 \-
 1. По формуле Адамара $\begin{colored}{blue}R=\frac{1}{\lim\sqrt[n]{a_n}}\end{colored}$ \\
-   Ряд (6) сходится при каком-то $z$ \Leftrightarrow $\sum n a_n(z-z_0)^n$ --- сходится \\
+   Ряд $\eqref{mem}$ сходится при каком-то $z$ \Leftrightarrow $\sum n a_n(z-z_0)^n$ --- сходится \\
    $\begin{colored}{gray}\text{Смторим на частичные суммы}\end{colored}$ 
    \[ \frac{1}{\lim\sqrt[n]{na_n}} = \frac{1}{1\cdot\lim\sqrt[n]{a_n}} = R \addtag \]
 2. $a\in B(z_0, R),\ \exists x < R,\ a \in B(z_0, r)$ \\
@@ -195,8 +209,8 @@ $w^n - w_0^n = (w - w_0)(w^{n - 1} + \underbrace{w^{n - 2}w_0}_{\text{по мо�
    \end{tikzpicture}
    \end{center}
    #+end_export
-   \[ \frac{f(z) - f(a)}{z - a} = \sum_{n = 0}^{+\infty}a_n\cdot\frac{(z - z_0)^n - (a - z_0)^n}{z - a} = \sum_{n = 1}^{ +\infty} a_n\cdot\frac{w^n - w_0^n}{w - w_0} \addtag \]
-   Последнее выражение по модулю по Лемме $\le n\cdot r^{n - 1}\cdot|a_n|$, ряд $\sum n r^{n - 1}|a_n|$ --- сходится по 1., т.е. ряд (8) равномерно сходится в круге $z \in B(z_0, r)$
+   \[ \frac{f(z) - f(a)}{z - a} = \sum_{n = 0}^{+\infty}a_n\cdot\frac{(z - z_0)^n - (a - z_0)^n}{z - a} = \sum_{n = 1}^{ +\infty} a_n\cdot\frac{w^n - w_0^n}{w - w_0} \addtag\label{nemem} \]
+   Последнее выражение по модулю по Лемме $\le n\cdot r^{n - 1}\cdot|a_n|$, ряд $\sum n r^{n - 1}|a_n|$ --- сходится по 1., т.е. ряд $\eqref{nemem}$ равномерно сходится в круге $z \in B(z_0, r)$
    \[ \lim \frac{f(z) - f(a)}{z - a} = \sum_{n = 1}^{ +\infty}a_n\cdot\lim\frac{(z - z_0)^n - (a - z_0)^n}{z - a} = \sum n a_n(a - z_0)^{n-1}\addtag \]
 #+end_proof
 

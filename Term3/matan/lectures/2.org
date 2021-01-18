@@ -7,139 +7,202 @@
 \[ |Ax| \le \Vert A \Vert \cdot |x| \]
 
 * Теорема лагранжа(для отображений)
+#+NAME: теорема5
+#+begin_theorem org
 $F: E \subset \mathbb{R}^m \rightarrow \mathbb{R}^l$ дифф $E\quad a, b \in E$ \\
-Тогда $\exists c \in [a, b]\quad c = a + \Theta(b - a)\ \theta \in (0, 1)$ \\
+_Тогда_ $\exists c \in [a, b]\quad c = a + \Theta(b - a)\ \Theta \in (0, 1)$ \\
 $|F(b) - F(a)| \le \Vert F'(c) \Vert \cdot |b - a|$
-
-*Доказательство* \\
+#+end_theorem
+#+NAME: теорема5док
+#+begin_proof org
 $f(t) = F(a + t(b - a)),\ t\in\mathbb{R}\quad f'(t) = F'(a + t(b - a))\cdot(b - a)$ \\
-Тогда $|f(1) - f(0)| \le |f'(c)|\cdot|1 - 0|$ - это т. Лагранжа для векторнозначных функций \\
-т.е $|F(b) - F(a)| \le |F'(a + c(b - a))\cdot(b - a)| \le \Vert F'(a + c(b - a)) \Vert \cdot|b - a|$
-
+Тогда $\exists \Theta \in [0, 1]:\ |f(1) - f(0)| \le |f'(\Theta)|\cdot|1 - 0|$ - это т. Лагранжа для векторнозначных функций \\
+т.е $|F(b) - F(a)| \le |F'(a + \Theta(b - a))\cdot(b - a)| \le \Vert F'(\underbrace{a + \Theta(b - a)}_{\in [a, b]}) \Vert \cdot|b - a|$
+#+end_proof
 * Лемма
+#+NAME: теорема6лем
+#+begin_lemma org
 $\mathcal{L}{m, m}$, $\Omega_m = \{L \in \mathcal{L}_{m, m}: \exists L^{-1}\}$, $A \mapsto A^{-1}$ \\
-$B \in \mathcal{L}_{m, m}$ Пусть $\exists c > 0\ \forall x \in \mathbb{R}^m\ |Bc| \ge C|x|$ \\
+$B \in \mathcal{L}_{m, m}$ Пусть $\exists c > 0\ \forall x \in \mathbb{R}^m\ |Bx| \ge c|x|$ \\
 Тогда $B \in \Omega_m$ и $\Vert B^{-1} \Vert \le \frac{1}{c}$
-
-*Доказательство* $B$ - биекция(конечномерный эффект???), $\exists B^{-1}$ \\
+#+end_lemma
+#+NAME: теорема6лемдок
+#+begin_proof org
+$B$ - биекция(конечномерный эффект???), $\exists B^{-1}$ \\
 $|Bx| \ge c|x|\qquad x:=B^{-1}y$ \\
 $|y| \ge c \cdot |B^{-1}y|$ \\
 $|B^{-1} y \le \frac{1}{c} |y| \Rightarrow \Vert B^{-1} \Vert \le \frac{1}{c}$
-
-/Замечание/ $A \in \Omega_m$ Тода $\exists c: |Ax| \ge c\cdot|x|$ \\
+#+end_proof
+#+NAME: теорема6лемприм
+#+begin_remark org
+$A \in \Omega_m$ Тода $\exists c: |Ax| \ge c\cdot|x|$ \\
 $x = |A^{-1}Ax| \le \Vert A^{-1} \Vert \cdot |Ax|\qquad c:=\frac{1}{\Vert A^{-1} \Vert}$
+#+end_remark
 * Теорема об обратимости оператора близкого к обратимому
+#+NAME: теорема6
+#+begin_theorem org
 $L \in \Omega_m\ M \in \mathcal{L}_{m, m}\quad \Vert L - M \Vert < \frac{1}{\Vert L^{-1} \Vert}\ (M - \text{близкий к } L)$ \\
-Тогда
+_Тогда_
 1. $M \in \Omega_m$, т.е. $\Omega_m$ - открытое множество в $\mathcal{L}_{m, m}$
 2. $\Vert M^{-1} \Vert \le \frac{1}{\Vert L^{-1} \Vert^{-1} - \Vert L - M \Vert}$
 3. $\Vert L^{-1} - M^{-1} \Vert \le \frac{\Vert L^{-1} \Vert}{\Vert L^{-1} \Vert^{-1} - \Vert L - M \Vert}\cdot\Vert L - M \Vert$
-   
-*Доказательство* \\
-/Примечание/ $|a + b| \ge |a| - |b|$ \\
-1. $|Mx| = |Lx + (M - L)x| \ge |Lx| - |(M - L)x| \ge \frac{1}{\Vert L^{-1} \Vert}\cdot|x| - \Vert M - L \Vert \cdot |x| \ge (\Vert L^{-1} \Vert^{-1} - \Vert M - L \Vert)\cdot|x| \Rightarrow M$ - обратим
-2. Из первого $\Vert M \Vert \le \dots$ - второй пункт
+#+end_theorem
+#+NAME: теорема6док
+#+begin_proof org
+$\color{blue}|a + b| \ge |a| - |b|$
+1. $|Mx| = |Lx + (M - L)x| \ge |Lx| - |(M - L)x| \ge \frac{1}{\Vert L^{-1} \Vert}\cdot|x| - \Vert M - L \Vert \cdot |x| \ge (\Vert L^{-1} \Vert^{-1} - \Vert M - L \Vert)\cdot|x| \Rightarrow M$ - обратим(по Лемме) \\
+   $L\in\Omega_m\Rightarrow \exists c=\frac{1}{\Vert L^{-1} \Vert}:\ |Lx| \ge c\cdot|x|$ (по замечанию к Лемме)
+2. Из пункта 1 $c = \Vert L^{-1} \Vert^{-1} - \Vert M - L \Vert$, тогда Лемма утверждает, что $\Vert M^{-1} \Vert \le \frac{1}{\Vert L^{-1} \Vert^{-1} - \Vert M - L \Vert}$
 3. $M^{-1} - L^{-1} = M^{-1}(L - M)L^{-1}$ \\
-   $\Vert M^{-1} - L^{-1} \Vert \le \Vert M^{-1} \Vert \cdot \Vert L - M \Vert \cdot \Vert L^{-1} \Vert \le \dots$ (из 2го пункта подставить $\Vert M^{-1} \Vert \le \dots$)
- 
-/Примечание/
+   $\Vert M^{-1} - L^{-1} \Vert \le \Vert M^{-1} \Vert \cdot \Vert L - M \Vert \cdot \Vert L^{-1} \Vert \le \frac{\Vert L^{-1} \Vert}{\Vert L^{-1} \Vert^{-1} - \Vert L - M \Vert}\cdot\Vert L - M \Vert$
+#+end_proof
+#+begin_remark org
 $A \mapsto A^{-2}$ - непрерывное отображение $\Omega_m \rightarrow \Omega_m$ \\
 $B_k \to L \Rightarrow$ при больших $k\ B_k \in B(L, \frac{1}{\Vert L^{-1} \Vert}) \Rightarrow B_k$ - обратимо  \\
 $\Vert L^{-1} - B_k^{-1} \Vert \le \frac{\Vert L^{1} \Vert}{\Vert L^{-1} \Vert - \Vert B_k^{-1} \Vert}\cdot\Vert L - B_k \Vert \underset{k \to +\infty}{\to} 0$
-
+#+end_remark
 * Теорема о непрерывно диффернцируемых отображениях
 $F: E \subset \mathbb{R}^m \rightarrow \mathbb{R}^l$ - дифф на $E$ \\
 $F': E \rightarrow \mathcal{L}_{m, l}$ \\
+#+NAME: теорема7
+#+begin_theorem org
 Пусть $F: E \subset \mathbb{R}^m \rightarrow \mathbb{R}^l$ - дифф на $E$ \\
-Тогда $1) \Leftrightarrow 2)$
+_Тогда_ эквивалентны:
 1. $F \in C^1(E)$ т.е существуют все частные производные $\frac{\partial F_i}{\partial x_j}$ - непрерывные на $E$
 2. $F': E \rightarrow \mathcal{L}_{m, l}$ - непрерывно \\
-   т.е $\forall x \in E\ \forall \varepsilon > 0\ \exists \delta = \delta(\varepsilon, x)\ \forall \bar{x}: |\var{x} - x| < \delta\quad \Vert F'(x) - F'(\bar{x}) \Vert \le \varepsilon$
+   т.е $\forall x \in E\ \forall \varepsilon > 0\ \exists \delta = \delta(\varepsilon, x)\ \forall \bar{x}: |\bar{x} - x| < \delta\quad \Vert F'(x) - F'(\bar{x}) \Vert \le \varepsilon$
+#+end_theorem
+#+NAME: теорема7док
+#+begin_proof org
+\-
+- ($1 \Rightarrow 2$) :: 
+  матричные элементы $F'(x) - F'(\bar{x})$ - это $\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x})$ \\
+  $\color{blue}\Vert A \Vert \le \sqrt{\sum \alpha_{i, j}^2}$ \\
+  Берем $x, \varepsilon$ $\exists \delta > 0\ \forall \bar{x}\ \dots\ \frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x}) < \frac{\varepsilon}{\sqrt{ml}}$ - сразу для всех $i, j$ \\
+  $\Vert F'(x) - F'(\bar{x}) \Vert < \sqrt{\sum_{i, j}\frac{\varepsilon^2}{ml}} = \varepsilon$
+- ($2 \Rightarrow 1$) :: 
+  Проверяем непрывность в точке $x$ \\
+  $\forall \varepsilon > 0\ \exists \delta > 0\ \forall \bar{x}: |x - \bar{x}| < \delta\quad \Vert F'(x) - F'(\bar{x}) \Vert < \varepsilon$ \\
+  $h = (0, 0, \dots, 0, \underbrace{1}_j, 0, \dots)$ \\
+  $| F'(x)h - F'(\bar{x})h| \le \Vert F'(x) - F'(\bar{x}) \Vert \cdot\underbrace{ |h| }_1 < \varepsilon$ \\
+  $|F'(x)h - F'(\bar{x})h| = \displaystyle{\sqrt{\sum_{i = 1}^{l}\left(\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x})\right)^2}} < \varepsilon \Rightarrow \forall i\ \left|\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x})\right| < \varepsilon$ 
+#+end_proof
 
-*Доказательство*
-1. $1) \Rightarrow 2)$ \\
-   матричные элементы $F'(x) - F'(\bar{x})$ - это $\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x})$ \\
-   /Примечание/ $\Vert A \Vert \le \sqrt{\sum \alpha_{i, j}^2}$ \\
-   Берем $x, \varepsilon$ $\exists \delta > 0\ \forall \bar{x}\ \dots\ \frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x}) < \frac{\varepsilon}{\sqrt{ml}}$ - сразу для всех $i, j$ \\
-   $\Vert F'(x) - F'(\bar{x}) \Vert < \sqrt{\sum_{i, j}\frac{\varepsilon^2}{ml}} = \varepsilon$
-2. $2) \Rightarrow 1)$ \\
-   Проверяем непрывность в точке $x$ \\
-   $\forall \varpepsilon > 0\ \exists \delta > 0\ \forall \bar{x}: |x - \var{x}| < \delta\quad \Vert F'(x) - F'(\bar{x}) \Vert < \varepsilon$ \\
-   $h = (0, 0, \dots, 0, \underbrace{1}_j, 0, \dots)$ \\
-   $| F'(x)h - F'(\bar{x})h| \le \Vert F'(x) - F'(\bar{x}) \Vert \cdot |h| < \varepsilon$ \\
-   $\displaystyle{\sqrt{\sum_{i = 1}^{l}\left(\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x})\right)^2}} \Rightarrow \forall i\ \left|\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_i}{\partial x_j}(\bar{x})\right| < \varepsilon$ 
 * Экстремумы
 ** Определение
+#+NAME: определение6
+#+begin_definition org
 $f: E \subset \mathbb{R}^m \rightarrow \mathbb{R}\quad a \in E$ \\
 $a$ - точка локального максимума: $\exists U(a) \subset E\ \forall x \in U(a)\ f(x) \le f(a)$ (аналогично для минимума) \\
 экстремум - максимум или минимум
+#+end_definition
+
 ** Теорема Ферма
+#+NAME: теорема8
+#+begin_theorem org
 $f: E \subset \mathbb{R}^m \rightarrow \mathbb{R}\ a \in \text{Int} E$ - точка экстремума, $f$ - дифф в точке $a$ \\
-Тогда $\forall u\in\mathbb{R}^m: |u| = 1\ \frac{\partial f}{\partial u}(a) = 0$
-
-*Доказательство* Для $f|_{\text{прямая}(a, u)}$ выполняется одномерная теорема Ферма
-
-/Следствия/
-1. Небходимое условие экстремума $a$ - локальный экстремум $f \Rightarrow \frac{\partial f}{\partial x_1}(a),\dots,\frac{\partial f}{\partial x_m}(a) = 0$
-2. теорема Ролля $f: E \subset \mathbb{R}^m \rightarrow \mathbb{R}$ \\
-   $K \subset R$ - компакт $f$ - дифф на $\text{Int}K$ ; $f$ - непрерывна на $K$ \\
-   $f|_{\partial K} = \text{const}$ (на границе $K$) Тогда $\exists a \in \text{Int}K\ f'(a) = (\frac{\partial f}{\partial x_1}(a),\dots,\frac{\partial f}{\partial x_m}(a)) = 0$
-
-   *Доказатльство* т. Вейершрасса  + т. Ферма
-
+_Тогда_ $\forall u\in\mathbb{R}^m: |u| = 1\ \frac{\partial f}{\partial u}(a) = 0$
+#+end_theorem
+#+NAME: теорема8док
+#+begin_proof org
+Для $f|_{\text{прямая}(a, u)}$ точка $a$ остается локальным экстремумом, выполняется одномерная теорема Ферма
+#+end_proof
+#+NAME: теорема8след1
+#+begin_corollary org
+Небходимое условие экстремума $a$ - локальный экстремум $f \Rightarrow \frac{\partial f}{\partial x_1}(a),\dots,\frac{\partial f}{\partial x_m}(a) = 0$
+#+end_corollary
+#+NAME: теорема8след2
+#+begin_corollary org
+теорема Ролля $f: E \subset \mathbb{R}^m \rightarrow \mathbb{R}$ \\
+$K \subset E$ - компакт $f$ - дифф на $\text{Int}K$ ; $f$ - непрерывна на $K$ \\
+$f|_{\partial K} = \text{const}$ (на границе $K$) \\
+_Тогда_ $\exists a \in \text{Int}K\ f'(a) = (\frac{\partial f}{\partial x_1}(a),\dots,\frac{\partial f}{\partial x_m}(a)) = 0$
+#+end_corollary
+#+NAME: теорема8след2док
+#+begin_proof org
+По теореме Вейерштрасса $f$ достигает минимального и максимального значения на компакте. Тогда:
+- $f = \const$ на $K$ \Rightarrow $f' \equiv 0$
+- $\exists a \in \text{Int}K$ --- точка экстремума \\
+  по Т. Ферма $f'(a) = 0$
+#+end_proof
 ** Квадратичная форма
 *** Определение
+#+NAME: определение5
+#+begin_definition org
 $Q: \mathbb{R}^m \rightarrow \mathbb{R}$ \\
 $Q(h) = \displaystyle{\sum_{1 \le i,j \le m}a_{ij}h_ih_j}$ \\
-Положительно определенная квадратичная фомра $\forall h \neq 0\ Q(h) > 0$ \\
-$Q(h) = h_1^2 + h_2^2 + \dots + \h_m^2$ \\
-Отрицательно определенная квадратичная фомра $\forall h \neq 0\ Q(h) < 0$ \\
-Незнакоопределенная квадратичная фомра $\exists \bar{h}\ Q(\bar{h}) < 0$ \\
-$\exists \bar{\bar{h}}\ Q{\bar{\bar{h}}} > 0\qquad Q(h) = h_1^2 - h_2^2$ \\
-Полуопределенная(положительно опрделенная вырожденная) $\exists \bar{h} \neq 0: Q(\var{h}) = 0$ \\
-$Q(h) = h_1^2\qquad Q((0, 1, 1, \dots)) = 0$
+- Положительно определенная квадратичная фомра $\forall h \neq 0\ Q(h) > 0$
+  #+begin_examp org
+  $Q(h) = h_1^2 + h_2^2 + \dots + \h_m^2$
+  #+end_examp
+- Отрицательно определенная квадратичная фомра $\forall h \neq 0\ Q(h) < 0$
+- Незнакоопределенная квадратичная фомра $\exists \bar{h}\ Q(\bar{h}) < 0\quad\exists \bar{\bar{h}}\ Q{\bar{\bar{h}}} > 0$
+  #+begin_examp org
+  $Q(h) = h_1^2 - h_2^2$
+  #+end_examp
+- Полуопределенная(положительно опрделенная вырожденная) $\exists \bar{h} \neq 0: Q(\var{h}) = 0$
+  #+begin_examp org
+  $Q(h) = h_1^2\qquad Q((0, 1, 1, \dots)) = 0$
+  #+end_examp
+#+end_definition
 
 *** Лемма
-1. $Q$ - положительно определенная. Тогда $\exists \gamma_Q > 0\ \forall h\ Q(h) \ge \gamma_Q|h|^2$
+#+NAME: теорема9
+#+begin_lemma org
+\-
+1. $Q$ - положительно определенная. \\
+   _Тогда_ $\exists \gamma_Q > 0\ \forall h\ Q(h) \ge \gamma_Q|h|^2$
 2. $p: \mathbb{R}^m \rightarrow \mathbb{R}$ - норма \\
-   Тогда $\exists C_1, C_2 > 0\ \forall x\ C_2|x| \le p(x) \le C_1|x|$
-   
-*Доказательство*  \\
-/Примечание/ $S^{m - 1}:=\{x\in\mathbb{R}^m: |x| = 1\}$ \\
+   _Тогда_ $\exists C_1, C_2 > 0\ \forall x\ C_2|x| \le p(x) \le C_1|x|$
+#+end_lemma
+#+NAME: теорема9док
+#+begin_proof org
+$S^{m - 1}:=\{x\in\mathbb{R}^m: |x| = 1\}$ --- компакт \Rightarrow по Т. Вейерштрасса
+минимум и максимум достигаются \\
 Для $x = 0$ оба утверждения очевидны. Пусть $x \neq 0$
-1. $\gamma_Q := \displaystyle{\min_{h \in S^{m - 1}} Q(h)} > 0$, $S^{m - 1}$ - компакт $\Rightarrow$ min достигается и $> 0$ \\
+1. $\gamma_Q := \displaystyle{\min_{h \in S^{m - 1}} Q(h)} > 0$ \\
    Тогда $Q(h) \ge \gamma_Q|h|^2$, $Q(h) = Q(|h|\cdot \frac{h}{|h|}) = |h|^2\cdot Q(\frac{h}{|h|}) \ge \gamma_Q\cdot|h|^2$ \\
 2. $C_2 := \displaystyle{\min_{x\in S^{m - 1}}p(x)}\quad C_1 := \displaystyle{\max_{x\in S^{m - 1}}p(x)}$ \\
    $p(x) = p(|x|\frac{x}{|x|}) = |x|p(\frac{x}{|x|}) \begin{array}{cc} \ge C_2|x| \\ \le C_1|x| \end{array}$ \\
-   Проверим, что $p(x)$ - непрерывная функция \\
+   Проверим, что $p(x)$ - непрерывная функция(для Т. Вейерштрасса), $e_k$ --- базисный вектор \\
    $p(x - y) = \displaystyle{p(\sum_{k = 1}^m(x_k - y_k)e_k) \le \sum p((x_k - y_k)e_k) = \sum|x_k - y_k|p(e_k)} \le |x - y|\cdot M$ \\
    где $M = \sqrt{\sum p(e_k)^2}$, $|p(x) - p(y)| \le p(x - y)$
+#+end_proof
 ** Достаточное условие экстремума
 $d^2f(a, h) = \displaystyle{f''_{x_1x_1}(a)h_1^2 + \dots + f''_{x_mx_m}h_m^2 + 2\sum_{1 \le i \le j \le m} f''_{x_ix_j}h_ih_j}$ \\
 $f(x) = f(a) + df(a, x - a) + \frac{1}{2!}d^2f(a, x - a) + o(|x - a|^2)$ \\
 $f(a + h) = f(a) + df(a, h) + \frac{1}{2!}d^2f(a + \theta h, h),\quad 0 \le \theta \le 1$
 *** Теорема о достаточном условии экстремума
+#+NAME: теорема10
+#+begin_theorem org
 $f: E\subset\mathbb{R}^m\rightarrow\mathbb{R}\ a \in \text{Int}E\quad\frac{\partial f}{\partial x_1}(a),\dots \frac{\partial f}{\partial x_m}(a)= 0,\ f \in C^2(E)$ \\
 $Q(h) := d^2f(a, h)$, Тогда, если:
 - $Q(h)$ - положительно определено, то $a$ - точка локального минимума
 - $Q(h)$ - отрицательно определено, то $a$ - локальный максимум
 - $Q(h)$ - незнакоопределено, то $a$ - не экстремум
 - $Q(h)$ - полож/отриц вырожденная - недостаточно информации
-  
-*Доказательство* \\
+#+end_theorem
+#+NAME: теорема10док
+#+begin_proof org
+\-
 - Для положит. опр. \\
-  $f(a + h) - f(a) = \frac{1}{2!}d^2f(a + \theta h, h) =$ \\
+  $f(a + h) - f(a) = \frac{1}{2}d^2f(a + \theta h, h) =$ \\
   $= \displaystyle{\frac{1}{2}\Bigg(Q(h) + \bigg(\sum_{i=1}^m \Big(\underbrace{f''_{x_ix_i}(a + \theta h) - f''_{x_ix_i}(a)}_{\text{б.м}\ h \to 0}\Big)\underbrace{h_i^2}_{\le |h|^2} + 2\sum_{i < j}\Big(\underbrace{f''_{x_ix_j}(a + \theta h) - f''_{x_ix_j}(a)}_{\text{б.м}}\Big)\underbrace{h_ih_j}_{\le |h|^2}\bigg)\Bigg)}$ \\
   $f(a + h) - f(a) \ge \frac{1}{2}(\gamma_Q|h|^2 - \frac{\gamma_Q}{2}|h|^2) \ge \frac{1}{4}\gamma_Q|h|^2 > 0$ \\
 - Для отр. опр аналогично \\
-- $\bar{h}\quad Q(\bar{h}) > 0\quad f(a + t\bar{h}) - f(a) = \frac{1}{2}df(a + \Theta t \bar{h}, \bar{h})t^2 =$ \\
+- $\sphericalangle\bar{h}\quad Q(\bar{h}) > 0\quad f(a + t\bar{h}) - f(a) = \frac{1}{2}d^2f(a + \Theta t \bar{h}, \bar{h})t^2 =$ \\
   $= \displaystyle{\frac{1}{2}\Bigg(t^2Q(\bar{h}) + t^2\bigg(\underbrace{\sum \Big(f''_{x_ix_i}(a + \Theta t h) - f''_{x_ix_i}(a)\Big)\bar{h_i}^2 + 2\sum_{i < j}\Big(\dots\Big)}_{\text{б.м при } t \to 0}\bigg)\Bigg)} \ge$ \\
   $\ge \frac{1}{2}t^2(Q(h) - \frac{1}{2}Q(h)) > 0$, т.е $f(a + t\bar{h}) > f(a)$, при $t \to 0$ \\
   Аналогично $f(a + t\bar{\bar{h}}) < f(a)$, при малых $t$ \\
-- /Пример/ $f(x_1, x_2, \dots) = x_1^2 - x_2^4 - x_3^4 - \dots\quad f'_{x_1}(a) = 0,\ f'_{x_2} = 0$ \\
+- Докажем примером: $f(x_1, x_2, \dots) = x_1^2 - x_2^4 - x_3^4 - \dots\quad f'_{x_1}(a) = 0,\ f'_{x_2} = 0$ \\
   $\bar{f}(x_1, x_2, \dots) = x_1^2 + x_2^4 + x_3^4 + \dots\quad d^2f(a, h) = 2h_1^2,\ d^2\bar{f}(a, h) = 2h_1^2$ \\
   $a = (0, 0, 0, \dots)$ \\
   $f$ - не имеет экстремума в точке $a$ \\
   $\bar{f}$ - имеет минимум в точке $a$
+#+end_proof
+#+begin_remark org
+Если $f$ как в теореме, $d^2f(a, h)$ - положительно определенный вырожденный $\Rightarrow\ a$ - не точка локального максимума
+#+end_remark
+ 
   
-  /Замечание/ Если $f$ как в теореме, $d^2f(a, h)$ - положительно определенный вырожденный $\Rightarrow\ a$ - не точка локального максимума
+  

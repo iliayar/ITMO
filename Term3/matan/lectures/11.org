@@ -8,7 +8,7 @@
 <<степенныерядыследствие1>>
 #+begin_corollary org
 $f = \sum a_n (z - z_0)^n,\ 0 < R< +\infty$ \\
-Тогда $f \in C^{\infty}(B(z_0, R))$ и все производные можно найти почленным дифференцированием
+_Тогда_ $f \in C^{\infty}(B(z_0, R))$ и все производные можно найти почленным дифференцированием
 #+begin_export latex
 \begin{center}
 \begin{tikzpicture}
@@ -25,9 +25,10 @@ $f = \sum a_n (z - z_0)^n,\ 0 < R< +\infty$ \\
 $f$ - комплексно дифференцируема в $z_0$ \\
 Тогда $f = \sum a_n (z - z_0)^n$ $R=$ рассстояние от $z_0$ до ближайшей особой точки функции
 #+end_theorem
+#+NAME: теорема35след
 #+begin_corollary org
 $f(x) \sum_{n = 0}^{+\infty} a_n (x - x_0)^n,\ a_n,x_0,x \in\R$ \\
-Тогда:
+_Тогда_:
 1. $\sum \frac{a_n}{n + 1}(x - x_0)^{n + 1}$ --- тот же радиус сходимости
 2. $\int_{x_0}^x f(t)dt = \sum \frac{a_n}{n + 1}(x - x_0)^{n + 1}$ \\
    #+ATTR_LATEX: :options {blue}
@@ -35,43 +36,57 @@ $f(x) \sum_{n = 0}^{+\infty} a_n (x - x_0)^n,\ a_n,x_0,x \in\R$ \\
    /Замечание./ $\int f(x) dx = \sum \frac{a_n}{n + 1}(x - x_0)^{n + 1} + \const$
    #+end_colored
 #+end_corollary
+#+NAME: теорема35следдок
 #+begin_proof org
 \-
 1. Продифференцируем ряд $\sum \frac{a_n}{n + 1}(x - x_0)^{n + 1}$. По [[file:10.org::166][теореме]] он имеет тотже радиус сходимости что и ряд $\sum a_n(z - z_0)^n$
 2. Мы можем вычислить производные левой и правой части, они совпадают, при $x = x_0$ ясно что константа нулевая \Rightarrow левая и правая части равны
 #+end_proof
+#+NAME: теорема35следприм
+#+begin_examp org
+\[ f(x) = \arcctg x \]
+Продифференцируем: \[ f' = \frac{-1}{1+ x^2} = -1 + x^2 - x^4 + \dots \]
+Проинтегрируем: \[ \arcctg x = C -x + \frac{x^3}{3} - \frac{x^5}{5} + \dots \]
+Находим $C$ подставляя $x=0\ \arcctg 0 = \frac{\pi}{2}$, итого: \[ \arcctg = \frac{\pi}{2} - x + \frac{x^3}{3}  + \frac{x^5}{5} \]
+#+end_examp
+
 ** Метод Абеля. Суммирование числовых рядов
+#+NAME: теорема37
 #+ATTR_LATEX: :options [Абеля]
 #+begin_theorem org
 $\sum_{n = 0}^{+\infty} C_n$ --- сходящийся $\color{gray}C_n \in \C$ \\
 $f(x) = \sum C_n x^n,\quad R \ge 1,\ -1 < x < 1$ \\
-Тогда $\lim_{x \to 1} f(x) = \sum C_n$
+_Тогда_ $\lim_{x \to 1} f(x) = \sum C_n$
 #+end_theorem
-#+begin_proof org
-Ряд $\sum C_nx^n$ равномерно сходится на $[0, 1]$ по признаку Абеля \\
-#+ATTR_LATEX: :options {blue}
-#+begin_colored org
+#+NAME: определение20
+#+begin_defintion org
 признак Абеля \\
 $\sum a_n(x)b_n(x)$ $\color{gray} a_n \in \C\ b_n \in \R$
 1. $\sum a_n(x)$ равномерно сходится на $\langle \alpha, \beta \rangle$
 2. $\forall x\ b_n(x)$ --- монотонна по $n$ \\
    $b_n(x)$ --- равномерно ограничена $\color{gray}\exists C_b:\ \forall n\ \forall x\quad |b_n(x)| \le C_b$
 Тогда ряд сходится \\
-#+end_colored
+#+end_defintion
+#+NAME: теорема37док
+#+begin_proof org
+Ряд $\sum C_nx^n$ равномерно сходится на $[0, 1]$ по признаку Абеля \\
 $a_n(x) := C_n\quad b_n(x) := x^n$ \Rightarrow этот ряд сходится \\
 Функции $C_nx^n$ --- непрерывны на $[0, 1]$ \Rightarrow (по т. Стокса-Зайдля) $\sum C_nx^n$ --- непрервны на $[0, 1]$
 #+end_proof
+#+NAME: теорема37след
 #+begin_corollary org
 $\sum a_n = A,\ \sum b_n = B,\ C_n = a_0b_n + a_1b_{n - 1} + \dots + a_nb_0$  \\
 Пусть $\sum C_n = C$ \\
-Тогда $C = A\cdot B$
+_Тогда_ $C = A\cdot B$
 #+end_corollary
+#+NAME: теорема37следдок
 #+begin_proof org
 $f(x) = \sum a_n x^n\quad g(x) = \sub b_n x^n\quad h(x) = \sum c_n x^n\quad x\in[0,1]$ \\
 $x < 1$ Есть абсолютная сходимость $a_n, b_n$ \Rightarrow можно перемножать: \\
 $f(x)g(x) = h(x)$, тогда при переход в пределе $x \to 1 - 0 \Rightarrow A\cdot B = C$
 #+end_proof
 ** Экспонента(комплексной переменной)
+#+NAME: теорема36
 #+begin_definition org
 $\sum \frac{z^n}{n!}\quad A = \infty\quad \exp(z) := \sum_{n = 0}^{+\infty} \frac{z^n}{n!}$
 Свойства:
@@ -80,7 +95,14 @@ $\sum \frac{z^n}{n!}\quad A = \infty\quad \exp(z) := \sum_{n = 0}^{+\infty} \fra
 3. $f_0$ --- показательная функция, удовлетворяет $f(x + y) = f(x)f(y)$ \\
    $\lim_{x \to 0}\frac{f_0(x) - 1}{x} = 1$ \\
    $f_0(x) := \exp(x)\quad\lim_{x \to 0}\frac{\exp(x) - 1}{x} = \exp'(0) = 1$
+4. $\overline{\exp(z)} = \exp(\overline{z})$
+   #+begin_proof org
+   $\color{gray} \overline{w_1 + w_2} = \overline{w_1} + \overline{w_2}$ \\
+   Потому что коэффицент вещественный:
+   \[ \overline{\sum_{n = 0}^N \frac{z^n}{n!}} = \sum_{n = 0}^N  \frac{(\overline{z})^n}{n!} \addtag \]
+   #+end_proof
 #+end_definition
+#+NAME: теорема36доп
 #+begin_theorem org
 $\forall z, w\in \C$, тогда $\exp(z + w) = \exp(z)\exp(w)$
 #+end_theorem
@@ -90,9 +112,10 @@ $\forall z, w\in \C$, тогда $\exp(z + w) = \exp(z)\exp(w)$
 $A_i$ --- множества, попарно не пересекаются \leftrightarrow $A_i$ --- дизьюнкты($\text{dis}$) \\
 $\displaystyle{\bigsqcup_i A_i}$ --- дизьюнктное объедиение
 #+end_symb
+#+NAME: определение29.1
 #+begin_definition org
 $X$ --- множество, $2^X$ -- система всевозможных подмножеств в $X$ \\
-$\mathcal{P} \subset 2^X$ --- полукольцо елси:
+$\mathcal{P} \subset 2^X$ --- *полукольцо* елси:
 1. $\emptyset \in \mathcal{P}$
 2. $\forall A, B \in \mathcal{P}\quad A \cap B \in \mathcal{P}$
 3. $\forall A, A' \in \mathcal{P}\ \exists$ конечное $B_1,\dots,B_2 \in \mathcal{P}$ -- дизьюнктны \\
@@ -104,6 +127,7 @@ $2^X$ --- полукольцо
 #+begin_examp org
 $X = \R^2\quad\mathcal{P}$ --- ограниченые подмножества(в том числе \emptyset)
 #+end_examp
+#+NAME: определение31
 #+begin_definition org
 ячейка в $R^m$ \\
 $[a, b) = \{x\in\R^m\vert\forall i\ x_i\in[a_i, b_i)\}$
@@ -237,10 +261,11 @@ $\mathcal{P} = \{X_\sigma\}_\sigma$, $X_\sigma = \{a \in X\big\vert a_{i_1} = \a
    \end{align*}
    #+end_export
    #+end_proof
+#+NAME: определение29.2
 #+begin_definition org
-$\mathfrak{A} \subset 2^X$ --- алгебра подмножеств в $X$:
-1. $\forall A, B \in \mathfrak{A}\quad A\setminus B \in \mathcal{A}$
-2. $X\in A$
+$\mathfrak{A} \subset 2^X$ --- *алгебра* подмножеств в $X$:
+1. $\forall A, B \in \mathfrak{A}\quad A\setminus B \in \A$
+2. $X\in \A$
 #+end_definition
 /Свойства/
 1. $\emptyset = X\setminus X \in \mathfrak{A}$

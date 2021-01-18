@@ -10,36 +10,66 @@ $\begin{pmatrix}
 \vdots &  & \vdots & \vdots & & \vdots \\
 \frac{\partial F_n}{\partial x_1} & \dots &\frac{\partial F_n}{\partial x_m} & \frac{\partial F_n}{\partial y_1} & \dots & \frac{\partial F_n}{\partial y_n} \\
 \end{pmatrix}$ \\
-*Доказательство* \\
+#+NAME: теорема15док
+#+begin_proof org
+\- \\
 Если 1) выполняется, то 2) очевидно: $F(x, \Phi(x)) = 0 \Rightarrow F'_x(x, \Phi(x)) + F'_y(x, \Phi(x))\cdot\Phi'(x) = 0$ \\
 1. $\tilde{F}: O \rightarrow \mathbb{R}^{m + n}\quad (x, y) \mapsto (x, F(x, y))\quad \tilde{F}(a, b) = (a, 0)$ \\
    $\tilde{F}' = \left(\begin{array}{cc} E & 0 \\ F'x & F'y \end{array}\right)$, очевидно $\det \tilde{F} = 0$ в $(a, b)$, значит $\exists U((a, b))\ \tilde{F}|_{U((a, b))}$ - диффеоморфизм \\
-   
-   #+ATTR_LATEX: :scale 0.5
-   [[file:~/Pictures/screenshots/2021-01-08-212359_431x134_scrot.png]]
-   1. $U = p_1 \times Q$ - можно так считать
+
+   #+begin_export latex
+   \begin{center}
+   \begin{tikzpicture}
+   \draw[->] (-0.5, 0) -- (3.5, 0) node[below right] {$x$};
+   \draw[->] (4.5, 0) -- (8.5, 0) node[below right] {$u$};
+   \draw[->] (0, -0.5) -- (0, 3.5) node[above left] {$y$};
+   \draw[->] (5, -0.5) -- (5, 3.5) node[above left] {$p$};
+   \draw plot [smooth cycle] coordinates { (6, 0) (6.2, 0.3) (6.4, 0.2) (6.6, 0.4) (6.8, 0.1) (6.7,0) (6.6, -0.3) (6.4, -0.3) (6.2, -0.4)};
+   \draw[color=red, thick] (6, 0) node[above left] {$P$} -- (6.7, 0);
+   \draw[color=red, thick] (1, 0) node[above] {$P_1$} -- (2.5, 0);
+   \draw[color=red, thick] (0, 1) -- (0 , 2.5) node[right] {$Q$};
+   \draw[dashed] (1, 1) rectangle (2.5, 2.5);
+   \draw[fill=black] (6.5, 0) circle[radius=1pt] node[below] {$a$};
+   \draw[fill=black] (2, 0) circle[radius=1pt] node[below] {$a$};
+   \draw[fill=black] (0, 1.5) circle[radius=1pt] node[left] {$b$};
+   \node[above right] at (2.5, 2.5) {$U$};
+   \node[above] at (6.6, 0.4) {$V$};
+   \draw[->, thick] (6, -0.3) -- (3, 1.5) node[midway,below] {$\Psi$};
+   \draw[->, thick] (3, 2.5) -- (6, 2.5) node[midway, above] {$\tilde{F}$};
+   \node[above right] at (8.5, 0) {$\R^m$};
+   \node[above right] at (5, 3.5) {$\R^n$};
+   \end{tikzpicture}
+   \end{center}
+   #+end_export
+
+   1. $U = P_1 \times Q$ - можно так считать
    2. $V = \tilde{F}(U)$
    3. $\tilde{F}$ - диффеоморфизм на $U$ \Rightarrow $\exists \Psi = \tilde{F}^{-1}: V \rightarrow U$
-   4. $\tilde{F}$ - не меняет первые $m$ координат $\Psi(u, v) = (u, H(u, v))$ \\
-      $H: V \rightarrow \mathbb{R}^m$
+   4. $\tilde{F}$ - не меняет первые $m$ координат $\Psi(u, v) = (u, H(u, v))$, $H: V \rightarrow \mathbb{R}^m$
    5. Ось $x$ и ось $u$ идентичны $p = \text{ось}\ u = \mathbb{R}^m \times \{0\}^n \cap \underbrace{V}_{\text{открыто в}\ \mathbb{R}^{m + n}} \Rightarrow\ p$ открыто в $\mahtbb{R}^{m}$
    6. $\Phi(x) = H(x, 0)\quad F(x, \Phi(x)) = 0$, при $x \in P$ \\
       $F \in C^r \Rightarrow \tilde{F} \in C^r \Rightarrow \Psi \in C^r \Rightarrow H \in C^r \Rightarrow \Phi \in C^r$
    Единственность $x \in p\ y \in u\quad F(x, y) = 0$ \\
    $(x, y) = \Psi(\tilde{F}(x, y)) = \Psi(x, 0) = (x, H(x, 0)) = (x, \Phi(x))$
+#+end_proof
  
 ** Определение
 "поверхность" = многообразие \\
-$M \subset \mathbb{R}^m\quad k \in \{1, \dots, m\}$ \\
-$M$ - простое $k\text{-мерное}$ многообразие в $\mathbb{R}^m$ если оно гомеоморфно некоторому открытому $O \subset \mathbb{R}^k$ \\
+$M \subset \mathbb{R}^m\quad k \in \{1, \dots, m\}$
+#+begin_definition org
+$M$ - *простое $k\text{-мерное}$ многообразие в $\mathbb{R}^m$* если оно гомеоморфно некоторому открытому $O \subset \mathbb{R}^k$ \\
 т.е. $\exists \Phi: O \subset \mathbb{R}^k \rightarrow M$ - непрерывное, обратимое, $\Phi^{-1}$ - непрерывное, $\Phi$ - параметризация многообразия $M$ \\
+#+end_definition
 
 ** Определение
-$M \subset \mathbb{R}^m$ - простое $k\text{-мерное}$ $C^r\text{-гладкое}$ многообразие в $\mathbb{R}^m$ \\
-$\exists \Phi: O \subset \mathbb{R}^l \rightarrow \mathbb{R}^m\quad \Phi(O) = M\quad \Phi: O \rightarrow M$ - гомеооморфизм \\
-$\Phi \in C^r\qquad \forall x \in O\quad \text{rank}\ \Phi'(x)=k$ - максимально возможное значение
-
-/Примеры/
+#+NAME: определение11
+#+begin_definition org
+$M \subset \mathbb{R}^m$ - *простое $k\text{-мерное}$ $C^r\text{-гладкое}$ многообразие в $\mathbb{R}^m$* \\
+$\exists \Phi: O \subset \mathbb{R}^k \rightarrow \mathbb{R}^m\quad \Phi(O) = M\quad \Phi: O \rightarrow M$ - гомеоморфизм \\
+$\Phi \in C^r\quad \forall x \in O\quad \text{rank}\ \Phi'(x)=k$ --- максимально возможное значение
+#+end_definition
+#+begin_examp org
+\-
 1. Полусфера в $\mathbb{R}^3 = \{(x,y ,z)\in\mathbb{R}^3\vert z= 0,\ x^2 + y^2 + z^2 = R^2\}$ \\
    $\Phi: (x, y) \mapsto (x, y, \sqrt{R^2 - x^2 - y^2})$ \\
    $\Phi: B(0, R) \subset \mathbb{R}^2 \rightarrow \mathbb{R}^3$ \\
@@ -61,16 +91,21 @@ $\Phi \in C^r\qquad \forall x \in O\quad \text{rank}\ \Phi'(x)=k$ - максим
 3. Сфера в $\mathbb{R}^3$ без \dots \\
    $\Phi: (0, 2\pi) \times [-\frac{\pi}{2}, \frac{\pi}{2}] \rightarrow \mahtbb{R}^3\quad R$ - радиус \\
    $(\varphi, \psi) \mapsto \begin{pmatrix} R\cos\varphi\cos\psi \\ R\sin\varphi\cos\psi \\ R\sin\psi \end{pmatrix}$ - сферические координаты в $\mathbb{R}^3$
+#+end_examp
 ** Теорема
+#+NAME: теорема16
+#+begin_theorem org
 $M \subset \mathbb{R}^m \quad 1 \le k < m\quad 1 \le r \le \infty\quad p\in M$ \\
-Тогда эквивалентны:
+_Тогда_ эквивалентны:
 1. $\exists U \subset \mathbb{R}^m$ - окрестность точки $p$ в $\mathbb{R}^m$: $M \cap U$ - простое $k\text{-мерное}$ многообразие класса $C^r$
 2. $\exists \tilde{U} \subset \mathbb{R}^m$ - окрестность точки $p$ \\
    $f_1, f_2, \dots, f_{m - k}: \tilde{U} \rightarrow \mathbb{R}$, все $f \in C^r$ \\
    $x\in M\cap\tilde{U} \Leftrightarrow f_1(x) = f_2(x) = \dots = 0$, при этом $\text{grad}(f_1(p)), \dots, \text{grad}(f_{m - k}(p))$ - ЛНЗ \\
-   
-*Доказательство* 
-- $1 \Rightarrow 2$ $\Phi$ - параметризация $: \underbrace{O}_{(t_1, \dots, t_k)} \subset \mathbb{R}^k,\ \in C^r$, $p = \Phi(t^0)$ \\
+#+end_theorem
+#+NAME: теорема16док
+#+begin_proof org
+\-
+- $1 \Rightarrow 2$ :: $\Phi$ - параметризация $: \underbrace{O}_{(t_1, \dots, t_k)} \subset \mathbb{R}^k,\ \in C^r$, $p = \Phi(t^0)$ \\
   $\Phi'$ - матрица $m\times k\quad \text{rank}\ \Phi'(t^0) = k$ \\
   Пусть $\det(\frac{\partial \Phi_i}{\partial t_k})_{i, j = 1\dots k} \neq 0$ \\
   $\mathbb{R}^m = \mathbb{R}^k \times \mathbb{R}^{m - k}$ \\
@@ -96,7 +131,7 @@ $M \subset \mathbb{R}^m \quad 1 \le k < m\quad 1 \le r \le \infty\quad p\in M$ \
   \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
   \frac{\partial H_{m - k}}{\partial x_1} & \dots & \frac{\partial H_{m - k}}{\partial x_k} & 0 & 0 & \dots & -1 \\
   \end{pmatrix}$
-- $2 \Rightarrow 1\qquad F = (f_1, \dots, f_{m - k})$ \\
+- $2 \Rightarrow 1$ :: $F = (f_1, \dots, f_{m - k})$ \\
   $\begin{pmatrix}
   \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_m} \\
   \vdots & \ddots & \vdots \\
@@ -109,15 +144,22 @@ $M \subset \mathbb{R}^m \quad 1 \le k < m\quad 1 \le r \le \infty\quad p\in M$ \
   $\exists H: P \rightarrow Q\quad H \in C^r\quad F(x', H(x')) = 0, \quad x' \in P$ \\
   Тогда $\Phi: P \rightarrow \mathbb{R}^m\quad (x_1,\dots,x_k)\mapsto (x_1, \dots, x_k, H_1(x'_1,\dots,x'_k), H_2, \dots, H_{m - k})$ - параметризация мноогбразия \\
   $\Phi$ - гомеоморфизм $P$ и $M \cap \tilde{U}$, $\Phi^{-1}$ - практически проекция
-  
+#+end_proof
 *** Следсвтие о двух параметризациях
+#+NAME: теорема17
+#+begin_corollary org
 $M \subset \mathbb{R}^m$ - $k\text{-мерное}\ C^k\text{-гладкое}$ многообразие $p \in M$ \\
 $\exists$ две парметризации $\Phi_1: O_1 \subset \mathbb{R}^k \rightarrow U(p)\cap M \subset \mathbb{R}^m\quad \Phi_1(t^0) = 0$ \\
 $\Phi_2: O_2 \subset \mathbb{R}^k \rightarrow U(p)\cap M \subset \mathbb{R}^m\quad \Phi_2(s^0) = 0$ \\
-Тогда $\exists$ диффеоморфизм $\Theta: O_1 \rightarrow O_2$, что $\Phi_1 = \Phi_2 \circ \Theta$
-
-*Доказательство* чатсный случай. Пусть для $\Phi_1,\ \Phi_2$, $\text{rank}\ \Phi'_1(t^0),\ \text{rank}\ \Phi'_2(s^0)$ достигаются на первых $k$ столбцах \\
-Тогда $\Phi_1 = \Phi_2 \circ \underbrace{(L\circ\Phi_2)^{-1} \circ (L\circ\Phi_1)}_{\Theta\text{- искомый диффеоморфизм}}$ \\
+_Тогда_ $\exists$ диффеоморфизм $\Theta: O_1 \rightarrow O_2$, что $\Phi_1 = \Phi_2 \circ \Theta$
+#+end_corollary
+#+NAME: теорема17док
+#+begin_proof org
+Чатсный случай. Пусть для $\Phi_1,\ \Phi_2$, $\text{rank}\ \Phi'_1(t^0),\ \text{rank}\ \Phi'_2(s^0)$ достигаются на первых $k$ столбцах \\
+Тогда $\Phi_1 = \Phi_2 \circ \underbrace{(L\circ\Phi_2)^{-1} \circ (L\circ\Phi_1)}_{\Theta\text{ --- искомый диффеоморфизм}}$ \\
 $\Phi_1 = \Phi_2 \circ (\Phi_2 \circ L_2)^{-1} \circ (L_2 \circ L_1^{-1}) \circ (L_1 \circ \Phi_1)$ \\
 $L_2 \circ L_1^{-1} = L_2 \circ \Phi_1 \circ (L_1 \circ \Phi_1)^{-1}\quad \in C^r$ \\
-"Почему-то неверно" LUL
+Невырожденность не доказана, поэтому то, что это диффеоморфизм не доказано
+#+end_proof
+
+

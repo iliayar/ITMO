@@ -4,10 +4,11 @@
 
 * Локально потенциальные векторные поля
 ** Интеграл локально потенциального векторного поля по непрерывному пути
+#+NAME: теорема45
 #+ATTR_LATEX: :options [о гусенице]
 #+begin_lemma org
 $\gamma: [a, b] \to \underset{\text{отк. мн.}}{O} \subset \R^m$ --- непрерывное \\
-Тогда $\exists \text{дробление}\quad a = t_0 < t_1 < t_2 < \dots < t_n = v$ \\
+_Тогда_ $\exists \text{дробление}\quad a = t_0 < t_1 < t_2 < \dots < t_n = b$ \\
 и $\exists$ шары $B_1,\ \dots,\ B_n \subset O\quad \gamma[t_{k_1}, t_l] \subset B_k$
 #+begin_export latex
 \begin{center}
@@ -40,6 +41,7 @@ $\gamma: [a, b] \to \underset{\text{отк. мн.}}{O} \subset \R^m$ --- неп�
 \end{center}
 #+end_export
 #+end_lemma
+#+NAME: теорема45док
 #+begin_proof org
 $\forall c \in [a, b]$ возьмем $B_c := B(\gamma(c), \underset{\text{произвол!!}}{r_c}) \subset O$ \\
 $\tilde{\alpha}_c := \inf \{\alpha \in [a, b]\vert\ \gamma[\alpha, c] \subset B_c\}$ \\
@@ -105,12 +107,14 @@ $V$ --- локально потенциальное векторное поле 
 \end{center}
 #+end_export
 #+end_corollary
+#+NAME: теорема46
 #+ATTR_LATEX: :options [о равенстве интегралов локально потенциального векторного поля по похожим путям]
 #+begin_lemma org
 $V$ - локально потенциальное векторное поле в $O \subset \R^m$ \\
 $\gamma, \tilde{\gamma}: [a, b] \to O$ --- $V$ - похожие, кусочно гладкие, $\gamma(a) = \tilde{\gamma}(a),\ \gamma(b) = \tilde{\gamma}(b)$ \\
-Тогда $\int_\gamma \sum V_i dx_i = \int_{\tilde{\gamma}} \sum V_i dx_i$
+_Тогда_ $\int_\gamma \sum V_i dx_i = \int_{\tilde{\gamma}} \sum V_i dx_i$
 #+end_lemma
+#+NAME: теорема46док
 #+begin_proof org
 Берем общую $V$ - гусеницу \\
 Пусть $f_k$ - потенциал $V$ в шаре $B_k$ \\
@@ -126,11 +130,14 @@ $f_k(\gammma(t_k)) = f_{k + 1}(\gamma(t_k))$ при $k = 1,2,\dots,n$ \\
 #+begin_remark org
 Вместо "$\gamma(a) = \tilde{\gamma}(a),\ \gamma(b) = \tilde{\gamma}(b)$" можно взять условие "$\gamma, \tilde{\gamma}$ - петли, т.е. $\gamma(a) = \gamma(b),\ \tilde{\gamma}(a) = \tilde{\gamma}(b)$, и вообще говоря $\gamma(a) \neq \tilde{\gamma}(a)$" Тогда утверждение Леммы 2 тоже верно
 #+end_remark
+#+NAME: теорема47
 #+begin_lemma org
+\label{lemma3}
 $\gamma: [a, b] \to O$ - непрерывный, $V$ - локально потенциальное векторное поле в $O$ \\
-Тогда $\exists \delta > 0\:$ Если $\tilde{\gamma} ,\tilde{\tilde{\gamma}} \to O$ таковы, что $\forall t \in [a, b]\quad |\gamma(t) - \tilde{\gamma}(t)| < \delta,\ |\gamma(t) - \tilde{\tilde{\gamma}}(t)| < \delta$ \\
-Тогда $\tilde{\gamma}$ и $\tilde{\tilde{\gamma}}$ (и $\gamma$) --- $V$ - похожи
+_Тогда_ $\exists \delta > 0\:$ Если $\tilde{\gamma} ,\tilde{\tilde{\gamma}}: [a, b] \to O$ таковы, что $\forall t \in [a, b]\quad |\gamma(t) - \tilde{\gamma}(t)| < \delta,\ |\gamma(t) - \tilde{\tilde{\gamma}}(t)| < \delta$ \\
+то $\tilde{\gamma}$ и $\tilde{\tilde{\gamma}}$ (и $\gamma$) --- $V$ - похожи
 #+end_lemma
+#+NAME: теорема47док
 #+begin_proof org
 Берем $V$ - гусеницу для \gamma
 
@@ -162,9 +169,10 @@ $t \in [\gamma_{k - 1}, \gamma_k] \mapsto \rho(\gamma(t), w)$ - непрерыв
 $\rho(\gamma(t), w) \le r_0 < r\quad \delta_k := \frac{r - r_0}{2}$ \\
 $\delta := \min(\delta_1, \dots, \delta_k)$
 #+end_proof
+#+NAME: определение26
 #+begin_definition org
-Интеграл локально потенциального векторного поля $V$ по непрерывному пути $\gamma$ \\
-Возьмем $\delta > 0$ из Леммы 3 \\
+*Интеграл локально потенциального векторного поля $V$ по непрерывному пути $\gamma$* \\
+Возьмем $\delta > 0$ из $\hyperref[lemma3]{\text{Леммы 3}}$ \\
 Пусть $\tilde{\gamma}$ --- \delta - близкий кусочно гладкий путь, т.е. $\forall t\quad |\gamma(t) - \tilde{\gamma}(t)| < \delta$ \\
 Полагаем: $I(V, \gamma) = I(V, \tilde{\gamma})$ \\
 /Следует из Леммы 3 и Леммы 2/
@@ -179,6 +187,7 @@ $\forall \varepsilon > 0\ \exists V(x_0)\ \forall x \in \dot{V}(x_0)\ \forall t 
 \[ \lim_{x \to x_0}\lim_{y \to y_0}f(x,y) = \lim_{y \to y_0}\lim_{x \to x_0}f(x, y) \addtag \] \\
 Если один из предельных переходов равномерный
 #+end_manualtheorem
+#+NAME: теорема32
 #+ATTR_LATEX: :options [признак Дирихле]
 #+begin_theorem org
 $\sum a_n(x)b_n(x)$ --- вещественный ряд, $x \in X$ \\
@@ -194,8 +203,8 @@ $\sum a_n(x)b_n(x)$ --- вещественный ряд, $x \in X$ \\
 2. $b_n \to 0,\ b_n$ - монотонна
 Тогда $\sum a_nb_n$ - сходится
 #+end_colored
-
 #+end_theorem
+#+NAME: теорема32док
 #+begin_proof org
 \[ \sum_{k = M}^N a_kb_k = A_Nb_N - A_{M - 1}b_{M - 1} + \sum_{k = M}^{N - 1} A_k(b_k - b_{k + 1}),\ \text{где }A_k = \sum_{i = 1}^k a_i \addtag \]
 /преобразование Абеля(суммирование по частям)/
@@ -217,6 +226,7 @@ $\forall \varepsilon > 0\ \exists K:\ \forall l > K\ \forall x \in X\ |b_l(x)| <
 * Степенные ряды
 $B(r_0, r) \subset \mathbb{C}$ - открытый круг \\
 $\sum_{n = 1}^{+\infty} a_n(z - z_0)^n$, где $z_0 \in \mathbb{C},\ a_n \in \mathbb{C},\ z$ --- переменная $\in \mathbb{C}$
+#+NAME: теорема33
 #+ATTR_LATEX: :options [о круге сходимости степенного ряды]
 #+begin_theorem org
 $\sum a_n(z - z_0)^n$ - степенной ряд \\
@@ -227,6 +237,7 @@ $\sum a_n(z - z_0)^n$ - степенной ряд \\
    - $|z - z_0| < R$ ряд сходится
    - $|z - z_0| > R$ ряд расходится
 #+end_theorem
+#+NAME: теорема33док
 #+begin_proof org
 #+ATTR_LATEX: :options {blue}
 #+begin_colored org
@@ -243,8 +254,9 @@ $\sum a_n(z - z_0)^n$
   1) $|z - z_0| < R$ ряд сходится абсолютно
   2) $|z - z_0| > R$ ряд расходится, т.к. слагаемые $\not\to 0$
 #+end_proof
+#+NAME: определение19
 #+ATTR_LATEX: :options [степенной ряд]
 #+begin_definition org
-$\sum a_n(z - z_0)^n$ число $R = \frac{1}{\lim\sqrt[n]{|a_n|}}$ --- называется радиусом сходимости степенного ряда
+$z_0,a,z \in \C\ \underbrace{\sum a_n(z - z_0)^n}_\text{степенной ряд}$ число $\underbrace{R = \frac{1}{\lim\sqrt[n]{|a_n|}}}_\text{формула Адамара}$ --- называется *радиусом сходимости степенного ряда*
 #+end_definition
 
