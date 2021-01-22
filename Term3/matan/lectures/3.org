@@ -74,7 +74,7 @@ $F'(x)\cdot 2(F(x) - y) = 0 \Rightarrow \forall x \det F' \neq 0 \Rightarrow F(x
 #+NAME: теорема13
 #+begin_corollary org
 $F: O \subset \mathbb{R}^m \rightarrow \mathbb{R}^l,\ l < m$, дифф в $O$, $F \in C^1(O)$ \\
-$\text{rg} F(x) = l$, при всех $x \in O$ \\
+$\text{rg} F'(x) = l$, при всех $x \in O$ \\
 _Тогда_ $F(O)$ - открытое
 #+end_corollary
 #+NAME: теорема13док
