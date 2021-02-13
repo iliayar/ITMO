@@ -1,0 +1,253 @@
+% Created 2021-02-10 Wed 13:17
+% Intended LaTeX compiler: pdflatex
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{task}{Задача}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 1}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Теория погрешности}
+\label{sec:org6aa2283}
+\begin{defintion}
+Отклонение от теоретического решения
+\end{defintion}
+Виды погрешности:
+\begin{enumerate}
+\item Неустранимая погрешность
+\begin{examp}
+Физические величины, другие константы
+\end{examp}
+\item Устранимая погрешнеость
+Связана с методом решения
+\begin{enumerate}
+\item Погрешность модели \\
+Связана с матиматической формулировкой задачи. Она плохо отображает реальную модель
+\item Остаточная погрешность(Погрешноть аппроксимации)
+\item Погрешность округления
+\item Накапливаемая погрешность \\
+Нецелые числа
+\end{enumerate}
+\end{enumerate}
+
+\noindent\rule{\textwidth}{0.5pt}
+
+\begin{itemize}
+\item \(X^*\) --- точное решение \\
+\item \(X\) --- Приближенное решение
+\item \(X^* - X\) --- погрешность
+\item \(\Delta X = |X^* - X|\) --- абсолютная погрешность \\
+\(\Delta_X \ge |X^* - X|\), т.е. \[ X - \Delta_X \le X^* \le X + \Delta_X \]
+\item \(\delta X = \left|\frac{X^* - X}{|X|}\right|\) --- относительная погрешость \\
+\(\delta_X \ge \left|\frac{X^* - X}{|X|}\right|\) --- предельная относительная погрешность
+\end{itemize}
+
+\subsection{Значащие цифры}
+\label{sec:org3ca7e67}
+\begin{definition}
+Все цифры в изображении отличные от нуля, и нули если они содержатся
+между значащими цифрами, или расположены в конце числа и указывают на
+сохранение разряды точности.  Нули стоящие левее, отличной от нуля
+цифры, не являются значащимицифрами Между ненулевыми, или указывающие
+на точность
+\end{definition}
+
+\begin{examp}
+\(\underbrace{0.00}_\text{незнач.}2080\)
+\end{examp}
+\begin{examp}
+\(689000 = 0.689 \cdot 10^6\) --- 3 значащие цифры
+\(689000 = 0.689000 \cdot 10^6\) --- 6 значащих цифр
+\end{examp}
+
+\subsection{Верные цифры}
+\label{sec:org2a908ee}
+\begin{defintion}
+Если, значащая цифра приближенного значения, находящаяся в разряде, в
+котором выполняется условие --- абсолютное значение погрешности не
+превосходит половину уиницы этого разряда \(\Delta \le 0.5\cdot 10^k\),
+где \(k\) --- номер разряда, то она называется верной
+\end{defintion}
+
+\begin{examp}
+\(a = 3.635\) \\
+\(\Delta a = 0.0003\) \\
+\begin{description}
+\item[{(3) \(k = 0\)}] \(\frac{1}{2} \cdot 10^0 = \frac{1}{2} \ge \Delta a\)
+\item[{(6) \(k = -1\)}] \(\frac{1}{2} \cdot 10^{-1} = 0.05 \ge \Delta a\)
+\item[{(3) \(k = -2\)}] \(\frac{1}{2} \cdot 10^{-2} = 0.005 \ge \Delta a\)
+\item[{(5) \(k = -3\)}] \(\frac{1}{2} \cdot 10^{-3} = 0.0005 \ge \Delta a\)
+\end{description}
+\end{examp}
+
+\subsection{Распространение погрешности}
+\label{sec:orgb6fcadf}
+\begin{examp}
+\(\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})^3 = 99 - 70\sqrt{2}\) \\
+\begin{description}
+\item[{\(\sqrt{2}\)}] \[ \frac{7}{5} = 1.4 \]
+\[ \frac{17}{12} = 1.41666 \]
+\[ \frac{707}{500} = 1.414 \]
+\[ \sqrt{2} = 1.4142145624 \]
+\end{description}
+\end{examp}
+
+
+\[ \Delta_{(x\cdot y)} \approx |Y|\Delta_X + |X|\Delta_Y \]
+\[ \Delta_{(\frac{x}{y})} \approx \left|\left{1}{Y}\right|\Delta_X + \left|\frac{X}{Y^2}|\Delta_Y \]
+
+\[ |\Delta u| = |f(x_1 + \Delta x_1, \dots, x_n + \Delta x_n) - f(x_1, \dots, x_n)| \]
+\[ |\Delta U| = |df(x_1, \dots, x_n)| = \left|\sum_{i=1}^n \frac{\partial u}{\partial x_i}\Delta x_i \right| \le \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\right|\cdot|\Delta x_i| \addtag\label{star_1} \]
+
+\[ |\delta u| = \frac{\ref{star_1}}{|u|} = \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\cdot\frac{1}{u}\right|\cdot|\Delta x_i| = \sum_{i = 1}^n \left|\frac{\partial \ln u}{\partial x_i}\right|\cdot|\Delta x_i| \]
+
+\[ \delta_u = \sum_{i = 1}^n \left|\frac{\partial \ln u}{\partial x_i}\right| \cdot |\Delta x_i| \]
+
+\[ \delta_{(X + Y)} = \left|\frac{X}{X + Y}\right| \delta_X + \left|\frac{Y}{X + Y}\right|\delta_Y \]
+\section{Одномерная минимизация функций}
+\label{sec:org7c0ba50}
+\subsection{Прямые методы}
+\label{sec:org4b196f1}
+Не требуют вычисление производной. Могут использовать только известные значения. 
+\subsubsection{Метод дихотомии}
+\label{sec:org39439cb}
+\[ x_1 = \frac{b + a - \delta}{2}\quad x_2 = \frac{b + a + \delta}{2} \addtag\label{delta_1} \]
+\[ \tau = \frac{b - x_1}{b - a} = \frac{x_2 - a}{b - a} \rightarrow \frac{1}{2} \]
+\[ X^* [a_i, b_i]\quad \frac{b_i - a_i}{2} \le \varepsilon \]
+
+\begin{enumerate}
+\item \(x_1\) и \(x_2\); вычислить \(f(x_1)\) и \(f(x_2)\)
+\item \(f(x_1)\) и \(f(x_2)\)
+\begin{itemize}
+\item Если \(f(x_1) \le f(x_2) \rightarrow [a, x_2]\), т.е. \(b = x_2\)
+\item Иначе \([x_1, b] \rightarrow [x_1, b]\), т.е. \(a = x_1\)
+\end{itemize}
+\item \(\varepsilon_n = \frac{b - a}{2}\) (\(n\) --- номер итерации)
+\begin{itemize}
+\item Если \(\varepsilon_n > varepsilon\) --- переход к следующей итерации(шаг 1)
+\item Если \(\varepsilon_n \le \varepsilon\), заврешить поиск(шаг 4)
+\end{itemize}
+\item \(x^* \approx \overline{x} = \frac{a + b}{2} \quad f^* \approx f(\overline{x})\)
+\end{enumerate}
+
+\(\ref{delta_1}\quad \delta \in (0, 2\varepsilon)\) \\
+Число итерций \(n \ge \log_2\frac{b - a - \delta}{2\varepsilon - \delta}\)
+\end{document}
