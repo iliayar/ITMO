@@ -1,0 +1,108 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 1
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Теория погрешности
+#+begin_defintion org
+Отклонение от теоретического решения
+#+end_defintion
+Виды погрешности:
+1. Неустранимая погрешность
+   #+begin_examp org
+   Физические величины, другие константы
+   #+end_examp
+2. Устранимая погрешнеость
+   Связана с методом решения
+   1. Погрешность модели \\
+      Связана с матиматической формулировкой задачи. Она плохо отображает реальную модель
+   2. Остаточная погрешность(Погрешноть аппроксимации)
+   3. Погрешность округления
+   4. Накапливаемая погрешность \\
+      Нецелые числа
+
+-------
+
+- $X^*$ --- точное решение \\
+- $X$ --- Приближенное решение
+- $X^* - X$ --- погрешность
+- $\Delta X = |X^* - X|$ --- абсолютная погрешность \\
+  $\Delta_X \ge |X^* - X|$, т.е. \[ X - \Delta_X \le X^* \le X + \Delta_X \]
+- $\delta X = \left|\frac{X^* - X}{|X|}\right|$ --- относительная погрешость \\
+  $\delta_X \ge \left|\frac{X^* - X}{|X|}\right|$ --- предельная относительная погрешность
+
+** Значащие цифры
+#+begin_definition org
+Все цифры в изображении отличные от нуля, и нули если они содержатся
+между значащими цифрами, или расположены в конце числа и указывают на
+сохранение разряды точности.  Нули стоящие левее, отличной от нуля
+цифры, не являются значащимицифрами Между ненулевыми, или указывающие
+на точность
+#+end_definition
+
+#+begin_examp org
+$\underbrace{0.00}_\text{незнач.}2080$
+#+end_examp
+#+begin_examp org
+$689000 = 0.689 \cdot 10^6$ --- 3 значащие цифры
+$689000 = 0.689000 \cdot 10^6$ --- 6 значащих цифр
+#+end_examp
+
+** Верные цифры
+#+begin_defintion org
+Если, значащая цифра приближенного значения, находящаяся в разряде, в
+котором выполняется условие --- абсолютное значение погрешности не
+превосходит половину уиницы этого разряда $\Delta \le 0.5\cdot 10^k$,
+где $k$ --- номер разряда, то она называется верной
+#+end_defintion
+
+#+begin_examp org
+$a = 3.635$ \\
+$\Delta a = 0.0003$ \\
+- (3) $k = 0$ :: $\frac{1}{2} \cdot 10^0 = \frac{1}{2} \ge \Delta a$
+- (6) $k = -1$ :: $\frac{1}{2} \cdot 10^{-1} = 0.05 \ge \Delta a$
+- (3) $k = -2$ :: $\frac{1}{2} \cdot 10^{-2} = 0.005 \ge \Delta a$
+- (5) $k = -3$ :: $\frac{1}{2} \cdot 10^{-3} = 0.0005 \ge \Delta a$
+#+end_examp
+
+** Распространение погрешности
+#+begin_examp org
+$\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})^3 = 99 - 70\sqrt{2}$ \\
+- $\sqrt{2}$ ::  \\
+  \[ \frac{7}{5} = 1.4 \]
+  \[ \frac{17}{12} = 1.41666 \]
+  \[ \frac{707}{500} = 1.414 \]
+  \[ \sqrt{2} = 1.4142145624 \]
+#+end_examp
+
+
+\[ \Delta_{(x\cdot y)} \approx |Y|\Delta_X + |X|\Delta_Y \]
+\[ \Delta_{(\frac{x}{y})} \approx \left|\left{1}{Y}\right|\Delta_X + \left|\frac{X}{Y^2}|\Delta_Y \]
+
+\[ |\Delta u| = |f(x_1 + \Delta x_1, \dots, x_n + \Delta x_n) - f(x_1, \dots, x_n)| \]
+\[ |\Delta U| = |df(x_1, \dots, x_n)| = \left|\sum_{i=1}^n \frac{\partial u}{\partial x_i}\Delta x_i \right| \le \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\right|\cdot|\Delta x_i| \addtag\label{star_1} \]
+
+\[ |\delta u| = \frac{\ref{star_1}}{|u|} = \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\cdot\frac{1}{u}\right|\cdot|\Delta x_i| = \sum_{i = 1}^n \left|\frac{\partial \ln u}{\partial x_i}\right|\cdot|\Delta x_i| \]
+
+\[ \delta_u = \sum_{i = 1}^n \left|\frac{\partial \ln u}{\partial x_i}\right| \cdot |\Delta x_i| \]
+
+\[ \delta_{(X + Y)} = \left|\frac{X}{X + Y}\right| \delta_X + \left|\frac{Y}{X + Y}\right|\delta_Y \]
+* Одномерная минимизация функций
+** Прямые методы
+Не требуют вычисление производной. Могут использовать только известные значения. 
+*** Метод дихотомии
+\[ x_1 = \frac{b + a - \delta}{2}\quad x_2 = \frac{b + a + \delta}{2} \addtag\label{delta_1} \]
+\[ \tau = \frac{b - x_1}{b - a} = \frac{x_2 - a}{b - a} \rightarrow \frac{1}{2} \]
+\[ X^* [a_i, b_i]\quad \frac{b_i - a_i}{2} \le \varepsilon \]
+
+1. $x_1$ и $x_2$; вычислить $f(x_1)$ и $f(x_2)$
+2. $f(x_1)$ и $f(x_2)$
+   - Если $f(x_1) \le f(x_2) \rightarrow [a, x_2]$, т.е. $b = x_2$
+   - Иначе $[x_1, b] \rightarrow [x_1, b]$, т.е. $a = x_1$
+3. $\varepsilon_n = \frac{b - a}{2}$ ($n$ --- номер итерации)
+   - Если $\varepsilon_n > varepsilon$ --- переход к следующей итерации(шаг 1)
+   - Если $\varepsilon_n \le \varepsilon$, заврешить поиск(шаг 4)
+4. $x^* \approx \overline{x} = \frac{a + b}{2} \quad f^* \approx f(\overline{x})$
+   
+$\ref{delta_1}\quad \delta \in (0, 2\varepsilon)$ \\
+Число итерций $n \ge \log_2\frac{b - a - \delta}{2\varepsilon - \delta}$
+

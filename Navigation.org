@@ -2,7 +2,7 @@
 
 My stuff from ITMO University
 
-* ITMO
+* Year 1
 ** Term 1
 *** Discrete Math
 **** Labs
@@ -70,6 +70,7 @@ Big homewaorks
 Small homeworks
 - [[file:Term2/CXX/comm-iliayar/][Comm]]
 - [[file:Term2/CXX/second-chance-arbitrary-iliayar/][Second Chance Arbitrary]]
+* Year 2
 ** Term 3
 *** Algorithms
 **** Labs
@@ -87,3 +88,9 @@ Small homeworks
 
 *** Math analysis
 [[file:Term3/matan/lectures/all_lectures.pdf][All lectures]]
+
+** Term 4
+*** Math analysis
+[[file:Term4/matan/lectures/][lectures]]
+*** TeorVer
+[[file:Term4/teorver/lectures/][lectures]]

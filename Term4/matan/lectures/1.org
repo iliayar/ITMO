@@ -1,0 +1,171 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 1
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_export latex
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\M}{\mathfrak{M}}
+#+end_export
+
+* Теория меры
+#+NAME: лемма_о_структуре_компактного_опреатора
+#+ATTR_LATEX: :options [о структуре компактного оператора]
+#+begin_lemma org
+$V : \R^m \to \R^m$ --- невырожденный линейный оператор, т.е. $\det V \neq 0$ \\
+_Тогда_:
+- \exists ортонормированные базисы $g_1, \dots, g_m;\ h_1, \dots, h_m$
+- $\exists S_1, \dots, S_m > 0$
+\[ \forall x \in \R^m\quad V(x) = \sum_{i = 1}^m S_i \langle x, g_i \rangle h_i$ \]
+\color{gray} $x = \sum \langle x, g_i \rangle g_i$ --- разложение по базису \color{black} \\
+*При этом* $\vert\det V\vert = S_1 S_2 \dots S_m$
+#+end_lemma
+#+NAME: лемма_о_структуре_компактного_опреатора_доказательство
+#+begin_proof org
+$W := V^*V$ \color{gray} * --- транспонирование в $\R^m$ \color{black} \\
+\color{gray} $W$ --- самосопряженный оператор(матрица симметрична относительно диагонали) \color{black} \\
+Собственные числа $c_1, \dots, c_m$ --- вещественные \\
+Собственные векторы $g_1, \dots, g_m$ \\
+Заметим что $c_i\langle g_i, g_i \rangle = \langle Wg_i, g_i \rangle = \langle Vg_i, Vg_i \rangle > 0 \Rightarrow c_i > 0$ \\
+- $S_i := \sqrt{c_i}$ \\
+- $h_i := \frac{1}{S_i} Vg_i$ \\
+\[ \langle h_i, h_j \rangle = \frac{1}{S_iS_j}\langle Vg_i, Vg_j\rangle = \frac{1}{S_iS_j}\langle Wg_i, g_j\rangle = \frac{c_i}{S_iS_j}\langle g_i, g_j \rangle = \delta_i \]
+\[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
+\[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
+$\ref{diag_1}$ --- т.к. диагональная матрица
+#+end_proof
+#+NAME: преобразование_меры_лебега_при_линейном_отображении
+#+ATTR_LATEX: :options [преобразование меры лебега при линейном отображении]
+#+begin_theorem org
+\-
+- $V: \R^m \to \R^m$ --- линейное отображение
+_Тогда_:
+- $\forall E \in \M^m\quad V(E) \in \M^m$
+- $\lambda(V(E)) = \vert \det V \vert \cdot \lambda E$
+#+end_theorem
+#+NAME: преобразование_меры_лебега_при_линейном_отображении_доказательство
+#+begin_proof org
+\- 
+- ($\det V = 0$) :: $\text{Im}(V)$ --- подпространство в $\R^m$ \Rightarrow мера $=0$
+- ($\det V \neq 0$) :: $\mu E := \lambda(V(E))$ --- мера \\
+   $\mu$ --- инвариантна относительно сдвигов
+   \[ \mu(E + a) = \lambda(V(E + a)) = \lambda(V(E) + Va) = \lambda(V(E)) = \mu E \]
+   \Rightarrow $\exists k: \mu = k\cdot \lambda$(Лемма из предыдущего семестра) \\
+   $Q$ --- единичный куб на векторах $g_i$ и $V(g_i) = S_ih_i$, $V(Q) = \{\sum\alpha_iS_ih_i \vert \alpha_i \in [0,1]\}$ --- паралеллепипед со сторонами $S_i, \dots, S_m$
+#+end_proof
+* Интеграл
+** Измеримые функции
+#+NAME: ступенчатая_фукнция
+#+begin_definition org
+\-
+1. $E$ --- множество, $E = \underset{\text{кон.}}{\bigsqcup}e_i$ --- *разбиение множества*
+2. $f: X \to \R$ --- *ступенчатая*, если \\
+   $\exists$ разбиение $X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i$ \\
+   При этом такое разбиение --- *допустимое разбиение*
+#+end_definition
+#+NAME: ступенчатая_функция_пример
+#+begin_examp org
+\-
+1. Характеристическая функция множества $E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}$
+2. $f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}$, где $\mathcal{X} = \bigsqcup e_i$
+#+end_examp
+#+NAME: свойства_ступенчатых_функций
+#+begin_remark org
+\-
+1. $\forall f, g$ --- ступенчатые \\
+   _Тогда_ $\exists$ разбиения, допутимые и для $f$, и для $g$ \\
+   \[ f = \sum_\text{кон.} c_i \mathcal{X}_{e_i}\quad h = \sum_\text{кон.} b_k \mathcal{X}_{A_k} \]
+   \[ f = \sum_{i, k} c_i \mathcal{X}_{e_i\cap A_k} \quad g = \sum b_k\cdot\mathcal{X}_{e_i \cap A_k} \]
+2. $f, g$ --- ступенчатые, $\alpha \in \R$ \\
+   _Тогда_ $f + g,\ \alpha f,\ fg,\ max(f, g),\ min(f, g),\ |f|$ --- ступенчатые
+#+end_remark
+#+NAME: лебегово_множество_функции
+#+begin_definition org
+$f: E\subset X \to \overline{\R},\ a \in \R$ \\
+$E(f < a) = \{x\in E: f(x) < a\}$ --- *лебегово множество функции $f$* \\
+$E(f \le a),\ E(f > a), E(f \ge a)$ --- также лебеговы множества \\
+Если $f$ задана на $X$: $X(f < a),\ X(f \le a), \dots$ --- лебеговы множества
+#+end_definition
+#+NAME: дополнение_лебегова_множества
+#+begin_remark org
+$E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C$ \\
+\[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
+#+end_remark
+#+NAME: функция_измеримая_на_множестве
+#+begin_definition org
+\-
+- $(X, \A, \mu)$ --- пространство с мерой
+- $f: X \to \overline{\R}$
+- $E \in \A$
+$f$ --- *измерима на множестве $E$*: \\
+$a \in \R\quad E(f < a)$ --- измеримо(т.е. $\in \A$)
+#+end_definition
+#+NAME: функция_измеримая_на_множестве_обозначения
+#+begin_symb org
+\-
+- $f$ --- измеримо на $X$ --- говорят просто "измеримо"
+- $X = \R^m$, мера Лебега --- измеримо по Лебегу
+#+end_symb
+#+NAME: функция_измеримая_на_множестве_эквивалентность
+#+begin_remark org
+Эквивалентны:
+1. $\forall a\quad E(f < a)$ --- измеримо
+2. $\forall a\quad E(f \le a)$ --- измеримо
+3. $\forall a\quad E(f > a)$ --- измеримо
+4. $\forall a\quad E(f \ge a)$ --- измеримо
+#+end_remark
+#+NAME: функция_измеримая_на_множестве_пример 
+#+begin_examp org
+1. $E \subset X$, $E$ --- измеримо, $\mathcal{X}_E$ --- измеримо \\
+   $E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}$
+2. $f: \R^m \to \R$ --- непрерывна. Тогда $f$ --- измеримо по Лебегу
+#+end_examp
+#+NAME: функция_измеримая_на_множестве_свойства
+#+begin_remark org
+/Свойства/:
+1. $f$ --- измерима на $E$
+   - $\Rightarrow$ :: $\forall a \in \R$ $E(f = a)$ --- измеримо \\
+   - $\not \Leftarrow$ :: $f: \R \to \R\quad f(x) = \mathcal{X} + \mathcal{X}_\text{неизм.}$
+2. $f$ --- измерима \Rightarrow $\forall \alpha \in R\quad \alpha f$ --- измерима
+3. $f$ --- измерима $E_1, E_2, \dots \Rightarrow f$ --- измерима на $E = \bigcup E_k$
+4. $f$ --- измерима на $E$; $\underset{\text{изм.}}{E'} \subset E \Rightarrow f$ --- измерима на $E'$ \\
+   $E'(f < a) = E(f < a) \cap E'$
+5. $f \neq 0$ --- измерима на $E$ \Rightarrow $\frac{1}{f}$ --- измерима на $E$
+6. $f \ge 0$, измерима на $E$, $\alpha \in \R$. _Тогда_ $f^\alpha$ --- измерима на $E$
+#+end_remark
+#+NAME: измеримая_функция_теорема
+#+begin_theorem org
+$f_n$ --- измерима на $X$. \\
+_Тогда_:
+1. \[ \sup_{n \in \N} f_n;\quad \inf_{n \in \N} f_n \addtag\label{sup_inf_1} \]
+   $\ref{sup_inf_1}$ --- измеримы
+2. $\overline{\lim} f_n;\quad\underline{\lim} f_n$ --- измеримы
+3. Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то $h(x)$ --- измеримо
+#+end_theorem
+#+NAME: измеримая_функция_теорема_доказательство
+#+begin_proof org
+\-
+1. $g = \sup f_n\quad X(g > a) = \bigcup X(f_n > a)$
+2. \[ (\overline{\lim} f_n)(x) = \inf\{s_n: s_n = \sup(f_n(x), f_{n + 1}(x), \dots)\} \]
+3. очев.
+#+end_proof
+
+** Меры Лебега-Стильеса
+#+NAME: мера_лебега_стилтьеса
+#+begin_definition org
+$\R, \P^1, g:\R \to \R$ --- возрастает, непрерывна \\
+$\mu[a, b) := g(b) - g(a)$ --- \sigma-конечный объем \\
+\[ g(a + 0) = \lim_{x \to a + 0}g(x), g(a - 0) = \lim_{x \to a - 0}g(x) \]
+\[ \mu[a, b) := g(b-0) - g(a - 0) \]
+--- тоже \sigma-конечная мера \\
+Применим теорему о продолжении, получим меру $\mu g$ на некой \sigma-алгебре --- *мера Лебега-Стилтьеса* 
+#+end_definition
+#+NAME: мера_борелля_стилтьеса
+#+begin_definition org
+$g(x) = \lceil x \rceil$ \\
+Пусть $\mu g$ определена на Борелевской \sigma-алгебре --- *мера Бореля-Стилтьеса*
+#+end_definition
+
+
+

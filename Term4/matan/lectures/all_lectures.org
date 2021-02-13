@@ -1,0 +1,5 @@
+#+LATEX_CLASS: general
+#+TITLE: Матан лекции
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+INCLUDE "1.org" :lines "4-"
