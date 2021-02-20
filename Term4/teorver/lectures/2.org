@@ -1,0 +1,167 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 2
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Аксиоматическое опредление верояности
+Колмагоров \\
+
+- $\Omega$ --- пространство элементарных исходов
+#+begin_deifinition org
+Систему $\mathcal{F} \subset \Omega$ называем *\sigma-алгеброй событий* если:
+1. $\Omega \in \mathcal{F}$
+2. Если $A \in \mathcal{F}$, то $\overline{A} \in \mathcal{F}$
+3. Если $A_1, A_2, \dots \in \mathcal{F}$, то $\bigcup_{i=1}^{+ \infty} A_i \in \mathcal{F}$
+#+end_deifinition
+#+begin_remark org
+Свойства:
+1. $\emptyset \in \mathcal{F}$, т.к. $\overline{\Omega} = \emptyset \in \mathcal{F}$
+2. Если $A_1, A_2, \dots \in \mathcal{F}$, то $\bigcap_{i = 1}^{+ \infty} A_i \in \mathcal{F}$
+   #+begin_proof org
+   \-\\
+   $A_1, A_2, \dots \in \mathcal{F} \Rightarrow \overline{A_1}, \overline{A_2}, \dots \in \mathcal{F} \Rightarrow \bigcup_{i = 1}^{+ \infty} \overline{A_i} \in \mathcal{F} \Rightarrow \overline{\bigcup_{i = 1}^{+ \infty}\overline{A_i}} = \bigcap_{i = 1}^{+ \infty} A_i \in \mathcal{F}$
+   #+end_proof
+2. 
+   1. $F = \{\Omega, \emptyset\}$
+   2. $F = \{\Omega, \emptyset, A, \overline{A}\}$
+#+end_remark
+#+begin_definition org
+$] \Omega$ --- пространство элементарных исходовб $\mathcal{F}$ -- его \sigma-алгебра.
+*Вероятностью* на $(\Omega, \mathcal{F})$ обозначается функция $P(A): \mathcal{F} \to \R$ со свойствами:
+1. $P(A) \ge 0$ --- свойство *неотрицательности*
+2. Если событие $A_1, A_2, \dots$ --- попарно несовместны($\forall i,j:\ A_i \cap A_j = \emptyset$),
+   то: \[ P(\bigcup_{i = 1}^{+ \infty} A_i) = \sum_{i = 1}^{+ \infty} P(A_i) \] --- свойство *счетной аддитивности*
+3. $P(\Omega) = 1$ --- свойство *\color{red}???*
+#+end_definition
+
+#+begin_definition org
+Тройка $(\Omega, \mathcal{F}, P)$ --- *вероятностное пространство*
+#+end_definition
+#+begin_remark org
+Свойства:
+1. $P(\emptyset) = 0$
+   #+begin_proof org
+   $\emptyset$ и $\Omega$ --- несовместные события
+   \[ P(\underbrace{\emptyset + \Omega}_\Omega) = P(\emptyset) + P(\Omega) = 1 \]
+   \[ P(\emptyset) + 1 = 1 \]
+   \[ P(\emptyset) = 0 \]
+   #+end_proof
+2. Формула обратной вероятнсоти \[ P(A) = 1 - P(\overline{A}) \]
+   #+begin_proof org
+   $A$ и $\overline{A}$ --- несовметсные, $A \cup \overline{A} = \Omega$
+   \[ P(A + \overline{A}) = P(A) + P(\overline{A}) = 1 \Rightarrow P(A) = 1 - P(\overline{A}) \]
+   #+end_proof
+3. $0 \le P(A) \le 1$
+   #+begin_proof org
+   \-
+   1. $P(A) \ge 0$
+   2. $P(A) = 1 - P(\overline{A}) \le 1$
+   #+end_proof
+#+end_remark
+#+begin_axiom org
+Пусть имеется убывающая цепочка событий $A_1 \supset A_2 \supset A_3 \supset \dots$, $\bigcap_{i = 1}^{+ \infty} A_i = \emptyset$ \\
+_Тогда_ $P(A_n) \xrightarrow[n \to \infty]{} 0$
+#+end_axiom
+#+begin_remark org
+При непрерывном изменении области $A\subset \R^n$ соответствующая вероятность также должна изменяться непрерывно.
+Аксиома непрерывности следует из аксиомы счетной аддитивности
+#+end_remark
+#+begin_proof org
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:2_1.png]]
+\[ A_n = \sum_{i = n}^{+ \infty} A_i\overline{A_{i + 1}} \cup \bigcap_{i = n}^{+ \infty}A_i \]
+т.к. эти события несовместны
+\[ P(A_n) = \sum_{i = n}^{+ \infty}P(A_i\overline{A_{i + 1}}) + P(\bigcap_{i = n}^{+\infty} A_i) \]
+т.к. $P(\bigcap_{i = 1}^{ + \infty} A_i) = \emptyset$ и $\bigcap_{i = n}^{ +\infty}A_i = \bigcap_{i = 1}^{ + \infty}A_i$, то $P(\bigcap_{i = n}^{ + \infty} A_i) = 0$ \\
+\[ P(A_n) = \sum_{i = n}^{ + \infty} P(A_i \overline{A_{i + 1}}) \]
+\[ \sum_{i = 1}^{ + \infty}P(A_i\overline{A_{i + 1}}) = P(A_i) \]
+\[ P(A_n) \xrightarrow[n \to + \infty]{} 0 \]
+#+end_proof
+#+begin_remark org
+Аксимома счетной аддитивности следует из аксиомы непрерывности и свойства конечной аддитивности
+#+end_remark
+** Свойства операция сложения, умножения
+#+begin_definition org
+\-
+1. Свойство дистрибутивности $A\cdot (B + C) = AB + AC$
+2. Формула сложения. Если $A$ и $B$ --- несовместны, то $P(A + B) = P(A) + P(B)$ \\
+   если несовместны, то $P(A + B) = P(A) + P(B) - P(AB)$
+   #+begin_proof org
+   \-
+   #+ATTR_LATEX: :scale 0.4
+   [[file:2_2.png]]
+   \[ A + B = A\overline{B} + AB + \overline{A}B \Rightarrow P(A + B) = P(A\overline{B}) + P(AB) + P(\overline{A}B) = \]
+   \[ = P(A\overline{B}) + P(AB) + (P(\overline{A}B) + P(AB)) - P(AB) = P(A) + P(B) - P(AB) \]
+   #+end_proof
+#+end_definition
+#+begin_task org
+$n$ писем раскладываются в $n$ конвертов. Найти вероятнсоть того что
+хотя бы одно письмо попадет в свой коверт. Чему равна эта вероятность
+при $n \to + \infty$
+#+end_task
+#+begin_solution org
+$A_i$ --- $i$ письмо попало в свой коверт \\
+$A$ --- хотя бы одно письмо попало в свой конверт
+\[ A = A_1 + A_2 + \dots + A_n \]
+\[ P(A_i) = \frac{1}{n},\ P(A_iA_j) = \frac{1}{A^2_n},\ P(A_iA_jA_k) = \frac{1}{A^3_n}, \dots P(A_1A_2\dots A_n) = \frac{1}{n!}\]
+\[ P(A) = n\cdot\frac{1}{n} - C^2_n\cdot\frac{1}{A^2_n} + \dots + (-1)^{n + 1}\frac{1}{n!} = 1 - \frac{1}{2!} + \frac{1}{3!} - \dots + (-1)^{n + 1}\frac{1}{n!} \]
+\[ e^{-1} = 1 - 1 + \frac{1}{2!} - \frac{1}{3!} + \dots \]
+\[ P(A) \xrightarrow[n \to +\infty]{} 1 - e^{-1} \]
+#+end_solution
+** Независимые события
+#+begin_remark org
+$\Omega = n$, $|A| = m_1$, $|B| = m_2$ \\
+$|\Omega \times \Omega| = n^2$, $AB = m_1m_2$
+#+end_remark
+#+begin_definition org
+События $A$ и $B$ называются *независимыми*, если $P(AB) = P(A)P(B)$
+#+end_definition
+#+begin_remark org
+Свойство: если $A$ и $B$ --- независимы, то $A$ и $\overline{B}$ --- независимые
+#+end_remark
+#+begin_proof org
+$P(A) = P(A(B + \overline{B})) = P(AB + A\overline{B}) = P(AB) + P(A\overline{B}) \Rightarrow P(A\overline{B}) = P(A) - P(AB) = P(A) - P(A)\cdot P(B) = P(A)\cdot(1 - P(B)) = P(A)\cdot P(\overline{B})$ \Rightarrow $A$ и $\overline{B}$ --- независимы
+#+end_proof
+#+begin_definition org
+События $A_1,A_2, \dots, A_n$ называются *независимыми в совкупности*, если для любого набора $1 \le i_1, i_2, \dots, i_k \le n\ P(A_{i_1}A_{i_2}\dots A_{i_k}) = P(A_{i_1})P(A_{i_2})\dots P(A_{i_k})$
+#+end_definition
+#+begin_remark org
+Если события независимы в совокупности, то события независимы попарно(при $k = 2$). Обратное неверно
+#+end_remark
+#+ATTR_LATEX: :options [Берштейна]
+#+begin_examp org
+Три грани правильного тетраэдра выкрашены в красный, синий, зленый цвета, а четвертая грань во все жти три цвета \\
+$] A$ --- грань содержит красный цвет, $B$ --- синий, $C$ --- зеленый \\
+\[ P(A) = P(B) = P(C) = \frac{2}{4} = \frac{1}{2} \]
+\[ P(AB) = P(AC) = P(BC) = \frac{1}{4} \]
+\[ P(AB) = \frac{1}{4} = \frac{1}{2}\cdot\frac{1}{2} = P(A)P(B) \] \Rightarrow все события попарно независим
+\[ P(ABC) = \frac{1}{4} \neq P(A)P(B)P(C) = \frac{1}{8} \] \Rightarrow события не независимы в совокупности
+
+#+end_examp
+#+begin_remark org
+Если в условии есть "хотябы", т.е. требуется найти вероятность совместных независимых событий, то применяем формулу обратной вероятности
+#+end_remark
+#+begin_task org
+Найти веротяность того, что при 4 бросаниях кости, хотябы один раз выпадет шестерка.
+#+end_task
+#+begin_solution org
+$] A_1$ --- при 1 броске "6", $A_2$ --- при 2х бросках "6", \dots, $A$ --- хотя бы один раз "6"
+\[ A = A_1 + A_2 + A_3 + A_4 \]
+\[ P(A_1) = P(A_2) = P(A_3) = P(A_4) = \frac{1}{6} \]
+\[ P(\overline{A_1}) = P(\overline{A_2}) = P(\overline{A_3}) = P(\overline{A_4}) = \frac{5}{6} \]
+$\overline{A}$ --- ни разу не выпадет
+\[ \overline{A} = \overline{A_1}\cdot\overline{A_2}\cdot\overline{A_3}\cdot\overline{A_4} \]
+\[ P(\overline{A}) = \left(\frac{5}{6}\right)^4  \]
+\[ P(A) = 1 - P(\overline{A}) \]
+#+end_solution
+#+begin_task org
+Два стрелка стреляют по мишени. Вероятность попадания первого --- $0.6$, второго --- $0.8$
+#+end_task
+#+begin_solution org
+$A_1$ --- 1й попал \\
+$A_2$ --- 2й попал \\
+$A$ --- один попал
+\[ A = A_1\cdot\overline{A_2} + \overline{A_1}A_2 \]
+\[ P(A)  = P(A)\cdot P(\overline{A_2}) + P(\overline{A_1})\cdot P(A_2) \]
+
+#+end_solution

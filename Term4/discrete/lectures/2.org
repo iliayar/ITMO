@@ -1,0 +1,48 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 2
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Производящие функции
+#+begin_definition org
+*Полином* --- степенныой ряд, у которого начиная с некоторого места
+ $n$ все коэффиценты 0.
+#+end_definition
+#+begin_symb org
+$\deg p = n$
+#+end_symb
+#+begin_definition org
+$\frac{P(t)}{Q(t)}$ --- *дробно рациональная функция*
+#+end_definition
+** Рекурентные соотношения
+#+begin_definition org
+\[ m: a_0, a_1, \dots, a_{m - 1} \]
+$k \le m, n \ge m$ \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где $c_1, \dots, c_k$ --- коэффиценты рекурентности
+#+end_definition
+#+begin_examp org
+\-
+- $m = 2,\ k = 2$
+- $f_0 = f_1 = 1$
+- $c_1 = c_2 = 1$
+f_n = f_{n - 1} + f_{n - 2} --- числа Фибоначи
+#+end_examp
+
+
+#+begin_definition org
+*Квазиполином*
+\[ f(n) = \sum_{i = 1}^k p_i(n)r_i^n \], где $p_i$ --- полином, $r_i$ --- числа
+
+#+end_definition
+#+begin_theorem org
+- $a_0, a_1, \dots, a_n, \dots$
+_Тогда_ эквивалентны:
+1. $A(t) = \frac{P(t)}{Q(t)}$, $P, Q$ --- полиномы, $q_0 \neq 0$
+2. для $n \ge m$ $a_n$ задается линейным рекурентным соотношением: $a_n = c_1a_{n - 1} + \dots + c_ka_{n - k}$, причем:
+   - $Q(t) = 1 - c_1t - c_2t^2 - \dots - c_kt^k$
+   - $\deg P \le m - 1$
+3. $a_n$ --- квазиполином \[ a_n = \sum_{i = 1}^k p_i(n)r_i^n \label{kvazi_1}\addtag \]
+   причем:
+   - $r_i$ --- обратные величины корням $Q(t)$
+   - $k$ --- число различных его корней
+   - $\deg p_i = (\text{кратность корня}(r_i^{-1})) - 1$ \\
+     (\ref{kvazi_1} кроме $\le m$ первых членов)
+#+end_theorem

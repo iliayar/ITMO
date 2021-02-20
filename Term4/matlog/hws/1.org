@@ -1,0 +1,24 @@
+#+LATEX_CLASS: general
+#+TITLE: 1.3.g
+
+* 1.3.g
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+
+\[ \neg A, \neg B \vdash A \to B \]
+По теореме о дедукции:
+\[ \neg A, \neg B, A \vdash B \]
+1. $\neg A$
+2. $A$
+3. $\neg B$
+4. $A \to (\neg B \to A)  \quad\text{(1 акс.)}$
+5. $\neg A \to (\neg B \to \neg A)  \quad\text{(1 акс.)}$
+6. $\neg B \to A\quad$ MP(2, 4)
+7. $\neg B \to \neg A\quad$ MP(1, 5)
+8. $(\neg B \to A) \to (\neg B \to \neg A) \to \neg\neg B  \quad \text{(9 акс.)}$
+9. $(\neg B \to \neg A) \to \neg\neg B\quad$ MP(6, 8)
+10. $\neg\neg B\quad$ MP(7, 9)
+11. $\neg\neg B \to B \addtag \quad \text{(10 акс.)}$
+12. $B\quad$ MP(10, 11)
+
