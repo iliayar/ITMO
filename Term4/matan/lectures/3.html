@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-02-22 Mon 12:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Лекция 3</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Ilya Yaroshevskiy" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Лекция 3</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf610e47">1. Интеграл</a>
+<ul>
+<li><a href="#orga5be3a9">1.1. Предельный переход под щнаком интеграла</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf610e47" class="outline-2">
+<h2 id="orgf610e47"><span class="section-number-2">1</span> Интеграл</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>\(f \ge 0\), ступенчатые <br />
+\(f = \sum_\text{кон.} \alpha_k \chi_{E_k}\), \(E_k\) &#x2014; измеримое <br />
+\(\int_X f = \sum \alpha_k \mu E_k\)</li>
+<li>\label{int_3_2} \(f \ge 0\), измеримая <br />
+\(\int_X f d\mu = \sup_{\substack{0 \le g \le g \\ f\text{ --- ступ.}}} \int_X g d\mu\)</li>
+<li><p>
+\label{int_3_3} \(f\) &#x2014; измерима, \(f^+, f^- \ge 0\) &#x2014; измеримые <br />
+Пусть \(\int_X f^+\) или \(\int_X f^-\) &#x2014; конечные <br />
+Тогда \(\int_X f = \int_X f^+ - \int_X f^-\)
+</p>
+<div class="definition" id="orgcfa5df8">
+<p>
+Если \(\int_x f^+,\ \int_X f^-\) &#x2014; оба конечные, то \(f\) назывется <b>суммируемой</b>
+</p>
+
+</div>
+<div class="remark" id="org467062c">
+<p>
+\(f\) &#x2014; измеримая, \(\ge 0\), интеграл \ref{int_3_3} = интеграл \ref{int_3_2}
+</p>
+
+</div></li>
+<li><div class="definition" id="orgf02035e">
+<p>
+\(E \subset X\) &#x2014; измкримое, \(f\) &#x2014; измерима на \(X\) <br />
+\(\int_E f d\mu = \int_X f\cdot\chi_E\)
+</p>
+
+</div></li>
+</ol>
+
+<div class="remark" id="orgbb7c9ab">
+<p>
+\(f = \sum \alpha_k \chi_{E_k}\ \int_E f = \sum \alpha_k \mu(E_k \cap E)\)
+</p>
+
+</div>
+<div class="remark" id="org91a5bad">
+<p>
+\(\int_E f d\mu = \sup \{fg:\ 0 \le g \le f\text{ на } E, g\text{ --- ступенчатые}\}\), можно считать что \(g\) &#x2014;
+тождественный 0 вне множества \(E\)
+</p>
+
+</div>
+<div class="remark" id="org17c799f">
+<p>
+\(\int_E f\) не зависит от значений \(f\) вне \(E\)
+</p>
+
+</div>
+<div class="remark" id="org292cfba">
+<p>
+\((X, \A, \mu)\) \(E\subset X\) &#x2014; измеримое, \(g, f\) &#x2014; измеримые. Свойства:
+</p>
+<ol class="org-ol">
+<li><p>
+\label{prop_3_1} Монотонность \(f \le g\) \(\int_E f \le \int_E g\)
+</p>
+<div class="proof" id="orgfed050f">
+<p>
+&#x00ad;
+</p>
+
+<div id="org3c59c7a" class="figure">
+<p><img src="3_1.png" alt="3_1.png" />
+</p>
+</div>
+<ol class="org-ol">
+<li>\(f, g \ge 0\) &#x2014; очевидно</li>
+<li>\(f, g\) &#x2014; произвольные <br />
+\(f^+ \le g^+\ f^- \le g^-\) <br />
+\(\int_E f^+ \le \int_E g^+\ \int_E f^- \le \int_E g^- \Rightarrow \text{OK}\)</li>
+</ol>
+
+</div></li>
+<li>\(\int_E Ad\mu = \mu E\ \int_E 0 d\mu = 0\)</li>
+<li><p>
+\label{prop_3_3} \(\mu E = 0\ \int_E f= 0\)
+</p>
+<div class="proof" id="orgcc0d0ca">
+<ol class="org-ol">
+<li>\(f\) &#x2014; ступенчатая</li>
+<li>\(f \ge 0\) &#x2014; измеримая</li>
+</ol>
+
+</div>
+
+<p>
+<i>Змечание</i>: <br />
+\(f\) &#x2014; измеримая. Тогда \(f\) &#x2014; суммируемая &hArr; \(\int |f| < + \infty\) <br />
+</p>
+<dl class="org-dl">
+<dt>\((\Leftarrow)\)</dt><dd>следует из cвойства \ref{prop_3_1}. \(f^+, f^- \le |f|\)</dd>
+<dt>\((\Rightarrow)\label{remark_3_1_proof}\)</dt><dd>позже</dd>
+</dl></li>
+<li>\label{prop_3_4} \(\int_E(-f) = -\int_E f,\ \forall c \in \R\ \int_E c f = c\int_E f\) <br />
+<ol class="org-ol">
+<li>\((-f)^+ = f^-\ (-f)^- = f^+\)</li>
+<li>можно считать \(c > 0\) для \(f \ge 0\) &#x2014; тривиально</li>
+</ol></li>
+<li><p>
+\(\exists \int_E f d\mu\) <br />
+Тогда \(|\int_E f d\mu| \le \int_E |f| d\mu\)
+</p>
+<div class="proof" id="org2d72e87">
+<p>
+\(-|f| \le f \le |f|\). По свойствам \ref{prop_3_3} и \ref{prop_3_4}
+</p>
+
+</div></li>
+<li><p>
+\(\mu E \le +\infty,\ a\le f\le b\) <br />
+Тогда \(a\mu E \le \int_E f \le b \mu E\)
+\(\color{gray} a\chi_E \le f \le b\chi_E\)
+</p>
+<div class="corollary" id="org9278016">
+<p>
+\(f\) &#x2014; измерима на \(E\), \(f\) &#x2014; ограничена на \(E\), \(\mu E < + \infty\) <br />
+Тогда \(f\) &#x2014; суммируемая на \(E\)
+</p>
+
+</div></li>
+<li><p>
+\(f\) &#x2014; суммируемая на \(E\). Тогда \(f\) &#x2014; почти везде конечная
+</p>
+<div class="proof" id="org77f7299">
+<p>
+&#x00ad;
+</p>
+<ol class="org-ol">
+<li>\(f \ge 0\ f = + \infty\) на \(A \subset E\) \(\forall n \in \N\ \int_E f \ge n\mu A\)</li>
+<li>\(f = f^+ - f^-\)</li>
+</ol>
+
+</div></li>
+</ol>
+
+</div>
+<div class="lemma" id="org12adaf4">
+<p>
+\label{lemma_3_1}
+\[ A = \bigsqcup_{i - 1}^{ + \infty} A_i \]
+&#x2014; измеримые, \(g\) &#x2014; ступенчатая, \(g \ge 0\) <br />
+<span class="underline">Тогда</span> \[ \int_A g d\mu = \sum_{i = 1}^{ + \infty}\int_{A_i}g d\mu \]
+</p>
+
+</div>
+<div class="proof" id="org19586b6">
+<p>
+\(\int_A g d\mu = \sum_\text{кон.} \alpha_k \mu(E_k \cap A) = \sum_k\sum_i \underbrace{\alpha_k\mu(E_k \cap A_i)}_{\ge 0} = \sum_i \sum_k \dots = \sum_i\int_{A_i} gd\mu\)
+</p>
+
+</div>
+<div class="theorem" id="org4b75432">
+<p>
+\(A = \bigsqcup A_i\) &#x2014; измеримые, \(f: X \to \overline{\R}\) &#x2014; измеримая на \(A\), \(f \ge 0\) <br />
+<span class="underline">Тогда</span> \(\int_A fd\mu = \sum_{i = 1}^{ + \infty} \int_{A_i} f d\mu\)
+</p>
+
+</div>
+<div class="proof" id="org666d66f">
+<p>
+&#x00ad;
+</p>
+<dl class="org-dl">
+<dt>\((\le)\)</dt><dd>ступенчатая \(g:\ 0 \le g \le f\ \int_a g = \sum\int_{A_i} g d\mu \le \sum \int_{A_i} f\) &#x2014; по \hyperref[lemma_3_1]{Лемме}</dd>
+<dt>\((\ge)\)</dt><dd><ol class="org-ol">
+<li><p>
+\(A = A_1 \cup A_2\) <br />
+\(0 \le g_1 \le f\chi_{A_1}\ 0 \le g_2 \le f\chi_A_2}\) <br />
+\[ g_1 = \sum \alpha_k \chi_{E_k}\ g_2 = \sum \beta_k \chi_{E_k} \]
+</p>
+<p>
+<img src="3_2.png" alt="3_2.png" />
+Считаем что \(E_k\) &#x2013; совместное разбиение
+\[ 0 \le g_1 + g_2 \le f \chi_A \]
+\[ \int_{A_1} g_1 + \int_{A_2} g_2 =  \int_A g_1 + g_2 \le \int_A f \]
+Перейдем к супремуму
+\[ \int_{A_1} f + \int_{A_2} g_2 \le \int_A f \]
+\[ \int_{A_1} f + \int_{A_2} f \le \int_A f \]
+</p></li>
+<li>\(\forall n \in \N\) &#x2014; индукция по \(n\)</li>
+<li>\[ A = \bigsqcup_{i = 1}^n A_i \sqcup B_n \], где \[ B_n = \bigsqcup_{i > n} A_i \]
+\[ \int_A f = \sum_{i = 1}^n \int_{A_i} f + \int_{B_n} f \ge \sum_{i = 1}^n \int_{A_i} f \]</li>
+</ol></dd>
+</dl>
+
+</div>
+<div class="corollary" id="org3842d5e">
+<ul class="org-ul">
+<li>\(f \ge 0\) &#x2014; измеримая</li>
+<li>\(\nu: \A \to \overline{\R}_+\)</li>
+<li>\(\nu E := \int_E fd\mu\)</li>
+</ul>
+<p>
+<span class="underline">Тогда</span> \(\nu\) &#x2014; мера
+</p>
+
+</div>
+<div class="corollary" id="org333c253">
+<p>
+\(f\) &#x2014; суммируема на \(A = \bigsqcup A_i\) &#x2014; измеримые <br />
+<span class="underline">Тогда</span> \[ \int_A f = \sum \int_{A_i} f \]
+</p>
+
+</div>
+<div class="proof" id="org7153b58">
+<p>
+\(f^+, f^- \dots\) \(\color{red}???\)
+</p>
+
+</div>
+</div>
+<div id="outline-container-orga5be3a9" class="outline-3">
+<h3 id="orga5be3a9"><span class="section-number-3">1.1</span> Предельный переход под щнаком интеграла</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+\(f_n \to f\). Можно ли утверждать \(\int_E f_n \to \int_E f\)?
+</p>
+<div class="examp" id="org9096a36">
+<p>
+\(f_n, f: \R \to \R\) <br />
+\(f_n = \frac{1}{n} \cdot \chi_{[0, n]}\ f\equiv 0\ f_n \to f\) (даже \(f_n \rightrightarrows f\) на \(\R\)) <br />
+\[ \int_\R f_n = \frac{1}{n}\lambda[0, n] = 1\not \xrightarrow[n \to + \infty]{} 0 = \int_\R f \]
+</p>
+
+</div>
+<div class="theorem" id="org2b1141b">
+<p>
+\((X, \A, \mu)\), \(f_n\) &#x2014; измеримая <br />
+\(\forall n\ 0 \le f_n \le f_{n + 1}\)  почти везде \(f(x) := \lim_{n\to + \infty} f_n(x)\) почти везде <br />
+<span class="underline">Тогда</span> \(\lim_{n \to + \infty}\int_X f_n d \mu = \int_x fd\mu\)
+</p>
+
+</div>
+<div class="remark" id="org4b35553">
+<p>
+\(f\) &#x2014; задана всюду, кроме множества меры \(0\). Считаем, что \(f = 0\) на \(e\) <br />
+<span class="underline">Тогда</span> \(f\) &#x2014; измерима на \(X\).
+</p>
+
+</div>
+<div class="proof" id="org9cda630">
+<p>
+&#x00ad;
+</p>
+<dl class="org-dl">
+<dt>\((\le)\)</dt><dd>очевидно. \(f_n \le f\) почти везде \(\int f_n \le \int f\)
+\[ \int_X f_n = \int_{X\setminus e}f_n + \int_e f_n = \int_{X\setminus e} f_n \le \int_{X \setminus e} f \le \int_X f \]</dd>
+<dt>\((\ge)\)</dt><dd>Достаточно: \(\forall g\) &#x2014; ступенчатая \(0 \le g \le f\)
+\[ \lim \int_X f_n \ge \int_X g \]
+Достаточно: \(\forall c \in (0, 1)\)
+\[ \lim \int_X f_n \ge c \int_X g \]
+\[ E_n := X(f_n \le c g) \dots \subset E_n \subset E_{n + 1} \subset \dots \]
+\(\bigcup E = X\) т.к. \(c < 1\)
+\[ \int_x f_n \ge \int_{E_n} f_n \ge c \int_{E_n} g \]
+Тогда \(\lin \int_X f_n \ge c \lim \int_{E_n} g = c\int_X g\) <br />
+Последнее равентсво справедливо в силу непрерывности мнизу меры \(\nu: E \mapsto \int_E g\)</dd>
+</dl>
+
+</div>
+
+<div class="theorem" id="org0559e30">
+<p>
+\(f, g \ge 0\) измерима на \(E\) <br />
+<span class="underline">Тогда</span> \[ \int_E f + g = \int_E f + \int_E g \]
+</p>
+
+</div>
+<div class="proof" id="org81fe932">
+<p>
+&#x00ad;
+</p>
+<ol class="org-ol">
+<li>\(f, g\) &#x2014; ступенчатые <br />
+\[ f = \sum \alpha_k\chi_{E_k},\ g = \sum \beta_k\chi_{E_k} \]
+\[ \int_E f + g = \sum (\alpha_k + \beta_k)\mu(E_k \cap E) = \sum \alpha_k \mu(E_k \cap E) + \sum \beta_l \mu(E_k \cap E) = \int_E f + \int_E g \]</li>
+<li>\(f \ge 0\) &#x2014; измерима &rArr; &exist; стпенчатая \(f_n:\ 0 \le f_n \le f_{n + 1} \le \dots \ \lim f_n = f\) <br />
+\(g \ge 0\) &#x2014; измерима &rArr; &exist; стпенчатая \(g_n:\ 0 \le g_n \le g_{n + 1} \le \dots \ \lim g_n = g\) <br />
+\(f_n + g_n \to f + g\ \int_E f_n + g_n \to \int_E f + g\) <br />
+\(\int_E f_n + g_n = \int_E f_n + \int_E g_n \to \int_E f + \int_E g = \int_E f+g\)</li>
+</ol>
+
+</div>
+<div class="corollary" id="orga128bf3">
+<p>
+\(f, g\) &#x2014; суммируемы на \(E\) <br />
+<span class="underline">Тогда</span> \(f+g\) &#x2014; суммируема и \(\int_E f + g = \int_E f + \int_E g\)
+</p>
+
+</div>
+<div class="remark" id="org0c4c466">
+<p>
+Свойство \(\ref{remark_3_1_proof}\) доказано
+</p>
+
+</div>
+<div class="proof" id="org4c06aad">
+<p>
+Суммируемость \(|f+g|\le |f| + |g|\) <br />
+\(h = f + g\). Тогда:
+\[ h^+ - h^- = f^+ - f^- + g^+ - g^- \Leftrightarrow h^+ + f^- + g^- = h^- + f^+ + g^+ \]
+\[ \Rightarrow \int_E h^+ + \int_E f^- + \int_E g^- = \int_E h^- + \int_E f^+ + \int_E g^+ \]
+\[ \int_E h^+ - \int_E h^- = \int_E f^+ - \int_E f^- + \int_E g^+ - \int_E g^- \]
+\[ \int_E h = \int_E f + \int_E g \]
+</p>
+
+</div>
+<div class="definition" id="org9884e13">
+<p>
+\(\mathcal{L}(X) =\) множество функций суммируемых на X
+</p>
+
+</div>
+<div class="corollary" id="org5fb1b23">
+<p>
+\(\mathcal{L}(X)\) &#x2014; линейное пространство, а отображение \(f \mapsto \int_X f\) &#x2014; это линейный функционал на \(\mathcal{L}(X)\)
+, т.е. \(\forall f_1, \dots, f_n \in \mathcal{L}(X)\ \forall \alpha_1, \dots, \alpha_k \in \R\)
+\[ \sum_{k = 1}^n \alpha_k f_k \in \mathcal{L}(X);\ \int_X\sum\alpha_k f_k = \sum_{k = 1}^n\alpha_k\int_X f_k\]
+</p>
+
+</div>
+<div class="theorem" id="org1b111cb">
+<p>
+\((X, \A, \mu)\ E \in \A\ \underset{\text{изм.}}{u_n}: X \to \overline{\R}\ u_n \ge 0\) почти везде <br />
+<span class="underline">Тогда</span> \[ \int_E(\sum_{n = 1}^{ + \infty} u_n(x))d\mu(x) = \sum_{n = 1}^{ + \infty} \int_E u_n d\mu \]
+</p>
+
+</div>
+<div class="proof" id="orgb0eb826">
+<p>
+по т. Леви: \(S_n := \sum_{k = 1}^n u_k\ 0 \le S_n \le S_{n + 1} \le \dots\ S_n \to S\) &#x2014; сумма ряда \(\sum u_n\) <br />
+Тогда \(\int_E S_n \to \int_E S\), \(\int_E S_n = \sum_{k = 1}^n \int_E u_k \to \int_E S\)
+</p>
+
+</div>
+<div class="corollary" id="org82c9e57">
+<p>
+\(u_n\) &#x2014; измеримые \(\sum_{n = 1}^{ + \infty} \int_E |u_n| < + \infty\) <br />
+<span class="underline">Тогда</span> ряд \(\sum u_n(x)\) &#x2014; абсолютно сходится при почти всех \(x\)
+</p>
+
+</div>
+<div class="proof" id="orga36b34b">
+<p>
+\(S(x) := \sum |u_n(x)| \ge 0\) &#x2014; измеримая
+\[ \int_E S(x) = \sum \int_E |u_n| < + \infty \]
+&rArr; \(S\) &#x2014; сумиируема &rArr; \(S\) почти везде конечена
+</p>
+
+</div>
+<div class="examp" id="org022732c">
+<p>
+\(x_n \in \R\) &#x2014; произведение последовательности; \(\sum a_n\) &#x2014; абсолютно сходится <br />
+<span class="underline">Тогда</span> \(\sum \frac{a_n}{\sqrt{|x - x_n|}}\) &#x2014; абсолютно сходится при почти всех \(x\)
+</p>
+
+</div>
+<div class="proof" id="org57ead28">
+<p>
+Достаточно проверить абсолютную сходимость на \([-N, N]\) почти везде
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ilya Yaroshevskiy</p>
+<p class="date">Created: 2021-02-22 Mon 12:57</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
