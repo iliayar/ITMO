@@ -1,5 +1,5 @@
 #+LATEX_CLASS: general
-#+TITLE: Лекция 2
+#+TITLE: Лекция 4
 #+AUTHOR: Ilya Yaroshevskiy
 
 

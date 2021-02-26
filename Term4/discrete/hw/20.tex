@@ -1,4 +1,4 @@
-% Created 2021-02-18 Thu 15:03
+% Created 2021-02-26 Fri 12:12
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Лекция 2}
+\title{20}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Лекция 2},
+ pdftitle={20},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -124,35 +124,49 @@
 \maketitle
 \tableofcontents
 
-\usepackage{algorithmicx}
-\usemintedstyle{vim}
+
+\section*{20}
+\label{sec:org2487b40}
+\[ f_{n + 2} = f_{n + 1} + f_n \]
+\[ f_{n + 1} = f_{n} + f_{n - 1} \Rightarrow f_{n - 1} = f_{n + 1} - f_n \]
+\[ f_{n + 2}^2 + f_{n - 1}^2 = f_{n+1}^2 + 2f_{n + 1}f_n + f_n^2 + f_{n +1}^2 - 2f_{n + 1}f_n + f_n^2 = 2f_{n + 1}^2 + 2f_n^2 \]
+\[ f_{n+2}^2 = 2f_{n + 1}^2 + 2f_n^2 - f_{n - 1}^2 \]
+\[ f_{n}^2 = 2f_{n - 1}^2 + 2f_{n - 2}^2 - f_{n - 3}^2 \]
+\[ g_n := f_n^2 \]
+\[ g_n = 2g_{n - 1} + 2g_{n - 2} - g_{n - 3}\]
+\subsection*{Находим производящую функцию:}
+\label{sec:org8abee87}
+\begin{itemize}
+\item \(c_1 = 2\)
+\item \(c_2 = 2\)
+\item \(c_3 = -1\)
+\end{itemize}
 
 
-
-\begin{listing}[htbp]
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-a = 3
-
-if a > 3: # $\LaTeX$
-    print('Yes')
-else:
-    print('No')
-\end{minted}
-\caption{Test}
-\end{listing}
-
-\begin{verbatim}
-No
-\end{verbatim}
+\begin{itemize}
+\item \(g_0 = f_0^2 = 1\)
+\item \(g_1 = f_1^2 = 1\)
+\item \(g_2 = f_2^2 = 4\)
+\end{itemize}
 
 
-\begin{algorithmic}
-\If {$i\geq maxval$}
-    \State $i\gets 0$
-\Else
-    \If {$i+k\leq maxval$}
-        \State $i\gets i+k$
-    \EndIf
-\EndIf
-\end{algorithmic}
+\begin{itemize}
+\item \(p_0 = g_0 = 1\)
+\item \(p_1 = g_1 - g_0c_1 = 1 - 2\cdot 1 = -1\)
+\item \(p_2 = g_2 - (g_1c_1 + g_0c_2) = 4 - (2 + 2) = 0\)
+\end{itemize}
+
+\subsection*{Итого}
+\label{sec:orgd5a0636}
+\[ A(t) = \frac{1 - t}{1 - 2t - 2t^2 + t^3} \]
+
+\subsection*{Test}
+\label{sec:orgfdc10d8}
+\begin{latex}
+\begin{center}
+\begin{tikzpicture}
+\draw (0, 0) circle[radius = 1cm];
+\end{tikzpicture}
+\end{center}
+\end{latex}
 \end{document}

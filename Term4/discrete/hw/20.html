@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-02-24 Wed 12:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>20</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Ilya Yaroshevskiy" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">20</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org436b6f0">20</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org436b6f0" class="outline-2">
+<h2 id="org436b6f0">20</h2>
+<div class="outline-text-2" id="text-org436b6f0">
+<p>
+\[ f_{n + 2} = f_{n + 1} + f_n \]
+\[ f_{n + 1} = f_{n} + f_{n - 1} \Rightarrow f_{n - 1} = f_{n + 1} - f_n \]
+\[ f_{n + 2}^2 + f_{n - 1}^2 = f_{n+1}^2 + 2f_{n + 1}f_n + f_n^2 + f_{n +1}^2 - 2f_{n + 1}f_n + f_n^2 = 2f_{n + 1}^2 + 2f_n^2 \]
+\[ f_{n+2}^2 = 2f_{n + 1}^2 + 2f_n^2 - f_{n - 1}^2 \]
+\[ f_{n}^2 = 2f_{n - 1}^2 + 2f_{n - 2}^2 - f_{n - 3}^2 \]
+\[ g_n := f_n^2 \]
+\[ g_n = 2g_{n - 1} + 2g_{n - 2} - g_{n - 3}\]
+Находим производящую функцию:
+</p>
+<ul class="org-ul">
+<li>\(c_1 = 2\)</li>
+<li>\(c_2 = 2\)</li>
+<li>\(c_3 = -1\)</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>\(g_0 = f_0^2 = 1\)</li>
+<li>\(g_1 = f_1^2 = 1\)</li>
+<li>\(g_2 = f_2^2 = 4\)</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>\(p_0 = g_0 = 1\)</li>
+<li>\(p_1 = g_1 - g_0c_1 = 1 - 2\cdot 1 = -1\)</li>
+<li>\(p_2 = g_2 - (g_1c_1 + g_0c_2) = 4 - (2 + 2) = 0\)</li>
+</ul>
+
+<p>
+\[ A(t) = \frac{1 - t}{1 - 2t - 2t^2 + t^3} \]
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ilya Yaroshevskiy</p>
+<p class="date">Created: 2021-02-24 Wed 12:33</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

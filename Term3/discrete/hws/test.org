@@ -45,11 +45,11 @@ int main() {
 Tes reference [[(sc)]]
 
 #+name: test-python
-#+BEGIN_SRC python :results value
+#+BEGIN_SRC python :results value :exports both
 return "Test"
 #+END_SRC
 
-#+BEGIN_SRC python :var s=test-python :results value
+#+BEGIN_SRC python :var s=test-python :results value :exports both
 return "Wow it's: {}".format(s)
 #+END_SRC
 

@@ -1,0 +1,53 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 2
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Гамма фунция
+\[ \int_0^{ + \infty} t^{x - 1}e^{-t}dt = \Gamma(x)\quad, x > 0 \]
+\[ \Gamma(n + 1) = n! \]
+\[ \int_0^1 t^{x - 1}(1 - t)^{y - 1}dt = B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x + y)} \approx \frac{1}{\binom{x + y}{x}} \]
+Формула понижения: \[ \Gamma(x + 1) = x\cdot\Gamma(x) \]
+Формула дополнения: \[ \Gamma(x)\Gamma(1-x) = \frac{\pi}{\sin \pi x} \]
+\[ \Gamma(\frac{1}{2}) = \sqrt{\pi} \]
+
+#+begin_examp org
+\[ \int_0^{\frac{\pi}{2}}\sin^{2021}x dx = \left[\begin{array}{l} t = \sin^2 x \\ dt = 2\sin x\cos x dx \\ dx = \frac{dt}{2t^{\frac{1}{2}}(1 - t)^{\frac{1}{2}}}\end{array}\right]  = \int_0^1 t^{1010,5}\cdot\frac{1}{2}t^{-\frac{1}{2}}(1 - t)^{-\frac{1}{2}}dt = \]
+\[ = \frac{1}{2} \int_0^1 t^{1010}(1 - t)^{-\frac{1}{2}} dt = \frac{1}{2}B(1011, \frac{1}{2}) = \frac{1}{2}\frac{\Gamma(1011)\Gamma(\frac{1}{2})}{\Gamma(1011 + \frac{1}{2})} = \]
+\[ = \frac{1}{2}\frac{1010!\sqrt{\pi}}{\frac{2021}{2}\cdot\frac{2019}{2}\cdot\dots\cdot\frac{1}{2}\cdot\sqrt{\pi}} = \frac{1010!\cdot2^{1009\color{red}?\color{black}}}{2021!!}\]
+#+end_examp
+* Кратные интгералы
+#+ATTR_LATEX: :scale 0.35
+[[file:2_1.png]]
+\[ \iint f dx dy = \int^b_a\left(\int^{d(x)}_{c(x)} f(x, y) dy\right)dx = \]
+\[ = \int_C^D\left(\int_{A(y)}^{B(y)}f(x, y) dx\right)dy \]
+#+ATTR_LATEX: :scale 0.35
+[[file:2_2.png]]
+#+begin_examp org
+\-
+#+ATTR_LATEX: :scale 0.35
+[[file:2_3.png]]
+\[ \iint_{\bigtriangleup AOB} f dx dy = \int_0^1 dx \int_0^{2x} f dy =  \]
+\[ = \int_0^2 dy \int_{\frac{y}{2}}^1 f dx \]
+#+end_examp
+
+** Изменение порядка интегрирования
+\[ \int_a^b dx \int^{d(x)}_{c(x)} f dy  \]
+#+begin_examp org
+\[ \iint_{x^2 + y^2 \le y} f dx dy \]
+- $x^2 + (y - \frac{1}{2})^2 \le \frac{1}{4}$ --- окружность радиуса $\frac{1}{2}$ с центром в $(0, \frac{1}{2})$
+#+end_examp
+#+begin_examp org
+\[ \iint_\Omega f dx dy \]
+#+ATTR_LATEX: :scale 0.35
+[[file:2_4.png]]
+\[ \color{magenta}I\color{black} = \int^{-1}_{-2} dx \int^{\sqrt{4 - x^2}}_{-\sqrt{4 - x^2}} dy \]
+\[ \color{magenta}II\color{black} = \int^1_{-1}dx\int^{\sqrt{4 - x^2}}_{-\sqrt{1 - x^2}} f dy \]
+#+end_examp
+#+begin_examp org
+\-
+#+ATTR_LATEX: :scale 0.4
+[[file:2_5.png]]
+\[ \int^2_{-1} dx \int^{x^2}_x f dy = \int^4_2 dy \int^2_{\sqrt{y}} f dx + \int^2_1 dy \int^y_{\sqrt{y}} f dx - \int^1_0 dy \int^{\sqrt{y}}_y f dx + \int^1_0 dy \int^{-\sqrt{y}}_{-1} f dx + \int^0_{-1} dy \int^y_{-1} f dx \]
+
+#+end_examp
+
