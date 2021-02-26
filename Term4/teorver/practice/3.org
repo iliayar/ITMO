@@ -1,0 +1,5 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 3
+#+AUTHOR: Ilya Yaroshevskiy
+
+

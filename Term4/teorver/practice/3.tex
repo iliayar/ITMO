@@ -1,4 +1,4 @@
-% Created 2021-02-26 Fri 16:29
+% Created 2021-02-20 Sat 14:41
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Testing org to pdf}
+\title{Практика 3}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Testing org to pdf},
+ pdftitle={Практика 3},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -125,126 +125,4 @@
 \tableofcontents
 
 
-\section{Test org to pdf}
-\label{sec:org011cc6c}
-\subsection{Code blocks}
-\label{sec:org54654f3}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{haskell}
-main = putStrLn "Hello World!"
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{c}
-#include <stdio.h>
-
-int main() {
-    printf("Hello World!")
-    return 0;
-}
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-print("Hello World!")
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{bash}
-echo "Hello World!"
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{clojure}
-(print "Hello World!")
-\end{minted}
-
-
-\begin{listing}[htbp]
-\begin{minted}[frame=lines,linenos=true,mathescape]{c++}
-#include <iostream>
-
-int main() {
-    std::cout << "Hello Wordl!" << std::endl;      (sc)
-    return 0;
-}
-\end{minted}
-\caption{C++ Hello world}
-\end{listing}
-
-Tes reference sc
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return "Test"
-\end{minted}
-
-\begin{verbatim}
-Test
-\end{verbatim}
-
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return "Wow it's: {}".format(s)
-\end{minted}
-
-\begin{verbatim}
-Wow it's: Test
-\end{verbatim}
-
-\subsection{Graphs}
-\label{sec:org8b660cd}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TMP.png}
-\caption{Test1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TMP2.png}
-\caption{Test 2}
-\end{figure}
-
-\begin{aligned}
-\[e^{i \pi} = 1\]
-\end{aligned}
-
-
-And now \textbf{Русские вперед}
-\subsection{Plots}
-\label{sec:orgc0a6767}
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{plot1.png}
-\end{center}
-
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-import math
-import numpy as np
-y = lambda x: x**2
-X = list(np.arange(-10, 10, 0.25))
-Y = []
-for x in X:
-    Y += [y(x)]
-return list(zip(X, Y))
-\end{minted}
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{plot2.png}
-\end{center}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return data[1]
-\end{minted}
-
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{13_2.png}
-\end{center}
-\subsection{Tikz}
-\label{sec:orge02368e}
-\begin{tikzpicture}
-\draw[gray, thick] (-1,2) -- (2,-4);
-\draw[gray, thick] (-1,-1) -- (2,2);
-\filldraw[black] (0,0) circle (2pt) node[anchor=west] {Intersection point};
-
-\end{tikzpicture}
 \end{document}
