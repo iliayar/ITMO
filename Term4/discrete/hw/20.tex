@@ -1,4 +1,4 @@
-% Created 2021-02-26 Fri 16:29
+% Created 2021-02-26 Fri 12:12
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Testing org to pdf}
+\title{20}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Testing org to pdf},
+ pdftitle={20},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -125,126 +125,48 @@
 \tableofcontents
 
 
-\section{Test org to pdf}
-\label{sec:org011cc6c}
-\subsection{Code blocks}
-\label{sec:org54654f3}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{haskell}
-main = putStrLn "Hello World!"
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{c}
-#include <stdio.h>
-
-int main() {
-    printf("Hello World!")
-    return 0;
-}
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-print("Hello World!")
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{bash}
-echo "Hello World!"
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{clojure}
-(print "Hello World!")
-\end{minted}
+\section*{20}
+\label{sec:org2487b40}
+\[ f_{n + 2} = f_{n + 1} + f_n \]
+\[ f_{n + 1} = f_{n} + f_{n - 1} \Rightarrow f_{n - 1} = f_{n + 1} - f_n \]
+\[ f_{n + 2}^2 + f_{n - 1}^2 = f_{n+1}^2 + 2f_{n + 1}f_n + f_n^2 + f_{n +1}^2 - 2f_{n + 1}f_n + f_n^2 = 2f_{n + 1}^2 + 2f_n^2 \]
+\[ f_{n+2}^2 = 2f_{n + 1}^2 + 2f_n^2 - f_{n - 1}^2 \]
+\[ f_{n}^2 = 2f_{n - 1}^2 + 2f_{n - 2}^2 - f_{n - 3}^2 \]
+\[ g_n := f_n^2 \]
+\[ g_n = 2g_{n - 1} + 2g_{n - 2} - g_{n - 3}\]
+\subsection*{Находим производящую функцию:}
+\label{sec:org8abee87}
+\begin{itemize}
+\item \(c_1 = 2\)
+\item \(c_2 = 2\)
+\item \(c_3 = -1\)
+\end{itemize}
 
 
-\begin{listing}[htbp]
-\begin{minted}[frame=lines,linenos=true,mathescape]{c++}
-#include <iostream>
-
-int main() {
-    std::cout << "Hello Wordl!" << std::endl;      (sc)
-    return 0;
-}
-\end{minted}
-\caption{C++ Hello world}
-\end{listing}
-
-Tes reference sc
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return "Test"
-\end{minted}
-
-\begin{verbatim}
-Test
-\end{verbatim}
+\begin{itemize}
+\item \(g_0 = f_0^2 = 1\)
+\item \(g_1 = f_1^2 = 1\)
+\item \(g_2 = f_2^2 = 4\)
+\end{itemize}
 
 
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return "Wow it's: {}".format(s)
-\end{minted}
+\begin{itemize}
+\item \(p_0 = g_0 = 1\)
+\item \(p_1 = g_1 - g_0c_1 = 1 - 2\cdot 1 = -1\)
+\item \(p_2 = g_2 - (g_1c_1 + g_0c_2) = 4 - (2 + 2) = 0\)
+\end{itemize}
 
-\begin{verbatim}
-Wow it's: Test
-\end{verbatim}
+\subsection*{Итого}
+\label{sec:orgd5a0636}
+\[ A(t) = \frac{1 - t}{1 - 2t - 2t^2 + t^3} \]
 
-\subsection{Graphs}
-\label{sec:org8b660cd}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TMP.png}
-\caption{Test1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TMP2.png}
-\caption{Test 2}
-\end{figure}
-
-\begin{aligned}
-\[e^{i \pi} = 1\]
-\end{aligned}
-
-
-And now \textbf{Русские вперед}
-\subsection{Plots}
-\label{sec:orgc0a6767}
-
+\subsection*{Test}
+\label{sec:orgfdc10d8}
+\begin{latex}
 \begin{center}
-\includegraphics[width=.9\linewidth]{plot1.png}
-\end{center}
-
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-import math
-import numpy as np
-y = lambda x: x**2
-X = list(np.arange(-10, 10, 0.25))
-Y = []
-for x in X:
-    Y += [y(x)]
-return list(zip(X, Y))
-\end{minted}
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{plot2.png}
-\end{center}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return data[1]
-\end{minted}
-
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{13_2.png}
-\end{center}
-\subsection{Tikz}
-\label{sec:orge02368e}
 \begin{tikzpicture}
-\draw[gray, thick] (-1,2) -- (2,-4);
-\draw[gray, thick] (-1,-1) -- (2,2);
-\filldraw[black] (0,0) circle (2pt) node[anchor=west] {Intersection point};
-
+\draw (0, 0) circle[radius = 1cm];
 \end{tikzpicture}
+\end{center}
+\end{latex}
 \end{document}

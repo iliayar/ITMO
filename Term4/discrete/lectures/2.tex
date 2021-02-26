@@ -1,4 +1,4 @@
-% Created 2021-02-26 Fri 16:29
+% Created 2021-02-17 Wed 15:52
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Testing org to pdf}
+\title{Лекция 2}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Testing org to pdf},
+ pdftitle={Лекция 2},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -125,126 +125,59 @@
 \tableofcontents
 
 
-\section{Test org to pdf}
-\label{sec:org011cc6c}
-\subsection{Code blocks}
-\label{sec:org54654f3}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{haskell}
-main = putStrLn "Hello World!"
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{c}
-#include <stdio.h>
-
-int main() {
-    printf("Hello World!")
-    return 0;
-}
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-print("Hello World!")
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{bash}
-echo "Hello World!"
-\end{minted}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{clojure}
-(print "Hello World!")
-\end{minted}
+\section{Производящие функции}
+\label{sec:org5823255}
+\begin{definition}
+\textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
+ \(n\) все коэффиценты 0.
+\end{definition}
+\begin{symb}
+\(\deg p = n\)
+\end{symb}
+\begin{definition}
+\(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
+\end{definition}
+\subsection{Рекурентные соотношения}
+\label{sec:org15f1a67}
+\begin{definition}
+\[ m: a_0, a_1, \dots, a_{m - 1} \]
+\(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
+\end{definition}
+\begin{examp}
+\-
+\begin{itemize}
+\item \(m = 2,\ k = 2\)
+\item \(f_0 = f_1 = 1\)
+\item \(c_1 = c_2 = 1\)
+\end{itemize}
+f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- числа Фибоначи
+\end{examp}
 
 
-\begin{listing}[htbp]
-\begin{minted}[frame=lines,linenos=true,mathescape]{c++}
-#include <iostream>
-
-int main() {
-    std::cout << "Hello Wordl!" << std::endl;      (sc)
-    return 0;
-}
-\end{minted}
-\caption{C++ Hello world}
-\end{listing}
-
-Tes reference sc
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return "Test"
-\end{minted}
-
-\begin{verbatim}
-Test
-\end{verbatim}
-
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return "Wow it's: {}".format(s)
-\end{minted}
-
-\begin{verbatim}
-Wow it's: Test
-\end{verbatim}
-
-\subsection{Graphs}
-\label{sec:org8b660cd}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TMP.png}
-\caption{Test1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TMP2.png}
-\caption{Test 2}
-\end{figure}
-
-\begin{aligned}
-\[e^{i \pi} = 1\]
-\end{aligned}
-
-
-And now \textbf{Русские вперед}
-\subsection{Plots}
-\label{sec:orgc0a6767}
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{plot1.png}
-\end{center}
-
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-import math
-import numpy as np
-y = lambda x: x**2
-X = list(np.arange(-10, 10, 0.25))
-Y = []
-for x in X:
-    Y += [y(x)]
-return list(zip(X, Y))
-\end{minted}
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{plot2.png}
-\end{center}
-
-\begin{minted}[frame=lines,linenos=true,mathescape]{python}
-return data[1]
-\end{minted}
-
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{13_2.png}
-\end{center}
-\subsection{Tikz}
-\label{sec:orge02368e}
-\begin{tikzpicture}
-\draw[gray, thick] (-1,2) -- (2,-4);
-\draw[gray, thick] (-1,-1) -- (2,2);
-\filldraw[black] (0,0) circle (2pt) node[anchor=west] {Intersection point};
-
-\end{tikzpicture}
+\begin{definition}
+\textbf{Квазиполином}
+\[ f(n) = \sum_{i = 1}^k p_i(n)r_i^n \], где \(p_i\) --- полином, \(r_i\) --- числа
+\end{definition}
+\begin{theorem}
+\begin{itemize}
+\item \(a_0, a_1, \dots, a_n, \dots\)
+\end{itemize}
+\uline{Тогда} эквивалентны:
+\begin{enumerate}
+\item \(A(t) = \frac{P(t)}{Q(t)}\), \(P, Q\) --- полиномы, \(q_0 \neq 0\)
+\item для \(n \ge m\) \(a_n\) задается линейным рекурентным соотношением: \(a_n = c_1a_{n - 1} + \dots + c_ka_{n - k}\), причем:
+\begin{itemize}
+\item \(Q(t) = 1 - c_1t - c_2t^2 - \dots - c_kt^k\)
+\item \(\deg P \le m - 1\)
+\end{itemize}
+\item \(a_n\) --- квазиполином \[ a_n = \sum_{i = 1}^k p_i(n)r_i^n \label{kvazi_1}\addtag \]
+причем:
+\begin{itemize}
+\item \(r_i\) --- обратные величины корням \(Q(t)\)
+\item \(k\) --- число различных его корней
+\item \(\deg p_i = (\text{кратность корня}(r_i^{-1})) - 1\) \\
+(\ref{kvazi_1} кроме \(\le m\) первых членов)
+\end{itemize}
+\end{enumerate}
+\end{theorem}
 \end{document}

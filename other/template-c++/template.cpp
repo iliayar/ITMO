@@ -11,6 +11,9 @@
 #include <cstdlib>
 #include <queue>
 #include <set>
+#include <deque>
+#include <list>
+#include <sstream>
 
 
 using namespace std;
@@ -27,8 +30,42 @@ using namespace std;
 #define DBG_CODE(x)
 #endif
 
+#define INF 1e+18
+
 using vint = vector<int>;
 using vint2 = vector<vint>;
+
+template<typename T>
+class Join {
+  T& v;
+  string& separator;
+  
+public:
+  
+  Join(T v, string separator)
+    : v(v), separator(separator)
+  {}
+
+  friend ostream& operator<<(ostream& out, Join<T> join) {
+    for(auto it = join.v.cbegin(); it != join.v.cend(); ++it) {
+      if(it != join.v.cbegin()) out << join.separator;
+      out << *it;
+    }
+    return out;
+  }
+};
+
+template<typename T>
+ostream& operator<<(ostream& out, vector<T> v) {
+  out << Join(v, " ") << endl;
+  return out;
+}
+
+template<typename T, typename K>
+ostream& operator<<(ostream& out, pair<T, K> p) {
+  out << "(" << p.first << ", " << p.second << ")";
+  return out;
+}
 
 //CODE_HERE
 
