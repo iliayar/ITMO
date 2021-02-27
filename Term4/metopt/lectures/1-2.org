@@ -1,5 +1,5 @@
 #+LATEX_CLASS: general
-#+TITLE: Лекция 1
+#+TITLE: Лекция 1, 2
 #+AUTHOR: Ilya Yaroshevskiy
 
 * Теория погрешности
@@ -26,7 +26,7 @@
 - $X$ --- Приближенное решение
 - $X^* - X$ --- погрешность
 - $\Delta X = |X^* - X|$ --- абсолютная погрешность \\
-  $\Delta_X \ge |X^* - X|$, т.е. \[ X - \Delta_X \le X^* \le X + \Delta_X \]
+  $\Delta_X \ge |X^* - X|$ --- предельная абсолютная погрешность, т.е. \[ X - \Delta_X \le X^* \le X + \Delta_X \]
 - $\delta X = \left|\frac{X^* - X}{|X|}\right|$ --- относительная погрешость \\
   $\delta_X \ge \left|\frac{X^* - X}{|X|}\right|$ --- предельная относительная погрешность
 
@@ -57,16 +57,16 @@ $689000 = 0.689000 \cdot 10^6$ --- 6 значащих цифр
 
 #+begin_examp org
 $a = 3.635$ \\
-$\Delta a = 0.0003$ \\
+$\Delta a = 0.003$ \\
 - (3) $k = 0$ :: $\frac{1}{2} \cdot 10^0 = \frac{1}{2} \ge \Delta a$
 - (6) $k = -1$ :: $\frac{1}{2} \cdot 10^{-1} = 0.05 \ge \Delta a$
 - (3) $k = -2$ :: $\frac{1}{2} \cdot 10^{-2} = 0.005 \ge \Delta a$
-- (5) $k = -3$ :: $\frac{1}{2} \cdot 10^{-3} = 0.0005 \ge \Delta a$
+- (5) $k = -3$ :: $\frac{1}{2} \cdot 10^{-3} = 0.0005 < \Delta a$ \Rightarrow 5 --- сомнительная цифра
 #+end_examp
 
 ** Распространение погрешности
 #+begin_examp org
-$\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})^3 = 99 - 70\sqrt{2}$ \\
+$\left(\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})^3 = 99 - 70\sqrt{2}$ \\
 - $\sqrt{2}$ ::  \\
   \[ \frac{7}{5} = 1.4 \]
   \[ \frac{17}{12} = 1.41666 \]
@@ -74,19 +74,80 @@ $\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})
   \[ \sqrt{2} = 1.4142145624 \]
 #+end_examp
 
-
+\[ \Delta_{x \pm y} = \Delta_x \pm \Delta_y \]
 \[ \Delta_{(x\cdot y)} \approx |Y|\Delta_X + |X|\Delta_Y \]
-\[ \Delta_{(\frac{x}{y})} \approx \left|\left{1}{Y}\right|\Delta_X + \left|\frac{X}{Y^2}|\Delta_Y \]
-
+\[ \Delta_{(\frac{x}{y})} \approx \left|\frac{1}{Y}\right|\Delta_X + \left|\frac{X}{Y^2}|\Delta_Y \]
 \[ |\Delta u| = |f(x_1 + \Delta x_1, \dots, x_n + \Delta x_n) - f(x_1, \dots, x_n)| \]
-\[ |\Delta U| = |df(x_1, \dots, x_n)| = \left|\sum_{i=1}^n \frac{\partial u}{\partial x_i}\Delta x_i \right| \le \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\right|\cdot|\Delta x_i| \addtag\label{star_1} \]
-
+\[ |\Delta u| \approx |df(x_1, \dots, x_n)| = \left|\sum_{i=1}^n \frac{\partial u}{\partial x_i}\Delta x_i \right| \le \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\right|\cdot|\Delta x_i| \addtag\label{star_1} \]
 \[ |\delta u| = \frac{\ref{star_1}}{|u|} = \sum_{i = 1}^n\left|\frac{\partial u}{\partial x_i}\cdot\frac{1}{u}\right|\cdot|\Delta x_i| = \sum_{i = 1}^n \left|\frac{\partial \ln u}{\partial x_i}\right|\cdot|\Delta x_i| \]
-
 \[ \delta_u = \sum_{i = 1}^n \left|\frac{\partial \ln u}{\partial x_i}\right| \cdot |\Delta x_i| \]
+\[ \delta_{(X \pm Y)} = \left|\frac{X}{X \pm Y}\right| \delta_X + \left|\frac{Y}{X \pm Y}\right|\delta_Y \]
+\[ \delta_{(X\cdot Y)} = \delta_X + \delta_Y \]
+\[ \delta_{(\frac{X}{Y})} = \delta_X + \delta_Y \]
 
-\[ \delta_{(X + Y)} = \left|\frac{X}{X + Y}\right| \delta_X + \left|\frac{Y}{X + Y}\right|\delta_Y \]
+#+begin_examp org
+$x = \frac{7}{5}$
+- $f_1 = \left(\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)$ \\
+  \[ \delta_{f_1} = 3\left|\frac{1}{x - 1} - \frac{1}{x + 1}\right|\cdot|\Delta X| = 6.25|\Delta X| \]
+- $f_2 = (\sqrt{2} - 1)^6$ \\
+  \[ \delta_{f_2} = 6\left|\frac{1}{x - 1}\right|\cdot|\Delta X| = 15|\Delta X| \]
+- $f_3 = (3 - 2\sqrt{2})^3$
+  \[ \delta_{f_3} = 6\left|\frac{1}{3 - 2x}\right|\cdot|\Delta X| = 30|\Delta X| \]
+- $f_4 = 99 - 70\sqrt{2}$
+  \[ \delta_{f_4} = \left|\frac{90}{99 - 70x}\right|\cdot|\Delta X| = 70|\Delta X| \]
+#+end_examp
+
+#+begin_examp org
+\[ y^2 - 140y + 1 = 0 \]
+Вычислить корни.
+- $y = 70 - \sqrt{4899}$ \\
+  $\sqrt{4899} = 69.992\dots$ \\
+  $\sqrt{4899} \approx 69.99$ \\
+  $y \approx 70 - 69.99 = 0.01$
+  \[ y = \frac{1}{70 + \sqrt{4899}} \]
+  $\sqrt{4899} = 69.99;\ 70 + 69.99 = 139.99$ \\
+  $y = \frac{1}{140} = 0.00714285 \approx 0.007143$
+#+end_examp
+
+
 * Одномерная минимизация функций
+** Унимодальные функции
+$f(x) \to \min,\ x \in U$ \\
+$f(x) \to \max \Rightarrow -f(x) \to min$ \\
+$x^* \in U$ --- точка минимума: $f(x*) \le f(x)\ \forall x \in U$ \\
+$U^*$ --- множество точек минимума \\
+$\tilde{x} \in U: \exists V(\tilde{x})\ \forall x \in V\ f(\tilde{x}) \le f(x)$ --- локальный минимум
+#+begin_definition org
+$f(x)$ --- *унимодальная функция* на $[a, b]$, если:
+1. $f(x)$ --- непрерывна на $[a, b]$
+2. $\exists \alpha, \beta: a \le \alpha\le\beta\le b$
+   1. Если $a < \alpha$, то $[a, \alpha]$ $f(x)$ --- монотонно убывает
+   2. Если $\beta < b$, то на $[\beta, b]$ $f(x)$ --- монотонна возрастает
+   3. $\forall x\in[\alpha, \beta]$ $f(x) = f^* = \min_{[a, b]}f(x)$
+#+end_definition
+#+begin_remark org
+Свойства:
+1. Любая из точек локального минимума является глобальным минимумом на этом же отрезке
+2. Функця унимодальная на $[a, b]$  унимодальна на $[c, d] \subset [a, b]$
+3. $f(x)$ унимодальна на $[a, b]$ $a \le x_1 < x_2 \le b$
+   1. если $f(x_1)\le f(x_2)$, то $x^* \in [a, x_2]$
+   2. если $f(x_1) > f(x_2)$, то $x^* \in [x_1, b]$
+#+end_remark
+#+begin_definition org
+$f(x)$ *выпукла* на $[a, b]$, если:
+- $\forall x', x'' \in [a, b]$ и $\alpha \in [0, 1]$: \\
+  \[ f(\alpha x' + (1 - \alpha)x'') \le \alpha f(x') + (1 - \alpha)f(x'') \]
+#+end_definition
+#+begin_remark org
+Свойства:
+1. Если $f(x)$ на $[a, b]$ $[x', x''] \subset [a, b]$
+2. Всякая выпуклая и непрерывная функция на $[a, b]$ является унимодальной на этом отрезке. Обратное не верно
+#+end_remark
+#+begin_definition org
+$x: f'(x) = 0$ --- *стационарная точка*
+#+end_definition
+
+
 ** Прямые методы
 Не требуют вычисление производной. Могут использовать только известные значения. 
 *** Метод дихотомии
@@ -99,7 +160,7 @@ $\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})
    - Если $f(x_1) \le f(x_2) \rightarrow [a, x_2]$, т.е. $b = x_2$
    - Иначе $[x_1, b] \rightarrow [x_1, b]$, т.е. $a = x_1$
 3. $\varepsilon_n = \frac{b - a}{2}$ ($n$ --- номер итерации)
-   - Если $\varepsilon_n > varepsilon$ --- переход к следующей итерации(шаг 1)
+   - Если $\varepsilon_n > \varepsilon$ --- переход к следующей итерации(шаг 1)
    - Если $\varepsilon_n \le \varepsilon$, заврешить поиск(шаг 4)
 4. $x^* \approx \overline{x} = \frac{a + b}{2} \quad f^* \approx f(\overline{x})$
    
