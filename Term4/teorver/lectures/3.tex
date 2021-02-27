@@ -1,0 +1,180 @@
+% Created 2021-02-27 Sat 13:39
+% Intended LaTeX compiler: pdflatex
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 3}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 3},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\begin{theorem}[Баеса]
+\(] H1, H2, \dots, H_n ,\dots\) --- полн. у. соб. \\
+\uline{Тогда} \[ P(H_k|A) = \frac{P(H_k)P(A|H_k)}{\sum_{i = 1}^{\infty}P(H_i)P(A|H_i)} \]
+\end{theorem}
+\begin{examp}
+В первой коробке 4 белых и два черных шара, во второй й белый и два
+черных. Из первой коробки во вторую переложили два шара, затем из
+второй коробке доставли шар. Найти вероятность того что он оказался белый
+\end{examp}
+\begin{solution}
+\begin{itemize}
+\item \(] H_1\) --- переложили 2 белых
+\item \(] H_2\) --- переложили 2 черных
+\item \(] H_3\) --- переложили 1 черный и 1 белый
+\item \(] A\) --- из второй коробки достали белый
+\end{itemize}
+\[ P(H_1) = \frac{4}{6}\cdot\frac{3}{5} =  \frac{6}{15} \]
+\[ P(H_2) = \frac{2}{6}\cdot\frac{1}{5} = \frac{1}{15} \]
+\[ P(H_3) = \frac{4}{6}\cdot\frac{2}{5} + \frac{2}{6}\cdot\frac{4}{5} = \frac{8}{15} \]
+\[ \sum P(H_i) = 1\text{ --- верно} \]
+\[ P(A|H_1) = \frac{3}{5} \]
+\[ P(A|H_2) = \frac{1}{5} \]
+\[ P(A|H_3) = \frac{2}{5} \]
+По формуле полной вероятности:
+\[ P(A) = P(H_1)\cdotP(A|H_1) + P(H_2)\cdotP(A|H_2) + P(H_3)\cdotP(A|H_3) = \frac{6}{15}\cdot\frac{3}{5} + \frac{1}{15}\cdot\frac{1}{5} + \frac{8}{15}\cdot\frac{2}{5} = \frac{7}{15}\]
+\end{solution}
+\begin{examp}
+По статистике 1\% населения болен раком. Тест дает правильный результат
+в 99\% случаев. Тест оказался положительным. Найти веротяность того что
+человек болен.
+\end{examp}
+\begin{solution}
+$]$ \left.\begin{array}{l}
+$H_1$ --- болен \\
+$H_2$ --- здоров
+\end{array}\right\}
+, \(A\) --- тест положительный
+\begin{itemize}
+\item \(P(H_1) = 0.01\)
+\item \(P(H_2) = 0.99\)
+\item \(P(A|H_1) = 0.99\)
+\item \(P(A|H_2) = 0.01\)
+\[ P(H_1|A) = \frac{P(H_1)P(A|H_1)}{P(H_1)P(A|H_1) + P(H_2)P(A|H_2)} = \frac{1}{2} \]
+\end{itemize}
+Сделаем второй тест:
+\begin{itemize}
+\item \(P(H_1) = 0.01\)
+\item \(P(H_2) = 0.99\)
+\item \(P(AA|H_1) = 0.99^2\)
+\item \(P(AA|H_2) = 0.01^2\)
+\end{itemize}
+\[ P(H_1|AA) = \frac{0.99}{0.99 + 0.01} = 0.99 \]
+\end{solution}
+\end{document}
