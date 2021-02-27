@@ -1,5 +1,5 @@
 
-// Generated at 2021-02-27 02:27:56.487376 
+// Generated at 2021-02-26 23:09:46.460483 
 // By iliayar
 #pragma comment(linker, "/STACK:36777216")
 #include <iostream>
@@ -75,18 +75,20 @@ vint2 A;
 vint2 B;
 
 vint p;
+// vint rp;
 vint was;
-vint wasB;
 
 bool dfs(int v) {
     if(was[v]) return false;
     was[v] = true;
     for(int u : A[v]) {
         if(p[u] == -1) {
+            // rp[u] = -1;
             p[u] = v;
             return true;
         } else {
             if(dfs(p[u])) {
+                // rp[u] = p[u];
                 p[u] = v;
                 return true;
             }
@@ -95,90 +97,49 @@ bool dfs(int v) {
     return false;
 }
 
-void dfs2(int v) {
-    if(was[v]) return;
-    was[v] = 1;
-    for(int u : A[v]) {
-        if(wasB[u]) continue;
-        wasB[u] = true;
-        if(p[u] != -1) {
-            dfs2(p[u]);
-        }
-    }
-}
-
 // entry
 void sol() {
 
-    int k; cin >> k;
-    for(int j = 0; j < k; ++j) {
-        int m, n; cin >> m >> n;
-        A.clear(); B.clear(); p.clear(); was.clear(); wasB.clear();
-        A.resize(m, vint());
-        B.resize(n, vint());
-        p.resize(n, -1);
-        was.resize(m, false);
-        wasB.resize(n, false);
+    int n, m; cin >> n >> m;
+    A.resize(n, vint());
+    B.resize(m, vint());
+    p.resize(m, -1);
+    // rp.resize(m, -1);
+    was.resize(n, false);
 
-        for(int i = 0; i < m; ++i) {
-            vint r(n, 1);
-            int u;
-            while((cin >> u, u) != 0) {
-                r[u-1] = 0;
-            }
-            for(int q = 0; q < n; ++q) {
-                if(r[q] == 1) {
-                    A[i].push_back(q);
-                    B[q].push_back(i);
-                }
-            }
+    for (int i = 0; i < n; ++i) {
+        int u;
+        while(true) {
+            cin >> u;
+            if(u == 0) break;
+            u--;
+            A[i].push_back(u);
+            B[u].push_back(i);
         }
-
-        for(int v = 0; v < m; ++v) {
-            if(dfs(v)) {
-            }
-            for(int& w : was) {
-                w = false;
-            }
-        }
-        DBG(p);
-        vint free(m, true);
-        for(int q = 0; q < n; ++q) {
-            if(p[q] != -1) {
-                free[p[q]] = false;
-            }
-        }
-        DBG(free);
-        for(int v = 0; v < m; ++v) {
-            if(free[v]) dfs2(v);
-        }
-        vint resA;
-        vint resB;
-        for(int v = 0; v < m; ++v) {
-            if(was[v]) resA.push_back(v + 1);
-        }
-        for(int v = 0; v < n; ++v) {
-            if(!wasB[v]) resB.push_back(v + 1);
-        }
-        cout << resA.size() + resB.size() << endl;
-        cout << resA.size() << " " << resB.size() << endl;
-        cout << resA;
-        cout << resB;
     }
-    
-    
+    int last = -1;
+    for(int v = 0; v < n; ++v) {
+        if(dfs(v)) {
+            last = v;
+        }
+        for(int& w : was) {
+            w = false;
+        }
+    }
+    // DBG(p);
+    // DBG(rp);
+    // DBG(last);
 
-
-    // vector<pair<int, int>> res;
-    // for(int i = 0; i < m; ++i) {
-    //     if(p[i] != -1) {
-    //         res.emplace_back(p[i] + 1, i + 1);
-    //     }
-    // }
-    // cout << res.size() << endl;
-    // for(auto [u, v] : res) {
-    //     cout << u << " " << v << endl; 
-    // }
+    vector<pair<int, int>> res;
+    for(int i = 0; i < m; ++i) {
+        if(p[i] != -1) {
+            res.emplace_back(p[i] + 1, i + 1);
+        }
+    }
+    cout << res.size() << endl;
+    for(auto [u, v] : res) {
+        cout << u << " " << v << endl; 
+    }
 }
 //##################CODE END###############
 #ifdef LOCAL
