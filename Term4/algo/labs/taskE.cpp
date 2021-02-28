@@ -1,5 +1,5 @@
 
-// Generated at 2021-02-28 01:49:29.190923 
+// Generated at 2021-02-27 23:07:52.904971 
 // By iliayar
 #pragma comment(linker, "/STACK:36777216")
 #include <iostream>
@@ -100,47 +100,56 @@ bool dfs(int v) {
 // entry
 void sol() {
 
-    int m, k, n; cin >> m >> k >> n;
-    A.resize(m, vint());
-    B.resize(k, vint());
-    p.resize(k, -1);
+    int n, m, a, b; cin >> n >> m >> a >> b;
+    A.resize(n*m, vint());
+    B.resize(n*m, vint());
+    p.resize(n*m, -1);
     // rp.resize(m, -1);
-    was.resize(m, false);
-    vint2 hate(m, vint(k, false));
+    was.resize(n*m, false);
 
-    int t; cin >> t;
-    for(int i = 0; i < t; ++i) {
-        int g, y; cin >> g >> y;
-        g--; y -= m + 1;
-        hate[g][y] = true;
-    }
+    int freen = 0;
+    vint lol(n*m, true);
 
-    vint moron(m + k, false);
-    int q; cin >> q;
-    for(int i = 0; i < q; ++i) {
-        int tt; cin >> tt;
-        moron[tt - 1] = true;
-        if(tt > m) {
-            tt -= m + 1;
-            for(int j = 0; j < m; ++j) {
-                if(!hate[j][tt]) {
-                    A[j].push_back(tt);
-                    B[tt].push_back(j);
-                    DBG("Moron: " << j + 1 << " " << tt + m + 1);
+    for(int i = 0; i < n; ++i) {
+        for(int j = 0; j < m; ++j) {
+            char c; cin >> c;
+            if (c == '*') {
+                freen++;
+                if((i + j)%2) {
+                    if(i > 0 && lol[(i - 1)*m + j]) {
+                        A[i*m + j].push_back((i - 1)*m + j);
+                        B[(i - 1)*m + j].push_back(i*m + j);
+                    }
+                    if(j > 0 && lol[(i*m +j - 1)]) {
+                        A[i*m + j].push_back(i*m +j - 1);
+                        B[i*m + j - 1].push_back(i*m + j);
+                    }
+                } else {
+                    if(i > 0 && lol[(i - 1)*m + j]) {
+                        B[i*m + j].push_back((i - 1)*m + j);
+                        A[(i - 1)*m + j].push_back(i*m + j);
+                    }
+                    if(j > 0 && lol[(i*m +j - 1)]) {
+                        B[i*m + j].push_back(i*m +j - 1);
+                        A[i*m + j - 1].push_back(i*m + j);
+                    }
                 }
+            } else {
+                lol[i*m + j] = false;
             }
-        } else {
-          tt -= 1;
-          for (int j = 0; j < k; ++j) {
-              DBG("AYAYYA " << j);
-              if(!hate[tt][j]) {
-                  A[tt].push_back(j);
-                  B[j].push_back(tt);
-                    DBG("Moron: " << tt + 1 << " " << j + m + 1);
-              }
-          }
         }
     }
+    
+    // for (int i = 0; i < n; ++i) {
+    //     int u;
+    //     while(true) {
+    //         cin >> u;
+    //         if(u == 0) break;
+    //         u--;
+    //         A[i].push_back(u);
+    //         B[u].push_back(i);
+    //     }
+    // }
 
     for(int v = 0; v < A.size(); ++v) {
         if(dfs(v)) {
@@ -151,72 +160,16 @@ void sol() {
     }
 
     vector<pair<int, int>> res;
-    vint doneA(m, false);
-    vint doneB(k, false);
     for(int i = 0; i < B.size(); ++i) {
         if(p[i] != -1) {
-            doneA[p[i]] = true;
-            doneB[i] = true;
-            moron[p[i]] = false;
-            moron[i + m] = false;
-            res.emplace_back(p[i] + 1, i + m + 1);
+            res.emplace_back(p[i] + 1, i + 1);
         }
     }
-    // DBG(res);
-    for(int mo : moron) {
-        if(mo) {
-            cout << "NO" << endl;
-            return;
-        }
+    if(a < 2*b) {
+        cout << res.size()*a + (freen - 2*res.size())*b << endl;
+    } else {
+        cout << b*freen << endl;
     }
-
-    if(res.size() > n) {
-        cout << "NO" << endl;
-        return;
-    }
-
-    A.clear();
-    B.clear();
-    A.resize(m, vint());
-    B.resize(k, vint());
-
-    for(int i = 0; i < m; ++i) {
-        for(int j = 0; j < k; ++j) {
-            if(!hate[i][j] && !doneA[i] && !doneB[j]) {
-                A[i].push_back(j);
-                B[j].push_back(i);
-                // DBG("Edge: " << i + 1 << " " << j + m + 1);
-            }
-        }
-    }
-
-    p.clear();
-    p.resize(k, -1);
-    
-    for(int v = 0; v < A.size(); ++v) {
-        if(dfs(v)) {
-        }
-        for(int& w : was) {
-            w = false;
-        }
-    }
-
-    for(int i = 0; i < B.size(); ++i) {
-        if(res.size() >= n) break;
-        if(p[i] != -1) {
-            res.emplace_back(p[i] + 1, i + m + 1);
-        }
-    }
-
-    if(n > res.size()) {
-        cout << "NO" << endl;
-        return;
-    }
-    cout << "YES" << endl;
-    for(auto [g, y] : res) {
-        cout << g << " " << y << endl;
-    }
-
     // for(auto [u, v] : res) {
     //     cout << u << " " << v << endl; 
     // }
