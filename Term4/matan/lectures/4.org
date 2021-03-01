@@ -1,0 +1,208 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 4
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_export latex
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+#+end_export
+
+#+ATTR_LATEX: :options [об абсолютной непрерывности ингтерала]
+#+begin_theorem org
+\-
+- $(X, \A, \mu)$
+- $f: X \to \overline{\R}$ --- суммируема
+_Тогда_ $\forall \varepsilon > 0\ \exists \delta > 0\ \forall E$ --- измеримым, $\mu E < \delta\quad |\int_E f| < \varepsilon$
+#+end_theorem
+#+begin_corollary org
+\-
+- $f$ --- суммируемая
+- $\mu E \to 0$
+_Тогда_ $\int_{E_n} f \to 0$
+#+end_corollary
+#+begin_proof org
+Возьмем множества $X_m := X(|f| \ge n)$, очевидно что $X_n \supset X_{n + 1} \supset \dots$, а также $\mu(\bigcap X_n) = 0$ \\
+Утвержение: $\forall \varepsilon\ \exists n_\varepsilon\quad \int_{X_{n_\varepsilon}}|f| < \frac{\varepsilon}{2}$ ---
+это свойство непрерывности сверху меры $A \mapsto \int_A |F| d\mu$ \\
+Пусть $\delta:=\frac{\varepsilon}{2n_\varepsilon}$, тода при $\mu E < \delta$
+\[ \left|\int_E f\right| \le\int_{E_nX_{n_\varepsilon}}|f| + \int_{E_nX_{n_\varepsilon}}^C \le \int_{X_{n_\varepsilon}} |f| + \int_{E_nX_{n_\varepsilon}} n_\varepsilon < \frac{\varepsilon}{2} + \mu E\cdot n_\varepsilon \le \varepsilon \]
+#+end_proof
+Правда ли что:
+\[ f_n \xRightarrow[\mu]{} f\quad \forall \varepsilon > 0\ \mu X(|f_n - f| > \varepsilon) \to 0\]
+\[ \int_X|f_n - f| d\mu \to 0 \]
+эквивалентны.
+- $(\Rightarrow)$ :: *Нет*. $(X, \A, \mu) = (\R, \mathfrak{M}, \lambda)$ \\
+  $f_n = \frac{1}{nx}\ f_n \xRightarrow[\lambda]{} 0$ \\
+  $\int|f_n - f| = + \infty$ --- при всех $n$
+- $(\Leftarrow)$ :: *Да*. \[\mu \underbrace{X(|f_n - f| > \varepsilon)}_{X_n} = \int_{X_n} 1 \le \int_{X_n} \frac{|f_n - 1|}{\varepsilon} = \frac{1}{\varepsilon}\int_{X_n}|f_n - f| \le \frac{1}{\varepsilon}\int_X|f_n - f| \xrightarrow[n\to +\infty]{} 0\]
+#+ATTR_LATEX: :options [Лебега]
+#+begin_theorem org
+\-
+- $(X, \A, \mu)$
+- $f_n, f$ --- измеримые, почти везде конечные
+- $f_n \xRightarrow[\mu]{} f$
+- $\exists g$ --- *суммируемая мажоранта*:
+  1. \label{lebega_1} $\forall n\ |f_n| \le g$ почти везде
+  2. $g$ --- усммируемая везде
+_Тогда_ $f_n, f$ --- суммируемые и $\int_X |f_n - f|d\mu\xrightarrow[n \to + \infty]{}0$, и 'тем более' $\int_X f_n d\mu \to \int_X f d\mu$
+#+end_theorem
+#+begin_proof org
+$f_n$ --- суммируема в силу \ref{lebega_1}, $f$ --- суммируема по следствию т. Рисса: $|f| \le g$ почти везде \\
+'тем более' = $\left|\int_X f_n - \int_X f \right| \le \int_X |f_n - f| \to 0$
+1. \label{lebega_2} $\mu X < + \infty$ фиксируем $\varepsilon\ X_n = X(|f_n - f| > \varepsilon)$ \\
+   $f_n \to f$, т.е. $\mu X_n \to 0$
+   \[ |f_n - f| \le |f_n| + |f| \le 2g \]
+   \[ \int_X|f_n - f| = \int_{X_n}+\int_{X_n^C} \le \int_{X_n} 2g + \int_{X_n^C} \varepsilon d\mu < \varepsilon + \varepsilon \mu X\]
+   По следствию т. об абсолютной непрерывности: $\int_{X_n} 2g \xrightarrow[n \to + \infty]{} 0$
+2. $\mu X = + \infty$ \\
+   Проверим утверждение: $\forall \varepsilon > 0\ \exists A \subset X$ --- измеримое, $\mu A$ --- конечная: $\int_{X\setminus A} g < \varepsilon$
+   \[ \int_X g = \sup \{\int g_n,\ 0\le g_n\le g,\ g_n\text{ --- ступенчатая}\} \]
+   \[ A := \{x:\ g_n(x) > 0\} \]
+   --- при достаточно больших $n$
+   \[\color{blue} 0 \le \int_X g - \int_X g_n = \int_A g- g_n + \int_{X\setminus A}g < \varepsilon \]
+   Фиксируем $\varepsilon > 0$
+   \[ \int_X |f_n - f| d\mu = \int_A + \int_{X\setminus A} \le \int_A |f_n -f| + \int_{X\setminus A}2g \]
+   По \ref{lebega_2} $\int_A|f_n - f| \xrightarrow[n \to + \infty]{} 0\ \int_{X\setminus A}2g < 2\varepsilon$ \\
+   т.е. при больших $n$ $\int_x |f_n -f|d\mu < 2\varepsilon$
+#+end_proof
+
+#+ATTR_LATEX: :options [Лебега]
+#+begin_theorem org
+\-
+- $(X, \A, \mu)$
+- $f_n, f$ --- измеримые, почти везде конечные
+- $f_n \to f$ почти везде
+- $\exists g$ --- *суммируемая мажоранта*:
+  1. \label{lebega_1} $\forall n\ |f_n| \le g$ почти везде
+  2. $g$ --- усммируемая везде
+_Тогда_ $f_n, f$ --- суммируемые и $\int_X |f_n - f|d\mu\xrightarrow[n \to + \infty]{}0$, и 'тем более' $\int_X f_n d\mu \to \int_X f d\mu$
+#+end_theorem
+#+begin_proof org
+\[ h_n := \sup(|f_n - f|,\ |f_{n + 1} - f|,\ \dots) \]
+- $0 \le h_n \le 2g$
+- $h_n$ --- монотонна убывает
+- $\lim h_n = \overline{\lim}|f_n - f| = 0$ почти везде
+$2h - h_n \ge 0$ --- эта последовательность возрастает, $2g - h_n \to 2g$ почти везде
+\[ \int_X 2g - h_n \to \int_X 2g \Rightarrow \int_X h_n \to 0 \]
+\[ \int_X|f_n -f| \le \int_X h_n \to 0 \]
+#+end_proof
+#+begin_examp org
+\[ \int_0^{ + \infty} t^{x - 1}e^{-t} dt \]
+\[ \lim_{x \to x_0} \int_0^{ + \infty} t^{x - 1} e^{-t} dt \overset{?}{=} \int_0^{ + \infty}t^{x_0 - 1}e^{-t} dt\]
+*Да*. $t^{x - 1} e^{-t} \xrightarrow[x \to x_0]{} t^{x_0 - 1}e^{-t}$ при всех $t>0$ \\
+Суммируемая мажоранта: $|t^{x - 1}e^{-t}| \le \underbrace{t^{\alpha - 1}e^{-t}}_\text{сумм.}$, $0 < \alpha < x_0$
+#+end_examp
+
+#+ATTR_LATEX: :options [Фату]
+#+begin_theorem org
+- $(X, \A, \mu)$
+- $f_n \ge 0$ --- измеримая
+- $f_n \to f$ почти везде
+- $\exist c > 0\ \forall n\ \int_X f_n \le c$
+_Тогда_ $\int_X f \le c$ \\
+#+end_theorem
+#+begin_remark org
+Здесь не требуется чтобы $\int_X f_n \to \int_X f$, это может быть не выполнено
+#+end_remark
+#+begin_proof org
+\[ g_n := \inf(f_n,\ f_{n + 1},\ \dots) \]
+\[ 0 \le g_n \le g_{n + 1}\ \lim g_n = \underline{\lim} f_n = f\text{ почти везде} \]
+\[ \int_X g_n \le \int_X f_n \le c \]
+\[ \int_X g_n \to \int_X f \Rightarrow \int_X f \le c \]
+#+end_proof
+#+begin_corollary org
+\-
+- $f_n, f \ge 0$ --- измеримые, почти везде конечные
+- $f_n \Rightarrow f$
+- $\exists c >0\ \forall n \int_X f_n \le c$
+_Тогда_ $\int_X f \le c$
+#+end_corollary
+#+begin_proof org
+\[ f_n \Rightarrow f \Rightarrow \exists n_k\ f_{n_k} \to f\text{ почти везде} \]
+
+#+end_proof
+
+#+begin_corollary org
+\-
+- $f_n \ge 0$ --- измеримые
+_Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
+#+end_corollary
+#+begin_proof org
+Как в теореме: \[ \int_X g_n \le \int_X f_n \]
+Выберем $n_k$: \[ \int_X f_{n_k} \xrightarrow[n \to + \infty]{} \underline{\lim}\int_X f_n \]
+\color{red}Zzz..\color{black}
+#+end_proof
+* Плотность одной меры по отношению к другой
+** Замена перменных в интеграле
+- $(X, \A, mu)$
+- $(Y, \B, \cdot)$
+- $\Phi: X \to Y$
+
+
+- Пусть $\Phi$ --- измеримо в следующем смысле:
+  \[ \Phi^{-1}(\B) \subset \A \]
+
+\noindentДля $E \in \B$ положим $\nu(E) = \mu \Phi^{-1}(E)$ \\
+Тогда $\nu$ --- мера:
+\[ \nu(\bigsqcuo E_n) = \mu(\Phi^{-1}(\bigsqcup E)n) = \mu(\bigsqcup\Phi^{-1}(E_n)) = \sum \mu \Phi^{-1} (E_n) = \sum \nu E_n\]
+Мера $\nu$ называется образом $\mu$ при отображении $\Phi$ и
+\[ \nu E = \int_{\Phi^{-1}(E)} 1 d\mu \]
+#+begin_remark org
+\-
+- $f: Y \to \overline{\R}$ --- измерима относительно $\B$
+Тогда $f\circ \Phi$ --- измерима относитльно $\A\ (f\circ \Phi: X\to\overline{\R})$
+\[ X(f(\Phi(x)) < a) = \Phi^{-1}(\underbrace{Y(f < a)}_{\in \B}) \in \A \]
+#+end_remark
+
+#+begin_definition org
+\-
+- $\omega: X\to\overline{\R}$ --- измерима(на $X$ относительно $\A$)
+- $\omega \ge 0$
+\[ \forall B \in \B\ \nu(B) = \int_{\Phi^{-1}(B)}\omega(x)d\mu(x) \]
+--- *взвешенный образ меры* $\mu$ при отображении $\Phi$, $\omega$ --- *вес*
+#+end_definition
+#+begin_theorem org
+\-
+- $(X, \A, \mu)$
+- $(Y, \B, \nu)$
+- $\Phi: X \to Y$
+- $\nu$ --- взвешенный образ меры $\mu$ при отображении $\Phi$ с весом $\omega$
+- $\omega \ge 0$ --- измерима на $X$
+_Тогда_ $\forall f$ --- измеримые на $Y$ относительно $\B$, $f \ge 0$ $f\circ \Phi$ --- измеримая на $X$ относительно $\A$ и
+\[ \int_Y f(y) d\nu(y) = \int_X f(\Phi(x))\cdot\omega(x)\d\mu(x) \label{weight_1}\addtag \]
+То же верно для суммируемых $f$
+#+end_theorem
+#+begin_proof org
+$f\circ \Phi$ --- измеримая \\
+1. Пусть $f = \X_B, B \in \B$
+   \[ f\circ \Phi(x) = f(\Phi(x)) = \left[\begin{array}{ll} 1 & ,\Phi(x) \in B \\ 0 & ,\Phi(x) \not\in B\end{array}\right. =\X_{\Phi^{-1}(B)} \]
+   Тогда \ref{weight_1}:
+   \[ \nu B \overset{?}{=} \int_X \X_{\Phi^{-1}(B)}\cdot\omegad\mu = \int_{\Phi^{-1}(B)}\omegad\mu  \]
+   --- это определение $\nu$
+2. $f$ --- ступенчатая. \ref{weight_1} следует из линейности интеграла
+3. $f \ge 0$ --- измеримая: таким образом ??? измеримая функция ступенчатая + т. Леви
+   \[ 0 \le h_1 \le h_2 \le \dots,\ h_i\text{ --- ступенчатая}\ h_i \le f\ h_i \to f \]
+   \[ \int_Y h_i d\nu = \int_X h_i \circ \Phi\cdot\omega d\mu \xrightarrow[i \to \infty]{} \]
+4. $f$ --- измеримая \Rightarrow для $|f|$ выполнено \ref{weight_1} \Rightarrow $|f|$ и $|f\circ \Phi|\cdot \omega$ \\
+   \color{red}Что-то про $f_+$ \color{black}
+#+end_proof
+#+begin_corollary org
+В условиях теоремы:
+- $B \in \B$
+- $f$ --- суммируемая на $B$
+_Тогда_ \[ \int_B f d\nu = \int_{\Phi^{-1}(B)}f(\Phi(x))\omega(x)d\mu\]
+#+end_corollary
+#+begin_proof org
+В теорему подствить $f \leftrightarrow f\cdot\X_{B}$
+#+end_proof
+#+begin_remark org
+Частный случай.
+- $X = Y$
+- $\A = \B$
+- $\Phi = \text{Id}$
+- $\nu(B) = \int_B\omega(x)d\mu$, $\omega \ge 0$ --- измеримая
+В этой ситуации $\omega$ --- плотность(меры $\nu$ относительно меры $\mu$) и тогда по теореме:
+\[ \int_X f d\nu = \int_X f(x)\omega(x)d\mu \]
+
+#+end_remark
