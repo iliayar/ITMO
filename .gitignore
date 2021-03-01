@@ -45,6 +45,7 @@ eclimd.log
 bin/
 .settings
 /**/#*#
+/**/.#*
 
 # build
 target
