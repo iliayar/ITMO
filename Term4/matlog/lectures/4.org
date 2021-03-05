@@ -2,8 +2,9 @@
 #+TITLE: Лекция 4
 #+AUTHOR: Ilya Yaroshevskiy
 
+#+LATEX_HEADER: \usepackage{stmaryrd}
+
 #+begin_export latex
-\usepackage{stmaryrd}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}

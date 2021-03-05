@@ -1,4 +1,4 @@
-#+TITLE: Navigation
+#+TITLE: README
 
 My stuff from ITMO University
 

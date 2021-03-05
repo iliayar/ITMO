@@ -1,4 +1,4 @@
-% Created 2021-03-05 Fri 14:59
+% Created 2021-03-05 Fri 15:17
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -25,6 +25,7 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
+\usepackage{stmaryrd}
 
 \usepackage{geometry}
 \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
@@ -124,7 +125,6 @@
 \maketitle
 \tableofcontents
 
-\usepackage{stmaryrd}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}
@@ -154,7 +154,7 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:org8c26d80}
+\label{sec:orge5fc3af}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
@@ -175,7 +175,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:orgacbfa0a}
+\label{sec:orgb1de61c}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -224,7 +224,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:orgbdb6285}
+\label{sec:org63b9e44}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
