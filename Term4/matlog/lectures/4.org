@@ -1,0 +1,178 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 4
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_export latex
+\usepackage{stmaryrd}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\L}{\mathcal{L}}
+\newcommand{\B}{\mathcal{B}}
+#+end_export
+
+
+#+begin_definition org
+*Предпорядок* --- транзитивное, рефлексивнре
+#+end_definition
+#+begin_definition org
+*Отношение порядка* (частичный) --- антисимметричное, транзитивное, рефлексивное
+#+end_definition
+#+begin_definition org
+*Линейный порядок* --- порядок в котором \( a \preceq b\) или \( b \preceq a\)
+#+end_definition
+#+begin_definition org
+*Полный порядок* --- линейный, каждое подмножество имеет наименьший элемент. 
+#+end_definition
+#+begin_examp org
+\(\N\) --- вполне упорядоченное множество
+#+end_examp
+#+begin_examp org
+\(\R\) --- не вполне упорядоченной множество
+- \((0, 1)\) не имееи наименььшего
+- \(\R\) не имеет наименьшего
+#+end_examp
+* Табличные модели
+#+begin_definition org
+Назовем модель *табличной* для ИИВ:
+- \(V\) --- множество истинностных значений \\
+  \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
+  Выделенные значения \(T \in V\) \\
+  \(\llbracketp+i\rrbracket \in V\) \(f_p : p_i \to V\)
+- \(p_i = f_\P(p_i)\) \\
+  \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
+  \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
++Если \(\vdash \alpha\), то+ \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
+#+end_definition
+#+begin_definition org
+Конечная модель: модель где \(V\) --- конечно
+#+end_definition
+#+begin_theorem org
+У ИИВ не существует полной табличной модели
+#+end_theorem
+* Модели Крипке
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\node at (0,0) (A) {\( P = NP? \)};
+\node at (2, 2) (B) {все банки лопнут, RSA сломают!!!};
+\node at (2, -2) (C) {RSA устоит};
+\draw[->] (A) -- node[above] {\(+\)} (B);
+\draw[->] (A) -- node[below] {\(-\)} (C);
+\end{tikzpicture}
+\end{center}
+#+end_export
+#+begin_defintion org
+\-
+1. \( W = \{W_i\}\) --- множество миров
+2. частичный порядок(\(\succeq\))
+3. отношение вынужденности: \(W_j \Vdash p_i\) \\
+   \( (\Vdash)  \subseteq W \times \P\) \\
+   При этом, если \( W_j \Vdash p_i \) и \( W_j \preceq W_k\), то \( W_j \Vdash p\)
+#+end_defintion
+#+begin_definition org
+\-
+1. \( W_i \Vdash \alpha\) и \( W_i \Vdash \beta\), тогда (и только тогда) \( W_i \Vdash \alpha \& \beta\) \\
+2.  \( W_i \Vdash \alpha\) или \(W_i \Vdash \beta\), то \(W_i \Vdash \alpha \vee \beta\)
+3. Пусть во всех \( W_i \preceq W_j\) всегда когда \(W_j \Vdash \alpha\) имеет место \(W_j \Vdash \beta\) \\
+   Тогда \( W_i \Vdash \alpha \to \beta\)
+4. \( W_i \Vdash \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
+   \(W_i \preceq W_j\), то \(W_j \not\Vdash \alpha\)
+#+end_definition
+#+begin_theorem org
+Если \(W_i \Vdash \alpha\) и \( W_i \preceq W_j\), то \(W_j \Vdash \alpha\)
+#+end_theorem
+#+begin_definition org
+Если \(W_i \Vdash \alpha\) при всех \( W_i \in W\), то \(\vDash \alpha\)
+#+end_definition
+#+begin_theorem org
+ИИВ корректна в модели Крипке
+#+end_theorem
+#+begin_proof org
+1. \(\langle W, \Omega \rangle\) --- топология, где \(\Omega = \{w \subseteq W | \text{если }W_i \in w,\ W_i \preceq W_j,\text{ то } W_j \in w\}\) \\
+2. \( \{W_k | W_k \Vdash p_j\}\) --- открытое множество \\
+   Примем \( \llbracket p_j \rrbracket = \{W_k | W_k \Vdash p_j\}\) \\
+   Аналогично \( \llbracket \alpha \rrbracket = \{W_k | W_k \Vdash \alpha\}\)
+#+end_proof
+* Доказательство нетабличности
+Пусть существует конечная табличная модель \( |V| = n\)
+\[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
+1. \(\not\vdash\varphi\)
+   #+begin_export latex
+   \begin{center}
+   \begin{tikzpicture}
+   \node[anchor=west] at (0, 0) (A) {\(W_0\)};
+   \node[anchor=west] at (1, 2) (B) {\(W_1\)};
+   \node[anchor=west] at (1, 1) (C) {\(W_2\)};
+   \node[anchor=west] at (1, 0) (D) {\(\vdots\)};
+   \node[anchor=west] at (1, -1) (E) {\(W_{n + 1}\)};
+   \draw[->] (A) -- (B);
+   \draw[->] (A) -- (C);
+   \draw[->] (A) -- (E);
+   \node[anchor=west] at (2, 2) {\(p_1\)};
+   \node[anchor=west] at (2, 1) {\(p_2\)};
+   \node[anchor=west] at (2, -1) {\(p_{n + 1}\)};
+   \end{tikzpicture}
+   \end{center}
+   #+end_export
+   \[ W_1 \not\Vdash (p_i \to p_k)\&(p_k\to p_1),\ k\neq 1 \]
+   Значит \[ \not\vDash (p_i\to p_j)\&(p_j\to p_i) \]
+   \[ \not\vDash \bigvee (p_i\to p_j)\&(p_j\to p_i) \]
+   \[ \not\vdash\varphi_n \]
+2. \(\vDash_V \varphi_n\): по признаку Дирихле найдутся \(i\neq j:\llbracket p_i \rrbracket = \llbracket p_j \rrbracket\) \\
+   \( \llbracket p_i \to p_j \rrbracket = \text{И}\) и \( \llbracket \varphi_n \rrbracket = \text{И}\) \\
+   Значит \(\vdash \varphi_n\) --- противоречие
+#+begin_definition org
+*Дизъюнктивность* ИИВ: \( \vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
+#+end_definition
+#+begin_definition org
+Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
+#+end_definition
+#+begin_definition org
+Пусть \(\A\) --- алгебра Гейтинга, тогда:
+1. \(\Gamma(\A)\) \\
+   #+begin_export latex
+   \begin{center}
+   \begin{tikzpicture}
+   \draw (-1, 0) circle[radius=0.5cm] node {\(\A\)};
+   \draw (1, 0) circle[radius=0.5cm] node {\(\A\)};
+   \node (0, 0) {\(\Rightarrow\)};
+   \draw (-1, 0.5) circle[radius=1pt,fill=black] node[above] {\(1\)};
+   \draw (1, 0.5) circle[radius=1pt,fill=black] node[above right] {\(1\)};
+   \draw (1, 1.5) circle[radius=1pt,fill=black] node[above] {\(\omega\)};
+   \draw (1, 1.5) -- (1, 0.5);
+   \end{tikzpicture}
+   \end{center}
+   #+end_export
+
+   Добавим новый элемент \( 1_{\Gamma(\A)}\) перенеименуем \( 1_\A \) в  \(\omega\)
+#+end_definition
+#+begin_theorem org
+\-
+- \( \Gamma(\A) \) --- алгебра Гейтинга
+- \( \Gamma(\A) \) --- Геделева
+#+end_theorem
+#+begin_definition org
+*Гомоморфизм* алгебр Гейтинга \\
+- \(\varphi: \A \to \B \)
+- \(\varphi(a \star b) = \varphi(a)\star\varphi(b)\)
+- \(\varphi(1_\A) = 1_\B\)
+#+end_definition
+#+begin_theorem org
+\( a \le b\), то \(\varphi(a) \le \varphi(b)\)
+#+end_theorem
+#+begin_definition org
+\-
+- \(\alpha\) --- формула ИИВ
+- \(f, g \): оценки ИИВ
+- \(f\): ИИВ \to \(\A\)
+- \(g\): ИИВ \to \(\B\)
+\color{red}Недописано\color{black}
+#+end_definition
+#+begin_theorem org
+если \(\varphi: \A \to \B\) согласована с \(f, g\)
+\color{red}Недописано\color{black}
+#+end_theorem
+
+
+Рассмторим алгебру Линденбаума?
+\color{red}Фокус сломался\color{black}
