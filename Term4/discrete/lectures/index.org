@@ -1,0 +1,7 @@
+
+
+#+begin_src emacs-lisp :results org :results raw
+(seq-filter
+ (apply-partially 'string-match-p ".org\\'")
+ (directory-files "./"))
+#+end_src
