@@ -1,0 +1,23 @@
+#+LATEX_CLASS: general
+#+TITLE: ??
+#+AUTHOR: Ilya Yaroshevskiy
+
+* 3.4.b
+:PROPERTIES:
+:UNNUMBERED:
+:END:
+- \( a \le b \)
+- \( c \le d \)
+
+  
+1. \( a + c \le b + d\)?
+   \[ a + c = \text{наим.} \{x | a \le x\ \&\ c \le x\} \]
+   \[ b + d = \text{наим.} \{x| b\le x\ \&\ c \le x\} \]
+   \[ \begin{cases} a \le b \le (b + d) \\ c \le d \le (b + d) \end{cases} \Rightarrow \begin{cases} a \le b + d \\ c \le b + d \end{cases} \]
+   Заметим что \( (b + d) \in \{ x | a\le x\ \&\ c \le x\}\), значит \(a + c \le b + d\)
+2. \(a \cdot c \le b \cdot d\)?
+   \[ a \cdot c = \text{наиб.} \{x| x\le a\ \&\ x \le c\} \]
+   \[ b \cdot d = \text{наиб.} \{x| x\le b\ \&\ x \le d\} \]
+   \[ \begin{cases} a\cdot c \le a \le b \\ a\cdot c \le c \le d \end{cases} \Rightarrow \begin{cases} a\cdot c \le b \\ a \cdot c \le d \end{cases} \]
+   Заметим что \( (a\cdot c) \in \{x| x \le b\ \&\ x \le d\}\), значит \(a\cdot c \le b \cdot d\)
+
