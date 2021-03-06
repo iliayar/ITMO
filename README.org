@@ -18,6 +18,7 @@ My stuff from ITMO University
 - [[file:Term4/teorver/lectures/1.pdf][Лекция 1]]
 - [[file:Term4/teorver/lectures/2.pdf][Лекция 2]]
 - [[file:Term4/teorver/lectures/3.pdf][Лекция 3]]
+- [[file:Term4/teorver/lectures/4.pdf][Лекция 4]]
 **** Практики
 - [[file:Term4/teorver/practice/1.pdf][Практика 1]]
 - [[file:Term4/teorver/practice/2.pdf][Практика 2]]
