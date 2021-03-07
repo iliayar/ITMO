@@ -1,0 +1,200 @@
+% Created 2021-03-04 Thu 00:09
+% Intended LaTeX compiler: pdflatex
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{ДЗ}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={ДЗ},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\usetikzlibrary{decorations.pathmorphing}
+
+
+\section*{Задание 3.9}
+\label{sec:org7121ed2}
+\emph{Дан неориентированный граф. Найти максимальное число вершинно непересекающихся путей
+из \(s\) в \(t\)}.
+
+\noindent\rule{\textwidth}{0.5pt}
+Сделаем из неориентированного графа ориентированный, построив для
+каждого неор. ребра \((u, v)\), ор. ребра \((u, v)\) и \((v, u)\) с
+пропускными способностями равными \(1\).
+
+Теперь перестроим граф следующим образом: каждую вершину \(u\), кроме \(s\) и \(t\), заменим
+на две \(u_1\) и \(u_2\). \(\forall v: (v, u) \in E\) добавим ребро
+\((v, u_1)\), аналогично \(\forall w: (u, w) \in E\) добавим ребро
+\((u_2, w)\). Добавим ребро \((u_1, u_2)\) с пропускной способностью
+равной \(1\).
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw=black] (A) at (0, 0) [circle] {\(u\)};
+\draw[decorate,decoration=snake,->] (-1.5, 0) -- (A);
+\draw[decorate,decoration=snake,->] (A) -- (1.5, 0);
+\node at (0, -1) {\(\Downarrow\)};
+\node[draw=black] (B) at (-1, -2) [circle] {\(u_1\)};
+\node[draw=black] (C) at (1, -2) [circle] {\(u_2\)};
+\draw[->] (B) -- node[above] {\(1\)} (C);
+\draw[decorate,decoration=snake,->] (-2.4, -2) -- (B);
+\draw[decorate,decoration=snake,->] (C) -- (2.4, -2);
+\end{tikzpicture}
+\end{center}
+
+Рассмотрим вершинно непересекающиеся пути \(s \leadsto t\) в исходном графе. Заметим
+что в новом графе соответсвующие пути также будут вершинно непересекающимися,
+значит по каждому такому пути можно пустить поток величины
+\(1\). Тогда будет выполняться неравенство \(k \le F_{\max}\), где \(k\) ---
+число вершинно непересекающихся путей, \(F_{\max}\) --- максимальный поток в новом графе.
+
+Рассмотрим максимальный поток, в котором поток по каждому ребру
+целочисленный(задача 3.3).
+\begin{enumerate}
+\item \label{3_9_1}'Запустим' dfs из начальной вершины до конечной: будем
+ходить по ребрам, поток по которым равен \(1\).
+\item \label{3_9_2}Заметим, что для всех
+ребер \((u_1, u_2)\) поток по ним не больше \(1\), значит суммарный
+входящий в \(u_1\) и выходящий из \(u_2\) потоки также не превышают \(1\).
+\begin{center}
+\begin{tikzpicture}
+\node[draw=black] (A) at (-1, 0) [circle] {\(u_1\)};
+\node[draw=black] (B) at (1, 0) [circle] {\(u_2\)};
+\draw[->] (-2.5, 1) -- node[above] {\(\color{red}1\color{black}/1\)} (A);
+\draw[->] (-2.5, 0) -- node[above] {\(\color{red}0\color{black}/1\)} (A);
+\draw[->] (-2.5, -1) -- node[above] {\(\color{red}0\color{black}/1\)} (A);
+\draw[->] (A) -- node[above] {\(\color{red}1\color{black}/1\)} (B);
+\draw[->] (B) -- node[above] {\(\color{red}1\color{black}/1\)} (2.5, 0);
+\draw[->] (B) -- node[above] {\(\color{red}0\color{black}/1\)} (2.5, 1);
+\draw[->] (B) -- node[above] {\(\color{red}0\color{black}/1\)} (2.5, -1);
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
+
+С учетом п. \ref{3_9_2}, различные пути найденные в п. \ref{3_9_1} будут вершинно непересекающиеся и
+их количество будет равно суммарному потоку: \(k \le k_{\max} \le F_{\max},\ k = F_{\max} \Rightarrow k_{\max} = F_{\max}\)
+
+Осталось показать что найденные пути будут существовать в исходном
+графе. Действительно, если путь проходит через вершину \(u_1\), то он
+проходит и через вершину \(u_2\). Значит можно сжать эти две вершину в
+одну, которая в свою очередь однозначно определяется в исходном графе.
+
+Получаем что максимальное количество вершинно непересекающихся путей в
+неориентированном графе равно максимальному потоку в графе,
+построенному выше указаным образом.
+\end{document}

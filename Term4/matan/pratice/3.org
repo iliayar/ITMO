@@ -1,0 +1,49 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 3
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Полярные координаты
+- \(x = r\cos\varphi\)
+- \(y = r\sin\varphi\)
+\[ \iint_\Omega f dx dy = \int^{\varphi_1}_{\varphi_0} d\varphi \int_{r_0(\varphi)}^{r_1(\varphi)} f(r\cos\varphi, r\sin\varphi)\cdot J\ dr = \int^{r_1}_{r_0} dr \int^{\varphi_1(r)}_{\varphi_0{r}} f\cdot J\ d\varphi \]
+#+ATTR_LATEX: :scale 0.4
+[[file:3_1.png]]
+#+begin_task org
+\-
+#+ATTR_LATEX: :scale 0.2
+[[file:3_2.png]]
+\[ \iint_\Omega f dx dy = \int^{2\pi}_0 d\varphi\int^1_0 f\cdot J\ dr \]
+#+end_task
+#+begin_task org
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:3_3.png]]
+\[ \iint_\Omega f dx dy = \int^{\frac{\pi}{4}}_0 d\varphi \int_0^{\frac{1}{\cos\varphi}} dr\ f\cdot J = \int dr \int d\varphi\ f\cdot J \]
+#+end_task
+#+begin_task org
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:3_4.png]]
+\[ \iint_\Omega f dx dy = \int^1_0 dr \int^{\frac{\pi}{4}}_0 d\varphi\ f\cdot J + \int_1^{\sqrt{2}}dr\int^{\frac{\pi}{4}}_{\arccos \frac{1}{2}}\]
+#+end_task
+#+begin_task org
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:3_5.png]]
+\[ \iint_\Omega = \int^{\frac{\pi}{4}}_0 d\varphi \int^{\frac{1}{\cos\varphi}}_{\frac{1}{\cos\varphi + \sin\varphi}} dr \dots + \int^{\frac{pi}{2}}_{\frac{\pi}{4}} d\varphi \int_{\frac{1}{\cos\varphi + \sin\varphi}}^{\frac{1}{\sin\varphi}} dr \dots = \]
+\[ = \int_{\frac{\sqrt{2}}{2}}^1 dr \int \]
+#+end_task
+#+begin_task org
+\[ x^2 + y^2 \le \alpha x \]
+\[ r = \alpha \cos\varphi \]
+\[ \iint_\Omega = \int^{\frac{\pi}{4}}_{\frac{\pi}{4}}d\varphi\int^{\alpha\cos\varphi}_0 f\cdot J\ dr = \int^\alpha_0 dr \int^{\arccos \frac{\alpha}{2}}_{-\arccos \frac{\alpha}{2}} f\cdot J d\varphi \]
+#+end_task
+* Замена переменных
+- \(x = x(u, v)\)
+- \(y = y(u, v)\)
+#+ATTR_LATEX: :scale 0.4
+[[file:3_6.png]]
+Фиксируем \(u = u_0\):
+\[ \begin{cases}x = x(u_0, v) \\ y = y(u_0, v) \end{cases}\]
+\[ \iint_\Omega f dx dy = \int_{u_0}^{u_1} du \int^{v_1(u)}_{v_0(u)} f(x(u, v), y(u, v)) \left(\det\begin{pmatrix}x'_u & x'_v \\ y'_u & y'_v \end{pmatrix}\right) dv \]
+\[ \color{blue} \int f(x) dx = \int f(x(t)) x' dt \]
