@@ -1,4 +1,4 @@
-% Created 2021-02-27 Sat 16:53
+% Created 2021-02-27 Sat 17:18
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Лекция 1}
+\title{Лекция 1, 2}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Лекция 1},
+ pdftitle={Лекция 1, 2},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -126,7 +126,7 @@
 
 
 \section{Теория погрешности}
-\label{sec:orgc3207f4}
+\label{sec:org549b6df}
 \begin{defintion}
 Отклонение от теоретического решения
 \end{defintion}
@@ -161,7 +161,7 @@
 \end{itemize}
 
 \subsection{Значащие цифры}
-\label{sec:org45ae2e2}
+\label{sec:org67dd9c8}
 \begin{definition}
 Все цифры в изображении отличные от нуля, и нули если они содержатся
 между значащими цифрами, или расположены в конце числа и указывают на
@@ -179,7 +179,7 @@
 \end{examp}
 
 \subsection{Верные цифры}
-\label{sec:orgbe0305d}
+\label{sec:org319d110}
 \begin{defintion}
 Если, значащая цифра приближенного значения, находящаяся в разряде, в
 котором выполняется условие --- абсолютное значение погрешности не
@@ -199,7 +199,7 @@
 \end{examp}
 
 \subsection{Распространение погрешности}
-\label{sec:org07c2823}
+\label{sec:orge94efa7}
 \begin{examp}
 \(\left(\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})^3 = 99 - 70\sqrt{2}\) \\
 \begin{description}
@@ -251,9 +251,9 @@
 
 
 \section{Одномерная минимизация функций}
-\label{sec:org5e1f4da}
+\label{sec:orgde71db4}
 \subsection{Унимодальные функции}
-\label{sec:org4b7b583}
+\label{sec:org6d06a09}
 \(f(x) \to \min,\ x \in U\) \\
 \(f(x) \to \max \Rightarrow -f(x) \to min\) \\
 \(x^* \in U\) --- точка минимума: \(f(x*) \le f(x)\ \forall x \in U\) \\
@@ -303,10 +303,10 @@
 
 
 \subsection{Прямые методы}
-\label{sec:orgfd873f8}
+\label{sec:org6b9f92e}
 Не требуют вычисление производной. Могут использовать только известные значения. 
 \subsubsection{Метод дихотомии}
-\label{sec:org06c3953}
+\label{sec:org9312671}
 \[ x_1 = \frac{b + a - \delta}{2}\quad x_2 = \frac{b + a + \delta}{2} \addtag\label{delta_1} \]
 \[ \tau = \frac{b - x_1}{b - a} = \frac{x_2 - a}{b - a} \rightarrow \frac{1}{2} \]
 \[ X^* [a_i, b_i]\quad \frac{b_i - a_i}{2} \le \varepsilon \]

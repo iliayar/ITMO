@@ -1,4 +1,4 @@
-% Created 2021-03-03 Wed 11:16
+% Created 2021-03-03 Wed 14:38
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Практика 2}
+\title{Практика 3}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Практика 2},
+ pdftitle={Практика 3},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -125,61 +125,61 @@
 \tableofcontents
 
 
-\section{Гамма фунция}
-\label{sec:orgd35add2}
-\[ \int_0^{ + \infty} t^{x - 1}e^{-t}dt = \Gamma(x)\quad, x > 0 \]
-\[ \Gamma(n + 1) = n! \]
-\[ \int_0^1 t^{x - 1}(1 - t)^{y - 1}dt = B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x + y)} \approx \frac{1}{\binom{x + y}{x}} \]
-Формула понижения: \[ \Gamma(x + 1) = x\cdot\Gamma(x) \]
-Формула дополнения: \[ \Gamma(x)\Gamma(1-x) = \frac{\pi}{\sin \pi x} \]
-\[ \Gamma(\frac{1}{2}) = \sqrt{\pi} \]
-
-\begin{examp}
-\[ \int_0^{\frac{\pi}{2}}\sin^{2021}x dx = \left[\begin{array}{l} t = \sin^2 x \\ dt = 2\sin x\cos x dx \\ dx = \frac{dt}{2t^{\frac{1}{2}}(1 - t)^{\frac{1}{2}}}\end{array}\right]  = \int_0^1 t^{1010,5}\cdot\frac{1}{2}t^{-\frac{1}{2}}(1 - t)^{-\frac{1}{2}}dt = \]
-\[ = \frac{1}{2} \int_0^1 t^{1010}(1 - t)^{-\frac{1}{2}} dt = \frac{1}{2}B(1011, \frac{1}{2}) = \frac{1}{2}\frac{\Gamma(1011)\Gamma(\frac{1}{2})}{\Gamma(1011 + \frac{1}{2})} = \]
-\[ = \frac{1}{2}\frac{1010!\sqrt{\pi}}{\frac{2021}{2}\cdot\frac{2019}{2}\cdot\dots\cdot\frac{1}{2}\cdot\sqrt{\pi}} = \frac{1010!\cdot2^{1009\color{red}?\color{black}}}{2021!!}\]
-\end{examp}
-\section{Кратные интгералы}
-\label{sec:orgb243271}
-\begin{center}
-\includegraphics[scale=0.35]{2_1.png}
-\end{center}
-\[ \iint f dx dy = \int^b_a\left(\int^{d(x)}_{c(x)} f(x, y) dy\right)dx = \]
-\[ = \int_C^D\left(\int_{A(y)}^{B(y)}f(x, y) dx\right)dy \]
-\begin{center}
-\includegraphics[scale=0.35]{2_2.png}
-\end{center}
-\begin{examp}
-\-
-\begin{center}
-\includegraphics[scale=0.35]{2_3.png}
-\end{center}
-\[ \iint_{\bigtriangleup AOB} f dx dy = \int_0^1 dx \int_0^{2x} f dy =  \]
-\[ = \int_0^2 dy \int_{\frac{y}{2}}^1 f dx \]
-\end{examp}
-
-\subsection{Изменение порядка интегрирования}
-\label{sec:org9ea45a2}
-\[ \int_a^b dx \int^{d(x)}_{c(x)} f dy  \]
-\begin{examp}
-\[ \iint_{x^2 + y^2 \le y} f dx dy \]
+\section{Полярные координаты}
+\label{sec:org4de8e41}
 \begin{itemize}
-\item \(x^2 + (y - \frac{1}{2})^2 \le \frac{1}{4}\) --- окружность радиуса \(\frac{1}{2}\) с центром в \((0, \frac{1}{2})\)
+\item \(x = r\cos\varphi\)
+\item \(y = r\sin\varphi\)
 \end{itemize}
-\end{examp}
-\begin{examp}
-\[ \iint_\Omega f dx dy \]
+\[ \iint_\Omega f dx dy = \int^{\varphi_1}_{\varphi_0} d\varphi \int_{r_0(\varphi)}^{r_1(\varphi)} f(r\cos\varphi, r\sin\varphi)\cdot J\ dr = \int^{r_1}_{r_0} dr \int^{\varphi_1(r)}_{\varphi_0{r}} f\cdot J\ d\varphi \]
 \begin{center}
-\includegraphics[scale=0.35]{2_4.png}
+\includegraphics[scale=0.4]{3_1.png}
 \end{center}
-\[ \color{magenta}I\color{black} = \int^{-1}_{-2} dx \int^{\sqrt{4 - x^2}}_{-\sqrt{4 - x^2}} dy \]
-\[ \color{magenta}II\color{black} = \int^1_{-1}dx\int^{\sqrt{4 - x^2}}_{-\sqrt{1 - x^2}} f dy \]
-\end{examp}
-\begin{examp}
+\begin{task}
 \-
 \begin{center}
-\includegraphics[scale=0.4]{2_5.png}
+\includegraphics[scale=0.2]{3_2.png}
 \end{center}
-\[ \int^2_{-1} dx \int^{x^2}_x f dy = \int^4_2 dy \int^2_{\sqrt{y}} f dx + \int^2_1 dy \int^y_{\sqrt{y}} f dx - \int^1_0 dy \int^{\sqrt{y}}_y f dx + \int^1_0 dy \int^{-\sqrt{y}}_{-1} f dx + \int^0_{-1} dy \int^y_{-1} f dx \]
-\end{examp}
+\[ \iint_\Omega f dx dy = \int^{2\pi}_0 d\varphi\int^1_0 f\cdot J\ dr \]
+\end{task}
+\begin{task}
+\-
+\begin{center}
+\includegraphics[scale=0.3]{3_3.png}
+\end{center}
+\[ \iint_\Omega f dx dy = \int^{\frac{\pi}{4}}_0 d\varphi \int_0^{\frac{1}{\cos\varphi}} dr\ f\cdot J = \int dr \int d\varphi\ f\cdot J \]
+\end{task}
+\begin{task}
+\-
+\begin{center}
+\includegraphics[scale=0.3]{3_4.png}
+\end{center}
+\[ \iint_\Omega f dx dy = \int^1_0 dr \int^{\frac{\pi}{4}}_0 d\varphi\ f\cdot J + \int_1^{\sqrt{2}}dr\int^{\frac{\pi}{4}}_{\arccos \frac{1}{2}}\]
+\end{task}
+\begin{task}
+\-
+\begin{center}
+\includegraphics[scale=0.3]{3_5.png}
+\end{center}
+\[ \iint_\Omega = \int^{\frac{\pi}{4}}_0 d\varphi \int^{\frac{1}{\cos\varphi}}_{\frac{1}{\cos\varphi + \sin\varphi}} dr \dots + \int^{\frac{pi}{2}}_{\frac{\pi}{4}} d\varphi \int_{\frac{1}{\cos\varphi + \sin\varphi}}^{\frac{1}{\sin\varphi}} dr \dots = \]
+\[ = \int_{\frac{\sqrt{2}}{2}}^1 dr \int \]
+\end{task}
+\begin{task}
+\[ x^2 + y^2 \le \alpha x \]
+\[ r = \alpha \cos\varphi \]
+\[ \iint_\Omega = \int^{\frac{\pi}{4}}_{\frac{\pi}{4}}d\varphi\int^{\alpha\cos\varphi}_0 f\cdot J\ dr = \int^\alpha_0 dr \int^{\arccos \frac{\alpha}{2}}_{-\arccos \frac{\alpha}{2}} f\cdot J d\varphi \]
+\end{task}
+\section{Замена переменных}
+\label{sec:org54d1cb7}
+\begin{itemize}
+\item \(x = x(u, v)\)
+\item \(y = y(u, v)\)
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{3_6.png}
+\end{center}
+Фиксируем \(u = u_0\):
+\[ \begin{cases}x = x(u_0, v) \\ y = y(u_0, v) \end{cases}\]
+\[ \iint_\Omega f dx dy = \int_{u_0}^{u_1} du \int^{v_1(u)}_{v_0(u)} f(x(u, v), y(u, v)) \left(\det\begin{pmatrix}x'_u & x'_v \\ y'_u & y'_v \end{pmatrix}\right) dv \]
+\[ \color{blue} \int f(x) dx = \int f(x(t)) x' dt \]
 \end{document}

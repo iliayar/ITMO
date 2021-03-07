@@ -1,0 +1,119 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 4
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Схема Бернулли
+#+begin_definition org
+Схемой Бернулли называется серия независимых испытаний, каждое из
+которых имеет два исхода, каждое интересующее нас событие лиибо
+произошло либо не произошло, успех ....
+- \(n\) --- число испытаний
+- \(p\) --- вкроятность события \(A\) при одном испытании
+- \(q = 1 - p\)
+- \(\nu_k\) --- число успехов при \(k\) испытаниях
+- \(P_n(k) = P(\nu_k = k)\)
+#+end_definition
+#+begin_theorem org
+Вероятность того что при \(n\) испытаниях произойдет ровно \(k\) успехов равна:
+\[ P_n(k) = C^k_np^kq^{n - k} \]
+#+end_theorem
+#+begin_proof org
+Рассмотрим один из исходов благоприятных событию \(A\): \(A_1 = \underbrace{\text{УУ}\dots\text{У}}_k\underbrace{\text{НН}\dots\text{Н}}_{n - k}\) --- независмые события \\
+- \(P(\text{У}) = p\)
+- \(P(\text{Н}) = q\)
+\[ P(A_1) = \underbrace{pp\dots p}_k\underbrace{qq\dots q}_{n - k} = p^kq^{n - k} \]
+\[ P(A) = C^k_np^kq^{n - k} \]
+#+end_proof
+#+begin_task org
+Вероятност попадания стрелка в цель при одном выстреле 0.8. Найти
+вероятность того что при 5 выстрелах буду 3 попадания
+#+end_task
+#+begin_solution  org
+\-
+- \(n = 5\)
+- \(p = 0.8\)
+- \(q = 0.2\)
+- \(k = 3\)
+\[ P_5(3) = C^3_5 p^3q^2 = 0.2048\]
+#+end_solution 
+** Наиболее вероотяное число успехов
+Выясним при каком значении \(k\) вероятность предшествующего числа
+успехов \(k - 1\) будет не более чесм веротяность \(k\) успехов
+\[ P_k(k - 1) \le P_k(k) \]
+\[ C^{k-1}_np^{k - 1}q^{n - k + 1} \le C^k_np^kq{n - k} \]
+\[ \frac{n!}{(k - 1)!(n -k + 1)!}q \le \frac{n!}{(k!(n - k)!)}p \]
+\[ \frac{k!}{(k-1)!}q \le \frac{(n - k + 1)!}{(n - k)!}p \]
+\[ k(1- p) \le (n - k + 1)p \]
+\[ k \le np + p \]
+Так как \(k\) --- целое то выполняется: \(np + p - 1\le k \le np + p\) \\
+Рассмотрим три ситуации:
+1. \(np\) --- целое. Тогда \(np + p\) --- целое и \(k = np\) --- наиболее вероятное число исходов
+2. \(np + p\) --- не целое. Тогда \(k = [np + p]\)
+3. \(np + p\) --- целое. Тогд \(np + p - 1\) --- целое и \(P_n(k - 1)
+   = P_n(k)\) и имеем два наиболле веротяных числа успехов:
+   - \(k = np + p\)
+   - \(k = np + p - 1\)
+#+ATTR_LATEX: :scale 0.35
+[[file:4_1.png]]
+** Предельные теоремы в схеме Бернулли
+#+begin_definition org
+*Локальная формула* Муавра-Лапласса. Применяем когда требутеся найти веротяноть точно числа успехов.
+\[ P_n(\nu_n = x) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
+, где \(\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, x = \frac{k - np}{\sqrt{npq}}\) --- функция Гауса. \\
+Свойства функции Гауса \(\varphi(x)\):
+1. \(\varphi(-x) = \varphi(x)\) --- четная
+2. при \(x > 5,\ \varphi(x) \approx 0\)
+#+end_definition
+#+begin_definition org
+*Интгрелальная формула Лапласса*. Применяем если число успехов лежит в неком диапозоне.
+\[ P_n(x_1 \le \nu_n \le x_2) \approx \Phi(x_1) - \Phi(x_2) \]
+, где \[ \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz\] --- функция Лапласса \\
+\[ x_1 = \frac{k_1 - np}{\sqrt{npq}},\ x_2 = \frac{k_2 - np}{\sqrt{npq}} \]
+
+Свойства \(\Phi(x)\):
+1. \(\Phi(-x) = \Phi(x)\) --- нечетная
+2. при \(x > 5,\ \Phi(x) \approx 0.5\)
+#+end_definition
+#+begin_remark org
+В некоторых источниках под функцией Лапласса поразумевается несколько иная функция, чаще всего:
+\[ F_0(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{z^2}{2}dz \]
+\[ F_0(x) = 0.5 + \Phi(x)\text{ или }\Phi(x) = F_0(x)-0.5 \]
+#+end_remark
+#+begin_remark org
+Формула применяем при \(n \ge 100\) и \(p,q\ge0.1\) 
+#+end_remark
+#+begin_task org
+Вероятность попадания стрелка в цель при одном выстреле 0.8. Стрелок сделал 400 выстрелов. Найти вероятность того что
+1. произошло ровно 330 попаданий
+2. произошло от 312 до 336 попаданий
+#+end_task
+#+begin_solution org
+1. \(n = 400, p = 0.8, q = 0.2, k=330\)
+   \[ x = \frac{330 - 400\cdot0.8}{\sqrt{400\cdot0.8\cdot0.2}} = 1.25 \]
+   \[ P_{400}(330) \approx \frac{1}{8} \cdot \varphi(1.25) \approx \frac{1}{8}\cdot0.1826 \approx 0.0228 \]
+2. \(n = 400, p=0.8, q = 0.2, k_1 =312, k_2 336\)
+   \[ x_1 = \frac{312 - 400\cdot0.8}{\sqrt{400\cdot0.8\cdot0.2}} = -1\]
+   \[ x_2 = \frac{336 - 400\cdot0.8}{\sqrt{400\cdot0.8\cdot0.2}} = 2\]
+   \[ P_{400}(312 \le \nu_n \le 336) = \Phi(2) - \Phi(-1) = \Phi(2) + \Phi(1) \approx 0.8185 \]
+#+end_solution
+* Статистическое определение вероятности
+- \(n_A\) --- число появления события \(A\) при \(n\) испытаниях 
+- \(\frac{n_A}{n}\) --- частота события \(A\)
+\[ P(A) \approx \frac{n_A}{n}, \text{при }n\to\infty \]
+
+** Вероятность отклонения относительной частоты
+\(] p\) --- веротяность события \(A\), \(\frac{n_A}{n}\) --- частота \(A\) \\
+По интегральной формуле Лапласса:
+\[ P\left(\left|\frac{n_A}{n} - p| \le \varepsilon\right) = P(-\varepsilon \le \frac{n_A}{n} - p \le \varepsilon) = P(-n\varepsilon \le n_a - np \le n\varepsilon) = P(np - n\varepsilon \le n_A \le np + n\varpepsilon) \]
+\[ x_1 = \frac{np - n\varepsilon - np}{\sqrt{npq}} = -\frac{n\varepsilon}{\sqrt{npq}} \]
+\[ x_2 = \frac{np + n\varepsilon - np}{\sqrt{npq}} = \frac{n\varespilon}{\sqrt{npq}} \]
+\[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = \Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) - \Phi\left(-\frac{n\varepsilon}{\sqrt{npq}}\right) = 2\Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) \]
+\[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
+** Закон больших чисел Бернулли
+Более точно последняя формула выглядит так:
+\[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \xrightarrow[n \to \infty]{} 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
+при \(n \to \infty\) \(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon \to \infty\) и \(\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\right) \to 0.5\)
+\[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \to 2\cdot0.5 = 1\]
+\[ \lim_{n\to\infty}P\left(\left|\frac{n_A}{n} - p \right| \le \varepsilon \right) = 1 \]
+--- закон больших чисел Бернулли \\
+То есть при большом числе испытаний, будет близко в реальной вероятности

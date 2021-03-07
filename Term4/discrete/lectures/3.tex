@@ -1,4 +1,4 @@
-% Created 2021-03-03 Wed 11:16
+% Created 2021-03-05 Fri 23:12
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -111,10 +111,10 @@
 \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Практика 2}
+\title{Лекция 3}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Практика 2},
+ pdftitle={Лекция 3},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -124,62 +124,52 @@
 \maketitle
 \tableofcontents
 
+\newcommand{\vdomino}{
+\begin{tikzpicture}
+\draw (0, 0) rectangle (0.15,0.3);
+\end{tikzpicture}}
+\newcommand{\hdomino}{
+\begin{tikzpicture}
+\draw (0, 0) rectangle (0.3,0.15);
+\draw (0, 0.15) rectangle (0.3,0.3);
+\end{tikzpicture}}
 
-\section{Гамма фунция}
-\label{sec:orgd35add2}
-\[ \int_0^{ + \infty} t^{x - 1}e^{-t}dt = \Gamma(x)\quad, x > 0 \]
-\[ \Gamma(n + 1) = n! \]
-\[ \int_0^1 t^{x - 1}(1 - t)^{y - 1}dt = B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x + y)} \approx \frac{1}{\binom{x + y}{x}} \]
-Формула понижения: \[ \Gamma(x + 1) = x\cdot\Gamma(x) \]
-Формула дополнения: \[ \Gamma(x)\Gamma(1-x) = \frac{\pi}{\sin \pi x} \]
-\[ \Gamma(\frac{1}{2}) = \sqrt{\pi} \]
-
-\begin{examp}
-\[ \int_0^{\frac{\pi}{2}}\sin^{2021}x dx = \left[\begin{array}{l} t = \sin^2 x \\ dt = 2\sin x\cos x dx \\ dx = \frac{dt}{2t^{\frac{1}{2}}(1 - t)^{\frac{1}{2}}}\end{array}\right]  = \int_0^1 t^{1010,5}\cdot\frac{1}{2}t^{-\frac{1}{2}}(1 - t)^{-\frac{1}{2}}dt = \]
-\[ = \frac{1}{2} \int_0^1 t^{1010}(1 - t)^{-\frac{1}{2}} dt = \frac{1}{2}B(1011, \frac{1}{2}) = \frac{1}{2}\frac{\Gamma(1011)\Gamma(\frac{1}{2})}{\Gamma(1011 + \frac{1}{2})} = \]
-\[ = \frac{1}{2}\frac{1010!\sqrt{\pi}}{\frac{2021}{2}\cdot\frac{2019}{2}\cdot\dots\cdot\frac{1}{2}\cdot\sqrt{\pi}} = \frac{1010!\cdot2^{1009\color{red}?\color{black}}}{2021!!}\]
-\end{examp}
-\section{Кратные интгералы}
-\label{sec:orgb243271}
-\begin{center}
-\includegraphics[scale=0.35]{2_1.png}
-\end{center}
-\[ \iint f dx dy = \int^b_a\left(\int^{d(x)}_{c(x)} f(x, y) dy\right)dx = \]
-\[ = \int_C^D\left(\int_{A(y)}^{B(y)}f(x, y) dx\right)dy \]
-\begin{center}
-\includegraphics[scale=0.35]{2_2.png}
-\end{center}
-\begin{examp}
-\-
-\begin{center}
-\includegraphics[scale=0.35]{2_3.png}
-\end{center}
-\[ \iint_{\bigtriangleup AOB} f dx dy = \int_0^1 dx \int_0^{2x} f dy =  \]
-\[ = \int_0^2 dy \int_{\frac{y}{2}}^1 f dx \]
-\end{examp}
-
-\subsection{Изменение порядка интегрирования}
-\label{sec:org9ea45a2}
-\[ \int_a^b dx \int^{d(x)}_{c(x)} f dy  \]
-\begin{examp}
-\[ \iint_{x^2 + y^2 \le y} f dx dy \]
+\section{Производящие функции для объектов}
+\label{sec:orgb8efd65}
 \begin{itemize}
-\item \(x^2 + (y - \frac{1}{2})^2 \le \frac{1}{4}\) --- окружность радиуса \(\frac{1}{2}\) с центром в \((0, \frac{1}{2})\)
+\item Оюъединение \\
+\(A, B\ A \cap B = \emptyset\ C = A \cup B\) \\
+\(A(t)\ B(t)\)
+\[ C(t) = A(t) + B(t)\]
+\[ c_n = a_n + b_n \]
+\item Пара \\
+\(C = A \times B\ \text{Pair}(A, B)\)
+\[C(t) = A(t) \cdot B(t)\] 
+\[ c_n = \sum_{i = 0}^na_nb_n \]
+\item Последовательности \\
+\(C = \text{Seq }A = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \dots\ a_0 = 0\)
+\[ C(t) = 1 + A(t) + A(t)\cdot A(t) + A(t)^3 + \dots \]
+\[ C(t) = \frac{1}{1 - A(t)} \]
+\item Множества \\
+\(\varepsilon\) вес \(0\) \\
+\(\text{Set }A = \bigtimes_{a \in A} (\varepsilon \cup a)\) \\
+\[ C(t) = \prod_{a \in A}(1 + t^{\omega(a)}) = \prod_{k = 0}^\infty (1 + t^k)^{a_k} \]
+\begin{examp}
+\(\text{Set}\left\{\vdomino, \hdomino\right\}\ a_1 = 1,a_2 = 1\) \\
+\[ C(t) = (1 + t)(1 + t^2) = t^3 + t^2 + t + 1 \]
+\end{examp}
+\item Мультимножества \\
+\[\text{MSet} A = \bigtimes_{a \in A}(\varepsilon \cup a \cup a^2 \cup \dots) = \prod_{a \in A}\text{Seq}\{a\}\]
+\[ C(t) = \prod_{a \in A}\frac{1}{1 - t^{\omega{a}}} = \prod_{k = 1}^\infty\left(\frac{1}{1 - t^k}\right)^{a_k} = \prod_{k = 1}^\infty(1 - t^k)^{-a_k}\]
+\begin{examp}
+\(\text{MSet}\{\vdomino, \hdomino\}\)
+\[ C(t) = \frac{1}{(1 - t)(1 - t^2)} = \frac{1}{(1 - t^2)(1 + t)} \]
+\[ c_n = dn + e + f\cdot(-1)^n \]
+\end{examp}
 \end{itemize}
-\end{examp}
 \begin{examp}
-\[ \iint_\Omega f dx dy \]
-\begin{center}
-\includegraphics[scale=0.35]{2_4.png}
-\end{center}
-\[ \color{magenta}I\color{black} = \int^{-1}_{-2} dx \int^{\sqrt{4 - x^2}}_{-\sqrt{4 - x^2}} dy \]
-\[ \color{magenta}II\color{black} = \int^1_{-1}dx\int^{\sqrt{4 - x^2}}_{-\sqrt{1 - x^2}} f dy \]
-\end{examp}
-\begin{examp}
-\-
-\begin{center}
-\includegraphics[scale=0.4]{2_5.png}
-\end{center}
-\[ \int^2_{-1} dx \int^{x^2}_x f dy = \int^4_2 dy \int^2_{\sqrt{y}} f dx + \int^2_1 dy \int^y_{\sqrt{y}} f dx - \int^1_0 dy \int^{\sqrt{y}}_y f dx + \int^1_0 dy \int^{-\sqrt{y}}_{-1} f dx + \int^0_{-1} dy \int^y_{-1} f dx \]
+\(\text{Seq}_{=k}(A) = A^k\) --- ровно 3 элемента \\
+\(\text{Seq}_{\ge k}(A) = A^k \times \text{Seq}(A)\frac{A(t)^k}{1 - A(t)}\) \\
+\(\text{Seq}_{\le k}(A) = \frac{1}{1 - A(t)} - \frac{A(t)^{k + 1}}{1 - A(t)} = \frac{1 - A(t)^{k + 1}}{1 - A(t)}\)
 \end{examp}
 \end{document}
