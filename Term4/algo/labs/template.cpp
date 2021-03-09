@@ -23,10 +23,10 @@ using namespace std;
 
 #define int long long
 #ifdef LOCAL
-#define DBG(x) cout << "DBG: " << x << endl
+#define DBG(x, ...) cout << ">>> DBG "  << #__VA_ARGS__ << endl << x << endl << "<<< DBG " << #__VA_ARGS__ << endl
 #define DBG_CODE(x) x
 #else
-#define DBG(x)
+#define DBG(x, ...)
 #define DBG_CODE(x)
 #endif
 
