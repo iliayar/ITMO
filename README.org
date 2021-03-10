@@ -11,8 +11,8 @@ My stuff from ITMO University
 - [[file:Term4/matan/lectures/3.pdf][Лекция 3]]
 - [[file:Term4/matan/lectures/4.pdf][Лекция 4]]
 **** Практики
-- [[file:Term4/matan/pratice/2.pdf][Практика 2]]
-- [[file:Term4/matan/pratice/3.pdf][Практика 3]]
+- [[file:Term4/matan/practice/2.pdf][Практика 2]]
+- [[file:Term4/matan/practice/3.pdf][Практика 3]]
 *** Теор. вер.
 **** Лекции
 - [[file:Term4/teorver/lectures/1.pdf][Лекция 1]]
@@ -93,7 +93,7 @@ My stuff from ITMO University
 13. [[file:Term2/programming/HW13/][Prolog Primes]]
 *** Algo
 **** Labs
-1. [[file:Sem2/algo/labs/lab1/][Дерево отрезков]]
+1. [[file:Term2/algo/labs/lab1/][Дерево отрезков]]
 2. [[file:Term2/algo/labs/lab2/][Деревья поиска]]
 *** Discrete Math
 **** Labs
