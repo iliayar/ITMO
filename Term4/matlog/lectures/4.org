@@ -138,8 +138,8 @@
    \draw (1, 0) circle[radius=0.5cm] node {\(\A\)};
    \node (0, 0) {\(\Rightarrow\)};
    \draw (-1, 0.5) circle[radius=1pt,fill=black] node[above] {\(1\)};
-   \draw (1, 0.5) circle[radius=1pt,fill=black] node[above right] {\(1\)};
-   \draw (1, 1.5) circle[radius=1pt,fill=black] node[above] {\(\omega\)};
+   \draw (1, 0.5) circle[radius=1pt,fill=black] node[above right] {\(\omega\)};
+   \draw (1, 1.5) circle[radius=1pt,fill=black] node[above] {\(1\)};
    \draw (1, 1.5) -- (1, 0.5);
    \end{tikzpicture}
    \end{center}
@@ -157,6 +157,7 @@
 - \(\varphi: \A \to \B \)
 - \(\varphi(a \star b) = \varphi(a)\star\varphi(b)\)
 - \(\varphi(1_\A) = 1_\B\)
+- \(\varphi(0_\A) = 0_\B\)
 #+end_definition
 #+begin_theorem org
 \( a \le b\), то \(\varphi(a) \le \varphi(b)\)
@@ -167,13 +168,21 @@
 - \(f, g \): оценки ИИВ
 - \(f\): ИИВ \to \(\A\)
 - \(g\): ИИВ \to \(\B\)
-\color{red}Недописано\color{black}
+\(\varphi\) согласованы \(f, g\), если \(\varphi(f(\alpha)) = g(\alpha)\)
 #+end_definition
 #+begin_theorem org
-если \(\varphi: \A \to \B\) согласована с \(f, g\)
-\color{red}Недописано\color{black}
+если \(\varphi: \A \to \B\) согласована с \(f, g\) и оценка \(\llbracket \alpha \rrbracket_g \neq 1_\B\), то \(\llbracket \alpha \rrbracket_f \neq 1_\A\)
 #+end_theorem
-
-
-Рассмторим алгебру Линденбаума?
-\color{red}Фокус сломался\color{black}
+#+begin_theorem org
+ИИВ дизъюнктивно
+#+end_theorem
+#+begin_proof org
+Рассмторим алгебру Линденбаума: \(\mathcal{L}\) \\
+Рассмотрим \(\Gamma(\mathcal{L})\) \\
+- \(\varphi: \Gamma(\mathcal{L}) \to \mathcal{L}\)
+\[ \varphi(x) = \begin{cases}1_\mathcal{L} & ,\substack{x =\omega \\ x = 1_{\Gamma(\mathcal{L})}} \\ x & , \text{иначе}\end{cases} \] 
+\(\varphi\) --- гомоморфизм \\
+Пусть \(\vdash \alpha \vee \beta\), тогда \(\llbracket \alpha \vee \beta \rrbracket_{\Gamma(\mathcal{L})} = 1_{\Gamma(\mathcal{L})}\) \\
+\(\llbracket \alpha + \beta \rrbracket = 1\), и т.к. \(\Gamma(\mathcal{L})\) --- Геделева то \(\llbracket \alpha \rrbracket = 1\) или \(\llbracket \beta \rrbracket = 1\) \\
+Пусть \(\not \vdash \alpha\) и \(\not \vdash \beta\), тогда \(\varphi(\llbracket \alpha \rrbracket) \neq 1_\mathcal{L}\) и \(\varphi(\llbracket \beta \rrbracket) \neq 1_\mathcal{L}\), т.е. \(\llbracket \alpha \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\) и \(\llbracket \beta \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\), тогда \(\llbracket \alpha \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) и \(\llbracket \beta \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) \Rightarrow Противоречие
+#+end_proof
