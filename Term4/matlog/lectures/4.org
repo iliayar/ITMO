@@ -76,7 +76,7 @@
 2.  \( W_i \Vdash \alpha\) или \(W_i \Vdash \beta\), то \(W_i \Vdash \alpha \vee \beta\)
 3. Пусть во всех \( W_i \preceq W_j\) всегда когда \(W_j \Vdash \alpha\) имеет место \(W_j \Vdash \beta\) \\
    Тогда \( W_i \Vdash \alpha \to \beta\)
-4. \( W_i \Vdash \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
+4. \( W_i \Vdash \neg \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
    \(W_i \preceq W_j\), то \(W_j \not\Vdash \alpha\)
 #+end_definition
 #+begin_theorem org

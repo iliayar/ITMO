@@ -1,4 +1,4 @@
-% Created 2021-03-11 Thu 22:26
+% Created 2021-03-11 Thu 22:42
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -155,7 +155,7 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:org98800a3}
+\label{sec:orga719833}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
@@ -176,7 +176,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:orgf2d3b60}
+\label{sec:org587a363}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -203,7 +203,7 @@
 \item \(W_i \Vdash \alpha\) или \(W_i \Vdash \beta\), то \(W_i \Vdash \alpha \vee \beta\)
 \item Пусть во всех \(W_i \preceq W_j\) всегда когда \(W_j \Vdash \alpha\) имеет место \(W_j \Vdash \beta\) \\
 Тогда \(W_i \Vdash \alpha \to \beta\)
-\item \(W_i \Vdash \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
+\item \(W_i \Vdash \neg \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
 \(W_i \preceq W_j\), то \(W_j \not\Vdash \alpha\)
 \end{enumerate}
 \end{definition}
@@ -225,7 +225,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:org3547f77}
+\label{sec:org8ce93f9}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
