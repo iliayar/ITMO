@@ -1,0 +1,145 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 5
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Предикаты
+ программа(функция)
+- \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
+- \(P\) --- доказательство, что из \(\alpha\) следует \(\beta\)
+  #+begin_src haskell
+  f a = a
+  #+end_src
+  \(f: A \to A\) --- \(f\) доказывает что, из \(A\) следует \(A\)
+| логическок исчесления | Типизированное \lambda-исчесление           |
+|-----------------------+---------------------------------------------|
+| логическая формула    | тип                                         |
+| доказательство        | значение                                    |
+| доказуемая формула    | обитаемый тип(имеет хотя бы один экземпляр) |
+| \to                   | функция                                     |
+| &                     | упорядоченная пара                          |
+| \vee                  | алг. тип(тип-сумма)                         |
+#+begin_examp org
+\(5\) доказывает Int
+#+end_examp
+#+begin_src pascal
+  type list = record
+     nul: boolean;
+     case nul of
+       true: ;
+             false: next: ^list;
+     end
+  end;
+#+end_src
+#+begin_src C
+  struct list {
+          *list next;
+  };
+#+end_src
+#+begin_src C
+    struct tree {
+            tree* left;
+            tree* right;
+            int value;
+    };
+#+end_src
+#+begin_definition org
+*Отмеченное(дизъюнктное)* объединение множеств: \\
+- \(A, B\) --- множества
+- \(A \sqcup B = \{\langle ``A``, a \rangle| a\in A\}\cup\{\langle ``B``, a \rangle | b \in B\}\)
+Пусть \(S \in A \sqcup B\). Мы знаем откуда \(S\)
+#+end_definition
+#+begin_src haskell
+    data List a = Nil | Cons a (List a)
+    example = Cons 1 (Cons 2 (Cons 3 Nil)) -- [1; 2; 3]
+#+end_src
+#+begin_src C
+  union {
+          int a;
+          char b;
+  };
+#+end_src
+#+begin_examp org
+#+begin_export latex
+\[
+\frac{\Gamma \vdash \overset{\text{Nil}}{\alpha} \to \gamma\quad \Gamma \vdash \overset{\text{Cons}}{\beta} \to \gamma\quad \Gamm \vdash \alpha \vee \beta}{\Gamma \vdash \underset{\text{int}}{\gamma}}
+\]
+#+end_export
+#+begin_src OCaml
+  (* count *)
+  let rec string_of_list l =
+  match l with
+     | Nil -> "[]" (* 0 *)
+     | Cons(hd, tl) -> hd ^":"^ string_of_list tl (* 1 + count tl *)
+#+end_src
+#+end_examp
+** Исчесление предикатов
+#+begin_definition org
+Язык исчесление предикатов
+- логические выражения "предикаты"/формулы
+- предметные выражния "термы"
+\(\Theta\) --- метаперменные для термов \\
+Термы:
+- Атомы:
+  - \(a, b, c, d, \dots\) --- предметные переменные
+  - \(x, y, z\) --- метапеременные для предметных перменных
+- Применение Функциональных Символов
+  - \(f, g, h\) --- Функциональные символы
+  - \(f(\Theta_1, \dots \Theta_n)\)
+- Лп. выражения:
+  - Применение предикатных символов \(P(\Theta_1, \dots, \Theta_n)\)
+  - \(P\) --- метаперменные для предикатных символов
+\color{red}Недописано\color{black}
+#+end_definition
+*** Сокращение записи
+И.В + жадность \(\forall, \exists\)
+\[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
+Правильный вариант:
+\[ \forall a. B(A) \& \forall b. B(b) \]
+** Теория моделей
+Оценка формулы в исчеслении предикатов:
+1. Фиксируем \(D\) --- предметное множетво
+2. Кажодму \(f_i(x_1, \dots, x_n)\) сопоставим функцию \(D^2 \to D\)
+3. Каждому \(P_j(x_1, \dots, x_m)\) сопоставим функцию(предикат) \(D^2 \to V\)
+4. Каждой \(x_i\) сопоставим элемент из \(D\)
+\(\forall x.\forall y\ E(x, y)\) \\
+Пусть \(D = \N\)
+\[ E(x, y) = \begin{cases}\text{И} & ,x = y \\ \text{Л} &, x\neq y\end{cases} \]
+\(\forall x.\forall y. E(x, y)\)
+- \(\llbracket x \rrbracket = f_{x_i}\)
+- \(\llbracket \alpha \star \beta \rrbracket\) --- смотри
+- \(\llbracket P_i(\Theta_1, \dots , \Theta_n) \rrbracket = f_{p_i}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
+- \(\llbracket f_j(\Theta_1 , \dots, \Theta_n ) \rrbracket = f_{f_j}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
+- \[ \llbracket \forall x. \varphi \rrbracket = \begin{cases} \text{И} & , \text{если } \llbracket \varphi \rrbracket = \text{И}, f_x = k\text{ при всех } k \in D \\ \text{Л} &,\text{иначе}\end{cases} \]
+\color{red}Недописано\color{black}
+#+begin_examp org
+\[ \forall \varpepsilon > 0 \exists N \forall n > N |a_n - a| < \varepsilon \]
+\[ \forall \varepsilon: \varespilon > 0 \to \exists N. \forall n. (n > N) \to (|a_n - a| < \varepsilon) \]
+\[ \forall e. G(e, m_0) \to \exists n_0.\forall n. G(n, n_0)\to G(e, m, (m\_ (m_a(n), a))) \]
+\color{red}Недописано\color{black}
+#+end_examp
+** Теория доказательств
+Все аксимомы И.В + M.P.
+- (cх. 11) :: \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
+- (сх. 12) :: \(\varphi[x:=\Theta]\to \exists x. \varphi\)
+\color{red}Недописано\color{black}
+#+begin_src C
+  int y;
+  int f(int x) {
+          x = y;
+  }
+#+end_src
+Заменим =y:=x=
+
+- (Пр. \(\forall\)) :: \[\frac{\varphi \to \psi}{\varphi \to \forall x. \psi}\]
+- (Пр. \(\exists\)) :: \[ \frac{\psi \to \varphi}{\exists x.\psi \to \varphi} \]
+\(x\) не входит свободно в \(\varphi\)
+#+begin_examp org
+\[ \frac{x = 5 \to x^2 = 25}{x = 5 \to \forall x. x^2 = 25} \]
+Нарушено ограничение
+#+end_examp
+#+begin_examp org
+\[ \exists y. x = y \]
+\[ \forall x. \exists y. x = y \to \exists y. y + 1 = y \]
+Делаем замену =x:=y+1=. Нарушено правило свобод
+#+end_examp
+

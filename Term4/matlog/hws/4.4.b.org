@@ -1,0 +1,17 @@
+#+LATEX_CLASS: general
+#+TITLE: 4.4.b
+#+AUTHOR: Ilya Yaroshevskiy
+
+* 4.4.b
+:PROPERTIES:
+:UNNUMBERED:
+:END:
+\(\mathcal{W}_\alpha, \mathcal{W}_\beta\) --- открытые
+1. 
+  \[ \mathcal{W}_{\alpha \& \beta} = \{W_i \in \mathfrak{W}| W_i \Vdash \alpha \& \beta\} \]
+  \[ \mathcal{W}_{\alpha \& \beta} = \{W_i \in \mathfrak{W}| W_i \Vdash \alpha \text{ и } W_i \Vdash \beta\} = \mathcal{W}_\alpha \cap \mathcal{W}_\beta \text{ --- открытое}\]
+2. 
+  \[ \mathcal{W}_{\alpha \vee \beta} = \{W_i \in \mathfrak{W}| W_i \Vdash \alpha \vee \beta\} \]
+  \[ \mathcal{W}_{\alpha \vee \beta} = \{W_i \in \mathfrak{W}| W_i \Vdash \alpha \text{ или } W_i \Vdash \beta\} = \mathcal{W}_\alpha \cup \mathcal{W}_\beta \text{ --- открытое}\]
+
+
