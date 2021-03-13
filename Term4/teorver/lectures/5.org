@@ -41,7 +41,7 @@ _Тогда_ \(\forall n, k \in \N\ p(\tau > n + k| \tau > n) = p(\tau > k)\)
 #+begin_proof org
 По формуле условной вероятности: \[ p(\tau > n + k |\tau > k) = \frac{p(\tau > n + k \text{ и } \tau > j)}{p(\tau > n)} = \frac{p(\tau > n + k)}{p(\tau > n)} \addtag\label{5_1_geom} \]
 \(p(\tau > m) = p(\text{первые } m\text{ неудач}) = q^m\)
-\[ \ref(5_1_geom) = \frac{q^{n + k}}{q^n} = q^k \]
+\[ \ref{5_1_geom} = \frac{q^{n + k}}{q^n} = q^k \]
 #+end_proof
 #+begin_remark org
 То, проработет ли девайс \(k\) часов после этого, не зависит от того сколько проработал до этого
