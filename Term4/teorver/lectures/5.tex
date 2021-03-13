@@ -1,4 +1,4 @@
-% Created 2021-03-13 Sat 15:14
+% Created 2021-03-13 Sat 15:16
 % Intended LaTeX compiler: pdflatex
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
@@ -128,7 +128,7 @@
 
 
 \section{Схемы испытаний и соответствующие распределения}
-\label{sec:org34cb085}
+\label{sec:orga2079de}
 \begin{itemize}
 \item \(n\) --- число испытаний
 \item \(p\) --- вероятность при одном испытании
@@ -143,7 +143,7 @@
 \(B_{n,p} = B(n, p)\)
 \end{symb}
 \subsection{Схема до превого успешного испытания}
-\label{sec:org300ad1f}
+\label{sec:org08df334}
 \begin{definition}
 \textbf{Схема до первого успешного испытания}. Пусть проводится бесконечная
  серия испытаний, которая заканчивается после первого успеха под номером \(\tau\)
@@ -170,7 +170,7 @@ G(p)
 \begin{proof}
 По формуле условной вероятности: \[ p(\tau > n + k |\tau > k) = \frac{p(\tau > n + k \text{ и } \tau > j)}{p(\tau > n)} = \frac{p(\tau > n + k)}{p(\tau > n)} \addtag\label{5_1_geom} \]
 \(p(\tau > m) = p(\text{первые } m\text{ неудач}) = q^m\)
-\[ \ref(5_1_geom) = \frac{q^{n + k}}{q^n} = q^k \]
+\[ \ref{5_1_geom} = \frac{q^{n + k}}{q^n} = q^k \]
 \end{proof}
 \begin{remark}
 То, проработет ли девайс \(k\) часов после этого, не зависит от того сколько проработал до этого
@@ -179,7 +179,7 @@ G(p)
 Также \(p(\tau = n + k|\tau > n) = p(\tau = k)\)
 \end{remark}
 \subsection{Испытание с несколькими исходами}
-\label{sec:orgac208ef}
+\label{sec:orgad3896a}
 Пусть при \(n\) испытаниях могут произойти \(m\) несовместных исходов
 \begin{itemize}
 \item \(p_i\) --- вероятность \(i\)-го исхода при одном отдельном испытании
@@ -208,7 +208,7 @@ G(p)
 \end{enumerate}
 \end{solution}
 \subsection{Урновая схема}
-\label{sec:org586c807}
+\label{sec:orgdd3e88b}
 В урне \(N\) шаров. Из них \(K\) белых, а черных \(N - K\). Из нее выбираем \(n\) шаров без учета порядка. \(k\) --- число вынутых белых
 \begin{theorem}[Схема в возвратом]
 Вероятность вынуть белый шар не менятеся. \\
@@ -244,7 +244,7 @@ G(p)
 \[ = C^k_n\left(\frac{K}{N}\right)^k\left(1 - \frac{K}{N}\right)^{n -k} \xrightarrow[N \to \infty]{} C^k_n\cdot p^k \cdot ( 1- p)^{n - k}\]
 \end{proof}
 \subsection{Схемы Пуассона. Теорема Пуассона для схемы Бернулли}
-\label{sec:org44af4b5}
+\label{sec:orga4ac9e6}
 Схема: вероятность успеха при одном отдельном испытании зависит от числа испытаний \(n\) таким образом, чтобы \(n \cdot p_n = \lambda\)(точнее \(np_n \xrightarrow[n \to \infty]{} \lambda\)) \\
 Появление очень редких событий в длинном потоке испытаний
 \begin{theorem}[Формула Пуассона]
@@ -257,7 +257,7 @@ G(p)
 \[ \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(\left(1 - \frac{\lambda_n}{n}\right)^{-\frac{n}{\lambda_n}}\right)^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}e^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda} \]
 \end{proof}
 \subsubsection{Оценка погрешности в формуле Пуссона}
-\label{sec:org94a84bc}
+\label{sec:org341aa8b}
 \begin{theorem}
 Пусть \(\nu_n\) -- число успешных про \(k\) в схеме Бернулли с вероятностью \(p\)
 \[ \lambda = np\quad A \subset \{0, 1, 2, \dotsm n\}\text{ --- произвольное подмножество}\]
