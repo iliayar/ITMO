@@ -1,0 +1,286 @@
+% Created 2021-03-13 Sat 15:14
+% Intended LaTeX compiler: pdflatex
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 5}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 5},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Схемы испытаний и соответствующие распределения}
+\label{sec:org34cb085}
+\begin{itemize}
+\item \(n\) --- число испытаний
+\item \(p\) --- вероятность при одном испытании
+\item \(q = 1 - p\) --- веротяность неудачи при одном испытании
+\end{itemize}
+
+
+\begin{definition}
+\[ k \to C^k_n p^k q^{n - k} \] --- биноминальное распределение с параметрами \(n\) и \(p\)
+\end{definition}
+\begin{symb}
+\(B_{n,p} = B(n, p)\)
+\end{symb}
+\subsection{Схема до превого успешного испытания}
+\label{sec:org300ad1f}
+\begin{definition}
+\textbf{Схема до первого успешного испытания}. Пусть проводится бесконечная
+ серия испытаний, которая заканчивается после первого успеха под номером \(\tau\)
+\end{definition}
+\begin{theorem}
+\(p(\tau = k) = q^{k - 1}p\)
+\end{theorem}
+\begin{proof}
+\[ p(\tau = k) = p(\underbrace{\text{НН}\dots\text{Н}}_{k - 1}\underset{\substack{\uparrow \\ k}}{\text{У}}) = q^{k - 1}p\]
+\end{proof}
+\begin{definition}
+\(k \to q^{k-1}p,\ 1 \le k \le \infty\) --- называется \textbf{геометрическим распределением} с параметром \(t\)
+\end{definition}
+\begin{symb}
+G(p)
+\end{symb}
+\begin{remark}
+Это распределение обладает так назыаемым свойством отсутствия после действия или свойством нестарения
+\end{remark}
+\begin{theorem}
+\(] p(\tau = k) = q^{k - 1}p\) \\
+\uline{Тогда} \(\forall n, k \in \N\ p(\tau > n + k| \tau > n) = p(\tau > k)\)
+\end{theorem}
+\begin{proof}
+По формуле условной вероятности: \[ p(\tau > n + k |\tau > k) = \frac{p(\tau > n + k \text{ и } \tau > j)}{p(\tau > n)} = \frac{p(\tau > n + k)}{p(\tau > n)} \addtag\label{5_1_geom} \]
+\(p(\tau > m) = p(\text{первые } m\text{ неудач}) = q^m\)
+\[ \ref(5_1_geom) = \frac{q^{n + k}}{q^n} = q^k \]
+\end{proof}
+\begin{remark}
+То, проработет ли девайс \(k\) часов после этого, не зависит от того сколько проработал до этого
+\end{remark}
+\begin{remark}
+Также \(p(\tau = n + k|\tau > n) = p(\tau = k)\)
+\end{remark}
+\subsection{Испытание с несколькими исходами}
+\label{sec:orgac208ef}
+Пусть при \(n\) испытаниях могут произойти \(m\) несовместных исходов
+\begin{itemize}
+\item \(p_i\) --- вероятность \(i\)-го исхода при одном отдельном испытании
+\end{itemize}
+\begin{theorem}
+Вероятность того, что при \(n\) испытаниях первый исход появится \(n_1\) раз, второй \(n_2\) раз, \dots{}, \(m\)-й \(n_m\) раз. \(n_1 + n_2 + \dots + n_m = m\)
+\uline{Тогда} \[ p(n_1, n_2, \dots, n_m) = \frac{n!}{n_1!n_2!\dots n_m!}p_1^{n_1}p_2^{n_2}\dots p_m^{n_m} \]
+\end{theorem}
+\begin{proof}
+\(A_1 = \underbrace{11\dots1}_{n_1}\underbrace{22\dots2}_{n_2}\dots \underbrace{m\dots m}_{n_m}\)
+\[ p(A_1) = p_1^{n_1}\dots p_n^{n_m} \]
+Остальные благоприятные исходы отличаются лишь расположением \(i\)-х исходов по \(n\) местам, а веротяности будут те-же. Всего таких исходов будет:
+\[ C^{n_1}_nC^{n_2}_{n - n_1}C^{n_3}_{n - n_1 - n_2}\dots C^{n_m}_{n_m} = \frac{n!}{n_1!n_2!\dots n_m!} \] --- формула для перестановок с повторениями
+\end{proof}
+\begin{task}
+Два одинаковых по силе шахматиста играют матч из 6 партий. Вероятность ничьи при одной пратии --- \(0.5\). Найти веротяность того, что второй игрок две партии выиграл, а три партии свел в ничью
+\end{task}
+\begin{solution}
+Исходы:
+\begin{enumerate}
+\item первый выиграл
+\item второй выиграл
+\item ничья
+\[ p_3 = \frac{1}{2};\ p_1 = p_2 = \frac{1}{2}\left(1 - \frac{1}{2}\right) = \frac{1}{4};\ n= 6 \]
+\[ P(1, 2, 3) = \frac{6!}{1!2!3!}\cdot\left(\frac{1}{4}\right)^1\cdot\left(\frac{1}{4}\right)^2\cdot\left(\frac{1}{2}\right)^3  = \frac{15}{2^7}\]
+\end{enumerate}
+\end{solution}
+\subsection{Урновая схема}
+\label{sec:org586c807}
+В урне \(N\) шаров. Из них \(K\) белых, а черных \(N - K\). Из нее выбираем \(n\) шаров без учета порядка. \(k\) --- число вынутых белых
+\begin{theorem}[Схема в возвратом]
+Вероятность вынуть белый шар не менятеся. \\
+\uline{Тогда} \[ p = \frac{K}{N}\quad p_n(k) = C^k_np^k(1 - p)^{n - k} \]
+--- биноминальное распределение
+\end{theorem}
+\begin{theorem}[Схема без возврата]
+\uline{Тогда} \[ P_{N,K}(n, k) = \frac{C^k_K\cdot C^{n-k}_{N - K}}{C^n_N} \]
+\end{theorem}
+\begin{definition}
+\[ k \to \frac{C^k_K\cdot C^{n - k}_{N - K}}{C^n_N},\ k \le K \]
+назвается \textbf{гипергеометрическим} распределением веротяности
+\end{definition}
+\begin{lemma}
+\[ C^k_K \sim \frac{K^k}{k!} \]
+, при \(K \to \infty, K = \const\)
+\end{lemma}
+\begin{proof}
+\[ C^k_K = \frac{K!}{k!(K - k)!} = \frac{K(K - 1)\dots(K - k + 1)}{K^k}\cdot \frac{K^k}{k!} = \underbrace{1 \cdot \left(1 - \frac{1}{K}\right)\cdot\left(1 - \frac{2}{K}\right) \dots \left(1 - \frac{k - 1}{K}\right)}_{\substack{\downarrow \\ 1}} \cdot\frac{K^k}{k!} \sim \frac{K^k}{k!}\]
+\end{proof}
+\begin{theorem}
+\-
+\begin{itemize}
+\item \(N \to \infty\)
+\item \(K \to \infty\)
+\item \(\frac{K}{N} \to p \in (0, 1)\)
+\item \(n\) и \(0 \le k \le K\) --- фиксированны
+\end{itemize}
+\uline{Тогда} \[ P_{N,K}(n,k) = \frac{C^k_KC^{n - k}_{N - K}}{C^n_N} \to C^k_np^k(1 - p)^{n - k} \]
+\end{theorem}
+\begin{proof}
+\[ P_{N, K}(n, k) = \frac{C^k_KC^{n - k}_{N - K}}{C^n_N} \xrightarrow[N \to \infty]{} \frac{K^k}{k!}\cdot \frac{(N -K)^{n - k}}{(n - k)!}\cdot \frac{n!}{N^n} = \frac{n!}{k!\cdot(n- k)!}\cdot \frac{K^k}{N^k}\cdot\frac{(N - K)^{n - k}}{N^{n - k}} = \]
+\[ = C^k_n\left(\frac{K}{N}\right)^k\left(1 - \frac{K}{N}\right)^{n -k} \xrightarrow[N \to \infty]{} C^k_n\cdot p^k \cdot ( 1- p)^{n - k}\]
+\end{proof}
+\subsection{Схемы Пуассона. Теорема Пуассона для схемы Бернулли}
+\label{sec:org44af4b5}
+Схема: вероятность успеха при одном отдельном испытании зависит от числа испытаний \(n\) таким образом, чтобы \(n \cdot p_n = \lambda\)(точнее \(np_n \xrightarrow[n \to \infty]{} \lambda\)) \\
+Появление очень редких событий в длинном потоке испытаний
+\begin{theorem}[Формула Пуассона]
+Пусть \(n \to \infty,\ p_n \to 0\), так что \(np_n \to \lambda > 0\) \\
+\uline{Тогда} вероятность \(k\) успехов при \(n\) испытаниях \(p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n -k} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda}\)
+\end{theorem}
+\begin{proof}
+Положим \(\lambda_n = np_n\)
+\[ p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n - k} \xrightarrow[n \to \infty]{} \frac{n^k}{k!}\cdot \frac{\lambda_n^k}{n^k}\cdot\left(1 - \frac{\lambda_n}{n}\right)^{n - k} = \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n\cdot\left(1 - \frac{\lambda_n}{n}\right)^{-k} \xrightarrow[n \to \infty]{} \]
+\[ \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(\left(1 - \frac{\lambda_n}{n}\right)^{-\frac{n}{\lambda_n}}\right)^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}e^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda} \]
+\end{proof}
+\subsubsection{Оценка погрешности в формуле Пуссона}
+\label{sec:org94a84bc}
+\begin{theorem}
+Пусть \(\nu_n\) -- число успешных про \(k\) в схеме Бернулли с вероятностью \(p\)
+\[ \lambda = np\quad A \subset \{0, 1, 2, \dotsm n\}\text{ --- произвольное подмножество}\]
+\uline{Тогда} погрешность
+\[ \left|p(\nu_n \in A) - \sum_{k \in A} \frac{\lambda_k}{k!} e^{-\lambda}\right| \le \min(p, \lambda p) = \min(p, np^2) = \min\left(p, \frac{\lambda^2}{n}\right) \]
+\end{theorem}
+\begin{remark}
+Формулу Пуасснона иногда называют формулой редких событий и применяем при малых \(p\), \(n \ge 100\)
+\end{remark}
+\begin{task}
+Прибор состоит из 1000 элементов. Вероятность отказа каждого элемента \(\frac{1}{1000}\). Какова вероятность отказа больше двух элементов
+\end{task}
+\begin{solution}
+\[ p_n(k) \approx \frac{\lambda^k}{k!}e^{-\lambda} \]
+, где \(\lambda = np\)
+\begin{itemize}
+\item \(n = 1000\)
+\item \(p = 0.001\)
+\item \(\lambda = np = 1\)
+\item \(k > 2\)
+\end{itemize}
+\[ p(\nu_n > 2) = 1 - p(\nu_n \le 2) = 1 - (p(0) + p(1) + p(2)) \approx 1 - \left(\frac{\lambda^0}{0!} e^{-\lambda} + \frac{\lambda^1}{1!}e^{-\lambda} + \frac{\lambda^2}{2!}e^{-\lambda}\right) = \]
+\[ = 1 - 2.5e^{-1} \approx 0.0803\]
+Погрешность \(\varepsilon \le \min(p, \lambda p) = 0.001\)
+\end{solution}
+\end{document}
