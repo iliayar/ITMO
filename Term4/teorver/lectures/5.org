@@ -1,0 +1,148 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 5
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Схемы испытаний и соответствующие распределения
+- \(n\) --- число испытаний
+- \(p\) --- вероятность при одном испытании
+- \(q = 1 - p\) --- веротяность неудачи при одном испытании
+
+
+#+begin_definition org
+\[ k \to C^k_n p^k q^{n - k} \] --- биноминальное распределение с параметрами \(n\) и \(p\)
+#+end_definition
+#+begin_symb org
+\(B_{n,p} = B(n, p)\)
+#+end_symb
+** Схема до превого успешного испытания
+#+begin_definition org
+*Схема до первого успешного испытания*. Пусть проводится бесконечная
+ серия испытаний, которая заканчивается после первого успеха под номером \(\tau\)
+#+end_definition
+#+begin_theorem org
+\(p(\tau = k) = q^{k - 1}p\)
+#+end_theorem
+#+begin_proof org
+\[ p(\tau = k) = p(\underbrace{\text{НН}\dots\text{Н}}_{k - 1}\underset{\substack{\uparrow \\ k}}{\text{У}}) = q^{k - 1}p\]
+#+end_proof
+#+begin_definition org
+\(k \to q^{k-1}p,\ 1 \le k \le \infty\) --- называется *геометрическим распределением* с параметром \(t\)
+#+end_definition
+#+begin_symb org
+G(p)
+#+end_symb
+#+begin_remark org
+Это распределение обладает так назыаемым свойством отсутствия после действия или свойством нестарения
+#+end_remark
+#+begin_theorem org
+\(] p(\tau = k) = q^{k - 1}p\) \\
+_Тогда_ \(\forall n, k \in \N\ p(\tau > n + k| \tau > n) = p(\tau > k)\)
+#+end_theorem
+#+begin_proof org
+По формуле условной вероятности: \[ p(\tau > n + k |\tau > k) = \frac{p(\tau > n + k \text{ и } \tau > j)}{p(\tau > n)} = \frac{p(\tau > n + k)}{p(\tau > n)} \addtag\label{5_1_geom} \]
+\(p(\tau > m) = p(\text{первые } m\text{ неудач}) = q^m\)
+\[ \ref{5_1_geom} = \frac{q^{n + k}}{q^n} = q^k \]
+#+end_proof
+#+begin_remark org
+То, проработет ли девайс \(k\) часов после этого, не зависит от того сколько проработал до этого
+#+end_remark
+#+begin_remark org
+Также \(p(\tau = n + k|\tau > n) = p(\tau = k)\)
+#+end_remark
+** Испытание с несколькими исходами
+Пусть при \(n\) испытаниях могут произойти \(m\) несовместных исходов
+- \(p_i\) --- вероятность \(i\)-го исхода при одном отдельном испытании
+#+begin_theorem org
+Вероятность того, что при \(n\) испытаниях первый исход появится \(n_1\) раз, второй \(n_2\) раз, \dots, \(m\)-й \(n_m\) раз. \(n_1 + n_2 + \dots + n_m = m\)
+_Тогда_ \[ p(n_1, n_2, \dots, n_m) = \frac{n!}{n_1!n_2!\dots n_m!}p_1^{n_1}p_2^{n_2}\dots p_m^{n_m} \]
+#+end_theorem
+#+begin_proof org
+\(A_1 = \underbrace{11\dots1}_{n_1}\underbrace{22\dots2}_{n_2}\dots \underbrace{m\dots m}_{n_m}\)
+\[ p(A_1) = p_1^{n_1}\dots p_n^{n_m} \]
+Остальные благоприятные исходы отличаются лишь расположением \(i\)-х исходов по \(n\) местам, а веротяности будут те-же. Всего таких исходов будет:
+\[ C^{n_1}_nC^{n_2}_{n - n_1}C^{n_3}_{n - n_1 - n_2}\dots C^{n_m}_{n_m} = \frac{n!}{n_1!n_2!\dots n_m!} \] --- формула для перестановок с повторениями
+#+end_proof
+#+begin_task org
+Два одинаковых по силе шахматиста играют матч из 6 партий. Вероятность ничьи при одной пратии --- \(0.5\). Найти веротяность того, что второй игрок две партии выиграл, а три партии свел в ничью
+#+end_task
+#+begin_solution org
+Исходы:
+1) первый выиграл
+2) второй выиграл
+3) ничья
+ \[ p_3 = \frac{1}{2};\ p_1 = p_2 = \frac{1}{2}\left(1 - \frac{1}{2}\right) = \frac{1}{4};\ n= 6 \]
+ \[ P(1, 2, 3) = \frac{6!}{1!2!3!}\cdot\left(\frac{1}{4}\right)^1\cdot\left(\frac{1}{4}\right)^2\cdot\left(\frac{1}{2}\right)^3  = \frac{15}{2^7}\]
+#+end_solution
+** Урновая схема
+В урне \(N\) шаров. Из них \(K\) белых, а черных \(N - K\). Из нее выбираем \(n\) шаров без учета порядка. \(k\) --- число вынутых белых
+#+ATTR_LATEX: :options [Схема в возвратом]
+#+begin_theorem org
+Вероятность вынуть белый шар не менятеся. \\
+_Тогда_ \[ p = \frac{K}{N}\quad p_n(k) = C^k_np^k(1 - p)^{n - k} \]
+--- биноминальное распределение
+#+end_theorem
+#+ATTR_LATEX: :options [Схема без возврата]
+#+begin_theorem org
+_Тогда_ \[ P_{N,K}(n, k) = \frac{C^k_K\cdot C^{n-k}_{N - K}}{C^n_N} \]
+#+end_theorem
+#+begin_definition org
+\[ k \to \frac{C^k_K\cdot C^{n - k}_{N - K}}{C^n_N},\ k \le K \]
+назвается *гипергеометрическим* распределением веротяности
+#+end_definition
+#+begin_lemma org
+\[ C^k_K \sim \frac{K^k}{k!} \]
+, при \(K \to \infty, K = \const\)
+#+end_lemma
+#+begin_proof org
+\[ C^k_K = \frac{K!}{k!(K - k)!} = \frac{K(K - 1)\dots(K - k + 1)}{K^k}\cdot \frac{K^k}{k!} = \underbrace{1 \cdot \left(1 - \frac{1}{K}\right)\cdot\left(1 - \frac{2}{K}\right) \dots \left(1 - \frac{k - 1}{K}\right)}_{\substack{\downarrow \\ 1}} \cdot\frac{K^k}{k!} \sim \frac{K^k}{k!}\]
+#+end_proof
+#+begin_theorem org
+\-
+- \(N \to \infty\)
+- \(K \to \infty\)
+- \(\frac{K}{N} \to p \in (0, 1)\)
+- \(n\) и \(0 \le k \le K\) --- фиксированны
+_Тогда_ \[ P_{N,K}(n,k) = \frac{C^k_KC^{n - k}_{N - K}}{C^n_N} \to C^k_np^k(1 - p)^{n - k} \]
+#+end_theorem
+#+begin_proof org
+\[ P_{N, K}(n, k) = \frac{C^k_KC^{n - k}_{N - K}}{C^n_N} \xrightarrow[N \to \infty]{} \frac{K^k}{k!}\cdot \frac{(N -K)^{n - k}}{(n - k)!}\cdot \frac{n!}{N^n} = \frac{n!}{k!\cdot(n- k)!}\cdot \frac{K^k}{N^k}\cdot\frac{(N - K)^{n - k}}{N^{n - k}} = \]
+\[ = C^k_n\left(\frac{K}{N}\right)^k\left(1 - \frac{K}{N}\right)^{n -k} \xrightarrow[N \to \infty]{} C^k_n\cdot p^k \cdot ( 1- p)^{n - k}\]
+#+end_proof
+** Схемы Пуассона. Теорема Пуассона для схемы Бернулли
+Схема: вероятность успеха при одном отдельном испытании зависит от числа испытаний \(n\) таким образом, чтобы \(n \cdot p_n = \lambda\)(точнее \(np_n \xrightarrow[n \to \infty]{} \lambda\)) \\
+Появление очень редких событий в длинном потоке испытаний
+#+ATTR_LATEX: :options [Формула Пуассона]
+#+begin_theorem org
+Пусть \(n \to \infty,\ p_n \to 0\), так что \(np_n \to \lambda > 0\) \\
+_Тогда_ вероятность \(k\) успехов при \(n\) испытаниях \(p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n -k} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda}\)
+#+end_theorem
+#+begin_proof org
+Положим \(\lambda_n = np_n\)
+\[ p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n - k} \xrightarrow[n \to \infty]{} \frac{n^k}{k!}\cdot \frac{\lambda_n^k}{n^k}\cdot\left(1 - \frac{\lambda_n}{n}\right)^{n - k} = \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n\cdot\left(1 - \frac{\lambda_n}{n}\right)^{-k} \xrightarrow[n \to \infty]{} \]
+\[ \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(\left(1 - \frac{\lambda_n}{n}\right)^{-\frac{n}{\lambda_n}}\right)^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}e^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda} \]
+
+#+end_proof
+*** Оценка погрешности в формуле Пуссона
+#+begin_theorem org
+Пусть \(\nu_n\) -- число успешных про \(k\) в схеме Бернулли с вероятностью \(p\)
+\[ \lambda = np\quad A \subset \{0, 1, 2, \dotsm n\}\text{ --- произвольное подмножество}\]
+_Тогда_ погрешность
+\[ \left|p(\nu_n \in A) - \sum_{k \in A} \frac{\lambda_k}{k!} e^{-\lambda}\right| \le \min(p, \lambda p) = \min(p, np^2) = \min\left(p, \frac{\lambda^2}{n}\right) \]
+#+end_theorem
+#+begin_remark org
+Формулу Пуасснона иногда называют формулой редких событий и применяем при малых \(p\), \(n \ge 100\)
+#+end_remark
+#+begin_task org
+Прибор состоит из 1000 элементов. Вероятность отказа каждого элемента \(\frac{1}{1000}\). Какова вероятность отказа больше двух элементов
+#+end_task
+#+begin_solution org
+\[ p_n(k) \approx \frac{\lambda^k}{k!}e^{-\lambda} \]
+, где \(\lambda = np\)
+- \(n = 1000\)
+- \(p = 0.001\)
+- \(\lambda = np = 1\)
+- \(k > 2\)
+\[ p(\nu_n > 2) = 1 - p(\nu_n \le 2) = 1 - (p(0) + p(1) + p(2)) \approx 1 - \left(\frac{\lambda^0}{0!} e^{-\lambda} + \frac{\lambda^1}{1!}e^{-\lambda} + \frac{\lambda^2}{2!}e^{-\lambda}\right) = \]
+\[ = 1 - 2.5e^{-1} \approx 0.0803\]
+Погрешность \(\varepsilon \le \min(p, \lambda p) = 0.001\)
+#+end_solution

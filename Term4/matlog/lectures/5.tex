@@ -1,0 +1,333 @@
+% Created 2021-03-12 Fri 17:14
+% Intended LaTeX compiler: pdflatex
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 5}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 5},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Программы}
+\label{sec:orgff34711}
+программа(функция)
+\begin{itemize}
+\item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
+\item \(P\) --- доказательство, что из \(\alpha\) следует \(\beta\)
+\begin{examp}
+\-
+\begin{minted}[frame=lines,linenos=true,mathescape]{haskell}
+f a = a
+\end{minted}
+\(f: A \to A\) --- \(f\) доказывает что, из \(A\) следует \(A\)
+\end{examp}
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{ll}
+логическок исчесления & Типизированное \(\lambda\)-исчесление\\
+\hline
+логическая формула & тип\\
+доказательство & значение\\
+доказуемая формула & обитаемый тип(имеет хотя бы один экземпляр)\\
+\(\to\) & функция\\
+\& & упорядоченная пара\\
+\(\vee\) & алг. тип(тип-сумма)\\
+\end{tabular}
+\end{center}
+\begin{examp}
+\(5\) доказывает Int
+\end{examp}
+\begin{examp}
+Список:
+\begin{minted}[frame=lines,linenos=true,mathescape]{pascal}
+Type list = Record
+   Nul: boolean;
+   case Nul of
+     True  : ;
+     False : Next: ^list;
+end;
+\end{minted}
+\begin{minted}[frame=lines,linenos=true,mathescape]{c}
+struct list {
+	*list next;
+};
+\end{minted}
+Если \texttt{next == NULL} --- то конец
+\end{examp}
+\begin{examp}
+Дерево:
+\begin{minted}[frame=lines,linenos=true,mathescape]{c}
+struct tree {
+	tree* left;
+	tree* right;
+	int value;
+};
+\end{minted}
+\end{examp}
+
+\begin{definition}
+\textbf{Отмеченное(дизъюнктное)} объединение множеств: \\
+\begin{itemize}
+\item \(A, B\) --- множества
+\item \(A \sqcup B = \{\langle ``A``, a \rangle| a\in A\}\cup\{\langle ``B``, a \rangle | b \in B\}\)
+\end{itemize}
+Пусть \(S \in A \sqcup B\). Мы знаем откуда \(S\)
+\end{definition}
+\begin{minted}[frame=lines,linenos=true,mathescape]{haskell}
+data List a = Nil | Cons a (List a)
+example = Cons 1 (Cons 2 (Cons 3 Nil)) -- [1; 2; 3]
+\end{minted}
+\begin{minted}[frame=lines,linenos=true,mathescape]{c}
+union {
+	int a;
+	char b;
+};
+\end{minted}
+\begin{examp}
+\[
+\frac{\Gamma \vdash \overset{\text{Nil}}{\alpha} \to \gamma\quad \Gamma \vdash \overset{\text{Cons}}{\beta} \to \gamma\quad \Gamm \vdash \alpha \vee \beta}{\Gamma \vdash \underset{\text{int}}{\gamma}}
+\]
+\begin{minted}[frame=lines,linenos=true,mathescape]{ocaml}
+let rec count l (* $\alpha + \beta$ *) =
+match l with
+   | Nil (* $\alpha$ *) -> 0 (* $\alpha \to \text{int}$ *)
+   | Cons(hd, tl) (* $\beta$ *) -> 1 + count tl (* $\beta \to \text{int}$ *)
+\end{minted}
+\end{examp}
+\subsection{Исчесление предикатов}
+\label{sec:orgb89c9a6}
+\begin{definition}
+Язык исчисление предикатов
+\begin{itemize}
+\item логические выражения "предикаты"/"формулы"
+\item предметные выражния "термы"
+\end{itemize}
+\(\Theta\) --- метаперменные для термов \\
+Термы:
+\begin{itemize}
+\item Атомы:
+\begin{itemize}
+\item \(a, b, c, d, \dots\) --- предметные переменные
+\item \(x, y, z\) --- метапеременные для предметных перменных
+\end{itemize}
+\item Функциональные Символы
+\begin{itemize}
+\item \(f, g, h\) --- Функциональные символы(метаперемнные)
+\item \(f(\Theta_1, \dots \Theta_n)\) --- применение функциональных символов
+\end{itemize}
+\item Логические выражения: \\
+\color{gray}Если \(n = 0\), будем писать \(f, g\) --- без скобок\color{black}
+\begin{itemize}
+\item \(P\) --- метаперменные для предикатных символов
+\item \(A, B, C\) --- предикатный символ
+\item \(P(\Theta_1, \dots, \Theta_n)\) --- применение предикатных символов
+\item \(\&, \vee, \neg, \to\) --- Cвязки
+\item \(\forall x.\varphi\) и \(\exists x.\varphi\) --- кванторы \\
+\color{gray}"<квантор> <переменная>.<выражение>"\color{black} \\
+\end{itemize}
+\end{itemize}
+\end{definition}
+\subsubsection{Сокращение записи}
+\label{sec:org05b5db4}
+И.В + жадность \(\forall, \exists\) \\
+Метавыражение:
+\[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
+Квантор съедает все что дают, т.е. имеет минимальный приоритет. \\
+Правильный вариант(настоящее выражние):
+\[ \forall a. B(A) \& \forall b. B(b) \]
+\subsection{Теория моделей}
+\label{sec:orgdc0c456}
+Оценка формулы в исчислении предикатов:
+\begin{enumerate}
+\item Фиксируем \(D\) --- предметное множетво
+\item Кажодму \(f_i(x_1, \dots, x_n)\) сопоставим функцию \(D^n \to D\)
+\item Каждому \(P_j(x_1, \dots, x_m)\) сопоставим функцию(предикат) \(D^2 \to V\)
+\item Каждой \(x_i\) сопоставим элемент из \(D\)
+\end{enumerate}
+\begin{examp}
+\[\forall x.\forall y.\ E(x, y)\]
+Чтобы определить формулу сначала определим \(D = \N\) 
+\[ E(x, y) = \begin{cases}\text{И} & ,x = y \\ \text{Л} &, x\neq y\end{cases} \]
+\begin{itemize}
+\item \(\llbracket x \rrbracket = f_{x_i}\)
+\item \(\llbracket \alpha \star \beta \rrbracket\) --- смотри ИИВ
+\item \(\llbracket P_i(\Theta_1, \dots , \Theta_n) \rrbracket = f_{P_i}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
+\item \(\llbracket f_j(\Theta_1 , \dots, \Theta_n ) \rrbracket = f_{f_j}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
+\item \[ \llbracket \forall x. \varphi \rrbracket = \begin{cases} \text{И} & , \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И}\text{ при всех } k \in D  \\ \text{Л} &,\text{иначе}\end{cases} \]
+\item \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе}\]
+\end{itemize}
+\[ \llbracket \forall x.\forall y.E(x, y) \rrbracket = \text{Л} \]
+т.к. \(\llbracket E(x, y) \rrbracket^{x:=1,\ y:=2} = \text{Л}\)
+\end{examp}
+\newcommand{\colorboxed}[2]{\,\color{#1}\fbox{\color{black}#2}\color{black}\,}
+
+\begin{examp}
+\[ \forall \colorboxed{green}{\varepsilon > \colorboxed{blue}{0}}\ \exists N\ \forall \colorboxed{green}{\colorboxed{blue}{n} > \colorboxed{blue}{N}}\quad \colorboxed{green}{\colorboxed{blue}{|a_n - a|} < \colorboxed{blue}{\varepsilon}} \]
+Синим отмечены функциональные конструкции(термы), зеленым предикатные
+\[ \forall \varepsilon. (\varepsilon > 0) \to \exists N. \forall n. (n > N) \to (|a_n - a| < \varepsilon) \]
+Обозначим:
+\begin{itemize}
+\item \((>)(a, b) = G(a, b)\) --- предикат
+\item \(|\bullet|(a) = m_|(a)\)
+\item \((-)(a, b) = m_-(a, b)\)
+\item \(0() = m_0\)
+\item \(a_\bullet(n) = m_a(n)\)
+\end{itemize}
+\[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
+\end{examp}
+\subsection{Теория доказательств}
+\label{sec:org199681d}
+Все аксимомы И.В + M.P.
+\begin{description}
+\item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
+\item[{(схема 12)}] \(\varphi[x:=\Theta]\to \exists x. \varphi\)
+\end{description}
+Если \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\).
+\begin{definition}
+\textbf{Свободен для подстановки} --- никакое свободное вхождение \(x\) в \(\Theta\) не станет связанным
+\end{definition}
+\begin{examp}
+\-
+\begin{minted}[frame=lines,linenos=true,mathescape]{c}
+int y;
+int f(int x) {
+	x = y;
+}
+\end{minted}
+Заменим \texttt{y := x}. Код сломается, т.к. у нас нет свобод для подстановки
+\end{examp}
+\begin{description}
+\item[{(Правило \(\forall\))}] \[\frac{\varphi \to \psi}{\varphi \to \forall x. \psi}\]
+\item[{(Правило \(\exists\))}] \[ \frac{\psi \to \varphi}{\exists x.\psi \to \varphi} \]
+\end{description}
+В обоих правилах \(x\) не входит свободно в \(\varphi\)
+\begin{examp}
+\[ \frac{x = 5 \to x^2 = 25}{x = 5 \to \forall x. x^2 = 25} \]
+Между \(x\) и \(x^2\) была связь, мы ее разрушили. Нарушено ограничение
+\end{examp}
+\begin{examp}
+\[ \exists y. x = y \]
+\[ \forall x. \exists y. x = y \to \exists y. y + 1 = y \]
+Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
+\end{examp}
+\end{document}

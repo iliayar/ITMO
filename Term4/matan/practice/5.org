@@ -1,0 +1,133 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 5
+#+AUTHOR: Ilya Yaroshevskiy
+
+\[ f \ge 0\quad \int_\Omega f d\mu \]
+\[ f\text{ --- суммируемая } \int_\Omega|f|d\mu < + \infty \]
+
+#+begin_examp org
+\[ f = \frac{1}{x^2 + y^2} \]
+\(\Omega\) --- окружность радиуса \(1\)
+\[ \iint \frac{1}{x^2 + y^2} dx dy = \sum_n \iint \frac{1}{x^2 + y^2} dx dy \asymp \sum \addtag\label{5_1_sum}\]
+\color{blue}
+\[ f, g > 0\quad f\asymp g \quad \exists c_1, c_2 > 0\ c_1f < g < c_2f \]
+\[ \inf f\mu E \le \int_E f d\mu \le \sup f \mu E \]
+\color{black}
+#+ATTR_LATEX: :scale 0.4
+[[file:5_1.png]]
+в \(\Omega_n\):
+\[ \frac{1}{x^2 + y^2} \asymp \frac{1}{\frac{1}{n^2}} \]
+\[ \frac{1}{\frac{1}{n^2}} \le \frac{1}{x^2 + y^2} \le \frac{1}{\frac{1}{(n + 1)^2}} \]
+\[ n^2 \le \frac{1}{x^2 + y^2} \le (n + 1)^2 \le 4n^2 \]
+\[ (\text{продолжение }\ref{5_1_sum})\ \sum_{n = 1}^{ + \infty} n^2 \cdot \lambda \Omega_n = \sum n^2 \frac{\pi}{4} \left(\frac{1}{n^2} - \frac{1}{(n + 1)^2}\right) \sim \sum \frac{c}{n}\text{ --- расходится}\]
+#+end_examp
+#+begin_examp org
+\[ f = \frac{1}{x + y} \]
+\(\Omega\) --- квадрат \(1\times 1\)
+\[ \iint \frac{1}{x + y} = \sum_{n = 1}^{ + \infty}\iint \frac{1}{x + y} \asymp \sum \frac{1}{\frac{1}{n}} \addtag\label{5_2_sum}\]
+#+ATTR_LATEX: :scale 0.4
+[[file:5_2.png]]
+\[ \frac{1}{2}\cdot\frac{1}{n} \le \frac{1}{n + 1} < x+ y \le \frac{2}{n} \]
+\[ \ref{5_2_sum} \sum \frac{1}{\frac{1}{n}}\cdot \frac{1}{n^3} = \sum \frac{1}{n^2}\text{ --- сходится} \]
+длина \( \approx \frac{1}{n}\), 
+ширина \( \approx \frac{1}{n^2}\)
+#+end_examp
+
+
+Функции:
+1. \[ f(x, y) = \frac{1}{(x^2 + y^2)^p} \]
+2. \[ g(x, y) = \frac{1}{|x + y|^p} \]
+3. \[ h(x, y) = \frac{1}{|1 - x^2 - y^2|^p} \]
+
+
+Области:
+#+begin_export latex
+\begin{figure}[H]
+\centering
+\begin{minipage}{20em}
+\includegraphics[scale=0.3]{5_3.png}
+\caption{Круг}
+\end{minipage}
+\begin{minipage}{20em}
+\includegraphics[scale=0.3]{5_4.png}
+\caption{Доплнение круга}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{20em}
+\centering
+\includegraphics[scale=0.3]{5_5.png}
+\caption{Треугольник}
+\end{minipage}
+\begin{minipage}{20em}
+\includegraphics[scale=0.3]{5_7.png}
+\caption{"Рог"}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{20em}
+\includegraphics[scale=0.3]{5_6.png}
+\caption{Четверть астроиды}
+\end{minipage}
+\begin{minipage}{20em}
+\includegraphics[scale=0.3]{5_8.png}
+\caption{Полоса}
+\end{minipage}
+\end{figure}
+#+end_export
+
+#+begin_task org
+\(f\) = 1., Дополнение круга
+#+end_task
+#+begin_solution org
+\[ \frac{1}{(n + 1)^{2p}} \le f \le \frac{1}{n^{2p}} \Rightarrow f \asymp \frac{1}{n^{2p}} \]
+\[ \frac{1}{(n + 1)^{2p}} \le f \le \frac{1}{n^{2p}} \Rightarrow f \asymp \frac{1}{n^{2p}} \]
+\[ \iint \frac{dx dy}{(x^2 + y^2)^p} = \sum_{n = 1}^{ + \infty} \iint_{\Omega_n} \frac{1}{(x^2 + y^2)^p} \asymp \sum \frac{1}{n^2 p} \cdot n = \sum \frac{1}{n^{2p - 1}} \]
+- \(2p - 1 > 1\) --- сходится
+- \(2p - 1\le 1\) --- расходится
+#+end_solution
+#+begin_task org
+\(f\) = 3., Круг
+#+end_task
+#+begin_solution org
+\[ \iint_\Omega f = \sum_n \iint_{\Omega_n}\frac{1}{|1 - x^2 - y^2|^p} dx dy \addtag\label{5_3}\]
+#+ATTR_LATEX: :scale 0.4
+[[file:5_9.png]]
+- A: :: \[ 1 - (1 - \frac{1}{n})^2 - o^2 = \frac{2}{n} - \frac{1}{n^2} \]
+- B: :: \[ \frac{2}{n + 1} - \frac{1}{(n + 1)^2} \]
+\[ \frac{1}{2n} < \frac{1}{n + 1} < \frac{2}{n + 1} - \frac{1}{(n + 1)^2} \le 1 - (x^2 + y^2) \le 1 - \left(1 - \frac{1}{n}\right)^2 \le \frac{2}{n} \]
+\[ 1 - (x^2 + y^2) \asymp \frac{1}{n} \]
+\[ f \asymp \frac{1}{\left(\frac{1}{n}\right)^p} = n^p \]
+\[ \ref{5_3} \asymp \sum n^p\cdot\frac{1}{n^2} = \sum \frac{1}{n^{2 - p}} \]
+- \(2 - p > 1\) --- сходится
+- \(2 - p < 1\) --- расходится
+#+end_solution
+#+begin_task org
+\(f\) = 2., "Рог"
+#+end_task
+#+begin_solution org
+\[ \iint_\Omega f = \sum_n \iint_{\Omega_n} \addtag\label{5_4} \]
+#+ATTR_LATEX: :scale 0.3
+[[file:5_10.png]]
+- \(x + y\): ::
+  \-
+  | \(A\left(\sqrt{\frac{n}{2}}, 2\right)\) | \(n + \frac{\sqrt{n}}{\sqrt{2}}\) | D | \(n + 1 + \frac{\sqrt{n + 1}}{\sqrt{2}}\) |
+  | \(B(\sqrt{n}, n)\)                      | \(n + \sqrt{n}\)                  | C | \(n + 1 + \sqrt{n + 1}\)                     |
+\[ \frac{1}{(3n)^p} \le "D" \frac{1}{(x + y)^p} \le "A" \frac{1}{\left(n + \frac{\sqrt{n}}{\sqrt{2}}\right)^p} \le \frac{1}{n^p} \]
+\[ f \asymp \frac{1}{n^p} \]
+\[ \ref{5_4} \asymp \sum \frac{1}{n^p}\cdot\sqrt{n} = \sum \frac{n^{p - \frac{1}{2}}}\]
+- \(p - \frac{1}{2} > 1\) --- сходится
+- \(p - \frac{1}{2} \le 1\) --- расходится
+#+end_solution
+#+begin_task org
+\(f\) = 1., "Рог"
+#+end_task
+#+begin_solution org
+\[ \iint_\text{"Рог"}\frac{1}{(x^2 + y^2)^p} = \sum \int_{\Omega_n} \asymp \sum \frac{1}{n^2p}\cdot\sqrt{n} \]
+
+#+end_solution
+
