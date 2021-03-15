@@ -10,41 +10,51 @@ My stuff from ITMO University
 - [[file:Term4/matan/lectures/2.pdf][Лекция 2]]
 - [[file:Term4/matan/lectures/3.pdf][Лекция 3]]
 - [[file:Term4/matan/lectures/4.pdf][Лекция 4]]
+- [[file:Term4/matan/lectures/5.pdf][Лекция 5]]
 **** Практики
-- [[file:Term4/matan/pratice/2.pdf][Практика 2]]
-- [[file:Term4/matan/pratice/3.pdf][Практика 3]]
+- [[file:Term4/matan/practice/2.pdf][Практика 2]]
+- [[file:Term4/matan/practice/3.pdf][Практика 3]]
+- [[file:Term4/matan/practice/5.pdf][Практика 5]]
 *** Теор. вер.
 **** Лекции
 - [[file:Term4/teorver/lectures/1.pdf][Лекция 1]]
 - [[file:Term4/teorver/lectures/2.pdf][Лекция 2]]
 - [[file:Term4/teorver/lectures/3.pdf][Лекция 3]]
 - [[file:Term4/teorver/lectures/4.pdf][Лекция 4]]
+- [[file:Term4/teorver/lectures/5.pdf][Лекция 5]]
 **** Практики
 - [[file:Term4/teorver/practice/1.pdf][Практика 1]]
 - [[file:Term4/teorver/practice/2.pdf][Практика 2]]
 - [[file:Term4/teorver/practice/3.pdf][Практика 3]]
 - [[file:Term4/teorver/practice/4.pdf][Практика 4]]
+- [[file:Term4/teorver/practice/5.pdf][Практика 5]]
 *** Мет. опт.
 **** Лекциии
 - [[file:Term4/metopt/lectures/1-2.pdf][Лекция 1, 2]]
 - [[file:Term4/metopt/lectures/3.pdf][Лекция 3]]
 - [[file:Term4/metopt/lectures/4.pdf][Лекция 4]]
 - [[file:Term4/metopt/lectures/5.pdf][Лекция 5]]
+- [[file:Term4/metopt/lectures/6.pdf][Лекция 6]]
 *** Мат. лог.
 **** Лекции
 - [[file:Term4/matlog/lectures/4.pdf][Лекция 4]]
+- [[file:Term4/matlog/lectures/5.pdf][Лекция 5]]
 **** Домашки
 - [[file:Term4/matlog/hws/1.pdf][1.3.g]]
 - [[file:Term4/matlog/hws/2.pdf][3.4.b]]
+- [[file:Term4/matlog/hws/4.4.b.pdf][4.4.b]]
 *** Дискретка
 **** Лекции
 - [[file:Term4/discrete/lectures/2.pdf][Лекция 2]]
 - [[file:Term4/discrete/lectures/3.pdf][Лекция 3]]
+- [[file:Term4/discrete/lectures/4.pdf][Лекция 4]]
 **** Домашки
 - [[file:Term4/discrete/hw/20.pdf][20]]
+- [[file:Term4/discrete/hw/56.pdf][56]]
 *** Java advanced
 **** Домашки
 - [[file:Term4/java/hws/walk/][Walk]]
+- [[file:Term4/java/hws/arrayset/][ArraySet]]
 *** Алгосы
 **** Домашки
 - [[file:Term4/algo/hws/3.9.pdf][3.9]]
@@ -89,7 +99,7 @@ My stuff from ITMO University
 13. [[file:Term2/programming/HW13/][Prolog Primes]]
 *** Algo
 **** Labs
-1. [[file:Sem2/algo/labs/lab1/][Дерево отрезков]]
+1. [[file:Term2/algo/labs/lab1/][Дерево отрезков]]
 2. [[file:Term2/algo/labs/lab2/][Деревья поиска]]
 *** Discrete Math
 **** Labs

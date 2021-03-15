@@ -1,0 +1,245 @@
+% Created 2021-03-10 Wed 11:34
+% Intended LaTeX compiler: pdflatex
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 6}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 6},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Постановка задачи}
+\label{sec:org78379d9}
+\begin{enumerate}
+\item \(x^* = (x_1, x_2, \dots, x_n)^T,\ x_i \in U \subset E_n\), где \(U\) --- множество допустимых значений, \(E_n\) --- эвклидово
+пространство размера \(n\). \(f(x^*) = \min_{x \in U} f(x)\). Если
+ствится задача найти максимум, то млжно перейти к поиску минимума: \(f(x^*) = \max_{x\in U}f(x) = -\min_{x \in U}(-f(x))\)
+\item \(f(x^*) = \text{extr}_{x \in U}f(x)\)
+\item Если \(U\) задается ограничением на вектор \(x\), то задача поиска
+условного экстремума. Если \(U = E_n\) --- не имеет ограничений,
+то задача поиска безусловного экстремума
+\item Решение задачи поиска экстремума --- пара \((x^*, f(x^*))\)
+\end{enumerate}
+
+\noindent\rule{\textwidth}{0.5pt}
+Если \(\forall x \in U\ f(x^*) \le f(x)\) --- то \(x^*\) --- глобальный минимум. Локальный минимум \(x^* \in U\): если \(\exists \varepsilon > 0\), что \(\forall x \in U\) и \(\Vert x - x^* \Vert < \varepsilon\), то \(f(x^*) \le f(x)\)
+\begin{definition}
+\textbf{Поверхностью уровня} функции \(f(x)\) называется множество точек, в которых функция принимает постоянные значения, т.е. \(f(x) = \const\)
+\end{definition}
+\begin{definition}
+\textbf{Градиентом} \(\nabla\) f(x) непрерывно жифференцируемой функции \(f(x)\) в x:
+\[ \nabla f(x) = \left(\begin{array}{c} \frac{\partial f(x)}{\partial x_1} \\ \frac{\partial f(x)}{\partial x_2} \\ \vdots \\ \frac{\partial f(x)}{\partial x_n}\end{array}\right) \]
+Градиент направлен по нормали к поверхности уровня, т.е. перпендикулярно к касательной плоскости в точке \(x\), проведенной в сторону наибольшего возрастания функции
+\end{definition}
+\begin{definition}
+\textbf{Матрицей Гессе} \(H(x)\) дважды непрерывно дифференцируемой в точке
+\(x\) функции \(f(x)\) называется матрица частных производных второго
+порядка, вычисленных в данной точке.
+\[ H(x) = \left( \begin{array}{cccc} \frac{\partial^2 f(x)}{\partial x_1^2} & \frac{\partial^2 f(x)}{\partial x_1x_2} & \dots & \frac{\partial^2 f(x)}{\partial x_1x_n} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial^2 f(x)}{\partial x_nx_1} & \frac{\partial^2 f(x)}{\partial x_nx_2} & \dots & \frac{\partial^2 f(x)}{\partial x_n^2} \end{array}\right) \]
+\end{definition}
+\begin{enumerate}
+\item \(H(x)\) --- симметричная, размер \(n \time n\)
+\item Антиградиент: вектор, равный по модулю вектору градиента, но противоположный по направлению. Указывает в сторну наибольшего убывания функции \(f(x)\)
+\item \[ \nabla f(x) = f(x + \Delta x) - f(x) = \nabla f(x)^T\Delta x + \frac{1}{2} \Delta x^T H(x)\Delta x + o(\Vert \Delta x \Vert^2) \]
+\(o(\Vert \Delta x \Vert^2)\) --- сумма всех членов разложения, имеющих порядок выше второго, \(\Delta x^T H(x) \Delta x\) --- квадратичная форма
+\end{enumerate}
+\subsection{Свойства квадратичных форм}
+\label{sec:org2ed1c46}
+Квадратичная форма \(\Delta x^T H(x) \Delta x\) (и соответсвующая матрица \(H(x)\)) называется:
+\begin{itemize}
+\item положительно опрделенной \(H(x) > 0\), если \(\forall \Delta x \neq 0\ \Delta x^T H(x) \Delta x > 0\)
+\item отрицательно определенной \(H(x) < 0\), если \(\forall \Delta x \neq 0\ \Delta x^T H(x) \Delta x < 0\)
+\item положительно полуопределенной \(H(x) \ge 0\), если \(\forall \Delta x \neq 0\ \Delta x^T H(x) \Delta x \ge 0\)
+и имеется \(\Delta x \neq 0: \Delta x^T H(x) \Delta x = 0\)
+\item отрицательно полуопределенной \(H(x) \le 0\), если \(\forall \Delta x \neq 0\ \Delta x^T H(x) \Delta x \le 0\)
+и имеется \(\Delta x \neq 0: \Delta x^T H(x) \Delta x = 0\)
+\item неопределнной, если \(\exists \Delta x, \Delta \tilde{x}: \Delta x^T H(x) \Delta x > 0,\ \Delta \tilde{x}^T H(\tilde{x}) \Delta \tilde{x} < 0\)
+\item тождественно равной нулю \(H(x) \equiv 0\), если \(\forall \Delta x\ \Delta x^T H(x) \Delta x = 0\)
+\end{itemize}
+\subsection{Свойства выпуклых множеств и выпуклых функций}
+\label{sec:org44d345d}
+\begin{definition}
+Пусть \(x, y \in E_n\). Множество точек вида \(\{z\} \subset E_n: z = \alpha x + (1 - \alpha)y\), \(\alpha \in [0, 1]\), \(z\) --- отрезок, соединяющий \(x\) и \(y\).
+\end{definition}
+\begin{examp}
+\(E_n: n \le 3\): \(z\) --- отрезок(обычный)
+\end{examp}
+\begin{definition}
+\(U \subset E_n\) выпуклое, если вместе с точками \(x\) и (y \(\in\) U) оно содержит и весь отрезок \(z = \alpha x + (1 - \alpha)y, \alpha \in [0, 1]\)
+\end{definition}
+\begin{definition}
+Функция \(f(x)\), заданая на выпуклом \(U \subset E_n\) называется:
+\begin{itemize}
+\item выпуклой, если \(\forall x, y \in U\) и \(\forall \alpha [0, 1]\) выполняется \(f(\alpha x + (1 - \alpha)y) \le \alpha f(x) + (1- \alpha)f(y)\)
+\item строго выпуклой, если \(\forall \alpha \in (0, 1)\) выполняется \(f(\alpha x + (1 - \alpha)y) < \alpha f(x) + (1-\alpha)f(y)\)
+\item сильно выпуклой с константой \(l > 0\), если \(\forall x, y \in U\) и \(\forall \alpha \in [0, 1]\) выполняется \(f(\alpha x + (1 - \alpha)y) \le \alpha f(x) + (1- \alpha) f(y) - \frac{l}{2}\alpha(1 - \alpha)\Vert x - y \Vert^2\)
+\end{itemize}
+\end{definition}
+\emph{Свойства:}
+\begin{enumerate}
+\item Функция \(f(x)\) \uline{выпуклая}, если ее грфик целиком лежит не выше отрезка, соединяющего две ее произвольные точки \\
+Функция \(f(x)\) \uline{строго выпуклая}, если ее график лежит целиком ниже отрезка, соединяющего две ее произвольные, но не совпадающие точки
+\item Если функция \(f(x)\) \uline{сильно выпуклая}, то она одноверменно строго выпуклая и выпуклая \\
+Если функция \(f(x)\) \uline{строго выпуклая}, то она одновременно выпуклая
+\item Выпуклость функции можно определить по матрице Гессе \(H(x)\)
+\begin{itemize}
+\item Если \(H(x) \ge 0\ \forall x \in E_n\), то \(f(x)\) выпуклая
+\item Если \(H(x) > 0\ \forall x\in E_n\), то \(f(x)\) строго выпуклая
+\item Если \(H(x)\ \ge lE\ \forall x \in E_n\), где \(E\) --- единичная матрица, то \(f(x)\) сильно выпуклая
+\end{itemize}
+\end{enumerate}
+\emph{Свойства выпуклых функций:}
+\begin{enumerate}
+\item Если f(x) выпуклая функция на выпуклом множестве \(U\), то всякая точка локального минимума есть точка глобального минимума на \(U\)
+\item Если выпуклая функция достигает своего минимума в двух различных точках, то она достигает миниума во всех точках отрезка, соединяющих это точки.
+\item Если \(f(x)\) строго выпуклая функция множества \(U\), то она может достигать своего глобального минимума на \(U\) не более чем в одной точке
+\end{enumerate}
+\subsection{Необходимое и достаточное условие безусловного экстремума}
+\label{sec:org4c6103d}
+\begin{theorem}[Необходимое условие экстремума первого порядка]
+Пусть \(x^* \in E_n\) --- локальный минимум или максимум \(f(x)\) на \(E_n\) и \(f(x)\) --- дифференцируема в точке \(x^*\) \\
+\uline{Тогда} \(\nabla f(x)\) в точке \(x^*\) равен нулю \(\nabla f(x^*) = 0\), т.е.
+\[ \frac{\partial f(x^*)}{\partial x_i} = 0,\ i = \overline{1, n} \]
+\end{theorem}
+\begin{definition}
+Точки \(x^*: \nabla f(x^*) = 0\) --- \textbf{стационарные}
+\end{definition}
+\begin{theorem}[Необходимое условие экстремума второго порядка]
+Пусть \(x^* \in E_n\) --- точка локального минимума или максимума \(f(x)\) на \(E_n\) и \(f(x)\) --- дважды дииференцируемая в точке. \\
+\uline{Тогда} \(H(x^*)\) --- является положительно или отрицательно(если максимум) полуопределенной, т.е. \(H(x^*) \ge 0\) или \(H(x^*) \le 0\)(если максимум)
+\end{theorem}
+\begin{theorem}[Достаточное условие экстремума]
+Пусть \(f(x)\) в \(x^* \in E_n\) дважды дифференцируема, ее \(\nabla f(x) = 0\), а \(H(x^*) > 0\) или \(H(x^*) < 0\)(для максимума). \\
+\uline{Тогда} \(x^*\) --- точка локального минимума(максимума) \(f(x)\) на \(E_n\)
+\end{theorem}
+\subsubsection{Проверка выполнения условий}
+\label{sec:orgfc78a8e}
+\begin{itemize}
+\item вычисление угловых миноров \(H(x)\)
+\item вычисление главных миноров \(H(x)\) \\
+\end{itemize}
+
+
+\begin{enumerate}
+\item Ислледование положительной или отрицательной определнности угловых и главных миноров
+\item Анализ собственных значений матрицы \(H(x)\)
+\end{enumerate}
+\end{document}

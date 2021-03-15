@@ -1,0 +1,207 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 5
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_export latex
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\M}{\mathfrak{M}}
+#+end_export
+
+* Плотности
+
+\noindentПлотность \((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- мера \\
+Плотность  меры \(\nu\) онсительно \(\mu\) --- это функция \(\omega: X \to \overline{\R}\) \\
+\(\forall B \in A\quad \nu B = \int_B \omega d\mu\)
+
+#+ATTR_LATEX: :options [критерий плотности]
+#+begin_theorem org
+\-
+- \((X, \A, \mu),\ \nu\) --- еще одна мера
+- \(\omega: X \to \overline{\R},\ \omega \ge 0\) --- измеримая
+_Тогда_ \(\omega\) --- плотность \(\nu\) отнсительно \(\mu\) \Leftrightarrow
+\[ \forall A \in \A\ \mu A \cdot \inf_A \omega \le \nu(A) \le \mu A \cdot \sup_A \omega \]
+#+end_theorem
+#+ATTR_LATEX: :options [нет плотности]
+#+begin_examp org
+\-
+- \(X = \R\)
+- \(\A = \M'\)
+- \(\mu = \lambda_1\)
+- \(\nu\) --- одноточечная мера \(\nu(A) = \left[\begin{array}{ll} 1 & ,\text{если } 0 \in A \\ 0 & ,\text{иначе}\end{array}\right.\) \\
+  считаем \(\nu: \A \to \R\)
+#+end_examp
+
+#+ATTR_LATEX: :options [Необходимое условие существования плотности]
+#+begin_theorem org
+\(\mu A = 0 \Rightarrow \nu A = 0\)
+#+end_theorem
+#+ATTR_LATEX: :options [теорема Радона-Никодина]
+#+begin_theorem org
+Это так-же достаточное условие
+#+end_theorem
+
+#+ATTR_LATEX: :options [Доказательство критерия плотности]
+#+begin_proof org
+- \((\Rightarrow)\) :: очевидно
+- \((\Leftarrow)\) :: Не умаляя общности \(\omega > 0: e = X(\omega = 0)\) \\
+  \(\nu(e) = \int_e \omega d\mu = 0\) \\
+  Для случая когда \(A \cup e = \emptyset\) все только лучше \\
+  Фиксируем \(q \in (0, 1)\) \\
+  \(A_j = A(q^j \le \omega < q^{j - 1}), j \in \mathbb{Z}\) \\
+  #+begin_center latex
+  \begin{tikzpicture}
+  \draw[->] (-2, 0) -- (2, 0);
+  \node at (-1.9, 0) (A) [below] {\(0\)};
+  \node at (-1.4, 0) (B) [below] {\(q^2\)};
+  \node at (-0.9, 0) (C) [below] {\(q\)};
+  \node at (-0.2, 0) (D) [below] {\(1 = q^0\)};
+  \node at (0.6, 0) (E) [above] {\(q^{-1}\)};
+  \node at (1.5, 0) (F) [above] {\(q^{-2}\)};
+  \end{tikzpicture}
+  #+end_center
+  \[ A = \bigsqcup_{j \in \mathbb{Z}} A_j \]
+  \[ \mu A_j \cdot q^{j} \le \nu A_j \le \mu A_i \cdot q^{j - 1} \addtag\label{5_1_neq}\]
+  \[ \mu A_j \cdot q^j \le \int_{A_j} \omega d\mu \le \mu A_j \cdot q^{j - 1} \addtag\label{5_2_neq} \]
+  Тогда
+  \[ q \cdot \int_A \omega d\mu \le q \cdot \sum \int_{A_j} \le \sum q^j \mu A_j \le \sum \nu A_j \le \frac{1}{q} \sum q^j \mu A_j \le \frac{1}{q} \sum \int_{A_j} = \frac{1}{q} \int_A \omega d\mu \ \]
+  то есть:
+  \[ q \int_A \omega d\mi \le \nu A \le \frac{1}{q} \int_A \omega d\mu \]
+  и \(q \to 1 - 0\)
+#+end_proof
+#+begin_lemma org
+\-
+- \(f, g\) --- суммируемые
+- \((X, \A, \mu)\)
+- \(\forall A \in \A\)
+- \(\int_A f = \int_A g\)
+_Тогда_ \(f = g\) почти везде
+#+end_lemma
+#+begin_proof org
+\(g := f - g\) \\
+Дано \(\forall A \int_A h = 0\) \\
+Доказать \(h = 0\) почти везде \\
+- \(A_{+} := X(h \ge 0)\)
+- \(A_{-} := X(h < 0)\)
+\(X = A_+ \sqcup A_-\)
+\[ \int_{A_+} |h| = \int_{A_+} h = 0 \]
+\[ \int_{A_-} |h| = -\int_{A_-} h = 0 \]
+тогда \[ \int_X |h| = 0 \]
+\(\Rightarrow h = 0\) почти везде
+#+end_proof
+#+begin_remark org
+\(\mathcal{L}(X)\) --- линейное пространство отображений \(l_A : f \mapsto \int_A f d\mu\) --- линейный функционал \\
+Таким образом множество функционалов \(\{l_A, A \in \A\}\) --- разделяет точки \\
+\( \forall f, g \in \mathcal{L}(X) \exists A l_A(f) \neq l_A(g)\)
+#+end_remark
+* Мера лебега
+#+ATTR_LATEX: :options [о мере образа малых кубических ячеек]
+#+begin_lemma org
+\-
+- \( O \subset \R^m\) --- открытое
+- \(a \in O\)
+- \(\Phi: O \to \R^m\)
+- \(\Phi \in C^1\)
+Пусть \(c > |\det\Phi'(a)| \neq 0\) \\
+_Тогда_ \(\exists \delta > 0\ \forall\) куба \(Q \subset B(a, \delta),\ a\in Q\) \\
+выполняется неравенство \(\lambda \Phi(Q) < c \cdot \lambda Q\)
+#+end_lemma
+#+begin_remark org
+Здесь можно считать что кубы замкнутые
+#+end_remark
+#+begin_proof org
+\(L := \Phi'(a)\) --- обратимо \\
+\[ \Phi(x) = \Phi(a) + L\cdot(x - a) + o(x - a)\quad x \to a \]
+\[ \underbrace{a + L^{-1}(\Phi(x) - \Phi(a))}_{\Psi(x)} = x + o(x - a) \]
+\[ \forall \varepsilon > 0 \exists \text{ шар} B_\varepsilon(a)\ \forall x \in B_\varepsilon(A)\ |\Psi(x) - x| < \frac{\varepsilon}{\sqrt{m}} |x - a| \]
+Пусть \(Q \subset B_\varepsilon(a) a \in Q \) --- куб со стороной \(h\). При \(x \in Q:\ |x - a| \le \sqrt{m}h\)
+\[ |\Psi(x) - x| \le \frac{\varepsilon}{\sqrt{m}}|x - a| \le \varepsilon h \]
+Тогда \(\Psi(Q) \subset\) Куб со стороной \((1 + 2\varepsilon)h\): при \(x, y \in Q\)
+\[ |\Psi(x)_i - \Psi(y)_i| \le |\Psi(x)_i - x_i| + |x_i - y_i| + |\Psi(y)_i - y_i| \le |\Psi(x) - x| + h + |\Psi(y) - y| \le (1 + 2\varepsilon)h\]
+\[ \lambda(\Psi(Q)) \le (1 + 2\varepsilon)^m \cdot \lambda Q  \]
+\(\Psi\) и \(\Phi\) отличаются только сдвигом и линейным отображением
+\[ \lambda \Phi(Q) = |\det L| \cdot \lambda \Psi(Q) \le \underbrace{|\det L|\cdot(1 + 2\varepsilon)^m}_{\text{выбираем }\varepsilon\text{ чтобы } ... < c } \lambda Q \]
+потом берем \(\delta = \text{радиус } B_\varepsilon(a)\)
+#+end_proof
+#+NAME: 5_lemma_2
+#+begin_lemma org
+\-
+- \(O \subset \R^m\) --- открытое
+- \(f: O \to \R\) --- непрерывное
+- \(Q \subset \overline{Q} \subset O\) --- кубическая ячейка
+- \(A \subset Q\)
+_Тогда_ \[ \inf_{\substack{G: A \subset G \\ G\text{ --- открытое } \subset O}}\left(\lambda(G)\sup_G f\right) = \lambda A\cdot \sup_A f\]
+#+end_lemma
+#+NAME: теорема_1
+#+begin_theorem org
+\-
+- \(\Phi: O \subset \R^m \to \R^m\) --- диффеоморфизм
+_Тогда_ \(\forall A \in \M^m, A \in O\)
+\[ \lambda \Phi(A) = \int_A \left|\det \Phi'(x)\right| d\lambda(x) \]
+#+end_theorem
+#+begin_proof org
+Обозначим якобиан \(J_\Phi(x) = |\det \Phi'(x)|\) \\
+\(\nu A := \lambda \Phi(A)\) --- мера. Т.е. надо доказать: \(J_\Phi\) --- плотность \(\nu\) относительно \(\lambda\). Тогда достаточно проверить условие критерия плотности
+\[ \inf_A J_\Phi \cdot \lambda A \le \nu A \le \sup_A J_\Phi \cdot \lambda A \addtag\label{5_3_neq}\]
+Достаточно проверить только правое неравенство. левое --- это "правое для \(\Phi(A)\) и отображения \(\Phi^{-1}\)"
+\[ \inf \frac{1}{|\det(\Phi')|}\cdot \lambda \Phi(A) \le \lambda A  \]
+1) Проверяем второе неравенство \ref{5_3_neq} для случая когда \(A\) --- кубическая ячейка. \(A \subset \overline{A} \subset O\). От противного:
+   \[ \lambda Q \cdot \sup_Q J_\Phi < \nu(Q) \]
+   Возьмем \(C > \sup_Q J_\Phi:\ C \cdot \lambda Q < \nu(Q)\). Запускаем процесс половинного деления: \\
+   Режем \(Q\) на \(2^m\) более мелких кубических ячеек. Выберем "мелкую" ячейку \(Q_1 \subset Q:\ C\cdot \lambda Q_1 < \nu Q_1\). Опять делим на \(2^m\) частей, берем \(Q_2:\ \C\cdot\lambda Q_2 < \nu Q_2\) и так далее
+   \[ Q_1 \supset Q_2 \supset \dots\quad \forall n C\cdot \lambda Q_n < \nu Q_n \addtag\label{5_4_kubi}\]
+   \[ a \in \bigcap \overline{Q_i}\quad c > \sup_Q J_\Phi = \sup_{\overline{Q}} J_\Phi,\text{ в частности } c > |\det\Phi'(a)| \]
+   Получаем противоречие с леммой: с скол угодно малой окрестности \(a\) имеются кубы \(\overline{Q_n}\), где выполняется \ref{5_4_kubi}. *Противоречие*
+2) Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
+   Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
+   \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
+3) По [[5_lemma_2][лемме]] второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
+   \[ O = \bigsqcup Q_j\text{ --- куба } Q_j \subset \overline{Q_j} \subset O \]
+   \[ A = \bigsqcup \underbrace{A \cup Q_j}_{A_j}\quad A\subset G\text{ --- открытое} \]
+   \[ J A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
+   Аналогично \ref{5_5_neq} получаем \(\nu A \le \sup_A f\cdot \lambda A\)
+#+end_proof
+#+begin_theorem org
+\-
+- \(\Phi: O \subset \R^m \to \R^m\) --- дифференцируемое
+_Тогда_ \(\forall f\) --- измеримых, \(\ge 0\), заданная на \(O' = \Phi(O)\)
+\[ \int_{O'}f(y) d\lambda = \int_O f(\Phi(x)) \cdot J_\Phi \cdot d\lambda \]
+, где \(J_\Phi(x) = |\det \Phi'(x)|\). То же верно для суммируемых функций \(f\)
+#+end_theorem
+#+begin_proof org
+Применяем теорему о взвешенном образе меры. \\
+Дано:
+- \((X, \A, \mu)\)
+- \((T, \B, \nu)\)
+- \( \Phi: X \to Y\) --- с сохранением измеримости
+- \(\Phi^{-1}(\B) \subset \A\)
+- \(\omega: Y \to \R,\ \ge 0\), измеримый
+- \(\nu\) --- взвешенный образ \(\mu\) с весом \(\omega\): \[\mu(B) = \int_{\Phi^{-1}(B)} \omega d\mu\]
+Тогда \[ \int_B f d\nu = \int_{\Phi^{-1}(B)}f(\Phi(x)) \omega(x) d\mu \]
+В нашем случае
+- \(X = Y - \R^m\)
+- \( \A = \B = \M^m\)
+- \(\Phi\) --- диффеоморфизм
+- \(\mu = \lambda\)
+- \(\nu(A) = \lambda \Phi(A)\)
+Под действием гладкого отображния \(\Phi\), \sigma-аглебра \(\M^m\) сохраняется \\
+По [[теорема_1][теореме]] \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
+т.е. \(\lambda\) --- взвешенный образ исходной меры Лебега по отношению к \(\Phi\)
+#+end_proof
+#+begin_examp org
+Полярные координаты в \(R^2\). \\
+\(\left\{\begin{array}{l} x = r\cos\varphi \\ y = r\sin\varphi \end{array}\right., \Phi: \{(r, \varphi), r> 0, \varphi \in (0, 2\pi)\} \to \R^2\) \\
+диффеоморфизм \[ \Phi = \begin{pmatrix} \cos \varphi & -r \sin\varphi \\ \sin \varphi & r \cos\varphi\end{pmatrix} \]
+\[ \det \Phi' = r\quad J_\Phi = r \]
+\[ \iint_\Omega f(x, y) = d\lambda_r = \iint_{\Phi^{-1}(\Omega)} f(r \cos\varphi, r\sin\varphi) r \underset{d \lambda_r(r, \varphi)}{d\lambda_r} \]
+#+end_examp
+#+begin_examp org
+Сферические координаты в \(R^3\)
+\[ \begin{cases} x = r \cos\varphi\cos\psi \\ y = r \sin\varphi \cos\psi \\ z = r\sin\psi \end{cases} 
+ \left[\begin{matrix} r > 0 \\ \varphi \in (0, 2\pi \\ \psi \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right) \end{matrix}\right. \]
+\[ \Phi' = \begin{pmatrix} \cos \varphi \cos \psi & -r \sin\varphi \cos\psi & - r \cos\varphi \sin \psi \\ \sin \varphi \cos \psi & r\cos\varphi\cos\psi? & - r\sin\varphi \sin \psi \\ \sin \psi & 0 & r\cos\psi \end{pmatrix} \]
+\[ \det \Phi' = r^2(\sin^2\psi \cos \psi + \cos^3\psi) = r^2\cos\psi = J_\Phi\]
+--- для географических координат: \(r\) --- растояние от центра Земли, \(\psi\) --- угол к плоскости экватора
+#+end_examp
+
