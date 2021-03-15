@@ -58,6 +58,8 @@ My stuff from ITMO University
 *** Алгосы
 **** Домашки
 - [[file:Term4/algo/hws/3.9.pdf][3.9]]
+**** Лабы
+- [[file:Term4/algo/labs/lab1/][Паросочетания]]
 ** Term 3
 *** Algorithms
 **** Labs
