@@ -1,5 +1,15 @@
-#+LATEX_CLASS: general
+#+LATEX_CLASS: lectures
 #+TITLE: Матан лекции
 #+AUTHOR: Ilya Yaroshevskiy
 
-#+INCLUDE "1.org" :lines "4-"
+
+* 
+#+INCLUDE: "1.org" :lines "4-"
+* 
+#+INCLUDE: "2.org" :lines "4-"
+* 
+#+INCLUDE: "3.org" :lines "4-"
+* 
+#+INCLUDE: "4.org" :lines "4-"
+* 
+#+INCLUDE: "5.org" :lines "4-"
