@@ -1,7 +1,7 @@
-% Created 2021-03-16 Tue 19:00
+% Created 2021-03-16 Tue 23:18
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[russ,oneside]{book}
+  \documentclass[oneside]{book}
   \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
@@ -28,7 +28,7 @@
 \usepackage{textcomp}
 \usepackage{capt-of}
   
-  \renewcommand{\chaptername}{Лекция}
+  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
   
    \usepackage{hyperref}
    \hypersetup{
@@ -113,10 +113,10 @@
   \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Матан лекции}
+\title{Лекции по Математическому анализу 4 семестр}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Матан лекции},
+ pdftitle={Лекции по Математическому анализу 4 семестр},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode )}, 
@@ -126,18 +126,17 @@
 \maketitle
 \tableofcontents
 
-\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
 
 
-\chapter{Лекция 1}
-\label{sec:orgd993f0d}
+\chapter{}
+\label{sec:orgec35d20}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Теория меры}
-\label{sec:org286da34}
+\label{sec:org86afb7e}
 \begin{lemma}[о структуре компактного оператора]
 \(V : \R^m \to \R^m\) --- невырожденный линейный оператор, т.е. \(\det V \neq 0\) \\
 \uline{Тогда}:
@@ -148,7 +147,7 @@
 \[ \forall x \in \R^m\quad V(x) = \sum_{i = 1}^m S_i \langle x, g_i \rangle h_i$ \]
 \color{gray} \(x = \sum \langle x, g_i \rangle g_i\) --- разложение по базису \color{black} \\
 \textbf{При этом} \(\vert\det V\vert = S_1 S_2 \dots S_m\)
-\label{org613e39e}
+\label{orgf7d971d}
 \end{lemma}
 \begin{proof}
 \(W := V^*V\) \color{gray} * --- транспонирование в \(\R^m\) \color{black} \\
@@ -164,7 +163,7 @@
 \[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
 \(\ref{diag_1}\) --- т.к. диагональная матрица
-\label{orgb1b6b0e}
+\label{org92772b9}
 \end{proof}
 \begin{theorem}[преобразование меры лебега при линейном отображении]
 \-
@@ -176,7 +175,7 @@
 \item \(\forall E \in \M^m\quad V(E) \in \M^m\)
 \item \(\lambda(V(E)) = \vert \det V \vert \cdot \lambda E\)
 \end{itemize}
-\label{orgcb755f1}
+\label{org0a073c3}
 \end{theorem}
 \begin{proof}
 \- 
@@ -188,12 +187,12 @@
 \(\Rightarrow\) \(\exists k: \mu = k\cdot \lambda\)(Лемма из предыдущего семестра) \\
 \(Q\) --- единичный куб на векторах \(g_i\) и \(V(g_i) = S_ih_i\), \(V(Q) = \{\sum\alpha_iS_ih_i \vert \alpha_i \in [0,1]\}\) --- паралеллепипед со сторонами \(S_i, \dots, S_m\)
 \end{description}
-\label{orgb52e115}
+\label{org3600934}
 \end{proof}
 \section{Интеграл}
-\label{sec:org91bd6e1}
+\label{sec:orgc09d42f}
 \subsection{Измеримые функции}
-\label{sec:org7060c04}
+\label{sec:org8253d04}
 \begin{definition}
 \-
 \begin{enumerate}
@@ -202,7 +201,7 @@
 \(\exists\) разбиение \(X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i\) \\
 При этом такое разбиение --- \textbf{допустимое разбиение}
 \end{enumerate}
-\label{org79997ee}
+\label{orgf3b43d8}
 \end{definition}
 \begin{examp}
 \-
@@ -210,7 +209,7 @@
 \item Характеристическая функция множества \(E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}\)
 \item \(f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}\), где \(\mathcal{X} = \bigsqcup e_i\)
 \end{enumerate}
-\label{org3680195}
+\label{org39a96e9}
 \end{examp}
 \begin{remark}
 \-
@@ -222,19 +221,19 @@
 \item \(f, g\) --- ступенчатые, \(\alpha \in \R\) \\
 \uline{Тогда} \(f + g,\ \alpha f,\ fg,\ max(f, g),\ min(f, g),\ |f|\) --- ступенчатые
 \end{enumerate}
-\label{org33c2f77}
+\label{org0cca135}
 \end{remark}
 \begin{definition}
 \(f: E\subset X \to \overline{\R},\ a \in \R\) \\
 \(E(f < a) = \{x\in E: f(x) < a\}\) --- \textbf{лебегово множество функции \(f\)} \\
 \(E(f \le a),\ E(f > a), E(f \ge a)\) --- также лебеговы множества \\
 Если \(f\) задана на \(X\): \(X(f < a),\ X(f \le a), \dots\) --- лебеговы множества
-\label{orgcee7a69}
+\label{org6eef9bb}
 \end{definition}
 \begin{remark}
 \(E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C\) \\
 \[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
-\label{orgfffe6e1}
+\label{orgbdd3c27}
 \end{remark}
 \begin{definition}
 \-
@@ -245,7 +244,7 @@
 \end{itemize}
 \(f\) --- \textbf{измерима на множестве \(E\)}: \\
 \(a \in \R\quad E(f < a)\) --- измеримо(т.е. \(\in \A\))
-\label{orgdb69081}
+\label{org9eb8e3d}
 \end{definition}
 \begin{symb}
 \-
@@ -253,7 +252,7 @@
 \item \(f\) --- измеримо на \(X\) --- говорят просто "измеримо"
 \item \(X = \R^m\), мера Лебега --- измеримо по Лебегу
 \end{itemize}
-\label{orgeb31797}
+\label{org5d24ffe}
 \end{symb}
 \begin{remark}
 Эквивалентны:
@@ -263,7 +262,7 @@
 \item \(\forall a\quad E(f > a)\) --- измеримо
 \item \(\forall a\quad E(f \ge a)\) --- измеримо
 \end{enumerate}
-\label{org6678a38}
+\label{org1094c37}
 \end{remark}
 \begin{examp}
 \begin{enumerate}
@@ -271,7 +270,7 @@
 \(E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}\)
 \item \(f: \R^m \to \R\) --- непрерывна. Тогда \(f\) --- измеримо по Лебегу
 \end{enumerate}
-\label{orgeaefd64}
+\label{orga90c66a}
 \end{examp}
 \begin{remark}
 \emph{Свойства}:
@@ -288,7 +287,7 @@
 \item \(f \neq 0\) --- измерима на \(E\) \(\Rightarrow\) \(\frac{1}{f}\) --- измерима на \(E\)
 \item \(f \ge 0\), измерима на \(E\), \(\alpha \in \R\). \uline{Тогда} \(f^\alpha\) --- измерима на \(E\)
 \end{enumerate}
-\label{org3166616}
+\label{orgce2cf98}
 \end{remark}
 \begin{theorem}
 \(f_n\) --- измерима на \(X\). \\
@@ -299,7 +298,7 @@
 \item \(\overline{\lim} f_n;\quad\underline{\lim} f_n\) --- измеримы
 \item Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то \(h(x)\) --- измеримо
 \end{enumerate}
-\label{orge1ff2f1}
+\label{org4e0cd5a}
 \end{theorem}
 \begin{proof}
 \-
@@ -308,11 +307,11 @@
 \item \[ (\overline{\lim} f_n)(x) = \inf\{s_n: s_n = \sup(f_n(x), f_{n + 1}(x), \dots)\} \]
 \item очев.
 \end{enumerate}
-\label{orgdbee0c1}
+\label{org0d75a63}
 \end{proof}
 
 \subsection{Меры Лебега-Стильеса}
-\label{sec:orgac2efd2}
+\label{sec:orgdb7618a}
 \begin{definition}
 \(\R, \P^1, g:\R \to \R\) --- возрастает, непрерывна \\
 \(\mu[a, b) := g(b) - g(a)\) --- \(\sigma\)-конечный объем \\
@@ -320,22 +319,22 @@
 \[ \mu[a, b) := g(b-0) - g(a - 0) \]
 --- тоже \(\sigma\)-конечная мера \\
 Применим теорему о продолжении, получим меру \(\mu g\) на некой \(\sigma\)-алгебре --- \textbf{мера Лебега-Стилтьеса} 
-\label{orgb79afdf}
+\label{org353ce57}
 \end{definition}
 \begin{definition}
 \(g(x) = \lceil x \rceil\) \\
 Пусть \(\mu g\) определена на Борелевской \(\sigma\)-алгебре --- \textbf{мера Бореля-Стилтьеса}
-\label{org4bb3ae2}
+\label{orga2d3abe}
 \end{definition}
-\chapter{Лекция 2}
-\label{sec:org1a0424e}
+\chapter{}
+\label{sec:org025fff5}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Теореия меры}
-\label{sec:org3158d30}
+\label{sec:orgbb347ed}
 \subsection{Измеримые функции}
-\label{sec:org0466af2}
+\label{sec:orga450792}
 \begin{itemize}
 \item \((X, \A, \mu)\)
 \item \(f: X \to \overline{R}\) имзмерима
@@ -354,7 +353,7 @@
 \item \(0 \le f_1 \le f_2 \le \dots\)
 \item \(\forall x f(x) = \lim_{n \to + \infty}f_n(x)\)
 \end{enumerate}
-\label{orgafbfbe2}
+\label{org56661ad}
 \end{theorem}
 \begin{proof}
 \begin{center}
@@ -364,33 +363,33 @@
 \[ e^{(n)}_{n^2 + 1} = X(n \le f) \]
 \[ g_n := \sum^{n + 1}_{k = 1} \frac{k - 1}{n} \X_{e^{(n)}_k} \]
 \[ g_n \ge 0 \quad \lim_{n \to + \infty}g_n(x) = f(x) \]
-\label{org760e85d}
+\label{orgd168204}
 \end{proof}
 \begin{corollary}
 \(f\) --- имзерима \\
 \uline{Тогда} \(\exists f_n\) --- ступенчатая, \(f_n \xrightarrow{n \to + \infty}{} f\) всюду и \(|f_n| \le |f|\)
-\label{org9eb1709}
+\label{org8a3ada9}
 \end{corollary}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(fg\) --- измемрима (\(0\cdot\infty=0\))
-\label{org6ba06fb}
+\label{org0888c15}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_ng_n\) --- ступенчатая \(f_ng_n \to fg\)
-\label{org7a2860a}
+\label{org5dd61ef}
 \end{proof}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(f + g\) --- измерима
-\label{orgad871e3}
+\label{orgc1dc250}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_n + g_n\) --- ступенчатая \(f_n + g_n \to f + g\) \\
 \color{gray}Считаем что \(\forall x\), не может быть \(f(x) = \pm \infty,\ g(x) = \mp \infty\)
-\label{orgfc213cf}
+\label{org6a0799a}
 \end{proof}
 
 \begin{itemize}
@@ -408,14 +407,14 @@
 \item \(f\) --- непрерывна на \(E' = E \setminus e\)
 \end{itemize}
 \uline{Тогда} \(f\) --- измерима
-\label{org8e93bea}
+\label{org012a969}
 \end{theorem}
 \begin{proof}
 \(f\) --- измерима на \(E'\)  \\
 \(E'(f < a)\) --- открыто в \(E'\) \\
 \[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в} E \]
 \[ E(f < a) = E'(f < a) \cup e(f < a) \]
-\label{org666724f}
+\label{org43d7bc6}
 \end{proof}
 \begin{examp}
 \-
@@ -448,7 +447,7 @@
 \(f\) --- непрерывна на \(\langle a, b \rangle\) за исключением возможно счетного числа точек
 \end{proof}
 \subsection{Сходимость почти везде и по мере}
-\label{sec:org737e436}
+\label{sec:org179f458}
 \begin{defintion}
 \begin{itemize}
 \item \((X, \A, \mu)\)
@@ -602,7 +601,7 @@
 \xymatrix@1{A\ar[r]^>>{+}&B}
 
 \section{Интеграл}
-\label{sec:org32a5000}
+\label{sec:orgc52f41e}
 \((X, \A, \mu)\)
 \begin{definition}
 \label{def_int_1}
@@ -660,13 +659,13 @@
 \item \[ \int_E f(x, y) d\mu = \int_{\R^m}\left(\int_{E_x} f(x, y d\lambda_n(y))\right)d\lambda_m(x) \]
 \end{enumerate}
 \end{theorem}
-\chapter{Лекция 3}
-\label{sec:orgaa44b63}
+\chapter{}
+\label{sec:orgfbd8a0c}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Интеграл}
-\label{sec:org0192e74}
+\label{sec:org514a333}
 \begin{enumerate}
 \item \(f \ge 0\), ступенчатые \\
 \(f = \sum_\text{кон.} \alpha_k \chi_{E_k}\), \(E_k\) --- измеримое \\
@@ -808,7 +807,7 @@
 \(f^+, f^- \dots\) \(\color{red}???\)
 \end{proof}
 \subsection{Предельный переход под щнаком интеграла}
-\label{sec:orgd485001}
+\label{sec:org3468b63}
 \(f_n \to f\). Можно ли утверждать \(\int_E f_n \to \int_E f\)?
 \begin{examp}
 \(f_n, f: \R \to \R\) \\
@@ -910,8 +909,8 @@
 \[ \le |a_n| \int_{-N}^N \frac{dx}{\sqrt{|x|}} = 4\sqrt{N}\cdot|a_n| \]
 \[ \sum_n \int_{[-N, N]}\frac{|a_n|}{\sqrt{|x - x_n|}} \le 4 \int_N \sum |a_n| < + \infty \]
 \end{proof}
-\chapter{Лекция 4}
-\label{sec:org2aed01d}
+\chapter{}
+\label{sec:org463e7fb}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
@@ -1061,9 +1060,9 @@
 \color{red}Zzz..\color{black}
 \end{proof}
 \section{Плотность одной меры по отношению к другой}
-\label{sec:org73e6e8d}
+\label{sec:org78c6701}
 \subsection{Замена перменных в интеграле}
-\label{sec:org4805f24}
+\label{sec:org454724d}
 \begin{itemize}
 \item \((X, \A, mu)\)
 \item \((Y, \B, \cdot)\)
@@ -1150,15 +1149,15 @@
 В этой ситуации \(\omega\) --- плотность(меры \(\nu\) относительно меры \(\mu\)) и тогда по теореме:
 \[ \int_X f d\nu = \int_X f(x)\omega(x)d\mu \]
 \end{remark}
-\chapter{Лекция 5}
-\label{sec:orgce88b4d}
+\chapter{}
+\label{sec:orgecc2d68}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Плотности}
-\label{sec:org4594479}
+\label{sec:org466a7c6}
 
 \noindentПлотность \((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- мера \\
 Плотность  меры \(\nu\) онсительно \(\mu\) --- это функция \(\omega: X \to \overline{\R}\) \\
@@ -1250,7 +1249,7 @@
 \(\forall f, g \in \mathcal{L}(X) \exists A l_A(f) \neq l_A(g)\)
 \end{remark}
 \section{Мера лебега}
-\label{sec:orgc4570a0}
+\label{sec:orgd0719ad}
 \begin{lemma}[о мере образа малых кубических ячеек]
 \-
 \begin{itemize}
@@ -1289,7 +1288,7 @@
 \item \(A \subset Q\)
 \end{itemize}
 \uline{Тогда} \[ \inf_{\substack{G: A \subset G \\ G\text{ --- открытое } \subset O}}\left(\lambda(G)\sup_G f\right) = \lambda A\cdot \sup_A f\]
-\label{orga899fb2}
+\label{orge9a64ad}
 \end{lemma}
 \begin{theorem}
 \-
@@ -1298,7 +1297,7 @@
 \end{itemize}
 \uline{Тогда} \(\forall A \in \M^m, A \in O\)
 \[ \lambda \Phi(A) = \int_A \left|\det \Phi'(x)\right| d\lambda(x) \]
-\label{org27cb1ce}
+\label{org9eb9cb2}
 \end{theorem}
 \begin{proof}
 Обозначим якобиан \(J_\Phi(x) = |\det \Phi'(x)|\) \\
@@ -1317,7 +1316,7 @@
 \item Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
 Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
 \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
-\item По \hyperref[orga899fb2]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
+\item По \hyperref[orge9a64ad]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
 \[ O = \bigsqcup Q_j\text{ --- куба } Q_j \subset \overline{Q_j} \subset O \]
 \[ A = \bigsqcup \underbrace{A \cup Q_j}_{A_j}\quad A\subset G\text{ --- открытое} \]
 \[ J A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
@@ -1354,7 +1353,7 @@
 \item \(\nu(A) = \lambda \Phi(A)\)
 \end{itemize}
 Под действием гладкого отображния \(\Phi\), \(\sigma\)-аглебра \(\M^m\) сохраняется \\
-По \hyperref[org27cb1ce]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
+По \hyperref[org9eb9cb2]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
 т.е. \(\lambda\) --- взвешенный образ исходной меры Лебега по отношению к \(\Phi\)
 \end{proof}
 \begin{examp}
