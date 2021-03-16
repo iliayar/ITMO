@@ -1,0 +1,366 @@
+% Created 2021-03-16 Tue 23:19
+% Intended LaTeX compiler: pdflatex
+
+  \documentclass[oneside]{book}
+  \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+  
+  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+  
+   \usepackage{hyperref}
+   \hypersetup{
+       colorlinks=true,
+       linkcolor=blue,
+       filecolor=orange,
+       citecolor=black,      
+       urlcolor=cyan,
+       }
+
+  \usetikzlibrary{decorations.markings}
+  \usetikzlibrary{cd}
+  \usetikzlibrary{patterns}
+  \usetikzlibrary{automata, arrows}
+
+  \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+  \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+  \newcommand{\R}{\mathbb{R}}
+  \renewcommand{\C}{\mathbb{C}}
+  \newcommand{\N}{\mathbb{N}}
+  \newcommand{\rank}{\text{rank}}
+  \newcommand{\const}{\text{const}}
+  \newcommand{\grad}{\text{grad}}
+
+  \theoremstyle{plain}
+  \newtheorem{axiom}{Аксиома}
+  \newtheorem{lemma}{Лемма}
+  \newtheorem{manuallemmainner}{Лемма}
+  \newenvironment{manuallemma}[1]{%
+    \renewcommand\themanuallemmainner{#1}%
+    \manuallemmainner
+  }{\endmanuallemmainner}
+
+  \theoremstyle{remark}
+  \newtheorem*{remark}{Примечание}
+  \newtheorem*{solution}{Решение}
+  \newtheorem{corollary}{Следствие}[theorem]
+  \newtheorem*{examp}{Пример}
+  \newtheorem*{observation}{Наблюдение}
+
+  \theoremstyle{definition}
+  \newtheorem{task}{Задача}
+  \newtheorem{theorem}{Теорема}[section]
+  \newtheorem*{definition}{Определение}
+  \newtheorem*{symb}{Обозначение}
+  \newtheorem{manualtheoreminner}{Теорема}
+  \newenvironment{manualtheorem}[1]{%
+    \renewcommand\themanualtheoreminner{#1}%
+    \manualtheoreminner
+  }{\endmanualtheoreminner}
+  \captionsetup{justification=centering,margin=2cm}
+  \newenvironment{colored}[1]{\color{#1}}{}
+
+  \tikzset{->-/.style={decoration={
+    markings,
+    mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+  \makeatletter
+  \newcommand*{\relrelbarsep}{.386ex}
+  \newcommand*{\relrelbar}{%
+    \mathrel{%
+      \mathpalette\@relrelbar\relrelbarsep
+    }%
+  }
+  \newcommand*{\@relrelbar}[2]{%
+    \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+    \lower#2\hbox{$\m@th#1\relbar$}%
+  }
+  \providecommand*{\rightrightarrowsfill@}{%
+    \arrowfill@\relrelbar\relrelbar\rightrightarrows
+  }
+  \providecommand*{\leftleftarrowsfill@}{%
+    \arrowfill@\leftleftarrows\relrelbar\relrelbar
+  }
+  \providecommand*{\xrightrightarrows}[2][]{%
+    \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+  }
+  \providecommand*{\xleftleftarrows}[2][]{%
+    \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+  }
+  \makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекции по Дискретной математике 4 семестр}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекции по Дискретной математике 4 семестр},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\chapter{}
+\label{sec:org35205b9}
+\chapter{}
+\label{sec:org5e1ce4d}
+\section{Производящие функции}
+\label{sec:orgd8b4274}
+\begin{definition}
+\textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
+ \(n\) все коэффиценты 0.
+\end{definition}
+\begin{symb}
+\(\deg p = n\)
+\end{symb}
+\begin{definition}
+\(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
+\end{definition}
+\subsection{Рекурентные соотношения}
+\label{sec:orgf00c3a6}
+\begin{definition}
+\[ m: a_0, a_1, \dots, a_{m - 1} \]
+\(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
+\end{definition}
+\begin{examp}
+\-
+\begin{itemize}
+\item \(m = 2,\ k = 2\)
+\item \(f_0 = f_1 = 1\)
+\item \(c_1 = c_2 = 1\)
+\end{itemize}
+f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- числа Фибоначи
+\end{examp}
+
+
+\begin{definition}
+\textbf{Квазиполином}
+\[ f(n) = \sum_{i = 1}^k p_i(n)r_i^n \], где \(p_i\) --- полином, \(r_i\) --- числа
+\end{definition}
+\begin{theorem}
+\begin{itemize}
+\item \(a_0, a_1, \dots, a_n, \dots\)
+\end{itemize}
+\uline{Тогда} эквивалентны:
+\begin{enumerate}
+\item \(A(t) = \frac{P(t)}{Q(t)}\), \(P, Q\) --- полиномы, \(q_0 \neq 0\)
+\item для \(n \ge m\) \(a_n\) задается линейным рекурентным соотношением: \(a_n = c_1a_{n - 1} + \dots + c_ka_{n - k}\), причем:
+\begin{itemize}
+\item \(Q(t) = 1 - c_1t - c_2t^2 - \dots - c_kt^k\)
+\item \(\deg P \le m - 1\)
+\end{itemize}
+\item \(a_n\) --- квазиполином \[ a_n = \sum_{i = 1}^k p_i(n)r_i^n \label{kvazi_1}\addtag \]
+причем:
+\begin{itemize}
+\item \(r_i\) --- обратные величины корням \(Q(t)\)
+\item \(k\) --- число различных его корней
+\item \(\deg p_i = (\text{кратность корня}(r_i^{-1})) - 1\) \\
+(\ref{kvazi_1} кроме \(\le m\) первых членов)
+\end{itemize}
+\end{enumerate}
+\end{theorem}
+\chapter{}
+\label{sec:orgc5250f3}
+\newcommand{\vdomino}{
+\begin{tikzpicture}
+\draw (0, 0) rectangle (0.15,0.3);
+\end{tikzpicture}}
+\newcommand{\hdomino}{
+\begin{tikzpicture}
+\draw (0, 0) rectangle (0.3,0.15);
+\draw (0, 0.15) rectangle (0.3,0.3);
+\end{tikzpicture}}
+
+\section{Производящие функции для объектов}
+\label{sec:orgd50eb2a}
+\begin{itemize}
+\item Оюъединение \\
+\(A, B\ A \cap B = \emptyset\ C = A \cup B\) \\
+\(A(t)\ B(t)\)
+\[ C(t) = A(t) + B(t)\]
+\[ c_n = a_n + b_n \]
+\item Пара \\
+\(C = A \times B\ \text{Pair}(A, B)\)
+\[C(t) = A(t) \cdot B(t)\] 
+\[ c_n = \sum_{i = 0}^na_nb_n \]
+\item Последовательности \\
+\(C = \text{Seq }A = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \dots\ a_0 = 0\)
+\[ C(t) = 1 + A(t) + A(t)\cdot A(t) + A(t)^3 + \dots \]
+\[ C(t) = \frac{1}{1 - A(t)} \]
+\item Множества \\
+\(\varepsilon\) вес \(0\) \\
+\(\text{Set }A = \bigtimes_{a \in A} (\varepsilon \cup a)\) \\
+\[ C(t) = \prod_{a \in A}(1 + t^{\omega(a)}) = \prod_{k = 0}^\infty (1 + t^k)^{a_k} \]
+\begin{examp}
+\(\text{Set}\left\{\vdomino, \hdomino\right\}\ a_1 = 1,a_2 = 1\) \\
+\[ C(t) = (1 + t)(1 + t^2) = t^3 + t^2 + t + 1 \]
+\end{examp}
+\item Мультимножества \\
+\[\text{MSet} A = \bigtimes_{a \in A}(\varepsilon \cup a \cup a^2 \cup \dots) = \prod_{a \in A}\text{Seq}\{a\}\]
+\[ C(t) = \prod_{a \in A}\frac{1}{1 - t^{\omega{a}}} = \prod_{k = 1}^\infty\left(\frac{1}{1 - t^k}\right)^{a_k} = \prod_{k = 1}^\infty(1 - t^k)^{-a_k}\]
+\begin{examp}
+\(\text{MSet}\{\vdomino, \hdomino\}\)
+\[ C(t) = \frac{1}{(1 - t)(1 - t^2)} = \frac{1}{(1 - t^2)(1 + t)} \]
+\[ c_n = dn + e + f\cdot(-1)^n \]
+\end{examp}
+\end{itemize}
+\begin{examp}
+\(\text{Seq}_{=k}(A) = A^k\) --- ровно 3 элемента \\
+\(\text{Seq}_{\ge k}(A) = A^k \times \text{Seq}(A)\frac{A(t)^k}{1 - A(t)}\) \\
+\(\text{Seq}_{\le k}(A) = \frac{1}{1 - A(t)} - \frac{A(t)^{k + 1}}{1 - A(t)} = \frac{1 - A(t)^{k + 1}}{1 - A(t)}\)
+\end{examp}
+\chapter{}
+\label{sec:org7861030}
+\usetikzlibrary{automata}
+
+
+
+\section{Производящие функции для регулярных языков}
+\label{sec:org478a7b7}
+\(L\) --- регулярный язык
+\[ | L \cap \Sigma^n | = a_n \] 
+\[ L(t) = a_0 + a_1 t + \dots \]
+\begin{remark}
+\(L\) --- регулярная спецификация \\
+\(\psi\) --- регулярное выражение:
+\begin{enumerate}
+\item \(L(\psi) = L\)
+\item \(\forall x \in \L\ \exists !\) способ \(x\) удовлетворяющий \(\psi\)
+\end{enumerate}
+\end{remark}
+\begin{lemma}
+\(\Sigma\) --- конечный алфавит, \(L \subset \Sigma^*\) \\
+\(L\) --- регулярная спецификация \(\Leftrightarrow\) \(L\) получаетя из \(\Sigma\):
+\begin{enumerate}
+\item Дизъюнктное объединение \(+\)
+\item Прямое произведение \(\times\)
+\item Последовательность Seq
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Общее рассжудение: по индукции рассмотрим для каждой операции во что
+она перейдет, надо показать что единственность вывода сохраняется \color{red} Не работает \color{black}
+\end{proof}
+\begin{examp}
+\[ ab^*|a^*b \]
+\[ \color{blue}a \times \text{Seq }b\color{black}|\color{blue}\text{Seq } a \times b\color{black} \]
+объединение дизъюнктное? \(\Rightarrow\) не регелярная спецификация
+\end{examp}
+\begin{examp}
+\[ (ab^*)^* \]
+\[ \color{blue} \text{Seq}(a \times \text{Seq } b) \color{black} \]
+\end{examp}
+\begin{theorem}
+Если у \(L\) есть регулярная спецификация, то \(L\) --- дробно рациональная
+\end{theorem}
+\begin{theorem}[Производящая функция регулярного языка]
+\(L\) --- регулярный язык над \(\Sigma\), ДКА \(A\): \\
+\begin{itemize}
+\item Состояния \(Q,\ |Q| = n\)
+\item \(s \in Q\) --- стартовое сотояние
+\item \(T \subset Q\) --- терминальные
+\end{itemize}
+\[ u = (\overbrace{0, 0, \dots, \underbrace{1}_s, 0, \dots, 0}^n) \]
+\[ v = (\overbrace{0, \underbrace{1}_{\in T}, 0, \underbrace{1}_{\in T}, \dots, \underbrace{1}_{\in T}, 0}^n) \]
+
+\[ D = (d_{ij})^T,\ d_{ij} = |\{c | i \xrightarrow[]{c} j\}| \]
+\[ L(t) = \vec{u}(I - tD)^{-1}\vec{v} \]
+\end{theorem}
+\begin{examp}
+Язык из слов, которые содержат abb как подстроку \\
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial] at (0, 0) (A) [circle] {\(0\)};
+\node[state] at (2, 0) (B) [circle] {\(1\)};
+\node[state] at (4, 0) (C) [circle] {\(2\)};
+\node[state,accepting] at (6, 0) (D) [circle] {\(3\)};
+\draw[->] (A) edge node[above] {a} (B);
+\draw[->] (A) edge[loop above] node[above] {b} (A);
+\draw[->] (B) edge[loop above] node[above] {a} (B);
+\draw[->] (B) edge node[above] {b} (C);
+\draw[->] (C) edge[loop above] node[above] {a} (B);
+\draw[->] (C) edge node[above] {b} (D);
+\draw[->] (D) edge[loop above] node[above] {a} (D);
+\draw[->] (D) edge[loop right] node[below] {b} (D);
+\end{tikzpicture}
+\end{center}
+\[ \begin{pmatrix} L_0 \\ L_1 \\ L_2 \\ L_3\end{pmatrix}  = \begin{pmatrix}0 \\ 0 \\ 0 \\ 1\end{pmatrix} + t \begin{pmatrix}1 & 1 & 0 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & 0 & 2\end{pmatrix}\begin{pmatrix}L_0 \\ L_1 \\ L_2 \\ L_3\end{pmatrix}\]
+\[ L_0 = \frac{t^3}{(1 - t)(1 - 2t)(1 - t - t^2)} \]
+\end{examp}
+\section{Автомат КМП и автокор. многочлен}
+\label{sec:org9310257}
+Конструкция Гуибаса-Одлызко
+\[ p = \fbox{p_1, p_2, \dots, p_k} \]
+\[ c_i = [p[i+1\dots k] = p[1\dots k-i]] \]
+\[ c(t) = c_0 + c_1 t + c_2 t^2 + \dots + c_{k - 1}t^{k - 1} \]
+\begin{examp}
+\(p = \text{aabbaa}\) \\
+\(c = (1, 0, 0, 0, 1, 1)\) \\
+\(c(t) = 1 + t^4 + t^5\)
+\end{examp}
+\begin{theorem}
+\-
+\begin{itemize}
+\item \(\Sigma,\ |\Sigma| = m\)
+\end{itemize}
+\(S_n\) --- количество слов длины \(n\), не содержащих \(p\)
+\[ S(t) = s_0 + s_1t + s_2t^2 + \dots \]
+\[ S(t) = \frac{c(t)}{t^k + (1 - mt)c(t)} \]
+\end{theorem}
+\begin{examp}
+\(p = \text{abb}\)
+\[ c(t) = 1 \]
+\[ \frac{1}{t^3 + (1 - 2t)\cdot 1} = \frac{1}{1 - 2t + t^3} \]
+\end{examp}
+
+\subsection{Пентагональная формула Эйлера}
+\label{sec:org26cb94f}
+\[ p_0\ p_1\ p_2\ \dots\ p_n\ \dots \]
+\(p_n\) --- количество разбиений \(n\) на слагаемые из \(\N\). Порядок не важен
+\begin{itemize}
+\item \(U = \{0\},\ u_1= 1,\ U(t) = t\)
+\item \(N = \text{Seq}^+U=\)положительно целые числа
+\item \(P = \text{MSet }N\)
+\[ P(t) = \prod_{k = 1}^\infty \frac{1}{1 - t^k} \]
+\end{itemize}
+\[ Q(t) = \prod_{k = 1}^\infty (1 - t^k) \]
+\[ R(t) = \prod_{k = 1}^\infty(1 + t^k)\ [t^n]R \to r_n \]
+\(r_n\) --- количество разбиений на различные слагаемые
+\[ [t^n]Q = \sum_{\substack{\text{разбиение } n \text{ на } \\ \text{различные слагаемые}}} (-1)^\text{число слагаемых} \]
+\[ q_n = e_n - o_n \]
+\(e_n\) --- число разбиений на четное число различных слагаемы, \(o_n\) --- число разбиений на нечетное число различных слагаемы, 
+\begin{theorem}
+\[ Q(t) = 1 + \sum_{k = 1}^\infty (-1)^k(t^{\frac{3k^2 - k}{2}} + t^{\frac{3k^2 + k}{2}}) \]
+\end{theorem}
+\begin{lemma}
+\[ n \neq \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n \]
+\[ n = \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n + (-1)^k \]
+\end{lemma}
+\end{document}
