@@ -13,3 +13,5 @@
 #+INCLUDE: "5.org" :lines "4-"
 * 
 #+INCLUDE: "6.org" :lines "4-"
+* 
+#+INCLUDE: "7.org" :lines "4-"
