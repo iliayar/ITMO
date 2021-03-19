@@ -1,5 +1,6 @@
-% Created 2021-02-27 Sat 13:39
+% Created 2021-03-19 Fri 21:58
 % Intended LaTeX compiler: pdflatex
+
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
@@ -11,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{natbib}
 \usepackage{amssymb}
+\usepackage{stmaryrd}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{mathtools}
@@ -41,6 +43,7 @@
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{cd}
 \usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
@@ -124,16 +127,90 @@
 \maketitle
 \tableofcontents
 
+
+\section{Условная вероятность}
+\label{sec:org49b0e5c}
+\begin{symb}
+\(P(A | B)\) --- вероятность наступления события \(A\), вычисленная в предположении, что событие \(B\) уже произошло
+\end{symb}
+\begin{examp}
+Кубик подбрасывается один раз. Известно что выпало больше трех очков. Найти вероятность того, что выпало четное число очков.
+\begin{itemize}
+\item \(A\) --- четное число очков
+\item \(B\) --- больше 3 очков
+\end{itemize}
+Тогда:
+\begin{itemize}
+\item \(n = 3\) \((4, 5, 6)\)
+\item \(m = 2\) \((4, 6)\)
+\end{itemize}
+\[ P(A|B) = \frac{2}{3} = \frac{\frac{2}{6}}{\frac{3}{6}} = \frac{P(A\cdot B)}{P(B)}\]
+\end{examp}
+\noindentПри интерпретация с геометрическим определением вероятностей также получаем формулу \(P(A|B) = \frac{P(A\cdot B)}{P(B)}\)
+\begin{definition}
+\textbf{Условной вероятностью} события \(A\) при условии того что имело место событие \(B\) называется величина:
+\[ P(A|B) = \frac{P(A \cdot B)}{P(B)} \] --- \textbf{формула условной вероятности}
+\end{definition}
+\subsection{Формула умножения вероятности}
+\label{sec:orgecdf415}
+Как следствие формулы условной вероятности получаем:
+\[ P(AB) = P(B) \cdot P(A|B)  \text{ или } P(AB) = P(A)\cdot P(B | A)\]
+\begin{theorem}
+\[ P(A_1 A_2 \dots A_n) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \dots P(A_n | A_1\dots A_{n - 1})\]
+\end{theorem}
+\begin{proof}
+По индукции
+\end{proof}
+\begin{remark}
+\(P(A) \neq 0\) и поэтому формула умножения удовлетворяет
+\[ P(A_1 A_2 \dots A_n) \neq 0\]
+\end{remark}
+\begin{remark}
+\[ P(A|B) = P(A) \Leftrightarrow P(AB) = P(A) \cdot P(B) \]
+\end{remark}
+\begin{proof}
+Очевидно
+\end{proof}
+\begin{task}
+В коробке 3 красных крандаша и 2 синих. Вынули 3 карандаша. Найти вероятность того что первые два красные а третий синий.
+\end{task}
+\begin{solution}
+\-
+\begin{itemize}
+\item \(A_1\) --- 1-й красный
+\item \(A_2\) --- 2-й красный
+\item \(A_3\) --- 3-й синий
+\end{itemize}
+\[ P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_2 A_1) = \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{2}{3} = \frac{1}{5} = 0.2\]
+\end{solution}
+\begin{remark}
+Прменяем когда учитывается порядок
+\end{remark}
+\subsection{Полная группа событий}
+\label{sec:org72080a4}
+\begin{definition}
+События \(H_1, H_2, \dots, H_n, \dots\) образуюти полную группу событий если они попарно несовместны, и содержат все элементарные исходы:
+\begin{itemize}
+\item \(P(H_i H_j) = \emptyset\ \forall i \neq j\)
+\item \(\sum\limits_{i = 1}^\infty H_i = \Omega\)
+\end{itemize}
+\end{definition}
+\begin{remark}
+Часто события из полной группы называются гипотезами
+\end{remark}
+\subsection{Формула полной вероятности}
+\label{sec:org7171aa9}
 \begin{theorem}[Баеса]
-\(] H1, H2, \dots, H_n ,\dots\) --- полн. у. соб. \\
+\(] H_1, H_2, \dots, H_n ,\dots\) --- полная группа событий \\
 \uline{Тогда} \[ P(H_k|A) = \frac{P(H_k)P(A|H_k)}{\sum_{i = 1}^{\infty}P(H_i)P(A|H_i)} \]
 \end{theorem}
 \begin{examp}
-В первой коробке 4 белых и два черных шара, во второй й белый и два
+В первой коробке 4 белых и два черных шара, во второй 1 белый и два
 черных. Из первой коробки во вторую переложили два шара, затем из
-второй коробке доставли шар. Найти вероятность того что он оказался белый
+второй коробки достали шар. Найти вероятность того что он оказался белый
 \end{examp}
 \begin{solution}
+\-
 \begin{itemize}
 \item \(] H_1\) --- переложили 2 белых
 \item \(] H_2\) --- переложили 2 черных
