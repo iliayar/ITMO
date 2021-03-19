@@ -1,0 +1,99 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 6
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Исчисление предикатов
+** Расставление скобок
+Кванторы имеют наименьший приоритет
+#+begin_examp org
+\[ \forall x. A \& B \& \forll y. C \& D \vee \exists z. E \]
+\[ (\forall x. (A \& B \& \forall y. (C \& D \vee \exists z. (E)))) \]
+#+end_examp
+Еще раз про правила только со скобками
+1. \[ \frac{\varphi \to \psi}{(\exists. \varphi) \to \psi} \]
+2. \[ \frac{\psi \to \varphi}{\psi \to (\forall x. \varphi)} \]
+#+begin_examp org
+\[ \frac{\varphi \to \psi}{\exists x.(\varphi \to \psi)} \]
+--- можно доказать, но это не правило вывода для \exists
+#+end_examp
+#+begin_definition org
+\-
+\( \alpha_1, \dots, \alpha_n\) --- доказательство
+- если \(\alpha_i\) --- аксимома
+- либо существует \(j, k < i\), что \(\alpha_k = \alpha_j \to \alpha_i\)
+- либо существует \(\alpha_j:\ \alpha_j = \varphi \to \psi\) и \(\alpha_i = (\exists x. \varphi) \to \psi\) причем \(x\) не входит свободно в \(\psi\)
+- либо существует \(j: \alpha_j = \psi \to \varphi\) и \(\alpha_i = \psi \to \forall x. \varphi \) причем \(x\) не входит свободно в \(\psi\)
+#+end_definition
+** Вхождение
+#+begin_examp org
+\[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
+1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
+#+end_examp
+#+begin_examp org
+\[ \underbrace{\forall x. \forall y. \forall x. \forall y. \forall x. P(x)}_{\text{область }\forall\text{ по }x} \]
+Здесь \(x\) в \(P(x)\) связано. \(x\) не входит свободно в эту формулу, потому что нет свободных вхождений
+#+end_examp
+#+begin_definition org
+Переменная \(x\) входит свободно если существует свободное вхождение
+#+end_definition
+#+begin_definition org
+Вхождение свободно, если не связано
+#+end_definition
+Можно относится к свободно входящим перменным как с перменным из библиотеки, т.е. мы не имеем права их переименовывать
+#+begin_examp org
+Некорректная формула
+- \(\alpha_1\) :: \( x = 0 \to x = 0 \)
+- \(\alpha_2\) :: \color{red}\( (\exists x. x = 0) \to (x = 0) \) --- не доказано\color{black}
+- \(\alpha_2'\) :: \((\exists t. x = 0) \to (x = 0)\) --- (правило \exists)
+#+end_examp
+#+begin_examp org
+\-
+- \((n)\) :: \(x = 0 \to y = 0\) --- откуда то
+- \((n + 1)\) :: \((\exists x. x = 0) \to (y = 0)\) --- (правило \exists)
+#+end_examp
+** Свободные подстановки
+#+begin_definition org
+\(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
+#+end_definition
+#+begin_definition org
+\(\varphi[x := \Theta]\) --- "Заменить все свободные вхождения x в \(\varphi\) на \(\Theta\)"
+#+end_definition
+#+begin_examp org
+\[ (\forall x. \forall y. \forall x. P(x))[x := y] \equiv \forall x. \forall y. \forall x. P(x) \]
+#+end_examp
+#+begin_examp org
+\[ P(x) \vee \forall x. P(x)\ [x := y] \equiv P(y) \vee \forall x. P(y) \]
+#+end_examp
+#+begin_examp org
+\[ (\forall y. x = y)\ [x := \underbrace{y}_{\equiv \Theta}] \equiv \forall y. \underset{1}{y} = y\]
+\(FV(\Theta) = \{y\}\) --- свободные перменные в \(\Theta\). Вхождение \(y\) с номером 1 стало связанным
+#+end_examp
+#+begin_examp org
+\[ P(x) \& \forall y. x = y\ [x := y + z] \equiv P(y + z) \& \forall y. \underset{1}{y} + z = y \]
+Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
+#+end_examp
+** Пример доказательства
+#+begin_lemma org
+Пусть \(\vdash \alpha\). Тогда \(\vdash \forall x. \alpha\)
+#+end_lemma
+#+begin_proof org
+\-
+1. Т.к. \(\vdash \alpha\), то существует \(\gamma_1, \dots, \gamma_2: \gamma_n = \alpha\)
+   \[ \begin{matrix}
+   (1) & \gamma_1 &  \\
+   \vdots & \vdots &  \\
+   (n) & \gamma_n (\equiv \alpha) &  \\
+   (n + 1) & A\& A \to A & \text{(акс)} \\
+   (n + 2) & \alpha \to ((A \& A \to A) \to \alpha) & \text{(акс)} \\
+   (n + 3) & (A \& A \to A) \to \alpha & (\text{M.P } n, n + 2) \\
+   (n + 4) & (A \& A \to A) \to \forall x.\alpha & (\text{введение }\forall\ n + 3) \\
+   (n + 5) & \forall x. \alpha & (\text{M.P. } n + 1, n + 4)
+   \end{matrix} \]
+#+end_proof
+** Теорема о дедукции
+#+begin_theorem org
+Пусть задана \(\Gamma,\ \alpha,\beta\)
+1. Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если \(b\) в доказательстве \(\Gamma, \alpha \to \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)
+2. Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
+#+end_theorem
+*** TODO Доказательсво
