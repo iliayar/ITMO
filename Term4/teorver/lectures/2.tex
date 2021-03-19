@@ -1,5 +1,6 @@
-% Created 2021-02-20 Sat 14:12
+% Created 2021-03-19 Fri 21:23
 % Intended LaTeX compiler: pdflatex
+
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
@@ -11,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{natbib}
 \usepackage{amssymb}
+\usepackage{stmaryrd}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{mathtools}
@@ -41,6 +43,7 @@
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{cd}
 \usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
@@ -126,7 +129,7 @@
 
 
 \section{Аксиоматическое опредление верояности}
-\label{sec:org822b5d2}
+\label{sec:org025b425}
 Колмагоров \\
 
 \begin{itemize}
@@ -160,9 +163,9 @@
 \textbf{Вероятностью} на \((\Omega, \mathcal{F})\) обозначается функция \(P(A): \mathcal{F} \to \R\) со свойствами:
 \begin{enumerate}
 \item \(P(A) \ge 0\) --- свойство \textbf{неотрицательности}
-\item Если событие \(A_1, A_2, \dots\) --- попарно несовместны(\(\forall i,j:\ A_i \cap A_j = \emptyset\)),
-то: \[ P(\bigcup_{i = 1}^{+ \infty} A_i) = \sum_{i = 1}^{+ \infty} P(A_i) \] --- свойство \textbf{счетной аддитивности}
-\item \(P(\Omega) = 1\) --- свойство \textbf{\color{red}???}
+\item Если события \(A_1, A_2, \dots\) --- попарно несовместны(\(\forall i,j:\ A_i \cap A_j = \emptyset\)),
+то: \[ P(\bigsqcup_{i = 1}^{+ \infty} A_i) = \sum_{i = 1}^{+ \infty} P(A_i) \] --- свойство \textbf{счетной аддитивности}
+\item \(P(\Omega) = 1\) --- свойство \textbf{нормированности}
 \end{enumerate}
 \end{definition}
 
@@ -181,7 +184,7 @@
 \end{proof}
 \item Формула обратной вероятнсоти \[ P(A) = 1 - P(\overline{A}) \]
 \begin{proof}
-\(A\) и \(\overline{A}\) --- несовметсные, \(A \cup \overline{A} = \Omega\)
+\(A\) и \(\overline{A}\) --- несовместные, \(A \cup \overline{A} = \Omega\)
 \[ P(A + \overline{A}) = P(A) + P(\overline{A}) = 1 \Rightarrow P(A) = 1 - P(\overline{A}) \]
 \end{proof}
 \item \(0 \le P(A) \le 1\)
@@ -219,13 +222,13 @@
 Аксимома счетной аддитивности следует из аксиомы непрерывности и свойства конечной аддитивности
 \end{remark}
 \subsection{Свойства операция сложения, умножения}
-\label{sec:orgc8f07d4}
+\label{sec:org849d210}
 \begin{definition}
 \-
 \begin{enumerate}
 \item Свойство дистрибутивности \(A\cdot (B + C) = AB + AC\)
 \item Формула сложения. Если \(A\) и \(B\) --- несовместны, то \(P(A + B) = P(A) + P(B)\) \\
-если несовместны, то \(P(A + B) = P(A) + P(B) - P(AB)\)
+если совместны, то \(P(A + B) = P(A) + P(B) - P(AB)\)
 \begin{proof}
 \-
 \begin{center}
@@ -251,7 +254,7 @@
 \[ P(A) \xrightarrow[n \to +\infty]{} 1 - e^{-1} \]
 \end{solution}
 \subsection{Независимые события}
-\label{sec:org3468bd3}
+\label{sec:org54b7dc7}
 \begin{remark}
 \(\Omega = n\), \(|A| = m_1\), \(|B| = m_2\) \\
 \(|\Omega \times \Omega| = n^2\), \(AB = m_1m_2\)
@@ -260,27 +263,27 @@
 События \(A\) и \(B\) называются \textbf{независимыми}, если \(P(AB) = P(A)P(B)\)
 \end{definition}
 \begin{remark}
-Свойство: если \(A\) и \(B\) --- независимы, то \(A\) и \(\overline{B}\) --- независимые
+Свойство: если \(A\) и \(B\) --- независимы, то \(A\) и \(\overline{B}\) --- независимы
 \end{remark}
 \begin{proof}
 \(P(A) = P(A(B + \overline{B})) = P(AB + A\overline{B}) = P(AB) + P(A\overline{B}) \Rightarrow P(A\overline{B}) = P(A) - P(AB) = P(A) - P(A)\cdot P(B) = P(A)\cdot(1 - P(B)) = P(A)\cdot P(\overline{B})\) \(\Rightarrow\) \(A\) и \(\overline{B}\) --- независимы
 \end{proof}
 \begin{definition}
-События \(A_1,A_2, \dots, A_n\) называются \textbf{независимыми в совкупности}, если для любого набора \(1 \le i_1, i_2, \dots, i_k \le n\ P(A_{i_1}A_{i_2}\dots A_{i_k}) = P(A_{i_1})P(A_{i_2})\dots P(A_{i_k})\)
+События \(A_1,A_2, \dots, A_n\) называются \textbf{независимыми в совокупности}, если для любого набора \(1 \le i_1, i_2, \dots, i_k \le n\ P(A_{i_1}A_{i_2}\dots A_{i_k}) = P(A_{i_1})P(A_{i_2})\dots P(A_{i_k})\)
 \end{definition}
 \begin{remark}
 Если события независимы в совокупности, то события независимы попарно(при \(k = 2\)). Обратное неверно
 \end{remark}
 \begin{examp}[Берштейна]
-Три грани правильного тетраэдра выкрашены в красный, синий, зленый цвета, а четвертая грань во все жти три цвета \\
+Три грани правильного тетраэдра выкрашены в красный, синий, зленый цвета, а четвертая грань во все эти три цвета \\
 \(] A\) --- грань содержит красный цвет, \(B\) --- синий, \(C\) --- зеленый \\
 \[ P(A) = P(B) = P(C) = \frac{2}{4} = \frac{1}{2} \]
 \[ P(AB) = P(AC) = P(BC) = \frac{1}{4} \]
-\[ P(AB) = \frac{1}{4} = \frac{1}{2}\cdot\frac{1}{2} = P(A)P(B) \] \(\Rightarrow\) все события попарно независим
+\[ P(AB) = \frac{1}{4} = \frac{1}{2}\cdot\frac{1}{2} = P(A)P(B) \] \(\Rightarrow\) все события попарно независимы
 \[ P(ABC) = \frac{1}{4} \neq P(A)P(B)P(C) = \frac{1}{8} \] \(\Rightarrow\) события не независимы в совокупности
 \end{examp}
 \begin{remark}
-Если в условии есть "хотябы", т.е. требуется найти вероятность совместных независимых событий, то применяем формулу обратной вероятности
+Если в условии есть ``хотябы``, т.е. требуется найти вероятность совместных независимых событий, то применяем формулу обратной вероятности
 \end{remark}
 \begin{task}
 Найти веротяность того, что при 4 бросаниях кости, хотябы один раз выпадет шестерка.

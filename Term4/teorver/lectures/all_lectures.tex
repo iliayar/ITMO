@@ -1,8 +1,8 @@
-% Created 2021-03-16 Tue 23:24
+% Created 2021-03-19 Fri 22:40
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[oneside]{book}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[oneside]{book}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,90 +27,90 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-  
-   \usepackage{hyperref}
-   \hypersetup{
-       colorlinks=true,
-       linkcolor=blue,
-       filecolor=orange,
-       citecolor=black,      
-       urlcolor=cyan,
-       }
 
-  \usetikzlibrary{decorations.markings}
-  \usetikzlibrary{cd}
-  \usetikzlibrary{patterns}
-  \usetikzlibrary{automata, arrows}
+\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
 
-  \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
-  \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
 
 
-  \newcommand{\R}{\mathbb{R}}
-  \renewcommand{\C}{\mathbb{C}}
-  \newcommand{\N}{\mathbb{N}}
-  \newcommand{\rank}{\text{rank}}
-  \newcommand{\const}{\text{const}}
-  \newcommand{\grad}{\text{grad}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
 
-  \theoremstyle{plain}
-  \newtheorem{axiom}{Аксиома}
-  \newtheorem{lemma}{Лемма}
-  \newtheorem{manuallemmainner}{Лемма}
-  \newenvironment{manuallemma}[1]{%
-    \renewcommand\themanuallemmainner{#1}%
-    \manuallemmainner
-  }{\endmanuallemmainner}
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
 
-  \theoremstyle{remark}
-  \newtheorem*{remark}{Примечание}
-  \newtheorem*{solution}{Решение}
-  \newtheorem{corollary}{Следствие}[theorem]
-  \newtheorem*{examp}{Пример}
-  \newtheorem*{observation}{Наблюдение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
 
-  \theoremstyle{definition}
-  \newtheorem{task}{Задача}
-  \newtheorem{theorem}{Теорема}[section]
-  \newtheorem*{definition}{Определение}
-  \newtheorem*{symb}{Обозначение}
-  \newtheorem{manualtheoreminner}{Теорема}
-  \newenvironment{manualtheorem}[1]{%
-    \renewcommand\themanualtheoreminner{#1}%
-    \manualtheoreminner
-  }{\endmanualtheoreminner}
-  \captionsetup{justification=centering,margin=2cm}
-  \newenvironment{colored}[1]{\color{#1}}{}
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
 
-  \tikzset{->-/.style={decoration={
-    markings,
-    mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
-  \makeatletter
-  \newcommand*{\relrelbarsep}{.386ex}
-  \newcommand*{\relrelbar}{%
-    \mathrel{%
-      \mathpalette\@relrelbar\relrelbarsep
-    }%
-  }
-  \newcommand*{\@relrelbar}[2]{%
-    \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
-    \lower#2\hbox{$\m@th#1\relbar$}%
-  }
-  \providecommand*{\rightrightarrowsfill@}{%
-    \arrowfill@\relrelbar\relrelbar\rightrightarrows
-  }
-  \providecommand*{\leftleftarrowsfill@}{%
-    \arrowfill@\leftleftarrows\relrelbar\relrelbar
-  }
-  \providecommand*{\xrightrightarrows}[2][]{%
-    \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
-  }
-  \providecommand*{\xleftleftarrows}[2][]{%
-    \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
-  }
-  \makeatother
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекции по Теории вероятностей 4 семестр}
@@ -128,19 +128,19 @@
 
 
 \chapter{}
-\label{sec:org56ca5d0}
+\label{sec:orgee626b9}
 \section{Статистическая вероятность}
-\label{sec:org254a06c}
+\label{sec:orge2e3ae9}
 \(n\) --- чсло экспериментов \\
 \(n_A\) --- число выполнения события \(A\)
 \begin{defintion}
 Отношение \(\frac{n_A}{n}\) --- частота события \(A\) \\
 \(P(A) \approx \frac{n_A}{n},\ n\to+\infty\)
 \end{defintion}
-\subsection{Пространство элементарных исходов. Случайные событи}
-\label{sec:org5d41f15}
+\subsection{Пространство элементарных исходов. Случайные события}
+\label{sec:org11b7b55}
 \begin{definition}
-\textbf{Пространстов элементарных исходов} называется множество
+\textbf{Пространством элементарных исходов} называется множество
 содержащее все возможные результаты данного эксперимента из которых при
 испытании происходит ровно один. Элементы этого множества называются \textbf{элементарными исходами}
 \end{definition}
@@ -183,7 +183,7 @@
 \end{examp}
 
 \subsection{Операции над событиями}
-\label{sec:org3439664}
+\label{sec:orgf4593f9}
 \begin{definition}
 \(\Omega\) --- универсальное событие, достоверное, наступает всегда, т.к. содержит все элементарные исходы \\
 \(\emptyset\) --- невозможное событие, никогда не выполняется, т.к. не одержит элементарных исходов
@@ -191,7 +191,7 @@
 \begin{definition}
 \textbf{Суммой событий} \(A + B\) называется событие \(A \cup B\) --- событие
  состоящее в том что произошло событие \(A\) или событие \(B\), т.е. хотя
- бы одно и них
+ бы одно из них
 \end{definition}
 \begin{definition}
 \textbf{Произведением} \(A \cdot B\) называется событие \(A \cap B\) --- событие состоящее в том что произошло событие \(A\) и событие \(B\), т.е. оба из них
@@ -220,12 +220,12 @@
 \(P(A) \le 1\) --- вероятность наступления события \(A\)
 \end{definition}
 \subsection{Классическое определение вероятности}
-\label{sec:orgaadc99a}
+\label{sec:orgd04dd18}
 Пусть \(\Omega\) содержит конечное число исходов, при чем их можно считать равновозможным.
 Тогда применимо классическое определение вероятности
 \begin{definition}
 Вероятность события \(A\) \(P(A) = \frac{|A|}{|\Omega|} = \frac{m}{n}\), где \(n\) --- число всех возможных элеметарных
-исходов, \(m\) --- число элементарных исходов благоприятных событию \(A\). В частности, если \(|\Omega = n|\), а \(A\) --- элементарный исход, то \(P(A) = \frac{1}{n}\)
+исходов, \(m\) --- число элементарных исходов благоприятных событию \(A\). В частности, если \(|\Omega| = n\), а \(A\) --- элементарный исход, то \(P(A) = \frac{1}{n}\)
 \end{definition}
 \begin{remark}
 Cвойства:
@@ -244,7 +244,7 @@ Cвойства:
 \(\Omega = \{1, 2, 3, 4, 5, 6\},\ A = \{ 2, 4, 5\},\ P(A) = \frac{3}{6} = \frac{1}{2}\) 
 \end{examp}
 \begin{examp}
-В ящике 3 белых и два черных шара. Вынули 3 шара, найти вероятность того что из них 2 белый и 1 черных
+В ящике 3 белых и два черных шара. Вынули 3 шара, найти вероятность того что из них 2 белых и 1 черных
 \begin{center}
 \begin{tikzpicture}
 \draw (4, 2) rectangle (-4, -2);
@@ -262,21 +262,21 @@ Cвойства:
 \[ P(A) = \frac{6}{10} \]
 \end{examp}
 \subsection{Геометрическое понятие вероятности}
-\label{sec:org4ffafb6}
+\label{sec:org30d7a64}
 Пусть \(\Omega \subset \R^n\)  --- замкнутая ограниченая область \\
-\(\mu(\Omega)\) --- конечная мера множества \(\Omega\) (например мера Римана, т.ее длина, площадь, объем) 
-В эту область \emph{наугад} бросаем точку. Термин \emph{наугад} означает, что веротяность попадания в область \(A\)
-зависит только от меры этой области, но не зависит от ее положения. Вероятность попадания в любые точки равновозможны.
+\(\mu(\Omega)\) --- конечная мера множества \(\Omega\) (например мера Римана, т.е длина, площадь, объем) 
+В эту область \emph{наугад} бросаем точку. Термин \emph{наугад} означает, что вероятность попадания в область \(A\)
+зависит только от меры этой области, но не зависит от ее положения. Вероятности попадания в любые точки равновозможны.
 Тогда применимо геометрическое определение вероятности.
 \begin{definition}
 \(P(A) = \frac{\mu(A)}{\mu(\Omega)}\), где \(\mu(\Omega)\) --- мера \(\Omega\), \(\mu(A)\) --- мера благоприятной области \(A\)
 \end{definition}
 \begin{remark}
-Заметим что по этому определению, мера точки равна \(0\) и веротяность попадания в конкретную точку равна \(0\), хотя это событи не является невозможным.
+Заметим что по этому определению, мера точки равна \(0\) и веротяность попадания в конкретную точку равна \(0\), хотя это событие не является невозможным.
 \end{remark}
 \begin{examp}
-Игра. Монета диаметром 6 сантиметров бросается на пол, вымощеный
-квадратной плиткой со стороной 20 сантиметров. Найти вероятнсть того
+Игра. Монета диаметром 6 сантиметров бросается на пол, вымощенный
+квадратной плиткой со стороной 20 сантиметров. Найти вероятность того
 что монета целиком окажется на одной плитке
 \begin{center}
 \begin{tikzpicture}
@@ -301,7 +301,7 @@ Cвойства:
 доски. Найти вероятность того что она пересечет стык
 \end{task}
 \begin{solution}
-\(2l\) --- длина иглы, \(x\) --- расстояние от центра игла до ближайщего края, \(\varphi\) --- угол к ближайшему краю \\
+\(2l\) --- длина иглы, \(x\) --- расстояние от центра иглы до ближайшего края, \(\varphi\) --- угол к ближайшему краю \\
 Игла пересечет край если \(x \le |AB|\), \(|AB| = l\sin\varphi\) \\
 Можно считать что положение от центра и угол, независимы друг от друга. \(x \in [0, l]. \varphi \in [0, \pi]\)
 \begin{center}
@@ -326,9 +326,9 @@ Cвойства:
 \[ P(A) = \frac{S(A)}{S(\Omega)} = \frac{2l}{\pi l} = \frac{2}{\pi} \]
 \end{solution}
 \chapter{}
-\label{sec:org26d7d75}
+\label{sec:orgfeba5e8}
 \section{Аксиоматическое опредление верояности}
-\label{sec:orgb09269e}
+\label{sec:org5e1d9cb}
 Колмагоров \\
 
 \begin{itemize}
@@ -362,9 +362,9 @@ Cвойства:
 \textbf{Вероятностью} на \((\Omega, \mathcal{F})\) обозначается функция \(P(A): \mathcal{F} \to \R\) со свойствами:
 \begin{enumerate}
 \item \(P(A) \ge 0\) --- свойство \textbf{неотрицательности}
-\item Если событие \(A_1, A_2, \dots\) --- попарно несовместны(\(\forall i,j:\ A_i \cap A_j = \emptyset\)),
-то: \[ P(\bigcup_{i = 1}^{+ \infty} A_i) = \sum_{i = 1}^{+ \infty} P(A_i) \] --- свойство \textbf{счетной аддитивности}
-\item \(P(\Omega) = 1\) --- свойство \textbf{\color{red}???}
+\item Если события \(A_1, A_2, \dots\) --- попарно несовместны(\(\forall i,j:\ A_i \cap A_j = \emptyset\)),
+то: \[ P(\bigsqcup_{i = 1}^{+ \infty} A_i) = \sum_{i = 1}^{+ \infty} P(A_i) \] --- свойство \textbf{счетной аддитивности}
+\item \(P(\Omega) = 1\) --- свойство \textbf{нормированности}
 \end{enumerate}
 \end{definition}
 
@@ -383,7 +383,7 @@ Cвойства:
 \end{proof}
 \item Формула обратной вероятнсоти \[ P(A) = 1 - P(\overline{A}) \]
 \begin{proof}
-\(A\) и \(\overline{A}\) --- несовметсные, \(A \cup \overline{A} = \Omega\)
+\(A\) и \(\overline{A}\) --- несовместные, \(A \cup \overline{A} = \Omega\)
 \[ P(A + \overline{A}) = P(A) + P(\overline{A}) = 1 \Rightarrow P(A) = 1 - P(\overline{A}) \]
 \end{proof}
 \item \(0 \le P(A) \le 1\)
@@ -421,13 +421,13 @@ Cвойства:
 Аксимома счетной аддитивности следует из аксиомы непрерывности и свойства конечной аддитивности
 \end{remark}
 \subsection{Свойства операция сложения, умножения}
-\label{sec:orgbba7d2b}
+\label{sec:orga88b911}
 \begin{definition}
 \-
 \begin{enumerate}
 \item Свойство дистрибутивности \(A\cdot (B + C) = AB + AC\)
 \item Формула сложения. Если \(A\) и \(B\) --- несовместны, то \(P(A + B) = P(A) + P(B)\) \\
-если несовместны, то \(P(A + B) = P(A) + P(B) - P(AB)\)
+если совместны, то \(P(A + B) = P(A) + P(B) - P(AB)\)
 \begin{proof}
 \-
 \begin{center}
@@ -453,7 +453,7 @@ Cвойства:
 \[ P(A) \xrightarrow[n \to +\infty]{} 1 - e^{-1} \]
 \end{solution}
 \subsection{Независимые события}
-\label{sec:org7ff9713}
+\label{sec:orgf0645c0}
 \begin{remark}
 \(\Omega = n\), \(|A| = m_1\), \(|B| = m_2\) \\
 \(|\Omega \times \Omega| = n^2\), \(AB = m_1m_2\)
@@ -462,33 +462,33 @@ Cвойства:
 События \(A\) и \(B\) называются \textbf{независимыми}, если \(P(AB) = P(A)P(B)\)
 \end{definition}
 \begin{remark}
-Свойство: если \(A\) и \(B\) --- независимы, то \(A\) и \(\overline{B}\) --- независимые
+Свойство: если \(A\) и \(B\) --- независимы, то \(A\) и \(\overline{B}\) --- независимы
 \end{remark}
 \begin{proof}
 \(P(A) = P(A(B + \overline{B})) = P(AB + A\overline{B}) = P(AB) + P(A\overline{B}) \Rightarrow P(A\overline{B}) = P(A) - P(AB) = P(A) - P(A)\cdot P(B) = P(A)\cdot(1 - P(B)) = P(A)\cdot P(\overline{B})\) \(\Rightarrow\) \(A\) и \(\overline{B}\) --- независимы
 \end{proof}
 \begin{definition}
-События \(A_1,A_2, \dots, A_n\) называются \textbf{независимыми в совкупности}, если для любого набора \(1 \le i_1, i_2, \dots, i_k \le n\ P(A_{i_1}A_{i_2}\dots A_{i_k}) = P(A_{i_1})P(A_{i_2})\dots P(A_{i_k})\)
+События \(A_1,A_2, \dots, A_n\) называются \textbf{независимыми в совокупности}, если для любого набора \(1 \le i_1, i_2, \dots, i_k \le n\ P(A_{i_1}A_{i_2}\dots A_{i_k}) = P(A_{i_1})P(A_{i_2})\dots P(A_{i_k})\)
 \end{definition}
 \begin{remark}
 Если события независимы в совокупности, то события независимы попарно(при \(k = 2\)). Обратное неверно
 \end{remark}
 \begin{examp}[Берштейна]
-Три грани правильного тетраэдра выкрашены в красный, синий, зленый цвета, а четвертая грань во все жти три цвета \\
+Три грани правильного тетраэдра выкрашены в красный, синий, зленый цвета, а четвертая грань во все эти три цвета \\
 \(] A\) --- грань содержит красный цвет, \(B\) --- синий, \(C\) --- зеленый \\
 \[ P(A) = P(B) = P(C) = \frac{2}{4} = \frac{1}{2} \]
 \[ P(AB) = P(AC) = P(BC) = \frac{1}{4} \]
-\[ P(AB) = \frac{1}{4} = \frac{1}{2}\cdot\frac{1}{2} = P(A)P(B) \] \(\Rightarrow\) все события попарно независим
+\[ P(AB) = \frac{1}{4} = \frac{1}{2}\cdot\frac{1}{2} = P(A)P(B) \] \(\Rightarrow\) все события попарно независимы
 \[ P(ABC) = \frac{1}{4} \neq P(A)P(B)P(C) = \frac{1}{8} \] \(\Rightarrow\) события не независимы в совокупности
 \end{examp}
 \begin{remark}
-Если в условии есть "хотябы", т.е. требуется найти вероятность совместных независимых событий, то применяем формулу обратной вероятности
+Если в условии есть ``хотябы``, т.е. требуется найти вероятность совместных независимых событий, то применяем формулу обратной вероятности
 \end{remark}
 \begin{task}
 Найти веротяность того, что при 4 бросаниях кости, хотябы один раз выпадет шестерка.
 \end{task}
 \begin{solution}
-\(] A_1\) --- при 1 броске "6", \(A_2\) --- при 2х бросках "6", \dots{}, \(A\) --- хотя бы один раз "6"
+\(] A_1\) --- при 1 броске ``6``, \(A_2\) --- при 2х бросках ``6``, \dots{}, \(A\) --- хотя бы один раз ``6``
 \[ A = A_1 + A_2 + A_3 + A_4 \]
 \[ P(A_1) = P(A_2) = P(A_3) = P(A_4) = \frac{1}{6} \]
 \[ P(\overline{A_1}) = P(\overline{A_2}) = P(\overline{A_3}) = P(\overline{A_4}) = \frac{5}{6} \]
@@ -504,21 +504,94 @@ Cвойства:
 \(A_1\) --- 1й попал \\
 \(A_2\) --- 2й попал \\
 \(A\) --- один попал
-\[ A = A_1\cdot\overline{A_2} + \overline{A_1}A_2 \]
+\[ A = A_1\cdot\overline{A_2} + \overline{A_1}\cdot A_2 \]
 \[ P(A)  = P(A)\cdot P(\overline{A_2}) + P(\overline{A_1})\cdot P(A_2) \]
 \end{solution}
 \chapter{}
-\label{sec:org94e78fe}
+\label{sec:orgc181742}
+\section{Условная вероятность}
+\label{sec:org7997768}
+\begin{symb}
+\(P(A | B)\) --- вероятность наступления события \(A\), вычисленная в предположении, что событие \(B\) уже произошло
+\end{symb}
+\begin{examp}
+Кубик подбрасывается один раз. Известно что выпало больше трех очков. Найти вероятность того, что выпало четное число очков.
+\begin{itemize}
+\item \(A\) --- четное число очков
+\item \(B\) --- больше 3 очков
+\end{itemize}
+Тогда:
+\begin{itemize}
+\item \(n = 3\) \((4, 5, 6)\)
+\item \(m = 2\) \((4, 6)\)
+\end{itemize}
+\[ P(A|B) = \frac{2}{3} = \frac{\frac{2}{6}}{\frac{3}{6}} = \frac{P(A\cdot B)}{P(B)}\]
+\end{examp}
+\noindentПри интерпретация с геометрическим определением вероятностей также получаем формулу \(P(A|B) = \frac{P(A\cdot B)}{P(B)}\)
+\begin{definition}
+\textbf{Условной вероятностью} события \(A\) при условии того что имело место событие \(B\) называется величина:
+\[ P(A|B) = \frac{P(A \cdot B)}{P(B)} \] --- \textbf{формула условной вероятности}
+\end{definition}
+\subsection{Формула умножения вероятности}
+\label{sec:orgb33f469}
+Как следствие формулы условной вероятности получаем:
+\[ P(AB) = P(B) \cdot P(A|B)  \text{ или } P(AB) = P(A)\cdot P(B | A)\]
+\begin{theorem}
+\[ P(A_1 A_2 \dots A_n) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_1 A_2) \dots P(A_n | A_1\dots A_{n - 1})\]
+\end{theorem}
+\begin{proof}
+По индукции
+\end{proof}
+\begin{remark}
+\(P(A) \neq 0\) и поэтому формула умножения удовлетворяет
+\[ P(A_1 A_2 \dots A_n) \neq 0\]
+\end{remark}
+\begin{remark}
+\[ P(A|B) = P(A) \Leftrightarrow P(AB) = P(A) \cdot P(B) \]
+\end{remark}
+\begin{proof}
+Очевидно
+\end{proof}
+\begin{task}
+В коробке 3 красных крандаша и 2 синих. Вынули 3 карандаша. Найти вероятность того что первые два красные а третий синий.
+\end{task}
+\begin{solution}
+\-
+\begin{itemize}
+\item \(A_1\) --- 1-й красный
+\item \(A_2\) --- 2-й красный
+\item \(A_3\) --- 3-й синий
+\end{itemize}
+\[ P(A_1 A_2 A_3) = P(A_1) \cdot P(A_2 | A_1) \cdot P(A_3 | A_2 A_1) = \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{2}{3} = \frac{1}{5} = 0.2\]
+\end{solution}
+\begin{remark}
+Прменяем когда учитывается порядок
+\end{remark}
+\subsection{Полная группа событий}
+\label{sec:org26f4098}
+\begin{definition}
+События \(H_1, H_2, \dots, H_n, \dots\) образуюти полную группу событий если они попарно несовместны, и содержат все элементарные исходы:
+\begin{itemize}
+\item \(P(H_i H_j) = \emptyset\ \forall i \neq j\)
+\item \(\sum\limits_{i = 1}^\infty H_i = \Omega\)
+\end{itemize}
+\end{definition}
+\begin{remark}
+Часто события из полной группы называются гипотезами
+\end{remark}
+\subsection{Формула полной вероятности}
+\label{sec:org586a5e5}
 \begin{theorem}[Баеса]
-\(] H1, H2, \dots, H_n ,\dots\) --- полн. у. соб. \\
+\(] H_1, H_2, \dots, H_n ,\dots\) --- полная группа событий \\
 \uline{Тогда} \[ P(H_k|A) = \frac{P(H_k)P(A|H_k)}{\sum_{i = 1}^{\infty}P(H_i)P(A|H_i)} \]
 \end{theorem}
 \begin{examp}
-В первой коробке 4 белых и два черных шара, во второй й белый и два
+В первой коробке 4 белых и два черных шара, во второй 1 белый и два
 черных. Из первой коробки во вторую переложили два шара, затем из
-второй коробке доставли шар. Найти вероятность того что он оказался белый
+второй коробки достали шар. Найти вероятность того что он оказался белый
 \end{examp}
 \begin{solution}
+\-
 \begin{itemize}
 \item \(] H_1\) --- переложили 2 белых
 \item \(] H_2\) --- переложили 2 черных
@@ -535,11 +608,11 @@ Cвойства:
 По формуле полной вероятности:
 \[ P(A) = P(H_1)\cdotP(A|H_1) + P(H_2)\cdotP(A|H_2) + P(H_3)\cdotP(A|H_3) = \frac{6}{15}\cdot\frac{3}{5} + \frac{1}{15}\cdot\frac{1}{5} + \frac{8}{15}\cdot\frac{2}{5} = \frac{7}{15}\]
 \end{solution}
-\begin{examp}
+\begin{task}
 По статистике 1\% населения болен раком. Тест дает правильный результат
 в 99\% случаев. Тест оказался положительным. Найти веротяность того что
 человек болен.
-\end{examp}
+\end{task}
 \begin{solution}
 $]$ \left.\begin{array}{l}
 $H_1$ --- болен \\
@@ -563,16 +636,16 @@ $H_2$ --- здоров
 \[ P(H_1|AA) = \frac{0.99}{0.99 + 0.01} = 0.99 \]
 \end{solution}
 \chapter{}
-\label{sec:org5ccab33}
+\label{sec:orgfff5e08}
 \section{Схема Бернулли}
-\label{sec:org3d47ef0}
+\label{sec:org49cec4c}
 \begin{definition}
 Схемой Бернулли называется серия независимых испытаний, каждое из
 которых имеет два исхода, каждое интересующее нас событие лиибо
-произошло либо не произошло, успех \ldots{}.
+произошло либо не произошло.
 \begin{itemize}
 \item \(n\) --- число испытаний
-\item \(p\) --- вкроятность события \(A\) при одном испытании
+\item \(p\) --- вероятность события \(A\) при одном испытании
 \item \(q = 1 - p\)
 \item \(\nu_k\) --- число успехов при \(k\) испытаниях
 \item \(P_n(k) = P(\nu_k = k)\)
@@ -592,8 +665,8 @@ $H_2$ --- здоров
 \[ P(A) = C^k_np^kq^{n - k} \]
 \end{proof}
 \begin{task}
-Вероятност попадания стрелка в цель при одном выстреле 0.8. Найти
-вероятность того что при 5 выстрелах буду 3 попадания
+Вероятность попадания стрелка в цель при одном выстреле 0.8. Найти
+вероятность того что при 5 выстрелах будут 3 попадания
 \end{task}
 \begin{solution}
 \-
@@ -605,11 +678,11 @@ $H_2$ --- здоров
 \end{itemize}
 \[ P_5(3) = C^3_5 p^3q^2 = 0.2048\]
 \end{solution}
-\subsection{Наиболее вероотяное число успехов}
-\label{sec:org91cbd51}
+\subsection{Наиболее вероятное число успехов}
+\label{sec:orgf8a0ee8}
 Выясним при каком значении \(k\) вероятность предшествующего числа
-успехов \(k - 1\) будет не более чесм веротяность \(k\) успехов
-\[ P_k(k - 1) \le P_k(k) \]
+успехов \(k - 1\) будет не больше чем веротяность \(k\) успехов
+\[ P_n(k - 1) \le P_n(k) \]
 \[ C^{k-1}_np^{k - 1}q^{n - k + 1} \le C^k_np^kq{n - k} \]
 \[ \frac{n!}{(k - 1)!(n -k + 1)!}q \le \frac{n!}{(k!(n - k)!)}p \]
 \[ \frac{k!}{(k-1)!}q \le \frac{(n - k + 1)!}{(n - k)!}p \]
@@ -621,7 +694,7 @@ $H_2$ --- здоров
 \item \(np\) --- целое. Тогда \(np + p\) --- целое и \(k = np\) --- наиболее вероятное число исходов
 \item \(np + p\) --- не целое. Тогда \(k = [np + p]\)
 \item \(np + p\) --- целое. Тогд \(np + p - 1\) --- целое и \(P_n(k - 1)
-   = P_n(k)\) и имеем два наиболле веротяных числа успехов:
+   = P_n(k)\) и имеем два наиболее вероятных числа успехов:
 \begin{itemize}
 \item \(k = np + p\)
 \item \(k = np + p - 1\)
@@ -631,9 +704,9 @@ $H_2$ --- здоров
 \includegraphics[scale=0.35]{4_1.png}
 \end{center}
 \subsection{Предельные теоремы в схеме Бернулли}
-\label{sec:org12fce19}
+\label{sec:orgdde1681}
 \begin{definition}
-\textbf{Локальная формула} Муавра-Лапласса. Применяем когда требутеся найти веротяноть точно числа успехов.
+\textbf{Локальная формула} Муавра-Лапласса. Применяем когда требуется найти вероятноть точного числа успехов.
 \[ P_n(\nu_n = x) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
 , где \(\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, x = \frac{k - np}{\sqrt{npq}}\) --- функция Гауса. \\
 Свойства функции Гауса \(\varphi(x)\):
@@ -643,7 +716,7 @@ $H_2$ --- здоров
 \end{enumerate}
 \end{definition}
 \begin{definition}
-\textbf{Интгрелальная формула Лапласса}. Применяем если число успехов лежит в неком диапозоне.
+\textbf{Интегральная формула Лапласса}. Применяем если число успехов лежит в неком диапозоне.
 \[ P_n(x_1 \le \nu_n \le x_2) \approx \Phi(x_1) - \Phi(x_2) \]
 , где \[ \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz\] --- функция Лапласса \\
 \[ x_1 = \frac{k_1 - np}{\sqrt{npq}},\ x_2 = \frac{k_2 - np}{\sqrt{npq}} \]
@@ -655,12 +728,12 @@ $H_2$ --- здоров
 \end{enumerate}
 \end{definition}
 \begin{remark}
-В некоторых источниках под функцией Лапласса поразумевается несколько иная функция, чаще всего:
+В некоторых источниках под функцией Лапласса подразумевается несколько иная функция, чаще всего:
 \[ F_0(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{z^2}{2}dz \]
 \[ F_0(x) = 0.5 + \Phi(x)\text{ или }\Phi(x) = F_0(x)-0.5 \]
 \end{remark}
 \begin{remark}
-Формула применяем при \(n \ge 100\) и \(p,q\ge0.1\) 
+Формулу применяем при \(n \ge 100\) и \(p,q\ge0.1\) 
 \end{remark}
 \begin{task}
 Вероятность попадания стрелка в цель при одном выстреле 0.8. Стрелок сделал 400 выстрелов. Найти вероятность того что
@@ -670,18 +743,19 @@ $H_2$ --- здоров
 \end{enumerate}
 \end{task}
 \begin{solution}
+\-
 \begin{enumerate}
 \item \(n = 400, p = 0.8, q = 0.2, k=330\)
 \[ x = \frac{330 - 400\cdot0.8}{\sqrt{400\cdot0.8\cdot0.2}} = 1.25 \]
 \[ P_{400}(330) \approx \frac{1}{8} \cdot \varphi(1.25) \approx \frac{1}{8}\cdot0.1826 \approx 0.0228 \]
-\item \(n = 400, p=0.8, q = 0.2, k_1 =312, k_2 336\)
+\item \(n = 400, p=0.8, q = 0.2, k_1 =312, k_2 = 336\)
 \[ x_1 = \frac{312 - 400\cdot0.8}{\sqrt{400\cdot0.8\cdot0.2}} = -1\]
 \[ x_2 = \frac{336 - 400\cdot0.8}{\sqrt{400\cdot0.8\cdot0.2}} = 2\]
 \[ P_{400}(312 \le \nu_n \le 336) = \Phi(2) - \Phi(-1) = \Phi(2) + \Phi(1) \approx 0.8185 \]
 \end{enumerate}
 \end{solution}
 \section{Статистическое определение вероятности}
-\label{sec:org1575ff9}
+\label{sec:org6eaa523}
 \begin{itemize}
 \item \(n_A\) --- число появления события \(A\) при \(n\) испытаниях
 \item \(\frac{n_A}{n}\) --- частота события \(A\)
@@ -689,7 +763,7 @@ $H_2$ --- здоров
 \[ P(A) \approx \frac{n_A}{n}, \text{при }n\to\infty \]
 
 \subsection{Вероятность отклонения относительной частоты}
-\label{sec:orgeb6451b}
+\label{sec:orgfd11d6b}
 \(] p\) --- веротяность события \(A\), \(\frac{n_A}{n}\) --- частота \(A\) \\
 По интегральной формуле Лапласса:
 \[ P\left(\left|\frac{n_A}{n} - p| \le \varepsilon\right) = P(-\varepsilon \le \frac{n_A}{n} - p \le \varepsilon) = P(-n\varepsilon \le n_a - np \le n\varepsilon) = P(np - n\varepsilon \le n_A \le np + n\varpepsilon) \]
@@ -698,22 +772,22 @@ $H_2$ --- здоров
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = \Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) - \Phi\left(-\frac{n\varepsilon}{\sqrt{npq}}\right) = 2\Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) \]
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 \subsection{Закон больших чисел Бернулли}
-\label{sec:orgb46eecb}
+\label{sec:org188e38f}
 Более точно последняя формула выглядит так:
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \xrightarrow[n \to \infty]{} 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 при \(n \to \infty\) \(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon \to \infty\) и \(\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\right) \to 0.5\)
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \to 2\cdot0.5 = 1\]
 \[ \lim_{n\to\infty}P\left(\left|\frac{n_A}{n} - p \right| \le \varepsilon \right) = 1 \]
 --- закон больших чисел Бернулли \\
-То есть при большом числе испытаний, будет близко в реальной вероятности
+То есть при большом числе испытаний, будет близко к реальной вероятности
 \chapter{}
-\label{sec:org242bb45}
+\label{sec:orgaaf1622}
 \section{Схемы испытаний и соответствующие распределения}
-\label{sec:orgb0c8131}
+\label{sec:org990819f}
 \begin{itemize}
 \item \(n\) --- число испытаний
 \item \(p\) --- вероятность при одном испытании
-\item \(q = 1 - p\) --- веротяность неудачи при одном испытании
+\item \(q = 1 - p\) --- вероятность неудачи при одном испытании
 \end{itemize}
 
 
@@ -723,8 +797,8 @@ $H_2$ --- здоров
 \begin{symb}
 \(B_{n,p} = B(n, p)\)
 \end{symb}
-\subsection{Схема до превого успешного испытания}
-\label{sec:org63015aa}
+\subsection{Схема до первого успешного испытания}
+\label{sec:org94207c8}
 \begin{definition}
 \textbf{Схема до первого успешного испытания}. Пусть проводится бесконечная
  серия испытаний, которая заканчивается после первого успеха под номером \(\tau\)
@@ -760,13 +834,13 @@ G(p)
 Также \(p(\tau = n + k|\tau > n) = p(\tau = k)\)
 \end{remark}
 \subsection{Испытание с несколькими исходами}
-\label{sec:org5c27ecc}
+\label{sec:orgbffff7c}
 Пусть при \(n\) испытаниях могут произойти \(m\) несовместных исходов
 \begin{itemize}
 \item \(p_i\) --- вероятность \(i\)-го исхода при одном отдельном испытании
 \end{itemize}
 \begin{theorem}
-Вероятность того, что при \(n\) испытаниях первый исход появится \(n_1\) раз, второй \(n_2\) раз, \dots{}, \(m\)-й \(n_m\) раз. \(n_1 + n_2 + \dots + n_m = m\)
+Вероятность того, что при \(n\) испытаниях первый исход появится \(n_1\) раз, второй \(n_2\) раз, \dots{}, \(m\)-й \(n_m\) раз. \(n_1 + n_2 + \dots + n_m = n\)
 \uline{Тогда} \[ p(n_1, n_2, \dots, n_m) = \frac{n!}{n_1!n_2!\dots n_m!}p_1^{n_1}p_2^{n_2}\dots p_m^{n_m} \]
 \end{theorem}
 \begin{proof}
@@ -776,7 +850,7 @@ G(p)
 \[ C^{n_1}_nC^{n_2}_{n - n_1}C^{n_3}_{n - n_1 - n_2}\dots C^{n_m}_{n_m} = \frac{n!}{n_1!n_2!\dots n_m!} \] --- формула для перестановок с повторениями
 \end{proof}
 \begin{task}
-Два одинаковых по силе шахматиста играют матч из 6 партий. Вероятность ничьи при одной пратии --- \(0.5\). Найти веротяность того, что второй игрок две партии выиграл, а три партии свел в ничью
+Два одинаковых по силе шахматиста играют матч из 6 партий. Вероятность ничьи при одной партии --- \(0.5\). Найти веротяность того, что второй игрок две партии выиграл, а три партии свел в ничью
 \end{task}
 \begin{solution}
 Исходы:
@@ -789,9 +863,9 @@ G(p)
 \end{enumerate}
 \end{solution}
 \subsection{Урновая схема}
-\label{sec:org6bba4f2}
+\label{sec:orgd64fd69}
 В урне \(N\) шаров. Из них \(K\) белых, а черных \(N - K\). Из нее выбираем \(n\) шаров без учета порядка. \(k\) --- число вынутых белых
-\begin{theorem}[Схема в возвратом]
+\begin{theorem}[Схема с возвратом]
 Вероятность вынуть белый шар не менятеся. \\
 \uline{Тогда} \[ p = \frac{K}{N}\quad p_n(k) = C^k_np^k(1 - p)^{n - k} \]
 --- биноминальное распределение
@@ -808,7 +882,8 @@ G(p)
 , при \(K \to \infty, K = \const\)
 \end{lemma}
 \begin{proof}
-\[ C^k_K = \frac{K!}{k!(K - k)!} = \frac{K(K - 1)\dots(K - k + 1)}{K^k}\cdot \frac{K^k}{k!} = \underbrace{1 \cdot \left(1 - \frac{1}{K}\right)\cdot\left(1 - \frac{2}{K}\right) \dots \left(1 - \frac{k - 1}{K}\right)}_{\substack{\downarrow \\ 1}} \cdot\frac{K^k}{k!} \sim \frac{K^k}{k!}\]
+\[ C^k_K = \frac{K!}{k!(K - k)!} = \frac{K(K - 1)\dots(K - k + 1)}{K^k}\cdot \frac{K^k}{k!} = \]
+\[ = \underbrace{1 \cdot \left(1 - \frac{1}{K}\right)\cdot\left(1 - \frac{2}{K}\right) \dots \left(1 - \frac{k - 1}{K}\right)}_{\substack{\downarrow \\ 1}} \cdot\frac{K^k}{k!} \sim \frac{K^k}{k!}\]
 \end{proof}
 \begin{theorem}
 \-
@@ -825,12 +900,12 @@ G(p)
 \[ = C^k_n\left(\frac{K}{N}\right)^k\left(1 - \frac{K}{N}\right)^{n -k} \xrightarrow[N \to \infty]{} C^k_n\cdot p^k \cdot ( 1- p)^{n - k}\]
 \end{proof}
 \subsection{Схемы Пуассона. Теорема Пуассона для схемы Бернулли}
-\label{sec:org4e5abd2}
+\label{sec:org9d41429}
 Схема: вероятность успеха при одном отдельном испытании зависит от числа испытаний \(n\) таким образом, чтобы \(n \cdot p_n = \lambda\)(точнее \(np_n \xrightarrow[n \to \infty]{} \lambda\)) \\
 Появление очень редких событий в длинном потоке испытаний
 \begin{theorem}[Формула Пуассона]
 Пусть \(n \to \infty,\ p_n \to 0\), так что \(np_n \to \lambda > 0\) \\
-\uline{Тогда} вероятность \(k\) успехов при \(n\) испытаниях \(p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n -k} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda}\)
+\uline{Тогда} вероятность \(k\) успехов при \(n\) испытаниях \[p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n -k} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda}\]
 \end{theorem}
 \begin{proof}
 Положим \(\lambda_n = np_n\)
@@ -839,15 +914,15 @@ G(p)
 \end{proof}
 \begin{enumerate}
 \item Оценка погрешности в формуле Пуссона
-\label{sec:org2115315}
+\label{sec:org3406e46}
 \begin{theorem}
-Пусть \(\nu_n\) -- число успешных про \(k\) в схеме Бернулли с вероятностью \(p\)
+Пусть \(\nu_n\) -- число успехов при \(n\) испытаниях в схеме Бернулли с вероятностью \(p\)
 \[ \lambda = np\quad A \subset \{0, 1, 2, \dotsm n\}\text{ --- произвольное подмножество}\]
 \uline{Тогда} погрешность
 \[ \left|p(\nu_n \in A) - \sum_{k \in A} \frac{\lambda_k}{k!} e^{-\lambda}\right| \le \min(p, \lambda p) = \min(p, np^2) = \min\left(p, \frac{\lambda^2}{n}\right) \]
 \end{theorem}
 \begin{remark}
-Формулу Пуасснона иногда называют формулой редких событий и применяем при малых \(p\), \(n \ge 100\)
+Формулу Пуасснона иногда называют формулой редких событий. Применяем при малых \(p\), \(n \ge 100\)
 \end{remark}
 \begin{task}
 Прибор состоит из 1000 элементов. Вероятность отказа каждого элемента \(\frac{1}{1000}\). Какова вероятность отказа больше двух элементов
