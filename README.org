@@ -29,11 +29,9 @@ My stuff from ITMO University
 **** Практики
 - [[file:Term4/teorver/practice/1.pdf][Практика 1]]
 - [[file:Term4/teorver/practice/2.pdf][Практика 2]]
-- [[file:Term4/teorver/practice/3.pdf][Практика 3]]
 - [[file:Term4/teorver/practice/4.pdf][Практика 4]]
 - [[file:Term4/teorver/practice/5.pdf][Практика 5]]
 - [[file:Term4/teorver/practice/6.pdf][Практика 6]]
-- [[file:Term4/teorver/practice/7.pdf][Практика 7]]
 *** Мет. опт.
 **** Лекциии
 [[file:Term4/metopt/lectures/all_lectures.pdf][Все лекции]]
