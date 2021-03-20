@@ -1,0 +1,5 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 6
+#+AUTHOR: Ilya Yaroshevskiy
+
+
