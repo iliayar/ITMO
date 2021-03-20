@@ -1,0 +1,82 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 6
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_task org
+\[ \int_\Omega \frac{1}{|x + y|^p} dx dy \]
+#+ATTR_LATEX: :scale 0.5
+[[file:6_1.png]]
+#+end_task
+#+begin_solution org
+\[ \int_\Omega \frac{1}{|x + y|^p} dx dy = \sum_n \int_{\Omega_n} \asymp \sum_n \frac{1}{\left(\frac{1}{n}\right)^p}\cdot \frac{1}{n^{p + 2}} \]
+#+end_solution
+#+begin_task org
+Тоже самое с четвертинкой астроиды
+#+end_task
+#+begin_solution org
+\[ \int_\Omega \frac{1}{|x + y|^p} dx dy \asymp \sum \frac{1}{n^{3 - p}} \]
+#+end_solution
+#+begin_task org
+\[ \int_\Omega \frac{1}{|1 - x^2 - y^2|} dx dy \],
+\(\Omega\) --- четверть астроиды
+#+ATTR_LATEX: :scale 0.5
+[[file:6_2.png]]
+#+end_task
+#+begin_solution org
+\[ \int_\Omega \frac{1}{|1 - x^2 - y^2|} dx dy = \sum_n \int_{\Omega_n} \asymp \sum \frac{1}{\left(\frac{1}{n}\right)^p}\cdot\frac{1}{n^{3.5}} \]
+#+end_solution
+#+begin_task org
+#+end_task
+* Интеграл по поверхности
+#+ATTR_LATEX: :scale 0.5
+[[file:6_3.png]]
+\[ \begin{array}{l} x(u, v) \\ y(u , v) \\ z(u, v) \end{array} \]
+\[ S = \iint_\Omega |\overline{x}'_u\times\overline{x}'_v| du dv = \iint_\Omega \sqrt{EG - F^2} du dv \]
+, где \(E = |\overline{x}_u'|^2 = x'_u^2 + y'_u^2 + z'_u^2\), \(F = (\overline{x}_u, \overline{x}_v) = x'_ux'_v + y'_uy'_b + z'_uz'_v \), \(G = |\overline{x}'_v|^2 = x'_v^2 + y'_v^2 + z'_v^2\)
+#+begin_task org
+График \(z = z(x, y)\)
+#+end_task
+#+begin_solution org
+\[ \begin{array}{l} x = x \\ y = y \\ z = z(x, y) \end{array}\quad \begin{matrix} i \\ j \\ k \end{matrix} \begin{pmatrix} 1 \\ 0 \\ z'_x \end{pmatrix} \begin{pmatrix} 0 \\ 1 \\ z'_y \end{pmatrix} \quad \begin{matrix} -z'_x \\ -z'_y \\ 1 \end{matrix}\]
+\[ S = \iint_\Omega \sqrt{1 + z'_x^2 + z'_y^2} dx dy \]
+#+end_solution
+#+begin_task org
+\[ x^2 + y^2 = a^2 \]
+\[ az = xy \]
+#+end_task
+#+begin_solution org
+\[ S = \iint_{\begin{tikzpicture}
+\draw (0, 0) circle[radius=0.2cm];
+\end{tikzpicture}} \sqrt{1 + \frac{y^2}{a^2} + \frac{x^2}{a^2}}\,dx,dy = \left|\begin{matrix} x = a r \cos\varphi \\ y = a r \sin \varphi \end{matrix}\right. = \int\limits^1_0 dr \int\limits^{2\pi}_0 d\varphi \sqrt{1 + r^2}a^2 r = 2\pi a^2 (1 + r^2)^\frac{3}{2} \cdot \frac{1}{3} \bigg|^1_0 \]
+#+end_solution
+#+begin_task org
+\[ x^2 + y^2 = a^2 \]
+\[ y^2 + z^2 = a^2 \]
+#+end_task
+#+begin_solution org
+\[ x = \sqrt{a^2 - z^2} \]
+\[ x'_y = 0\quad x'_z = \frac{-z}{\sqrt{a^2 - z^2}} \]
+\[ S = 4 \iint\limits_{y^2 + z^2 \le a^2} \sqrt{1 + \left(\frac{\partial x}{\partial y}\right)^2 + \left(\frac{\partial x}{\partial z}\right)^2}\, dy\, dz = 16 \int\limits_0^a dz \int\limits^{\sqrt{a^2 - z^2}}_0 \sqrt{1 + 0 + \left(-\frac{z}{x}\right)^2} dy = \]
+\[ = 16 \int\limits^a_0 dz \int\limits^{\sqrt{a^2 - z^2}}_0 \frac{\sqrt{x^2 + z^2}}{x^2} dy = 16 a \int dz \int \frac{dy}{\sqrt{a^2 - z^2}} \]
+
+#+end_solution
+
+#+begin_task org
+\[ z^2 = 2xy\quad x + y = 1,\ x= 0,\ y = 0\]
+#+end_task
+#+begin_solution org
+\[ z = \sqrt{2xy}\quad \]
+\[ \begin{matrix}
+z'_x = \sqrt{\frac{y}{x}}\cdot \frac{1}{\sqrt{2}} \\
+z'_y = \sqrt{\frac{x}{y}}\cdot \frac{1}{\sqrt{2}} \end{matrix }\]
+\[ S = \iint \sqrt{1 + \frac{y}{2x} + \frac{x}{2y}}\,dx\,dy = \iint \sqrt{\frac{2xy + y^2 + x^2}{2xy}} = \iint \frac{x + y}{\sqrt{2}\sqrt{xy}} = \int\limits^1_0 dx \int\limits_0^{1 - x} \frac{\sqrt{x}}{\sqrt{2}}\cdot\frac{1}{\sqrt{y}} + \frac{1}{\sqrt{2}x}\cdot \sqrt{y} dy\]
+
+#+end_solution
+
+#+begin_task org
+\[ z = \sqrt{x^2 - y^2}\quad (x^2 + y^2)^2 = a^2(x^2 - y^2) \]
+#+end_task
+#+begin_solution org
+\[ \iint\limits_\Omega \sqrt{1 + \frac{x^2 + y^2}{x^2 - y^2}}\,dx\,dy = 4\sqrt{2} \iint \frac{x}{\sqrt{x^2 - y^2}}\,dx\,dy \]
+\[ z'_x = \frac{x}{\sqrt{x^2 - y^2}}\quad z'_y = \frac{-y}{\sqrt{x^2 + y^2}} \]
+#+end_solution
