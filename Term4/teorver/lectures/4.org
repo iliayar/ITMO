@@ -58,7 +58,7 @@
 ** Предельные теоремы в схеме Бернулли
 #+begin_definition org
 *Локальная формула* Муавра-Лапласса. Применяем когда требуется найти вероятноть точного числа успехов.
-\[ P_n(\nu_n = x) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
+\[ P_n(\nu_n = k) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
 , где \(\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, x = \frac{k - np}{\sqrt{npq}}\) --- функция Гауса. \\
 Свойства функции Гауса \(\varphi(x)\):
 1. \(\varphi(-x) = \varphi(x)\) --- четная
@@ -66,7 +66,7 @@
 #+end_definition
 #+begin_definition org
 *Интегральная формула Лапласса*. Применяем если число успехов лежит в неком диапозоне.
-\[ P_n(x_1 \le \nu_n \le x_2) \approx \Phi(x_1) - \Phi(x_2) \]
+\[ P_n(k_1 \le \nu_n \le k_2) \approx \Phi(x_1) - \Phi(x_2) \]
 , где \[ \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz\] --- функция Лапласса \\
 \[ x_1 = \frac{k_1 - np}{\sqrt{npq}},\ x_2 = \frac{k_2 - np}{\sqrt{npq}} \]
 
