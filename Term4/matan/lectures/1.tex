@@ -1,7 +1,8 @@
-% Created 2021-02-09 Tue 16:24
+% Created 2021-03-16 Tue 18:38
 % Intended LaTeX compiler: pdflatex
-\documentclass[english]{article}
-\usepackage[T1, T2A]{fontenc}
+
+  \documentclass[english]{article}
+  \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -11,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{natbib}
 \usepackage{amssymb}
+\usepackage{stmaryrd}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{mathtools}
@@ -25,89 +27,91 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
+  
+  \usepackage{geometry}
+  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+  
+   \usepackage{hyperref}
+   \hypersetup{
+       colorlinks=true,
+       linkcolor=blue,
+       filecolor=orange,
+       citecolor=black,      
+       urlcolor=cyan,
+       }
 
-\usepackage{geometry}
-\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+  \usetikzlibrary{decorations.markings}
+  \usetikzlibrary{cd}
+  \usetikzlibrary{patterns}
+  \usetikzlibrary{automata, arrows}
 
- \usepackage{hyperref}
- \hypersetup{
-     colorlinks=true,
-     linkcolor=blue,
-     filecolor=orange,
-     citecolor=black,      
-     urlcolor=cyan,
-     }
-
-\usetikzlibrary{decorations.markings}
-\usetikzlibrary{cd}
-\usetikzlibrary{patterns}
-
-\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
-\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+  \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+  \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
 
 
-\newcommand{\R}{\mathbb{R}}
-\renewcommand{\C}{\mathbb{C}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+  \newcommand{\R}{\mathbb{R}}
+  \renewcommand{\C}{\mathbb{C}}
+  \newcommand{\N}{\mathbb{N}}
+  \newcommand{\rank}{\text{rank}}
+  \newcommand{\const}{\text{const}}
+  \newcommand{\grad}{\text{grad}}
 
-\theoremstyle{plain}
-\newtheorem{axiom}{Аксиома}
-\newtheorem{lemma}{Лемма}
-\newtheorem{manuallemmainner}{Лемма}
-\newenvironment{manuallemma}[1]{%
-  \renewcommand\themanuallemmainner{#1}%
-  \manuallemmainner
-}{\endmanuallemmainner}
+  \theoremstyle{plain}
+  \newtheorem{axiom}{Аксиома}
+  \newtheorem{lemma}{Лемма}
+  \newtheorem{manuallemmainner}{Лемма}
+  \newenvironment{manuallemma}[1]{%
+    \renewcommand\themanuallemmainner{#1}%
+    \manuallemmainner
+  }{\endmanuallemmainner}
 
-\theoremstyle{remark}
-\newtheorem*{remark}{Примечание}
-\newtheorem*{exercise}{Упражнение}
-\newtheorem{corollary}{Следствие}[theorem]
-\newtheorem*{examp}{Пример}
-\newtheorem*{observation}{Наблюдение}
+  \theoremstyle{remark}
+  \newtheorem*{remark}{Примечание}
+  \newtheorem*{solution}{Решение}
+  \newtheorem{corollary}{Следствие}[theorem]
+  \newtheorem*{examp}{Пример}
+  \newtheorem*{observation}{Наблюдение}
 
-\theoremstyle{definition}
-\newtheorem{theorem}{Теорема}[section]
-\newtheorem*{definition}{Определение}
-\newtheorem*{symb}{Обозначение}
-\newtheorem{manualtheoreminner}{Теорема}
-\newenvironment{manualtheorem}[1]{%
-  \renewcommand\themanualtheoreminner{#1}%
-  \manualtheoreminner
-}{\endmanualtheoreminner}
-\captionsetup{justification=centering,margin=2cm}
-\newenvironment{colored}[1]{\color{#1}}{}
+  \theoremstyle{definition}
+  \newtheorem{task}{Задача}
+  \newtheorem{theorem}{Теорема}[section]
+  \newtheorem*{definition}{Определение}
+  \newtheorem*{symb}{Обозначение}
+  \newtheorem{manualtheoreminner}{Теорема}
+  \newenvironment{manualtheorem}[1]{%
+    \renewcommand\themanualtheoreminner{#1}%
+    \manualtheoreminner
+  }{\endmanualtheoreminner}
+  \captionsetup{justification=centering,margin=2cm}
+  \newenvironment{colored}[1]{\color{#1}}{}
 
-\tikzset{->-/.style={decoration={
-  markings,
-  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
-\makeatletter
-\newcommand*{\relrelbarsep}{.386ex}
-\newcommand*{\relrelbar}{%
-  \mathrel{%
-    \mathpalette\@relrelbar\relrelbarsep
-  }%
-}
-\newcommand*{\@relrelbar}[2]{%
-  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
-  \lower#2\hbox{$\m@th#1\relbar$}%
-}
-\providecommand*{\rightrightarrowsfill@}{%
-  \arrowfill@\relrelbar\relrelbar\rightrightarrows
-}
-\providecommand*{\leftleftarrowsfill@}{%
-  \arrowfill@\leftleftarrows\relrelbar\relrelbar
-}
-\providecommand*{\xrightrightarrows}[2][]{%
-  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
-}
-\providecommand*{\xleftleftarrows}[2][]{%
-  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
-}
-\makeatother
+  \tikzset{->-/.style={decoration={
+    markings,
+    mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+  \makeatletter
+  \newcommand*{\relrelbarsep}{.386ex}
+  \newcommand*{\relrelbar}{%
+    \mathrel{%
+      \mathpalette\@relrelbar\relrelbarsep
+    }%
+  }
+  \newcommand*{\@relrelbar}[2]{%
+    \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+    \lower#2\hbox{$\m@th#1\relbar$}%
+  }
+  \providecommand*{\rightrightarrowsfill@}{%
+    \arrowfill@\relrelbar\relrelbar\rightrightarrows
+  }
+  \providecommand*{\leftleftarrowsfill@}{%
+    \arrowfill@\leftleftarrows\relrelbar\relrelbar
+  }
+  \providecommand*{\xrightrightarrows}[2][]{%
+    \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+  }
+  \providecommand*{\xleftleftarrows}[2][]{%
+    \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+  }
+  \makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 1}
@@ -129,7 +133,7 @@
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Теория меры}
-\label{sec:org7bdb928}
+\label{sec:org1e8fd1b}
 \begin{lemma}[о структуре компактного оператора]
 \(V : \R^m \to \R^m\) --- невырожденный линейный оператор, т.е. \(\det V \neq 0\) \\
 \uline{Тогда}:
@@ -140,7 +144,7 @@
 \[ \forall x \in \R^m\quad V(x) = \sum_{i = 1}^m S_i \langle x, g_i \rangle h_i$ \]
 \color{gray} \(x = \sum \langle x, g_i \rangle g_i\) --- разложение по базису \color{black} \\
 \textbf{При этом} \(\vert\det V\vert = S_1 S_2 \dots S_m\)
-\label{org62b4da8}
+\label{org1493ef6}
 \end{lemma}
 \begin{proof}
 \(W := V^*V\) \color{gray} * --- транспонирование в \(\R^m\) \color{black} \\
@@ -156,7 +160,7 @@
 \[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
 \(\ref{diag_1}\) --- т.к. диагональная матрица
-\label{org5b1f23a}
+\label{orgc562fbb}
 \end{proof}
 \begin{theorem}[преобразование меры лебега при линейном отображении]
 \-
@@ -168,7 +172,7 @@
 \item \(\forall E \in \M^m\quad V(E) \in \M^m\)
 \item \(\lambda(V(E)) = \vert \det V \vert \cdot \lambda E\)
 \end{itemize}
-\label{orgb08db77}
+\label{orgb6e1c0e}
 \end{theorem}
 \begin{proof}
 \- 
@@ -180,12 +184,12 @@
 \(\Rightarrow\) \(\exists k: \mu = k\cdot \lambda\)(Лемма из предыдущего семестра) \\
 \(Q\) --- единичный куб на векторах \(g_i\) и \(V(g_i) = S_ih_i\), \(V(Q) = \{\sum\alpha_iS_ih_i \vert \alpha_i \in [0,1]\}\) --- паралеллепипед со сторонами \(S_i, \dots, S_m\)
 \end{description}
-\label{org8d97f42}
+\label{orgab82692}
 \end{proof}
 \section{Интеграл}
-\label{sec:orgff7e778}
+\label{sec:orgba02c2c}
 \subsection{Измеримые функции}
-\label{sec:orgabae49a}
+\label{sec:org192b2d7}
 \begin{definition}
 \-
 \begin{enumerate}
@@ -194,7 +198,7 @@
 \(\exists\) разбиение \(X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i\) \\
 При этом такое разбиение --- \textbf{допустимое разбиение}
 \end{enumerate}
-\label{orgc2594d7}
+\label{org10500eb}
 \end{definition}
 \begin{examp}
 \-
@@ -202,7 +206,7 @@
 \item Характеристическая функция множества \(E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}\)
 \item \(f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}\), где \(\mathcal{X} = \bigsqcup e_i\)
 \end{enumerate}
-\label{org62262b2}
+\label{org4b0ebf0}
 \end{examp}
 \begin{remark}
 \-
@@ -214,19 +218,19 @@
 \item \(f, g\) --- ступенчатые, \(\alpha \in \R\) \\
 \uline{Тогда} \(f + g,\ \alpha f,\ fg,\ max(f, g),\ min(f, g),\ |f|\) --- ступенчатые
 \end{enumerate}
-\label{org1e1c836}
+\label{orgf2ca6ad}
 \end{remark}
 \begin{definition}
 \(f: E\subset X \to \overline{\R},\ a \in \R\) \\
 \(E(f < a) = \{x\in E: f(x) < a\}\) --- \textbf{лебегово множество функции \(f\)} \\
 \(E(f \le a),\ E(f > a), E(f \ge a)\) --- также лебеговы множества \\
 Если \(f\) задана на \(X\): \(X(f < a),\ X(f \le a), \dots\) --- лебеговы множества
-\label{org9e76c4d}
+\label{org637ad7e}
 \end{definition}
 \begin{remark}
 \(E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C\) \\
 \[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
-\label{org932a5c8}
+\label{org15cea73}
 \end{remark}
 \begin{definition}
 \-
@@ -237,7 +241,7 @@
 \end{itemize}
 \(f\) --- \textbf{измерима на множестве \(E\)}: \\
 \(a \in \R\quad E(f < a)\) --- измеримо(т.е. \(\in \A\))
-\label{orgea2f15d}
+\label{orgf570328}
 \end{definition}
 \begin{symb}
 \-
@@ -245,7 +249,7 @@
 \item \(f\) --- измеримо на \(X\) --- говорят просто "измеримо"
 \item \(X = \R^m\), мера Лебега --- измеримо по Лебегу
 \end{itemize}
-\label{org9ff994c}
+\label{orgab6f7b3}
 \end{symb}
 \begin{remark}
 Эквивалентны:
@@ -255,7 +259,7 @@
 \item \(\forall a\quad E(f > a)\) --- измеримо
 \item \(\forall a\quad E(f \ge a)\) --- измеримо
 \end{enumerate}
-\label{org0d61473}
+\label{orgf971f07}
 \end{remark}
 \begin{examp}
 \begin{enumerate}
@@ -263,7 +267,7 @@
 \(E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}\)
 \item \(f: \R^m \to \R\) --- непрерывна. Тогда \(f\) --- измеримо по Лебегу
 \end{enumerate}
-\label{orgdb2dd65}
+\label{org80fdca0}
 \end{examp}
 \begin{remark}
 \emph{Свойства}:
@@ -280,7 +284,7 @@
 \item \(f \neq 0\) --- измерима на \(E\) \(\Rightarrow\) \(\frac{1}{f}\) --- измерима на \(E\)
 \item \(f \ge 0\), измерима на \(E\), \(\alpha \in \R\). \uline{Тогда} \(f^\alpha\) --- измерима на \(E\)
 \end{enumerate}
-\label{org0686530}
+\label{orgc2dee36}
 \end{remark}
 \begin{theorem}
 \(f_n\) --- измерима на \(X\). \\
@@ -291,7 +295,7 @@
 \item \(\overline{\lim} f_n;\quad\underline{\lim} f_n\) --- измеримы
 \item Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то \(h(x)\) --- измеримо
 \end{enumerate}
-\label{org4a5f254}
+\label{org59cc789}
 \end{theorem}
 \begin{proof}
 \-
@@ -300,11 +304,11 @@
 \item \[ (\overline{\lim} f_n)(x) = \inf\{s_n: s_n = \sup(f_n(x), f_{n + 1}(x), \dots)\} \]
 \item очев.
 \end{enumerate}
-\label{orgf7ee1f8}
+\label{orgcecff0a}
 \end{proof}
 
 \subsection{Меры Лебега-Стильеса}
-\label{sec:org2798b92}
+\label{sec:orgeb9e54a}
 \begin{definition}
 \(\R, \P^1, g:\R \to \R\) --- возрастает, непрерывна \\
 \(\mu[a, b) := g(b) - g(a)\) --- \(\sigma\)-конечный объем \\
@@ -312,11 +316,11 @@
 \[ \mu[a, b) := g(b-0) - g(a - 0) \]
 --- тоже \(\sigma\)-конечная мера \\
 Применим теорему о продолжении, получим меру \(\mu g\) на некой \(\sigma\)-алгебре --- \textbf{мера Лебега-Стилтьеса} 
-\label{org92ef608}
+\label{org681709c}
 \end{definition}
 \begin{definition}
 \(g(x) = \lceil x \rceil\) \\
 Пусть \(\mu g\) определена на Борелевской \(\sigma\)-алгебре --- \textbf{мера Бореля-Стилтьеса}
-\label{org1431505}
+\label{orgd968516}
 \end{definition}
 \end{document}

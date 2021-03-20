@@ -1,0 +1,11 @@
+#+LATEX_CLASS: lectures
+#+TITLE: Лекции по Дискретной математике 4 семестр
+#+AUTHOR: Ilya Yaroshevskiy
+
+* TODO
+* 
+#+INCLUDE: "2.org" :lines "4-"
+* 
+#+INCLUDE: "3.org" :lines "4-"
+* 
+#+INCLUDE: "4.org" :lines "4-"

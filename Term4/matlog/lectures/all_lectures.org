@@ -1,0 +1,13 @@
+#+LATEX_CLASS: lectures
+#+TITLE: Лекции по Математической логике 4 семестр
+#+AUTHOR: Ilya Yaroshevskiy
+
+* TODO
+* TODO
+* TODO
+* 
+#+INCLUDE: "4.org" :lines "4-"
+* 
+#+INCLUDE: "5.org" :lines "4-"
+* 
+#+INCLUDE: "6.org" :lines "4-"
