@@ -10,6 +10,8 @@
 *.out
 *.class
 *.jar
+/**/*.o
+/**/*.hi
 
 # Java tests
 /**/base/*
