@@ -1,4 +1,4 @@
-% Created 2021-03-19 Fri 22:18
+% Created 2021-03-20 Sat 14:05
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -129,7 +129,7 @@
 
 
 \section{Схема Бернулли}
-\label{sec:orgdd1f8da}
+\label{sec:orgabc06bf}
 \begin{definition}
 Схемой Бернулли называется серия независимых испытаний, каждое из
 которых имеет два исхода, каждое интересующее нас событие лиибо
@@ -170,7 +170,7 @@
 \[ P_5(3) = C^3_5 p^3q^2 = 0.2048\]
 \end{solution}
 \subsection{Наиболее вероятное число успехов}
-\label{sec:orgc9cc5bb}
+\label{sec:orgb26fc8d}
 Выясним при каком значении \(k\) вероятность предшествующего числа
 успехов \(k - 1\) будет не больше чем веротяность \(k\) успехов
 \[ P_n(k - 1) \le P_n(k) \]
@@ -195,10 +195,10 @@
 \includegraphics[scale=0.35]{4_1.png}
 \end{center}
 \subsection{Предельные теоремы в схеме Бернулли}
-\label{sec:org8b8bea6}
+\label{sec:org101bfc4}
 \begin{definition}
 \textbf{Локальная формула} Муавра-Лапласса. Применяем когда требуется найти вероятноть точного числа успехов.
-\[ P_n(\nu_n = x) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
+\[ P_n(\nu_n = k) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
 , где \(\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, x = \frac{k - np}{\sqrt{npq}}\) --- функция Гауса. \\
 Свойства функции Гауса \(\varphi(x)\):
 \begin{enumerate}
@@ -208,7 +208,7 @@
 \end{definition}
 \begin{definition}
 \textbf{Интегральная формула Лапласса}. Применяем если число успехов лежит в неком диапозоне.
-\[ P_n(x_1 \le \nu_n \le x_2) \approx \Phi(x_1) - \Phi(x_2) \]
+\[ P_n(k_1 \le \nu_n \le k_2) \approx \Phi(x_1) - \Phi(x_2) \]
 , где \[ \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz\] --- функция Лапласса \\
 \[ x_1 = \frac{k_1 - np}{\sqrt{npq}},\ x_2 = \frac{k_2 - np}{\sqrt{npq}} \]
 
@@ -246,7 +246,7 @@
 \end{enumerate}
 \end{solution}
 \section{Статистическое определение вероятности}
-\label{sec:org8f4f0f6}
+\label{sec:org74078d7}
 \begin{itemize}
 \item \(n_A\) --- число появления события \(A\) при \(n\) испытаниях
 \item \(\frac{n_A}{n}\) --- частота события \(A\)
@@ -254,7 +254,7 @@
 \[ P(A) \approx \frac{n_A}{n}, \text{при }n\to\infty \]
 
 \subsection{Вероятность отклонения относительной частоты}
-\label{sec:org88174c7}
+\label{sec:org49f4912}
 \(] p\) --- веротяность события \(A\), \(\frac{n_A}{n}\) --- частота \(A\) \\
 По интегральной формуле Лапласса:
 \[ P\left(\left|\frac{n_A}{n} - p| \le \varepsilon\right) = P(-\varepsilon \le \frac{n_A}{n} - p \le \varepsilon) = P(-n\varepsilon \le n_a - np \le n\varepsilon) = P(np - n\varepsilon \le n_A \le np + n\varpepsilon) \]
@@ -263,7 +263,7 @@
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = \Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) - \Phi\left(-\frac{n\varepsilon}{\sqrt{npq}}\right) = 2\Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) \]
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 \subsection{Закон больших чисел Бернулли}
-\label{sec:org5c537f9}
+\label{sec:org84585ed}
 Более точно последняя формула выглядит так:
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \xrightarrow[n \to \infty]{} 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 при \(n \to \infty\) \(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon \to \infty\) и \(\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\right) \to 0.5\)
