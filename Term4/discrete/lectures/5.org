@@ -1,0 +1,137 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 5
+#+AUTHOR: Ilya Yaroshevskiy
+
+
+#+begin_export latex
+\newcommand{\Seq}{\text{Seq}\,}
+\newcommand{\Set}{\text{Set}\,}
+\newcommand{\Cyc}{\text{Cyc}\,}
+#+end_export
+
+* Помеченные КО и экспоненциальные производящие функции
+\[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
+#+begin_definition org
+Экспоненциальная производящая функция:
+\[ a(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
+#+end_definition
+#+begin_symb org
+Мы будет обозначать ЭПФ так-же большой буквой
+#+end_symb
+#+begin_examp org
+\(1, 1, 1,1, ,1,1 ,1, 1, 1\)
+- ОПФ :: \(\frac{1}{1 - t}\)
+- ЭПФ :: \(1 + 1\cdot t + \frac{1}{2!}\cdot t^2 + \frac{1}{3!}\cdot t^3 + \dots = \sum\limits_{n = 0}^{ + \infty} \frac{1}{n!}\cdot t^n = e^t = \exp(t)\)  
+#+end_examp
+#+begin_examp org
+\(1, 1, 2, 6, 24, \dots, n!, \dots\quad a_n = n!\)
+- ОПФ :: \(1 + t + 2\cdot t^2 + 6\cdot t^3 + \dots + n!\cdot t^n + \dots\)
+- ЭПФ :: \(\sum \limits_{n = 0}^{ + \infty} \frac{n!}{n!}\cdot t^n = \frac{1}{1 - t}\)
+#+end_examp
+
+\[ A(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
+\[ B(t) = \frac{b_0}{0!} + \frac{b_1}{1!}\cdot t + \frac{b_2}{2!}\cdot t^2 + \dots + \frac{b_n}{n!}\cdot t^n + \dots \]
+
+#+begin_property org
+\[ C(t) = A(t) \pm B(t)\quad c_n = a_n \pm b_n \]
+#+end_property
+#+begin_property org
+\[ C(t) = a(t)\cdot B(t) \]
+\[ \frac{C_n}{n!} = \sum\limits_{k = 0}^n \frac{a_k}{k!}\cdot\frac{b_{n - k}}{(n - k)!} \]
+\[ c_n = \sum\limits_{k = 0}^n \binom{n}{k}a_kb_{n - k} \]
+#+end_property
+#+begin_property org
+\[ C(t) = \frac{A(t)}{B(t)} \]
+\[ a_n = \sum^n_{k = 0}\binom{n}{k}b_kc_{n - k} = \sum\limits_{k = 1}^n \binom{n}{k} b_k c_{n - k} + b_0 c_n \]
+\[ c_n = \frac{a - \sum_{k = 1}^n\binom{n}{k} b_k c_{n - k}}{b_0} \]
+#+end_property
+*Далее все производящие функции --- экспоненциальные, а объекты помеченые*
+** Помеченные объекты
+#+begin_examp org
+Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
+#+end_examp
+#+begin_examp org
+Пустые графы. \(E_n = 1\) --- количество графов с \(n\) вершинами \\
+ЭПФ: \(\exp(t)\)
+#+end_examp
+#+begin_examp org
+Циклы. \(C_n = (n - 1)!\) --- количество циклов из \(n\) вершин. Направление обхода фиксировано. \\
+ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
+#+end_examp
+** Операции
+*** Дизъюнктное объединение (сумма)
+- \(A\)
+- \(B\)
+- \(A \cap B = \emptyset\)
+- \(C = A \cup B\)
+\[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
+*** Пара (произведение)
+- \(A\)
+- \(B\)
+- \(C = A \times B\)
+\[ C = \{\langle \underbrace{a}_{k\text{ атомов}}, \underbrace{b}_{n - k\text{ атомов}} \rangle\} \]
+Получим последовательность \(c_1 c_2 \dots c_n\). Перенумеруем элементы: \\
+Первые \(k\) в \(d_1d_2 \dots d_k\), где \(d_i = |\{c_j | 1 \le j \le k,\ c_k \le c_i\}|\). \\
+А остальные \(c_{k + 1}\dots c_n\) в \(e_1 \dots e_{n - k}\), где \(e_i = |\{c_j | k + 1\le j \le n,\ c_j \le c_{i + k}\}|\). \\
+Пусть \(d_i = a_i\), а \(e_i = b_i\)
+\[ c_n = \sum_{k = 0}^{ n } \binom{n}{k} a_k b_{n - k} \quad C(t) = A(t) \cdot B(t)\]
+#+begin_examp org
+Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
+#+end_examp
+*** Последовательность
+\[ C = \Seq A = \emptyset + A \times \Seq A \]
+\[ C(t) = 1 + A(t)\cdot C(t) \]
+\[ C(t) = \frac{1}{1 - A(t)} \]
+#+begin_examp org
+\-
+- \(U = \{\circ\}\)
+- \(U(t) = t\)
+- \(\Seq U = P\)
+\[P(t) = \frac{1}{1 - t}\]
+#+end_examp
+*** Множества (Set)
+- \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
+\[ B_k = \Seq_k A = \underbrace{A \times A \times \dots \times A}_k\quad B_k(t) = A(t)^k \]
+\[ \Set_k A = \Seq_k A /_\sim\]
+\([x_1 x_2 \dots x_k] \sim [y_1 y_2 \dots y_k]\). \exists перестановка \(\pi: x_i = y_{\pi[i]}\)
+\[ C_k(t) = \frac{1}{k!}\quad B_k(t) = \frac{A(t)^k}{k!} \]
+\[ \Set A = \bigcup_{k = 0}^{\infty} \Set_k A = \sum_{k = 0}^\infty \frac{A(t)^k}{k!} = e^{A(t)} \]
+#+begin_examp org
+\-
+- \(U = \{\circ\}\)
+- \(U(t) = t\)
+\[ \Set U = E\quad E(t) = e^t \]
+, где \(E\) --- пустые графы
+#+end_examp
+#+begin_examp org
+Циклы.
+- \(U = \{\circ\}\)
+- \(U(t) = t\)
+- \(B = \Set \Cyc U\)
+\[ B(t) = e^{C(t)} = e^{\ln \frac{1}{1 - t}} = \frac{1}{1 - t} \]
+Набор помеченных циклов являеся престановкой
+#+end_examp
+*** Циклы
+- \(\Cyc_k A\) --- количество циклов длины \(k\)
+\[ C = \Cyc_k A = \Seq_k A /_\sim \], где классы эквивалентности с точностью до циклических сдвигов. \\
+\([x_1\dots x_k] \sim [y_1 \dots y_k]\). \(\exists i:\ x_j = y_{(i + j)\mod k + 1}\)
+\[ \Cyc U = \ln\frac{1}{1 - t} \]
+\[ C_k(t) = \frac{1}{k}A(t)^k \]
+\[ C(t) = \sum_{k = 1}^\infty \frac{1}{k} A(t)^k = \ln\frac{1}{1 - A(t)} \]
+\[ \Set\Cyc U = P \]
+\[ \Set \Cyc A \simeq \Seq A \]
+
+
+** Обобщение
+
+#+ATTR_LATEX: :options [о подстановке]
+#+begin_theorem org
+\-
+- \(A\) --- помеченные КО --- \(A(t)\)
+- \(B\) --- помеченные КО --- \(B(t)\)
+\(C = A[B]\) --- вместо каждого атома \(A\) подставляем КО \(B\), перенумеруем получившиеся атомы произвольным образом
+\[ C(t) = A(B(t)) \]
+#+end_theorem
+#+begin_examp org
+\(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
+#+end_examp
