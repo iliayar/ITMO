@@ -1,8 +1,8 @@
-% Created 2021-03-16 Tue 23:18
+% Created 2021-03-22 Mon 13:09
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[oneside]{book}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[oneside]{book}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,90 +27,90 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-  
-   \usepackage{hyperref}
-   \hypersetup{
-       colorlinks=true,
-       linkcolor=blue,
-       filecolor=orange,
-       citecolor=black,      
-       urlcolor=cyan,
-       }
 
-  \usetikzlibrary{decorations.markings}
-  \usetikzlibrary{cd}
-  \usetikzlibrary{patterns}
-  \usetikzlibrary{automata, arrows}
+\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
 
-  \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
-  \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
 
 
-  \newcommand{\R}{\mathbb{R}}
-  \renewcommand{\C}{\mathbb{C}}
-  \newcommand{\N}{\mathbb{N}}
-  \newcommand{\rank}{\text{rank}}
-  \newcommand{\const}{\text{const}}
-  \newcommand{\grad}{\text{grad}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
 
-  \theoremstyle{plain}
-  \newtheorem{axiom}{Аксиома}
-  \newtheorem{lemma}{Лемма}
-  \newtheorem{manuallemmainner}{Лемма}
-  \newenvironment{manuallemma}[1]{%
-    \renewcommand\themanuallemmainner{#1}%
-    \manuallemmainner
-  }{\endmanuallemmainner}
+\theoremstyle{plain}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
 
-  \theoremstyle{remark}
-  \newtheorem*{remark}{Примечание}
-  \newtheorem*{solution}{Решение}
-  \newtheorem{corollary}{Следствие}[theorem]
-  \newtheorem*{examp}{Пример}
-  \newtheorem*{observation}{Наблюдение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
 
-  \theoremstyle{definition}
-  \newtheorem{task}{Задача}
-  \newtheorem{theorem}{Теорема}[section]
-  \newtheorem*{definition}{Определение}
-  \newtheorem*{symb}{Обозначение}
-  \newtheorem{manualtheoreminner}{Теорема}
-  \newenvironment{manualtheorem}[1]{%
-    \renewcommand\themanualtheoreminner{#1}%
-    \manualtheoreminner
-  }{\endmanualtheoreminner}
-  \captionsetup{justification=centering,margin=2cm}
-  \newenvironment{colored}[1]{\color{#1}}{}
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
 
-  \tikzset{->-/.style={decoration={
-    markings,
-    mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
-  \makeatletter
-  \newcommand*{\relrelbarsep}{.386ex}
-  \newcommand*{\relrelbar}{%
-    \mathrel{%
-      \mathpalette\@relrelbar\relrelbarsep
-    }%
-  }
-  \newcommand*{\@relrelbar}[2]{%
-    \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
-    \lower#2\hbox{$\m@th#1\relbar$}%
-  }
-  \providecommand*{\rightrightarrowsfill@}{%
-    \arrowfill@\relrelbar\relrelbar\rightrightarrows
-  }
-  \providecommand*{\leftleftarrowsfill@}{%
-    \arrowfill@\leftleftarrows\relrelbar\relrelbar
-  }
-  \providecommand*{\xrightrightarrows}[2][]{%
-    \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
-  }
-  \providecommand*{\xleftleftarrows}[2][]{%
-    \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
-  }
-  \makeatother
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекции по Математическому анализу 4 семестр}
@@ -129,14 +129,14 @@
 
 
 \chapter{}
-\label{sec:orgec35d20}
+\label{sec:orgd1bd3de}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Теория меры}
-\label{sec:org86afb7e}
+\label{sec:org588549d}
 \begin{lemma}[о структуре компактного оператора]
 \(V : \R^m \to \R^m\) --- невырожденный линейный оператор, т.е. \(\det V \neq 0\) \\
 \uline{Тогда}:
@@ -147,7 +147,7 @@
 \[ \forall x \in \R^m\quad V(x) = \sum_{i = 1}^m S_i \langle x, g_i \rangle h_i$ \]
 \color{gray} \(x = \sum \langle x, g_i \rangle g_i\) --- разложение по базису \color{black} \\
 \textbf{При этом} \(\vert\det V\vert = S_1 S_2 \dots S_m\)
-\label{orgf7d971d}
+\label{orgd40e810}
 \end{lemma}
 \begin{proof}
 \(W := V^*V\) \color{gray} * --- транспонирование в \(\R^m\) \color{black} \\
@@ -163,7 +163,7 @@
 \[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
 \(\ref{diag_1}\) --- т.к. диагональная матрица
-\label{org92772b9}
+\label{org42058b7}
 \end{proof}
 \begin{theorem}[преобразование меры лебега при линейном отображении]
 \-
@@ -175,7 +175,7 @@
 \item \(\forall E \in \M^m\quad V(E) \in \M^m\)
 \item \(\lambda(V(E)) = \vert \det V \vert \cdot \lambda E\)
 \end{itemize}
-\label{org0a073c3}
+\label{org44b17e7}
 \end{theorem}
 \begin{proof}
 \- 
@@ -187,12 +187,12 @@
 \(\Rightarrow\) \(\exists k: \mu = k\cdot \lambda\)(Лемма из предыдущего семестра) \\
 \(Q\) --- единичный куб на векторах \(g_i\) и \(V(g_i) = S_ih_i\), \(V(Q) = \{\sum\alpha_iS_ih_i \vert \alpha_i \in [0,1]\}\) --- паралеллепипед со сторонами \(S_i, \dots, S_m\)
 \end{description}
-\label{org3600934}
+\label{orga1a2794}
 \end{proof}
 \section{Интеграл}
-\label{sec:orgc09d42f}
+\label{sec:orgb563dc9}
 \subsection{Измеримые функции}
-\label{sec:org8253d04}
+\label{sec:orgc1ccb17}
 \begin{definition}
 \-
 \begin{enumerate}
@@ -201,7 +201,7 @@
 \(\exists\) разбиение \(X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i\) \\
 При этом такое разбиение --- \textbf{допустимое разбиение}
 \end{enumerate}
-\label{orgf3b43d8}
+\label{org0bc31ef}
 \end{definition}
 \begin{examp}
 \-
@@ -209,7 +209,7 @@
 \item Характеристическая функция множества \(E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}\)
 \item \(f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}\), где \(\mathcal{X} = \bigsqcup e_i\)
 \end{enumerate}
-\label{org39a96e9}
+\label{org34bd264}
 \end{examp}
 \begin{remark}
 \-
@@ -221,19 +221,19 @@
 \item \(f, g\) --- ступенчатые, \(\alpha \in \R\) \\
 \uline{Тогда} \(f + g,\ \alpha f,\ fg,\ max(f, g),\ min(f, g),\ |f|\) --- ступенчатые
 \end{enumerate}
-\label{org0cca135}
+\label{orgd1f505c}
 \end{remark}
 \begin{definition}
 \(f: E\subset X \to \overline{\R},\ a \in \R\) \\
 \(E(f < a) = \{x\in E: f(x) < a\}\) --- \textbf{лебегово множество функции \(f\)} \\
 \(E(f \le a),\ E(f > a), E(f \ge a)\) --- также лебеговы множества \\
 Если \(f\) задана на \(X\): \(X(f < a),\ X(f \le a), \dots\) --- лебеговы множества
-\label{org6eef9bb}
+\label{org66e71f3}
 \end{definition}
 \begin{remark}
 \(E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C\) \\
 \[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
-\label{orgbdd3c27}
+\label{org6f9c248}
 \end{remark}
 \begin{definition}
 \-
@@ -244,7 +244,7 @@
 \end{itemize}
 \(f\) --- \textbf{измерима на множестве \(E\)}: \\
 \(a \in \R\quad E(f < a)\) --- измеримо(т.е. \(\in \A\))
-\label{org9eb8e3d}
+\label{org5428c01}
 \end{definition}
 \begin{symb}
 \-
@@ -252,7 +252,7 @@
 \item \(f\) --- измеримо на \(X\) --- говорят просто "измеримо"
 \item \(X = \R^m\), мера Лебега --- измеримо по Лебегу
 \end{itemize}
-\label{org5d24ffe}
+\label{orgbde659c}
 \end{symb}
 \begin{remark}
 Эквивалентны:
@@ -262,7 +262,7 @@
 \item \(\forall a\quad E(f > a)\) --- измеримо
 \item \(\forall a\quad E(f \ge a)\) --- измеримо
 \end{enumerate}
-\label{org1094c37}
+\label{orgdfb6065}
 \end{remark}
 \begin{examp}
 \begin{enumerate}
@@ -270,7 +270,7 @@
 \(E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}\)
 \item \(f: \R^m \to \R\) --- непрерывна. Тогда \(f\) --- измеримо по Лебегу
 \end{enumerate}
-\label{orga90c66a}
+\label{orga26d145}
 \end{examp}
 \begin{remark}
 \emph{Свойства}:
@@ -287,7 +287,7 @@
 \item \(f \neq 0\) --- измерима на \(E\) \(\Rightarrow\) \(\frac{1}{f}\) --- измерима на \(E\)
 \item \(f \ge 0\), измерима на \(E\), \(\alpha \in \R\). \uline{Тогда} \(f^\alpha\) --- измерима на \(E\)
 \end{enumerate}
-\label{orgce2cf98}
+\label{org8e07704}
 \end{remark}
 \begin{theorem}
 \(f_n\) --- измерима на \(X\). \\
@@ -298,7 +298,7 @@
 \item \(\overline{\lim} f_n;\quad\underline{\lim} f_n\) --- измеримы
 \item Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то \(h(x)\) --- измеримо
 \end{enumerate}
-\label{org4e0cd5a}
+\label{org8606544}
 \end{theorem}
 \begin{proof}
 \-
@@ -307,11 +307,11 @@
 \item \[ (\overline{\lim} f_n)(x) = \inf\{s_n: s_n = \sup(f_n(x), f_{n + 1}(x), \dots)\} \]
 \item очев.
 \end{enumerate}
-\label{org0d75a63}
+\label{org59474a9}
 \end{proof}
 
 \subsection{Меры Лебега-Стильеса}
-\label{sec:orgdb7618a}
+\label{sec:orgabcb36b}
 \begin{definition}
 \(\R, \P^1, g:\R \to \R\) --- возрастает, непрерывна \\
 \(\mu[a, b) := g(b) - g(a)\) --- \(\sigma\)-конечный объем \\
@@ -319,22 +319,22 @@
 \[ \mu[a, b) := g(b-0) - g(a - 0) \]
 --- тоже \(\sigma\)-конечная мера \\
 Применим теорему о продолжении, получим меру \(\mu g\) на некой \(\sigma\)-алгебре --- \textbf{мера Лебега-Стилтьеса} 
-\label{org353ce57}
+\label{org67cb59b}
 \end{definition}
 \begin{definition}
 \(g(x) = \lceil x \rceil\) \\
 Пусть \(\mu g\) определена на Борелевской \(\sigma\)-алгебре --- \textbf{мера Бореля-Стилтьеса}
-\label{orga2d3abe}
+\label{org02cdf6f}
 \end{definition}
 \chapter{}
-\label{sec:org025fff5}
+\label{sec:orgafa6097}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Теореия меры}
-\label{sec:orgbb347ed}
+\label{sec:org8eb94d8}
 \subsection{Измеримые функции}
-\label{sec:orga450792}
+\label{sec:orgbef497c}
 \begin{itemize}
 \item \((X, \A, \mu)\)
 \item \(f: X \to \overline{R}\) имзмерима
@@ -353,7 +353,7 @@
 \item \(0 \le f_1 \le f_2 \le \dots\)
 \item \(\forall x f(x) = \lim_{n \to + \infty}f_n(x)\)
 \end{enumerate}
-\label{org56661ad}
+\label{org5d451af}
 \end{theorem}
 \begin{proof}
 \begin{center}
@@ -363,33 +363,33 @@
 \[ e^{(n)}_{n^2 + 1} = X(n \le f) \]
 \[ g_n := \sum^{n + 1}_{k = 1} \frac{k - 1}{n} \X_{e^{(n)}_k} \]
 \[ g_n \ge 0 \quad \lim_{n \to + \infty}g_n(x) = f(x) \]
-\label{orgd168204}
+\label{orgf4bcc2b}
 \end{proof}
 \begin{corollary}
 \(f\) --- имзерима \\
 \uline{Тогда} \(\exists f_n\) --- ступенчатая, \(f_n \xrightarrow{n \to + \infty}{} f\) всюду и \(|f_n| \le |f|\)
-\label{org8a3ada9}
+\label{org3147a5e}
 \end{corollary}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(fg\) --- измемрима (\(0\cdot\infty=0\))
-\label{org0888c15}
+\label{org554bb40}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_ng_n\) --- ступенчатая \(f_ng_n \to fg\)
-\label{org5dd61ef}
+\label{org89b8a84}
 \end{proof}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(f + g\) --- измерима
-\label{orgc1dc250}
+\label{org295d9f7}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_n + g_n\) --- ступенчатая \(f_n + g_n \to f + g\) \\
 \color{gray}Считаем что \(\forall x\), не может быть \(f(x) = \pm \infty,\ g(x) = \mp \infty\)
-\label{org6a0799a}
+\label{org944eaff}
 \end{proof}
 
 \begin{itemize}
@@ -407,14 +407,14 @@
 \item \(f\) --- непрерывна на \(E' = E \setminus e\)
 \end{itemize}
 \uline{Тогда} \(f\) --- измерима
-\label{org012a969}
+\label{org0ab40da}
 \end{theorem}
 \begin{proof}
 \(f\) --- измерима на \(E'\)  \\
 \(E'(f < a)\) --- открыто в \(E'\) \\
 \[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в} E \]
 \[ E(f < a) = E'(f < a) \cup e(f < a) \]
-\label{org43d7bc6}
+\label{orga8c2569}
 \end{proof}
 \begin{examp}
 \-
@@ -447,7 +447,7 @@
 \(f\) --- непрерывна на \(\langle a, b \rangle\) за исключением возможно счетного числа точек
 \end{proof}
 \subsection{Сходимость почти везде и по мере}
-\label{sec:org179f458}
+\label{sec:org9dfefd5}
 \begin{defintion}
 \begin{itemize}
 \item \((X, \A, \mu)\)
@@ -601,7 +601,7 @@
 \xymatrix@1{A\ar[r]^>>{+}&B}
 
 \section{Интеграл}
-\label{sec:orgc52f41e}
+\label{sec:org6d5ec50}
 \((X, \A, \mu)\)
 \begin{definition}
 \label{def_int_1}
@@ -660,12 +660,12 @@
 \end{enumerate}
 \end{theorem}
 \chapter{}
-\label{sec:orgfbd8a0c}
+\label{sec:orgb2c1292}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Интеграл}
-\label{sec:org514a333}
+\label{sec:org2bdc79a}
 \begin{enumerate}
 \item \(f \ge 0\), ступенчатые \\
 \(f = \sum_\text{кон.} \alpha_k \chi_{E_k}\), \(E_k\) --- измеримое \\
@@ -807,7 +807,7 @@
 \(f^+, f^- \dots\) \(\color{red}???\)
 \end{proof}
 \subsection{Предельный переход под щнаком интеграла}
-\label{sec:org3468b63}
+\label{sec:orgf392527}
 \(f_n \to f\). Можно ли утверждать \(\int_E f_n \to \int_E f\)?
 \begin{examp}
 \(f_n, f: \R \to \R\) \\
@@ -910,7 +910,7 @@
 \[ \sum_n \int_{[-N, N]}\frac{|a_n|}{\sqrt{|x - x_n|}} \le 4 \int_N \sum |a_n| < + \infty \]
 \end{proof}
 \chapter{}
-\label{sec:org463e7fb}
+\label{sec:orgd66efb2}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
@@ -1060,9 +1060,9 @@
 \color{red}Zzz..\color{black}
 \end{proof}
 \section{Плотность одной меры по отношению к другой}
-\label{sec:org78c6701}
+\label{sec:orgb932241}
 \subsection{Замена перменных в интеграле}
-\label{sec:org454724d}
+\label{sec:org50f5c37}
 \begin{itemize}
 \item \((X, \A, mu)\)
 \item \((Y, \B, \cdot)\)
@@ -1150,14 +1150,14 @@
 \[ \int_X f d\nu = \int_X f(x)\omega(x)d\mu \]
 \end{remark}
 \chapter{}
-\label{sec:orgecc2d68}
+\label{sec:orgbc0d711}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Плотности}
-\label{sec:org466a7c6}
+\label{sec:org238860a}
 
 \noindentПлотность \((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- мера \\
 Плотность  меры \(\nu\) онсительно \(\mu\) --- это функция \(\omega: X \to \overline{\R}\) \\
@@ -1249,7 +1249,7 @@
 \(\forall f, g \in \mathcal{L}(X) \exists A l_A(f) \neq l_A(g)\)
 \end{remark}
 \section{Мера лебега}
-\label{sec:orgd0719ad}
+\label{sec:org817316f}
 \begin{lemma}[о мере образа малых кубических ячеек]
 \-
 \begin{itemize}
@@ -1288,7 +1288,7 @@
 \item \(A \subset Q\)
 \end{itemize}
 \uline{Тогда} \[ \inf_{\substack{G: A \subset G \\ G\text{ --- открытое } \subset O}}\left(\lambda(G)\sup_G f\right) = \lambda A\cdot \sup_A f\]
-\label{orge9a64ad}
+\label{org6ab8a1e}
 \end{lemma}
 \begin{theorem}
 \-
@@ -1297,7 +1297,7 @@
 \end{itemize}
 \uline{Тогда} \(\forall A \in \M^m, A \in O\)
 \[ \lambda \Phi(A) = \int_A \left|\det \Phi'(x)\right| d\lambda(x) \]
-\label{org9eb9cb2}
+\label{orge6b8a31}
 \end{theorem}
 \begin{proof}
 Обозначим якобиан \(J_\Phi(x) = |\det \Phi'(x)|\) \\
@@ -1316,7 +1316,7 @@
 \item Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
 Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
 \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
-\item По \hyperref[orge9a64ad]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
+\item По \hyperref[org6ab8a1e]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
 \[ O = \bigsqcup Q_j\text{ --- куба } Q_j \subset \overline{Q_j} \subset O \]
 \[ A = \bigsqcup \underbrace{A \cup Q_j}_{A_j}\quad A\subset G\text{ --- открытое} \]
 \[ J A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
@@ -1353,7 +1353,7 @@
 \item \(\nu(A) = \lambda \Phi(A)\)
 \end{itemize}
 Под действием гладкого отображния \(\Phi\), \(\sigma\)-аглебра \(\M^m\) сохраняется \\
-По \hyperref[org9eb9cb2]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
+По \hyperref[orge6b8a31]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
 т.е. \(\lambda\) --- взвешенный образ исходной меры Лебега по отношению к \(\Phi\)
 \end{proof}
 \begin{examp}
@@ -1371,4 +1371,228 @@
 \[ \det \Phi' = r^2(\sin^2\psi \cos \psi + \cos^3\psi) = r^2\cos\psi = J_\Phi\]
 --- для географических координат: \(r\) --- растояние от центра Земли, \(\psi\) --- угол к плоскости экватора
 \end{examp}
+\chapter{}
+\label{sec:org83047d3}
+\newcommand{\X}{\chi}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\M}{\mathfrak{M}}
+
+\section{Сферические координаты в \(R^m\)}
+\label{sec:org9628b7b}
+\begin{examp}
+\-
+\begin{itemize}
+\item \(r, \varphi_1, \dots \varphi_{m - 1}\)
+\item \(\R^m \supset \R^{m - 1} \supset \dots \supset \R^2\)
+В кажои из очередных пространств \(\R^k\) фиксируем ортогональное к \(\R^{k - 1}\)
+
+\item \(\varphi_1\) --- угол между \(\overline{e_1}\) и \(Ox \in [0, \pi]\)
+\item \(\varphi_2\) --- угол между \(\overline{e_2}\) и \(P_{2_(e_2\ \dots\ e_m)} (x) \in [0, \pi]\)
+\item \(\vdots\)
+\item \(\varphi_{m - 1}\) --- просто полярный угол в \(\R^m\)
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.5]{6_1.png}
+\end{center}
+\[ x_1 = r\cos\varphi_1 \]
+\[ x_2 = r \sin \varphi_1\cos\varphi_2 \]
+\[ x_3 = 2 \sin \varphi_1 \sin\varphi_2 \cos\varphi_3 \]
+\[ \vdots \]
+\[ x_{m - 1} = r\sin\varphi_1 \dots \sin\varphi_{m - 2}\cos\varphi_{m - 1} \]
+\[ x_m = r \sin\varphi_1 \dots \sin\varphi_{m - 2} \sin \varphi_{m - 1} \]
+\[ J = r^{m - 1}\sin^{m - 2}\varphi_1\sin^{m - 3}\varphi_2 \dots \sin\varphi_{m - 2}\footnote{\text{В }\R^3\text{ ``географические`` координаты }J = r^2\cos\psi} \]
+Сделаем в цикле эти координаты:
+\begin{description}
+\item[{шаг 1}] \(x_m = \rho_{m - 1}\sin\varphi_{m - 1}\) \\
+\(x_{m - 1} = \rho_{m - 1}\cos\varphi_{m - 1}\) \\
+\((x_1\ \dots\ x_n) \rightsquigarrow (x_1\ \dots\ x_{m - 2},\ \rho_{m - 1},\ \varphi_{m - 1})\)
+\item[{шаг 2}] \(\rho_{m - 1} = \rho(m_2) \sin\varphi_{m - 2}\) \\
+\(x_{m - 2} = \rho_{m - 2} \cos\varphi_{m - 2}\) \\
+\((x_1\ \dots\ x_{m - 2},\ \rho_{m - 1},\ \varphi_{m -1}) \rightsquigarrow (x_1\ \dots\ x_{m - 3},\ \rho_{m - 2},\ \varphi_{m - 2},\ \varphi_{m - 1})\)
+\item[{\(\vdots\)}] 
+
+\item[{последний шаг}] \((x_1,\ \rho_2,\ \varphi_2\ \dots\ \varphi_{m - 1}) \rightsquigarrow (r,\ \varphi_1\ \dots\ \varphi_{m - 1})\) \\
+\(\rho_2 = r\sin\varphi_1\) \\
+\(x_1 = r \cos\varphi_1\)
+\end{description}
+\[ \lambda_m(\Omega) = \int\limits_\Omega 1 d\lambda_m \xlongequal[\text{1 шаг}]{} \int\limits_{\Omega_1} \rho_{m - 1} \xlongequal[\text{2 шаг}]{} \int\limits_{\Omega_2} \rho^2_{m - 2} \sin\varphi_{m - 2} \xlongequal[\text{3 шаг}]{} \int\limits_{\Omega_3} \rho^3_{m - 3} \sin^2\varphi_{m - 3}\sin\varphi_{m - 2} d\lambda = \]
+\[ = \dots = \int\limits_{\Omega_{m - 1}}r^{m - 1}\sin^{n - 2}\varphi_{1} \dots \sin\varphi_{m - 2}\]
+\end{examp}
+\section{Произведение мер}
+\label{sec:org6a17a55}
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \((Y, \B, \nu)\)
+\end{itemize}
+\begin{lemma}
+\(\A, \B\) --- п/к \(\Rightarrow\) \(\A \times \B = \{A\times B \subset X \times Y | A \in \A,\ B\in\B\}\)
+\end{lemma}
+\begin{examp}
+Ячейки: В \(\R^2 = \R^1 \times \R^1\ \A = \mathcal{P}^1,\ \B \in \mathcal{P}^1\) \\
+\(A \times B\) --- ячейка из \(\mathcal{P}\)
+\end{examp}
+\begin{definition}
+\(\mathcal{P} = \A \times \B\) --- множества из этой системы называются измеримыми прямоуг. \(m_o(A \times B) = \mu A\cdot \nu B\)
+\end{definition}
+\begin{theorem}
+\-
+\begin{enumerate}
+\item \(m_0\) --- мера на \(\mathcal{P}\)
+\item \(\nu,\mu\) --- \(\sigma\)-конечные \(\Rightarrow\) \(m_0\) --- тоже \(\sigma\)-конечная
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\-
+\begin{enumerate}
+\item ?\(m_0\) --- счетно аддитивна ?\(m_0 P = \sum m_o P_k\), если
+\[ A \times B = P = \bigsqcup P_k\text{, где }P_k=A_k\times B_k \]
+Наблюдение: \(\chi_{A \times B}(x, y) = \chi_A(x)\cdot\chi_B(y)\) \\
+Тогда \(\chi_P = \sum \chi_{P_k}\), т.е.
+\[ \forall x \in X, y \in Y\quad\chi_A(x)\chi_B(y) = \sum \chi_{A_k}(x)\chi_{B_k}(y) \]
+проинтегрируем по \(y\) по мере \(\nu\):
+\[ \chi_A(x) \nu B = \sum \chi_A(x)\cdot \nu B_k \]
+Интегрируем по \(x\):
+\[ \mu A \cdot \nu B - \sum \mu A_k \cdot \nu B_k  \]
+\item Очев. \(\mu\) --- \(\sigma\)-конечная \(\Rightarrow\) \(X = \bigcup X_k\), \(\mu X_k\) --- конечная
+\(nu\) --- \(\sigma\)-конечная \(\Rightarrow\) \(Y = \bigcup Y_n\), \(\nu Y_k\) --- конечная
+\[ X \times Y = \bigcup X_k \timesy Y_n\quad m_0 \mu X_k \nu Y_n\text{ --- конечная} \]
+\(\Rightarrow\) \(m_0\) --- \(\sigma\)-конечная мера
+\end{enumerate}
+\end{proof}
+\begin{definition}
+\-
+\begin{itemize}
+\item \((X, \A, \mu)\), \((Y, \B, \nu)\) --- пространства с мерой
+\item \(\mu, \nu\) --- \(\sigma\)-конечные
+\end{itemize}
+Пусть \(m\) --- лебеговское продолжение меры \(m_0\) с п/к \(\A \times \B\) на \(\sigma\)-алгебра, которую будет обозначать \(\A \otimes \B\)
+\end{definition}
+\begin{definition}
+\((X \times Y, \A \otimes \B, \nu \times \mu)\) --- произведение пространств с мерой \((X, \A, \mu)\) и \((Y, \B, \nu)\)
+\end{definition}
+\begin{remark}
+\-
+\begin{enumerate}
+\item Это произведение ассоциативно
+\item \(\sigma\)-конечность нужна для единственности произведения
+\end{enumerate}
+\end{remark}
+\begin{theorem}
+\(\lambda_m \times \lambda_n = \lambda_{n + m}\)
+\end{theorem}
+\begin{proof}
+\color{red}Без доказательсва\color{black}
+\end{proof}
+\begin{definition}
+\-
+\begin{itemize}
+\item \(X, Y\) --- множества
+\item \(C \subset X \times Y\)
+\end{itemize}
+\[ C_x := \{y \in Y| (x, y) \in C\} \]
+\[ C^y := \{x \in X| (x, y) \in C \} \]
+\end{definition}
+\begin{remark}
+\[ \left(\bigcup\limits_\alpha C_\alpha\right)_x = \bigcup\left(C_\alpha\right)_x \]
+\[ \left(\bigcap\limits_\alpha C_\alpha\right)_x = \bigcap\limits_\alpha\left(C_\alpha\right)_x \]
+\[ \left(C \setminus C'\right)_x = C_x \setminus C'_x \]
+\end{remark}
+\begin{theorem}[Кавальери]
+\-
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \((Y, \B, \nu)\)
+\item \(\nu, \mu\) --- \(\sigma\)-конечные, полные
+\item \(m := \mu \times \nu\)
+\end{itemize}
+Пусть \(C \in \A \otimes \B\) \\
+\uline{Тогда}:
+\begin{enumerate}
+\item \(C_x \in \B\) при почти всех \(x\)
+\item \(x \mapsto \nu(C_x)\) --- измеримая\footnote{функция задана при почти всех \(x\). Она равна почти везде некоторой измеримой функции, которая задана на всем \(X\). Это ``не мешает`` утверждению 3} функция на \(X\)
+\item \(mC = \int\limits_X \nu(C_x)d\mu(x)\)
+\end{enumerate}
+Аналогичное верно для \(C^y\)
+\end{theorem}
+\begin{examp}
+Половину шара сопоставляем с конусом.
+\begin{center}
+\includegraphics[scale=0.4]{6_2.png}
+\end{center}
+\begin{itemize}
+\item \(C_x=\)круг
+\item \(C_x=\)кольцо
+\end{itemize}
+\[ \lambda(C_x) = \pi(R^2 - x^2) \]
+\[ \lambda(C_x) = \pi R^2 - \pi x^2 \]
+\[ \nu(\frac{1}{2}\text{шара}) = \nu(\text{цилиндр}-\text{конус}) = \pi R^2 - \frac{1}{3} \pi R^2 = \frac{2}{3} \pi R^ \]
+\end{examp}
+\begin{proof}
+\(\mathcal{D}\) --- система множеств, для которых выполнено 1. - 3. 
+\begin{enumerate}
+\item \(C = A\times B \Rightarrow C \in \mathcal{D}\)
+\begin{enumerate}
+\item \(C_x = \left[\begin{matrix} \emptyset & x \not\in A \\ B & x \in A\end{matrix}\right.\)
+\item \(x \mapsto \nu(x)\) --- это функция \(\nu B \cdot \chi_A\)
+\item \(\int \nu(C_x) d\mu = \int\limits_X \nu B \cdot \chi_A d\mu = \nu B \cdot \mu A = mC\)
+\end{enumerate}
+\item \(E_i \in D\), dis \(\Rightarrow\) \(\bigsqcup E_i \in D\) \\
+\(E_i \in D \Rightarrow (E_i)_X\) --- измеримое почти везде \(\Rightarrow\) при почти всех \(x\) все \((E_i)_X\) -- измеримое \\
+\begin{enumerate}
+\item Тогда при этих \(x\ E_X = \bigsqcup(E_i)_X \in \B\)
+\item \(\nu E_X = \sum \underbrace{\nu(E_i)_X}_\text{измеримая функция}\) \(\Rightarrow\) функция \(x \mapsto \nu E_X\) измеримая\(\footnotemark[\value{footnote}]\)
+\item \[ \int\limits_X \nu E_X d\mu = \sum_i \int\limits_X \nu(E_i)_X = \sum_i mE_i = mE \]
+\end{enumerate}
+\item \(E_i \in \mathcal{D},\ E_1 \supset E_2 \supset \dots,\ E = \bigcap\limits_iE_i,\ \mu E_i < + \infty\) Тогда \(E \in \mathcal{D}\)
+\[ \int\limits_X \nu(E_i)_X d\mu = mE_i < +\infty \Rightarrow \nu(E_i)_X\text{ --- конечная при почти всех }x \]
+\begin{enumerate}
+\item \(\forall x\) верно \((E_1)_X \supset (E_2)_X \supset \dots ,\ E_X = \bigcap (E_i)_X\). Тогда \(E_X\) --- измеримое при почти всех \(x\) и \(\lim\limits_{i \to + \infty} \nu(E_i)_X = \nu E_X\) при почти всех \(x\)
+\item Таким образом \(x \mapsto \nu E_X\) --- измеримая\(\footnotemark[\value{footnote}]\)
+\item \[ \int\limits_X \nu E_X d\mu = \lim \int \nu(E_i)_X d\mu = \lim mE_i = mE \]
+Первое равенство по теореме Лебега о предельном переходе под знаком интеграла: \(|\nu (E_i)_X| \le \nu (E_1)_X\) --- из\(\footnotemark[\value{footnote}]\)
+\end{enumerate}
+\end{enumerate}
+Итог: \(A_{ij} \in \mathcal{P} = \A \times \B\), то \(\color{red}??\color{black}\bigcup A_{ij} \in \mathcal{D}\)
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item \(mE = 0 \Rightarrow E \in \mathcal{D}\)
+\[ mE = \inf\{\sum m_0 P_k | E \subset \bigcup P_k,\ P_k \in \mathcal{P}\} \]
+--- теорема о лебеговском продолжении. \\
+\(\exists\) множества \(H\) вида \(\bigcap\limits_e\bigsqcup\limits_X P_{ke}\) (т.е. \(H \in \mathcal{D}\)) \\
+\(E \subset H, mH = mE = 0\)
+\[ 0 = mH = \int\limits_X \nu H_x d\mu \Rightarrow \nu H_X \sim 0\text{ (\(=0\) при почти всех \(x\))} \]
+\(E_X \subset H_x, \nu\) --- полная \(\Rightarrow\)
+\begin{enumerate}
+\item \(E_X\) --- измерима при почти всех \(x\)
+\item \(\nu E_X = 0\) почти везде
+\item \(\int \nu E_X d\mu = 0 = m E\)
+\end{enumerate}
+\item \(C\) --- \(m\)-измеримо, \(mC < + \infty\) тогда \(C \in \mathcal{D}\) \\
+\(C = H \setminus e\), где \(H\) --- вида \(\color{red}???\color{black}\bigcup P_{ke},\ me = 0,\ mC = mH\)
+\begin{enumerate}
+\item \(C_x = H_x \setminus e_X\) --- измерима при почти всех \(x\), т.к. \(\nu\) --- полная
+\item \(\nu e_X = 0\) при почти всех \(x\) \(\Rightarrow\) \(\nu C_x = \nu H_x - \nu e_X = \nu H_X\) \(\Rightarrow\) измерима
+\item \(\int\limits_X \nu C_x d\mu = \int\limits_X \nu H_x d\mu = mH = mC\)
+\end{enumerate}
+\item \(C\) --- произвольное измеримое множество в \(X \times Y\) \(\Rightarrow\) \(C \in \mathcal{D}\) \\
+\[ X = \bigsqcup X_k,\ \mu X_k < + \infty,\ Y = \bigsqcup Y_j,\ \nu Y_j < + \infty \]
+\[ C = \bigsqcup (C \cap (X_k \times Y_j))\text{ --- используем 2.}\]
+\end{enumerate}
+\end{proof}
+\begin{corollary}
+\(C\) --- измеримое в \(X\times Y\). Пусть \(P_q(C) = \{x \in X| C_x \neq 0\}\) --- проекция \(C\) на \(X\). Если \(P_1(C)\) --- измеримое, то:
+\[ mC = \int\limits_{P_1(C)} \nu(C_x) d\mu \]
+\end{corollary}
+\begin{proof}
+при \(x \not\in P_1(C)\ \nu(C_x) = 0\)
+\end{proof}
+\begin{remark}
+\-
+\begin{enumerate}
+\item \(С\) --- измеримое \(\not\Rightarrow\) \(P_1(C)\) --- измеримое
+\item \(C\) --- измеримое \(\not\Rightarrow\) \(\forall x\ C_x\) --- измеримо
+\item \(\forall x\forall y\ C_x,C^y\) --- измеримые \(\not\Rightarrow\) \(C\) --- измеримое (пример Серпинского)
+\end{enumerate}
+\end{remark}
 \end{document}
