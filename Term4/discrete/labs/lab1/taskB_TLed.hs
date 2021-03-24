@@ -3,7 +3,7 @@ import Data.List
 import Data.Ratio (numerator, denominator, (%))
 import Data.Maybe (fromJust)
 
-modulus :: Int
+modulus :: Integral a => a
 modulus = 998244353
 
 data GenFunc = Polynom [Rational] 
@@ -27,9 +27,10 @@ instance Gen GenFunc where
     getAll (Mult g1 g2) = 
         let p1 = getAll g1
             p2 = getAll g2
-        in [getN (take n p1) (take n p2) | n <- [1..]]
-        where
-            getN p1 p2 = sum $ zipWith (*) p1 (reverse p2)
+            getAll' (a:as) sum =
+              let  (n:ns) = zipWith (+) sum $ map (*a) p2
+              in n : getAll' as ns
+        in getAll' p1 (repeat 0)
     getAll (Div g1 g2) =
         let (x:p1) = getAll g1
             (y:p2) = getAll g2
@@ -41,34 +42,23 @@ instance Gen GenFunc where
                 in cn : (getAll' p1 (z:p2) ((y:c) ++ [cn]) $ n + 1)
     getAll (Subst g1 g2) =
       let (a:as) = getAll g1
-          bs = getAll g2
-      in a : [getN n as bs | n <- [1..]]
-      where
-        getN n as bs = sum $ zipWith (*) as $ map (\i -> sumProds n i bs) [1..n] 
+          (_:bs) = getAll g2
+          bsp = Polynom bs
+          getAll' (a:axs) gp sum =
+            let bxs = map (*a) $ getAll gp
+                (n:ns) = zipWith (+) sum bxs
+            in n : getAll' axs (Mult gp bsp) ns
+      in a : getAll' as bsp (repeat 0)
       
 
-readInt :: String -> Int
-readInt = read
-
-showInt :: Int -> String
-showInt = show
+fromRational' :: (Rational -> Integer) -> Rational -> Int
+fromRational' f = fromIntegral . (`mod` modulus) . f
 
 factorial :: Int -> Int
-factorial n = foldl (*) 1 [1..n]
+factorial n = foldl (\a c -> (a * c) `mod` modulus) 1 [1..n]
+factorialRat :: Int -> Rational
+factorialRat = fromIntegral . factorial
 comb n k = (factorial n) `div` ((factorial k) * (factorial $ n - k))
-
-getElements :: [Rational] -> [Int] -> [Rational]
-getElements a = getElements' 0 a
-getElements' :: Int -> [Rational] -> [Int] -> [Rational]
-getElements' _ _ [] = []
-getElements' _ [] _ = undefined
-getElements' i (a:as) (id:ids) = if id == i then a : getElements' i (a:as) ids else getElements' (i + 1) as (id:ids)
-
-sumProds = sumProds' []
-sumProds' :: [Int] -> Int -> Int -> [Rational] -> Rational
-sumProds' ks 0 0 b = foldl (*) 1 $ getElements b $ sort ks
-sumProds' ks n 1 b = sumProds' (n : ks) 0 0 b
-sumProds' ks n i b = foldl (+) 0 $ [sumProds' (k : ks) (n - k) (i - 1) b | k <- [0..n]]
 
 -- a -> b -> (d, x, y)
 gcdext :: Int -> Int -> (Int, Int, Int)
@@ -81,25 +71,25 @@ invert :: Int -> Maybe Int
 invert a =
   let (g, x, y) = gcdext a modulus
   in if g == 1
-        then Just $ ((x `mod` modulus) + modulus) `mod` modulus
+        then Just $ x `mod` modulus
         else Nothing
 
 toIntegerWithModulus :: Rational -> Int
-toIntegerWithModulus r = ((((fromIntegral $ numerator r) + modulus) `mod` modulus) * (fromJust $ invert $ fromIntegral $ denominator r)) `mod` modulus
+toIntegerWithModulus r = ((((fromRational' numerator r) + modulus) `mod` modulus) * (fromIntegral $ fromJust $ invert $ (fromRational' denominator r))) `mod` modulus
 
 exponentGen :: GenFunc
-exponentGen = Polynom [(fromIntegral 1) / (fromIntegral $ factorial n) | n <- [0..]]
+exponentGen = Polynom [(1 % 1) / (factorialRat n) | n <- [0..]]
 
 sqrtGen :: GenFunc
-sqrtGen = Polynom $ [((-1 % 1) ^^ n * (fromIntegral $ factorial (2*n)))/(fromIntegral $ (1 - 2*n) * (factorial n) ^ 2 * (4 ^ n)) | n <- [0..]]
+sqrtGen = Polynom $ [(((-1 % 1) ^^ n) * (factorialRat (2*n)))/((fromIntegral (1 - 2*n)) * (((factorialRat n) ^^ 2) * ((4 % 1) ^^ n))) | n <- [0..]]
 
 lnGen :: GenFunc
-lnGen = Polynom $ (0 % 1):[((-1 % 1) ^^ (n + 1)) / (fromIntegral n) | n <- [1..]]
+lnGen = Polynom $ (0 % 1):[((-1 % 1) ^^ ((n + 1) `mod` 2)) / (fromIntegral n) | n <- [1..]]
 
 main = do
-  (n:m:[]) <- fmap (map (readInt) . words) getLine
-  p <- fmap (Polynom . (map (fromIntegral . readInt)) . words) getLine
-  mapM_ (\f -> putStrLn $ showRationals $ getFirstN m $ Subst f p) [sqrtGen, exponentGen, lnGen]
+  (n:m:[]) <- fmap (map read . words) getLine
+  p <- fmap (Polynom . (map read) . words) getLine
+  mapM_ (\f -> putStrLn $ showRationals $ getFirstN m $ Subst f p) [lnGen]
   return ()
   where
     showRationals = unwords . (map (show . toIntegerWithModulus))
