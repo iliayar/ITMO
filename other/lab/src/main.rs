@@ -174,11 +174,11 @@ fn main() {
     };
 
     let mut scanner = if local {
-	stdin = io::stdin();
-	Scanner::std(&mut stdin)
-    } else {
 	file = File::open("local.in").expect("Cannot open input file");
 	Scanner::file(&mut file)
+    } else {
+	stdin = io::stdin();
+	Scanner::std(&mut stdin)
     };
 
     sol(&mut scanner);
