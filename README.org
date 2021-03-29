@@ -13,6 +13,7 @@ My stuff from ITMO University
 - [[file:Term4/matan/lectures/4.pdf][Лекция 4]]
 - [[file:Term4/matan/lectures/5.pdf][Лекция 5]]
 - [[file:Term4/matan/lectures/6.pdf][Лекция 6]]
+- [[file:Term4/matan/lectures/7.pdf][Лекция 7]]
 **** Практики
 - [[file:Term4/matan/practice/2.pdf][Практика 2]]
 - [[file:Term4/matan/practice/3.pdf][Практика 3]]
@@ -63,6 +64,7 @@ My stuff from ITMO University
 - [[file:Term4/discrete/lectures/3.pdf][Лекция 3]]
 - [[file:Term4/discrete/lectures/4.pdf][Лекция 4]]
 - [[file:Term4/discrete/lectures/5.pdf][Лекция 5]]
+- [[file:Term4/discrete/lectures/6.pdf][Лекция 6]]
 **** Домашки
 - [[file:Term4/discrete/hw/20.pdf][20]]
 - [[file:Term4/discrete/hw/56.pdf][56]]
