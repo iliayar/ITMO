@@ -1,0 +1,237 @@
+% Created 2021-03-30 Tue 00:51
+% Intended LaTeX compiler: pdflatex
+
+  \documentclass[english]{article}
+  \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+  
+  \usepackage{geometry}
+  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+   \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\const}{\text{const}}
+\newcommand{\grad}{\text{grad}}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 6}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 6},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newcommand{\stirlF}[2]{\left[\begin{matrix} #1 \\ #2 \end{matrix}\right]}
+\newcommand{\stirlS}[2]{\left\{\begin{matrix} #1 \\ #2 \end{matrix}\right\}}
+\newcommand{\Set}{\text{Set}\,}
+\newcommand{\Seq}{\text{Seq}\,}
+\newcommand{\Cyc}{\text{Cyc}\,}
+
+
+Рассмотрим деревья:
+\[ T = t \times \Text{Seq}\,T \]
+, где \(t\) --- корень
+\[ A(t) = t\cdot \phi(A(t)) \]
+\[ \phi(s) = \frac{1}{1 - s} \]
+Решить это уравнение в общем виде можно с помощью формулы Лагранжа
+\begin{theorem}[формула обращения Лагранжа]
+\[ a_n = \frac{1}{n}\cdot[s^{n - 1}](\phi(s))^n \], где \([s^{n}]A(s)\) --- коэффицент при \(s^n\) в \(A(s)\)
+\[ A(t) = \sum_{n = 0}^\infty a_n t^n \]
+\end{theorem}
+\begin{examp}
+Применим ее для деревьев
+\[ a_n = \frac{1}{n}\cdot[s^{n - 1}]\left(\frac{1}{1 - s}\right)^n \]
+\[ \left(\frac{1}{1 - s}\right)^n = (1 + s + s^2 + s^3 + \dots + s^k + \dots)^n \]
+\[ (1 - s)^{-n} = 1 - \binom{-n}{1} s + \binom{-n}{2}s^2 - \binom{-n}{3}s^3 \]
+\[ \binom{-n}{n - 1} = \frac{-n\cdot(-n - 1)\cdot(-n - 2)\cdot\dots\cdot(-n - (n - 1) + 1)}{1\cdot 2 \cdot 3 \cdot \dots \cdot (n - 1)} \]
+\[ \frac{1}{n}(-1)^{n - 1}\binom{-n}{n - 1} = \frac{(2n - 2)!}{(n - 1)!n!} = \binom{2n - 2}{n - 1} \]
+\end{examp}
+\begin{examp}
+\[ \phi(s) = e^s \]
+\[ \frac{a_n}{n!} = \frac{1}{n}\cdot[s^{n- 1}] e^{ns} \]
+\[ e^{ns} = 1 + \frac{1}{1!}(ns) + \frac{1}{2!}(ns)^2 + \frac{1}{3!}(ns)^3 + \dots \]
+\[ [s^{n - 1}]e^{ns} = \frac{n^{n - 1}}{(n - 1)!} \]
+\end{examp}
+\section{Производящая функция от нескольких перменных}
+\label{sec:org2ede39f}
+\(\binom{n}{k}\) образуют таблицу:
+\begin{center}
+\begin{tabular}{l|rrrll}
+\(n\textbackslash k\) &  &  &  &  & \\
+\hline
+ & 1 &  &  &  & \\
+ & 1 & 1 &  &  & \\
+ & 1 & 2 & 1 &  & \\
+ & 1 & 3 & 3 & 1 & \\
+ & 1 & 4 & 6 & 4 & 1\\
+\end{tabular}
+\end{center}
+\[ A_k(t) = \sum_{n = 0}^\infty \binom{n}{k}t^n \]
+\[ B_n(t) = \sum_{n = 0}^\infty \binom{n}{l}t^k \]
+\[ C(u ,z) = \sum_{n, k}\binom{n}{k}z^nu^k = \frac{1}{1 - z - uz}\]
+Посмотрим на \(C(u, z)\) так: \(n\) --- вес, \(k\) --- стоимость. Будем считать, что \(z\) --- не берем объект, \(uz\) --- берем объект
+\[ \text{Seq}\,\{z, uz\} = [], [z], [uz], [z, z], [z, uz], [uz, z], [uz, uz], \dots \]
+\[ A(u, z) = z + uz \]
+\subsection{Числа Стирлинга I рода}
+\label{sec:orgcc26127}
+\fixme \\
+Помеченные перстановки, \(\text{Set}\,\text{Cyc}\,Z\)
+\[ \bigcup_{k = 0}^\infty \text{Set}_{=k}\text{Cyc}\, Z \]
+\[ \text{Set}\,\text{Cyc}\,Z = e^{\ln\frac{1}{1 - Z}} = \frac{1}{1 - Z} \]
+\[ \bigcup_{k = 0}^\infty \text{Set}_{= k}\left(u \times \text{Cyc}\,Z\right) \mapsto \sum_{n ,k}\stirlF{n}{k}\frac{1}{n!}z^nu^k\]
+\[ \Set_{=k}(A) = \frac{\Seq_{=k}(A)}}{k!} = \frac{A(Z)^k}{k!}  \]
+\[ u \times \Cyc Z = \sum_{n = 0}^\infty \frac{\left(u \ln \left(\frac{1}{1 - Z}\right)\right)^k}{k!} = e^{u\ln\frac{1}{1 - Z}} = (1 - Z)^{-u}\]
+\[ (1 - Z)^{-u} = \sum_{n,k}\frac{\stirlF{n}{k}}{n!} Z^n u^k \]
+\subsection{Числа Стирлинга II рода}
+\label{sec:org0d14be1}
+\[ \stirlS{n}{k}\quad \Set\Set_{>0} Z \]
+\[ \bigcup_{k = 0}^\infty\Set_{=k}(u\times \Set_{>0}Z) \]
+\[ \sum_{k = 0}^\infty \frac{\left(u(e^Z - 1)^k\right)}{k!} = e^{ue^Z - u} = \sum_{n,k} \frac{\stirlS{n}{k}}{n!}z^nu^k\]
+\subsection{Средняя стоимоть}
+\label{sec:orgad08a54}
+\begin{itemize}
+\item \(A\quad a_{n,k} = [z^nu^k]A(u, z)\) --- количество объектов веса \(n\) стоимости \(k\)
+\end{itemize}
+\[ w_n = \frac{\sum_{k = 0}^\infty k a_{n,k}}{\sum_{k = 0}^\infty a_{n, k}} = \frac{\left.[z^n]\left(\frac{\partial}{\partial u}A(u ,z)\right)\right|_{u = 1}}{[z^n]A(1, z)}\]
+\subsubsection{Разбиение на слагаемые, порядок важен}
+\label{sec:org132f69b}
+Аналогично рассотовке перегорожок, \(\Seq\Seq_{>0}Z\)
+\[ \Seq \left(u\times\Seq_{>0}Z\right) \]
+\[ \frac{1}{1 - z} - 1= \frac{z}{1 - z} \]
+\[ A(u, z) =  \frac{1}{1 - \frac{uz}{1 - z}} = \frac{1 - z}{1 - z - uz} \]
+\[ \frac{\partial A(u,z)}{\partial u}\bigg|_{u = 1} = \frac{z(1 - z)}{(1 - z- uz)^2} \bigg|_{u = 1} = \frac{z(1 - z)}{(1 - 2z)^2}\]
+\begin{description}
+\item[{Числитель}] \[ [z^n]\frac{z(1 - z)}{(1 - 2z)^2} = \frac{2^n(n + 1)}{4} \]
+\item[{Знаменатель}] \[ [z^n]\frac{1 - z}{1 - 2z} = 2^n - 2^{n - 1} = 2^{n - 1} \]
+\end{description}
+Среднее число слагаемых: \[ \frac{2^n(n + 1)}{2^{n - 1}\cdot4} = \frac{n + 1}{2} \]
+\subsubsection{Среднее число циклов в перестановке}
+\label{sec:org9da9234}
+\[ A(u ,z) = (1 - z)^{- u} \]
+\[ \frac{\partial}{\partial u}A(u, z) = \frac{\partial}{\partial u} e^{u \ln\frac{1}{1 - z}} = \ln \frac{1}{1 - z}\cdot e^{u\ln\frac{1}{1 -z }} \]
+Подставляем \(u = 1\):
+\begin{description}
+\item[{Числитель}] \[ [z^n]\frac{\ln \left(\frac{1}{1 - z}\right)}{1 - z} = B(z)\]
+\item[{Знаменатель}] \[ (1 - z)^{-u}\bigg_{u = 1} = \frac{1}{1 - z} \]
+\[ [z^n]\frac{1}{1 - z} = 1 \]
+\end{description}
+\[ (z + \frac{1}{2}z^2 + \frac{1}{3}z^3 + \dots + \frac{1}{k}z^k + \dots)\cdot(1 + z + z^2 + \dots) \]
+\[ [z^n]B(z) = \sum_{k = 1}^n \frac{1}{k} = H_n \sim \log n \]
+\end{document}
