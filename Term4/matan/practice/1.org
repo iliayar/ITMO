@@ -1,0 +1,39 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 1
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Интегралы по пути
+- \(\gamma: [a, b] \to \R^3\)
+- \(x(t), y(t), z(t)\)
+\[ \int_\gamma P dx + Q dy + R dz = \int_a^b (P(x(t), y(t), z(t))x'(t) + Qy' + Rz') dt \]
+\[ \text{длинна пути} = \int_a^b \sqrt{x'^2 + y'^2 + z'^2} dt \]
+\[ \int_\gamma f ds := \int_a^b f(x(t), y(t), z(t)) \cdot \sqrt{x'^2 + y'^2 + z'^2} dt \]
+#+begin_task org
+прямоугольный треугольник с вершинами \(O = (0,0), B = (1, 0), A = (0, 1)\).
+#+end_task
+#+begin_solution org
+\[ \int_\triangle (x + y) ds = \int_{OA} + \int_{AB} + \int_{OB} \]
+- \(OA\) ::
+  \[ x(t) = t\quad y(t) = 0\quad \sqrt{x'^2 + y'^2} = 1 \]
+  \[ \int_{OA} = \int_0^1 t\cdot 1 dt = \frac{1}{2} \]
+- \(AB\) ::
+  \[ x(t) = t\quad y(t) = 1 - t\quad\sqrt{x'^2 + y'^2} = \sqrt{2} \]
+  \[ \int_{AB} = \int_0^1 1 \cdot \sqrt{2} dt = \sqrt{2} \]
+- \(OB\) ::
+  \[ x(t) = 0\quad y(t) = t\quad\sqrt{x'^2 + y'^2} = 1 \]
+  \[ \int_{OB} = \frac{1}{2} \]
+#+end_solution
+#+begin_task org
+Парабола
+\[ \int_C (x^2 - 2xy) dx + (y^2 - 2xy) dy \]
+#+end_task
+#+begin_solution org
+\[ x(t) = t \quad y(t) = t^2 \quad t \in[-1, 1] \]
+\[ \int_C \dots = \int_{-1}^1 (t^2 - 2t)\cdot 1 + (t^4 - 2t^3)\cdot 2t dt \]
+Используя обощенную формулу Ньютона Лейбница для потенциальных векторных полей
+\[ \int P dx + Q dy + R dz \]
+Убедимся, что поле не потенциальное
+\[ P'_y = Q'_x \]
+\[ P'_z = R'_x \]
+\[ Q'_z = R'_y \]
+#+end_solution
