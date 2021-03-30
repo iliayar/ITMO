@@ -1,8 +1,8 @@
-% Created 2021-03-22 Mon 13:09
+% Created 2021-03-30 Tue 00:09
 % Intended LaTeX compiler: pdflatex
 
-\documentclass[oneside]{book}
-\usepackage[T1, T2A]{fontenc}
+  \documentclass[oneside]{book}
+  \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,10 +27,9 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-
-\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-
- \usepackage{hyperref}
+  
+  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+   \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -55,7 +54,19 @@
 \newcommand{\const}{\text{const}}
 \newcommand{\grad}{\text{grad}}
 
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -129,14 +140,14 @@
 
 
 \chapter{}
-\label{sec:orgd1bd3de}
+\label{sec:org9da1ebc}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Теория меры}
-\label{sec:org588549d}
+\label{sec:org6606f16}
 \begin{lemma}[о структуре компактного оператора]
 \(V : \R^m \to \R^m\) --- невырожденный линейный оператор, т.е. \(\det V \neq 0\) \\
 \uline{Тогда}:
@@ -147,7 +158,7 @@
 \[ \forall x \in \R^m\quad V(x) = \sum_{i = 1}^m S_i \langle x, g_i \rangle h_i$ \]
 \color{gray} \(x = \sum \langle x, g_i \rangle g_i\) --- разложение по базису \color{black} \\
 \textbf{При этом} \(\vert\det V\vert = S_1 S_2 \dots S_m\)
-\label{orgd40e810}
+\label{org1137611}
 \end{lemma}
 \begin{proof}
 \(W := V^*V\) \color{gray} * --- транспонирование в \(\R^m\) \color{black} \\
@@ -163,7 +174,7 @@
 \[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
 \(\ref{diag_1}\) --- т.к. диагональная матрица
-\label{org42058b7}
+\label{org18ec969}
 \end{proof}
 \begin{theorem}[преобразование меры лебега при линейном отображении]
 \-
@@ -175,7 +186,7 @@
 \item \(\forall E \in \M^m\quad V(E) \in \M^m\)
 \item \(\lambda(V(E)) = \vert \det V \vert \cdot \lambda E\)
 \end{itemize}
-\label{org44b17e7}
+\label{org3fe37be}
 \end{theorem}
 \begin{proof}
 \- 
@@ -187,12 +198,12 @@
 \(\Rightarrow\) \(\exists k: \mu = k\cdot \lambda\)(Лемма из предыдущего семестра) \\
 \(Q\) --- единичный куб на векторах \(g_i\) и \(V(g_i) = S_ih_i\), \(V(Q) = \{\sum\alpha_iS_ih_i \vert \alpha_i \in [0,1]\}\) --- паралеллепипед со сторонами \(S_i, \dots, S_m\)
 \end{description}
-\label{orga1a2794}
+\label{org994ed2c}
 \end{proof}
 \section{Интеграл}
-\label{sec:orgb563dc9}
+\label{sec:org4c061a4}
 \subsection{Измеримые функции}
-\label{sec:orgc1ccb17}
+\label{sec:org40fc307}
 \begin{definition}
 \-
 \begin{enumerate}
@@ -201,7 +212,7 @@
 \(\exists\) разбиение \(X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i\) \\
 При этом такое разбиение --- \textbf{допустимое разбиение}
 \end{enumerate}
-\label{org0bc31ef}
+\label{orgd003ea9}
 \end{definition}
 \begin{examp}
 \-
@@ -209,7 +220,7 @@
 \item Характеристическая функция множества \(E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}\)
 \item \(f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}\), где \(\mathcal{X} = \bigsqcup e_i\)
 \end{enumerate}
-\label{org34bd264}
+\label{org24bcabe}
 \end{examp}
 \begin{remark}
 \-
@@ -221,19 +232,19 @@
 \item \(f, g\) --- ступенчатые, \(\alpha \in \R\) \\
 \uline{Тогда} \(f + g,\ \alpha f,\ fg,\ max(f, g),\ min(f, g),\ |f|\) --- ступенчатые
 \end{enumerate}
-\label{orgd1f505c}
+\label{orgcbc9740}
 \end{remark}
 \begin{definition}
 \(f: E\subset X \to \overline{\R},\ a \in \R\) \\
 \(E(f < a) = \{x\in E: f(x) < a\}\) --- \textbf{лебегово множество функции \(f\)} \\
 \(E(f \le a),\ E(f > a), E(f \ge a)\) --- также лебеговы множества \\
 Если \(f\) задана на \(X\): \(X(f < a),\ X(f \le a), \dots\) --- лебеговы множества
-\label{org66e71f3}
+\label{org5544d72}
 \end{definition}
 \begin{remark}
 \(E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C\) \\
 \[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
-\label{org6f9c248}
+\label{orgc77b166}
 \end{remark}
 \begin{definition}
 \-
@@ -244,7 +255,7 @@
 \end{itemize}
 \(f\) --- \textbf{измерима на множестве \(E\)}: \\
 \(a \in \R\quad E(f < a)\) --- измеримо(т.е. \(\in \A\))
-\label{org5428c01}
+\label{org17ad4f0}
 \end{definition}
 \begin{symb}
 \-
@@ -252,7 +263,7 @@
 \item \(f\) --- измеримо на \(X\) --- говорят просто "измеримо"
 \item \(X = \R^m\), мера Лебега --- измеримо по Лебегу
 \end{itemize}
-\label{orgbde659c}
+\label{org37e50ba}
 \end{symb}
 \begin{remark}
 Эквивалентны:
@@ -262,7 +273,7 @@
 \item \(\forall a\quad E(f > a)\) --- измеримо
 \item \(\forall a\quad E(f \ge a)\) --- измеримо
 \end{enumerate}
-\label{orgdfb6065}
+\label{orgf582444}
 \end{remark}
 \begin{examp}
 \begin{enumerate}
@@ -270,7 +281,7 @@
 \(E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}\)
 \item \(f: \R^m \to \R\) --- непрерывна. Тогда \(f\) --- измеримо по Лебегу
 \end{enumerate}
-\label{orga26d145}
+\label{org14c6bcb}
 \end{examp}
 \begin{remark}
 \emph{Свойства}:
@@ -287,7 +298,7 @@
 \item \(f \neq 0\) --- измерима на \(E\) \(\Rightarrow\) \(\frac{1}{f}\) --- измерима на \(E\)
 \item \(f \ge 0\), измерима на \(E\), \(\alpha \in \R\). \uline{Тогда} \(f^\alpha\) --- измерима на \(E\)
 \end{enumerate}
-\label{org8e07704}
+\label{org3d5dbea}
 \end{remark}
 \begin{theorem}
 \(f_n\) --- измерима на \(X\). \\
@@ -298,7 +309,7 @@
 \item \(\overline{\lim} f_n;\quad\underline{\lim} f_n\) --- измеримы
 \item Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то \(h(x)\) --- измеримо
 \end{enumerate}
-\label{org8606544}
+\label{org577da3d}
 \end{theorem}
 \begin{proof}
 \-
@@ -307,11 +318,11 @@
 \item \[ (\overline{\lim} f_n)(x) = \inf\{s_n: s_n = \sup(f_n(x), f_{n + 1}(x), \dots)\} \]
 \item очев.
 \end{enumerate}
-\label{org59474a9}
+\label{orgec3638b}
 \end{proof}
 
 \subsection{Меры Лебега-Стильеса}
-\label{sec:orgabcb36b}
+\label{sec:org7f6ca35}
 \begin{definition}
 \(\R, \P^1, g:\R \to \R\) --- возрастает, непрерывна \\
 \(\mu[a, b) := g(b) - g(a)\) --- \(\sigma\)-конечный объем \\
@@ -319,22 +330,22 @@
 \[ \mu[a, b) := g(b-0) - g(a - 0) \]
 --- тоже \(\sigma\)-конечная мера \\
 Применим теорему о продолжении, получим меру \(\mu g\) на некой \(\sigma\)-алгебре --- \textbf{мера Лебега-Стилтьеса} 
-\label{org67cb59b}
+\label{orgefeb27f}
 \end{definition}
 \begin{definition}
 \(g(x) = \lceil x \rceil\) \\
 Пусть \(\mu g\) определена на Борелевской \(\sigma\)-алгебре --- \textbf{мера Бореля-Стилтьеса}
-\label{org02cdf6f}
+\label{orgbeef305}
 \end{definition}
 \chapter{}
-\label{sec:orgafa6097}
+\label{sec:orge52ed0d}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Теореия меры}
-\label{sec:org8eb94d8}
+\label{sec:orgdc48793}
 \subsection{Измеримые функции}
-\label{sec:orgbef497c}
+\label{sec:org279dda6}
 \begin{itemize}
 \item \((X, \A, \mu)\)
 \item \(f: X \to \overline{R}\) имзмерима
@@ -353,7 +364,7 @@
 \item \(0 \le f_1 \le f_2 \le \dots\)
 \item \(\forall x f(x) = \lim_{n \to + \infty}f_n(x)\)
 \end{enumerate}
-\label{org5d451af}
+\label{org29cd531}
 \end{theorem}
 \begin{proof}
 \begin{center}
@@ -363,33 +374,33 @@
 \[ e^{(n)}_{n^2 + 1} = X(n \le f) \]
 \[ g_n := \sum^{n + 1}_{k = 1} \frac{k - 1}{n} \X_{e^{(n)}_k} \]
 \[ g_n \ge 0 \quad \lim_{n \to + \infty}g_n(x) = f(x) \]
-\label{orgf4bcc2b}
+\label{orgfe7f062}
 \end{proof}
 \begin{corollary}
 \(f\) --- имзерима \\
 \uline{Тогда} \(\exists f_n\) --- ступенчатая, \(f_n \xrightarrow{n \to + \infty}{} f\) всюду и \(|f_n| \le |f|\)
-\label{org3147a5e}
+\label{org213d632}
 \end{corollary}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(fg\) --- измемрима (\(0\cdot\infty=0\))
-\label{org554bb40}
+\label{orgccf63c8}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_ng_n\) --- ступенчатая \(f_ng_n \to fg\)
-\label{org89b8a84}
+\label{orgc00bde0}
 \end{proof}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(f + g\) --- измерима
-\label{org295d9f7}
+\label{org230af49}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_n + g_n\) --- ступенчатая \(f_n + g_n \to f + g\) \\
 \color{gray}Считаем что \(\forall x\), не может быть \(f(x) = \pm \infty,\ g(x) = \mp \infty\)
-\label{org944eaff}
+\label{orgaf0eed3}
 \end{proof}
 
 \begin{itemize}
@@ -407,14 +418,14 @@
 \item \(f\) --- непрерывна на \(E' = E \setminus e\)
 \end{itemize}
 \uline{Тогда} \(f\) --- измерима
-\label{org0ab40da}
+\label{orgd1b3c3d}
 \end{theorem}
 \begin{proof}
 \(f\) --- измерима на \(E'\)  \\
 \(E'(f < a)\) --- открыто в \(E'\) \\
 \[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в} E \]
 \[ E(f < a) = E'(f < a) \cup e(f < a) \]
-\label{orga8c2569}
+\label{org44fef9d}
 \end{proof}
 \begin{examp}
 \-
@@ -447,7 +458,7 @@
 \(f\) --- непрерывна на \(\langle a, b \rangle\) за исключением возможно счетного числа точек
 \end{proof}
 \subsection{Сходимость почти везде и по мере}
-\label{sec:org9dfefd5}
+\label{sec:org675618c}
 \begin{defintion}
 \begin{itemize}
 \item \((X, \A, \mu)\)
@@ -601,7 +612,7 @@
 \xymatrix@1{A\ar[r]^>>{+}&B}
 
 \section{Интеграл}
-\label{sec:org6d5ec50}
+\label{sec:org3f20652}
 \((X, \A, \mu)\)
 \begin{definition}
 \label{def_int_1}
@@ -660,12 +671,12 @@
 \end{enumerate}
 \end{theorem}
 \chapter{}
-\label{sec:orgb2c1292}
+\label{sec:orge729d51}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Интеграл}
-\label{sec:org2bdc79a}
+\label{sec:org34158cb}
 \begin{enumerate}
 \item \(f \ge 0\), ступенчатые \\
 \(f = \sum_\text{кон.} \alpha_k \chi_{E_k}\), \(E_k\) --- измеримое \\
@@ -807,7 +818,7 @@
 \(f^+, f^- \dots\) \(\color{red}???\)
 \end{proof}
 \subsection{Предельный переход под щнаком интеграла}
-\label{sec:orgf392527}
+\label{sec:orgdd05972}
 \(f_n \to f\). Можно ли утверждать \(\int_E f_n \to \int_E f\)?
 \begin{examp}
 \(f_n, f: \R \to \R\) \\
@@ -910,7 +921,7 @@
 \[ \sum_n \int_{[-N, N]}\frac{|a_n|}{\sqrt{|x - x_n|}} \le 4 \int_N \sum |a_n| < + \infty \]
 \end{proof}
 \chapter{}
-\label{sec:orgd66efb2}
+\label{sec:org93a6bed}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
@@ -1060,9 +1071,9 @@
 \color{red}Zzz..\color{black}
 \end{proof}
 \section{Плотность одной меры по отношению к другой}
-\label{sec:orgb932241}
+\label{sec:org2cb9b4c}
 \subsection{Замена перменных в интеграле}
-\label{sec:org50f5c37}
+\label{sec:org69e6011}
 \begin{itemize}
 \item \((X, \A, mu)\)
 \item \((Y, \B, \cdot)\)
@@ -1150,14 +1161,14 @@
 \[ \int_X f d\nu = \int_X f(x)\omega(x)d\mu \]
 \end{remark}
 \chapter{}
-\label{sec:orgbc0d711}
+\label{sec:org94c626d}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Плотности}
-\label{sec:org238860a}
+\label{sec:org1540e3e}
 
 \noindentПлотность \((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- мера \\
 Плотность  меры \(\nu\) онсительно \(\mu\) --- это функция \(\omega: X \to \overline{\R}\) \\
@@ -1249,7 +1260,7 @@
 \(\forall f, g \in \mathcal{L}(X) \exists A l_A(f) \neq l_A(g)\)
 \end{remark}
 \section{Мера лебега}
-\label{sec:org817316f}
+\label{sec:org1860c9b}
 \begin{lemma}[о мере образа малых кубических ячеек]
 \-
 \begin{itemize}
@@ -1288,7 +1299,7 @@
 \item \(A \subset Q\)
 \end{itemize}
 \uline{Тогда} \[ \inf_{\substack{G: A \subset G \\ G\text{ --- открытое } \subset O}}\left(\lambda(G)\sup_G f\right) = \lambda A\cdot \sup_A f\]
-\label{org6ab8a1e}
+\label{org8876b45}
 \end{lemma}
 \begin{theorem}
 \-
@@ -1297,7 +1308,7 @@
 \end{itemize}
 \uline{Тогда} \(\forall A \in \M^m, A \in O\)
 \[ \lambda \Phi(A) = \int_A \left|\det \Phi'(x)\right| d\lambda(x) \]
-\label{orge6b8a31}
+\label{org63a2e9a}
 \end{theorem}
 \begin{proof}
 Обозначим якобиан \(J_\Phi(x) = |\det \Phi'(x)|\) \\
@@ -1316,7 +1327,7 @@
 \item Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
 Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
 \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
-\item По \hyperref[org6ab8a1e]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
+\item По \hyperref[org8876b45]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
 \[ O = \bigsqcup Q_j\text{ --- куба } Q_j \subset \overline{Q_j} \subset O \]
 \[ A = \bigsqcup \underbrace{A \cup Q_j}_{A_j}\quad A\subset G\text{ --- открытое} \]
 \[ J A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
@@ -1353,7 +1364,7 @@
 \item \(\nu(A) = \lambda \Phi(A)\)
 \end{itemize}
 Под действием гладкого отображния \(\Phi\), \(\sigma\)-аглебра \(\M^m\) сохраняется \\
-По \hyperref[orge6b8a31]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
+По \hyperref[org63a2e9a]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
 т.е. \(\lambda\) --- взвешенный образ исходной меры Лебега по отношению к \(\Phi\)
 \end{proof}
 \begin{examp}
@@ -1372,14 +1383,14 @@
 --- для географических координат: \(r\) --- растояние от центра Земли, \(\psi\) --- угол к плоскости экватора
 \end{examp}
 \chapter{}
-\label{sec:org83047d3}
+\label{sec:orge489816}
 \newcommand{\X}{\chi}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Сферические координаты в \(R^m\)}
-\label{sec:org9628b7b}
+\label{sec:orgaea8b90}
 \begin{examp}
 \-
 \begin{itemize}
@@ -1420,7 +1431,7 @@
 \[ = \dots = \int\limits_{\Omega_{m - 1}}r^{m - 1}\sin^{n - 2}\varphi_{1} \dots \sin\varphi_{m - 2}\]
 \end{examp}
 \section{Произведение мер}
-\label{sec:org6a17a55}
+\label{sec:orgbc50969}
 \begin{itemize}
 \item \((X, \A, \mu)\)
 \item \((Y, \B, \nu)\)
@@ -1594,5 +1605,151 @@
 \item \(C\) --- измеримое \(\not\Rightarrow\) \(\forall x\ C_x\) --- измеримо
 \item \(\forall x\forall y\ C_x,C^y\) --- измеримые \(\not\Rightarrow\) \(C\) --- измеримое (пример Серпинского)
 \end{enumerate}
+\end{remark}
+\chapter{}
+\label{sec:org534b045}
+\newcommand{\X}{\chi}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\M}{\mathfrak{M}}
+
+\section{Принцип Кавальери}
+\label{sec:org1012590}
+\begin{enumerate}
+\item \(C_x\) --- имзмерима при почти всех \(x\)
+\item \(x \mapsto \nu C_x\) --- измерима*
+\item \(mC = \int\limits_X \mathcal{X}_x d\mu\)
+\end{enumerate}
+\begin{corollary}
+\(f: [a, b] \to \R\) --- непрерывная \\
+\uline{Тогда} \(\int\limits_a^b f(x)\,dx = \int\limits_{[a, b]} f\,d\lambda_1\)
+\end{corollary}
+\begin{proof}
+\(f>0\ \text{ПГ}(f[a, b])\) --- измеримое множество в \(\R^2\). \(C_x = [0, f(x)]\ \lambda_1(C_x) = f(x)\)
+\[ \int\limits_a^b f(x)\, dx = \lambda_2(\text{ПГ}) = \int\limits_{[a, b]} f d\lambda_1 \]
+\end{proof}
+\begin{remark}
+\(\lambda_2\) можно продолжить на множество \(2^{\R^2}\) с сохранением свойства конечной аддитивности и это продолжение не единственно
+\label{orgf7d485e}
+\end{remark}
+\begin{remark}
+\(\lambda_m, m>2\) --- аналогичным образом продолжить невозможно. Парадокс Хаусдорфа-Банаха-Тарского
+\label{org6a1bef5}
+\end{remark}
+\begin{remark}
+Для \hyperref[orgf7d485e]{замечания 1} и \hyperref[org6a1bef5]{замечания 2} требуется инвариантность меры относительно движения \(\R^m\)
+\end{remark}
+
+\begin{definition}
+\-
+\begin{itemize}
+\item \(C \subset X \times Y\)
+\item \(f: X \times T \to \Y\)
+\item \(\forall x \in X\ f_x\) --- это функция(сечение) \(f_x(y) = f(x, y)\), можно считать что она задана на \(C_x\)
+\item \(f^y\) --- аналогичное сечение
+\end{itemize}
+\end{definition}
+\begin{theorem}
+\-
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \((Y, \B, \nu)\)
+\item \(\mu, \nu\) --- \(\sigma\)-конечныемера, полные
+\item \(m = \mu x \nu\)
+\item \(f: X \times Y \to \overline{R}, f \ge 0\) --- измерима относительно \(A\otimes B\)
+\end{itemize}
+\uline{Тогда}
+\begin{enumerate}
+\item при  почти всех \(x\) \(f_x\) --- измеримая на \(Y\) \color{blue}\(f^y\) --- измерима на \(X\) почти везде\color{black}
+\item \(x \mapsto \varphi(x)=\int\limits_Y f_x d\nu = \int\limits_Y f(x, y) = d\nu(y)\) --- измеримая* на \(X\) \\
+\color{blue}\(y \mapsto \psi(y) = \int\limits_X f^y d\mu\) --- измеримая* на \(Y\)\color{black}
+\item \(\int\limits_{X \times Y} d fm = \int\limits_X \varphi d\mu = \int\limits_X\left(\int\limits_Y f(x, y) d\nu(y)\right)d\mu(x)\) \\
+\color{blue}\(= \int\limits_Y \psi d\nu = \int\limits_Y\left(\int\limits_X f(x, y) d\mu(x)\right)d\nu(y)\)
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\todo
+\end{proof}
+\begin{corllary}
+\(C \subset X \times Y\) \(P_1(C)\) --- измеримо. \\
+\uline{Тогда} \[ \int\limits_C f dm = \int\limits_{f_1(C)}\left(\int_{C_x} f(x, y) d\nu(y)\right)d\mu(x) \]
+\end{corllary}
+\begin{theorem}[Фубини]
+\-
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \(Y, B, \nu\)
+\item \(\nu, mu\) --- \(\sigma\)-конечные
+\item \(m = \nu \times \mu\)
+\item \(f\) --- суммируема на \(X \times Y\) относительно \(m\)
+\end{itemize}
+\uline{Тогда}
+\begin{enumerate}
+\item \(f_x\) --- суммируема на \(Y\) при почти всех \(x\)
+\item \(x \mapsto \varphi(x) = \int_Y fx\,d\nu = \int_Y f(x, y)\,d\nu(y)\) --- суммируема на \(Y\)
+\item \(\int\limits_{X \times Y} f\,dm = \int\limits_X \varphi\,d\mu = \int_X \left(\int_Y f(x, y) d\nu(y)\right) d\mu(x)\)
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\color{green}Без доказательства\color{black}
+\end{proof}
+\todo
+\section{Поверхностные интегралы}
+\label{sec:orgfc75c05}
+\subsection{Поверхностные интегралы I рода}
+\label{sec:org0694ec7}
+\begin{definition}
+\(M \subset \R^3\) --- простое двумерное гладкое многообразие. \(\varphi: G \subset \R^2 \to \R^3\) --- параметризация. \(E \subset M\) --- измеримо по Лебегу, если \(\varphi^{-1}(E)\) измеримо в \(\R^2\) по Лебегу
+\end{definition}
+\begin{symb}
+\(\A_M = \{E \subset M | E\text{ --- измеримо}\} = \{\varphi(A) | A \in \M^2,\ A \subset G\}\)
+\end{symb}
+\begin{definition}
+Мера на \(\A_M\) \[S(E) := \iint\limits_{\varphi^{-1}(E)} | \varphi'_u \times \varphi'_v |\,dudv\]
+Т.е. это взвешенный образ меры Лебега при отображении \(\varphi\)
+\end{definition}
+\begin{remark}
+\(\A_M\) --- \(\sigma\)-алгебра, \(S\) --- мера
+\end{remark}
+\begin{remark}
+\(E \subset M\) --- компактное \(\Rightarrow\ \varphi^{-1}(E)\) --- компактное \(\Rightarrow\) измеримое \(\Rightarrow\) замкнутые множества измеримы \(\Rightarrow\) (относительно) открытые множества измеримы
+\end{remark}
+\begin{remark}
+\(\A_M\) не зависит от \(\varphi\) по теореме о двух параметризациях
+\end{remark}
+\begin{remark}
+\(S\) не зависит от \(\varphi\)
+\[ |\overline{\varphi'_s}\times\overline{\varphi'_v}| = |(\overline{\varphi'_s}\cdot u'_s + \overline{\varphi'_v}\cdot v'_s) \times (\overline{\varphi'_u}\cdot u'_t + \overline{\varphi'_v}\cdot v'_t)| = \]
+\[ = | \overline{(\varphi'_u \times \varphi'_v)}\cdot(u'_s\cdot v'_t - v'_s\cdot u'_t)| = \todo \]
+\end{remark}
+\begin{remark}
+\-
+\begin{itemize}
+\item \(f: \M \to \overline{R}\) --- измеримая
+\end{itemize}
+\(M(f<a)\) --- измеримая \(\Leftrightarrow\) \(N(f\circ\varphi<a)\) --- измерима относително \(\M^2\) \\
+\(f\) --- измерима относительно \(\A_M\) \(\Leftrightarrow\) \(f \circ \varphi\) --- измерима относительно \(\M^2\)
+\end{remark}
+\begin{definition}[поверхностный интеграл I рода]
+\-
+\begin{itemize}
+\item \(M\) --- простое гладкое двумерное иногообразие в \(\R^3\)
+\item \(\varphi\) --- параметризация
+\item \(f: M \to \overline{R}\) --- суммируема по мере \(S\)
+\end{itemize}
+То \[ \iint\limits_M f\,ds = \iint\limits_M f(x, y, z)\,ds \]
+называется \textbf{интегралом I рода от \(f\) по многообразию \(M\)}
+\end{definition}
+\begin{remark}
+По теореме об интегрировании по взвешенному образу меры
+\[ \iint\limits_M f\,ds = \iint\limits_G f(\varphi(u, v)) |\varphi'_v \times \varphi'_v|\,dudv \]
+\[ \varphi'_u \times \varphi'_v = \begin{pmatrix}
+i & x'_u & x'_v \\
+j & y'_u & y'_v \\
+k & z'_u & z'_v
+\end{pmatrix}\]
+\[ |\varphi'_u \times \varphi'_v| = |\varphi'_u| \cdot |\varphi'_v|\sun\alpha = \sqrt{|\varphi'_u|^2 \cdot |varphi'_v|^2 \cdot (1 - \cos^2\alpha)} = \sqrt{EG - F^2} \]
+\[ E = |\varphi'_u| = x'_u^2 + y'_u^2 + z'_u^2 \]
+\[ F = \langle \varphi'_u, \varphi'_v \rangle = x'_ux'_v + y'_uy'_v + z'_u z'_v \quad F = |\varphi'_v|^2 \]
 \end{remark}
 \end{document}
