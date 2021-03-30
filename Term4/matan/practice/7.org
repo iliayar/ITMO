@@ -1,0 +1,34 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 7
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_task org
+\[ \int_\alpha^\beta d\varphi \int_\gamma^\delta d\psi \dots \]
+#+end_task
+#+begin_solution org
+\[ x = r_0 \cos\varphi\cos\psi \]
+\[ y = r_0 \sin\varphi\cos\psi \]
+\[ z = r_0 \sin\psi \]
+\[ \begin{vmatrix}
+i & -r_0 \cos \varphi \cos \psi & - r \cos\varphi\sin\psi \\
+j & r_0 \cos\varphi \cos \psi & - r\sin\varphi\sin\psi \\
+k & 0 & r\cos\varphi
+\end{vmatrix} = r^2 \begin{pmatrix}
+\cos \varphi \cos^2 \psi \\
+-\sin\varphi\cos^2\psi \\
+\cos\psi\sin\psi
+\end{pmatrix} \]
+\[ r^2 \int^\beta_\alpha d\varphi \int_\gamma^\delta d\psi \cos\psi \]
+#+end_solution
+
+#+begin_task org
+\[ \iint\limits_{x\ge0,y\ge0} \frac{dx\,dy}{(1 + x^2 + y^3)^p} \]
+#+end_task
+#+begin_solution org
+\[ \left[\begin{array}{l}
+x = r \cos\varphi \\
+y = r^{\frac{2}{3}}\sin^{\frac{2}{3}}\varphi
+\end{array}\right. \]
+\[ I = \int\limits_0^{\frac{\pi}{2}}\int\limits_0^{ + \infty} \frac{\frac{2}{3} r^{\frac{2}{3}} \sin^{-\frac{1}{3}}\varphi}{(1 + r^2)^p}  \]
+#+end_solution
+* Тройной интеграл
