@@ -49,6 +49,7 @@ My stuff from ITMO University
 - [[file:Term4/metopt/lectures/6.pdf][Лекция 6]]
 - [[file:Term4/metopt/lectures/7.pdf][Лекция 7]]
 - [[file:Term4/metopt/lectures/9.pdf][Лекция 9]]
+- [[file:Term4/metopt/lectures/10.pdf][Лекция 10]]
 *** Мат. лог.
 **** Лекции
 [[file:Term4/matlog/lectures/all_lectures.pdf][Все лекции]]
