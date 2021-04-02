@@ -56,6 +56,7 @@ My stuff from ITMO University
 - [[file:Term4/matlog/lectures/4.pdf][Лекция 4]]
 - [[file:Term4/matlog/lectures/5.pdf][Лекция 5]]
 - [[file:Term4/matlog/lectures/6.pdf][Лекция 6]]
+- [[file:Term4/matlog/lectures/7.pdf][Лекция 7]]
 **** Домашки
 - [[file:Term4/matlog/hws/1.pdf][1.3.g]]
 - [[file:Term4/matlog/hws/2.pdf][3.4.b]]
