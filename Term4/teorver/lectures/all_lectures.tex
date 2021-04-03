@@ -1,8 +1,8 @@
-% Created 2021-03-27 Sat 14:45
+% Created 2021-04-03 Sat 14:42
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[oneside]{book}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[oneside]{book}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,9 +27,9 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-   \usepackage{hyperref}
+
+\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -130,7 +130,7 @@
  pdftitle={Лекции по Теории вероятностей 4 семестр},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -139,9 +139,9 @@
 
 
 \chapter{}
-\label{sec:orgd1fcc77}
+\label{sec:orga87884d}
 \section{Статистическая вероятность}
-\label{sec:org18e253a}
+\label{sec:org5542282}
 \(n\) --- чсло экспериментов \\
 \(n_A\) --- число выполнения события \(A\)
 \begin{defintion}
@@ -149,7 +149,7 @@
 \(P(A) \approx \frac{n_A}{n},\ n\to+\infty\)
 \end{defintion}
 \subsection{Пространство элементарных исходов. Случайные события}
-\label{sec:orgdf54fa3}
+\label{sec:org80bdb58}
 \begin{definition}
 \textbf{Пространством элементарных исходов} называется множество
 содержащее все возможные результаты данного эксперимента из которых при
@@ -194,7 +194,7 @@
 \end{examp}
 
 \subsection{Операции над событиями}
-\label{sec:org56dd225}
+\label{sec:org369debc}
 \begin{definition}
 \(\Omega\) --- универсальное событие, достоверное, наступает всегда, т.к. содержит все элементарные исходы \\
 \(\emptyset\) --- невозможное событие, никогда не выполняется, т.к. не одержит элементарных исходов
@@ -231,7 +231,7 @@
 \(P(A) \le 1\) --- вероятность наступления события \(A\)
 \end{definition}
 \subsection{Классическое определение вероятности}
-\label{sec:orgb1010c6}
+\label{sec:orgded86f2}
 Пусть \(\Omega\) содержит конечное число исходов, при чем их можно считать равновозможным.
 Тогда применимо классическое определение вероятности
 \begin{definition}
@@ -273,7 +273,7 @@ Cвойства:
 \[ P(A) = \frac{6}{10} \]
 \end{examp}
 \subsection{Геометрическое понятие вероятности}
-\label{sec:org95187e5}
+\label{sec:orgdccd7fa}
 Пусть \(\Omega \subset \R^n\)  --- замкнутая ограниченая область \\
 \(\mu(\Omega)\) --- конечная мера множества \(\Omega\) (например мера Римана, т.е длина, площадь, объем) 
 В эту область \emph{наугад} бросаем точку. Термин \emph{наугад} означает, что вероятность попадания в область \(A\)
@@ -337,9 +337,9 @@ Cвойства:
 \[ P(A) = \frac{S(A)}{S(\Omega)} = \frac{2l}{\pi l} = \frac{2}{\pi} \]
 \end{solution}
 \chapter{}
-\label{sec:orgca4f16f}
+\label{sec:org67b9668}
 \section{Аксиоматическое опредление верояности}
-\label{sec:org33d3415}
+\label{sec:orga492b49}
 Колмагоров \\
 
 \begin{itemize}
@@ -432,7 +432,7 @@ Cвойства:
 Аксимома счетной аддитивности следует из аксиомы непрерывности и свойства конечной аддитивности
 \end{remark}
 \subsection{Свойства операция сложения, умножения}
-\label{sec:orge385835}
+\label{sec:orgc9ebe82}
 \begin{definition}
 \-
 \begin{enumerate}
@@ -464,7 +464,7 @@ Cвойства:
 \[ P(A) \xrightarrow[n \to +\infty]{} 1 - e^{-1} \]
 \end{solution}
 \subsection{Независимые события}
-\label{sec:orgfd78517}
+\label{sec:orgd17fcef}
 \begin{remark}
 \(\Omega = n\), \(|A| = m_1\), \(|B| = m_2\) \\
 \(|\Omega \times \Omega| = n^2\), \(AB = m_1m_2\)
@@ -519,9 +519,9 @@ Cвойства:
 \[ P(A)  = P(A)\cdot P(\overline{A_2}) + P(\overline{A_1})\cdot P(A_2) \]
 \end{solution}
 \chapter{}
-\label{sec:org20d4f5a}
+\label{sec:org570548f}
 \section{Условная вероятность}
-\label{sec:orge7d4e38}
+\label{sec:org77b4235}
 \begin{symb}
 \(P(A | B)\) --- вероятность наступления события \(A\), вычисленная в предположении, что событие \(B\) уже произошло
 \end{symb}
@@ -544,7 +544,7 @@ Cвойства:
 \[ P(A|B) = \frac{P(A \cdot B)}{P(B)} \] --- \textbf{формула условной вероятности}
 \end{definition}
 \subsection{Формула умножения вероятности}
-\label{sec:org21fc58c}
+\label{sec:org2c10fb7}
 Как следствие формулы условной вероятности получаем:
 \[ P(AB) = P(B) \cdot P(A|B)  \text{ или } P(AB) = P(A)\cdot P(B | A)\]
 \begin{theorem}
@@ -579,7 +579,7 @@ Cвойства:
 Прменяем когда учитывается порядок
 \end{remark}
 \subsection{Полная группа событий}
-\label{sec:org381268c}
+\label{sec:orga888622}
 \begin{definition}
 События \(H_1, H_2, \dots, H_n, \dots\) образуюти полную группу событий если они попарно несовместны, и содержат все элементарные исходы:
 \begin{itemize}
@@ -591,7 +591,7 @@ Cвойства:
 Часто события из полной группы называются гипотезами
 \end{remark}
 \subsection{Формула полной вероятности}
-\label{sec:org6d460ab}
+\label{sec:orgae06da7}
 \begin{theorem}[Баеса]
 \(] H_1, H_2, \dots, H_n ,\dots\) --- полная группа событий \\
 \uline{Тогда} \[ P(H_k|A) = \frac{P(H_k)P(A|H_k)}{\sum_{i = 1}^{\infty}P(H_i)P(A|H_i)} \]
@@ -647,9 +647,9 @@ $H_2$ --- здоров
 \[ P(H_1|AA) = \frac{0.99}{0.99 + 0.01} = 0.99 \]
 \end{solution}
 \chapter{}
-\label{sec:orgffb53c0}
+\label{sec:org7f30711}
 \section{Схема Бернулли}
-\label{sec:orgb08db7a}
+\label{sec:orgd9dee8d}
 \begin{definition}
 Схемой Бернулли называется серия независимых испытаний, каждое из
 которых имеет два исхода, каждое интересующее нас событие лиибо
@@ -690,7 +690,7 @@ $H_2$ --- здоров
 \[ P_5(3) = C^3_5 p^3q^2 = 0.2048\]
 \end{solution}
 \subsection{Наиболее вероятное число успехов}
-\label{sec:org86715c7}
+\label{sec:orge7503e3}
 Выясним при каком значении \(k\) вероятность предшествующего числа
 успехов \(k - 1\) будет не больше чем веротяность \(k\) успехов
 \[ P_n(k - 1) \le P_n(k) \]
@@ -715,7 +715,7 @@ $H_2$ --- здоров
 \includegraphics[scale=0.35]{4_1.png}
 \end{center}
 \subsection{Предельные теоремы в схеме Бернулли}
-\label{sec:org2360fa4}
+\label{sec:org79dd191}
 \begin{definition}
 \textbf{Локальная формула} Муавра-Лапласса. Применяем когда требуется найти вероятноть точного числа успехов.
 \[ P_n(\nu_n = k) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
@@ -766,7 +766,7 @@ $H_2$ --- здоров
 \end{enumerate}
 \end{solution}
 \section{Статистическое определение вероятности}
-\label{sec:org8846e08}
+\label{sec:org4817b77}
 \begin{itemize}
 \item \(n_A\) --- число появления события \(A\) при \(n\) испытаниях
 \item \(\frac{n_A}{n}\) --- частота события \(A\)
@@ -774,7 +774,7 @@ $H_2$ --- здоров
 \[ P(A) \approx \frac{n_A}{n}, \text{при }n\to\infty \]
 
 \subsection{Вероятность отклонения относительной частоты}
-\label{sec:orge666b78}
+\label{sec:org246804a}
 \(] p\) --- веротяность события \(A\), \(\frac{n_A}{n}\) --- частота \(A\) \\
 По интегральной формуле Лапласса:
 \[ P\left(\left|\frac{n_A}{n} - p| \le \varepsilon\right) = P(-\varepsilon \le \frac{n_A}{n} - p \le \varepsilon) = P(-n\varepsilon \le n_a - np \le n\varepsilon) = P(np - n\varepsilon \le n_A \le np + n\varpepsilon) \]
@@ -783,7 +783,7 @@ $H_2$ --- здоров
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = \Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) - \Phi\left(-\frac{n\varepsilon}{\sqrt{npq}}\right) = 2\Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) \]
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 \subsection{Закон больших чисел Бернулли}
-\label{sec:org057182b}
+\label{sec:org2a66495}
 Более точно последняя формула выглядит так:
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \xrightarrow[n \to \infty]{} 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 при \(n \to \infty\) \(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon \to \infty\) и \(\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\right) \to 0.5\)
@@ -792,9 +792,9 @@ $H_2$ --- здоров
 --- закон больших чисел Бернулли \\
 То есть при большом числе испытаний, будет близко к реальной вероятности
 \chapter{}
-\label{sec:org0fb0382}
+\label{sec:orge8d2f62}
 \section{Схемы испытаний и соответствующие распределения}
-\label{sec:org4f21d12}
+\label{sec:orge5c794b}
 \begin{itemize}
 \item \(n\) --- число испытаний
 \item \(p\) --- вероятность при одном испытании
@@ -809,7 +809,7 @@ $H_2$ --- здоров
 \(B_{n,p} = B(n, p)\)
 \end{symb}
 \subsection{Схема до первого успешного испытания}
-\label{sec:org869b07d}
+\label{sec:org5430b38}
 \begin{definition}
 \textbf{Схема до первого успешного испытания}. Пусть проводится бесконечная
  серия испытаний, которая заканчивается после первого успеха под номером \(\tau\)
@@ -845,7 +845,7 @@ G(p)
 Также \(p(\tau = n + k|\tau > n) = p(\tau = k)\)
 \end{remark}
 \subsection{Испытание с несколькими исходами}
-\label{sec:org0344e1e}
+\label{sec:org9bec5ae}
 Пусть при \(n\) испытаниях могут произойти \(m\) несовместных исходов
 \begin{itemize}
 \item \(p_i\) --- вероятность \(i\)-го исхода при одном отдельном испытании
@@ -874,7 +874,7 @@ G(p)
 \end{enumerate}
 \end{solution}
 \subsection{Урновая схема}
-\label{sec:org82bd6f9}
+\label{sec:org4e715f4}
 В урне \(N\) шаров. Из них \(K\) белых, а черных \(N - K\). Из нее выбираем \(n\) шаров без учета порядка. \(k\) --- число вынутых белых
 \begin{theorem}[Схема с возвратом]
 Вероятность вынуть белый шар не менятеся. \\
@@ -911,7 +911,7 @@ G(p)
 \[ = C^k_n\left(\frac{K}{N}\right)^k\left(1 - \frac{K}{N}\right)^{n -k} \xrightarrow[N \to \infty]{} C^k_n\cdot p^k \cdot ( 1- p)^{n - k}\]
 \end{proof}
 \subsection{Схемы Пуассона. Теорема Пуассона для схемы Бернулли}
-\label{sec:orga913e4e}
+\label{sec:orgfc95ba0}
 Схема: вероятность успеха при одном отдельном испытании зависит от числа испытаний \(n\) таким образом, чтобы \(n \cdot p_n = \lambda\)(точнее \(np_n \xrightarrow[n \to \infty]{} \lambda\)) \\
 Появление очень редких событий в длинном потоке испытаний
 \begin{theorem}[Формула Пуассона]
@@ -925,7 +925,7 @@ G(p)
 \end{proof}
 \begin{enumerate}
 \item Оценка погрешности в формуле Пуссона
-\label{sec:orgfe9ff30}
+\label{sec:orga996af0}
 \begin{theorem}
 Пусть \(\nu_n\) -- число успехов при \(n\) испытаниях в схеме Бернулли с вероятностью \(p\)
 \[ \lambda = np\quad A \subset \{0, 1, 2, \dotsm n\}\text{ --- произвольное подмножество}\]
@@ -953,13 +953,13 @@ G(p)
 \end{solution}
 \end{enumerate}
 \chapter{}
-\label{sec:org872d91c}
+\label{sec:orgc156c0b}
 \newcommand{\todo}{{\color{red}\text{Доделать }}}
 \newcommand{\fixme}{{\color{red}\text{Исправить }}}
 
 
 \section{Случайные величины}
-\label{sec:orgd28a1a5}
+\label{sec:orgd58523e}
 \begin{symb}
 \(\xi\) --- \textbf{Случаная величина}
 \end{symb}
@@ -998,7 +998,7 @@ G(p)
 Если \(x = 4\), то \(\{\omega | \xi(\omega) < 4\} = \{1, 2, 3\} \not\in \mathcal{F}\) \(\Rightarrow\) \(\xi\) не является \(\mathcal{F}\)-измеримой
 \end{examp}
 \subsection{Смысл измеримости}
-\label{sec:org06c992a}
+\label{sec:orga98f310}
 Пусть случайная величина \(\xi: \Omega \to \R\) --- измеримая. Тогда \(P(\xi < x) = P(\{\omega | \xi(\omega) < x\})\), т.к. \(A_x = \{\omega | \xi(\omega) < x\} \in \mathcal{F}\). Тогда \[\overline{A_x} = \{\omega | \xi(\omega) \ge x\} \in \mathcal{F}\] \[A_x \setminus B_y = \{\omega | t \le \xi(\omega) le x\} \in \mathcal{F}\]
 \[ B_x = \todo \]
 \[ B_x \setminus A_x = \{\omega | \xi(\omega) = x\} \in \mathcal{F} \]
@@ -1017,7 +1017,7 @@ G(p)
 Функция \(P(B)\ B \in \mathcal{B}\) называется \textbf{распределнием вероятностей} случаной величниы \(\xi(\omega)\). Т.е. распределение случайной величны это соответсвие множествами на вещественной прямой и вероятностями случаной величны попасть в это множество
 \end{definition}
 \subsection{Типы распределения}
-\label{sec:org5d61bb5}
+\label{sec:org58d711f}
 \begin{itemize}
 \item Дискретные
 \item Абсолютно непрерывные
@@ -1026,7 +1026,7 @@ G(p)
 \end{itemize}
 \begin{enumerate}
 \item Дискретные
-\label{sec:orga345a1e}
+\label{sec:org3044a86}
 Случайная величина \(\xi\) имеет дискретное распределение, если она принимает не более чем счетное число значений, т.е. существует конечный или счетный набор чисел \(\{x_1, x_2, \dots, x_n, \dots\}\), такой что
 \begin{enumerate}
 \item \(p_i = p(\xi = x_i) > 0\)
@@ -1050,14 +1050,14 @@ G(p)
 \end{tabular}
 \end{center}
 \todo
-\label{orgf411cfe}
+\label{org3d6f15e}
 \end{examp}
 \begin{enumerate}
 \item Основные числовые характеристики
-\label{sec:org9ae5681}
+\label{sec:org08174c7}
 \begin{enumerate}
 \item Математическое ожидание(среднее значение)
-\label{sec:org8e1d5ba}
+\label{sec:org39c4528}
 \begin{defintion}
 \textbf{Математическим ожиданием} случаной величины \(\xi\) называется число:
 \[ E\xi = \sum\limits_i x_i p_i \] при условии что данный ряд сходится абсолютно, иначе говрят что что математическое ожидание не существует
@@ -1069,7 +1069,7 @@ E\(\xi\)
 Смысл: среднее значение, число вокруг которого группируеются значения случаной величины. Физический смысл: центр масс. Статистический смысл: среднее арифметическое наблюдаемых значений при большои значении реальных экспериментов
 \end{remark}
 \item Дисперсия
-\label{sec:orgc0e305e}
+\label{sec:org46d7a70}
 \begin{definition}
 \textbf{Дисперсией} \(D\xi\) случайной величины \(\xi\) называется среднее квадратов отклонений ее от математического ожидания
 \[ D\xi = E(\xi - E\xi)^2 \] или \[D\xi = \sum\limits_i (x_i - E\xi)^2 p_i \]
@@ -1082,7 +1082,7 @@ E\(\xi\)
 Смысл: квадрат среднего разброса(рассейния) случайной величины около ее математического ожидания
 \end{remark}
 \item Среднее квадратическое отклонение
-\label{sec:org83d2cbd}
+\label{sec:org41db44b}
 \begin{definition}
 \textbf{Средним квадратическим отклонением} (\(\sigma\)\textsubscript{\(\xi\)} = \(\sigma\)(\(\xi\))) случайной величины \(\xi\) называется число
 \[ \sigma = \sqrt{D\xi} \]
@@ -1091,14 +1091,14 @@ E\(\xi\)
 Смысл: характеризует средний разброс случайной величины около ее математического ожидания
 \end{remark}
 \begin{examp}
-\hyperref[orgf411cfe]{Бросаем кость}
+\hyperref[org3d6f15e]{Бросаем кость}
 \[ E\xi = 1\cdot \frac{1}{6} + 2 \cdot \frac{1}{6}  + 3 \cdot \frac{1}{6} + 4 \cdot \frac{1}{6} + 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} = 3.5 \]
 \[ D\xi = 1^2 \cdot \frac{1}{6} + 2^2 \cdot \frac{1}{6} + 3^2 \cdot \frac{1}{6} + 4^2 \cdot \frac{1}{6} + 5^2 \cdot \frac{1}{6} + 6^2 \cdot \frac{1}{6} - 3.5^2 = 2.92 \]
 \[ \sigma = \sqrt{2.92} \approx 1 \neq 1 \]
 \end{examp}
 \end{enumerate}
 \item Свойства математического ожидания и дисперсии
-\label{sec:org4eee323}
+\label{sec:orgbc863f6}
 \begin{definition}
 Случайная величина \(\xi\) имеет вырожденное распределение, если \(\xi(\omega) = C = \const\ \forall \omega \in \Omega\) или \(p(\xi = C) = 1\)
 \[ E \xi = C = \const \]
@@ -1134,7 +1134,7 @@ E\(\xi\)
 \end{proof}
 \begin{definition}
 Дискретные случаные величины \textbf{независимы} если \(\forall i, j\ p(\xi = x_i, \eta = y_j) = p(\xi = x_i) \cdot p(\eta = y_j)\)
-\label{orgb4ceba1}
+\label{org73456c2}
 \end{definition}
 \begin{remark}
 Если \(xi\) и \(\eta\) независимы, то
@@ -1163,7 +1163,7 @@ E\(\xi\)
 \[ D(\xi + \eta) = D\xi + \eta \]
 \end{remark}
 \begin{proof}
-По \hyperref[orgb4ceba1]{свойству} \(\text{Cov}(\xi, \eta) = 0\)
+По \hyperref[org73456c2]{свойству} \(\text{Cov}(\xi, \eta) = 0\)
 \end{proof}
 \begin{remark}
 Среднее квадратическое отклонение --- минимум отклонения случайной величины от точек вещественной прямой, т.е.
@@ -1174,7 +1174,7 @@ E\(\xi\)
 \[ = D\xi + (E\xi - a)^2 \le D\xi \]
 \end{proof}
 \item Другие числовые характеристики
-\label{sec:org8fee24d}
+\label{sec:org619c520}
 \begin{remark}
 \[ m_k = E\xi^k \] --- момент \(k\)-того порядка \\
 В частности \(m_1 = E\xi\)
@@ -1203,11 +1203,11 @@ E\(\xi\)
 \end{enumerate}
 \end{enumerate}
 \chapter{}
-\label{sec:orge743f9d}
+\label{sec:org8e456f1}
 \section{Стандартное дискретное распределение}
-\label{sec:org04191e0}
+\label{sec:org77ccdc4}
 \subsection{Распределение Бернулли}
-\label{sec:org124c3ab}
+\label{sec:orgaec96b6}
 \begin{symb}
 \(B_p,\ 0 < p < 1\)
 \end{symb}
@@ -1229,7 +1229,7 @@ E\(\xi\)
 \[ E\xi = 0\cdot(1 - p) + 1\cdot p = p \]
 \[ D\xi = pq \]
 \subsection{Биноминальное распределение}
-\label{sec:orgecabdbb}
+\label{sec:orgd8a8bb4}
 \begin{symb}
 \(B_{n,p}\)
 \end{symb}
@@ -1258,7 +1258,7 @@ E\(\xi\)
 \[ E\xi = \sum_{i = 0}^n E\xi_i = np \]
 \[ D\xi = \sum_{i = 0}^n D\xi_i = npq \]
 \subsection{Геометрическое распределение}
-\label{sec:org3eb9148}
+\label{sec:org54c50f9}
 \begin{symb}
 \(G_p\)
 \end{symb}
@@ -1281,7 +1281,7 @@ E\(\xi\)
 \[ E\xi^2 = \sum_{k = 1}^p k^2 q^{k - 1} p = p\sum_{k = 1}^\infty\left(k\cdot(k - 1) + k\right)\cdot q^{k - 1} + p\sum_{k = 1}^\infty k\dot q^{k - 1} =  \frac{22q}{p^2} + \frac{1}{p} \]
 \[ D\xi = \frac{q}{p^2} \]
 \subsection{Распределение Пуассона}
-\label{sec:org1f104ab}
+\label{sec:org2f22dd4}
 \begin{definition}
 Слкчайная величина \(\xi\) имеет распределение ПУассона с парметром \(k > 0\), если
 \[ p(\xi = k) = \frac{\lambda^k}{k!}e^{-\lambda} \quad, 0\le k < \infty \]
@@ -1298,7 +1298,7 @@ E\(\xi\)
 \[ D\xi = \lambda \]
 \[ \simga = \sqrt{\lambda} \]
 \subsection{Функция распределения}
-\label{sec:orgedf74ae}
+\label{sec:orga12c4a1}
 \begin{definition}
 \(F\xi(x)\) случайной величины \(\xi\) называется функция
 \[ F\xi(x) = p(\xi < x) \]
@@ -1319,7 +1319,7 @@ p, x > 1
 \end{examp}
 \begin{enumerate}
 \item Свойства функции распределения
-\label{sec:org5f5f738}
+\label{sec:org54483ac}
 \begin{property}
 \(F(x)\) --- ограниченая функция
 \end{property}
@@ -1357,7 +1357,7 @@ p, x > 1
 \end{property}
 \begin{property}
 \(F(x)\) --- непрерывна слева, т.е. \(F(x_0 - 0) = F(x_0)\)
-\label{orga7b9a35}
+\label{orgde518f6}
 \end{property}
 \begin{proof}
 \-
@@ -1389,7 +1389,7 @@ p, x > 1
 \[ F(x_0 + 0) - F(x_0) = p(\xi = x_0) \]
 \end{proof}
 \begin{property}
-Если \(F(x)\) непрерывна в точке \(x_0\), то \(p(\xi = 0) = 0\). Следствие из \ref{orga7b9a35}
+Если \(F(x)\) непрерывна в точке \(x_0\), то \(p(\xi = 0) = 0\). Следствие из \ref{orgde518f6}
 \end{property}
 \begin{property}
 Если \(F(x)\) непрерывна то, \(p(x_1 \le \xi < x_2) = p(x_1 < \xi < x_2) = p(x_1 \le \xi \le x_2) = p(x_1 < \xi \le x_2) = F(x_2) - F(x_1)\)
@@ -1399,7 +1399,7 @@ p, x > 1
 \end{property}
 \end{enumerate}
 \section{Абсолютно непрерывные случайные величины}
-\label{sec:org081bff8}
+\label{sec:org9cc455b}
 \begin{definition}
 Случайная величина \(\xi\) имеет \textbf{абсолютно непрерывное} распределение, если для любового Борелевского множества \(B \in \mathfrak{B}\)
 \[ p(\xi \in B) = \int\limits_B f_\xi(x) dx \]
@@ -1409,7 +1409,7 @@ p, x > 1
 \(f_\xi(x)\) --- \textbf{плотность распределения} случайной величины \(\xi\)
 \end{definition}
 \subsection{Свойства плотности и функции распределения}
-\label{sec:orgda9483e}
+\label{sec:org7cfde47}
 \beginproperty
 \begin{property}
 \textbf{Вероятностный геометрический} смысл плотности.
@@ -1425,7 +1425,7 @@ p, x > 1
 \begin{property}
 \textbf{Условие нормировки}
 \[ \int\limits_{-\infty}^{+ \infty} f(x) dx = 1 \]
-\label{org588cef9}
+\label{orgab31892}
 \end{property}
 \begin{proof}
 По определению \(p(\xi \in \R) = 1\) а \(B = \R \in \mathfrak{B}\) \fixme
@@ -1446,7 +1446,7 @@ p, x > 1
 \(F_\xi(x)\) --- дифференцируема почти всюду и
 \[ f_\xi(x) = F'(x) \]
 почти для всех \(x\)
-\label{org10a23ac}
+\label{orgb9156a9}
 \end{property}
 \begin{proof}
 Теорема Барроу.
@@ -1456,10 +1456,10 @@ p, x > 1
 \end{remark}
 \begin{property}
 \(f_\xi(x) > 0\)
-\label{orgcc2dd24}
+\label{orge215ade}
 \end{property}
 \begin{proof}
-Из определения или из \ref{org10a23ac}
+Из определения или из \ref{orgb9156a9}
 \end{proof}
 \begin{property}
 \(p(\xi = x_0) = 0\)
@@ -1468,10 +1468,10 @@ p, x > 1
 \(p(x_1 </\le \xi </\le x_2) = F(x_2) - f(x_1)\)
 \end{property}
 \begin{property}
-Если для \(f(x)\) выолнено свойства \ref{org588cef9} и \ref{orgcc2dd24} то она является плотностью некоторой случайной величины
+Если для \(f(x)\) выолнено свойства \ref{orgab31892} и \ref{orge215ade} то она является плотностью некоторой случайной величины
 \end{property}
 \subsection{Числовые характеричтики}
-\label{sec:org2bd6618}
+\label{sec:org41399f5}
 \begin{definition}
 \textbf{Математическим ожиданием} абсолютно непрерывной случайной величины \(\xi\) называется число
 \[ E\xi = \int\limits_{- \infty}^{+\infty} x f(x) dx \]
@@ -1491,4 +1491,207 @@ p, x > 1
 \begin{remark}
 Смысл свойств этих числовых характеристик полоностью идентичны дискретной случайной величины
 \end{remark}
+\chapter{}
+\label{sec:org9940cb4}
+\section{Стандартное абсолюютно непрерывное распределение}
+\label{sec:org91273a9}
+\subsection{Равномерное распределение}
+\label{sec:org38dd7d7}
+\begin{definition}
+Случайная величина \(\xi\) \textbf{равномерно} распределена на \([a, b]\) если ее плотность постоянна на этом отрезке
+\[ f(x) = \begin{cases}
+0 & x < a \\
+\frac{1}{b - a} & a \le x \le b \\
+0 & x > b
+\end{cases}\]
+\[ F(x) = \int_a^x \frac{1}{b - a}dx = \frac{x - a}{b - a} \]
+\[ F(x) = \begin{cases}
+0 & x < a \\
+\frac{x - a}{b - a} & a \le x \le b \\
+1 & x > b
+\end{cases} \]
+\[ E\xi = \int_{-\infty}^\infty x f(x) dx = \int_a^b x \cdot \frac{1}{b - a} dx = \frac{a + b}{2} \]
+\[ E\xi^2 = \int_{-\infty}^\infty x^2f(x) dx = \int_a^b x^2 \frac{dx}{b - a}dx = \frac{a^2 + ab + b^2}{3} \]
+\[ D\xi = E\xi^2 - (E\xi)^2 = \frac{a^2 - 2ab + b^2}{12} = \frac{(b - a)^2}{12} \]
+\[ \sigma = \frac{b - a}{2\sqrt{3}} \]
+\[ p(\alpha < \xi < \beta) = \frac{\beta - \alpha}{b - a} \quad \alpha, \beta \in [a, b] \]
+\end{definition}
+\begin{symb}
+\(\xi \in U_{[a, b]}\)
+\end{symb}
+\begin{remark}
+Датчики случайных чисел имеют равномерное распределение, и с их помощью можно смоделировать другие распределения, если знаем их функции распределения
+\end{remark}
+\subsection{Экспоненциальное распределение}
+\label{sec:org65ff470}
+\begin{definition}
+Случайная величина \(\xi\) имеет \textbf{показательное} распределение, если ее плотность имеет вид:
+\[ f(x) = \begin{cases}
+0 & x < 0 \\
+\alpha e^{- \alpha x} & x \ge 0
+\end{cases}\]
+\[ F(x) = \begin{cases}
+0 & x < 0 \\
+1 - e^{-\alpha x} & x \ge 0
+\end{cases}\]
+\[ E\xi^k = \int_{-\infty}^\infty x^k f(x) dx = \int_0^\infty x^k \alpha e^{-\alpha x} dx = \frac{1}{\alpha^k} \int_0^\infty \alpha (\alpha x)^ke^{-\alpha x} dx = \frac{k!}{\alpha^k} \]
+\[ E\xi = \frac{1}{\alpha} \]
+\[ E\xi^2 = \frac{2}{\alpha^2} \]
+\[ D\xi = E\xi^2 - (E\xi)^2 = \frac{1}{\alpha^2} \]
+\[ \sigma = \frac{1}{\alpha} \]
+\[ p(a < \xi < b) = e^{-a\alpha} - e^{- b\alpha} \]
+\end{definition}
+\begin{remark}
+\textbf{Свойство нестарения}. Если \(\xi \in E_\alpha\), то \(p(\xi > x + y | \xi > x) = p(\xi > y)\)
+\end{remark}
+
+\begin{remark}
+Гамма функция Эйлера:
+\[ \Gamma(\lambda) = \int_0^\infty t^{\lambda - 1} e^{-t} dt \]
+\begin{itemize}
+\item \[ \Gamma(\lambda - 1) = \lambda! \quad \lambda \in \N \]
+\end{itemize}
+\end{remark}
+\begin{symb}
+\(\xi \in E_\alpha\)
+\end{symb}
+\begin{examp}
+Время работы прибора до поломки
+\end{examp}
+\begin{examp}
+Время между появлениями двух соседних редких событий в простейшем потоке событий
+\end{examp}
+\subsection{Нормальное распределение}
+\label{sec:orge4ef5e9}
+\begin{definition}
+Случайная величина \(\xi\) имеет \textbf{нормальное} распределение с параметрами \(a, \sigma > 0\), если ее плотность имеет вид
+\[ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x - a)^2}{2\sigma^2}}\]
+Смысл параметров распределения: \(a = E\xi\), \(\sigma\) --- среднее квадратическое отклонения. \(D = \sigma^2\) \\
+Функция распределения
+\[ F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(t - a)^2}{2\sigma^2}} dt \]
+\end{definition}
+\begin{symb}
+\(\xi \in N_{a, \sigma}\)
+\end{symb}
+\subsection{Стандартное нормальное рапределение}
+\label{sec:orgd3932fb}
+\begin{definition}
+Стандартным нормальным распределением называется нормальное распределение с параметрами \(a = 0,\ \sigma = 1\) т.е. \(\xi \in N_{0, 1}\). Плотность
+\[ \varphi(x) = \frac{1{\sqrt{2\pi}}}e^{-\frac{x^2}{2}} \]
+Функиця распределения
+\[ \Phi_0(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x e^{-\frac{z^2}{2}} dz \]
+\end{definition}
+\begin{remark}
+\[ \Phi_0(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^0 e^{-\frac{z^2}{2}} dz + \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz = 0.5 + \Phi(x)\text{ --- функция Лапласса} \]
+\end{remark}
+\begin{remark}
+Интеграл Пуассона
+\[ \int_{-\infty}^\infty e^{-\frac{x^2}{2}} dx = \sqrt{2\pi} \]
+\end{remark}
+\subsection{Связь между нормальным и стандартным нормальным распределениями и ее следствия}
+\label{sec:org28fa20a}
+\begin{property}
+\(\xi \in N_{a, \sigma}\). Тогда
+\[ F_\xi(x) = \Phi_\xi \left(\frac{x -a}{\sigma}\right) \]
+\end{property}
+\begin{proof}
+\[ F_\xi(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{(t - a)^2}{2\sigma^2}} dt \]
+\todo
+\end{proof}
+\begin{property}
+Если \(\xi \in N_{a,\sigma}\), тогда \(\eta = \frac{1 - a}{\sigma} \in N_{0, 1}\)
+\end{property}
+\begin{proof}
+\todo
+\end{proof}
+\begin{property}
+\(\xi \in N_{a, \sigma}\). Тогда \(E\xi = a\), \(D\xi = \sigma^2\)
+\end{property}
+\begin{proof}
+\[ \eta = \frac{\xi - a}{\sigma} \in N_{0, 1} \Rightarrow E\eta = 0,\ D\eta = 1\]
+\[ \xi = \sigma\eta + a \]
+\[ E\xi = \sigma\cdot 0 + a = a \]
+\[ D\xi = \sigma^2 \cdot 1 = \sigma^2 \]
+\end{proof}
+
+\begin{property}
+Вероятность попадания случайной величины в заданый интервал
+\[ p(\alpha < \xi < \beta)  = \Phi \left(\frac{\beta - a}{\sigma}\right) - \Phi \left(\frac{\alpha - a}{\sigma}\right) \]
+\end{property}
+\begin{proof}
+\[ p(\alpha < \xi < \beta) = F_\xi(\beta) - F_\xi(\alpha) = \Phi_0 \left(\frac{\beta - a}{\sigma}\right) - \Phi_0 \left(\frac{\alpha - a}{\sigma}\right) = \]
+\[ = \left(0,5 + \Phi \left(\frac{\beta - a}{\sigma}\right)\right) - \left(0,5 + \Phi \left(\frac{\alpha - a}{\sigma}\right)\right) = \Phi \left(\frac{\beta - a}{\sigma}\right) - \Phi \left(\frac{\alpha - a}{\sigma}\right) \]
+\end{proof}
+\begin{property}
+Вероятность отклонения случайной величины от ее среднего значения или попадание в интервал симметричный относительно \(a\)
+\[ p(|\xi - a| < t) = 2\Phi \left(\frac{t}{\sigma}\right) \]
+\end{property}
+\begin{proof}
+\[ P(|\xi - a| < t) = p(-t < \xi - a < t) = p(a - t < \xi a + t) = \Phi \left(\frac{a + t - a}{\sigma}\right) - \Phi \left(\frac{a - t - a}{\sigma}\right) = \]
+\[ = \Phi \left(\frac{t}{\sigma}\right) - \Phi \left(-\frac{t}{\sigma}\right) = 2\Phi \left(\frac{t}{\sigma}\right) \]
+\end{proof}
+\begin{proof}
+При замене в этой формуле \(Phi(x)\) на \(\Phi_0(x)\) получится
+\[ p(|\xi - a| < t) = 2\Phi_0 \left(\frac{t}{\sigma}\right) - 1 \]
+\end{proof}
+\begin{property}[Правило трех \(\sigma\)]
+\[ p(|\xi - a| < 3\sigma) \approx 0.9973 \]
+\end{property}
+\subsection{Коэффиценты асимметрии и эксцесса}
+\label{sec:org5326869}
+\begin{definition}
+Асимметрией распределения называется число
+\[ A_\xi = E \left(\frac{\xi - a}{\sigma}\right)^3 = \frac{N_{a, \sigma}}{\sigma^3} \fixme\]
+\end{definition}
+\begin{definition}
+Эксцессом распределения называется число
+\[ E_\xi = E \left(\frac{\xi - a}{\sigma}\right)^4 - 3 = \frac{N_{a,\sigma}}{\sigma^4} - 3 \fixme \]
+\end{definition}
+\begin{remark}
+Если \(\xi \in N_{a,\sigma^2}\), то \(A\xi = 0\) и \(E\xi = 0\). Таким образом эти коэффиценты показывают насколько сильно данное распределение отличается от нормального
+\end{remark}
+\subsection{Гамма функция и гамма распределение}
+\label{sec:org306744c}
+\begin{definition}
+Гамма функцией Гаусса называется функия
+\[ \Gamma(\lambda) = \int_0^\infty t^{\lambda - 1} e^{-t}dt \]
+\end{definition}
+\beginproperty
+\begin{property}
+\[ \Gamma(\lambda) = (\lambda - 1)\cdot \Gamma(\lambda - 1) \]
+\end{property}
+\begin{property}
+\[ \Gamma(1) = 1 \]
+\end{property}
+\begin{property}
+\[ \Gamma(x) = (x - 1)!\quad x \in \N \]
+\end{property}
+\begin{property}
+\[ \Gamma(\frac{1}{2}) = \sqrt{\pi} \]
+\end{property}
+\begin{definition}
+Случайная величина \(\xi\) имеет гамма распределение с параметрами \(\alpha, \lambda > 0\), если ее плотность имеет вид:
+\[ f_\xi (x) = \begin{cases}
+0 & x < 0 \\
+\frac{\alpha^\lambda}{\Gamma(\lambda)}x^{\lambda - 1}e^{-\alpha x} & x \ge 0
+\end{cases} \fixme \] 
+\[ F_\xi(x) = \frac{\alpha^\lambda}{\Gamma(\lambda)} \int_0^x t^{\lambda - 1} e^{-\alpha t} dt \quad x \ge 0 \]
+Если \(\lambda \in \N\), то \[F_\xi(x) = \sum_{k = \lambda}^\infty \frac{(\alpha x)^k}{x^k}e^{-\alpha x} \fixme \]
+\end{definition}
+\begin{symb}
+\(\xi \in \Gamma_{\alpha, \lambda}\)
+\end{symb}
+\beginproperty
+\begin{property}
+\(E\xi = \frac{\lambda}{\alpha}\), \(D\xi = \frac{\lambda}{\alpha^2}\)
+\end{property}
+\begin{property}
+\(\Gamma_{\alpha, \lambda} = E_\alpha\)
+\end{property}
+\begin{property}
+\todo
+\end{property}
+\begin{property}
+Если \(\xi \in N_{0, 1}\), то \(\xi^2 \in \Gamma_{\frac{1}{2},\frac{1}{2}}\)
+\end{property}
 \end{document}
