@@ -24,14 +24,14 @@ impl Scanner {
 
 // CODE_HERE
 
-const MOD: i64 = 998_244_353;
+const MOD: i128 = 998_244_353;
 
-fn normalize(n: &mut i64) {
+fn normalize(n: &mut i128) {
     *n = (*n % MOD + MOD) % MOD;
 }
 
 /// A(t) + B(t)
-fn sum(a: &[i64] , b: &[i64]) -> Vec<i64> {
+fn sum(a: &[i128] , b: &[i128]) -> Vec<i128> {
     let mut p = vec![0; std::cmp::max(a.len(), b.len())];
     for i in 0..p.len() {
 	p[i] = if i >= a.len() {
@@ -49,7 +49,7 @@ fn sum(a: &[i64] , b: &[i64]) -> Vec<i64> {
 }
 
 /// A(t) * B(t)
-fn mult(a: &[i64], b: &[i64]) -> Vec<i64> {
+fn mult(a: &[i128], b: &[i128]) -> Vec<i128> {
     let mut p = vec![0; a.len() + b.len() - 1];
     for i in 0..a.len() {
 	for j in 0..b.len() {
@@ -63,10 +63,10 @@ fn mult(a: &[i64], b: &[i64]) -> Vec<i64> {
 /// A(t) / B(t)
 /// @param a A(t)
 /// @param b B(t)
-fn divide(a: &[i64], b: &[i64], size: usize) -> Vec<i64> {
+fn divide(a: &[i128], b: &[i128], size: usize) -> Vec<i128> {
     let mut p = vec![0; size];
     for i in 0..size {
-	let mut sum: i64 = 0;
+	let mut sum: i128 = 0;
 	for j in 0..i {
 	    sum += p[j] * if i - j >= b.len() { 0 } else { b[i - j] };
 	    normalize(&mut sum);
@@ -78,7 +78,7 @@ fn divide(a: &[i64], b: &[i64], size: usize) -> Vec<i64> {
 }
 
 /// A(B(t))
-fn subs(a: &[i64], b: &[i64]) -> Vec<i64> {
+fn subs(a: &[i128], b: &[i128]) -> Vec<i128> {
     let size = (a.len() - 1)*(b.len() - 1) + 1;
     let mut p = vec![0; size];
     let mut bn = vec![0; size + b.len()];
@@ -113,7 +113,7 @@ fn subs(a: &[i64], b: &[i64]) -> Vec<i64> {
 }
 
 /// returns (g, x, y)
-fn gcdext(a: i64, b: i64) -> (i64, i64, i64) {
+fn gcdext(a: i128, b: i128) -> (i128, i128, i128) {
     if a == 0 {
 	return (b, 0, 1);
     }
@@ -121,7 +121,7 @@ fn gcdext(a: i64, b: i64) -> (i64, i64, i64) {
     (d, y - (b / a) * x, x)
 }
 
-fn invert(n: i64) -> i64 {
+fn invert(n: i128) -> i128 {
     let (g, mut x, _) = gcdext(n, MOD);
     if g != 1 {
 	panic!("Should find inverted");
@@ -131,11 +131,11 @@ fn invert(n: i64) -> i64 {
     }
 }
 
-fn gen_exp(size: usize) -> Vec<i64> {
+fn gen_exp(size: usize) -> Vec<i128> {
     let mut p = vec![0; size];
     let mut fact = 1;
     for i in 0..size {
-	let n = i as i64;
+	let n = i as i128;
 	p[i] = invert(fact);
 	fact *= n + 1;
 	normalize(&mut fact);
@@ -143,17 +143,17 @@ fn gen_exp(size: usize) -> Vec<i64> {
     return p;
 }
 
-fn gen_sqrt(size: usize) -> Vec<i64> {
+fn gen_sqrt(size: usize) -> Vec<i128> {
     let mut p = vec![0; size];
-    let mut fact1: i64 = 1;
-    let mut fact2: i64 = 1;
-    let mut pow: i64 = 1;
+    let mut fact1: i128 = 1;
+    let mut fact2: i128 = 1;
+    let mut pow: i128 = 1;
     for i in 0..size {
-	let n = i as i64;
+	let n = i as i128;
 	let mut sign = if n % 2 == 0 { 1 } else { -1 };
 	p[i] = fact2;
 	normalize(&mut p[i]);
-	let mut t: i64 = 1 - 2*n;
+	let mut t: i128 = 1 - 2*n;
 	if t < 0 {
 	    t *= -1;
 	    sign *= -1;
@@ -175,11 +175,11 @@ fn gen_sqrt(size: usize) -> Vec<i64> {
     return p;
 }
 
-fn gen_ln(size: usize) -> Vec<i64> {
+fn gen_ln(size: usize) -> Vec<i128> {
     let mut p = vec![0; size];
     p[0] = 0;
     for i in 1..size {
-	let n = i as i64;
+	let n = i as i128;
 	p[i] = invert(n);
 	p[i] *= if n % 2 == 0 { -1 } else { 1 };
 	normalize(&mut p[i])
@@ -187,9 +187,9 @@ fn gen_ln(size: usize) -> Vec<i64> {
     return p;
 }
 
-fn gen_from_recursive(a: &[i64], c: &[i64]) -> (Vec<i64>, Vec<i64>) {
+fn gen_from_recursive(a: &[i128], c: &[i128]) -> (Vec<i128>, Vec<i128>) {
     
-    let mut p: Vec<i64> = a.iter().cloned().collect();
+    let mut p: Vec<i128> = a.iter().cloned().collect();
     let mut last_nonz: usize = 0;
     for i in 0..c.len() {
 	for j in 0..min(c.len(), i) {
@@ -200,18 +200,18 @@ fn gen_from_recursive(a: &[i64], c: &[i64]) -> (Vec<i64>, Vec<i64>) {
 	}
     }
     p.resize(last_nonz + 1, 0);
-    let q: Vec<i64> = iter::once(1).into_iter().chain(c.iter().map(|e| -e)).collect();
+    let q: Vec<i128> = iter::once(1).into_iter().chain(c.iter().map(|e| -e)).collect();
     return (p, q);
 }
 
 #[derive(Clone,Copy)]
 struct Rational {
-    denominator: i64,
-    numerator: i64
+    denominator: i128,
+    numerator: i128
 }
 
 impl Rational {
-    fn new(numerator: i64, denominator: i64) -> Rational {
+    fn new(numerator: i128, denominator: i128) -> Rational {
 	let numer = if denominator < 0 { -numerator } else { numerator };
 	let denom = if denominator < 0 { -denominator } else { denominator };
 	let d = gcdext(if numer < 0 { -numer } else { numer }, denom).0;
@@ -232,8 +232,8 @@ impl ops::Add<Rational> for Rational {
     type Output = Rational;
 
     fn add(self, rhs: Rational) -> Rational {
-	let mlt: i64 = gcdext(self.denominator, rhs.denominator).0;
-	let denom: i64 = self.denominator * rhs.denominator / mlt;
+	let mlt: i128 = gcdext(self.denominator, rhs.denominator).0;
+	let denom: i128 = self.denominator * rhs.denominator / mlt;
 	let numer = self.numerator * (denom / self.denominator) + rhs.numerator * (denom / rhs.denominator);
 	Rational::new(numer, denom)
     }
@@ -249,32 +249,32 @@ impl ops::Mul<Rational> for Rational {
     }
 }
 
-impl ops::Mul<i64> for Rational {
+impl ops::Mul<i128> for Rational {
     type Output = Rational;
 
-    fn mul(self, rhs: i64) -> Self::Output {
+    fn mul(self, rhs: i128) -> Self::Output {
 	self * Rational::new(rhs, 1)
     }
 }
 
-impl ops::Div<i64> for Rational {
+impl ops::Div<i128> for Rational {
     type Output = Rational;
 
-    fn div(self, rhs: i64) -> Self::Output {
+    fn div(self, rhs: i128) -> Self::Output {
         self * Rational::new(1, rhs)
     }
 }
 
-impl ops::Add<i64> for Rational {
+impl ops::Add<i128> for Rational {
     type Output = Rational;
 
-    fn add(self, rhs: i64) -> Self::Output {
+    fn add(self, rhs: i128) -> Self::Output {
         self + Rational::new(rhs, 1)
     }
 }
 
-impl From<i64> for Rational {
-    fn from(numer: i64) -> Self {
+impl From<i128> for Rational {
+    fn from(numer: i128) -> Self {
         Rational::new(numer, 1)
     }
 }
@@ -298,17 +298,17 @@ fn mult_rational(a: &[Rational], b: &[Rational]) -> Vec<Rational> {
     return p;
 }
     
-fn to_quazi(k: usize, r: i64, p: &[Rational]) -> Vec<Rational> {
+fn to_quazi(k: usize, r: i128, p: &[Rational]) -> Vec<Rational> {
     let mut res = Vec::new();
-    let mut fact: i64 = 1;
+    let mut fact: i128 = 1;
     for i in 1..(k + 1) {
-	fact *= i as i64;
+	fact *= i as i128;
     }
     let mut pow = 1;
     for n in 0..p.len() {
 	let mut pp =  vec![Rational::from(1)];
 	for i in 1..(k + 1) {
-	    pp = mult_rational(&pp, &vec![Rational::from((i as i64) - (n as i64)), Rational::from(1)]);
+	    pp = mult_rational(&pp, &vec![Rational::from((i as i128) - (n as i128)), Rational::from(1)]);
 	}
 	pp = pp.iter().map(|e| *e * p[n] / pow / fact).collect();
 	res = add_rational(&res, &pp);
@@ -322,9 +322,9 @@ fn main() {
     let mut scan = Scanner::default();
     let out = &mut BufWriter::new(stdout());
     
-    let r: i64 = scan.next::<i64>();
+    let r: i128 = scan.next::<i128>();
     let k: usize = scan.next::<usize>();
-    let p: Vec<i64> =  (0..(k + 1)).map(|_| scan.next()).collect();
+    let p: Vec<i128> =  (0..(k + 1)).map(|_| scan.next()).collect();
 
     let mut pr: Vec<Rational> = vec![Rational::from(0); k + 1];
     for i in 0..(k + 1) {

@@ -3,7 +3,6 @@
 use std::cmp::{min,max};
 use std::io::{BufWriter, stdin, stdout, Write};
 use std::iter;
-use std::ops;
 
 #[derive(Default)]
 struct Scanner {
@@ -204,136 +203,24 @@ fn gen_from_recursive(a: &[i64], c: &[i64]) -> (Vec<i64>, Vec<i64>) {
     return (p, q);
 }
 
-#[derive(Clone,Copy)]
-struct Rational {
-    denominator: i64,
-    numerator: i64
-}
-
-impl Rational {
-    fn new(numerator: i64, denominator: i64) -> Rational {
-	let numer = if denominator < 0 { -numerator } else { numerator };
-	let denom = if denominator < 0 { -denominator } else { denominator };
-	let d = gcdext(if numer < 0 { -numer } else { numer }, denom).0;
-	Rational {
-	    denominator: denom / d,
-	    numerator: numer / d,
-	}
-    }
-}
-
-impl std::fmt::Display for Rational {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}/{}", self.numerator, self.denominator)
-    }
-}
-
-impl ops::Add<Rational> for Rational {
-    type Output = Rational;
-
-    fn add(self, rhs: Rational) -> Rational {
-	let mlt: i64 = gcdext(self.denominator, rhs.denominator).0;
-	let denom: i64 = self.denominator * rhs.denominator / mlt;
-	let numer = self.numerator * (denom / self.denominator) + rhs.numerator * (denom / rhs.denominator);
-	Rational::new(numer, denom)
-    }
-}
-
-impl ops::Mul<Rational> for Rational {
-    type Output = Rational;
-
-    fn mul(self, rhs: Rational) -> Self::Output {
-        let denom = self.denominator * rhs.denominator;
-	let numer = self.numerator * rhs.numerator;
-	Rational::new(numer, denom)
-    }
-}
-
-impl ops::Mul<i64> for Rational {
-    type Output = Rational;
-
-    fn mul(self, rhs: i64) -> Self::Output {
-	self * Rational::new(rhs, 1)
-    }
-}
-
-impl ops::Div<i64> for Rational {
-    type Output = Rational;
-
-    fn div(self, rhs: i64) -> Self::Output {
-        self * Rational::new(1, rhs)
-    }
-}
-
-impl ops::Add<i64> for Rational {
-    type Output = Rational;
-
-    fn add(self, rhs: i64) -> Self::Output {
-        self + Rational::new(rhs, 1)
-    }
-}
-
-impl From<i64> for Rational {
-    fn from(numer: i64) -> Self {
-        Rational::new(numer, 1)
-    }
-}
-
-fn add_rational(a: &[Rational], b: &[Rational]) -> Vec<Rational> {
-    let n = max(a.len(), b.len());
-    let mut res = vec![Rational::from(0); n];
-    for i in 0..n {
-	res[i] = res[i] + if i < a.len() { a[i] } else { Rational::from(0) }
-	+ if i < b.len() { b[i] } else { Rational::from(0) };
-    }
-    return res;
-}
-fn mult_rational(a: &[Rational], b: &[Rational]) -> Vec<Rational> {
-    let mut p = vec![Rational::from(0); a.len() + b.len() - 1];
-    for i in 0..a.len() {
-	for j in 0..b.len() {
-	    p[i + j] = p[i + j] + a[i] * b[j];
-	}
-    }
-    return p;
-}
-    
-fn to_quazi(k: usize, r: i64, p: &[Rational]) -> Vec<Rational> {
-    let mut res = Vec::new();
-    let mut fact: i64 = 1;
-    for i in 1..(k + 1) {
-	fact *= i as i64;
-    }
-    let mut pow = 1;
-    for n in 0..p.len() {
-	let mut pp =  vec![Rational::from(1)];
-	for i in 1..(k + 1) {
-	    pp = mult_rational(&pp, &vec![Rational::from((i as i64) - (n as i64)), Rational::from(1)]);
-	}
-	pp = pp.iter().map(|e| *e * p[n] / pow / fact).collect();
-	res = add_rational(&res, &pp);
-	pow *= r;
-    }
-    return res;
-}
-
-
 fn main() {
     let mut scan = Scanner::default();
     let out = &mut BufWriter::new(stdout());
     
-    let r: i64 = scan.next::<i64>();
     let k: usize = scan.next::<usize>();
-    let p: Vec<i64> =  (0..(k + 1)).map(|_| scan.next()).collect();
-
-    let mut pr: Vec<Rational> = vec![Rational::from(0); k + 1];
-    for i in 0..(k + 1) {
-	pr[i] = Rational::from(p[i]);
-    }
-
-    let res = to_quazi(k, r, &pr);
-    for r in res {
-	write!(out, "{} ", r).ok();
+    let a: Vec<i64> =  (0..k).map(|_| scan.next()).collect();
+    let c: Vec<i64> =  (0..k).map(|_| scan.next()).collect();
+    
+    let (p, q) = gen_from_recursive(&a, &c);
+    writeln!(out, "{}", p.len() - 1).ok();
+    for e in p {
+	write!(out, "{} ", e).ok();
     }
     writeln!(out, "").ok();
+    writeln!(out, "{}", q.len() - 1).ok();
+    for e in q {
+	write!(out, "{} ", e).ok();
+    }
+    writeln!(out, "").ok();
+    
 }
