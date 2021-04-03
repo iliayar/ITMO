@@ -1,0 +1,198 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 8
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Стандартное абсолюютно непрерывное распределение
+** Равномерное распределение
+#+begin_definition org
+Случайная величина \(\xi\) *равномерно* распределена на \([a, b]\) если ее плотность постоянна на этом отрезке
+\[ f(x) = \begin{cases}
+0 & x < a \\
+\frac{1}{b - a} & a \le x \le b \\
+0 & x > b
+\end{cases}\]
+\[ F(x) = \int_a^x \frac{1}{b - a}dx = \frac{x - a}{b - a} \]
+\[ F(x) = \begin{cases}
+0 & x < a \\
+\frac{x - a}{b - a} & a \le x \le b \\
+1 & x > b
+\end{cases} \]
+\[ E\xi = \int_{-\infty}^\infty x f(x) dx = \int_a^b x \cdot \frac{1}{b - a} dx = \frac{a + b}{2} \]
+\[ E\xi^2 = \int_{-\infty}^\infty x^2f(x) dx = \int_a^b x^2 \frac{dx}{b - a}dx = \frac{a^2 + ab + b^2}{3} \]
+\[ D\xi = E\xi^2 - (E\xi)^2 = \frac{a^2 - 2ab + b^2}{12} = \frac{(b - a)^2}{12} \]
+\[ \sigma = \frac{b - a}{2\sqrt{3}} \]
+\[ p(\alpha < \xi < \beta) = \frac{\beta - \alpha}{b - a} \quad \alpha, \beta \in [a, b] \]
+#+end_definition
+#+begin_symb org
+\(\xi \in U_{[a, b]}\)
+#+end_symb
+#+begin_remark org
+Датчики случайных чисел имеют равномерное распределение, и с их помощью можно смоделировать другие распределения, если знаем их функции распределения
+#+end_remark
+** Экспоненциальное распределение
+#+begin_definition org
+Случайная величина \(\xi\) имеет *показательное* распределение, если ее плотность имеет вид:
+\[ f(x) = \begin{cases}
+0 & x < 0 \\
+\alpha e^{- \alpha x} & x \ge 0
+\end{cases}\]
+\[ F(x) = \begin{cases}
+0 & x < 0 \\
+1 - e^{-\alpha x} & x \ge 0
+\end{cases}\]
+\[ E\xi^k = \int_{-\infty}^\infty x^k f(x) dx = \int_0^\infty x^k \alpha e^{-\alpha x} dx = \frac{1}{\alpha^k} \int_0^\infty \alpha (\alpha x)^ke^{-\alpha x} dx = \frac{k!}{\alpha^k} \]
+\[ E\xi = \frac{1}{\alpha} \]
+\[ E\xi^2 = \frac{2}{\alpha^2} \]
+\[ D\xi = E\xi^2 - (E\xi)^2 = \frac{1}{\alpha^2} \]
+\[ \sigma = \frac{1}{\alpha} \]
+\[ p(a < \xi < b) = e^{-a\alpha} - e^{- b\alpha} \]
+#+end_definition
+#+begin_remark org
+*Свойство нестарения*. Если \(\xi \in E_\alpha\), то \(p(\xi > x + y | \xi > x) = p(\xi > y)\)
+#+end_remark
+
+#+begin_remark org
+Гамма функция Эйлера:
+\[ \Gamma(\lambda) = \int_0^\infty t^{\lambda - 1} e^{-t} dt \]
+- \[ \Gamma(\lambda - 1) = \lambda! \quad \lambda \in \N \]
+#+end_remark
+#+begin_symb org
+\(\xi \in E_\alpha\)
+#+end_symb
+#+begin_examp org
+Время работы прибора до поломки
+#+end_examp
+#+begin_examp org
+Время между появлениями двух соседних редких событий в простейшем потоке событий
+#+end_examp
+** Нормальное распределение
+#+begin_definition org
+Случайная величина \(\xi\) имеет *нормальное* распределение с параметрами \(a, \sigma > 0\), если ее плотность имеет вид
+\[ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x - a)^2}{2\sigma^2}}\]
+Смысл параметров распределения: \(a = E\xi\), \(\sigma\) --- среднее квадратическое отклонения. \(D = \sigma^2\) \\
+Функция распределения
+\[ F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(t - a)^2}{2\sigma^2}} dt \]
+#+end_definition
+#+begin_symb org
+\(\xi \in N_{a, \sigma}\)
+#+end_symb
+** Стандартное нормальное рапределение
+#+begin_definition org
+Стандартным нормальным распределением называется нормальное распределение с параметрами \(a = 0,\ \sigma = 1\) т.е. \(\xi \in N_{0, 1}\). Плотность
+\[ \varphi(x) = \frac{1{\sqrt{2\pi}}}e^{-\frac{x^2}{2}} \]
+Функиця распределения
+\[ \Phi_0(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x e^{-\frac{z^2}{2}} dz \]
+#+end_definition
+#+begin_remark org
+\[ \Phi_0(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^0 e^{-\frac{z^2}{2}} dz + \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz = 0.5 + \Phi(x)\text{ --- функция Лапласса} \]
+#+end_remark
+#+begin_remark org
+Интеграл Пуассона
+\[ \int_{-\infty}^\infty e^{-\frac{x^2}{2}} dx = \sqrt{2\pi} \]
+#+end_remark
+** Связь между нормальным и стандартным нормальным распределениями и ее следствия
+#+begin_property org
+\(\xi \in N_{a, \sigma}\). Тогда
+\[ F_\xi(x) = \Phi_\xi \left(\frac{x -a}{\sigma}\right) \]
+#+end_property
+#+begin_proof org
+\[ F_\xi(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{(t - a)^2}{2\sigma^2}} dt \]
+\todo
+#+end_proof
+#+begin_property org
+Если \(\xi \in N_{a,\sigma}\), тогда \(\eta = \frac{1 - a}{\sigma} \in N_{0, 1}\)
+#+end_property
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_property org
+\(\xi \in N_{a, \sigma}\). Тогда \(E\xi = a\), \(D\xi = \sigma^2\)
+#+end_property
+#+begin_proof org
+\[ \eta = \frac{\xi - a}{\sigma} \in N_{0, 1} \Rightarrow E\eta = 0,\ D\eta = 1\]
+\[ \xi = \sigma\eta + a \]
+\[ E\xi = \sigma\cdot 0 + a = a \]
+\[ D\xi = \sigma^2 \cdot 1 = \sigma^2 \]
+#+end_proof
+
+#+begin_property org
+Вероятность попадания случайной величины в заданый интервал
+\[ p(\alpha < \xi < \beta)  = \Phi \left(\frac{\beta - a}{\sigma}\right) - \Phi \left(\frac{\alpha - a}{\sigma}\right) \]
+#+end_property
+#+begin_proof org
+\[ p(\alpha < \xi < \beta) = F_\xi(\beta) - F_\xi(\alpha) = \Phi_0 \left(\frac{\beta - a}{\sigma}\right) - \Phi_0 \left(\frac{\alpha - a}{\sigma}\right) = \]
+\[ = \left(0,5 + \Phi \left(\frac{\beta - a}{\sigma}\right)\right) - \left(0,5 + \Phi \left(\frac{\alpha - a}{\sigma}\right)\right) = \Phi \left(\frac{\beta - a}{\sigma}\right) - \Phi \left(\frac{\alpha - a}{\sigma}\right) \]
+#+end_proof
+#+begin_property org
+Вероятность отклонения случайной величины от ее среднего значения или попадание в интервал симметричный относительно \(a\)
+\[ p(|\xi - a| < t) = 2\Phi \left(\frac{t}{\sigma}\right) \]
+#+end_property
+#+begin_proof org
+\[ P(|\xi - a| < t) = p(-t < \xi - a < t) = p(a - t < \xi a + t) = \Phi \left(\frac{a + t - a}{\sigma}\right) - \Phi \left(\frac{a - t - a}{\sigma}\right) = \]
+\[ = \Phi \left(\frac{t}{\sigma}\right) - \Phi \left(-\frac{t}{\sigma}\right) = 2\Phi \left(\frac{t}{\sigma}\right) \]
+
+#+end_proof
+#+begin_proof org
+При замене в этой формуле \(Phi(x)\) на \(\Phi_0(x)\) получится
+\[ p(|\xi - a| < t) = 2\Phi_0 \left(\frac{t}{\sigma}\right) - 1 \]
+#+end_proof
+#+ATTR_LATEX: :options [Правило трех \(\sigma\)]
+#+begin_property org
+\[ p(|\xi - a| < 3\sigma) \approx 0.9973 \]
+#+end_property
+** Коэффиценты асимметрии и эксцесса
+#+begin_definition org
+Асимметрией распределения называется число
+\[ A_\xi = E \left(\frac{\xi - a}{\sigma}\right)^3 = \frac{N_{a, \sigma}}{\sigma^3} \fixme\]
+#+end_definition
+#+begin_definition org
+Эксцессом распределения называется число
+\[ E_\xi = E \left(\frac{\xi - a}{\sigma}\right)^4 - 3 = \frac{N_{a,\sigma}}{\sigma^4} - 3 \fixme \]
+#+end_definition
+#+begin_remark org
+Если \(\xi \in N_{a,\sigma^2}\), то \(A\xi = 0\) и \(E\xi = 0\). Таким образом эти коэффиценты показывают насколько сильно данное распределение отличается от нормального
+#+end_remark
+** Гамма функция и гамма распределение
+#+begin_definition org
+Гамма функцией Гаусса называется функия
+\[ \Gamma(\lambda) = \int_0^\infty t^{\lambda - 1} e^{-t}dt \]
+#+end_definition
+\beginproperty
+#+begin_property org
+\[ \Gamma(\lambda) = (\lambda - 1)\cdot \Gamma(\lambda - 1) \]
+#+end_property
+#+begin_property org
+\[ \Gamma(1) = 1 \]
+#+end_property
+#+begin_property org
+\[ \Gamma(x) = (x - 1)!\quad x \in \N \]
+#+end_property
+#+begin_property org
+\[ \Gamma(\frac{1}{2}) = \sqrt{\pi} \]
+#+end_property
+#+begin_definition org
+Случайная величина \(\xi\) имеет гамма распределение с параметрами \(\alpha, \lambda > 0\), если ее плотность имеет вид:
+\[ f_\xi (x) = \begin{cases}
+0 & x < 0 \\
+\frac{\alpha^\lambda}{\Gamma(\lambda)}x^{\lambda - 1}e^{-\alpha x} & x \ge 0
+\end{cases} \fixme \] 
+\[ F_\xi(x) = \frac{\alpha^\lambda}{\Gamma(\lambda)} \int_0^x t^{\lambda - 1} e^{-\alpha t} dt \quad x \ge 0 \]
+Если \(\lambda \in \N\), то \[F_\xi(x) = \sum_{k = \lambda}^\infty \frac{(\alpha x)^k}{x^k}e^{-\alpha x} \fixme \]
+#+end_definition
+#+begin_symb org
+\(\xi \in \Gamma_{\alpha, \lambda}\)
+#+end_symb
+\beginproperty
+#+begin_property org
+\(E\xi = \frac{\lambda}{\alpha}\), \(D\xi = \frac{\lambda}{\alpha^2}\)
+#+end_property
+#+begin_property org
+\(\Gamma_{\alpha, \lambda} = E_\alpha\)
+#+end_property
+#+begin_property org
+\todo
+#+end_property
+#+begin_property org
+Если \(\xi \in N_{0, 1}\), то \(\xi^2 \in \Gamma_{\frac{1}{2},\frac{1}{2}}\)
+#+end_property
+
