@@ -182,6 +182,3 @@ _Тогда_ \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
 #+end_remark
 
 
-
-
-

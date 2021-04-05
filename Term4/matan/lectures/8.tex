@@ -1,8 +1,8 @@
-% Created 2021-04-05 Mon 13:10
+% Created 2021-04-05 Mon 13:15
 % Intended LaTeX compiler: pdflatex
 
-\documentclass[english]{article}
-\usepackage[T1, T2A]{fontenc}
+  \documentclass[english]{article}
+  \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,10 +27,10 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-
-\usepackage{geometry}
-\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
- \usepackage{hyperref}
+  
+  \usepackage{geometry}
+  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+   \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -51,9 +51,10 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
 \newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
 \newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
@@ -167,7 +168,7 @@
 \[ \int_E f ds := \sum_i \int_{E \cap M_i} f ds \]
 \end{definition}
 \section{Поверхностный интеграл II рода}
-\label{sec:orga44f5fc}
+\label{sec:org2e9230a}
 \begin{itemize}
 \item \(M\) --- простое гладкое двумерное многообразие в \(R^3\) --- поверхность
 \end{itemize}
@@ -248,9 +249,9 @@
 \uline{Тогда} (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
 \end{corollary}
 \section{Ряды Фурье}
-\label{sec:org24825dc}
+\label{sec:org1b40256}
 \subsection{Пространства \(L^p\)}
-\label{sec:org5ccc7f1}
+\label{sec:orgdf581c6}
 \begin{property}
 \-
 \begin{itemize}
@@ -272,10 +273,10 @@
 \item \(f, g: E \to \C\) --- измеримые
 \end{itemize}
 \uline{Тогда} \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \left(\int_E |g|^q\right)^{\frac{1}{q}} \]
-\label{org37da624}
+\label{orgb80c6c0}
 \end{property}
 \begin{property}[Неравенство Минковского]
-Те-же условия что и в \hyperref[org37da624]{Неравенстве Гельдера}
+Те-же условия что и в \hyperref[orgb80c6c0]{Неравенстве Гельдера}
 \[ \left(\int_E |f + g|^p\right)^{\frac{1}{p}} \le \left(\int_E |f|^p\right)^{\frac{1}{p}} + \left(\int_E |g|^p\right)^{\frac{1}{p}} \]
 \end{property}
 \begin{remark}
@@ -335,4 +336,8 @@
 \begin{remark}
 \(f \in L^p\) \(\Rightarrow\) \(f\) --- почти везде конечны. \(1 \le p \le +\infty\) \(\Rightarrow\) можно считать \(f\) --- задана всюду на \(E\), и всюду конечна
 \end{remark}
+
+
+
+\[ \const \grad A \]
 \end{document}
