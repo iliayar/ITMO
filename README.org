@@ -14,6 +14,7 @@ My stuff from ITMO University
 - [[file:Term4/matan/lectures/5.pdf][Лекция 5]]
 - [[file:Term4/matan/lectures/6.pdf][Лекция 6]]
 - [[file:Term4/matan/lectures/7.pdf][Лекция 7]]
+- [[file:Term4/matan/lectures/8.pdf][Лекция 8]]
 **** Практики
 - [[file:Term4/matan/practice/1.pdf][Практика 1]]
 - [[file:Term4/matan/practice/2.pdf][Практика 2]]
