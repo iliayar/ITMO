@@ -57,12 +57,6 @@ impl From<i64> for Finite {
     }
 }
 
-impl Into<usize> for Finite {
-    fn into(self) -> usize {
-        self.value as usize
-    }
-}
-
 impl From<u128> for Finite {
     fn from(value: u128) -> Self {
         return Finite { value: value % MOD };
@@ -101,7 +95,7 @@ impl ops::Mul<Finite> for Finite {
     type Output = Finite;
 
     fn mul(self, rhs: Finite) -> Self::Output {
-        return Finite::from((self.value * rhs.value) % MOD);
+        return Finite::from((self.value * rhs.value + MOD) % MOD);
     }
 }
 
@@ -152,12 +146,6 @@ impl Rational {
 	    denominator: denom / d,
 	    numerator: numer / d,
 	}
-    }
-}
-
-impl Into<usize> for Rational {
-    fn into(self) -> usize {
-        self.numerator as usize
     }
 }
 
@@ -273,34 +261,20 @@ where
 
 impl<T> Polynom<T>
 where
-    T: Copy
-    + From<i64>
-    + ops::Add<T, Output = T>
-    + ops::Mul<T, Output = T>
-    + ops::Div<T, Output = T>
-    + Eq
-    + std::fmt::Display
+    T: Copy + From<i64> + ops::Add<T, Output = T> + ops::Mul<T, Output = T> + ops::Div<T, Output = T> + Eq
 {
     fn div(&self, rhs: &Polynom<T>, size: usize) -> Polynom<T> {
 	let a: &[T] = &self.value;
 	let b: &[T] = &rhs.value;
-	let mut max_zero: usize = 0;
-	while b[max_zero] == T::from(0) {
-	    max_zero += 1;
-	}
-	let b: &[T] = &b[max_zero..];
 	let mut p = vec![T::from(0); size];
-	for i in 0..p.len() {
+	for i in 0..size {
 	    let mut sum: T = T::from(0);
 	    for j in 0..i {
 		sum = sum + p[j] * if i - j >= b.len() { T::from(0) } else { b[i - j] };
 	    }
-	    p[i] = (if i >= a.len() { T::from(0) } else { a[i] } + T::from(-1)*sum) / b[0];
+	    p[i] = ( if i >= a.len() { T::from(0) } else { a[i] } + T::from(-1)*sum) / b[0];
 	}
-	// let res = Polynom { value: p };
-	let res = Polynom { value: p.iter().skip(max_zero).map(|e| *e).collect() };
-	println!("Div: {}", res);
-	return res;
+	return Polynom { value: p };
     }
 
     fn subs(&self, arg: &Polynom<T>) -> Polynom<T> {
@@ -452,106 +426,40 @@ where
 
 fn seq<T>(p: &Polynom<T>, m: usize) -> Polynom<T>
 where
-    T: Copy
-    + From<i64>
-    + ops::Add<T, Output = T>
-    + ops::Mul<T, Output = T>
-    + ops::Div<T, Output = T>
-    + Eq
-    + Into<usize>
-    + std::fmt::Display
-{
-    let res = &Polynom::from(vec![1]) + &(p * &Polynom::from(vec![-1]));
-    // println!("Pre divide Seq: {}", res);
-    let res = Polynom::from(vec![1]).div(&res, m);
-    return Polynom { value: res.value.into_iter().take(m).collect() };
-}
-
-fn pair<T>(a: &Polynom<T>, b: &Polynom<T>, m: usize) -> Polynom<T>
-where
     T: Copy + From<i64> + ops::Add<T, Output = T> + ops::Mul<T, Output = T> + ops::Div<T, Output = T> + Eq
 {
-    let res = a * b;
-    return Polynom { value: res.value.into_iter().take(m).collect() };
-}
-
-fn mset<T>(p: &Polynom<T>, m: usize) -> Polynom<T>
-where
-    T: Copy
-    + From<i64>
-    + ops::Add<T, Output = T>
-    + ops::Mul<T, Output = T>
-    + ops::Div<T, Output = T>
-    + Eq
-    + Into<usize>
-    + std::fmt::Display
-{
-    let mut res = Polynom::from(vec![1]);
-    let mut t = Polynom::from(vec![1]);
-    for i in 1..p.value.len() {
-	if p.value[i] == T::from(0) {
-	    continue;
-	}
-	t = &t * &Polynom::from(vec![0, 1]);
-	res = &res * &t.raise(p.value[i].into());
-    }
-    // println!("Pre divide MSet: {}", res);
-    let res = Polynom::from(vec![1]).div(&res, m);
-    return Polynom { value: res.value.into_iter().take(m).collect() };
-}
-
-
-fn car(bytes: &[u8]) -> (u8, &[u8]) {
-    (bytes[0], &bytes[1..])
-}
-
-
-type T = Rational;
-
-fn eval(expr: &[u8], m: usize) -> (Polynom<T>, &[u8]) {
-    match car(expr) {
-	(b'B', expr) => (Polynom::from(vec![0 as i64, 1 as i64]), expr),
-	(b'P', expr) => {
-	    let (a, expr) =  eval(&expr[1..], m);
-	    let (b, expr) = eval(&expr[1..], m);
-	    // println!("Parsed pair: ({}, {})\n    Rest: {}", a, b, expr.iter().cloned().map(|e| e as char).collect::<String>());
-	    (pair(&a, &b, m), &expr[1..])
-	},
-	(b'S', expr) => {
-	    let (p, expr) =  eval(&expr[1..], m);
-	    // println!("Parsed MSet: {}\n    Rest: {}", p, expr.iter().cloned().map(|e| e as char).collect::<String>());
-	    (mset(&p, m), &expr[1..])
-	},
-	(b'L', expr) => {
-	    let (p, expr) =  eval(&expr[1..], m);
-	    // println!("Parsed Seq: {}\n    Rest: {}", p, expr.iter().cloned().map(|e| e as char).collect::<String>());
-	    (seq(&p, m), &expr[1..])
-	},
-	_  => panic!()
-    }
+    return Polynom::from(vec![1]).div(&(&Polynom::from(vec![1]) + &(p * &Polynom::from(vec![-1]))), m);
 }
 
 fn main() {
+    type T = Finite;
     
     let mut scan = Scanner::default();
     let out = &mut BufWriter::new(stdout());
     
-    // let k: usize = scan.next();
-    // let m: usize = scan.next();
-    // let c: Vec<usize> = (0..k).map(|_| scan.next::<usize>()).collect();
+    let k: usize = scan.next();
+    let m: usize = scan.next();
+    let c: Vec<usize> = (0..k).map(|_| scan.next::<usize>()).collect();
 
-    // let s = "Hello";
+    let mut siblings = vec![Finite::from(0 as i64); m + 1];
+    let mut t = vec![Finite::from(0 as i64); m + 1];
+    t[0] = Finite::from(1 as i64);
+    siblings[0] = Finite::from(1 as i64);
 
-    // match car(&s.as_bytes()) {
-    // 	(b'H', rest) => println!("Rest: {}", rest.iter().map(|c| *c as char).collect::<String>()),
-    // 	_ => panic!()
-    // }
+    for w in 1..=m {
+	t[w] = c.iter().filter(|v| &w >= v).map(|v| siblings[w - v]).sum();
+	siblings[w] = (0..=w).map(|i| t[i]*t[w - i]).sum();
+    }
 
-    let m = 7;
-    
-    // println!("{}", pair(&mset(&u, m), &seq(&u, m), m));
-    // println!("{}", mset(&seq(&u, m), m));
+    // Nice solution!. But slow((
+    // let mut res: Polynom<T> = &Polynom::from(vec![1]) + &(&Polynom::from(vec![-1])*&Polynom::sqrt(m + max_zero + 1).subs(&(&Polynom::from(vec![-4])*&p)));
+    // res = res.div(&Polynom{ value: p.value.iter().skip(max_zero).cloned().collect() }, m + 1 + max_zero);
+    // res = Polynom{ value: res.value.iter().skip(1 + max_zero).map(|e| *e / T::from(2)).collect() };
+    // writeln!(out, "{}", res).ok();
 
-    let expr: String = scan.next();
-    writeln!(out, "{}", eval(&expr.into_bytes(), m).0).ok();
+    for i in 1..=m {
+	write!(out, "{} ", t[i]).ok();
+    }
+    writeln!(out, "").ok();
+
 }
