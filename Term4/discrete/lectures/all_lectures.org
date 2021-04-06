@@ -6,12 +6,13 @@
 #+INCLUDE: "1.org" :lines "4-"
 * 17 февраля
 #+INCLUDE: "2.org" :lines "4-"
-* TODO 24 февраля
-* 3 марта
+* 24 февраля
 #+INCLUDE: "3.org" :lines "4-"
-* 10 марта
+* 3 марта
 #+INCLUDE: "4.org" :lines "4-"
-* 17 марта
+* 10 марта
 #+INCLUDE: "5.org" :lines "4-"
-* 24 марта
+* 17 марта
 #+INCLUDE: "6.org" :lines "4-"
+* 24 марта
+#+INCLUDE: "7.org" :lines "4-"

@@ -1,0 +1,84 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 3
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Ассимпточиское поведение линейных рекуррент
+** Квазимногчлен в рациональную ПФ
+#+begin_lemma org
+\-
+- \(a_n = n^k r^n\)
+- \(A(t) = \frac{P(t)}{Q(t)}\)
+_Тогда_ \(Q(t) = (1 - rt)^{k + 1}\)
+\[ A(t) = \frac{1}{r}\cdot \frac{P'_k(t)(1 - rt) + r(k + 1)P_k(t) - \sum_{i = 0}^k r \binom{k + 1}{i} P_i(t) (1 - rt)^{k - i + 1}}{(1 - rt)^{k + 2}} \]
+#+end_lemma
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_lemma org
+\-
+- \(a_n = p(n) r^n\)
+- \(A(t) = \frac{P(t)}{Q(t)}\)
+_Тогда_ \(Q(t) = (1 - rt)^{\deg p + 1}\)
+#+end_lemma
+#+begin_corollary org
+Квазимногочлен \Rightarrow Рациональная ПФ: \\
+Корни \(Q(t)\): \(\frac{1}{r_i}\) кратности \(\deg p_i + 1\)
+#+end_corollary
+
+** Рациональная ПФ в квазимногочлен
+- \(A(t) = \frac{P(t)}{Q(t)}\)
+\[ Q(t) = \prod_{i = 1}^s (1 - r_it)^{f_i} \]
+\[ \frac{P(t)}{Q(t)} = \sum_{i = 1}^s \frac{P_i(t)}{(1 - r_i t)^{f_i}} \]
+#+begin_lemma org
+\[ A(t) = \frac{P(t)}{(1 - rt)^{k + 1}} \]
+_Тогда_ \[ a_n = p(n) r^n \], \(p\) --- полином, \(\deg p = k\)
+\[ A(t) = P(t) U(t) \]
+\[ U(t) = (1 + rt + r^2 t^2 + \dots)^{k + 1} \]
+\[ a_n = \sum_{i = 0}^n p_i u_{n - i} \]
+#+end_lemma
+#+begin_corollary org
+\[ a_n = \sum_{x_1 + x_2 + \dots + x_{k + 1} = n} r^n = \binom{n + 1 + k - 1}{k}r^n = \binom{n + k}{k}r^n = \]
+\[ = \frac{1}{k!}(n + k)(n + k - 1)\dots(n + 1)r^n = p_k(n)r^n \]
+\[ \sum_{i = 0}^m p_i u_i = \left(\sum_{i = 1}^m \frac{p_{n - i}(n)}{r^i}\right)r^n \]
+#+end_corollary
+** Оценка ассимптотического поведения
+Обратные корни: \(\begin{matrix} r_1 & f_1 \\ r_2 & f_2 \\ \vdots & \vdots \\ r_s & f_s \end{matrix}\)
+\beginproperty
+#+begin_property org
+\-
+- \(\exists r_i: |r_i|\) --- max
+- \(\forall j \neq i:\ |r_j| < |r_i|\)
+\(r_i\) вещественные \(a_n \sim n^{f_i - 1}\cdot r_i^n\)
+#+end_property
+#+begin_property org
+Несколько \(r_i\) имеют \(\max|r_i|\)
+1. \(r_i \in \R\), \(r_i = \pm r\). Если разной кратности у \(r_i, r_j\), соответсвенно \(f_i > f_j\) \\
+   Тогда \(a_n \sim n^{f_i - 1}r_i^n(+n^{f_i - 1}r_j^n)\) \\
+   Если одинаковой кратности \(f_i = f_j\) \\
+   Тогда \(a_n \sim c_1 n^{f_i - 1}r^n + c_2 n^{f_j - 1}(-r)^n\)
+#+end_property
+#+begin_property org
+\(r_1, r_2, \dots, r_l\) --- орбратные корни максимальной степени \(\max|r_i|\) и \(\max f_i\)
+\[ r_i = z_i e^{i\phi_i} \]
+\[ a_n \sim n^{f_i} z^n \sum_{j = 1}^l e^{i\phi_j} \]
+Если \(\phi_j = \frac{2\pi a_j}{b_j}\), \(n\) делится на \(\mathop{\rm LCM}(b_j)\) классов
+#+end_property
+
+#+begin_examp org
+Числа каталана:
+\[ c_n = \sum_{k = 0}^{n - 1}c_k c_{n - k - 1} \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\[ C(t)^2 = c_0^2 + (c_0 c_1 + c_1 c_0) t + \dots \]
+\[ C(t)^2 \cdot t + 1 = C(t) \]
+\[ t\cdot C(t)^2 - C(t) + 1 = 0 \]
+\[ C(t) = \frac{1 - \sqrt{1 - 4t}}{2t} \]
+#+end_examp
+#+begin_remark org
+Рассмотрим \((1 - t)^\alpha\):
+\[ (1 - t)^\alpha = \sum_{i = 0}^\infty \binom{\alpha}{i} t^i = P_\alpha(t) \]
+\[ \binom{\alpha}{t} = \frac{\alpha(\alpha - 1)(\alpha - 2)\cdot(\alpha - i + 1)}{1 \cdot 2 \cdot 3 \cdot \dots \cdot i} \]
+\[ P_{\frac{1}{2}}(-4t) = 1 - 2t - 2t^2 - 4t^3 - 10t^4 \]
+\[ \binom{\frac{1}{2}}{2} = \frac{\frac{1}{2}\cdot \left(-\frac{1}{2}\right)}{1\cdot 2} = -\frac{1}{8} \]
+\[ \binom{\frac{1}{2}}{3} = \frac{\frac{1}{2} \cdot \left(-\frac{1}{2}\right) \left(-\frac{3}{2}\right)}{1 \cdot 2 \cdot 3} = \frac{1}{16} \]
+
+#+end_remark
