@@ -24,7 +24,7 @@ impl Scanner {
 
 // CODE_HERE
 
-const MOD: u128 =  998_244_353;
+const MOD: u128 = 1000000007;
 
 /// returns (g, x, y)
 fn gcdext(a: i64, b: i64) -> (i64, i64, i64) {
@@ -86,12 +86,6 @@ impl From<u128> for Finite {
 }
 
 impl std::fmt::Display for Finite {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.value)
-    }
-}
-
-impl std::fmt::Debug for Finite {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.value)
     }
@@ -521,32 +515,62 @@ fn car(bytes: &[u8]) -> (u8, &[u8]) {
 }
 
 
+type T = Rational;
+
+fn eval(expr: &[u8], m: usize) -> (Polynom<T>, &[u8]) {
+    match car(expr) {
+	(b'B', expr) => {
+	    let mut res = vec![0 as i64; m];
+	    res[1] = 1;
+	    (Polynom::from(res), expr)
+	}, 
+	(b'P', expr) => {
+	    let (a, expr) =  eval(&expr[1..], m);
+	    let (b, expr) = eval(&expr[1..], m);
+	    // println!("Parsed pair: ({}, {})\n    Rest: {}", a, b, expr.iter().cloned().map(|e| e as char).collect::<String>());
+	    (pair(&a, &b, m), &expr[1..])
+	},
+	(b'S', expr) => {
+	    let (p, expr) =  eval(&expr[1..], m);
+	    // println!("Parsed MSet: {}\n    Rest: {}", p, expr.iter().cloned().map(|e| e as char).collect::<String>());
+	    (p.mset(m), &expr[1..])
+	},
+	(b'L', expr) => {
+	    let (p, expr) =  eval(&expr[1..], m);
+	    // println!("Parsed Seq: {}\n    Rest: {}", p, expr.iter().cloned().map(|e| e as char).collect::<String>());
+	    (p.seq(m), &expr[1..])
+	},
+	_  => panic!()
+    }
+}
+
 fn main() {
     
     let mut scan = Scanner::default();
     let out = &mut BufWriter::new(stdout());
     
-    let k: usize = scan.next();
-    let n: usize = scan.next();
+    // let k: usize = scan.next();
+    // let m: usize = scan.next();
     // let c: Vec<usize> = (0..k).map(|_| scan.next::<usize>()).collect();
-    let mut t: Vec<Vec<Finite>> = vec![vec![Finite::from(0 as i64); k]; k];
-    t[0] = vec![Finite::from(1 as i64); k];
-    for i in 1..k {
-	for j in 1..k {
-	    t[j][i] = t[j - 1][i - 1] + t[j][i - 1];
-	}
-    }
-    let mut res = vec![Finite::from(0 as i64); n];
-    res[0] = Finite::from(1 as i64);
-    for i in 1..(k - 1) {
-	res[i] = (0..i).map(|j| res[j] * res[i - 1 - j]).sum();
-    }
-    for i in (k - 1)..n {
-	res[i] = (1..k).map(|j| res[i - j] * t[j][k - 1 - j] * Finite::from(if j % 2 == 0 { -1 } else { 1 } as i64)).sum();
-    }
 
-    (0..n).for_each(|i| write!(out, "{} ", res[i]).expect(""));
-    writeln!(out, "").ok();
+    // let s = "Hello";
+
+    // match car(&s.as_bytes()) {
+    // 	(b'H', rest) => println!("Rest: {}", rest.iter().map(|c| *c as char).collect::<String>()),
+    // 	_ => panic!()
+    // }
+
+    let m = 7;
     
-    // println!("{:#?}", t);
+    // println!("{}", pair(&mset(&u, m), &seq(&u, m), m));
+    // println!("{}", mset(&seq(&u, m), m));
+
+    let expr: String = scan.next();
+    let res = eval(&expr.into_bytes(), m).0;
+    // let res = Polynom { value: res.value.into_iter().chain(iter::repeat(T::from(0 as i64))).take(m).collect() };
+    // writeln!(out, "{}", res).ok();
+    for r in res.value.iter() {
+	write!(out, "{} ", r.numerator).ok();
+    }
+    writeln!(out, "").ok();
 }
