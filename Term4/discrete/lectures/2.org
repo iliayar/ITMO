@@ -49,12 +49,11 @@ _Тогда_ эквивалентны:
 
 ** Рекурента в рациональную ПФ
 \[ A(t) = \frac{P(t)}{Q(t)} \]
-\[ f_n = c_1 f_{n - 1} + c_2 f_{n - 2} + \dots + c_kf_{n - k} \]
+\[ a_n = c_1 a_{n - 1} + c_2 a_{n - 2} + \dots + c_ka_{n - k} \]
 \[ m = \deg P + 1\quad k = \deg Q \]
 \[ p_i = a_i - \sum_{j = 1}^{\min(k, i)} a_{i - j} c_j \]
 \[ a_n = \frac{p_n - \sum_{i = 1}^n a_{n - i}q_i}{q_0} \]
 \[ c_i = -q_i \]
-\[ f_i = a_i \]
 \[ a_n = \sum_{i = 1}^{\min(n, k)} c_i a_{n - i} [+ p\text{ если } n < m] \]
 
 
