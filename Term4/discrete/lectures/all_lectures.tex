@@ -1,8 +1,8 @@
-% Created 2021-03-30 Tue 00:53
+% Created 2021-04-06 Tue 20:22
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[oneside]{book}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[oneside]{book}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,9 +27,9 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-   \usepackage{hyperref}
+
+\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -50,9 +50,10 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
 \newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
 \newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
@@ -130,7 +131,7 @@
  pdftitle={Лекции по Дискретной математике 4 семестр},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -138,12 +139,74 @@
 \tableofcontents
 
 
-\chapter{TODO}
-\label{sec:org6c6d170}
 \chapter{}
-\label{sec:org4d13361}
+\label{sec:org193ee21}
 \section{Производящие функции}
-\label{sec:orge6aab1c}
+\label{sec:org94531e1}
+Последовательность \(a_0, a_1, a_2, \dots\). Запишем в виде ряда
+\[ A(t) = a_0 + a_1 t + a_2 t^2 + \dots \], где \(A(t)\) --- \textbf{производящая функция}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\)
+\end{itemize}
+\[A(t) + B(t) = C(t)\]
+\[ c_n = a_n + b_n \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\)
+\end{itemize}
+\[ A(t) \cdot B(t) = C(t) \]
+\[ (a_0 + a_1 t + a_2 t^2 + \dots)\cdot(b_0 + b_1 t + b_2 t^2) = \]
+\[ = a_0b_0 + (a_0 b_1 + a_1 b_0) t + (a_0 b_2 + a_1 b_1 + a_2 b_0) t^2 + \dots \]
+\[ c_n = \sum_{k = 0}^n a_kb_{n - k} \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\), \(b_0 \neq 0\)
+\end{itemize}
+\[ \frac{A(t)}{B(t)} = C(t) \]
+\[ C(t)\cdot B(t) = A(t) \]
+\[ c_n = a_n - \sum_{k = 0}^{n - 1}c_k b_{n - k} \]
+Если \(b_0 = 1\) и \(a_i, b_i \in \mathbb{Z}\), то \(c_i \in \mathbb{Z}\)
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\end{itemize}
+\[ A'(t) = a_1 + 2\cdot a_2 t + 3 \cdot a_3 t^2 + \dots \]
+\[ a'_n = n\cdot a_n t^{n - 1} \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\end{itemize}
+\[ \int A(t) = a_0 t + \frac{1}{2} a_1 t^2 + \frac{1}{3} a_2 t^3 + \dots \]
+\[ a'_n = \frac{1}{n + 1} \cdot a_n t^{n + 1} \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\), \(b_0 = 0\)
+\end{itemize}
+\[ C(t) = A(B(t)) \]
+\[ c_n = \sum_{k = 1}^n a_i \sum_{n=k_1 + k_2 + \dots + k_i} \prod_{j = 1}^i b_{k_j} \]
+\end{property}
+\chapter{}
+\label{sec:org8c16762}
+\section{Производящие функции}
+\label{sec:orgd5f11c0}
 \begin{definition}
 \textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
  \(n\) все коэффиценты 0.
@@ -155,7 +218,7 @@
 \(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
 \end{definition}
 \subsection{Рекурентные соотношения}
-\label{sec:org859dc60}
+\label{sec:org9afbd17}
 \begin{definition}
 \[ m: a_0, a_1, \dots, a_{m - 1} \]
 \(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
@@ -198,7 +261,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{enumerate}
 \end{theorem}
 \chapter{}
-\label{sec:org520773b}
+\label{sec:org3f4be40}
 \newcommand{\vdomino}{
 \begin{tikzpicture}
 \draw (0, 0) rectangle (0.15,0.3);
@@ -210,7 +273,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{tikzpicture}}
 
 \section{Производящие функции для объектов}
-\label{sec:org85adb63}
+\label{sec:orga10c293}
 \begin{itemize}
 \item Оюъединение \\
 \(A, B\ A \cap B = \emptyset\ C = A \cup B\) \\
@@ -248,13 +311,13 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \(\text{Seq}_{\le k}(A) = \frac{1}{1 - A(t)} - \frac{A(t)^{k + 1}}{1 - A(t)} = \frac{1 - A(t)^{k + 1}}{1 - A(t)}\)
 \end{examp}
 \chapter{}
-\label{sec:org84a65d1}
+\label{sec:orgf3c7852}
 \usetikzlibrary{automata}
 
 
 
 \section{Производящие функции для регулярных языков}
-\label{sec:org1abc5c1}
+\label{sec:org73faf08}
 \(L\) --- регулярный язык
 \[ | L \cap \Sigma^n | = a_n \] 
 \[ L(t) = a_0 + a_1 t + \dots \]
@@ -326,7 +389,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ L_0 = \frac{t^3}{(1 - t)(1 - 2t)(1 - t - t^2)} \]
 \end{examp}
 \section{Автомат КМП и автокор. многочлен}
-\label{sec:org0bc6c22}
+\label{sec:orgf1cf229}
 Конструкция Гуибаса-Одлызко
 \[ p = \fbox{p_1, p_2, \dots, p_k} \]
 \[ c_i = [p[i+1\dots k] = p[1\dots k-i]] \]
@@ -352,7 +415,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{examp}
 
 \subsection{Пентагональная формула Эйлера}
-\label{sec:orgc710d15}
+\label{sec:org3227096}
 \[ p_0\ p_1\ p_2\ \dots\ p_n\ \dots \]
 \(p_n\) --- количество разбиений \(n\) на слагаемые из \(\N\). Порядок не важен
 \begin{itemize}
@@ -375,13 +438,13 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ n = \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n + (-1)^k \]
 \end{lemma}
 \chapter{}
-\label{sec:org0f423da}
+\label{sec:org46c7cf8}
 \newcommand{\Seq}{\text{Seq}\,}
 \newcommand{\Set}{\text{Set}\,}
 \newcommand{\Cyc}{\text{Cyc}\,}
 
 \section{Помеченные КО и экспоненциальные производящие функции}
-\label{sec:org50f4f2e}
+\label{sec:org316d5c5}
 \[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
 \begin{definition}
 Экспоненциальная производящая функция:
@@ -423,7 +486,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{property}
 \textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
 \subsection{Помеченные объекты}
-\label{sec:org88208b2}
+\label{sec:orga24b7ca}
 \begin{examp}
 Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
 \end{examp}
@@ -436,10 +499,10 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
 \end{examp}
 \subsection{Операции}
-\label{sec:orgdc707b5}
+\label{sec:org96c6913}
 \begin{enumerate}
 \item Дизъюнктное объединение (сумма)
-\label{sec:orgaf76f92}
+\label{sec:org11ae30d}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -448,7 +511,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
 \item Пара (произведение)
-\label{sec:orgb102cf1}
+\label{sec:orge471746}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -464,7 +527,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
 \end{examp}
 \item Последовательность
-\label{sec:org7fc8a1b}
+\label{sec:org7847e22}
 \[ C = \Seq A = \emptyset + A \times \Seq A \]
 \[ C(t) = 1 + A(t)\cdot C(t) \]
 \[ C(t) = \frac{1}{1 - A(t)} \]
@@ -478,7 +541,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[P(t) = \frac{1}{1 - t}\]
 \end{examp}
 \item Множества (Set)
-\label{sec:org3097ea4}
+\label{sec:org59ff88b}
 \begin{itemize}
 \item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
 \end{itemize}
@@ -507,7 +570,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Набор помеченных циклов являеся престановкой
 \end{examp}
 \item Циклы
-\label{sec:orgb7cb29a}
+\label{sec:org2cbf76c}
 \begin{itemize}
 \item \(\Cyc_k A\) --- количество циклов длины \(k\)
 \end{itemize}
@@ -522,7 +585,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 
 
 \subsection{Обобщение}
-\label{sec:orgd133fe2}
+\label{sec:org868403b}
 
 \begin{theorem}[о подстановке]
 \-
@@ -537,7 +600,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
 \end{examp}
 \chapter{}
-\label{sec:org186075f}
+\label{sec:orgb2c435a}
 \newcommand{\stirlF}[2]{\left[\begin{matrix} #1 \\ #2 \end{matrix}\right]}
 \newcommand{\stirlS}[2]{\left\{\begin{matrix} #1 \\ #2 \end{matrix}\right\}}
 \newcommand{\Set}{\text{Set}\,}
@@ -570,7 +633,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ [s^{n - 1}]e^{ns} = \frac{n^{n - 1}}{(n - 1)!} \]
 \end{examp}
 \section{Производящая функция от нескольких перменных}
-\label{sec:orgac8c783}
+\label{sec:org28fc36e}
 \(\binom{n}{k}\) образуют таблицу:
 \begin{center}
 \begin{tabular}{l|rrrll}
@@ -590,7 +653,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ \text{Seq}\,\{z, uz\} = [], [z], [uz], [z, z], [z, uz], [uz, z], [uz, uz], \dots \]
 \[ A(u, z) = z + uz \]
 \subsection{Числа Стирлинга I рода}
-\label{sec:org5119f06}
+\label{sec:org2cffbc0}
 \fixme \\
 Помеченные перстановки, \(\text{Set}\,\text{Cyc}\,Z\)
 \[ \bigcup_{k = 0}^\infty \text{Set}_{=k}\text{Cyc}\, Z \]
@@ -600,19 +663,19 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ u \times \Cyc Z = \sum_{n = 0}^\infty \frac{\left(u \ln \left(\frac{1}{1 - Z}\right)\right)^k}{k!} = e^{u\ln\frac{1}{1 - Z}} = (1 - Z)^{-u}\]
 \[ (1 - Z)^{-u} = \sum_{n,k}\frac{\stirlF{n}{k}}{n!} Z^n u^k \]
 \subsection{Числа Стирлинга II рода}
-\label{sec:org22d54f0}
+\label{sec:orgcaf2109}
 \[ \stirlS{n}{k}\quad \Set\Set_{>0} Z \]
 \[ \bigcup_{k = 0}^\infty\Set_{=k}(u\times \Set_{>0}Z) \]
 \[ \sum_{k = 0}^\infty \frac{\left(u(e^Z - 1)^k\right)}{k!} = e^{ue^Z - u} = \sum_{n,k} \frac{\stirlS{n}{k}}{n!}z^nu^k\]
 \subsection{Средняя стоимоть}
-\label{sec:org52aa4d9}
+\label{sec:org6a01f39}
 \begin{itemize}
 \item \(A\quad a_{n,k} = [z^nu^k]A(u, z)\) --- количество объектов веса \(n\) стоимости \(k\)
 \end{itemize}
 \[ w_n = \frac{\sum_{k = 0}^\infty k a_{n,k}}{\sum_{k = 0}^\infty a_{n, k}} = \frac{\left.[z^n]\left(\frac{\partial}{\partial u}A(u ,z)\right)\right|_{u = 1}}{[z^n]A(1, z)}\]
 \begin{enumerate}
 \item Разбиение на слагаемые, порядок важен
-\label{sec:orgeab9b4f}
+\label{sec:org144b6d6}
 Аналогично рассотовке перегорожок, \(\Seq\Seq_{>0}Z\)
 \[ \Seq \left(u\times\Seq_{>0}Z\right) \]
 \[ \frac{1}{1 - z} - 1= \frac{z}{1 - z} \]
@@ -624,7 +687,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{description}
 Среднее число слагаемых: \[ \frac{2^n(n + 1)}{2^{n - 1}\cdot4} = \frac{n + 1}{2} \]
 \item Среднее число циклов в перестановке
-\label{sec:orgb1fd890}
+\label{sec:org44f693d}
 \[ A(u ,z) = (1 - z)^{- u} \]
 \[ \frac{\partial}{\partial u}A(u, z) = \frac{\partial}{\partial u} e^{u \ln\frac{1}{1 - z}} = \ln \frac{1}{1 - z}\cdot e^{u\ln\frac{1}{1 -z }} \]
 Подставляем \(u = 1\):

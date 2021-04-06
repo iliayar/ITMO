@@ -2,7 +2,8 @@
 #+TITLE: Лекции по Дискретной математике 4 семестр
 #+AUTHOR: Ilya Yaroshevskiy
 
-* TODO
+* 
+#+INCLUDE: "1.org" :lines "4-"
 * 
 #+INCLUDE: "2.org" :lines "4-"
 * 
