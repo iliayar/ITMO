@@ -1,4 +1,4 @@
-% Created 2021-04-06 Tue 20:22
+% Created 2021-04-06 Tue 20:32
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[oneside]{book}
@@ -139,10 +139,10 @@
 \tableofcontents
 
 
-\chapter{}
-\label{sec:org193ee21}
+\chapter{10 февраля}
+\label{sec:org964a4f3}
 \section{Производящие функции}
-\label{sec:org94531e1}
+\label{sec:org9432f7f}
 Последовательность \(a_0, a_1, a_2, \dots\). Запишем в виде ряда
 \[ A(t) = a_0 + a_1 t + a_2 t^2 + \dots \], где \(A(t)\) --- \textbf{производящая функция}
 \begin{property}
@@ -203,10 +203,10 @@
 \[ C(t) = A(B(t)) \]
 \[ c_n = \sum_{k = 1}^n a_i \sum_{n=k_1 + k_2 + \dots + k_i} \prod_{j = 1}^i b_{k_j} \]
 \end{property}
-\chapter{}
-\label{sec:org8c16762}
+\chapter{17 февраля}
+\label{sec:orgbb5fc34}
 \section{Производящие функции}
-\label{sec:orgd5f11c0}
+\label{sec:org37bfc58}
 \begin{definition}
 \textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
  \(n\) все коэффиценты 0.
@@ -218,7 +218,7 @@
 \(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
 \end{definition}
 \subsection{Рекурентные соотношения}
-\label{sec:org9afbd17}
+\label{sec:org3a9337c}
 \begin{definition}
 \[ m: a_0, a_1, \dots, a_{m - 1} \]
 \(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
@@ -260,8 +260,10 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \end{enumerate}
 \end{theorem}
-\chapter{}
-\label{sec:org3f4be40}
+\chapter{{\bfseries\sffamily TODO} 24 февраля}
+\label{sec:org73a71e7}
+\chapter{3 марта}
+\label{sec:org4614719}
 \newcommand{\vdomino}{
 \begin{tikzpicture}
 \draw (0, 0) rectangle (0.15,0.3);
@@ -273,7 +275,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{tikzpicture}}
 
 \section{Производящие функции для объектов}
-\label{sec:orga10c293}
+\label{sec:org40b9dcd}
 \begin{itemize}
 \item Оюъединение \\
 \(A, B\ A \cap B = \emptyset\ C = A \cup B\) \\
@@ -310,14 +312,14 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \(\text{Seq}_{\ge k}(A) = A^k \times \text{Seq}(A)\frac{A(t)^k}{1 - A(t)}\) \\
 \(\text{Seq}_{\le k}(A) = \frac{1}{1 - A(t)} - \frac{A(t)^{k + 1}}{1 - A(t)} = \frac{1 - A(t)^{k + 1}}{1 - A(t)}\)
 \end{examp}
-\chapter{}
-\label{sec:orgf3c7852}
+\chapter{10 марта}
+\label{sec:org487478f}
 \usetikzlibrary{automata}
 
 
 
 \section{Производящие функции для регулярных языков}
-\label{sec:org73faf08}
+\label{sec:orgfb67c91}
 \(L\) --- регулярный язык
 \[ | L \cap \Sigma^n | = a_n \] 
 \[ L(t) = a_0 + a_1 t + \dots \]
@@ -389,7 +391,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ L_0 = \frac{t^3}{(1 - t)(1 - 2t)(1 - t - t^2)} \]
 \end{examp}
 \section{Автомат КМП и автокор. многочлен}
-\label{sec:orgf1cf229}
+\label{sec:org89aa67a}
 Конструкция Гуибаса-Одлызко
 \[ p = \fbox{p_1, p_2, \dots, p_k} \]
 \[ c_i = [p[i+1\dots k] = p[1\dots k-i]] \]
@@ -415,7 +417,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{examp}
 
 \subsection{Пентагональная формула Эйлера}
-\label{sec:org3227096}
+\label{sec:org0439523}
 \[ p_0\ p_1\ p_2\ \dots\ p_n\ \dots \]
 \(p_n\) --- количество разбиений \(n\) на слагаемые из \(\N\). Порядок не важен
 \begin{itemize}
@@ -437,14 +439,14 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ n \neq \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n \]
 \[ n = \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n + (-1)^k \]
 \end{lemma}
-\chapter{}
-\label{sec:org46c7cf8}
+\chapter{17 марта}
+\label{sec:orge1e22f9}
 \newcommand{\Seq}{\text{Seq}\,}
 \newcommand{\Set}{\text{Set}\,}
 \newcommand{\Cyc}{\text{Cyc}\,}
 
 \section{Помеченные КО и экспоненциальные производящие функции}
-\label{sec:org316d5c5}
+\label{sec:orge14d5a3}
 \[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
 \begin{definition}
 Экспоненциальная производящая функция:
@@ -486,7 +488,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{property}
 \textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
 \subsection{Помеченные объекты}
-\label{sec:orga24b7ca}
+\label{sec:orgd7d8773}
 \begin{examp}
 Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
 \end{examp}
@@ -499,10 +501,10 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
 \end{examp}
 \subsection{Операции}
-\label{sec:org96c6913}
+\label{sec:org844ae26}
 \begin{enumerate}
 \item Дизъюнктное объединение (сумма)
-\label{sec:org11ae30d}
+\label{sec:orgfd86212}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -511,7 +513,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
 \item Пара (произведение)
-\label{sec:orge471746}
+\label{sec:orgb06eec1}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -527,7 +529,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
 \end{examp}
 \item Последовательность
-\label{sec:org7847e22}
+\label{sec:orgc1abfbb}
 \[ C = \Seq A = \emptyset + A \times \Seq A \]
 \[ C(t) = 1 + A(t)\cdot C(t) \]
 \[ C(t) = \frac{1}{1 - A(t)} \]
@@ -541,7 +543,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[P(t) = \frac{1}{1 - t}\]
 \end{examp}
 \item Множества (Set)
-\label{sec:org59ff88b}
+\label{sec:org1a69831}
 \begin{itemize}
 \item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
 \end{itemize}
@@ -570,7 +572,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Набор помеченных циклов являеся престановкой
 \end{examp}
 \item Циклы
-\label{sec:org2cbf76c}
+\label{sec:org876b7a4}
 \begin{itemize}
 \item \(\Cyc_k A\) --- количество циклов длины \(k\)
 \end{itemize}
@@ -585,7 +587,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 
 
 \subsection{Обобщение}
-\label{sec:org868403b}
+\label{sec:org766b02b}
 
 \begin{theorem}[о подстановке]
 \-
@@ -599,8 +601,8 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \begin{examp}
 \(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
 \end{examp}
-\chapter{}
-\label{sec:orgb2c435a}
+\chapter{24 марта}
+\label{sec:org9a66d41}
 \newcommand{\stirlF}[2]{\left[\begin{matrix} #1 \\ #2 \end{matrix}\right]}
 \newcommand{\stirlS}[2]{\left\{\begin{matrix} #1 \\ #2 \end{matrix}\right\}}
 \newcommand{\Set}{\text{Set}\,}
@@ -633,7 +635,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ [s^{n - 1}]e^{ns} = \frac{n^{n - 1}}{(n - 1)!} \]
 \end{examp}
 \section{Производящая функция от нескольких перменных}
-\label{sec:org28fc36e}
+\label{sec:org55e658f}
 \(\binom{n}{k}\) образуют таблицу:
 \begin{center}
 \begin{tabular}{l|rrrll}
@@ -653,7 +655,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ \text{Seq}\,\{z, uz\} = [], [z], [uz], [z, z], [z, uz], [uz, z], [uz, uz], \dots \]
 \[ A(u, z) = z + uz \]
 \subsection{Числа Стирлинга I рода}
-\label{sec:org2cffbc0}
+\label{sec:org284202d}
 \fixme \\
 Помеченные перстановки, \(\text{Set}\,\text{Cyc}\,Z\)
 \[ \bigcup_{k = 0}^\infty \text{Set}_{=k}\text{Cyc}\, Z \]
@@ -663,19 +665,19 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ u \times \Cyc Z = \sum_{n = 0}^\infty \frac{\left(u \ln \left(\frac{1}{1 - Z}\right)\right)^k}{k!} = e^{u\ln\frac{1}{1 - Z}} = (1 - Z)^{-u}\]
 \[ (1 - Z)^{-u} = \sum_{n,k}\frac{\stirlF{n}{k}}{n!} Z^n u^k \]
 \subsection{Числа Стирлинга II рода}
-\label{sec:orgcaf2109}
+\label{sec:org49a8e0f}
 \[ \stirlS{n}{k}\quad \Set\Set_{>0} Z \]
 \[ \bigcup_{k = 0}^\infty\Set_{=k}(u\times \Set_{>0}Z) \]
 \[ \sum_{k = 0}^\infty \frac{\left(u(e^Z - 1)^k\right)}{k!} = e^{ue^Z - u} = \sum_{n,k} \frac{\stirlS{n}{k}}{n!}z^nu^k\]
 \subsection{Средняя стоимоть}
-\label{sec:org6a01f39}
+\label{sec:org53afca4}
 \begin{itemize}
 \item \(A\quad a_{n,k} = [z^nu^k]A(u, z)\) --- количество объектов веса \(n\) стоимости \(k\)
 \end{itemize}
 \[ w_n = \frac{\sum_{k = 0}^\infty k a_{n,k}}{\sum_{k = 0}^\infty a_{n, k}} = \frac{\left.[z^n]\left(\frac{\partial}{\partial u}A(u ,z)\right)\right|_{u = 1}}{[z^n]A(1, z)}\]
 \begin{enumerate}
 \item Разбиение на слагаемые, порядок важен
-\label{sec:org144b6d6}
+\label{sec:org2dff8c8}
 Аналогично рассотовке перегорожок, \(\Seq\Seq_{>0}Z\)
 \[ \Seq \left(u\times\Seq_{>0}Z\right) \]
 \[ \frac{1}{1 - z} - 1= \frac{z}{1 - z} \]
@@ -687,7 +689,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{description}
 Среднее число слагаемых: \[ \frac{2^n(n + 1)}{2^{n - 1}\cdot4} = \frac{n + 1}{2} \]
 \item Среднее число циклов в перестановке
-\label{sec:org44f693d}
+\label{sec:org257e872}
 \[ A(u ,z) = (1 - z)^{- u} \]
 \[ \frac{\partial}{\partial u}A(u, z) = \frac{\partial}{\partial u} e^{u \ln\frac{1}{1 - z}} = \ln \frac{1}{1 - z}\cdot e^{u\ln\frac{1}{1 -z }} \]
 Подставляем \(u = 1\):

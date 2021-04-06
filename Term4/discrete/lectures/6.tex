@@ -1,8 +1,8 @@
-% Created 2021-03-30 Tue 00:51
+% Created 2021-04-06 Tue 20:34
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[english]{article}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,10 +27,10 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \usepackage{geometry}
-  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-   \usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -51,9 +51,10 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
 \newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
 \newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
@@ -131,107 +132,169 @@
  pdftitle={Лекция 6},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
 \maketitle
 \tableofcontents
 
-\newcommand{\stirlF}[2]{\left[\begin{matrix} #1 \\ #2 \end{matrix}\right]}
-\newcommand{\stirlS}[2]{\left\{\begin{matrix} #1 \\ #2 \end{matrix}\right\}}
-\newcommand{\Set}{\text{Set}\,}
 \newcommand{\Seq}{\text{Seq}\,}
+\newcommand{\Set}{\text{Set}\,}
 \newcommand{\Cyc}{\text{Cyc}\,}
 
+\section{Помеченные КО и экспоненциальные производящие функции}
+\label{sec:org1bb7779}
+\[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
+\begin{definition}
+Экспоненциальная производящая функция:
+\[ a(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
+\end{definition}
+\begin{symb}
+Мы будет обозначать ЭПФ так-же большой буквой
+\end{symb}
+\begin{examp}
+\(1, 1, 1,1, ,1,1 ,1, 1, 1\)
+\begin{description}
+\item[{ОПФ}] \(\frac{1}{1 - t}\)
+\item[{ЭПФ}] \(1 + 1\cdot t + \frac{1}{2!}\cdot t^2 + \frac{1}{3!}\cdot t^3 + \dots = \sum\limits_{n = 0}^{ + \infty} \frac{1}{n!}\cdot t^n = e^t = \exp(t)\)
+\end{description}
+\end{examp}
+\begin{examp}
+\(1, 1, 2, 6, 24, \dots, n!, \dots\quad a_n = n!\)
+\begin{description}
+\item[{ОПФ}] \(1 + t + 2\cdot t^2 + 6\cdot t^3 + \dots + n!\cdot t^n + \dots\)
+\item[{ЭПФ}] \(\sum \limits_{n = 0}^{ + \infty} \frac{n!}{n!}\cdot t^n = \frac{1}{1 - t}\)
+\end{description}
+\end{examp}
 
-Рассмотрим деревья:
-\[ T = t \times \Text{Seq}\,T \]
-, где \(t\) --- корень
-\[ A(t) = t\cdot \phi(A(t)) \]
-\[ \phi(s) = \frac{1}{1 - s} \]
-Решить это уравнение в общем виде можно с помощью формулы Лагранжа
-\begin{theorem}[формула обращения Лагранжа]
-\[ a_n = \frac{1}{n}\cdot[s^{n - 1}](\phi(s))^n \], где \([s^{n}]A(s)\) --- коэффицент при \(s^n\) в \(A(s)\)
-\[ A(t) = \sum_{n = 0}^\infty a_n t^n \]
+\[ A(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
+\[ B(t) = \frac{b_0}{0!} + \frac{b_1}{1!}\cdot t + \frac{b_2}{2!}\cdot t^2 + \dots + \frac{b_n}{n!}\cdot t^n + \dots \]
+
+\begin{property}
+\[ C(t) = A(t) \pm B(t)\quad c_n = a_n \pm b_n \]
+\end{property}
+\begin{property}
+\[ C(t) = a(t)\cdot B(t) \]
+\[ \frac{C_n}{n!} = \sum\limits_{k = 0}^n \frac{a_k}{k!}\cdot\frac{b_{n - k}}{(n - k)!} \]
+\[ c_n = \sum\limits_{k = 0}^n \binom{n}{k}a_kb_{n - k} \]
+\end{property}
+\begin{property}
+\[ C(t) = \frac{A(t)}{B(t)} \]
+\[ a_n = \sum^n_{k = 0}\binom{n}{k}b_kc_{n - k} = \sum\limits_{k = 1}^n \binom{n}{k} b_k c_{n - k} + b_0 c_n \]
+\[ c_n = \frac{a - \sum_{k = 1}^n\binom{n}{k} b_k c_{n - k}}{b_0} \]
+\end{property}
+\textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
+\subsection{Помеченные объекты}
+\label{sec:org57b1f70}
+\begin{examp}
+Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
+\end{examp}
+\begin{examp}
+Пустые графы. \(E_n = 1\) --- количество графов с \(n\) вершинами \\
+ЭПФ: \(\exp(t)\)
+\end{examp}
+\begin{examp}
+Циклы. \(C_n = (n - 1)!\) --- количество циклов из \(n\) вершин. Направление обхода фиксировано. \\
+ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
+\end{examp}
+\subsection{Операции}
+\label{sec:org11b51f0}
+\subsubsection{Дизъюнктное объединение (сумма)}
+\label{sec:org6dbabd1}
+\begin{itemize}
+\item \(A\)
+\item \(B\)
+\item \(A \cap B = \emptyset\)
+\item \(C = A \cup B\)
+\end{itemize}
+\[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
+\subsubsection{Пара (произведение)}
+\label{sec:org8d97a25}
+\begin{itemize}
+\item \(A\)
+\item \(B\)
+\item \(C = A \times B\)
+\end{itemize}
+\[ C = \{\langle \underbrace{a}_{k\text{ атомов}}, \underbrace{b}_{n - k\text{ атомов}} \rangle\} \]
+Получим последовательность \(c_1 c_2 \dots c_n\). Перенумеруем элементы: \\
+Первые \(k\) в \(d_1d_2 \dots d_k\), где \(d_i = |\{c_j | 1 \le j \le k,\ c_k \le c_i\}|\). \\
+А остальные \(c_{k + 1}\dots c_n\) в \(e_1 \dots e_{n - k}\), где \(e_i = |\{c_j | k + 1\le j \le n,\ c_j \le c_{i + k}\}|\). \\
+Пусть \(d_i = a_i\), а \(e_i = b_i\)
+\[ c_n = \sum_{k = 0}^{ n } \binom{n}{k} a_k b_{n - k} \quad C(t) = A(t) \cdot B(t)\]
+\begin{examp}
+Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
+\end{examp}
+\subsubsection{Последовательность}
+\label{sec:org7361d1b}
+\[ C = \Seq A = \emptyset + A \times \Seq A \]
+\[ C(t) = 1 + A(t)\cdot C(t) \]
+\[ C(t) = \frac{1}{1 - A(t)} \]
+\begin{examp}
+\-
+\begin{itemize}
+\item \(U = \{\circ\}\)
+\item \(U(t) = t\)
+\item \(\Seq U = P\)
+\end{itemize}
+\[P(t) = \frac{1}{1 - t}\]
+\end{examp}
+\subsubsection{Множества (Set)}
+\label{sec:org119bc2f}
+\begin{itemize}
+\item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
+\end{itemize}
+\[ B_k = \Seq_k A = \underbrace{A \times A \times \dots \times A}_k\quad B_k(t) = A(t)^k \]
+\[ \Set_k A = \Seq_k A /_\sim\]
+\([x_1 x_2 \dots x_k] \sim [y_1 y_2 \dots y_k]\). \(\exists\) перестановка \(\pi: x_i = y_{\pi[i]}\)
+\[ C_k(t) = \frac{1}{k!}\quad B_k(t) = \frac{A(t)^k}{k!} \]
+\[ \Set A = \bigcup_{k = 0}^{\infty} \Set_k A = \sum_{k = 0}^\infty \frac{A(t)^k}{k!} = e^{A(t)} \]
+\begin{examp}
+\-
+\begin{itemize}
+\item \(U = \{\circ\}\)
+\item \(U(t) = t\)
+\end{itemize}
+\[ \Set U = E\quad E(t) = e^t \]
+, где \(E\) --- пустые графы
+\end{examp}
+\begin{examp}
+Циклы.
+\begin{itemize}
+\item \(U = \{\circ\}\)
+\item \(U(t) = t\)
+\item \(B = \Set \Cyc U\)
+\end{itemize}
+\[ B(t) = e^{C(t)} = e^{\ln \frac{1}{1 - t}} = \frac{1}{1 - t} \]
+Набор помеченных циклов являеся престановкой
+\end{examp}
+\subsubsection{Циклы}
+\label{sec:org02fe53c}
+\begin{itemize}
+\item \(\Cyc_k A\) --- количество циклов длины \(k\)
+\end{itemize}
+\[ C = \Cyc_k A = \Seq_k A /_\sim \], где классы эквивалентности с точностью до циклических сдвигов. \\
+\([x_1\dots x_k] \sim [y_1 \dots y_k]\). \(\exists i:\ x_j = y_{(i + j)\mod k + 1}\)
+\[ \Cyc U = \ln\frac{1}{1 - t} \]
+\[ C_k(t) = \frac{1}{k}A(t)^k \]
+\[ C(t) = \sum_{k = 1}^\infty \frac{1}{k} A(t)^k = \ln\frac{1}{1 - A(t)} \]
+\[ \Set\Cyc U = P \]
+\[ \Set \Cyc A \simeq \Seq A \]
+
+
+\subsection{Обобщение}
+\label{sec:orge59a004}
+
+\begin{theorem}[о подстановке]
+\-
+\begin{itemize}
+\item \(A\) --- помеченные КО --- \(A(t)\)
+\item \(B\) --- помеченные КО --- \(B(t)\)
+\end{itemize}
+\(C = A[B]\) --- вместо каждого атома \(A\) подставляем КО \(B\), перенумеруем получившиеся атомы произвольным образом
+\[ C(t) = A(B(t)) \]
 \end{theorem}
 \begin{examp}
-Применим ее для деревьев
-\[ a_n = \frac{1}{n}\cdot[s^{n - 1}]\left(\frac{1}{1 - s}\right)^n \]
-\[ \left(\frac{1}{1 - s}\right)^n = (1 + s + s^2 + s^3 + \dots + s^k + \dots)^n \]
-\[ (1 - s)^{-n} = 1 - \binom{-n}{1} s + \binom{-n}{2}s^2 - \binom{-n}{3}s^3 \]
-\[ \binom{-n}{n - 1} = \frac{-n\cdot(-n - 1)\cdot(-n - 2)\cdot\dots\cdot(-n - (n - 1) + 1)}{1\cdot 2 \cdot 3 \cdot \dots \cdot (n - 1)} \]
-\[ \frac{1}{n}(-1)^{n - 1}\binom{-n}{n - 1} = \frac{(2n - 2)!}{(n - 1)!n!} = \binom{2n - 2}{n - 1} \]
+\(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
 \end{examp}
-\begin{examp}
-\[ \phi(s) = e^s \]
-\[ \frac{a_n}{n!} = \frac{1}{n}\cdot[s^{n- 1}] e^{ns} \]
-\[ e^{ns} = 1 + \frac{1}{1!}(ns) + \frac{1}{2!}(ns)^2 + \frac{1}{3!}(ns)^3 + \dots \]
-\[ [s^{n - 1}]e^{ns} = \frac{n^{n - 1}}{(n - 1)!} \]
-\end{examp}
-\section{Производящая функция от нескольких перменных}
-\label{sec:org2ede39f}
-\(\binom{n}{k}\) образуют таблицу:
-\begin{center}
-\begin{tabular}{l|rrrll}
-\(n\textbackslash k\) &  &  &  &  & \\
-\hline
- & 1 &  &  &  & \\
- & 1 & 1 &  &  & \\
- & 1 & 2 & 1 &  & \\
- & 1 & 3 & 3 & 1 & \\
- & 1 & 4 & 6 & 4 & 1\\
-\end{tabular}
-\end{center}
-\[ A_k(t) = \sum_{n = 0}^\infty \binom{n}{k}t^n \]
-\[ B_n(t) = \sum_{n = 0}^\infty \binom{n}{l}t^k \]
-\[ C(u ,z) = \sum_{n, k}\binom{n}{k}z^nu^k = \frac{1}{1 - z - uz}\]
-Посмотрим на \(C(u, z)\) так: \(n\) --- вес, \(k\) --- стоимость. Будем считать, что \(z\) --- не берем объект, \(uz\) --- берем объект
-\[ \text{Seq}\,\{z, uz\} = [], [z], [uz], [z, z], [z, uz], [uz, z], [uz, uz], \dots \]
-\[ A(u, z) = z + uz \]
-\subsection{Числа Стирлинга I рода}
-\label{sec:orgcc26127}
-\fixme \\
-Помеченные перстановки, \(\text{Set}\,\text{Cyc}\,Z\)
-\[ \bigcup_{k = 0}^\infty \text{Set}_{=k}\text{Cyc}\, Z \]
-\[ \text{Set}\,\text{Cyc}\,Z = e^{\ln\frac{1}{1 - Z}} = \frac{1}{1 - Z} \]
-\[ \bigcup_{k = 0}^\infty \text{Set}_{= k}\left(u \times \text{Cyc}\,Z\right) \mapsto \sum_{n ,k}\stirlF{n}{k}\frac{1}{n!}z^nu^k\]
-\[ \Set_{=k}(A) = \frac{\Seq_{=k}(A)}}{k!} = \frac{A(Z)^k}{k!}  \]
-\[ u \times \Cyc Z = \sum_{n = 0}^\infty \frac{\left(u \ln \left(\frac{1}{1 - Z}\right)\right)^k}{k!} = e^{u\ln\frac{1}{1 - Z}} = (1 - Z)^{-u}\]
-\[ (1 - Z)^{-u} = \sum_{n,k}\frac{\stirlF{n}{k}}{n!} Z^n u^k \]
-\subsection{Числа Стирлинга II рода}
-\label{sec:org0d14be1}
-\[ \stirlS{n}{k}\quad \Set\Set_{>0} Z \]
-\[ \bigcup_{k = 0}^\infty\Set_{=k}(u\times \Set_{>0}Z) \]
-\[ \sum_{k = 0}^\infty \frac{\left(u(e^Z - 1)^k\right)}{k!} = e^{ue^Z - u} = \sum_{n,k} \frac{\stirlS{n}{k}}{n!}z^nu^k\]
-\subsection{Средняя стоимоть}
-\label{sec:orgad08a54}
-\begin{itemize}
-\item \(A\quad a_{n,k} = [z^nu^k]A(u, z)\) --- количество объектов веса \(n\) стоимости \(k\)
-\end{itemize}
-\[ w_n = \frac{\sum_{k = 0}^\infty k a_{n,k}}{\sum_{k = 0}^\infty a_{n, k}} = \frac{\left.[z^n]\left(\frac{\partial}{\partial u}A(u ,z)\right)\right|_{u = 1}}{[z^n]A(1, z)}\]
-\subsubsection{Разбиение на слагаемые, порядок важен}
-\label{sec:org132f69b}
-Аналогично рассотовке перегорожок, \(\Seq\Seq_{>0}Z\)
-\[ \Seq \left(u\times\Seq_{>0}Z\right) \]
-\[ \frac{1}{1 - z} - 1= \frac{z}{1 - z} \]
-\[ A(u, z) =  \frac{1}{1 - \frac{uz}{1 - z}} = \frac{1 - z}{1 - z - uz} \]
-\[ \frac{\partial A(u,z)}{\partial u}\bigg|_{u = 1} = \frac{z(1 - z)}{(1 - z- uz)^2} \bigg|_{u = 1} = \frac{z(1 - z)}{(1 - 2z)^2}\]
-\begin{description}
-\item[{Числитель}] \[ [z^n]\frac{z(1 - z)}{(1 - 2z)^2} = \frac{2^n(n + 1)}{4} \]
-\item[{Знаменатель}] \[ [z^n]\frac{1 - z}{1 - 2z} = 2^n - 2^{n - 1} = 2^{n - 1} \]
-\end{description}
-Среднее число слагаемых: \[ \frac{2^n(n + 1)}{2^{n - 1}\cdot4} = \frac{n + 1}{2} \]
-\subsubsection{Среднее число циклов в перестановке}
-\label{sec:org9da9234}
-\[ A(u ,z) = (1 - z)^{- u} \]
-\[ \frac{\partial}{\partial u}A(u, z) = \frac{\partial}{\partial u} e^{u \ln\frac{1}{1 - z}} = \ln \frac{1}{1 - z}\cdot e^{u\ln\frac{1}{1 -z }} \]
-Подставляем \(u = 1\):
-\begin{description}
-\item[{Числитель}] \[ [z^n]\frac{\ln \left(\frac{1}{1 - z}\right)}{1 - z} = B(z)\]
-\item[{Знаменатель}] \[ (1 - z)^{-u}\bigg_{u = 1} = \frac{1}{1 - z} \]
-\[ [z^n]\frac{1}{1 - z} = 1 \]
-\end{description}
-\[ (z + \frac{1}{2}z^2 + \frac{1}{3}z^3 + \dots + \frac{1}{k}z^k + \dots)\cdot(1 + z + z^2 + \dots) \]
-\[ [z^n]B(z) = \sum_{k = 1}^n \frac{1}{k} = H_n \sim \log n \]
 \end{document}
