@@ -1,8 +1,8 @@
-% Created 2021-03-22 Mon 23:13
+% Created 2021-04-06 Tue 20:34
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[english]{article}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,10 +27,10 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \usepackage{geometry}
-  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-   \usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -51,9 +51,13 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
 
 \newcounter{propertycnt}
 \setcounter{propertycnt}{1}
@@ -128,169 +132,136 @@
  pdftitle={Лекция 5},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
 \maketitle
 \tableofcontents
 
-\newcommand{\Seq}{\text{Seq}\,}
-\newcommand{\Set}{\text{Set}\,}
-\newcommand{\Cyc}{\text{Cyc}\,}
-
-\section{Помеченные КО и экспоненциальные производящие функции}
-\label{sec:orge46ba4b}
-\[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
-\begin{definition}
-Экспоненциальная производящая функция:
-\[ a(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
-\end{definition}
-\begin{symb}
-Мы будет обозначать ЭПФ так-же большой буквой
-\end{symb}
-\begin{examp}
-\(1, 1, 1,1, ,1,1 ,1, 1, 1\)
-\begin{description}
-\item[{ОПФ}] \(\frac{1}{1 - t}\)
-\item[{ЭПФ}] \(1 + 1\cdot t + \frac{1}{2!}\cdot t^2 + \frac{1}{3!}\cdot t^3 + \dots = \sum\limits_{n = 0}^{ + \infty} \frac{1}{n!}\cdot t^n = e^t = \exp(t)\)
-\end{description}
-\end{examp}
-\begin{examp}
-\(1, 1, 2, 6, 24, \dots, n!, \dots\quad a_n = n!\)
-\begin{description}
-\item[{ОПФ}] \(1 + t + 2\cdot t^2 + 6\cdot t^3 + \dots + n!\cdot t^n + \dots\)
-\item[{ЭПФ}] \(\sum \limits_{n = 0}^{ + \infty} \frac{n!}{n!}\cdot t^n = \frac{1}{1 - t}\)
-\end{description}
-\end{examp}
-
-\[ A(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
-\[ B(t) = \frac{b_0}{0!} + \frac{b_1}{1!}\cdot t + \frac{b_2}{2!}\cdot t^2 + \dots + \frac{b_n}{n!}\cdot t^n + \dots \]
-
-\begin{property}
-\[ C(t) = A(t) \pm B(t)\quad c_n = a_n \pm b_n \]
-\end{property}
-\begin{property}
-\[ C(t) = a(t)\cdot B(t) \]
-\[ \frac{C_n}{n!} = \sum\limits_{k = 0}^n \frac{a_k}{k!}\cdot\frac{b_{n - k}}{(n - k)!} \]
-\[ c_n = \sum\limits_{k = 0}^n \binom{n}{k}a_kb_{n - k} \]
-\end{property}
-\begin{property}
-\[ C(t) = \frac{A(t)}{B(t)} \]
-\[ a_n = \sum^n_{k = 0}\binom{n}{k}b_kc_{n - k} = \sum\limits_{k = 1}^n \binom{n}{k} b_k c_{n - k} + b_0 c_n \]
-\[ c_n = \frac{a - \sum_{k = 1}^n\binom{n}{k} b_k c_{n - k}}{b_0} \]
-\end{property}
-\textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
-\subsection{Помеченные объекты}
-\label{sec:orge722889}
-\begin{examp}
-Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
-\end{examp}
-\begin{examp}
-Пустые графы. \(E_n = 1\) --- количество графов с \(n\) вершинами \\
-ЭПФ: \(\exp(t)\)
-\end{examp}
-\begin{examp}
-Циклы. \(C_n = (n - 1)!\) --- количество циклов из \(n\) вершин. Направление обхода фиксировано. \\
-ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
-\end{examp}
-\subsection{Операции}
-\label{sec:orgd0f81e5}
-\subsubsection{Дизъюнктное объединение (сумма)}
-\label{sec:orgfef685f}
-\begin{itemize}
-\item \(A\)
-\item \(B\)
-\item \(A \cap B = \emptyset\)
-\item \(C = A \cup B\)
-\end{itemize}
-\[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
-\subsubsection{Пара (произведение)}
-\label{sec:orgf0d06fb}
-\begin{itemize}
-\item \(A\)
-\item \(B\)
-\item \(C = A \times B\)
-\end{itemize}
-\[ C = \{\langle \underbrace{a}_{k\text{ атомов}}, \underbrace{b}_{n - k\text{ атомов}} \rangle\} \]
-Получим последовательность \(c_1 c_2 \dots c_n\). Перенумеруем элементы: \\
-Первые \(k\) в \(d_1d_2 \dots d_k\), где \(d_i = |\{c_j | 1 \le j \le k,\ c_k \le c_i\}|\). \\
-А остальные \(c_{k + 1}\dots c_n\) в \(e_1 \dots e_{n - k}\), где \(e_i = |\{c_j | k + 1\le j \le n,\ c_j \le c_{i + k}\}|\). \\
-Пусть \(d_i = a_i\), а \(e_i = b_i\)
-\[ c_n = \sum_{k = 0}^{ n } \binom{n}{k} a_k b_{n - k} \quad C(t) = A(t) \cdot B(t)\]
-\begin{examp}
-Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
-\end{examp}
-\subsubsection{Последовательность}
-\label{sec:org467d162}
-\[ C = \Seq A = \emptyset + A \times \Seq A \]
-\[ C(t) = 1 + A(t)\cdot C(t) \]
-\[ C(t) = \frac{1}{1 - A(t)} \]
-\begin{examp}
-\-
-\begin{itemize}
-\item \(U = \{\circ\}\)
-\item \(U(t) = t\)
-\item \(\Seq U = P\)
-\end{itemize}
-\[P(t) = \frac{1}{1 - t}\]
-\end{examp}
-\subsubsection{Множества (Set)}
-\label{sec:orgaad6e41}
-\begin{itemize}
-\item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
-\end{itemize}
-\[ B_k = \Seq_k A = \underbrace{A \times A \times \dots \times A}_k\quad B_k(t) = A(t)^k \]
-\[ \Set_k A = \Seq_k A /_\sim\]
-\([x_1 x_2 \dots x_k] \sim [y_1 y_2 \dots y_k]\). \(\exists\) перестановка \(\pi: x_i = y_{\pi[i]}\)
-\[ C_k(t) = \frac{1}{k!}\quad B_k(t) = \frac{A(t)^k}{k!} \]
-\[ \Set A = \bigcup_{k = 0}^{\infty} \Set_k A = \sum_{k = 0}^\infty \frac{A(t)^k}{k!} = e^{A(t)} \]
-\begin{examp}
-\-
-\begin{itemize}
-\item \(U = \{\circ\}\)
-\item \(U(t) = t\)
-\end{itemize}
-\[ \Set U = E\quad E(t) = e^t \]
-, где \(E\) --- пустые графы
-\end{examp}
-\begin{examp}
-Циклы.
-\begin{itemize}
-\item \(U = \{\circ\}\)
-\item \(U(t) = t\)
-\item \(B = \Set \Cyc U\)
-\end{itemize}
-\[ B(t) = e^{C(t)} = e^{\ln \frac{1}{1 - t}} = \frac{1}{1 - t} \]
-Набор помеченных циклов являеся престановкой
-\end{examp}
-\subsubsection{Циклы}
-\label{sec:org37b3687}
-\begin{itemize}
-\item \(\Cyc_k A\) --- количество циклов длины \(k\)
-\end{itemize}
-\[ C = \Cyc_k A = \Seq_k A /_\sim \], где классы эквивалентности с точностью до циклических сдвигов. \\
-\([x_1\dots x_k] \sim [y_1 \dots y_k]\). \(\exists i:\ x_j = y_{(i + j)\mod k + 1}\)
-\[ \Cyc U = \ln\frac{1}{1 - t} \]
-\[ C_k(t) = \frac{1}{k}A(t)^k \]
-\[ C(t) = \sum_{k = 1}^\infty \frac{1}{k} A(t)^k = \ln\frac{1}{1 - A(t)} \]
-\[ \Set\Cyc U = P \]
-\[ \Set \Cyc A \simeq \Seq A \]
+\usetikzlibrary{automata}
 
 
-\subsection{Обобщение}
-\label{sec:orga720f1c}
 
-\begin{theorem}[о подстановке]
-\-
+\section{Производящие функции для регулярных языков}
+\label{sec:orge3baa7f}
+\(L\) --- регулярный язык
+\[ | L \cap \Sigma^n | = a_n \] 
+\[ L(t) = a_0 + a_1 t + \dots \]
+\begin{remark}
+\(L\) --- регулярная спецификация \\
+\(\psi\) --- регулярное выражение:
+\begin{enumerate}
+\item \(L(\psi) = L\)
+\item \(\forall x \in \L\ \exists !\) способ \(x\) удовлетворяющий \(\psi\)
+\end{enumerate}
+\end{remark}
+\begin{lemma}
+\(\Sigma\) --- конечный алфавит, \(L \subset \Sigma^*\) \\
+\(L\) --- регулярная спецификация \(\Leftrightarrow\) \(L\) получаетя из \(\Sigma\):
+\begin{enumerate}
+\item Дизъюнктное объединение \(+\)
+\item Прямое произведение \(\times\)
+\item Последовательность Seq
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Общее рассжудение: по индукции рассмотрим для каждой операции во что
+она перейдет, надо показать что единственность вывода сохраняется \color{red} Не работает \color{black}
+\end{proof}
+\begin{examp}
+\[ ab^*|a^*b \]
+\[ \color{blue}a \times \text{Seq }b\color{black}|\color{blue}\text{Seq } a \times b\color{black} \]
+объединение дизъюнктное? \(\Rightarrow\) не регелярная спецификация
+\end{examp}
+\begin{examp}
+\[ (ab^*)^* \]
+\[ \color{blue} \text{Seq}(a \times \text{Seq } b) \color{black} \]
+\end{examp}
+\begin{theorem}
+Если у \(L\) есть регулярная спецификация, то \(L\) --- дробно рациональная
+\end{theorem}
+\begin{theorem}[Производящая функция регулярного языка]
+\(L\) --- регулярный язык над \(\Sigma\), ДКА \(A\): \\
 \begin{itemize}
-\item \(A\) --- помеченные КО --- \(A(t)\)
-\item \(B\) --- помеченные КО --- \(B(t)\)
+\item Состояния \(Q,\ |Q| = n\)
+\item \(s \in Q\) --- стартовое сотояние
+\item \(T \subset Q\) --- терминальные
 \end{itemize}
-\(C = A[B]\) --- вместо каждого атома \(A\) подставляем КО \(B\), перенумеруем получившиеся атомы произвольным образом
-\[ C(t) = A(B(t)) \]
+\[ u = (\overbrace{0, 0, \dots, \underbrace{1}_s, 0, \dots, 0}^n) \]
+\[ v = (\overbrace{0, \underbrace{1}_{\in T}, 0, \underbrace{1}_{\in T}, \dots, \underbrace{1}_{\in T}, 0}^n) \]
+
+\[ D = (d_{ij})^T,\ d_{ij} = |\{c | i \xrightarrow[]{c} j\}| \]
+\[ L(t) = \vec{u}(I - tD)^{-1}\vec{v} \]
 \end{theorem}
 \begin{examp}
-\(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
+Язык из слов, которые содержат abb как подстроку \\
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial] at (0, 0) (A) [circle] {\(0\)};
+\node[state] at (2, 0) (B) [circle] {\(1\)};
+\node[state] at (4, 0) (C) [circle] {\(2\)};
+\node[state,accepting] at (6, 0) (D) [circle] {\(3\)};
+\draw[->] (A) edge node[above] {a} (B);
+\draw[->] (A) edge[loop above] node[above] {b} (A);
+\draw[->] (B) edge[loop above] node[above] {a} (B);
+\draw[->] (B) edge node[above] {b} (C);
+\draw[->] (C) edge[loop above] node[above] {a} (B);
+\draw[->] (C) edge node[above] {b} (D);
+\draw[->] (D) edge[loop above] node[above] {a} (D);
+\draw[->] (D) edge[loop right] node[below] {b} (D);
+\end{tikzpicture}
+\end{center}
+\[ \begin{pmatrix} L_0 \\ L_1 \\ L_2 \\ L_3\end{pmatrix}  = \begin{pmatrix}0 \\ 0 \\ 0 \\ 1\end{pmatrix} + t \begin{pmatrix}1 & 1 & 0 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & 0 & 2\end{pmatrix}\begin{pmatrix}L_0 \\ L_1 \\ L_2 \\ L_3\end{pmatrix}\]
+\[ L_0 = \frac{t^3}{(1 - t)(1 - 2t)(1 - t - t^2)} \]
 \end{examp}
+\section{Автомат КМП и автокор. многочлен}
+\label{sec:org010b9b7}
+Конструкция Гуибаса-Одлызко
+\[ p = \fbox{p_1, p_2, \dots, p_k} \]
+\[ c_i = [p[i+1\dots k] = p[1\dots k-i]] \]
+\[ c(t) = c_0 + c_1 t + c_2 t^2 + \dots + c_{k - 1}t^{k - 1} \]
+\begin{examp}
+\(p = \text{aabbaa}\) \\
+\(c = (1, 0, 0, 0, 1, 1)\) \\
+\(c(t) = 1 + t^4 + t^5\)
+\end{examp}
+\begin{theorem}
+\-
+\begin{itemize}
+\item \(\Sigma,\ |\Sigma| = m\)
+\end{itemize}
+\(S_n\) --- количество слов длины \(n\), не содержащих \(p\)
+\[ S(t) = s_0 + s_1t + s_2t^2 + \dots \]
+\[ S(t) = \frac{c(t)}{t^k + (1 - mt)c(t)} \]
+\end{theorem}
+\begin{examp}
+\(p = \text{abb}\)
+\[ c(t) = 1 \]
+\[ \frac{1}{t^3 + (1 - 2t)\cdot 1} = \frac{1}{1 - 2t + t^3} \]
+\end{examp}
+
+\subsection{Пентагональная формула Эйлера}
+\label{sec:org62d1f42}
+\[ p_0\ p_1\ p_2\ \dots\ p_n\ \dots \]
+\(p_n\) --- количество разбиений \(n\) на слагаемые из \(\N\). Порядок не важен
+\begin{itemize}
+\item \(U = \{0\},\ u_1= 1,\ U(t) = t\)
+\item \(N = \text{Seq}^+U=\)положительно целые числа
+\item \(P = \text{MSet }N\)
+\[ P(t) = \prod_{k = 1}^\infty \frac{1}{1 - t^k} \]
+\end{itemize}
+\[ Q(t) = \prod_{k = 1}^\infty (1 - t^k) \]
+\[ R(t) = \prod_{k = 1}^\infty(1 + t^k)\ [t^n]R \to r_n \]
+\(r_n\) --- количество разбиений на различные слагаемые
+\[ [t^n]Q = \sum_{\substack{\text{разбиение } n \text{ на } \\ \text{различные слагаемые}}} (-1)^\text{число слагаемых} \]
+\[ q_n = e_n - o_n \]
+\(e_n\) --- число разбиений на четное число различных слагаемы, \(o_n\) --- число разбиений на нечетное число различных слагаемы, 
+\begin{theorem}
+\[ Q(t) = 1 + \sum_{k = 1}^\infty (-1)^k(t^{\frac{3k^2 - k}{2}} + t^{\frac{3k^2 + k}{2}}) \]
+\end{theorem}
+\begin{lemma}
+\[ n \neq \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n \]
+\[ n = \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n + (-1)^k \]
+\end{lemma}
 \end{document}
