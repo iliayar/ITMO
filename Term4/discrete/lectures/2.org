@@ -46,3 +46,15 @@ _Тогда_ эквивалентны:
    - $\deg p_i = (\text{кратность корня}(r_i^{-1})) - 1$ \\
      (\ref{kvazi_1} кроме $\le m$ первых членов)
 #+end_theorem
+
+** Рекурента в рациональную ПФ
+\[ A(t) = \frac{P(t)}{Q(t)} \]
+\[ f_n = c_1 f_{n - 1} + c_2 f_{n - 2} + \dots + c_kf_{n - k} \]
+\[ m = \deg P + 1\quad k = \deg Q \]
+\[ p_i = a_i - \sum_{j = 1}^{\min(k, i)} a_{i - j} c_j \]
+\[ a_n = \frac{p_n - \sum_{i = 1}^n a_{n - i}q_i}{q_0} \]
+\[ c_i = -q_i \]
+\[ f_i = a_i \]
+\[ a_n = \sum_{i = 1}^{\min(n, k)} c_i a_{n - i} [+ p\text{ если } n < m] \]
+
+
