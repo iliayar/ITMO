@@ -1,0 +1,15 @@
+#+TITLE: Програмирование
+* Домашки
+1. Nope
+2. [[file:HW2/][Binary Search]]
+3. [[file:HW3/][Array Queue]]
+4. [[file:HW4/][Queue]]
+5. [[file:HW5/][Generic Expressions]]
+6. [[file:HW6/functionalExpression.js][Functional Expression]]
+7. [[file:HW7/objectExpression.js][Object Expression]]
+8. [[file:HW8/objectExpression.js][Prefix Parser]]
+9. [[file:HW9/][Clojure linear]]
+10. Watch Next
+11. Watch Next
+12. [[file:HW10_11_12/][Clojure expressions]]
+13. [[file:HW13/][Prolog Primes]]
