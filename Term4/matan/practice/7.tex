@@ -1,4 +1,4 @@
-% Created 2021-03-25 Thu 10:34
+% Created 2021-04-07 Wed 23:05
 % Intended LaTeX compiler: pdflatex
 
   \documentclass[english]{article}
@@ -21,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -51,9 +54,13 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
 
 \newcounter{propertycnt}
 \setcounter{propertycnt}{1}
@@ -120,6 +127,32 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Практика 7}
@@ -128,7 +161,7 @@
  pdftitle={Практика 7},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -165,5 +198,53 @@ y = r^{\frac{2}{3}}\sin^{\frac{2}{3}}\varphi
 \[ I = \int\limits_0^{\frac{\pi}{2}}\int\limits_0^{ + \infty} \frac{\frac{2}{3} r^{\frac{2}{3}} \sin^{-\frac{1}{3}}\varphi}{(1 + r^2)^p}  \]
 \end{solution}
 \section{Тройной интеграл}
-\label{sec:orgba7436b}
+\label{sec:org09b7bf6}
+Есть трехмерная фигура \(\Omega\)
+\[ \iiint\limits_\Omega f\,dx\,dy\,dz \addtag\label{int_1} \]
+\begin{description}
+\item[{\(3 = 1 + 2\)}] \[ \ref{int_1} = \int_a^b dx \iint_{\Omega_x} f \,dy\,dz \]
+\item[{\(3 = 2 + 1\)}] \[ \ref{int_1} = \iint_{\Omega_{xy}} dx\,dy \int_{z(x, y)}^{z_2(x, y)}f\,dz \]
+\end{description}
+\[ \iiint x y^2 z^3 \addtag\label{int_2} \]
+\begin{itemize}
+\item \(z = xy\)
+\item \(y = x\)
+\item \(x = 1\)
+\item \(z = 0\)
+\end{itemize}
+
+
+\begin{enumerate}
+\item \[ \ref{int_2} = \int\limits_0^1 dx \int\limits_0^x dy \int\limits_0^{xy} x y^2 z^3 dz \]
+\item \[ \ref{int_2} = \int dy \int_y^1 dx \int_0^{xy} f dz\]
+\item \[ \ref{int_2} = \int_0^1 dz \int_{\sqrt{z}}^1 dx \int_{\frac{z}{x}}^x f\,dy \]
+\end{enumerate}
+\begin{task}
+\[ \int\limits_0^1 dx \int\limits_0^{1 - x}dy\int\limits_0^{x + y} f\, dz \]
+\end{task}
+\begin{solution}
+\[ = \int\limits_0^1 dz \int\limits_z^1 dx \int\limits_0^{z - x} f\, dy + \int_0^z dx \int_{z - x}^{1 - x} f\, dy \]
+\end{solution}
+
+\begin{task}
+\[ \sum_{k = 0}^N\sum_{l = 0}^k\sum_{m = 0}^l \frac{1}{m^3} \]
+\[ \int\limits_0^a d\xi \int\limits_0^\xi d\eta \int\limits_0^\tau f(\zeta) d\zeta \]
+\end{task}
+\begin{solution}
+\[ 0 \le m \le l \le k \le N \]
+\[ 0 \le \zeta \le \eta \le \xi \le a \]
+\[ = \int\limits_0^1 d\zeta \int\limits_\zeta^a \int\limits_\eta^a f(\zeta) d\xi = \int_0^a f(\zeta) \frac{(a - \zeta)2}{2} d\zeta \]
+\end{solution}
+
+\begin{task}
+\[ \iiint \sqrt{x^2 + y^2 + z^2}\,dx\,dy\,dz \]
+\[ x^2 + y^2 + z^2 = z \]
+\end{task}
+\begin{solution}
+\[ \begin{cases}
+x = r \cos\phi \cos\psi \\
+\vdots
+\end{cases} \]
+\[ J = r^2\cos\psi \]
+\end{solution}
 \end{document}
