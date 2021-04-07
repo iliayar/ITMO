@@ -1,4 +1,4 @@
-% Created 2021-04-07 Wed 11:44
+% Created 2021-04-07 Wed 11:48
 % Intended LaTeX compiler: pdflatex
 
   \documentclass[english]{article}
@@ -171,9 +171,9 @@
 
 
 \section{Разреженный формат}
-\label{sec:org00f62a3}
+\label{sec:org54428ea}
 \subsection{Строчно столбцовый формат}
-\label{sec:org1467b98}
+\label{sec:org5422d77}
 \begin{enumerate}
 \item Вещественный массив \(di[n]\) --- диагональные элементы
 \item Вещественный массив \(al, au\) --- по строкам и стобцам соответсвенно
@@ -210,7 +210,7 @@ a_{11} & & & & & & & & \\
 \end{enumerate}
 \end{examp}
 \subsection{Решение СЛАУ. Метод Гаусса}
-\label{sec:org58d3f64}
+\label{sec:org5e10bce}
 \[ \begin{cases}
 a_{11}x_1 + a_{12} x_2 + \dots + a_{1n}x_n = b_1 \\
 a_{21}x_1 + a_{22} x_2 + \dots + a_{2n}x_n = b_2 \\
@@ -259,7 +259,7 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 
 \[ a_{ij}^{(k)} = a_{ij}^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}a_{kj}^{(k - 1)} \quad b_i^{(k)} = b_i^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}b_k^{(k - 1)} \quad \ k \in \overline{1, n};\ i,j \in \overline{k + 1, n}\]
 \subsection{Обратный ход Гаусса}
-\label{sec:orge2669d6}
+\label{sec:org12b964f}
 \[ x_n = \frac{b_n^{(n - 1)}}{a_{nn}^{(n - 1)}} \]
 \[ \vdots \]
 \[ x_2 = \frac{b_2^{(1)} - a_{23}^{(1)} x_3 - \dots - a_{2n}^{(1)}x_n}{a_{22}^{(1)}} \]
@@ -273,6 +273,7 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 \STATE \(m:\ m \ge k,\ |a_{mk}| = \max_{i \ge k}\{|a_{ik}|\}\)
 \IF{\(a_{mk} = 0\)}
 \STATE Нет однозначного решения. Завершить алгоритм
+\PROCEDURE
 \ELSE
 \FOR{\(j = k,\dots,n\)}
 \STATE Поменять местами \(b_x\) и \(b_m\)

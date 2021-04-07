@@ -1,0 +1,22 @@
+#+TITLE: Теория вероятностей
+
+
+* Лекции
+[[file:lectures/all_lectures.pdf][Все лекции]]
+- [[file:lectures/1.pdf][Лекция 1]]
+- [[file:lectures/2.pdf][Лекция 2]]
+- [[file:lectures/3.pdf][Лекция 3]]
+- [[file:lectures/4.pdf][Лекция 4]]
+- [[file:lectures/5.pdf][Лекция 5]]
+- [[file:lectures/6.pdf][Лекция 6]]
+- [[file:lectures/7.pdf][Лекция 7]]
+- [[file:lectures/8.pdf][Лекция 8]]
+* Практики
+- [[file:practice/1.pdf][Практика 1]]
+- [[file:practice/2.pdf][Практика 2]]
+- [[file:practice/4.pdf][Практика 4]]
+- [[file:practice/5.pdf][Практика 5]]
+- [[file:practice/6.pdf][Практика 6]]
+- [[file:practice/7.pdf][Практика 7]]
+- [[file:practice/8.pdf][Практика 8]]
+- [[file:practice/9.pdf][Практика 9]]
