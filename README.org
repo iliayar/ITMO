@@ -2,8 +2,8 @@
 
 My stuff from ITMO University
 
-* Year 2
-** Term 4
+* 2 курс
+** Семестр 4
 *** [[file:Term4/matan/][Матан]]
 *** [[file:Term4/teorver/][Теор. вер.]]
 *** [[file:Term4/metopt/][Мет. опт.]]
@@ -11,89 +11,22 @@ My stuff from ITMO University
 *** [[file:Term4/discrete/][Дискретка]]
 *** [[file:Term4/java/][Java]]
 *** [[file:Term4/algo/][АиСД]]
-** Term 3
-*** Algorithms
-**** Labs
-- [[file:Term3/algo/labs/lab1/][Graphs]]
-- [[file:Term3/algo/labs/lab2/][Minimal paths]]
-- [[file:Term3/algo/labs/lab3/][Strings]]
-
-*** DE
-- Some conspects for [[file:Term3/diffur/Test_11_5.pdf][first]] and [[file:Term3/diffur/Test2.pdf][second]] test \\
-- [[file:Term3/diffur/models/][Models for 11 hw]]
-*** Discrete Math
-**** Labs
-- [[file:Term3/discrete/labs/lab1/][Graphs]]
-- [[file:Term3/discrete/labs/lab2/][Matroids]]
-
-*** Math analysis
-[[file:Term3/matan/lectures/all_lectures.pdf][All lectures]]
-
-* Year 1
-** Term 2
-*** Programming
-[[http://www.kgeorgiy.info/courses/paradigms/homeworks.html][Homeworks]] \\
-[[https://www.kgeorgiy.info/git/geo/paradigms-2020][Homeworks github(Tests, modifications)]]
-
-[[http://www.kgeorgiy.info/courses/paradigms/][Course stuff]]
-**** Homework
-1. Nope
-2. [[file:Term2/programming/HW2/][Binary Search]]
-3. [[file:Term2/programming/HW3/][Array Queue]]
-4. [[file:Term2/programming/HW4/][Queue]]
-5. [[file:Term2/programming/HW5/][Generic Expressions]]
-6. [[file:Sem2/programming/HW6/functionalExpression.js][Functional Expression]]
-7. [[file:Sem2/programming/HW7/objectExpression.js][Object Expression]]
-8. [[file:Sem2/programming/HW8/objectExpression.js][Prefix Parser]]
-9. [[file:Sem2/programming/HW9/][Clojure linear]]
-10. Watch Next
-11. Watch Next
-12. [[file:Term2/programming/HW10_11_12/][Clojure expressions]]
-13. [[file:Term2/programming/HW13/][Prolog Primes]]
-*** Algo
-**** Labs
-1. [[file:Term2/algo/labs/lab1/][Дерево отрезков]]
-2. [[file:Term2/algo/labs/lab2/][Деревья поиска]]
-*** Discrete Math
-**** Labs
-- [[file:Term2/discrete/labs/lab1/][Automaton]]
-- [[file:Term2/discrete/labs/lab2/][Grammars]]
-*** Linear Algebra
-**** Labs
-[[file:Term2/linal/labs/][/Trying/ Determine figure in 3D]]
-*** Math Analysis
-[[file:Term2/matan/][Some lectures]]
-*** C++
-Big homewaorks
-- [[file:Term2/CXX/8-puzzle-iliayar/][8 Puzzle with A*]]
-- [[file:Term2/CXX/open-addressing-hash-iliayar/][Open Adressing Hash Map/Set with an STL interface]]
-- [[file:Term2/CXX/inverted-index-iliayar/][Inverted Index]]
-- [[file:Term2/CXX/md-handler-iliayar/][MD Handler]]
-Small homeworks
-- [[file:Term2/CXX/comm-iliayar/][Comm]]
-- [[file:Term2/CXX/second-chance-arbitrary-iliayar/][Second Chance Arbitrary]]
-** Term 1
-*** Discrete Math
-**** Labs
-- [[file:Term1/Discrete/][Some labs not sorted]]
-*** Algorithms
-**** Labs
-- Nope
-*** Programming
-Java course homeworks
-1. 
-2. [[file:Term1/programming/HW2/][Sum]]
-3. [[file:Term1/programming/HW3/][Reverse]]
-4. [[file:Term1/programming/HW4/][WordStat]]
-5. [[file:Term1/programming/HW5/][Scanner]]
-6. [[file:Term1/programming/HW6/][WordStat]] with containers
-7. [[file:Term1/programming/HW7/][markup]]
-8. Hmm...
-9. [[file:Term1/programming/HW9/][Markdown to HTML]]
-10. [[file:Term1/programming/HW10/][nmk]]
-11. [[file:Term1/programming/HW11/][Expressions]]
-*** Linear Algebra
-Labs:
-1. [[file:Term1/linal/LAB1/][Matrix multiplication]]
-2. [[file:Term1/linal/LAB2/][Yarrr]]
-3. [[file:Term1/linal/LAB3/][Reflections in cube]]
+** Семестр 3
+*** [[file:Term3/algo/][АиСД]]
+*** [[file:Term3/diffur/][Диффуры]]
+*** [[file:Term3/discrete/][Дискретка]]
+*** [[file:Term3/matan/][Матан]]
+* 1 курс
+** Семестр 2
+*** [[file:Term2/programming/][Програмирование]]
+*** [[file:Term2/algo/][АиСД]]
+*** [[file:Term2/discrete/][Дискретка]]
+*** [[file:Term2/linal/][Линал]]
+*** [[file:Term2/matan/][Матан]]
+*** [[file:Term2/CXX/][С++]]
+** Семестр 1
+*** [[file:Term1/Discrete/][Дискретка]]
+*** [[file:Term1/algo/][АиСД]]
+*** [[file:Term1/programming/][Програмироание]]
+*** [[file:Term1/linal/][Линал]]
+   

@@ -1,0 +1,3 @@
+#+TITLE: Математический анализ
+
+[[file:lectures/all_lectures.pdf][Все лекции]]
