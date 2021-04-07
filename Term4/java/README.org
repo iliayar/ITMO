@@ -1,0 +1,7 @@
+#+TITLE: Java advanced
+
+
+* Домашки
+- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/walk/][Walk]]
+- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/arrayset/][ArraySet]]
+- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/student/][Student]]
