@@ -18,3 +18,7 @@
 * TODO
 * 
 #+INCLUDE: "9.org" :lines "4-"
+* 
+#+INCLUDE: "10.org" :lines "4-"
+* 
+#+INCLUDE: "11.org" :lines "4-"

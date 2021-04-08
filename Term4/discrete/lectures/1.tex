@@ -1,0 +1,205 @@
+% Created 2021-04-06 Tue 20:17
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 1}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Производящие функции}
+\label{sec:org81fed6a}
+Последовательность \(a_0, a_1, a_2, \dots\). Запишем в виде ряда
+\[ A(t) = a_0 + a_1 t + a_2 t^2 + \dots \], где \(A(t)\) --- \textbf{производящая функция}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\)
+\end{itemize}
+\[A(t) + B(t) = C(t)\]
+\[ c_n = a_n + b_n \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\)
+\end{itemize}
+\[ A(t) \cdot B(t) = C(t) \]
+\[ (a_0 + a_1 t + a_2 t^2 + \dots)\cdot(b_0 + b_1 t + b_2 t^2) = \]
+\[ = a_0b_0 + (a_0 b_1 + a_1 b_0) t + (a_0 b_2 + a_1 b_1 + a_2 b_0) t^2 + \dots \]
+\[ c_n = \sum_{k = 0}^n a_kb_{n - k} \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\), \(b_0 \neq 0\)
+\end{itemize}
+\[ \frac{A(t)}{B(t)} = C(t) \]
+\[ C(t)\cdot B(t) = A(t) \]
+\[ c_n = a_n - \sum_{k = 0}^{n - 1}c_k b_{n - k} \]
+Если \(b_0 = 1\) и \(a_i, b_i \in \mathbb{Z}\), то \(c_i \in \mathbb{Z}\)
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\end{itemize}
+\[ A'(t) = a_1 + 2\cdot a_2 t + 3 \cdot a_3 t^2 + \dots \]
+\[ a'_n = n\cdot a_n t^{n - 1} \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\end{itemize}
+\[ \int A(t) = a_0 t + \frac{1}{2} a_1 t^2 + \frac{1}{3} a_2 t^3 + \dots \]
+\[ a'_n = \frac{1}{n + 1} \cdot a_n t^{n + 1} \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\), \(b_0 = 0\)
+\end{itemize}
+\[ C(t) = A(B(t)) \]
+\[ c_n = \sum_{k = 1}^n a_i \sum_{n=k_1 + k_2 + \dots + k_i} \prod_{j = 1}^i b_{k_j} \]
+\end{property}
+\end{document}

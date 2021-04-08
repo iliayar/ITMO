@@ -1,8 +1,8 @@
-% Created 2021-03-22 Mon 23:13
+% Created 2021-04-06 Tue 23:36
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[oneside]{book}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[oneside]{book}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -27,9 +27,9 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-   \usepackage{hyperref}
+
+\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -50,9 +50,13 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
 
 \newcounter{propertycnt}
 \setcounter{propertycnt}{1}
@@ -127,7 +131,7 @@
  pdftitle={Лекции по Дискретной математике 4 семестр},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -135,12 +139,74 @@
 \tableofcontents
 
 
-\chapter{TODO}
-\label{sec:orgc46cd2d}
-\chapter{}
-\label{sec:orgbdb31c2}
+\chapter{10 февраля}
+\label{sec:org9325ed8}
 \section{Производящие функции}
-\label{sec:org94bb6d6}
+\label{sec:org508d6a1}
+Последовательность \(a_0, a_1, a_2, \dots\). Запишем в виде ряда
+\[ A(t) = a_0 + a_1 t + a_2 t^2 + \dots \], где \(A(t)\) --- \textbf{производящая функция}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\)
+\end{itemize}
+\[A(t) + B(t) = C(t)\]
+\[ c_n = a_n + b_n \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\)
+\end{itemize}
+\[ A(t) \cdot B(t) = C(t) \]
+\[ (a_0 + a_1 t + a_2 t^2 + \dots)\cdot(b_0 + b_1 t + b_2 t^2) = \]
+\[ = a_0b_0 + (a_0 b_1 + a_1 b_0) t + (a_0 b_2 + a_1 b_1 + a_2 b_0) t^2 + \dots \]
+\[ c_n = \sum_{k = 0}^n a_kb_{n - k} \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\), \(b_0 \neq 0\)
+\end{itemize}
+\[ \frac{A(t)}{B(t)} = C(t) \]
+\[ C(t)\cdot B(t) = A(t) \]
+\[ c_n = a_n - \sum_{k = 0}^{n - 1}c_k b_{n - k} \]
+Если \(b_0 = 1\) и \(a_i, b_i \in \mathbb{Z}\), то \(c_i \in \mathbb{Z}\)
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\end{itemize}
+\[ A'(t) = a_1 + 2\cdot a_2 t + 3 \cdot a_3 t^2 + \dots \]
+\[ a'_n = n\cdot a_n t^{n - 1} \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\end{itemize}
+\[ \int A(t) = a_0 t + \frac{1}{2} a_1 t^2 + \frac{1}{3} a_2 t^3 + \dots \]
+\[ a'_n = \frac{1}{n + 1} \cdot a_n t^{n + 1} \]
+\end{property}
+\begin{property}
+\-
+\begin{itemize}
+\item \(A(t) = a_0 + a_1 t + a_2 t + \dots\)
+\item \(B(t) = b_0 + b_1 t + b_2 t + \dots\), \(b_0 = 0\)
+\end{itemize}
+\[ C(t) = A(B(t)) \]
+\[ c_n = \sum_{k = 1}^n a_i \sum_{n=k_1 + k_2 + \dots + k_i} \prod_{j = 1}^i b_{k_j} \]
+\end{property}
+\chapter{17 февраля}
+\label{sec:org263e8b3}
+\section{Производящие функции}
+\label{sec:org01340d2}
 \begin{definition}
 \textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
  \(n\) все коэффиценты 0.
@@ -152,7 +218,7 @@
 \(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
 \end{definition}
 \subsection{Рекурентные соотношения}
-\label{sec:orgc49a0bc}
+\label{sec:org92cbd2e}
 \begin{definition}
 \[ m: a_0, a_1, \dots, a_{m - 1} \]
 \(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
@@ -194,8 +260,113 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \end{enumerate}
 \end{theorem}
-\chapter{}
-\label{sec:org903585d}
+
+\subsection{Рекурента в рациональную ПФ}
+\label{sec:org0639718}
+\[ A(t) = \frac{P(t)}{Q(t)} \]
+\[ a_n = c_1 a_{n - 1} + c_2 a_{n - 2} + \dots + c_ka_{n - k} \]
+\[ m = \deg P + 1\quad k = \deg Q \]
+\[ p_i = a_i - \sum_{j = 1}^{\min(k, i)} a_{i - j} c_j \]
+\[ a_n = \frac{p_n - \sum_{i = 1}^n a_{n - i}q_i}{q_0} \]
+\[ c_i = -q_i \]
+\[ a_n = \sum_{i = 1}^{\min(n, k)} c_i a_{n - i} [+ p\text{ если } n < m] \]
+\chapter{24 февраля}
+\label{sec:org8d5e7ee}
+\section{Ассимпточиское поведение линейных рекуррент}
+\label{sec:org2afd8c9}
+\subsection{Квазимногчлен в рациональную ПФ}
+\label{sec:org522201c}
+\begin{lemma}
+\-
+\begin{itemize}
+\item \(a_n = n^k r^n\)
+\item \(A(t) = \frac{P(t)}{Q(t)}\)
+\end{itemize}
+\uline{Тогда} \(Q(t) = (1 - rt)^{k + 1}\)
+\[ A(t) = \frac{1}{r}\cdot \frac{P'_k(t)(1 - rt) + r(k + 1)P_k(t) - \sum_{i = 0}^k r \binom{k + 1}{i} P_i(t) (1 - rt)^{k - i + 1}}{(1 - rt)^{k + 2}} \]
+\end{lemma}
+\begin{proof}
+\todo
+\end{proof}
+\begin{lemma}
+\-
+\begin{itemize}
+\item \(a_n = p(n) r^n\)
+\item \(A(t) = \frac{P(t)}{Q(t)}\)
+\end{itemize}
+\uline{Тогда} \(Q(t) = (1 - rt)^{\deg p + 1}\)
+\end{lemma}
+\begin{corollary}
+Квазимногочлен \(\Rightarrow\) Рациональная ПФ: \\
+Корни \(Q(t)\): \(\frac{1}{r_i}\) кратности \(\deg p_i + 1\)
+\end{corollary}
+
+\subsection{Рациональная ПФ в квазимногочлен}
+\label{sec:org5d85c44}
+\begin{itemize}
+\item \(A(t) = \frac{P(t)}{Q(t)}\)
+\end{itemize}
+\[ Q(t) = \prod_{i = 1}^s (1 - r_it)^{f_i} \]
+\[ \frac{P(t)}{Q(t)} = \sum_{i = 1}^s \frac{P_i(t)}{(1 - r_i t)^{f_i}} \]
+\begin{lemma}
+\[ A(t) = \frac{P(t)}{(1 - rt)^{k + 1}} \]
+\uline{Тогда} \[ a_n = p(n) r^n \], \(p\) --- полином, \(\deg p = k\)
+\[ A(t) = P(t) U(t) \]
+\[ U(t) = (1 + rt + r^2 t^2 + \dots)^{k + 1} \]
+\[ a_n = \sum_{i = 0}^n p_i u_{n - i} \]
+\end{lemma}
+\begin{corollary}
+\[ a_n = \sum_{x_1 + x_2 + \dots + x_{k + 1} = n} r^n = \binom{n + 1 + k - 1}{k}r^n = \binom{n + k}{k}r^n = \]
+\[ = \frac{1}{k!}(n + k)(n + k - 1)\dots(n + 1)r^n = p_k(n)r^n \]
+\[ \sum_{i = 0}^m p_i u_i = \left(\sum_{i = 1}^m \frac{p_{n - i}(n)}{r^i}\right)r^n \]
+\end{corollary}
+\subsection{Оценка ассимптотического поведения}
+\label{sec:orga31ec65}
+Обратные корни: \(\begin{matrix} r_1 & f_1 \\ r_2 & f_2 \\ \vdots & \vdots \\ r_s & f_s \end{matrix}\)
+\beginproperty
+\begin{property}
+\-
+\begin{itemize}
+\item \(\exists r_i: |r_i|\) --- max
+\item \(\forall j \neq i:\ |r_j| < |r_i|\)
+\end{itemize}
+\(r_i\) вещественные \(a_n \sim n^{f_i - 1}\cdot r_i^n\)
+\end{property}
+\begin{property}
+Несколько \(r_i\) имеют \(\max|r_i|\)
+\begin{enumerate}
+\item \(r_i \in \R\), \(r_i = \pm r\). Если разной кратности у \(r_i, r_j\), соответсвенно \(f_i > f_j\) \\
+Тогда \(a_n \sim n^{f_i - 1}r_i^n(+n^{f_i - 1}r_j^n)\) \\
+Если одинаковой кратности \(f_i = f_j\) \\
+Тогда \(a_n \sim c_1 n^{f_i - 1}r^n + c_2 n^{f_j - 1}(-r)^n\)
+\end{enumerate}
+\end{property}
+\begin{property}
+\(r_1, r_2, \dots, r_l\) --- орбратные корни максимальной степени \(\max|r_i|\) и \(\max f_i\)
+\[ r_i = z_i e^{i\phi_i} \]
+\[ a_n \sim n^{f_i} z^n \sum_{j = 1}^l e^{i\phi_j} \]
+Если \(\phi_j = \frac{2\pi a_j}{b_j}\), \(n\) делится на \(\mathop{\rm LCM}(b_j)\) классов
+\end{property}
+
+\begin{examp}
+Числа каталана:
+\[ c_n = \sum_{k = 0}^{n - 1}c_k c_{n - k - 1} \]
+\[ C(t) = c_0 + c_1 t + c_2 t^2 + \dots \]
+\[ C(t)^2 = c_0^2 + (c_0 c_1 + c_1 c_0) t + \dots \]
+\[ C(t)^2 \cdot t + 1 = C(t) \]
+\[ t\cdot C(t)^2 - C(t) + 1 = 0 \]
+\[ C(t) = \frac{1 - \sqrt{1 - 4t}}{2t} \]
+\end{examp}
+\begin{remark}
+Рассмотрим \((1 - t)^\alpha\):
+\[ (1 - t)^\alpha = \sum_{i = 0}^\infty \binom{\alpha}{i} t^i = P_\alpha(t) \]
+\[ \binom{\alpha}{t} = \frac{\alpha(\alpha - 1)(\alpha - 2)\cdot(\alpha - i + 1)}{1 \cdot 2 \cdot 3 \cdot \dots \cdot i} \]
+\[ P_{\frac{1}{2}}(-4t) = 1 - 2t - 2t^2 - 4t^3 - 10t^4 \]
+\[ \binom{\frac{1}{2}}{2} = \frac{\frac{1}{2}\cdot \left(-\frac{1}{2}\right)}{1\cdot 2} = -\frac{1}{8} \]
+\[ \binom{\frac{1}{2}}{3} = \frac{\frac{1}{2} \cdot \left(-\frac{1}{2}\right) \left(-\frac{3}{2}\right)}{1 \cdot 2 \cdot 3} = \frac{1}{16} \]
+\end{remark}
+\chapter{3 марта}
+\label{sec:org4d36d9f}
 \newcommand{\vdomino}{
 \begin{tikzpicture}
 \draw (0, 0) rectangle (0.15,0.3);
@@ -207,7 +378,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{tikzpicture}}
 
 \section{Производящие функции для объектов}
-\label{sec:org9405249}
+\label{sec:org687cf1a}
 \begin{itemize}
 \item Оюъединение \\
 \(A, B\ A \cap B = \emptyset\ C = A \cup B\) \\
@@ -244,14 +415,14 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \(\text{Seq}_{\ge k}(A) = A^k \times \text{Seq}(A)\frac{A(t)^k}{1 - A(t)}\) \\
 \(\text{Seq}_{\le k}(A) = \frac{1}{1 - A(t)} - \frac{A(t)^{k + 1}}{1 - A(t)} = \frac{1 - A(t)^{k + 1}}{1 - A(t)}\)
 \end{examp}
-\chapter{}
-\label{sec:org0730270}
+\chapter{10 марта}
+\label{sec:org3156422}
 \usetikzlibrary{automata}
 
 
 
 \section{Производящие функции для регулярных языков}
-\label{sec:orgb747179}
+\label{sec:orgfa2d9f9}
 \(L\) --- регулярный язык
 \[ | L \cap \Sigma^n | = a_n \] 
 \[ L(t) = a_0 + a_1 t + \dots \]
@@ -323,7 +494,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ L_0 = \frac{t^3}{(1 - t)(1 - 2t)(1 - t - t^2)} \]
 \end{examp}
 \section{Автомат КМП и автокор. многочлен}
-\label{sec:orgac58c1f}
+\label{sec:orga168bd7}
 Конструкция Гуибаса-Одлызко
 \[ p = \fbox{p_1, p_2, \dots, p_k} \]
 \[ c_i = [p[i+1\dots k] = p[1\dots k-i]] \]
@@ -349,7 +520,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{examp}
 
 \subsection{Пентагональная формула Эйлера}
-\label{sec:org4fa3420}
+\label{sec:orgb17109e}
 \[ p_0\ p_1\ p_2\ \dots\ p_n\ \dots \]
 \(p_n\) --- количество разбиений \(n\) на слагаемые из \(\N\). Порядок не важен
 \begin{itemize}
@@ -371,14 +542,14 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ n \neq \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n \]
 \[ n = \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n + (-1)^k \]
 \end{lemma}
-\chapter{}
-\label{sec:org80be573}
+\chapter{17 марта}
+\label{sec:orgb988c34}
 \newcommand{\Seq}{\text{Seq}\,}
 \newcommand{\Set}{\text{Set}\,}
 \newcommand{\Cyc}{\text{Cyc}\,}
 
 \section{Помеченные КО и экспоненциальные производящие функции}
-\label{sec:orgb7832eb}
+\label{sec:org3b96502}
 \[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
 \begin{definition}
 Экспоненциальная производящая функция:
@@ -420,7 +591,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{property}
 \textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
 \subsection{Помеченные объекты}
-\label{sec:orgbed66da}
+\label{sec:orgc7421fd}
 \begin{examp}
 Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
 \end{examp}
@@ -433,10 +604,10 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
 \end{examp}
 \subsection{Операции}
-\label{sec:org032f0d7}
+\label{sec:org20acb3f}
 \begin{enumerate}
 \item Дизъюнктное объединение (сумма)
-\label{sec:org75b7c5c}
+\label{sec:orge0eb872}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -445,7 +616,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
 \item Пара (произведение)
-\label{sec:org6dc4837}
+\label{sec:orga7766c9}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -461,7 +632,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
 \end{examp}
 \item Последовательность
-\label{sec:orgbb3e5ab}
+\label{sec:org71a8949}
 \[ C = \Seq A = \emptyset + A \times \Seq A \]
 \[ C(t) = 1 + A(t)\cdot C(t) \]
 \[ C(t) = \frac{1}{1 - A(t)} \]
@@ -475,7 +646,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[P(t) = \frac{1}{1 - t}\]
 \end{examp}
 \item Множества (Set)
-\label{sec:org28be15e}
+\label{sec:org5fe1d7a}
 \begin{itemize}
 \item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
 \end{itemize}
@@ -504,7 +675,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Набор помеченных циклов являеся престановкой
 \end{examp}
 \item Циклы
-\label{sec:orgad908db}
+\label{sec:orgd9ad362}
 \begin{itemize}
 \item \(\Cyc_k A\) --- количество циклов длины \(k\)
 \end{itemize}
@@ -519,7 +690,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 
 
 \subsection{Обобщение}
-\label{sec:org3be3faf}
+\label{sec:org2b786ba}
 
 \begin{theorem}[о подстановке]
 \-
@@ -533,4 +704,104 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \begin{examp}
 \(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
 \end{examp}
+\chapter{24 марта}
+\label{sec:org54da72a}
+\newcommand{\stirlF}[2]{\left[\begin{matrix} #1 \\ #2 \end{matrix}\right]}
+\newcommand{\stirlS}[2]{\left\{\begin{matrix} #1 \\ #2 \end{matrix}\right\}}
+\newcommand{\Set}{\text{Set}\,}
+\newcommand{\Seq}{\text{Seq}\,}
+\newcommand{\Cyc}{\text{Cyc}\,}
+
+
+Рассмотрим деревья:
+\[ T = t \times \Text{Seq}\,T \]
+, где \(t\) --- корень
+\[ A(t) = t\cdot \phi(A(t)) \]
+\[ \phi(s) = \frac{1}{1 - s} \]
+Решить это уравнение в общем виде можно с помощью формулы Лагранжа
+\begin{theorem}[формула обращения Лагранжа]
+\[ a_n = \frac{1}{n}\cdot[s^{n - 1}](\phi(s))^n \], где \([s^{n}]A(s)\) --- коэффицент при \(s^n\) в \(A(s)\)
+\[ A(t) = \sum_{n = 0}^\infty a_n t^n \]
+\end{theorem}
+\begin{examp}
+Применим ее для деревьев
+\[ a_n = \frac{1}{n}\cdot[s^{n - 1}]\left(\frac{1}{1 - s}\right)^n \]
+\[ \left(\frac{1}{1 - s}\right)^n = (1 + s + s^2 + s^3 + \dots + s^k + \dots)^n \]
+\[ (1 - s)^{-n} = 1 - \binom{-n}{1} s + \binom{-n}{2}s^2 - \binom{-n}{3}s^3 \]
+\[ \binom{-n}{n - 1} = \frac{-n\cdot(-n - 1)\cdot(-n - 2)\cdot\dots\cdot(-n - (n - 1) + 1)}{1\cdot 2 \cdot 3 \cdot \dots \cdot (n - 1)} \]
+\[ \frac{1}{n}(-1)^{n - 1}\binom{-n}{n - 1} = \frac{(2n - 2)!}{(n - 1)!n!} = \binom{2n - 2}{n - 1} \]
+\end{examp}
+\begin{examp}
+\[ \phi(s) = e^s \]
+\[ \frac{a_n}{n!} = \frac{1}{n}\cdot[s^{n- 1}] e^{ns} \]
+\[ e^{ns} = 1 + \frac{1}{1!}(ns) + \frac{1}{2!}(ns)^2 + \frac{1}{3!}(ns)^3 + \dots \]
+\[ [s^{n - 1}]e^{ns} = \frac{n^{n - 1}}{(n - 1)!} \]
+\end{examp}
+\section{Производящая функция от нескольких перменных}
+\label{sec:orgffcd321}
+\(\binom{n}{k}\) образуют таблицу:
+\begin{center}
+\begin{tabular}{l|rrrll}
+\(n\textbackslash k\) &  &  &  &  & \\
+\hline
+ & 1 &  &  &  & \\
+ & 1 & 1 &  &  & \\
+ & 1 & 2 & 1 &  & \\
+ & 1 & 3 & 3 & 1 & \\
+ & 1 & 4 & 6 & 4 & 1\\
+\end{tabular}
+\end{center}
+\[ A_k(t) = \sum_{n = 0}^\infty \binom{n}{k}t^n \]
+\[ B_n(t) = \sum_{n = 0}^\infty \binom{n}{l}t^k \]
+\[ C(u ,z) = \sum_{n, k}\binom{n}{k}z^nu^k = \frac{1}{1 - z - uz}\]
+Посмотрим на \(C(u, z)\) так: \(n\) --- вес, \(k\) --- стоимость. Будем считать, что \(z\) --- не берем объект, \(uz\) --- берем объект
+\[ \text{Seq}\,\{z, uz\} = [], [z], [uz], [z, z], [z, uz], [uz, z], [uz, uz], \dots \]
+\[ A(u, z) = z + uz \]
+\subsection{Числа Стирлинга I рода}
+\label{sec:org2eae1e4}
+\fixme \\
+Помеченные перстановки, \(\text{Set}\,\text{Cyc}\,Z\)
+\[ \bigcup_{k = 0}^\infty \text{Set}_{=k}\text{Cyc}\, Z \]
+\[ \text{Set}\,\text{Cyc}\,Z = e^{\ln\frac{1}{1 - Z}} = \frac{1}{1 - Z} \]
+\[ \bigcup_{k = 0}^\infty \text{Set}_{= k}\left(u \times \text{Cyc}\,Z\right) \mapsto \sum_{n ,k}\stirlF{n}{k}\frac{1}{n!}z^nu^k\]
+\[ \Set_{=k}(A) = \frac{\Seq_{=k}(A)}}{k!} = \frac{A(Z)^k}{k!}  \]
+\[ u \times \Cyc Z = \sum_{n = 0}^\infty \frac{\left(u \ln \left(\frac{1}{1 - Z}\right)\right)^k}{k!} = e^{u\ln\frac{1}{1 - Z}} = (1 - Z)^{-u}\]
+\[ (1 - Z)^{-u} = \sum_{n,k}\frac{\stirlF{n}{k}}{n!} Z^n u^k \]
+\subsection{Числа Стирлинга II рода}
+\label{sec:org0ab1c76}
+\[ \stirlS{n}{k}\quad \Set\Set_{>0} Z \]
+\[ \bigcup_{k = 0}^\infty\Set_{=k}(u\times \Set_{>0}Z) \]
+\[ \sum_{k = 0}^\infty \frac{\left(u(e^Z - 1)^k\right)}{k!} = e^{ue^Z - u} = \sum_{n,k} \frac{\stirlS{n}{k}}{n!}z^nu^k\]
+\subsection{Средняя стоимоть}
+\label{sec:orgd946881}
+\begin{itemize}
+\item \(A\quad a_{n,k} = [z^nu^k]A(u, z)\) --- количество объектов веса \(n\) стоимости \(k\)
+\end{itemize}
+\[ w_n = \frac{\sum_{k = 0}^\infty k a_{n,k}}{\sum_{k = 0}^\infty a_{n, k}} = \frac{\left.[z^n]\left(\frac{\partial}{\partial u}A(u ,z)\right)\right|_{u = 1}}{[z^n]A(1, z)}\]
+\begin{enumerate}
+\item Разбиение на слагаемые, порядок важен
+\label{sec:orgc88e20b}
+Аналогично рассотовке перегорожок, \(\Seq\Seq_{>0}Z\)
+\[ \Seq \left(u\times\Seq_{>0}Z\right) \]
+\[ \frac{1}{1 - z} - 1= \frac{z}{1 - z} \]
+\[ A(u, z) =  \frac{1}{1 - \frac{uz}{1 - z}} = \frac{1 - z}{1 - z - uz} \]
+\[ \frac{\partial A(u,z)}{\partial u}\bigg|_{u = 1} = \frac{z(1 - z)}{(1 - z- uz)^2} \bigg|_{u = 1} = \frac{z(1 - z)}{(1 - 2z)^2}\]
+\begin{description}
+\item[{Числитель}] \[ [z^n]\frac{z(1 - z)}{(1 - 2z)^2} = \frac{2^n(n + 1)}{4} \]
+\item[{Знаменатель}] \[ [z^n]\frac{1 - z}{1 - 2z} = 2^n - 2^{n - 1} = 2^{n - 1} \]
+\end{description}
+Среднее число слагаемых: \[ \frac{2^n(n + 1)}{2^{n - 1}\cdot4} = \frac{n + 1}{2} \]
+\item Среднее число циклов в перестановке
+\label{sec:org8c8b2b5}
+\[ A(u ,z) = (1 - z)^{- u} \]
+\[ \frac{\partial}{\partial u}A(u, z) = \frac{\partial}{\partial u} e^{u \ln\frac{1}{1 - z}} = \ln \frac{1}{1 - z}\cdot e^{u\ln\frac{1}{1 -z }} \]
+Подставляем \(u = 1\):
+\begin{description}
+\item[{Числитель}] \[ [z^n]\frac{\ln \left(\frac{1}{1 - z}\right)}{1 - z} = B(z)\]
+\item[{Знаменатель}] \[ (1 - z)^{-u}\bigg_{u = 1} = \frac{1}{1 - z} \]
+\[ [z^n]\frac{1}{1 - z} = 1 \]
+\end{description}
+\[ (z + \frac{1}{2}z^2 + \frac{1}{3}z^3 + \dots + \frac{1}{k}z^k + \dots)\cdot(1 + z + z^2 + \dots) \]
+\[ [z^n]B(z) = \sum_{k = 1}^n \frac{1}{k} = H_n \sim \log n \]
+\end{enumerate}
 \end{document}

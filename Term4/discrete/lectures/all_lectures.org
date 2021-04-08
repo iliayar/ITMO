@@ -2,12 +2,17 @@
 #+TITLE: Лекции по Дискретной математике 4 семестр
 #+AUTHOR: Ilya Yaroshevskiy
 
-* TODO
-* 
+* 10 февраля
+#+INCLUDE: "1.org" :lines "4-"
+* 17 февраля
 #+INCLUDE: "2.org" :lines "4-"
-* 
+* 24 февраля
 #+INCLUDE: "3.org" :lines "4-"
-* 
+* 3 марта
 #+INCLUDE: "4.org" :lines "4-"
-* 
+* 10 марта
 #+INCLUDE: "5.org" :lines "4-"
+* 17 марта
+#+INCLUDE: "6.org" :lines "4-"
+* 24 марта
+#+INCLUDE: "7.org" :lines "4-"

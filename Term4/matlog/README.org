@@ -1,0 +1,11 @@
+#+TITLE: Математическая логика
+* Лекции
+[[file:lectures/all_lectures.pdf][Все лекции]]
+- [[file:lectures/4.pdf][Лекция 4]]
+- [[file:lectures/5.pdf][Лекция 5]]
+- [[file:lectures/6.pdf][Лекция 6]]
+- [[file:lectures/7.pdf][Лекция 7]]
+* Домашки
+- [[file:hws/1.pdf][1.3.g]]
+- [[file:hws/2.pdf][3.4.b]]
+- [[file:hws/4.4.b.pdf][4.4.b]]

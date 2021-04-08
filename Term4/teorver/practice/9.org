@@ -1,0 +1,67 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 9
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_task org
+\(\xi \in N(2, 3)\). Найти \(p(-1 < \xi < 7)\), \(p(|\xi - a| > 6.5)\)
+#+end_task
+#+begin_solution org
+\[ p(-1 < \xi < 7) = \Phi\left(\frac{7 - 2}{3}\right) - \Phi\left(\frac{-1 - 2}{3}\right) = \Phi(1.67) + \Phi(1) \]
+\[ p(|\xi - a| > 6.5) = 1 - p(|\xi - a| < 6.5) = 1 - 2\Phi \left(\frac{6.5}{3}\right) = 1 - 2\Phi(2.17) \]
+#+end_solution
+#+begin_task org
+Прибор точно калиброван. Среднее квадратическое отклонение ошибки.
+#+end_task
+#+begin_solution org
+\(a = 0,\ \sigma = 0.5\)
+\[ p(-1.5 < \xi < 0.5) = \Phi(1)  + \Phi(3) \]
+#+end_solution
+#+begin_task org
+Вероятность того, что ноормальная случаная величина отклонится от среднего занчения не более чем на 5 равна \(0ю95\)
+#+end_task
+#+begin_solution org
+\[ p(|\xi - a| < 5) = 0.95 = 2\Phi \left(\frac{5}{\sigma}\right) \]
+\[ \Phi \left(\frac{5}{\sigma}\right) = 0.475 \]
+\[ \frac{5}{\sigma} = 1.96 \]
+\[ \sigma \approx 2.55 \]
+#+end_solution
+#+begin_task org
+Известно, что нормальная случайная величина имеет среднее значение \(a = 100\) и \(p(88 < \xi < 112) = 0.9973\). Найти \(p(95 < \xi < 107)\)
+#+end_task
+#+begin_solution org
+\[ p(88 < \xi < 112) = \Phi \left(\frac{112 - 100}{\sigma}\right) - \Phi \left(\frac{88 - 100}{\sigma}\right) = 2\Phi \left(\frac{12}{\sigma}\right) = 0.9973 \]
+\[ \Phi \left(\frac{12}{\sigma}\right) = 0.49865 \]
+\[ \frac{12}{\sigma} = 3 \]
+\[ \sigma = 4 \]
+\[ p(95 < \xi < 107) = \Phi(1.75) + \Phi(1.25) = 0.4599 + 0.3944 = 0.8543 \]
+#+end_solution
+#+begin_task org
+Трамвай ходит с интервалом ровно 15 мин. Случайная величина --- время его ожидания на остановке. Найти мат ожидание и дисперсию.
+#+end_task
+#+begin_solution org
+\(a = 0, b = 15\)
+#+end_solution
+#+begin_task org
+Среднее время работы прибора до поломки --- 10 лет. Найти вероятност того что он проработате не менее 20 лет.
+#+end_task
+#+begin_solution org
+\(\xi \in E_\alpha\)
+\[ E\xi = \frac{1}{\alpha} = 10 \]
+\[ \alpha = 0.1 \]
+\[ p(\xi > 20) = 1 - p(0 < \xi < 20) = 1 - e^{-0\cdot0.1}  + e^{-20\cdot 0.1}\]
+#+end_solution
+
+* ДЗ
+#+begin_task org
+\(\xi \in N(3, 1^2)\). Найти \(p(1.8 < \xi < 3.8)\)
+#+end_task
+#+begin_task org
+\(\xi \in N(a, \sigma)\), \(p(|\xi - a| < 24) = 0.42\). Найти \(\sigma\)
+#+end_task
+#+begin_task org
+Двое человек договорились встретится между .. Первый сказал ..  Второй сказал что придет между 12:30 и 13:00. Случайная величина --- время ожидания. Найти числовые характеристики.
+#+end_task
+#+begin_task org
+Вывести правило 3х \(\sigma\) для равномерного и показательного распределения.
+#+end_task
+

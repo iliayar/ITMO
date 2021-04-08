@@ -1,0 +1,14 @@
+#+TITLE: Програмирование
+Курс Java
+* Домашки
+1. 
+2. [[file:HW2/][Sum]]
+3. [[file:HW3/][Reverse]]
+4. [[file:HW4/][WordStat]]
+5. [[file:HW5/][Scanner]]
+6. [[file:HW6/][WordStat]] with containers
+7. [[file:HW7/][markup]]
+8. Нету
+9. [[file:HW9/][Markdown to HTML]]
+10. [[file:HW10/][nmk]]
+11. [[file:HW11/][Expressions]]

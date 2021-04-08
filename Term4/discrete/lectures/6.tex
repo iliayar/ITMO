@@ -1,0 +1,300 @@
+% Created 2021-04-06 Tue 20:34
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 6}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 6},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newcommand{\Seq}{\text{Seq}\,}
+\newcommand{\Set}{\text{Set}\,}
+\newcommand{\Cyc}{\text{Cyc}\,}
+
+\section{Помеченные КО и экспоненциальные производящие функции}
+\label{sec:org1bb7779}
+\[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
+\begin{definition}
+Экспоненциальная производящая функция:
+\[ a(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
+\end{definition}
+\begin{symb}
+Мы будет обозначать ЭПФ так-же большой буквой
+\end{symb}
+\begin{examp}
+\(1, 1, 1,1, ,1,1 ,1, 1, 1\)
+\begin{description}
+\item[{ОПФ}] \(\frac{1}{1 - t}\)
+\item[{ЭПФ}] \(1 + 1\cdot t + \frac{1}{2!}\cdot t^2 + \frac{1}{3!}\cdot t^3 + \dots = \sum\limits_{n = 0}^{ + \infty} \frac{1}{n!}\cdot t^n = e^t = \exp(t)\)
+\end{description}
+\end{examp}
+\begin{examp}
+\(1, 1, 2, 6, 24, \dots, n!, \dots\quad a_n = n!\)
+\begin{description}
+\item[{ОПФ}] \(1 + t + 2\cdot t^2 + 6\cdot t^3 + \dots + n!\cdot t^n + \dots\)
+\item[{ЭПФ}] \(\sum \limits_{n = 0}^{ + \infty} \frac{n!}{n!}\cdot t^n = \frac{1}{1 - t}\)
+\end{description}
+\end{examp}
+
+\[ A(t) = \frac{a_0}{0!} + \frac{a_1}{1!}\cdot t + \frac{a_2}{2!}\cdot t^2 + \dots + \frac{a_n}{n!}\cdot t^n + \dots \]
+\[ B(t) = \frac{b_0}{0!} + \frac{b_1}{1!}\cdot t + \frac{b_2}{2!}\cdot t^2 + \dots + \frac{b_n}{n!}\cdot t^n + \dots \]
+
+\begin{property}
+\[ C(t) = A(t) \pm B(t)\quad c_n = a_n \pm b_n \]
+\end{property}
+\begin{property}
+\[ C(t) = a(t)\cdot B(t) \]
+\[ \frac{C_n}{n!} = \sum\limits_{k = 0}^n \frac{a_k}{k!}\cdot\frac{b_{n - k}}{(n - k)!} \]
+\[ c_n = \sum\limits_{k = 0}^n \binom{n}{k}a_kb_{n - k} \]
+\end{property}
+\begin{property}
+\[ C(t) = \frac{A(t)}{B(t)} \]
+\[ a_n = \sum^n_{k = 0}\binom{n}{k}b_kc_{n - k} = \sum\limits_{k = 1}^n \binom{n}{k} b_k c_{n - k} + b_0 c_n \]
+\[ c_n = \frac{a - \sum_{k = 1}^n\binom{n}{k} b_k c_{n - k}}{b_0} \]
+\end{property}
+\textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
+\subsection{Помеченные объекты}
+\label{sec:org57b1f70}
+\begin{examp}
+Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
+\end{examp}
+\begin{examp}
+Пустые графы. \(E_n = 1\) --- количество графов с \(n\) вершинами \\
+ЭПФ: \(\exp(t)\)
+\end{examp}
+\begin{examp}
+Циклы. \(C_n = (n - 1)!\) --- количество циклов из \(n\) вершин. Направление обхода фиксировано. \\
+ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
+\end{examp}
+\subsection{Операции}
+\label{sec:org11b51f0}
+\subsubsection{Дизъюнктное объединение (сумма)}
+\label{sec:org6dbabd1}
+\begin{itemize}
+\item \(A\)
+\item \(B\)
+\item \(A \cap B = \emptyset\)
+\item \(C = A \cup B\)
+\end{itemize}
+\[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
+\subsubsection{Пара (произведение)}
+\label{sec:org8d97a25}
+\begin{itemize}
+\item \(A\)
+\item \(B\)
+\item \(C = A \times B\)
+\end{itemize}
+\[ C = \{\langle \underbrace{a}_{k\text{ атомов}}, \underbrace{b}_{n - k\text{ атомов}} \rangle\} \]
+Получим последовательность \(c_1 c_2 \dots c_n\). Перенумеруем элементы: \\
+Первые \(k\) в \(d_1d_2 \dots d_k\), где \(d_i = |\{c_j | 1 \le j \le k,\ c_k \le c_i\}|\). \\
+А остальные \(c_{k + 1}\dots c_n\) в \(e_1 \dots e_{n - k}\), где \(e_i = |\{c_j | k + 1\le j \le n,\ c_j \le c_{i + k}\}|\). \\
+Пусть \(d_i = a_i\), а \(e_i = b_i\)
+\[ c_n = \sum_{k = 0}^{ n } \binom{n}{k} a_k b_{n - k} \quad C(t) = A(t) \cdot B(t)\]
+\begin{examp}
+Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
+\end{examp}
+\subsubsection{Последовательность}
+\label{sec:org7361d1b}
+\[ C = \Seq A = \emptyset + A \times \Seq A \]
+\[ C(t) = 1 + A(t)\cdot C(t) \]
+\[ C(t) = \frac{1}{1 - A(t)} \]
+\begin{examp}
+\-
+\begin{itemize}
+\item \(U = \{\circ\}\)
+\item \(U(t) = t\)
+\item \(\Seq U = P\)
+\end{itemize}
+\[P(t) = \frac{1}{1 - t}\]
+\end{examp}
+\subsubsection{Множества (Set)}
+\label{sec:org119bc2f}
+\begin{itemize}
+\item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
+\end{itemize}
+\[ B_k = \Seq_k A = \underbrace{A \times A \times \dots \times A}_k\quad B_k(t) = A(t)^k \]
+\[ \Set_k A = \Seq_k A /_\sim\]
+\([x_1 x_2 \dots x_k] \sim [y_1 y_2 \dots y_k]\). \(\exists\) перестановка \(\pi: x_i = y_{\pi[i]}\)
+\[ C_k(t) = \frac{1}{k!}\quad B_k(t) = \frac{A(t)^k}{k!} \]
+\[ \Set A = \bigcup_{k = 0}^{\infty} \Set_k A = \sum_{k = 0}^\infty \frac{A(t)^k}{k!} = e^{A(t)} \]
+\begin{examp}
+\-
+\begin{itemize}
+\item \(U = \{\circ\}\)
+\item \(U(t) = t\)
+\end{itemize}
+\[ \Set U = E\quad E(t) = e^t \]
+, где \(E\) --- пустые графы
+\end{examp}
+\begin{examp}
+Циклы.
+\begin{itemize}
+\item \(U = \{\circ\}\)
+\item \(U(t) = t\)
+\item \(B = \Set \Cyc U\)
+\end{itemize}
+\[ B(t) = e^{C(t)} = e^{\ln \frac{1}{1 - t}} = \frac{1}{1 - t} \]
+Набор помеченных циклов являеся престановкой
+\end{examp}
+\subsubsection{Циклы}
+\label{sec:org02fe53c}
+\begin{itemize}
+\item \(\Cyc_k A\) --- количество циклов длины \(k\)
+\end{itemize}
+\[ C = \Cyc_k A = \Seq_k A /_\sim \], где классы эквивалентности с точностью до циклических сдвигов. \\
+\([x_1\dots x_k] \sim [y_1 \dots y_k]\). \(\exists i:\ x_j = y_{(i + j)\mod k + 1}\)
+\[ \Cyc U = \ln\frac{1}{1 - t} \]
+\[ C_k(t) = \frac{1}{k}A(t)^k \]
+\[ C(t) = \sum_{k = 1}^\infty \frac{1}{k} A(t)^k = \ln\frac{1}{1 - A(t)} \]
+\[ \Set\Cyc U = P \]
+\[ \Set \Cyc A \simeq \Seq A \]
+
+
+\subsection{Обобщение}
+\label{sec:orge59a004}
+
+\begin{theorem}[о подстановке]
+\-
+\begin{itemize}
+\item \(A\) --- помеченные КО --- \(A(t)\)
+\item \(B\) --- помеченные КО --- \(B(t)\)
+\end{itemize}
+\(C = A[B]\) --- вместо каждого атома \(A\) подставляем КО \(B\), перенумеруем получившиеся атомы произвольным образом
+\[ C(t) = A(B(t)) \]
+\end{theorem}
+\begin{examp}
+\(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
+\end{examp}
+\end{document}
