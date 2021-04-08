@@ -88,8 +88,29 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 \[ x_2 = \frac{b_2^{(1)} - a_{23}^{(1)} x_3 - \dots - a_{2n}^{(1)}x_n}{a_{22}^{(1)}} \]
 \[ x_1 = \frac{b_1 - a_{12} x_2 - \dots - a_{1n} x_n}{a_{11}} \]
 \[ x_k = \frac{b_k^{(k - 1)} - \sum_{i = k + 1}^n a_{ki}^{(k - 1)} x_i}{a_{kk}^{(k - 1)}} \quad k \in \overline{n, 1}\]
-\todo
-Модификация
+\(\sum_j^n = 0\), если \(j > n\)
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{метод Гаусса}
+\begin{algorithmic}[1]
+\FOR{\(k = 1,\dots, n - 1\)}
+  \FOR{\(i = k+1,\dots,n\)}
+    \STATE \(t_{ik} = \frac{a_{ik}}{a_{kk}}\)
+    \STATE \(b_i = b_i - t_{ik}b_k\)
+    \FOR{\(j = k + 1,\dots,n\)}
+      \STATE \(a_{ij} = a_{ij} - t_{ik}a_{kj}\)
+    \ENDFOR
+  \ENDFOR
+\ENDFOR
+\STATE \(x_n = \frac{b_n}{a_{nn}}\)
+\FOR{\(k = n - 1,\dots, 1\)}
+  \STATE \(x_k = \frac{(b_k - \sum_{j = k + 1}^n a_{kj} x_j)}{a_{kk}}\)
+\ENDFOR
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+
+Модификация с постолбцовым выбором глваного элемента
 #+begin_export latex
 \begin{rualgo}[H]
 \caption{Модификация алгоритма Гаусса}
