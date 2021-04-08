@@ -1,0 +1,120 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 7
+#+AUTHOR: Ilya Yaroshevskiy
+
+- \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
+- \(x = 0 \vdash \forall x. x = 0\)
+- \(x = 0 \not\vDash \forall x. x = 0\)
+#+ATTR_LATEX: :options [Условие для корректности]
+#+begin_definition org
+Правила для кванторов по свободным перменным из \(\Gamma\) запрещены. \\
+_Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
+#+end_definition
+* Полнота исчесления предикатов
+#+begin_definition org
+\(\Gamma\) --- *непротиворечивое* множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha \) ни при каком \(\alpha\)
+#+end_definition
+#+begin_examp org
+Непротиворечивые:
+- \(\emptyset\)
+- \(A \vee \neg A\)
+Противоречивые:
+- \(A \& \neg A\)
+#+end_examp
+#+begin_remark org
+Непротиворечивое множество замкнутых(не имеющая сводных перменных) бескванторных формул
+#+end_remark
+#+begin_examp org
+\(\{A\}, \{0 = 0\}\)
+#+end_examp
+#+begin_definition org
+*Моделью* для непротиворечивого множества замкнутых бескванторных формул \(\Gamma\) --- такая модель, что каждая формула из \(\Gamma\) оценивается в И
+#+end_definition
+#+begin_definition org
+Полное непротиворечивое замкнутых бескванторных формул --- такое, что для каждой замкнутой бескванторной формулы \(\alpha\): либо \(\alpha \in \Gamma\), либо \(\neg \alpha \in \Gamma\)
+#+end_definition
+#+begin_symb org
+*з.б.* --- замкнутая бескванторная. *непр. мн* --- непротиворечивое множество
+#+end_symb
+#+begin_theorem org
+Если \(\Gamma\) --- непротиворечивое множество з.б. фомул и \(\alpha\) --- з.б.  формула. \\
+То либо \(\Gamma \cup \{\alpha\}\), либо \(\Gamma \cup \{\neg \alpha\}\) --- непр. мн. з.б. формул
+#+end_theorem
+#+begin_proof org
+Пусть и \(\Gamma \cup \{\alpha\}\) и \(\Gamma \cup \{\neg \alpha\}\)\todo
+#+end_proof
+#+begin_theorem org
+Если \(\Gamma\) --- непр. мн. з.б. фомул, то можно построить \(\Delta\) --- полное непр. мн. з.б. формул. \(\Gamma \subseteq \Delta\) и в языке --- счетное количество формул
+#+end_theorem
+\(\varphi_1, \varphi_2, \varphi_3, \dots\) --- формулы з.б. \\
+- \(\Gamma_0 = \Gamma\)
+- \(\Gamma_1 = \Gamma_0 \cup \{\varphi_1\}\) либо \(\Gamma_0 \cup \{\neg \varphi_1\}\) --- смотря что непротиворечивое
+- \(\Gamma_2 = \Gamma_1 \cup \{\varphi_2\}\) либо \(\Gamma_1 \cup \{\neg \varphi_2\}\)
+\[ \Gamma^* = \bigcup_i \Gamma_i \]
+#+begin_property org
+\(\Gamma^*\) --- полное
+#+end_property
+#+begin_property org
+\(\Gamma^*\) --- непрерывное
+#+end_property
+#+begin_proof org
+Пусть \(\Gamma^* \vdash \beta \& \neg \beta\) \\
+Конечное доказательство \(\gamma_1, \dots \gamma_n\), часть из которых гипотезы: \(\gamma_1, \dots, \gamma_k\) \\
+\(\gamma_i \in \Gamma_{R_i}\). Возьмем \(\Gamma_{\max{R_i}}\). Правда ли \(\Gamma_{\max{R_i}} \vdash B \& \neg B\)
+#+end_proof
+#+begin_theorem org
+Любое полное непротиворечивое множество замкнутых бескванторных формул \(\Gamma\) имеет модель, т.е. существует оценка \(\llbracket \rrbracket\): если \(\gamma \in \Gamma\), то \(\llbracket \gamma \rrbracket = \text{И}\)
+#+end_theorem
+#+begin_proof org
+\(D\) --- все записи из функциональных символов.
+- \(\llbracket f_0^n \rrbracket\) --- константа \Rightarrow \(``f_0^n``\)
+- \(\llbracket f_k^m (\Theta_1, \dots, \Theta_k) \rrbracket\) \Rightarrow \(``f_k^m(`` + \llbracket \Theta_1 \rrbracket + ``,`` + \dots + ``,`` + \llbracket \Theta_k \rrbracket + ``)``\)
+- \(\llbracket P(\Theta_1, \dots, \Theta_n) \rrbracket = \begin{cases} \text{И} & P(\Theta_1, \dots, \Theta_n) \in \Gamma \\ \text{Л} & \text{иначе} \end{cases}\)
+- свободные переменные: \(\emptyset\)
+Так построенные модель --- модель для \(\Gamma\). Индукция по количеству связок. \\
+_База_ очев. \\
+_Переход_ \(\alpha \& \beta\). При этом
+1. Если \(\alpha, \beta \in \Gamma\) \(\llbracket \alpha \rrbracket = \text{И}\) и \(\llbracket \beta \rrbracket = \text{И}\) то \(\alpha \& \beta \in \Gamma\)
+2. Если \(\alpha, \beta \not\in \Gamma\) \(\llbracket \alpha \rrbracket \neq \text{И}\) или \(\llbracket \beta \rrbracket \neq \text{И}\) то \(\alpha \& \beta \not\in \Gamma\)
+Аналогично для других операций
+#+end_proof
+#+ATTR_LATEX: :options [Геделя о полноте]
+#+begin_theorem org
+Если \(\Gamma\) --- полное неротиворечивое множество замкнутых(не бескванторных) фомул, то оно имеет модель
+#+end_theorem
+#+begin_corollary org
+Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+#+end_corollary
+#+begin_proof org
+Пусть \(\vDash \alpha\), но \(\not\vdash \alpha\). Значит \(\{\neg \alpha\}\) --- непротиворечивое множество замкнутых формул. Тогда \(\{\alpha\}\) или \(\{\neg \alpha\}\) --- непр. мн. з. ф. Пусть \(\{\alpha\}\) --- непр. мн. з.ф., а \(\{\neg \alpha\}\) --- противоречивое. При этом \(\neg \alpha \vdash \beta \& \neg \beta\), \(\neg \alpha \vdash \alpha\), \(\beta \& \neg \beta \vDash \alpha\). \(\neg \alpha \vdash \alpha\), \(\alpha \vdash \alpha\). Значит \(\vdash \alpha\)
+#+end_proof
+- \(\Gamma\) --- п.м.з.ф.
+- перестроим \(\Gamma\) в \(\Gamma^\triangle\) --- п.н.м. *б.* з. ф.
+- по теореме о существование модели: \(M^\triangle\) --- модель для \(F^\triangle\)
+- покажем, что \(M^\triangle\) --- модель для \(\Gamma\) --- \(M\)
+\(\Gamma_0 = \Gamma\), где все формулы --- в предварительной нормальной форме
+#+begin_definition org
+ПНФ --- формула, где \(\forall \exists \forall \dots(\tau)\), \(\tau\) --- формула без кванторов
+#+end_definition
+#+begin_theorem org
+Если \(\varphi\) --- формула, то существует \(\psi\) --- в п.ф., то \(\varphi \to \psi\) и \(\psi \to \varphi\)
+#+end_theorem
+#+begin_proof org
+\(\Gamma_0 \subseteq \Gamma_1 \subseteq \Gamma_1 \subseteq \dots \subseteq \Gamma^* \). \(\Gamma^* = \bigcup_i \Gamma_i\) \\
+Переход: \(\Gamma_i \to \Gamma_{i + 1}\) \\
+Рассмторим: \(\varphi_j \in \Gamma_i\) \\
+Построим семейство ф.с. \(d^j_i\) --- новые перменные
+1. \(\varphi_j\) без кванторов --- не трогаем
+2. \(\varphi_j \equiv \forall x. \psi\) --- добавим все формулы вида \(\psi[x := \Theta]\), где \(\Theta\) -- терм, состоящий из \(f\): \(d_0^e, d_1^{e'} \dots , d_{i - 1}^{e^{'\dots'}}\)
+3. \(\varphi_j \equiv \exists x. \psi\) --- добавим \(\psi[x:=d^j_i]\)
+\(\Gamma_{i + 1} = \Gamma_i \cup \{\text{все добавленные формулы}\}\) --- счетное количество
+#+end_proof
+#+begin_theorem org
+Если \(\Gamma_i\) --- непротиворечиво, то \(\Gamma_{i + 1}\) --- непротиворечиво
+#+end_theorem
+#+begin_theorem org
+\(\Gamma*\) --- непротиворечиво
+#+end_theorem
+#+begin_corollary org
+\(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
+#+end_corollary

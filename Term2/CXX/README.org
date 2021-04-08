@@ -1,0 +1,10 @@
+#+TITLE: С++
+* Домашки
+** Большие
+- [[file:8-puzzle-iliayar/][8 Puzzle with A*]]
+- [[file:open-addressing-hash-iliayar/][Open Adressing Hash Map/Set with an STL interface]]
+- [[file:inverted-index-iliayar/][Inverted Index]]
+- [[file:md-handler-iliayar/][MD Handler]]
+** Маленькие
+- [[file:comm-iliayar/][Comm]]
+- [[file:second-chance-arbitrary-iliayar/][Second Chance Arbitrary]]

@@ -1,0 +1,343 @@
+% Created 2021-04-05 Mon 13:15
+% Intended LaTeX compiler: pdflatex
+
+  \documentclass[english]{article}
+  \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+  
+  \usepackage{geometry}
+  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+   \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 8}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 8},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
+
+
+\begin{itemize}
+\item \(M\)
+\item \(\Phi: O \subset \R^2 \to \R^3\)
+\item \(f\)
+\item \(f \citc \Phi\)
+\end{itemize}
+\[ \int_{M/E} d fs = \int_{O/\Phi^{-1}(E)} f \circ \Phi \cdot |\Phi'u\times\Phi'v|\,du\,dv \]
+\begin{definition}
+\(M \subset \R^3\) --- \textbf{кусочно гладкое двумерное многообразие}, если
+\(M\) --- конечное объединение
+\begin{itemize}
+\item простых гладких двумерных многообразий \(M_i\)
+\item гладких кривых
+\item точек
+\end{itemize}
+\end{definition}
+\begin{remark}
+Просто так сферу параметризовать не можем, но можем разбить ее на две полусферы и окружность и считать отдельно для каждой из них.
+\end{remark}
+\begin{definition}
+\(E \subset M\) --- измеримое, если измеримы все \(E \cap M_i\). \\
+\[S(E) := \sum_i S(E\cap M_i) \]
+\[ \int_E f ds := \sum_i \int_{E \cap M_i} f ds \]
+\end{definition}
+\section{Поверхностный интеграл II рода}
+\label{sec:org2e9230a}
+\begin{itemize}
+\item \(M\) --- простое гладкое двумерное многообразие в \(R^3\) --- поверхность
+\end{itemize}
+\begin{definition}
+\textbf{Сторона поверхности} --- непрерывное семейство единичных нормалей к этой поверхности \\
+\(M \subset \R^3 \quad W: M \to \R^3\) \\
+\(\forall x\ W(x)\) --- нормаль к \(M\), \(|w(x)| = 1\), \(w(x) \perp \Phi'u,\Phi'_v\)
+\end{definition}
+\begin{remark}
+Локльно каждая повехность --- двустороннее. В общем случае --- 1 или 2 стороны
+\end{remark}
+\begin{remark}
+График функции \(z(x, y)\)
+\[ \Phi: (x, y) \mapsto \begin{pmatrix} x \\ y \\ z(x, y) \end{pmatrix} \]
+\[ \Phi'_x = \begin{pmatrix} 1 \\ 0 \\ z'_x \end{pmatrix}\quad\Phi'_y = \begin{pmatrix} 0 \\ 1 \\ z'_y \end{pmatrix} \]
+--- касательные векторы
+\[n := \Phi'_x \times \Phi'_y = \begin{pmatrix} -z'_x \\ -z'_y \\ 1 \end{pmatrix}\] --- нормаль
+\[ n_0 = \pm \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
+\end{remark}
+\begin{remark}
+Другой способ задания стороны поверхности
+\begin{enumerate}
+\item \(u, v\) --- касательные векторы \\
+\(u \not\parallel v\), \((u, v)\) --- касательный реп\(\acute{\text{е}}\)р \\
+Если задано непрерывное поле реперов, то они задают сторону \(n = u \times v\)(отнормировать)
+\item Задана петля + указано непрерывное движение
+\end{enumerate}
+\end{remark}
+\begin{definition}
+\(M\) --- поверхность в \(\R^3\), \(n_0\) --- сторона, \(\gamma\) --- контур(петля) в \(M\) --- ориентированный. \\
+Говорят, что сторона поверхности \(n_0\) согласована с ориентацией \(\gamma\): \((\gamma' \times N_\text{внутр.}) \parallel n_0\). Т.е. если ориентация \(\gamma\) задает сторону \(n_0\)
+\end{definition}
+\begin{definition}
+\-
+\begin{itemize}
+\item \(M\) --- простое двумерное гладкое многообразие
+\item \(n_0\) --- сторона \(M\)
+\item \(F: M \to \R^3\) --- векторное поле(непрерывное)
+\end{itemize}
+\[ \int_M \langle F, n_0 \rangle \, ds \] --- \textbf{интеграл II рода} векторного поля \(F\) по поверхности \(M\)
+\end{definition}
+\begin{remark}
+Смена стороны = смена знака
+\end{remark}
+\begin{remark}
+Не зависит от параметра
+\end{remark}
+\begin{remark}
+\(F = (P, Q, R)\) обозначается
+\[ \iint_M P \, dy\,dz + Q\,dz\,dx + R\,dx\,dy \]
+\end{remark}
+\begin{remark}
+\(\Phi, n = \Phi'_u \times \Phi'_v \leadsto n_0\)
+\[ \int_M \langle F, n_0 \rangle = \int_O \left\langle F, \frac{\Phi'_u \times \Phi'_v}{|\Phi'_u\times\Phi'_v} \right\rangle |\Phi'_u\times\Phi'_v|\,du\,dv =  \]
+\[ \int_O \underbrace{\langle F, \Phi'_u\times\Phi'_v \rangle}_\text{смешенное произведение} \,du\,dv \addtag\label{int_1_8} \]
+\[ \Phi(u, v) = (x(u, v), y(u, v), z(u, v)) \]
+\[ \langle F, \Phi'_u\times\Phi'_v \rangle = \det\begin{pmatrix}P & x'_u & x'_v \\ Q & y'_u & y'_v \\ R & z'_u & z'_v\end{pmatrix} \]
+\[ \ref{int_1_8} = \int_O P\cdot\begin{vmatrix} y'_u & z'_v \\ z'_u & z'_v \end{vmatrix} + Q\cdot\begin{vmatrix}z'_u & z'_v \\ x'_u & x'_v\end{vmatrix} + R\cdot\begin{vmatrix}x'_u & x'_v \\ y'_u & y'_v\end{vmatrix}\,du\,dv \]
+\end{remark}
+\begin{examp}
+График \(z(x, y)\) над областью \(G\) по верхней стороне
+\[ \iint_{\Gamma_z} R\,dx\,dy = \iint_{\Gamma_z} 0\,dy\,dz + 0\,dz\,dy + R(x, y, z)\,dx\,dy \addtag\label{int_2_8} \]
+\[ n_0 = \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
+\[ \ref{int_2_8} = \iint_{\Gamma_z} R(x, y, z)\cdot \frac{1}{\sqrt{1 + z'_x^2 + z'_y^2}}\,ds = \iint_G R(x, y, z(x, y)) \,dx\,dy = \iint_G R\,dx\,dy \]
+т.е. этот интеграл II рода равен интегралу по проекции
+\end{examp}
+\begin{corollary}
+\-
+\begin{itemize}
+\item \(V \subset \R^3\)
+\item \(M = \partial V\) --- гладкая двумерная поверхность
+\item \(n_0\) --- внешняя нормаль
+\end{itemize}
+\[ \lambda_3 V = \iint_{\partial V} z\,dx\,dy = \frac{1}{3}\iint_{\partial V} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy \]
+\end{corollary}
+\begin{corollary}
+\(\Omega\) --- гладкая кривая в \(\R^2\), \(M\) (--- цилиндр над \(\Omega\)) \(=\Omega \times [z_0, z_1]\) \\
+\uline{Тогда} (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
+\end{corollary}
+\section{Ряды Фурье}
+\label{sec:org1b40256}
+\subsection{Пространства \(L^p\)}
+\label{sec:orgdf581c6}
+\begin{property}
+\-
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \(f: X \to \C\) \\
+\(x = f(x) = u(x) + iv(x)\) \\
+\(u = \Re f,\ v = \Im f\) \\
+\item \(f\) --- измеримая, если \(u\) и \(v\) --- измеримые
+\item \(f\) --- суммируемая, \(u\) и \(v\) --- суммирумые
+\item \(f\) --- суммируемая: \(\int_E f = \int_E u + \int_E v\)
+\end{itemize}
+\end{property}
+\begin{property}[Неравенство Гёльдера]
+\-
+\begin{itemize}
+\item \(p,q > 1\) \(\frac{1}{p} + \frac{1}{q} = 1\)
+\item \((X, \A, \mu)\)
+\item \(E\) --- измеримое
+\item \(f, g: E \to \C\) --- измеримые
+\end{itemize}
+\uline{Тогда} \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \left(\int_E |g|^q\right)^{\frac{1}{q}} \]
+\label{orgb80c6c0}
+\end{property}
+\begin{property}[Неравенство Минковского]
+Те-же условия что и в \hyperref[orgb80c6c0]{Неравенстве Гельдера}
+\[ \left(\int_E |f + g|^p\right)^{\frac{1}{p}} \le \left(\int_E |f|^p\right)^{\frac{1}{p}} + \left(\int_E |g|^p\right)^{\frac{1}{p}} \]
+\end{property}
+\begin{remark}
+При \(p = 1\) неравенство тоже верно
+\end{remark}
+\begin{property}
+\begin{definition}
+\(L^p\), \(1 \le p \le +\infty\)
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \(E \subset X\) --- измеримое
+\end{itemize}
+\[ \mathcal{L}^p(E, \mu) := \left\{f: \text{ почти везде }E \to \R(\C) \Big| f\text{ --- измеримая}, \int_E |f|^p\,d\mu < +\infty\right\} \]
+--- это линейное пространство (по неравенству Минковского) \\
+\(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = h\text{ почти везде}\). \(\mathcal{L}^p/_N = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
+\end{definition}
+\end{property}
+
+\begin{property}
+\-
+\begin{itemize}
+\item \(L^\infty(E,\mu)\)
+\item \((X, \A, \mu)\)
+\item \(E\) --- измеримое
+\item \(f\) --- почти везде \(E \to \overline{\R}\) --- измеримая
+\end{itemize}
+\[ \esssup_{x \in E} f = \inf \{A \in \overline{R}\Big| f \le A\text{ почти везде}\} \]
+\end{property}
+\beginproperties
+\begin{property}
+\(\esssup f \le \sup f\)
+\end{property}
+\begin{property}
+\(f \le \esssup f\) почти везде
+\end{property}
+\begin{proof}
+\(B = \esssup f\) \\
+Тогда 
+\end{proof}
+
+\begin{property}
+\(f\) --- сумм, \(\esssup_E |g| < +\infty\) \\
+\uline{Тогда} \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
+\end{property}
+\begin{proof}
+\[ \left| \int_E fg \right| \le \int_E |fg| \le \int_E \esssup |g|\cdot|f| \]
+\end{proof}
+\begin{remark}
+\(L^\infty(E, \mu) = \{f: \text{п.в. } E \to \overline{\R}(\overline{\C}),\text{ изм.}, \esssup |f| < +\infty \}/_\sim\). Эквивалентные функции отождествленны --- это нормированное пространство
+\[ \Vert f \Vert_{L^\infty(E, \mu)} := \esssup_E |f| = \Vert f \Vert_\infty \]
+\end{remark}
+\begin{remark}
+В новых обозначениях. Неравенство Гельдера:
+\[ \Vert fg \Vert_1 \le \Vert f \Vert_p \cdot \Vert g \Vert_q \]
+Здесь можно брать \(p = 1,\ q = +\infty\)
+\end{remark}
+\begin{remark}
+\(f \in L^p\) \(\Rightarrow\) \(f\) --- почти везде конечны. \(1 \le p \le +\infty\) \(\Rightarrow\) можно считать \(f\) --- задана всюду на \(E\), и всюду конечна
+\end{remark}
+
+
+
+\[ \const \grad A \]
+\end{document}

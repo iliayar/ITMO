@@ -1,0 +1,184 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 8
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_export latex
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
+#+end_export
+
+
+- \(M\)
+- \(\Phi: O \subset \R^2 \to \R^3\)
+- \(f\)
+- \(f \citc \Phi\)
+\[ \int_{M/E} d fs = \int_{O/\Phi^{-1}(E)} f \circ \Phi \cdot |\Phi'u\times\Phi'v|\,du\,dv \]
+#+begin_definition org
+\(M \subset \R^3\) --- *кусочно гладкое двумерное многообразие*, если
+\(M\) --- конечное объединение
+- простых гладких двумерных многообразий \(M_i\)
+- гладких кривых
+- точек
+#+end_definition
+#+begin_remark org
+Просто так сферу параметризовать не можем, но можем разбить ее на две полусферы и окружность и считать отдельно для каждой из них.
+#+end_remark
+#+begin_definition org
+\(E \subset M\) --- измеримое, если измеримы все \(E \cap M_i\). \\
+\[S(E) := \sum_i S(E\cap M_i) \]
+\[ \int_E f ds := \sum_i \int_{E \cap M_i} f ds \]
+#+end_definition
+* Поверхностный интеграл II рода
+- \(M\) --- простое гладкое двумерное многообразие в \(R^3\) --- поверхность
+#+begin_definition org
+*Сторона поверхности* --- непрерывное семейство единичных нормалей к этой поверхности \\
+\(M \subset \R^3 \quad W: M \to \R^3\) \\
+\(\forall x\ W(x)\) --- нормаль к \(M\), \(|w(x)| = 1\), \(w(x) \perp \Phi'u,\Phi'_v\)
+#+end_definition
+#+begin_remark org
+Локльно каждая повехность --- двустороннее. В общем случае --- 1 или 2 стороны
+#+end_remark
+#+begin_remark org
+График функции \(z(x, y)\)
+\[ \Phi: (x, y) \mapsto \begin{pmatrix} x \\ y \\ z(x, y) \end{pmatrix} \]
+\[ \Phi'_x = \begin{pmatrix} 1 \\ 0 \\ z'_x \end{pmatrix}\quad\Phi'_y = \begin{pmatrix} 0 \\ 1 \\ z'_y \end{pmatrix} \]
+--- касательные векторы
+\[n := \Phi'_x \times \Phi'_y = \begin{pmatrix} -z'_x \\ -z'_y \\ 1 \end{pmatrix}\] --- нормаль
+\[ n_0 = \pm \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
+#+end_remark
+#+begin_remark org
+Другой способ задания стороны поверхности
+1. \(u, v\) --- касательные векторы \\
+   \(u \not\parallel v\), \((u, v)\) --- касательный реп\(\acute{\text{е}}\)р \\
+   Если задано непрерывное поле реперов, то они задают сторону \(n = u \times v\)(отнормировать)
+2. Задана петля + указано непрерывное движение
+#+end_remark
+#+begin_definition org
+\(M\) --- поверхность в \(\R^3\), \(n_0\) --- сторона, \(\gamma\) --- контур(петля) в \(M\) --- ориентированный. \\
+Говорят, что сторона поверхности \(n_0\) согласована с ориентацией \(\gamma\): \((\gamma' \times N_\text{внутр.}) \parallel n_0\). Т.е. если ориентация \gamma задает сторону \(n_0\)
+#+end_definition
+#+begin_definition org
+\-
+- \(M\) --- простое двумерное гладкое многообразие
+- \(n_0\) --- сторона \(M\)
+- \(F: M \to \R^3\) --- векторное поле(непрерывное)
+\[ \int_M \langle F, n_0 \rangle \, ds \] --- *интеграл II рода* векторного поля \(F\) по поверхности \(M\)
+#+end_definition
+#+begin_remark org
+Смена стороны = смена знака
+#+end_remark
+#+begin_remark org
+Не зависит от параметра
+#+end_remark
+#+begin_remark org
+\(F = (P, Q, R)\) обозначается
+\[ \iint_M P \, dy\,dz + Q\,dz\,dx + R\,dx\,dy \]
+#+end_remark
+#+begin_remark org
+\(\Phi, n = \Phi'_u \times \Phi'_v \leadsto n_0\)
+\[ \int_M \langle F, n_0 \rangle = \int_O \left\langle F, \frac{\Phi'_u \times \Phi'_v}{|\Phi'_u\times\Phi'_v} \right\rangle |\Phi'_u\times\Phi'_v|\,du\,dv =  \]
+\[ \int_O \underbrace{\langle F, \Phi'_u\times\Phi'_v \rangle}_\text{смешенное произведение} \,du\,dv \addtag\label{int_1_8} \]
+\[ \Phi(u, v) = (x(u, v), y(u, v), z(u, v)) \]
+\[ \langle F, \Phi'_u\times\Phi'_v \rangle = \det\begin{pmatrix}P & x'_u & x'_v \\ Q & y'_u & y'_v \\ R & z'_u & z'_v\end{pmatrix} \]
+\[ \ref{int_1_8} = \int_O P\cdot\begin{vmatrix} y'_u & z'_v \\ z'_u & z'_v \end{vmatrix} + Q\cdot\begin{vmatrix}z'_u & z'_v \\ x'_u & x'_v\end{vmatrix} + R\cdot\begin{vmatrix}x'_u & x'_v \\ y'_u & y'_v\end{vmatrix}\,du\,dv \]
+#+end_remark
+#+begin_examp org
+График \(z(x, y)\) над областью \(G\) по верхней стороне
+\[ \iint_{\Gamma_z} R\,dx\,dy = \iint_{\Gamma_z} 0\,dy\,dz + 0\,dz\,dy + R(x, y, z)\,dx\,dy \addtag\label{int_2_8} \]
+\[ n_0 = \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
+\[ \ref{int_2_8} = \iint_{\Gamma_z} R(x, y, z)\cdot \frac{1}{\sqrt{1 + z'_x^2 + z'_y^2}}\,ds = \iint_G R(x, y, z(x, y)) \,dx\,dy = \iint_G R\,dx\,dy \]
+т.е. этот интеграл II рода равен интегралу по проекции
+#+end_examp
+#+begin_corollary org
+\-
+- \(V \subset \R^3\)
+- \(M = \partial V\) --- гладкая двумерная поверхность
+- \(n_0\) --- внешняя нормаль
+\[ \lambda_3 V = \iint_{\partial V} z\,dx\,dy = \frac{1}{3}\iint_{\partial V} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy \]
+#+end_corollary
+#+begin_corollary org
+\(\Omega\) --- гладкая кривая в \(\R^2\), \(M\) (--- цилиндр над \(\Omega\)) \(=\Omega \times [z_0, z_1]\) \\
+_Тогда_ (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
+#+end_corollary
+* Ряды Фурье
+** Пространства \(L^p\)
+#+begin_property org
+\-
+- \((X, \A, \mu)\)
+- \(f: X \to \C\) \\
+  \(x = f(x) = u(x) + iv(x)\) \\
+  \(u = \Re f,\ v = \Im f\) \\
+- \(f\) --- измеримая, если \(u\) и \(v\) --- измеримые
+- \(f\) --- суммируемая, \(u\) и \(v\) --- суммирумые
+- \(f\) --- суммируемая: \(\int_E f = \int_E u + \int_E v\)
+#+end_property
+#+NAME: gelder_8
+#+ATTR_LATEX: :options [Неравенство Гёльдера]
+#+begin_property org
+\-
+- \(p,q > 1\) \(\frac{1}{p} + \frac{1}{q} = 1\)
+- \((X, \A, \mu)\)
+- \(E\) --- измеримое
+- \(f, g: E \to \C\) --- измеримые
+_Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \left(\int_E |g|^q\right)^{\frac{1}{q}} \]
+#+end_property
+#+ATTR_LATEX: :options [Неравенство Минковского]
+#+begin_property org
+Те-же условия что и в [[gelder_8][Неравенстве Гельдера]]
+\[ \left(\int_E |f + g|^p\right)^{\frac{1}{p}} \le \left(\int_E |f|^p\right)^{\frac{1}{p}} + \left(\int_E |g|^p\right)^{\frac{1}{p}} \]
+#+end_property
+#+begin_remark org
+При \(p = 1\) неравенство тоже верно
+#+end_remark
+#+begin_property org
+#+begin_definition org
+\(L^p\), \(1 \le p \le +\infty \)
+- \((X, \A, \mu)\)
+- \(E \subset X\) --- измеримое
+\[ \mathcal{L}^p(E, \mu) := \left\{f: \text{ почти везде }E \to \R(\C) \Big| f\text{ --- измеримая}, \int_E |f|^p\,d\mu < +\infty\right\} \]
+--- это линейное пространство (по неравенству Минковского) \\
+\(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = h\text{ почти везде}\). \(\mathcal{L}^p/_N = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
+#+end_definition
+#+end_property
+
+#+begin_property org
+\-
+- \(L^\infty(E,\mu)\)
+- \((X, \A, \mu)\)
+- \(E\) --- измеримое
+- \(f\) --- почти везде \(E \to \overline{\R}\) --- измеримая
+\[ \esssup_{x \in E} f = \inf \{A \in \overline{R}\Big| f \le A\text{ почти везде}\} \]
+#+end_property
+\beginproperties
+#+begin_property org
+\(\esssup f \le \sup f\)
+#+end_property
+#+begin_property org
+\(f \le \esssup f\) почти везде
+#+end_property
+#+begin_proof org
+\(B = \esssup f\) \\
+Тогда \(\)
+#+end_proof
+
+#+begin_property org
+\(f\) --- сумм, \(\esssup_E |g| < +\infty\) \\
+_Тогда_ \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
+#+end_property
+#+begin_proof org
+\[ \left| \int_E fg \right| \le \int_E |fg| \le \int_E \esssup |g|\cdot|f| \]
+#+end_proof
+#+begin_remark org
+\(L^\infty(E, \mu) = \{f: \text{п.в. } E \to \overline{\R}(\overline{\C}),\text{ изм.}, \esssup |f| < +\infty \}/_\sim\). Эквивалентные функции отождествленны --- это нормированное пространство
+\[ \Vert f \Vert_{L^\infty(E, \mu)} := \esssup_E |f| = \Vert f \Vert_\infty \]
+#+end_remark
+#+begin_remark org
+В новых обозначениях. Неравенство Гельдера:
+\[ \Vert fg \Vert_1 \le \Vert f \Vert_p \cdot \Vert g \Vert_q \]
+Здесь можно брать \(p = 1,\ q = +\infty\)
+#+end_remark
+#+begin_remark org
+\(f \in L^p\) \Rightarrow \(f\) --- почти везде конечны. \(1 \le p \le +\infty\) \Rightarrow можно считать \(f\) --- задана всюду на \(E\), и всюду конечна
+#+end_remark
+
+

@@ -1,5 +1,6 @@
-% Created 2021-02-17 Wed 15:52
+% Created 2021-04-06 Tue 23:36
 % Intended LaTeX compiler: pdflatex
+
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
@@ -11,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{natbib}
 \usepackage{amssymb}
+\usepackage{stmaryrd}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{mathtools}
@@ -28,7 +30,6 @@
 
 \usepackage{geometry}
 \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-
  \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
@@ -41,6 +42,7 @@
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{cd}
 \usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
@@ -49,11 +51,24 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -117,7 +132,7 @@
  pdftitle={Лекция 2},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -126,7 +141,7 @@
 
 
 \section{Производящие функции}
-\label{sec:org5823255}
+\label{sec:org6af3296}
 \begin{definition}
 \textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
  \(n\) все коэффиценты 0.
@@ -138,7 +153,7 @@
 \(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
 \end{definition}
 \subsection{Рекурентные соотношения}
-\label{sec:org15f1a67}
+\label{sec:org3d71388}
 \begin{definition}
 \[ m: a_0, a_1, \dots, a_{m - 1} \]
 \(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
@@ -180,4 +195,14 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \end{enumerate}
 \end{theorem}
+
+\subsection{Рекурента в рациональную ПФ}
+\label{sec:org720ac5a}
+\[ A(t) = \frac{P(t)}{Q(t)} \]
+\[ a_n = c_1 a_{n - 1} + c_2 a_{n - 2} + \dots + c_ka_{n - k} \]
+\[ m = \deg P + 1\quad k = \deg Q \]
+\[ p_i = a_i - \sum_{j = 1}^{\min(k, i)} a_{i - j} c_j \]
+\[ a_n = \frac{p_n - \sum_{i = 1}^n a_{n - i}q_i}{q_0} \]
+\[ c_i = -q_i \]
+\[ a_n = \sum_{i = 1}^{\min(n, k)} c_i a_{n - i} [+ p\text{ если } n < m] \]
 \end{document}

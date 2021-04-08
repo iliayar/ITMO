@@ -1,4 +1,4 @@
-% Created 2021-03-19 Fri 15:07
+% Created 2021-04-02 Fri 15:06
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[oneside]{book}
@@ -30,7 +30,6 @@
 \usepackage{stmaryrd}
 
 \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-
  \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
@@ -56,7 +55,19 @@
 \newcommand{\const}{\text{const}}
 \newcommand{\grad}{\text{grad}}
 
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -120,7 +131,7 @@
  pdftitle={Лекции по Математической логике 4 семестр},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -129,13 +140,13 @@
 
 
 \chapter{TODO}
-\label{sec:org1a36f56}
+\label{sec:org0e6028a}
 \chapter{TODO}
-\label{sec:org6959f87}
+\label{sec:orged1d912}
 \chapter{TODO}
-\label{sec:org1e70fe8}
+\label{sec:orgbcce6ac}
 \chapter{}
-\label{sec:org6e20b79}
+\label{sec:orgd4650e0}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}
@@ -165,7 +176,7 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:orgbe7f0a9}
+\label{sec:org0a7f6ba}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
@@ -186,7 +197,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:org43f2663}
+\label{sec:orgd09fff7}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -235,7 +246,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:org38ab280}
+\label{sec:org6827a0b}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
@@ -336,9 +347,9 @@
 Пусть \(\not \vdash \alpha\) и \(\not \vdash \beta\), тогда \(\varphi(\llbracket \alpha \rrbracket) \neq 1_\mathcal{L}\) и \(\varphi(\llbracket \beta \rrbracket) \neq 1_\mathcal{L}\), т.е. \(\llbracket \alpha \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\) и \(\llbracket \beta \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\), тогда \(\llbracket \alpha \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) и \(\llbracket \beta \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) \(\Rightarrow\) Противоречие
 \end{proof}
 \chapter{}
-\label{sec:orga136d15}
+\label{sec:orga8d8e1f}
 \section{Программы}
-\label{sec:orgc03e2ee}
+\label{sec:org75f9f76}
 программа(функция)
 \begin{itemize}
 \item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
@@ -425,7 +436,7 @@ match l with
 \end{minted}
 \end{examp}
 \subsection{Исчесление предикатов}
-\label{sec:org50c827f}
+\label{sec:org5e338b6}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
@@ -459,7 +470,7 @@ match l with
 \end{definition}
 \begin{enumerate}
 \item Сокращение записи
-\label{sec:orgd03109a}
+\label{sec:org9d9d8e6}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -468,7 +479,7 @@ match l with
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \end{enumerate}
 \subsection{Теория моделей}
-\label{sec:org6432e30}
+\label{sec:orga42b697}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -508,7 +519,7 @@ match l with
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теория доказательств}
-\label{sec:org66613d9}
+\label{sec:orgb12512f}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
@@ -543,11 +554,11 @@ int f(int x) {
 Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
 \end{examp}
 \chapter{}
-\label{sec:org5f4d89a}
+\label{sec:org462c941}
 \section{Исчисление предикатов}
-\label{sec:orgc5663bc}
+\label{sec:org07a0556}
 \subsection{Расставление скобок}
-\label{sec:orgb9c5c43}
+\label{sec:org2d6f09b}
 Кванторы имеют наименьший приоритет
 \begin{examp}
 \[ \forall x. A \& B \& \forll y. C \& D \vee \exists z. E \]
@@ -573,7 +584,7 @@ int f(int x) {
 \end{itemize}
 \end{definition}
 \subsection{Вхождение}
-\label{sec:org1623dc2}
+\label{sec:org422cf54}
 \begin{examp}
 \[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
 1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
@@ -605,7 +616,7 @@ int f(int x) {
 \end{description}
 \end{examp}
 \subsection{Свободные подстановки}
-\label{sec:orgc8283c3}
+\label{sec:orgd76ecb0}
 \begin{definition}
 \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
 \end{definition}
@@ -627,7 +638,7 @@ int f(int x) {
 Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
 \end{examp}
 \subsection{Пример доказательства}
-\label{sec:orgca1e3cb}
+\label{sec:org05587ad}
 \begin{lemma}
 Пусть \(\vdash \alpha\). Тогда \(\vdash \forall x. \alpha\)
 \end{lemma}
@@ -648,7 +659,7 @@ int f(int x) {
 \end{enumerate}
 \end{proof}
 \subsection{Теорема о дедукции}
-\label{sec:org26d911c}
+\label{sec:org589dd3b}
 \begin{theorem}
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 \begin{enumerate}
@@ -658,6 +669,139 @@ int f(int x) {
 \end{theorem}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Доказательсво
-\label{sec:org22efaa6}
+\label{sec:org3adc0c5}
 \end{enumerate}
+\chapter{}
+\label{sec:org82dded2}
+\begin{itemize}
+\item \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
+\item \(x = 0 \vdash \forall x. x = 0\)
+\item \(x = 0 \not\vDash \forall x. x = 0\)
+\end{itemize}
+\begin{definition}[Условие для корректности]
+Правила для кванторов по свободным перменным из \(\Gamma\) запрещены. \\
+\uline{Тогда} \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
+\end{definition}
+\section{Полнота исчесления предикатов}
+\label{sec:org6ac35c6}
+\begin{definition}
+\(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
+\end{definition}
+\begin{examp}
+Непротиворечивые:
+\begin{itemize}
+\item \(\emptyset\)
+\item \(A \vee \neg A\)
+\end{itemize}
+Противоречивые:
+\begin{itemize}
+\item \(A \& \neg A\)
+\end{itemize}
+\end{examp}
+\begin{remark}
+Непротиворечивое множество замкнутых(не имеющая сводных перменных) бескванторных формул
+\end{remark}
+\begin{examp}
+\(\{A\}, \{0 = 0\}\)
+\end{examp}
+\begin{definition}
+\textbf{Моделью} для непротиворечивого множества замкнутых бескванторных формул \(\Gamma\) --- такая модель, что каждая формула из \(\Gamma\) оценивается в И
+\end{definition}
+\begin{definition}
+Полное непротиворечивое замкнутых бескванторных формул --- такое, что для каждой замкнутой бескванторной формулы \(\alpha\): либо \(\alpha \in \Gamma\), либо \(\neg \alpha \in \Gamma\)
+\end{definition}
+\begin{symb}
+\textbf{з.б.} --- замкнутая бескванторная. \textbf{непр. мн} --- непротиворечивое множество
+\end{symb}
+\begin{theorem}
+Если \(\Gamma\) --- непротиворечивое множество з.б. фомул и \(\alpha\) --- з.б.  формула. \\
+То либо \(\Gamma \cup \{\alpha\}\), либо \(\Gamma \cup \{\neg \alpha\}\) --- непр. мн. з.б. формул
+\end{theorem}
+\begin{proof}
+Пусть и \(\Gamma \cup \{\alpha\}\) и \(\Gamma \cup \{\neg \alpha\}\)\todo
+\end{proof}
+\begin{theorem}
+Если \(\Gamma\) --- непр. мн. з.б. фомул, то можно построить \(\Delta\) --- полное непр. мн. з.б. формул. \(\Gamma \subseteq \Delta\) и в языке --- счетное количество формул
+\end{theorem}
+\(\varphi_1, \varphi_2, \varphi_3, \dots\) --- формулы з.б. \\
+\begin{itemize}
+\item \(\Gamma_0 = \Gamma\)
+\item \(\Gamma_1 = \Gamma_0 \cup \{\varphi_1\}\) либо \(\Gamma_0 \cup \{\neg \varphi_1\}\) --- смотря что непротиворечивое
+\item \(\Gamma_2 = \Gamma_1 \cup \{\varphi_2\}\) либо \(\Gamma_1 \cup \{\neg \varphi_2\}\)
+\end{itemize}
+\[ \Gamma^* = \bigcup_i \Gamma_i \]
+\begin{property}
+\(\Gamma^*\) --- полное
+\end{property}
+\begin{property}
+\(\Gamma^*\) --- непрерывное
+\end{property}
+\begin{proof}
+Пусть \(\Gamma^* \vdash \beta \& \neg \beta\) \\
+Конечное доказательство \(\gamma_1, \dots \gamma_n\), часть из которых гипотезы: \(\gamma_1, \dots, \gamma_k\) \\
+\(\gamma_i \in \Gamma_{R_i}\). Возьмем \(\Gamma_{\max{R_i}}\). Правда ли \(\Gamma_{\max{R_i}} \vdash B \& \neg B\)
+\end{proof}
+\begin{theorem}
+Любое полное непротиворечивое множество замкнутых бескванторных формул \(\Gamma\) имеет модель, т.е. существует оценка \(\llbracket \rrbracket\): если \(\gamma \in \Gamma\), то \(\llbracket \gamma \rrbracket = \text{И}\)
+\end{theorem}
+\begin{proof}
+\(D\) --- все записи из функциональных символов.
+\begin{itemize}
+\item \(\llbracket f_0^n \rrbracket\) --- константа \(\Rightarrow\) \(``f_0^n``\)
+\item \(\llbracket f_k^m (\Theta_1, \dots, \Theta_k) \rrbracket\) \(\Rightarrow\) \(``f_k^m(`` + \llbracket \Theta_1 \rrbracket + ``,`` + \dots + ``,`` + \llbracket \Theta_k \rrbracket + ``)``\)
+\item \(\llbracket P(\Theta_1, \dots, \Theta_n) \rrbracket = \begin{cases} \text{И} & P(\Theta_1, \dots, \Theta_n) \in \Gamma \\ \text{Л} & \text{иначе} \end{cases}\)
+\item свободные переменные: \(\emptyset\)
+\end{itemize}
+Так построенные модель --- модель для \(\Gamma\). Индукция по количеству связок. \\
+\uline{База} очев. \\
+\uline{Переход} \(\alpha \& \beta\). При этом
+\begin{enumerate}
+\item Если \(\alpha, \beta \in \Gamma\) \(\llbracket \alpha \rrbracket = \text{И}\) и \(\llbracket \beta \rrbracket = \text{И}\) то \(\alpha \& \beta \in \Gamma\)
+\item Если \(\alpha, \beta \not\in \Gamma\) \(\llbracket \alpha \rrbracket \neq \text{И}\) или \(\llbracket \beta \rrbracket \neq \text{И}\) то \(\alpha \& \beta \not\in \Gamma\)
+\end{enumerate}
+Аналогично для других операций
+\end{proof}
+\begin{theorem}[Геделя о полноте]
+Если \(\Gamma\) --- полное неротиворечивое множество замкнутых(не бескванторных) фомул, то оно имеет модель
+\end{theorem}
+\begin{corollary}
+Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+\end{corollary}
+\begin{proof}
+Пусть \(\vDash \alpha\), но \(\not\vdash \alpha\). Значит \(\{\neg \alpha\}\) --- непротиворечивое множество замкнутых формул. Тогда \(\{\alpha\}\) или \(\{\neg \alpha\}\) --- непр. мн. з. ф. Пусть \(\{\alpha\}\) --- непр. мн. з.ф., а \(\{\neg \alpha\}\) --- противоречивое. При этом \(\neg \alpha \vdash \beta \& \neg \beta\), \(\neg \alpha \vdash \alpha\), \(\beta \& \neg \beta \vDash \alpha\). \(\neg \alpha \vdash \alpha\), \(\alpha \vdash \alpha\). Значит \(\vdash \alpha\)
+\end{proof}
+\begin{itemize}
+\item \(\Gamma\) --- п.м.з.ф.
+\item перестроим \(\Gamma\) в \(\Gamma^\triangle\) --- п.н.м. \textbf{б.} з. ф.
+\item по теореме о существование модели: \(M^\triangle\) --- модель для \(F^\triangle\)
+\item покажем, что \(M^\triangle\) --- модель для \(\Gamma\) --- \(M\)
+\end{itemize}
+\(\Gamma_0 = \Gamma\), где все формулы --- в предварительной нормальной форме
+\begin{definition}
+ПНФ --- формула, где \(\forall \exists \forall \dots(\tau)\), \(\tau\) --- формула без кванторов
+\end{definition}
+\begin{theorem}
+Если \(\varphi\) --- формула, то существует \(\psi\) --- в п.ф., то \(\varphi \to \psi\) и \(\psi \to \varphi\)
+\end{theorem}
+\begin{proof}
+\(\Gamma_0 \subseteq \Gamma_1 \subseteq \Gamma_1 \subseteq \dots \subseteq \Gamma^*\). \(\Gamma^* = \bigcup_i \Gamma_i\) \\
+Переход: \(\Gamma_i \to \Gamma_{i + 1}\) \\
+Рассмторим: \(\varphi_j \in \Gamma_i\) \\
+Построим семейство ф.с. \(d^j_i\) --- новые перменные
+\begin{enumerate}
+\item \(\varphi_j\) без кванторов --- не трогаем
+\item \(\varphi_j \equiv \forall x. \psi\) --- добавим все формулы вида \(\psi[x := \Theta]\), где \(\Theta\) -- терм, состоящий из \(f\): \(d_0^e, d_1^{e'} \dots , d_{i - 1}^{e^{'\dots'}}\)
+\item \(\varphi_j \equiv \exists x. \psi\) --- добавим \(\psi[x:=d^j_i]\)
+\end{enumerate}
+\(\Gamma_{i + 1} = \Gamma_i \cup \{\text{все добавленные формулы}\}\) --- счетное количество
+\end{proof}
+\begin{theorem}
+Если \(\Gamma_i\) --- непротиворечиво, то \(\Gamma_{i + 1}\) --- непротиворечиво
+\end{theorem}
+\begin{theorem}
+\(\Gamma*\) --- непротиворечиво
+\end{theorem}
+\begin{corollary}
+\(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
+\end{corollary}
 \end{document}

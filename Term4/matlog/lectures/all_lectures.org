@@ -10,4 +10,6 @@
 * 
 #+INCLUDE: "5.org" :lines "4-"
 * 
-#+INCLUDE: "6.org" :lines "4-"
+#+include: "6.org" :lines "4-"
+* 
+#+include: "7.org" :lines "4-"
