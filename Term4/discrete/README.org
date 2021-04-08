@@ -11,7 +11,8 @@
 - [[file:lectures/6.pdf][Лекция 6]]
 - [[file:lectures/7.pdf][Лекция 7]]
 * Лабы
-- [[file:labs/lab1/][Производящие функции]]
+- [[file:labs/lab1/][Производящие функции]] \\
+  [[file:labs/lab1/s4-01-lab-genfunction.pdf][Условия]]
 * Домашки
 - [[file:hw/20.pdf][20]]
 - [[file:hw/56.pdf][56]]
