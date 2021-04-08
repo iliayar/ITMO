@@ -18,3 +18,4 @@
 - [[file:practice/5.pdf][Практика 5]]
 - [[file:practice/6.pdf][Практика 6]]
 - [[file:practice/7.pdf][Практика 7]]
+- [[file:practice/8.pdf][Практика 8]]
