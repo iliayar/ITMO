@@ -1,8 +1,8 @@
-% Created 2021-04-02 Fri 15:06
+% Created 2021-04-08 Thu 23:03
 % Intended LaTeX compiler: pdflatex
 
-\documentclass[oneside]{book}
-\usepackage[T1, T2A]{fontenc}
+  \documentclass[oneside]{book}
+  \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -21,16 +21,19 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-\usepackage{stmaryrd}
+  \usepackage{stmaryrd}
 
-\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
- \usepackage{hyperref}
+  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+   \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -51,9 +54,10 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
 \newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
 \newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
@@ -123,6 +127,32 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекции по Математической логике 4 семестр}
@@ -140,13 +170,13 @@
 
 
 \chapter{TODO}
-\label{sec:org0e6028a}
+\label{sec:org4f595bc}
 \chapter{TODO}
-\label{sec:orged1d912}
+\label{sec:org53239f8}
 \chapter{TODO}
-\label{sec:orgbcce6ac}
+\label{sec:orgb092681}
 \chapter{}
-\label{sec:orgd4650e0}
+\label{sec:org2a1c25e}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}
@@ -176,7 +206,7 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:org0a7f6ba}
+\label{sec:org91e6c08}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
@@ -197,7 +227,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:orgd09fff7}
+\label{sec:orgda9b979}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -246,7 +276,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:org6827a0b}
+\label{sec:orge8f34f6}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
@@ -347,9 +377,9 @@
 Пусть \(\not \vdash \alpha\) и \(\not \vdash \beta\), тогда \(\varphi(\llbracket \alpha \rrbracket) \neq 1_\mathcal{L}\) и \(\varphi(\llbracket \beta \rrbracket) \neq 1_\mathcal{L}\), т.е. \(\llbracket \alpha \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\) и \(\llbracket \beta \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\), тогда \(\llbracket \alpha \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) и \(\llbracket \beta \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) \(\Rightarrow\) Противоречие
 \end{proof}
 \chapter{}
-\label{sec:orga8d8e1f}
+\label{sec:orga54ca63}
 \section{Программы}
-\label{sec:org75f9f76}
+\label{sec:orga2c85cb}
 программа(функция)
 \begin{itemize}
 \item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
@@ -436,12 +466,12 @@ match l with
 \end{minted}
 \end{examp}
 \subsection{Исчесление предикатов}
-\label{sec:org5e338b6}
+\label{sec:org23aa887}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
-\item логические выражения "предикаты"/"формулы"
-\item предметные выражния "термы"
+\item логические выражения ``предикаты``/``формулы``
+\item предметные выражния ``термы``
 \end{itemize}
 \(\Theta\) --- метаперменные для термов \\
 Термы:
@@ -464,13 +494,13 @@ match l with
 \item \(P(\Theta_1, \dots, \Theta_n)\) --- применение предикатных символов
 \item \(\&, \vee, \neg, \to\) --- Cвязки
 \item \(\forall x.\varphi\) и \(\exists x.\varphi\) --- кванторы \\
-\color{gray}"<квантор> <переменная>.<выражение>"\color{black} \\
+\color{gray}``<квантор> <переменная>.<выражение>``\color{black} \\
 \end{itemize}
 \end{itemize}
 \end{definition}
 \begin{enumerate}
 \item Сокращение записи
-\label{sec:org9d9d8e6}
+\label{sec:orgf83382c}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -479,7 +509,7 @@ match l with
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \end{enumerate}
 \subsection{Теория моделей}
-\label{sec:orga42b697}
+\label{sec:org35b4fab}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -497,7 +527,7 @@ match l with
 \item \(\llbracket P_i(\Theta_1, \dots , \Theta_n) \rrbracket = f_{P_i}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
 \item \(\llbracket f_j(\Theta_1 , \dots, \Theta_n ) \rrbracket = f_{f_j}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
 \item \[ \llbracket \forall x. \varphi \rrbracket = \begin{cases} \text{И} & , \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И}\text{ при всех } k \in D  \\ \text{Л} &,\text{иначе}\end{cases} \]
-\item \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе}\]
+\item \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе} \end{cases} \]
 \end{itemize}
 \[ \llbracket \forall x.\forall y.E(x, y) \rrbracket = \text{Л} \]
 т.к. \(\llbracket E(x, y) \rrbracket^{x:=1,\ y:=2} = \text{Л}\)
@@ -519,7 +549,7 @@ match l with
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теория доказательств}
-\label{sec:orgb12512f}
+\label{sec:org88dad9f}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
@@ -554,11 +584,11 @@ int f(int x) {
 Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
 \end{examp}
 \chapter{}
-\label{sec:org462c941}
+\label{sec:orga8fffec}
 \section{Исчисление предикатов}
-\label{sec:org07a0556}
+\label{sec:org28af291}
 \subsection{Расставление скобок}
-\label{sec:org2d6f09b}
+\label{sec:orgc9112a3}
 Кванторы имеют наименьший приоритет
 \begin{examp}
 \[ \forall x. A \& B \& \forll y. C \& D \vee \exists z. E \]
@@ -584,7 +614,7 @@ int f(int x) {
 \end{itemize}
 \end{definition}
 \subsection{Вхождение}
-\label{sec:org422cf54}
+\label{sec:org9b736c6}
 \begin{examp}
 \[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
 1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
@@ -616,7 +646,7 @@ int f(int x) {
 \end{description}
 \end{examp}
 \subsection{Свободные подстановки}
-\label{sec:orgd76ecb0}
+\label{sec:org18f79ae}
 \begin{definition}
 \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
 \end{definition}
@@ -638,7 +668,7 @@ int f(int x) {
 Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
 \end{examp}
 \subsection{Пример доказательства}
-\label{sec:org05587ad}
+\label{sec:org3bb5853}
 \begin{lemma}
 Пусть \(\vdash \alpha\). Тогда \(\vdash \forall x. \alpha\)
 \end{lemma}
@@ -659,7 +689,7 @@ int f(int x) {
 \end{enumerate}
 \end{proof}
 \subsection{Теорема о дедукции}
-\label{sec:org589dd3b}
+\label{sec:orgb88f12b}
 \begin{theorem}
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 \begin{enumerate}
@@ -667,12 +697,8 @@ int f(int x) {
 \item Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
 \end{enumerate}
 \end{theorem}
-\begin{enumerate}
-\item {\bfseries\sffamily TODO} Доказательсво
-\label{sec:org3adc0c5}
-\end{enumerate}
 \chapter{}
-\label{sec:org82dded2}
+\label{sec:orgc7631be}
 \begin{itemize}
 \item \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
 \item \(x = 0 \vdash \forall x. x = 0\)
@@ -683,7 +709,7 @@ int f(int x) {
 \uline{Тогда} \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 \end{definition}
 \section{Полнота исчесления предикатов}
-\label{sec:org6ac35c6}
+\label{sec:org35d4fe5}
 \begin{definition}
 \(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
 \end{definition}
