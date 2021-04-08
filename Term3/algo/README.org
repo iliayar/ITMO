@@ -2,6 +2,9 @@
 
 
 * Лабы
-- [[file:labs/lab1/][Графы]]
-- [[file:labs/lab2/][Кратчайших путь]]
-- [[file:labs/lab3/][Строки]]
+- [[file:labs/lab1/][Графы]] \\
+  [[file:labs/lab1/statements.pdf][Условия]]
+- [[file:labs/lab2/][Кратчайших путь]] \\
+  [[file:labs/lab2/statements.pdf][Условия]]
+- [[file:labs/lab3/][Строки]] \\
+  [[file:labs/lab3/statements.pdf][Условия]]

@@ -4,4 +4,6 @@
 * Домашки
 - [[file:hws/3.9.pdf][3.9]]
 * Лабы
-- [[file:labs/lab1/][Паросочетания]]
+- [[file:labs/lab1/][Паросочетания]] \\
+  [[file:labs/lab1/statements.pdf][Услвоия]]
+
