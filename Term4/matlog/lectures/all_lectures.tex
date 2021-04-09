@@ -1,4 +1,4 @@
-% Created 2021-04-08 Thu 23:03
+% Created 2021-04-09 Fri 15:15
 % Intended LaTeX compiler: pdflatex
 
   \documentclass[oneside]{book}
@@ -49,6 +49,8 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
@@ -170,13 +172,13 @@
 
 
 \chapter{TODO}
-\label{sec:org4f595bc}
+\label{sec:org6c6f459}
 \chapter{TODO}
-\label{sec:org53239f8}
+\label{sec:org857e8b0}
 \chapter{TODO}
-\label{sec:orgb092681}
-\chapter{}
-\label{sec:org2a1c25e}
+\label{sec:org53b15a9}
+\chapter{5 марта}
+\label{sec:org2884259}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}
@@ -206,7 +208,7 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:org91e6c08}
+\label{sec:org7d7051f}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
@@ -227,7 +229,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:orgda9b979}
+\label{sec:org15d02e2}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -276,7 +278,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:orge8f34f6}
+\label{sec:orgc8d1917}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
@@ -376,10 +378,10 @@
 \(\llbracket \alpha + \beta \rrbracket = 1\), и т.к. \(\Gamma(\mathcal{L})\) --- Геделева то \(\llbracket \alpha \rrbracket = 1\) или \(\llbracket \beta \rrbracket = 1\) \\
 Пусть \(\not \vdash \alpha\) и \(\not \vdash \beta\), тогда \(\varphi(\llbracket \alpha \rrbracket) \neq 1_\mathcal{L}\) и \(\varphi(\llbracket \beta \rrbracket) \neq 1_\mathcal{L}\), т.е. \(\llbracket \alpha \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\) и \(\llbracket \beta \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\), тогда \(\llbracket \alpha \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) и \(\llbracket \beta \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) \(\Rightarrow\) Противоречие
 \end{proof}
-\chapter{}
-\label{sec:orga54ca63}
+\chapter{12 марта}
+\label{sec:orgb2949d9}
 \section{Программы}
-\label{sec:orga2c85cb}
+\label{sec:orgeb7bede}
 программа(функция)
 \begin{itemize}
 \item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
@@ -466,7 +468,7 @@ match l with
 \end{minted}
 \end{examp}
 \subsection{Исчесление предикатов}
-\label{sec:org23aa887}
+\label{sec:orgb0842d1}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
@@ -500,7 +502,7 @@ match l with
 \end{definition}
 \begin{enumerate}
 \item Сокращение записи
-\label{sec:orgf83382c}
+\label{sec:orgf87209f}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -509,7 +511,7 @@ match l with
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \end{enumerate}
 \subsection{Теория моделей}
-\label{sec:org35b4fab}
+\label{sec:orgc600e8d}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -549,7 +551,7 @@ match l with
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теория доказательств}
-\label{sec:org88dad9f}
+\label{sec:org69fd44a}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
@@ -583,12 +585,12 @@ int f(int x) {
 \[ \forall x. \exists y. x = y \to \exists y. y + 1 = y \]
 Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
 \end{examp}
-\chapter{}
-\label{sec:orga8fffec}
+\chapter{19 марта}
+\label{sec:org08594df}
 \section{Исчисление предикатов}
-\label{sec:org28af291}
+\label{sec:orgea935b7}
 \subsection{Расставление скобок}
-\label{sec:orgc9112a3}
+\label{sec:org6404c61}
 Кванторы имеют наименьший приоритет
 \begin{examp}
 \[ \forall x. A \& B \& \forll y. C \& D \vee \exists z. E \]
@@ -614,7 +616,7 @@ int f(int x) {
 \end{itemize}
 \end{definition}
 \subsection{Вхождение}
-\label{sec:org9b736c6}
+\label{sec:orgb4ba7ab}
 \begin{examp}
 \[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
 1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
@@ -646,7 +648,7 @@ int f(int x) {
 \end{description}
 \end{examp}
 \subsection{Свободные подстановки}
-\label{sec:org18f79ae}
+\label{sec:orgf8b425f}
 \begin{definition}
 \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
 \end{definition}
@@ -668,7 +670,7 @@ int f(int x) {
 Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
 \end{examp}
 \subsection{Пример доказательства}
-\label{sec:org3bb5853}
+\label{sec:org9e4be2c}
 \begin{lemma}
 Пусть \(\vdash \alpha\). Тогда \(\vdash \forall x. \alpha\)
 \end{lemma}
@@ -689,7 +691,7 @@ int f(int x) {
 \end{enumerate}
 \end{proof}
 \subsection{Теорема о дедукции}
-\label{sec:orgb88f12b}
+\label{sec:org1af4621}
 \begin{theorem}
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 \begin{enumerate}
@@ -697,8 +699,8 @@ int f(int x) {
 \item Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
 \end{enumerate}
 \end{theorem}
-\chapter{}
-\label{sec:orgc7631be}
+\chapter{2 апреля}
+\label{sec:org56de94b}
 \begin{itemize}
 \item \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
 \item \(x = 0 \vdash \forall x. x = 0\)
@@ -709,7 +711,7 @@ int f(int x) {
 \uline{Тогда} \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 \end{definition}
 \section{Полнота исчесления предикатов}
-\label{sec:org35d4fe5}
+\label{sec:org8784d78}
 \begin{definition}
 \(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
 \end{definition}
@@ -830,4 +832,116 @@ int f(int x) {
 \begin{corollary}
 \(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
 \end{corollary}
+\chapter{9 апреля}
+\label{sec:org3ff5eb5}
+\section{Исчесление предиктов}
+\label{sec:orgb2364e2}
+\begin{theorem}[Геделя о полноте ИП]
+У любого н.м.з.ф. (непротиворечивого множества замкнутых формул) ИП существует модель
+\end{theorem}
+\begin{theorem}
+Если формула \(\phi\) --- замкнутая формула ИП \\
+\uline{Тогда} найдется \(\psi\) --- замкнутая формула ИП, что \(\vdash \varphi \to \psi\) и \(\psi \to \varphi\). \(\psi\) --- с поверхностными кванторами
+\end{theorem}
+\begin{proof}
+См. ДЗ
+\end{proof}
+\begin{remark}
+Рассмотрим \(\Gamma\) --- н.м.з.ф. --- рассмотрим \(\Gamma'\) --- полное расширение \(\Gamma\). Пусть \(\varphi\) --- фомула из \(\Gamma'\), тогда найдется \(\psi in \Gamma'\), что \(\psi\) --- с поверхностными кванторами и \(\vdash \varphi \to \psi\), \(\vdash \psi \to \varphi\)
+\end{remark}
+\begin{proof}[Доказательство теоремы Геделя о полноте ИП]
+Рассмотрим множество констант(нуль местных функциональных символов) --- \(d^i_j\). Построим \(\{\Gamma_j\}:\)
+\[ \Gamma' = \Gamma_0 \subseteq \Gamma_1 \subseteq \Gamma2 \subseteq \dots \subseteq \Gamma_j \subseteq \dots \]
+Переход \(\Gamma_j \Rightarrow \Gamma_{j + 1}\): рассмторим все формулы из \(\Gamma_j\): \(\{\gamma_1, \gamma_2, \gamma_3, \dots\}\)
+\begin{enumerate}
+\item \(\gamma_i\) ---  формула без кванторов --- оставим на месте
+\item \(\gamma_i \equiv \forall x.\varphi\) --- добваим к \(\Gamma_{j + 1}\) все формулы вида \(\varphi[x:=\Theta]\), где \(\Theta\) --- составлен из всех ф.с. ИП и констант вида \(d_1^k,\dots,d^k_j\)
+\item \(\gamma_i \equiv \exists x.\varphi\) --- добавим одну формулу --- \(\varphi[x:=d^i_{j + 1}]\)
+\end{enumerate}
+
+
+\begin{description}
+\item[{\textbf{Утв. 1}}] \(Gamma_{i + 1}\) непр., если \(\Gamma_i\) --- непр. \\
+Докажем от противного. \(\Gamma_{i + 1} \vdash \beta \& \neg \beta\)
+\[ \Gamma_i, \gamma_1, \dots, \gamma_n \vdash \beta \& \neg \beta \quad \gamma_i \in \Gamma_{i + 1} \setminus \Gamma_i \]
+\[ \Gamma_i \vdash \gamma_1 \to \gamma_2 \to \dots \to \gamma_n \to \beta \& \neg \beta \]
+\(\gamma_i\) --- замкнутое \(\implies\) т. о дедукции. Докажем что \(\Gamma_i \vdash \beta \& \neg \beta\) по индукции.
+\[ \Gamma_i \vdash \gamma \to \varepsilon \]
+Покажем \(\Gamma_i \vdash \varepsilon\), т.е. \(\gamma\) получен из \(\forall x. \xi\) или \(\forall x. \xi\) \(\in \Gamma_i\)
+\begin{description}
+\item[{\textbf{\((\forall x. \xi)\)}}] Заметим, что \(\Gamma_i \vdash \forall x.\xi\)
+\[ \begin{array}{ll}
+    \vdots & \text{по условию} \\
+    \gamma \to \varepsilon & \text{по построению }\Gamma_{i + 1} \\
+    \forall x.\xi \to (\underbrace{\xi[x:=\Theta]}_\gamma) & \text{(акс. 11)} \\
+    (\forall x.\xi) \to \varepsilon & \left|\begin{matrix} \eta \to \xi \\ \xi \to \kappa \end{matrix}\right. \implies \eta \to \kappa\\
+    \forall x.\xi & \\
+    \varepsilon & \text{(M.P.)}
+    \end{array} \]
+\item[{\textbf{\((\exists x. \xi)\)}}] \[ \Gamma_i \vdash \overbrace{\xi[x:=d^k_{i + 1}]}^\gamma \to \varepsilon \]
+Заметим, что \(d^k_{i + 1}\) не входит в \(\varepsilon\). Заменим все \(d^k_{i + 1}\) в доказательстве на \(y\) --- новая перменная
+\[ \Gamma_i \vdash \xi[x:=y] \to \varepsilon \]
+\[ \begin{array}{ll}
+    \exists y. \xi[x:=y] \to \varepsilon & \\
+    (\exists x. \xi x) \to (\exists t. \xi[x:=y]) & \\
+    (\exists x.\xi) \to \varepsilon & \\
+    \exists x. \xi & \\
+    \varespilon & 
+    \end{array}\]
+\[ \fixme \]
+\end{description}
+\item[{\textbf{Утв. 2}}] \(\Gamma^*\) --- непр. \(\Gamma_0 \vdash \gamma_1 \to \dots \to \gamma_n \to \beta \& \neg \beta\)
+\[ \Gamma_{\max_i(0..n)} \vdash \beta \& \neg \beta \]
+Значит \(\Gamma_\max\) --- противоречиво, \(\Gamma^\triangle = \Gamma^*\) без кванторов \\
+\uline{Значит} у \(\Gamma^\triangle\) есть модель \(M\)
+\item[{\textbf{Утв. 3}}] \(\gamma \in \Gamma'\), то \(\llb \gamma \rrb_M = \text{И}\) \\
+Индукция по количеству кванторов в \(\gamma\). Рассмторим:
+\begin{enumerate}
+\item \(\gamma \equiv \forall x. \delta\) \\
+\(\llb \forall x. \delta \rrb\), если \(\llb \delta \rrb^{x := \kappa} = \text{И}, \kappa \in D\). Рассмотри \(\llb \delta \rrb^{x := \kappa},\ k \in D\). \(\kappa\) содержит константы и ф-с, \(\kappa\) осмысленно \(\Gamma_p\). \(\delta\) добавлена на шаге \(q\). Рассмотрим шаг \(\Gamma_{\max(p, q)}\) \(\forall x. \delta: \Gamma_{\max(p, q) + 1}\) добавлена \(\delta[x:=\kappa]\). \(\delta[x:=\kappa]\) --- меньше на 1 квантор, \(\llb \delta[x:=k] \rrb = \text{И}\)
+\item \(\gamma \equiv \exists x. \delta\) --- аналогично
+\end{enumerate}
+\end{description}
+\end{proof}
+
+\begin{theorem}
+ИП неразрешимо
+\end{theorem}
+\begin{definition}
+\textbf{Язык} --- множество слов. Язык \(\mathcal{L}\) разрешим, если существует \(A\) --- алгоритм, что по слову \(w\): \\
+\(A(w)\) --- останавливается в `1`, если \(w \in \mathcal{L}\) и `0`, если \(w \not\in \mathcal{L}\)
+\end{definition}
+\begin{remark}
+Проблема останова: не существует алгоритма, который по программе для машина Тьюринга ответит, остановится она или нет. \\
+Пусть \(\mathcal{L}'\) --- язык всех останов программы для машины Тьюринга. \(\mathcal{L}'\) неразрешим
+\end{remark}
+\begin{remark}
+\texttt{[a, b, c, d, e] = cons(a, cons(b, cons(c, cons(d, cons(e, nil)))))} \\
+\(A\) --- алфавит ленты
+\[ \left.\begin{array}{l}
+S_x,\ x \in A \\
+e \text{ --- } \text{nil}
+\end{array}\right\} \text{ --- } 0\text{-местные функциональные символы}\]
+\[ C(a, b) \text{ --- } 2\text{-местные функциональные символы} \]
+\(b_s, s \in \mathcal{S}\) --- множество всех состояний, \(b_0\) --- начальное состояние.
+\[ C(s_c, C(s_b, C(s_a, e))) \quad C(s_d, C(s_e, e)) \]
+Заведем предикат, которых отвечает было ли состояние в процессе. Начальное состояние --- машина Тьюринга запущена на строке \(\alpha\):
+\[ R(\alpha, e, b_0) \]
+Переход:
+\[ (s_x, b_s) \to (s_y, b_t, \leftrightarrow) \]
+\[ (s_x, b_s) \to (s_y, b_t, \leftarrow) \]
+Если пермещение законно, то можем построить для каждого такие правила:
+\[ \forall z. \forall w. R(C(s_x, z), w, b_s) \to R(C(s_y, z), w, b_t) \]
+\[ \dots  R(z, C(s_y, w), b_t)\]
+Сделаем коньюнкцию вех эти правил: \(R(\dots)\&R(\dots)\&\dots\&R(\dots) \to \exists z. \exists . R(z, w, b_\triangle)\)
+\fixme
+\end{remark}
+\begin{examp}
+\-
+\begin{enumerate}
+\item \(R(C(s_k, e), e, b_0)\) --- доказуемо(мы так сказали)
+Двинем голвку вправо:
+\[ \forall x. \forall y. R(C(s_k, x), y, b_0) \to R(x, C(s_k, y), b_1) \]
+\end{enumerate}
+\end{examp}
 \end{document}
