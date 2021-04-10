@@ -1,0 +1,343 @@
+% Created 2021-04-10 Sat 14:13
+% Intended LaTeX compiler: pdflatex
+
+  \documentclass[english]{article}
+  \usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+  
+  \usepackage{geometry}
+  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+   \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\renewcommand{\B}(\mathfrak{B})
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 9}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 9},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Сингулярное распределение}
+\label{sec:orgd2d7768}
+\begin{definition}
+Случайная величина \(\xi\) имеет \textbf{сингулярное распределение}, если существует Борелевское множество \(B \in \mathfrak{B}\), с нулевой мерой Лебега \(\lambda B = 0\), такое что \(p(\xi \in B) = 1\), но \(\forall x \in B\ p(\xi = x) = 0\) 
+\end{definition}
+\begin{remark}
+\[ \forall x \in B\ p(\xi = x) = 0 \implies p(\xi \in B) = 0 \]
+Иными словами, при сингулярном распределении, случайная величина распределена на несчетном множестве меры 0
+\end{remark}
+\begin{remark}
+Функция распределения --- непрерывная функция, по свойству 7 функии распределения.
+\end{remark}
+\begin{examp}
+Случайная величина \(\xi\), задана функция распределения, которая --- лестница Кантора
+\todo
+\end{examp}
+\begin{theorem}[Лебега]
+Пусть \(F_\xi(x)\) --- функция распределения произвольной случайной величины \(\xi\) \\
+\uline{Тогда}
+\[ F_\xi(x) = p_1F_1(x) + p_2F_2(x) + p_3F_3(x) \quad p_1 + p_2 + p_3 = 1\]
+, где \(F_1(x)\) --- фунция дискретного распределения, \(F_2(x)\) --- функция абсолютно непрерывного распределения, \(F_3(x)\) --- функция сингулярного распределения. Т.е. все распределения делятся на дискретные, абсолютно непрерывные, сингуряные и их смеси
+\end{theorem}
+\section{Общий взгляд на математическое ожидание}
+\label{sec:org4507a46}
+Пусть случайная величина \(\xi\) задана на вероятностном пространстве \((\Omega, \mathcal{F}, p)\). Математическим ожиданием случайной величины \(\xi\) называется интеграл Лебега:
+\[ E\xi = \int_\Omega \xi(\omega) dp(\omega) \addtag\label{int_1_9} \], при условии, что данный интеграл существует. Использую интеграл Стилтьеса, эту формулу можно записать в виде:
+\[ E\xi = \int_{-\infty}^{\infty} x dF_\xi(x) \addtag\label{int_2_9} \]
+Из определения интеграла Стилтьеса можно получить геометрическую интерпретацию математического ожидания
+
+Рассмотрим две ситуации:
+\begin{enumerate}
+\item Вероятностное пространство \((\Omega, \mathcal{F}, p)\) --- дискретное вероятностное пространство, т.е. \(\Omega\) состоит из н.б.ч.с числа точек. Тогда из \ref{int_1_9} получаем:
+\[ E\xi = \sum_{i = 1}^\infty \xi(\omega_i) p(\omega_i) \]
+\begin{examp}
+\todo
+\end{examp}
+\item \((\Omega, \mathcal{F}, p)\) --- непрерывное вероятностное пространство. например \(\Omega \subset \R^m\), \(\omega = (x_1, x_2, \dots, x_m)\), тогда из \ref{int_2_9} получаем:
+\[ E\xi = \iint\dots\int_\Omega \xi(x_1, x_2, \dots, x_m)\cdot p(x_1, x_2, \dots, x_m) dx_1 dx_2\dots dx_m \]
+\begin{examp}
+В круг радиуса 3 наугад бросается точка, случайная величина \(\xi\), расстояния от центра круга до данной точки. Найти мат. ожидание \(\xi\).
+\[ \Omega = \{(x, y) \Big| x^2 + y^2 \le 9\} \]
+\[ \xi = \sqrt{x^2 + y^2} \]
+\[ p(x, y) = p = \const \]
+Из условия нормировки:
+\[ \int_\Omega \alpha p(\omega) = 1 \text{ или } \iint_\Omega p\,dx\,dy = 1 \implies \frac{1}{9 \pi} \]
+\[ E\xi = \iint_\Omega \xi(x, y)\cdot p dx dy = \iint_\Omega \sqrt{x^2 + y^2} \frac{1}{9 \pi} dx dy = \]
+\[ = \frac{1}{9\pi} \int_0^\pi d\varphi \int_0^3 \rho \cdot \rho d\rho = \frac{1}{9\pi}\cdot\pi\cdot\frac{\rho^3}{3} \bigg|_0^3 = 2 \]
+\fixme
+\end{examp}
+\end{enumerate}
+\section{Преобразование случайных величин}
+\label{sec:org53a2293}
+\(\xi\) --- случайная величина на \((\Omega, \mathcal{F}, p)\), \(g: \R \to \R\). Тогда функция \(g(\xi)\)
+\begin{definition}
+Функция \(g(x): \R \to \R\) --- Борелевская функция, если \(\forall B \in mathfrak{B}\), \(g^{-1}(B) \in \mathfrak{B}\)
+\end{definition}
+\begin{theorem}
+Если \(g(x)\) --- Борелевская функция и \(\xi\) --- случайная величина на \((\Omega, \mathcal{F}, p)\), то \(g(\xi)\) --- случайная величина на \((\Omega, \mathcal{F}, p)\)
+\end{theorem}
+\begin{proof}
+\todo
+\end{proof}
+\begin{remark}
+Если \(\xi\) --- дискретная случайная величина, то ее закон распределения находится просто из определения, поэтому в дальнейшем будем считать, что \(\xi\) имеет абсолютно непрерывное распределние
+\end{remark}
+\subsection{Стандартизация случайной величины}
+\label{sec:orge14463b}
+\begin{definition}
+Пусть имеется случайная величина \(\xi\) с соответствующей ей стандортной величиной:
+\[ \eta = \frac{\xi - E\xi}{\sigma} \]
+\end{definition}
+\beginproperty
+\begin{property}
+\(E\eta = 0\), \(D\eta = 1\)
+\end{property}
+\begin{proof}
+\todo
+\end{proof}
+\begin{remark}
+При стандартизации тип распределения не всегда сохраняется
+\end{remark}
+\subsection{Линейное преобразование}
+\label{sec:org9280380}
+\begin{theorem}
+Пусть случайная величина \(\xi\) имеет плотность \(f_\xi(x)\) \\
+\uline{Тогда} случайная величина \(\eta = a\xi + b,\ a \neq 0\) имеет плотность:
+\[ f_\eta(x) = \frac{1}{|a|}\cdot f_\xi \left(\frac{x - b}{a}\right) \]
+\end{theorem}
+\begin{proof}
+\-
+\begin{enumerate}
+\item \(a > 0\), тогда:
+\[ F_\eta(x) = p(a\xi + b < x) = p(\xi < \frac{x - b}{a}) = \int_{-\infty}^{\frac{x - b}{a}} f_\xi(t) dt \]
+\[ = \left[\begin{matrix} t = \frac{y - b}{a} & dt = \frac{1}{a}dy & y = at + b \\ y(-\infty) = -\infty & y \left(\frac{x - b}{a}\right) = x &  \end{matrix}\right. = \int \]
+\end{enumerate}
+\todo
+\end{proof}
+\beginproperty
+\begin{property}
+Если \(\xi \in N(0, 1)\), то \(\eta = \sigma \xi + a \in N(a, \sigma^{-1})\)
+\end{property}
+\begin{proof}
+\todo
+\end{proof}
+\begin{property}
+Если \(\eta \in N(a, \sigma^2)\), то \(\xi = \frac{\eta - a}{\sigma} \in N(0, 1)\)
+\end{property}
+\begin{property}
+Если \(\eta \in N(a, \sigma^2)\), то \(\xi = \gamma\eta + b \in N(a\gamma + b, \gamma^2\sigma^2)\)
+\end{property}
+\begin{property}
+Если \(\xi \in U(0, 1)\), то \(\eta = a \xi + b \in U(b, a + b)\) при \(a > 0\)
+\end{property}
+\begin{property}
+Если \(\xi \in E_\alpha\), то \(\eta = \alpha \xi \in E_1\)
+\end{property}
+
+\begin{theorem}
+Пусть \(f_\xi(x)\) --- плотность случайной величины \(\xi\) и функция \(\g(x)\) --- монотонная. Тогда существует обратная \(h(t) = g^{-1}(x)\) и случайная величина \(\eta = g(\xi)\) имеет плотность:
+\[ f_\eta(x) = \frac{1}{|f'_ \xi(x)|} f _\xi()  \fixme \]
+\end{theorem}
+\subsection{Квантильное преобразование}
+\label{sec:orgcaffcf5}
+\begin{theorem}
+Пусть функция распределения \(F(x)\) случайной величины \(\xi\) --- непрерывная, тогда случайная величина \(\eta = F(\xi) \in U(0, 1)\) --- имеет стандартное равномерное распределение
+\end{theorem}
+\begin{proof}
+Ясно, что \(0 \le \eta \le 1\)
+\begin{enumerate}
+\item Предположим сначала, что \(F(x)\) --- строго возрастающая функция. Тогда она имеет обратную функцию \(F^{-1}(x)\) и
+\[ F_\eta(x) = p(F(\xi) < x) = p(\xi < F^{-1}(x)) = \begin{cases}
+   0 & x < 0 \\
+   F(F^{-1}(x)) = x & 0 \le x \le 1 \\
+   1 & x > 1
+   \end{cases} \implies \]
+\(\implies \eta \in U(0, 1)\)
+\item Пусть функция не является строго возрастающей, т.е. у нее есть интервалы постоянства, в этом случае через \(F^{-1}(x)\) обозначим, самую левую точку такого интервала:
+\[ F^{-1}(x) = \min_t\{t \Big| F(t) = x)\} \]
+--- корректно, т.к. \(F(x)\) непрерывна слева. Тогда снова будет верна цепочка:
+\[ F_\eta(x) = p(F(\xi) < x) = p(\xi < F^{-1}(x)) = F(F^{-1}(x)) = x\quad 0 \le x \le 1\]
+\end{enumerate}
+\end{proof}
+Сформулируем теперь обратную теорему: \\
+Пусть \(F(x)\) --- функция распределения случаайной величины \(\xi\), при чем не обязательно непрерывная. Обозначим через \(F^{-1}(x) = \inf\{t \Big| F(t) \ge x\}\)
+\begin{theorem}
+Пусть \(\eta \in U(0, 1)\), \(F(x)\) --- произвольная функция распределения. \\
+\uline{Тогда} случайная величина \(\xi = F^{-1}(\eta)\) имеет функцию распределения \(F(x)\)
+\end{theorem}
+\begin{remark}
+\(F^{-1}(\eta)\) называется квантильным преобразованием над случайной величиной \(\eta\)
+\end{remark}
+\begin{corollary}
+Датчики случайных чисел обычно имеют стандартное равномерное распределение. Из теоремы следует, что при помощи датчика случайных числе и квантильного преобразования, мы можем смоделировать любое желаемое распределение, в том числе дискретное.
+\end{corollary}
+\begin{examp}
+\(E_\alpha\):
+\[ F(x) = \begin{cases}
+0 & x < 0 \\
+1 - e^{-\alpha x} & x \ge 0
+\end{cases}\]
+\[ \eta = 1 - e^{-\alpha x} \implies x = -\frac{1}{\alpha}\ln(1 - \eta) \]
+Если \(\eta \in U(0, 1)\), то \(\xi = \frac{1}{\alpha} \ln(1 - \eta) \in E_\alpha\)
+\end{examp}
+\begin{examp}
+\(N(0, 1)\):
+\[ \Phi_0(x) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^x  e^{-\frac{z^2}{2}} dz\]
+\[ \Phi^{-1}_0 \in N(0, 1) \]
+\end{examp}
+\end{document}
