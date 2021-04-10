@@ -1,4 +1,4 @@
-% Created 2021-04-10 Sat 14:13
+% Created 2021-04-10 Sat 14:26
 % Intended LaTeX compiler: pdflatex
 
   \documentclass[english]{article}
@@ -57,7 +57,7 @@
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\A}{\mathfrak{A}}
-\renewcommand{\B}(\mathfrak{B})
+\newcommand{\B}{\mathfrak{B}}
 \newcommand{\rank}{\mathop{\rm rank}\nolimits}
 \newcommand{\const}{\var{const}}
 \newcommand{\grad}{\mathop{\rm grad}\nolimits}
@@ -173,7 +173,7 @@
 
 
 \section{Сингулярное распределение}
-\label{sec:orgd2d7768}
+\label{sec:orgad1a4a0}
 \begin{definition}
 Случайная величина \(\xi\) имеет \textbf{сингулярное распределение}, если существует Борелевское множество \(B \in \mathfrak{B}\), с нулевой мерой Лебега \(\lambda B = 0\), такое что \(p(\xi \in B) = 1\), но \(\forall x \in B\ p(\xi = x) = 0\) 
 \end{definition}
@@ -195,7 +195,7 @@
 , где \(F_1(x)\) --- фунция дискретного распределения, \(F_2(x)\) --- функция абсолютно непрерывного распределения, \(F_3(x)\) --- функция сингулярного распределения. Т.е. все распределения делятся на дискретные, абсолютно непрерывные, сингуряные и их смеси
 \end{theorem}
 \section{Общий взгляд на математическое ожидание}
-\label{sec:org4507a46}
+\label{sec:org474c2e8}
 Пусть случайная величина \(\xi\) задана на вероятностном пространстве \((\Omega, \mathcal{F}, p)\). Математическим ожиданием случайной величины \(\xi\) называется интеграл Лебега:
 \[ E\xi = \int_\Omega \xi(\omega) dp(\omega) \addtag\label{int_1_9} \], при условии, что данный интеграл существует. Использую интеграл Стилтьеса, эту формулу можно записать в виде:
 \[ E\xi = \int_{-\infty}^{\infty} x dF_\xi(x) \addtag\label{int_2_9} \]
@@ -223,7 +223,7 @@
 \end{examp}
 \end{enumerate}
 \section{Преобразование случайных величин}
-\label{sec:org53a2293}
+\label{sec:org14ba42c}
 \(\xi\) --- случайная величина на \((\Omega, \mathcal{F}, p)\), \(g: \R \to \R\). Тогда функция \(g(\xi)\)
 \begin{definition}
 Функция \(g(x): \R \to \R\) --- Борелевская функция, если \(\forall B \in mathfrak{B}\), \(g^{-1}(B) \in \mathfrak{B}\)
@@ -238,7 +238,7 @@
 Если \(\xi\) --- дискретная случайная величина, то ее закон распределения находится просто из определения, поэтому в дальнейшем будем считать, что \(\xi\) имеет абсолютно непрерывное распределние
 \end{remark}
 \subsection{Стандартизация случайной величины}
-\label{sec:orge14463b}
+\label{sec:orgf4eb310}
 \begin{definition}
 Пусть имеется случайная величина \(\xi\) с соответствующей ей стандортной величиной:
 \[ \eta = \frac{\xi - E\xi}{\sigma} \]
@@ -254,7 +254,7 @@
 При стандартизации тип распределения не всегда сохраняется
 \end{remark}
 \subsection{Линейное преобразование}
-\label{sec:org9280380}
+\label{sec:org2b50847}
 \begin{theorem}
 Пусть случайная величина \(\xi\) имеет плотность \(f_\xi(x)\) \\
 \uline{Тогда} случайная величина \(\eta = a\xi + b,\ a \neq 0\) имеет плотность:
@@ -294,7 +294,7 @@
 \[ f_\eta(x) = \frac{1}{|f'_ \xi(x)|} f _\xi()  \fixme \]
 \end{theorem}
 \subsection{Квантильное преобразование}
-\label{sec:orgcaffcf5}
+\label{sec:org8971554}
 \begin{theorem}
 Пусть функция распределения \(F(x)\) случайной величины \(\xi\) --- непрерывная, тогда случайная величина \(\eta = F(\xi) \in U(0, 1)\) --- имеет стандартное равномерное распределение
 \end{theorem}
