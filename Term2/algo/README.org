@@ -1,4 +1,8 @@
 #+TITLE: Алгоритмы и структуры данных
 * Лабы
-1. [[file:labs/lab1/][Дерево отрезков]]
-2. [[file:labs/lab2/][Деревья поиска]]
+1. [[file:labs/lab1/][Дерево отрезков]] \\
+   [[file:labs/lab1/statements.pdf][Условия]]
+2. [[file:labs/lab2/][Деревья поиска]] \\
+   [[file:labs/lab2/statements.pdf][Условия]]
+3. [[file:labs/lab3/][Запросы на деревьях]] \\
+   [[file:labs/lab3/statements.pdf][Условия]]

@@ -1,7 +1,8 @@
-% Created 2021-03-12 Fri 17:14
+% Created 2021-04-08 Thu 23:02
 % Intended LaTeX compiler: pdflatex
-\documentclass[english]{article}
-\usepackage[T1, T2A]{fontenc}
+
+  \documentclass[english]{article}
+  \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -20,17 +21,19 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-
-\usepackage{geometry}
-\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-
- \usepackage{hyperref}
+  
+  \usepackage{geometry}
+  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+   \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -51,11 +54,24 @@
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -111,6 +127,32 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 5}
@@ -119,7 +161,7 @@
  pdftitle={Лекция 5},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -128,7 +170,7 @@
 
 
 \section{Программы}
-\label{sec:orgff34711}
+\label{sec:org6e1450b}
 программа(функция)
 \begin{itemize}
 \item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
@@ -215,12 +257,12 @@ match l with
 \end{minted}
 \end{examp}
 \subsection{Исчесление предикатов}
-\label{sec:orgb89c9a6}
+\label{sec:org8348991}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
-\item логические выражения "предикаты"/"формулы"
-\item предметные выражния "термы"
+\item логические выражения ``предикаты``/``формулы``
+\item предметные выражния ``термы``
 \end{itemize}
 \(\Theta\) --- метаперменные для термов \\
 Термы:
@@ -243,12 +285,12 @@ match l with
 \item \(P(\Theta_1, \dots, \Theta_n)\) --- применение предикатных символов
 \item \(\&, \vee, \neg, \to\) --- Cвязки
 \item \(\forall x.\varphi\) и \(\exists x.\varphi\) --- кванторы \\
-\color{gray}"<квантор> <переменная>.<выражение>"\color{black} \\
+\color{gray}``<квантор> <переменная>.<выражение>``\color{black} \\
 \end{itemize}
 \end{itemize}
 \end{definition}
 \subsubsection{Сокращение записи}
-\label{sec:org05b5db4}
+\label{sec:orgba6c8ec}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -256,7 +298,7 @@ match l with
 Правильный вариант(настоящее выражние):
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \subsection{Теория моделей}
-\label{sec:orgdc0c456}
+\label{sec:orgbbba951}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -274,7 +316,7 @@ match l with
 \item \(\llbracket P_i(\Theta_1, \dots , \Theta_n) \rrbracket = f_{P_i}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
 \item \(\llbracket f_j(\Theta_1 , \dots, \Theta_n ) \rrbracket = f_{f_j}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
 \item \[ \llbracket \forall x. \varphi \rrbracket = \begin{cases} \text{И} & , \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И}\text{ при всех } k \in D  \\ \text{Л} &,\text{иначе}\end{cases} \]
-\item \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе}\]
+\item \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе} \end{cases} \]
 \end{itemize}
 \[ \llbracket \forall x.\forall y.E(x, y) \rrbracket = \text{Л} \]
 т.к. \(\llbracket E(x, y) \rrbracket^{x:=1,\ y:=2} = \text{Л}\)
@@ -296,7 +338,7 @@ match l with
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теория доказательств}
-\label{sec:org199681d}
+\label{sec:org10ab678}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
