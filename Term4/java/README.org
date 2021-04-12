@@ -8,3 +8,4 @@
 4. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/implementor/][Implementor]]
 5. See prev
 6. See prev
+7. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/concurrent/][IterativeParallelism]]
