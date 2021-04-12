@@ -1,4 +1,4 @@
-% Created 2021-04-05 Mon 13:10
+% Created 2021-04-12 Mon 13:11
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[oneside]{book}
@@ -21,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -45,14 +48,18 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
 \newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
 \newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
@@ -122,6 +129,32 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекции по Математическому анализу 4 семестр}
@@ -140,14 +173,14 @@
 
 
 \chapter{}
-\label{sec:orge5ef99c}
+\label{sec:org7ee6692}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Теория меры}
-\label{sec:org4c4a2ec}
+\label{sec:orge972367}
 \begin{lemma}[о структуре компактного оператора]
 \(V : \R^m \to \R^m\) --- невырожденный линейный оператор, т.е. \(\det V \neq 0\) \\
 \uline{Тогда}:
@@ -158,7 +191,7 @@
 \[ \forall x \in \R^m\quad V(x) = \sum_{i = 1}^m S_i \langle x, g_i \rangle h_i$ \]
 \color{gray} \(x = \sum \langle x, g_i \rangle g_i\) --- разложение по базису \color{black} \\
 \textbf{При этом} \(\vert\det V\vert = S_1 S_2 \dots S_m\)
-\label{orge0df488}
+\label{org098c67b}
 \end{lemma}
 \begin{proof}
 \(W := V^*V\) \color{gray} * --- транспонирование в \(\R^m\) \color{black} \\
@@ -174,7 +207,7 @@
 \[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
 \(\ref{diag_1}\) --- т.к. диагональная матрица
-\label{org141a927}
+\label{orgab4c889}
 \end{proof}
 \begin{theorem}[преобразование меры лебега при линейном отображении]
 \-
@@ -186,7 +219,7 @@
 \item \(\forall E \in \M^m\quad V(E) \in \M^m\)
 \item \(\lambda(V(E)) = \vert \det V \vert \cdot \lambda E\)
 \end{itemize}
-\label{orgebc8bfe}
+\label{org95549ba}
 \end{theorem}
 \begin{proof}
 \- 
@@ -198,12 +231,12 @@
 \(\Rightarrow\) \(\exists k: \mu = k\cdot \lambda\)(Лемма из предыдущего семестра) \\
 \(Q\) --- единичный куб на векторах \(g_i\) и \(V(g_i) = S_ih_i\), \(V(Q) = \{\sum\alpha_iS_ih_i \vert \alpha_i \in [0,1]\}\) --- паралеллепипед со сторонами \(S_i, \dots, S_m\)
 \end{description}
-\label{orgb207266}
+\label{org8601846}
 \end{proof}
 \section{Интеграл}
-\label{sec:org3afdb7f}
+\label{sec:orgad9d5a9}
 \subsection{Измеримые функции}
-\label{sec:org1337c2d}
+\label{sec:orgee40c1d}
 \begin{definition}
 \-
 \begin{enumerate}
@@ -212,7 +245,7 @@
 \(\exists\) разбиение \(X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i\) \\
 При этом такое разбиение --- \textbf{допустимое разбиение}
 \end{enumerate}
-\label{org73e6293}
+\label{org6325d0f}
 \end{definition}
 \begin{examp}
 \-
@@ -220,7 +253,7 @@
 \item Характеристическая функция множества \(E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}\)
 \item \(f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}\), где \(\mathcal{X} = \bigsqcup e_i\)
 \end{enumerate}
-\label{org1395acd}
+\label{org1b7295b}
 \end{examp}
 \begin{remark}
 \-
@@ -232,19 +265,19 @@
 \item \(f, g\) --- ступенчатые, \(\alpha \in \R\) \\
 \uline{Тогда} \(f + g,\ \alpha f,\ fg,\ max(f, g),\ min(f, g),\ |f|\) --- ступенчатые
 \end{enumerate}
-\label{org5c72e44}
+\label{org73b9e8e}
 \end{remark}
 \begin{definition}
 \(f: E\subset X \to \overline{\R},\ a \in \R\) \\
 \(E(f < a) = \{x\in E: f(x) < a\}\) --- \textbf{лебегово множество функции \(f\)} \\
 \(E(f \le a),\ E(f > a), E(f \ge a)\) --- также лебеговы множества \\
 Если \(f\) задана на \(X\): \(X(f < a),\ X(f \le a), \dots\) --- лебеговы множества
-\label{org540a6c0}
+\label{orgbbf5c6d}
 \end{definition}
 \begin{remark}
 \(E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C\) \\
 \[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
-\label{org8b91d7a}
+\label{org88d9991}
 \end{remark}
 \begin{definition}
 \-
@@ -255,7 +288,7 @@
 \end{itemize}
 \(f\) --- \textbf{измерима на множестве \(E\)}: \\
 \(a \in \R\quad E(f < a)\) --- измеримо(т.е. \(\in \A\))
-\label{orgd8a96b4}
+\label{org073efac}
 \end{definition}
 \begin{symb}
 \-
@@ -263,7 +296,7 @@
 \item \(f\) --- измеримо на \(X\) --- говорят просто "измеримо"
 \item \(X = \R^m\), мера Лебега --- измеримо по Лебегу
 \end{itemize}
-\label{org5d1e0c6}
+\label{org9d58d0d}
 \end{symb}
 \begin{remark}
 Эквивалентны:
@@ -273,7 +306,7 @@
 \item \(\forall a\quad E(f > a)\) --- измеримо
 \item \(\forall a\quad E(f \ge a)\) --- измеримо
 \end{enumerate}
-\label{orgf06fc1f}
+\label{org7fa37d8}
 \end{remark}
 \begin{examp}
 \begin{enumerate}
@@ -281,7 +314,7 @@
 \(E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}\)
 \item \(f: \R^m \to \R\) --- непрерывна. Тогда \(f\) --- измеримо по Лебегу
 \end{enumerate}
-\label{orgfd2094b}
+\label{orgba9e6ee}
 \end{examp}
 \begin{remark}
 \emph{Свойства}:
@@ -298,7 +331,7 @@
 \item \(f \neq 0\) --- измерима на \(E\) \(\Rightarrow\) \(\frac{1}{f}\) --- измерима на \(E\)
 \item \(f \ge 0\), измерима на \(E\), \(\alpha \in \R\). \uline{Тогда} \(f^\alpha\) --- измерима на \(E\)
 \end{enumerate}
-\label{orgcd52c73}
+\label{org23889b0}
 \end{remark}
 \begin{theorem}
 \(f_n\) --- измерима на \(X\). \\
@@ -309,7 +342,7 @@
 \item \(\overline{\lim} f_n;\quad\underline{\lim} f_n\) --- измеримы
 \item Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то \(h(x)\) --- измеримо
 \end{enumerate}
-\label{org117de58}
+\label{org225823d}
 \end{theorem}
 \begin{proof}
 \-
@@ -318,11 +351,11 @@
 \item \[ (\overline{\lim} f_n)(x) = \inf\{s_n: s_n = \sup(f_n(x), f_{n + 1}(x), \dots)\} \]
 \item очев.
 \end{enumerate}
-\label{org5ec23eb}
+\label{org1c3997e}
 \end{proof}
 
 \subsection{Меры Лебега-Стильеса}
-\label{sec:org8b352fa}
+\label{sec:org1e237c8}
 \begin{definition}
 \(\R, \P^1, g:\R \to \R\) --- возрастает, непрерывна \\
 \(\mu[a, b) := g(b) - g(a)\) --- \(\sigma\)-конечный объем \\
@@ -330,22 +363,22 @@
 \[ \mu[a, b) := g(b-0) - g(a - 0) \]
 --- тоже \(\sigma\)-конечная мера \\
 Применим теорему о продолжении, получим меру \(\mu g\) на некой \(\sigma\)-алгебре --- \textbf{мера Лебега-Стилтьеса} 
-\label{org490c293}
+\label{org8440af8}
 \end{definition}
 \begin{definition}
 \(g(x) = \lceil x \rceil\) \\
 Пусть \(\mu g\) определена на Борелевской \(\sigma\)-алгебре --- \textbf{мера Бореля-Стилтьеса}
-\label{org6d2a5e4}
+\label{org25ac6a7}
 \end{definition}
 \chapter{}
-\label{sec:org44e9e3b}
+\label{sec:org5cbcfe0}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Теореия меры}
-\label{sec:org2981065}
+\label{sec:org2ffcba2}
 \subsection{Измеримые функции}
-\label{sec:orgea12c61}
+\label{sec:orga7de7b4}
 \begin{itemize}
 \item \((X, \A, \mu)\)
 \item \(f: X \to \overline{R}\) имзмерима
@@ -364,7 +397,7 @@
 \item \(0 \le f_1 \le f_2 \le \dots\)
 \item \(\forall x f(x) = \lim_{n \to + \infty}f_n(x)\)
 \end{enumerate}
-\label{org82b79a6}
+\label{orga36c50e}
 \end{theorem}
 \begin{proof}
 \begin{center}
@@ -374,33 +407,33 @@
 \[ e^{(n)}_{n^2 + 1} = X(n \le f) \]
 \[ g_n := \sum^{n + 1}_{k = 1} \frac{k - 1}{n} \X_{e^{(n)}_k} \]
 \[ g_n \ge 0 \quad \lim_{n \to + \infty}g_n(x) = f(x) \]
-\label{org302136e}
+\label{org322b387}
 \end{proof}
 \begin{corollary}
 \(f\) --- имзерима \\
 \uline{Тогда} \(\exists f_n\) --- ступенчатая, \(f_n \xrightarrow{n \to + \infty}{} f\) всюду и \(|f_n| \le |f|\)
-\label{org59fc7ab}
+\label{orga9b778e}
 \end{corollary}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(fg\) --- измемрима (\(0\cdot\infty=0\))
-\label{orgc089754}
+\label{org10ef661}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_ng_n\) --- ступенчатая \(f_ng_n \to fg\)
-\label{orgc0bdec2}
+\label{org7e2befe}
 \end{proof}
 \begin{corollary}
 \(f, g\) --- измеримы \\
 \uline{Тогда} \(f + g\) --- измерима
-\label{org6b7721f}
+\label{orgae41baa}
 \end{corollary}
 \begin{proof}
 \(f_n \to f\quad g_n \to g\), (\(f_n, g_n\)) --- ступеначтые \\
 \(f_n + g_n\) --- ступенчатая \(f_n + g_n \to f + g\) \\
 \color{gray}Считаем что \(\forall x\), не может быть \(f(x) = \pm \infty,\ g(x) = \mp \infty\)
-\label{orgf0427db}
+\label{orgc72f01b}
 \end{proof}
 
 \begin{itemize}
@@ -418,14 +451,14 @@
 \item \(f\) --- непрерывна на \(E' = E \setminus e\)
 \end{itemize}
 \uline{Тогда} \(f\) --- измерима
-\label{org170e34f}
+\label{org240ca79}
 \end{theorem}
 \begin{proof}
 \(f\) --- измерима на \(E'\)  \\
 \(E'(f < a)\) --- открыто в \(E'\) \\
 \[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в} E \]
 \[ E(f < a) = E'(f < a) \cup e(f < a) \]
-\label{orgd15de75}
+\label{orgebcce93}
 \end{proof}
 \begin{examp}
 \-
@@ -458,7 +491,7 @@
 \(f\) --- непрерывна на \(\langle a, b \rangle\) за исключением возможно счетного числа точек
 \end{proof}
 \subsection{Сходимость почти везде и по мере}
-\label{sec:org94c1f67}
+\label{sec:orga19e53f}
 \begin{defintion}
 \begin{itemize}
 \item \((X, \A, \mu)\)
@@ -612,7 +645,7 @@
 \xymatrix@1{A\ar[r]^>>{+}&B}
 
 \section{Интеграл}
-\label{sec:org9ce0062}
+\label{sec:org156492e}
 \((X, \A, \mu)\)
 \begin{definition}
 \label{def_int_1}
@@ -671,12 +704,12 @@
 \end{enumerate}
 \end{theorem}
 \chapter{}
-\label{sec:org40fbe25}
+\label{sec:org28dbc18}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 
 \section{Интеграл}
-\label{sec:org65585dc}
+\label{sec:orgd64f09c}
 \begin{enumerate}
 \item \(f \ge 0\), ступенчатые \\
 \(f = \sum_\text{кон.} \alpha_k \chi_{E_k}\), \(E_k\) --- измеримое \\
@@ -818,7 +851,7 @@
 \(f^+, f^- \dots\) \(\color{red}???\)
 \end{proof}
 \subsection{Предельный переход под щнаком интеграла}
-\label{sec:org26d4583}
+\label{sec:org2fc001a}
 \(f_n \to f\). Можно ли утверждать \(\int_E f_n \to \int_E f\)?
 \begin{examp}
 \(f_n, f: \R \to \R\) \\
@@ -921,7 +954,7 @@
 \[ \sum_n \int_{[-N, N]}\frac{|a_n|}{\sqrt{|x - x_n|}} \le 4 \int_N \sum |a_n| < + \infty \]
 \end{proof}
 \chapter{}
-\label{sec:org1a6a4a9}
+\label{sec:orgdb0785a}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
@@ -1071,9 +1104,9 @@
 \color{red}Zzz..\color{black}
 \end{proof}
 \section{Плотность одной меры по отношению к другой}
-\label{sec:org2cd15b5}
+\label{sec:org1505d20}
 \subsection{Замена перменных в интеграле}
-\label{sec:org669d2d2}
+\label{sec:org63e16a8}
 \begin{itemize}
 \item \((X, \A, mu)\)
 \item \((Y, \B, \cdot)\)
@@ -1161,14 +1194,14 @@
 \[ \int_X f d\nu = \int_X f(x)\omega(x)d\mu \]
 \end{remark}
 \chapter{}
-\label{sec:org763da8a}
+\label{sec:orgff2134d}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Плотности}
-\label{sec:orgdada8c3}
+\label{sec:orgea5ad21}
 
 \noindentПлотность \((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- мера \\
 Плотность  меры \(\nu\) онсительно \(\mu\) --- это функция \(\omega: X \to \overline{\R}\) \\
@@ -1260,7 +1293,7 @@
 \(\forall f, g \in \mathcal{L}(X) \exists A l_A(f) \neq l_A(g)\)
 \end{remark}
 \section{Мера лебега}
-\label{sec:org79db927}
+\label{sec:orgb653f2b}
 \begin{lemma}[о мере образа малых кубических ячеек]
 \-
 \begin{itemize}
@@ -1299,7 +1332,7 @@
 \item \(A \subset Q\)
 \end{itemize}
 \uline{Тогда} \[ \inf_{\substack{G: A \subset G \\ G\text{ --- открытое } \subset O}}\left(\lambda(G)\sup_G f\right) = \lambda A\cdot \sup_A f\]
-\label{org5649272}
+\label{org017e4b1}
 \end{lemma}
 \begin{theorem}
 \-
@@ -1308,7 +1341,7 @@
 \end{itemize}
 \uline{Тогда} \(\forall A \in \M^m, A \in O\)
 \[ \lambda \Phi(A) = \int_A \left|\det \Phi'(x)\right| d\lambda(x) \]
-\label{org15d6f90}
+\label{org5b1c0b5}
 \end{theorem}
 \begin{proof}
 Обозначим якобиан \(J_\Phi(x) = |\det \Phi'(x)|\) \\
@@ -1327,7 +1360,7 @@
 \item Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
 Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
 \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
-\item По \hyperref[org5649272]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
+\item По \hyperref[org017e4b1]{лемме} второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
 \[ O = \bigsqcup Q_j\text{ --- куба } Q_j \subset \overline{Q_j} \subset O \]
 \[ A = \bigsqcup \underbrace{A \cup Q_j}_{A_j}\quad A\subset G\text{ --- открытое} \]
 \[ J A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
@@ -1364,7 +1397,7 @@
 \item \(\nu(A) = \lambda \Phi(A)\)
 \end{itemize}
 Под действием гладкого отображния \(\Phi\), \(\sigma\)-аглебра \(\M^m\) сохраняется \\
-По \hyperref[org15d6f90]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
+По \hyperref[org5b1c0b5]{теореме} \[\nu(B) = \int_{\Phi^{-1}(A)} J_\Phi d\lambda\]
 т.е. \(\lambda\) --- взвешенный образ исходной меры Лебега по отношению к \(\Phi\)
 \end{proof}
 \begin{examp}
@@ -1383,14 +1416,14 @@
 --- для географических координат: \(r\) --- растояние от центра Земли, \(\psi\) --- угол к плоскости экватора
 \end{examp}
 \chapter{}
-\label{sec:orgb1f1e3c}
+\label{sec:org698257a}
 \newcommand{\X}{\chi}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Сферические координаты в \(R^m\)}
-\label{sec:orga14cd54}
+\label{sec:org606b0ad}
 \begin{examp}
 \-
 \begin{itemize}
@@ -1431,7 +1464,7 @@
 \[ = \dots = \int\limits_{\Omega_{m - 1}}r^{m - 1}\sin^{n - 2}\varphi_{1} \dots \sin\varphi_{m - 2}\]
 \end{examp}
 \section{Произведение мер}
-\label{sec:org058e0bf}
+\label{sec:orgd2f5a59}
 \begin{itemize}
 \item \((X, \A, \mu)\)
 \item \((Y, \B, \nu)\)
@@ -1607,14 +1640,14 @@
 \end{enumerate}
 \end{remark}
 \chapter{}
-\label{sec:org85f198d}
+\label{sec:org35ebece}
 \newcommand{\X}{\chi}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 
 \section{Принцип Кавальери}
-\label{sec:org45e51eb}
+\label{sec:org4a40e8d}
 \begin{enumerate}
 \item \(C_x\) --- имзмерима при почти всех \(x\)
 \item \(x \mapsto \nu C_x\) --- измерима*
@@ -1630,14 +1663,14 @@
 \end{proof}
 \begin{remark}
 \(\lambda_2\) можно продолжить на множество \(2^{\R^2}\) с сохранением свойства конечной аддитивности и это продолжение не единственно
-\label{orgcf0e44c}
+\label{orgcbb7c36}
 \end{remark}
 \begin{remark}
 \(\lambda_m, m>2\) --- аналогичным образом продолжить невозможно. Парадокс Хаусдорфа-Банаха-Тарского
-\label{orgfb0f648}
+\label{org624686f}
 \end{remark}
 \begin{remark}
-Для \hyperref[orgcf0e44c]{замечания 1} и \hyperref[orgfb0f648]{замечания 2} требуется инвариантность меры относительно движения \(\R^m\)
+Для \hyperref[orgcbb7c36]{замечания 1} и \hyperref[org624686f]{замечания 2} требуется инвариантность меры относительно движения \(\R^m\)
 \end{remark}
 
 \begin{definition}
@@ -1695,9 +1728,9 @@
 \end{proof}
 \todo
 \section{Поверхностные интегралы}
-\label{sec:org37c91c4}
+\label{sec:org5c53b4a}
 \subsection{Поверхностные интегралы I рода}
-\label{sec:org002fc79}
+\label{sec:org9081b64}
 \begin{definition}
 \(M \subset \R^3\) --- простое двумерное гладкое многообразие. \(\varphi: G \subset \R^2 \to \R^3\) --- параметризация. \(E \subset M\) --- измеримо по Лебегу, если \(\varphi^{-1}(E)\) измеримо в \(\R^2\) по Лебегу
 \end{definition}
@@ -1752,8 +1785,8 @@ k & z'_u & z'_v
 \[ E = |\varphi'_u| = x'_u^2 + y'_u^2 + z'_u^2 \]
 \[ F = \langle \varphi'_u, \varphi'_v \rangle = x'_ux'_v + y'_uy'_v + z'_u z'_v \quad F = |\varphi'_v|^2 \]
 \end{remark}
-\chapter{}
-\label{sec:orga219270}
+\chapter{5 апреля}
+\label{sec:orgc7c5985}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
 
@@ -1783,7 +1816,7 @@ k & z'_u & z'_v
 \[ \int_E f ds := \sum_i \int_{E \cap M_i} f ds \]
 \end{definition}
 \section{Поверхностный интеграл II рода}
-\label{sec:org8cbd810}
+\label{sec:org47fc054}
 \begin{itemize}
 \item \(M\) --- простое гладкое двумерное многообразие в \(R^3\) --- поверхность
 \end{itemize}
@@ -1864,9 +1897,9 @@ k & z'_u & z'_v
 \uline{Тогда} (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
 \end{corollary}
 \section{Ряды Фурье}
-\label{sec:org18a4b65}
+\label{sec:orgb316bec}
 \subsection{Пространства \(L^p\)}
-\label{sec:orgcf18e5a}
+\label{sec:org2072e13}
 \begin{property}
 \-
 \begin{itemize}
@@ -1888,10 +1921,209 @@ k & z'_u & z'_v
 \item \(f, g: E \to \C\) --- измеримые
 \end{itemize}
 \uline{Тогда} \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \left(\int_E |g|^q\right)^{\frac{1}{q}} \]
-\label{orgc185adb}
+\label{orga46c7c8}
 \end{property}
 \begin{property}[Неравенство Минковского]
-Те-же условия что и в \hyperref[orgc185adb]{Неравенстве Гельдера}
+Те-же условия что и в \hyperref[orga46c7c8]{Неравенстве Гельдера}
+\[ \left(\int_E |f + g|^p\right)^{\frac{1}{p}} \le \left(\int_E |f|^p\right)^{\frac{1}{p}} + \left(\int_E |g|^p\right)^{\frac{1}{p}} \]
+\end{property}
+\begin{remark}
+При \(p = 1\) неравенство тоже верно
+\end{remark}
+\begin{property}
+\begin{definition}
+\(L^p\), \(1 \le p \le +\infty\)
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \(E \subset X\) --- измеримое
+\end{itemize}
+\[ \mathcal{L}^p(E, \mu) := \left\{f: \text{ почти везде }E \to \R(\C) \Big| f\text{ --- измеримая}, \int_E |f|^p\,d\mu < +\infty\right\} \]
+--- это линейное пространство (по неравенству Минковского) \\
+\(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = h\text{ почти везде}\). \(\mathcal{L}^p/_N = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
+\end{definition}
+\end{property}
+
+\begin{property}
+\-
+\begin{itemize}
+\item \(L^\infty(E,\mu)\)
+\item \((X, \A, \mu)\)
+\item \(E\) --- измеримое
+\item \(f\) --- почти везде \(E \to \overline{\R}\) --- измеримая
+\end{itemize}
+\[ \esssup_{x \in E} f = \inf \{A \in \overline{R}\Big| f \le A\text{ почти везде}\} \]
+\end{property}
+\beginproperties
+\begin{property}
+\(\esssup f \le \sup f\)
+\end{property}
+\begin{property}
+\(f \le \esssup f\) почти везде
+\end{property}
+\begin{proof}
+\(B = \esssup f\) \\
+Тогда 
+\end{proof}
+
+\begin{property}
+\(f\) --- сумм, \(\esssup_E |g| < +\infty\) \\
+\uline{Тогда} \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
+\end{property}
+\begin{proof}
+\[ \left| \int_E fg \right| \le \int_E |fg| \le \int_E \esssup |g|\cdot|f| \]
+\end{proof}
+\begin{remark}
+\(L^\infty(E, \mu) = \{f: \text{п.в. } E \to \overline{\R}(\overline{\C}),\text{ изм.}, \esssup |f| < +\infty \}/_\sim\). Эквивалентные функции отождествленны --- это нормированное пространство
+\[ \Vert f \Vert_{L^\infty(E, \mu)} := \esssup_E |f| = \Vert f \Vert_\infty \]
+\end{remark}
+\begin{remark}
+В новых обозначениях. Неравенство Гельдера:
+\[ \Vert fg \Vert_1 \le \Vert f \Vert_p \cdot \Vert g \Vert_q \]
+Здесь можно брать \(p = 1,\ q = +\infty\)
+\end{remark}
+\begin{remark}
+\(f \in L^p\) \(\Rightarrow\) \(f\) --- почти везде конечны. \(1 \le p \le +\infty\) \(\Rightarrow\) можно считать \(f\) --- задана всюду на \(E\), и всюду конечна
+\end{remark}
+\chapter{12 апреля}
+\label{sec:orgd25b948}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
+
+
+\begin{itemize}
+\item \(M\)
+\item \(\Phi: O \subset \R^2 \to \R^3\)
+\item \(f\)
+\item \(f \citc \Phi\)
+\end{itemize}
+\[ \int_{M/E} d fs = \int_{O/\Phi^{-1}(E)} f \circ \Phi \cdot |\Phi'u\times\Phi'v|\,du\,dv \]
+\begin{definition}
+\(M \subset \R^3\) --- \textbf{кусочно гладкое двумерное многообразие}, если
+\(M\) --- конечное объединение
+\begin{itemize}
+\item простых гладких двумерных многообразий \(M_i\)
+\item гладких кривых
+\item точек
+\end{itemize}
+\end{definition}
+\begin{remark}
+Просто так сферу параметризовать не можем, но можем разбить ее на две полусферы и окружность и считать отдельно для каждой из них.
+\end{remark}
+\begin{definition}
+\(E \subset M\) --- измеримое, если измеримы все \(E \cap M_i\). \\
+\[S(E) := \sum_i S(E\cap M_i) \]
+\[ \int_E f ds := \sum_i \int_{E \cap M_i} f ds \]
+\end{definition}
+\section{Поверхностный интеграл II рода}
+\label{sec:org15fdded}
+\begin{itemize}
+\item \(M\) --- простое гладкое двумерное многообразие в \(R^3\) --- поверхность
+\end{itemize}
+\begin{definition}
+\textbf{Сторона поверхности} --- непрерывное семейство единичных нормалей к этой поверхности \\
+\(M \subset \R^3 \quad W: M \to \R^3\) \\
+\(\forall x\ W(x)\) --- нормаль к \(M\), \(|w(x)| = 1\), \(w(x) \perp \Phi'u,\Phi'_v\)
+\end{definition}
+\begin{remark}
+Локльно каждая повехность --- двустороннее. В общем случае --- 1 или 2 стороны
+\end{remark}
+\begin{remark}
+График функции \(z(x, y)\)
+\[ \Phi: (x, y) \mapsto \begin{pmatrix} x \\ y \\ z(x, y) \end{pmatrix} \]
+\[ \Phi'_x = \begin{pmatrix} 1 \\ 0 \\ z'_x \end{pmatrix}\quad\Phi'_y = \begin{pmatrix} 0 \\ 1 \\ z'_y \end{pmatrix} \]
+--- касательные векторы
+\[n := \Phi'_x \times \Phi'_y = \begin{pmatrix} -z'_x \\ -z'_y \\ 1 \end{pmatrix}\] --- нормаль
+\[ n_0 = \pm \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
+\end{remark}
+\begin{remark}
+Другой способ задания стороны поверхности
+\begin{enumerate}
+\item \(u, v\) --- касательные векторы \\
+\(u \not\parallel v\), \((u, v)\) --- касательный реп\(\acute{\text{е}}\)р \\
+Если задано непрерывное поле реперов, то они задают сторону \(n = u \times v\)(отнормировать)
+\item Задана петля + указано непрерывное движение
+\end{enumerate}
+\end{remark}
+\begin{definition}
+\(M\) --- поверхность в \(\R^3\), \(n_0\) --- сторона, \(\gamma\) --- контур(петля) в \(M\) --- ориентированный. \\
+Говорят, что сторона поверхности \(n_0\) согласована с ориентацией \(\gamma\): \((\gamma' \times N_\text{внутр.}) \parallel n_0\). Т.е. если ориентация \(\gamma\) задает сторону \(n_0\)
+\end{definition}
+\begin{definition}
+\-
+\begin{itemize}
+\item \(M\) --- простое двумерное гладкое многообразие
+\item \(n_0\) --- сторона \(M\)
+\item \(F: M \to \R^3\) --- векторное поле(непрерывное)
+\end{itemize}
+\[ \int_M \langle F, n_0 \rangle \, ds \] --- \textbf{интеграл II рода} векторного поля \(F\) по поверхности \(M\)
+\end{definition}
+\begin{remark}
+Смена стороны = смена знака
+\end{remark}
+\begin{remark}
+Не зависит от параметра
+\end{remark}
+\begin{remark}
+\(F = (P, Q, R)\) обозначается
+\[ \iint_M P \, dy\,dz + Q\,dz\,dx + R\,dx\,dy \]
+\end{remark}
+\begin{remark}
+\(\Phi, n = \Phi'_u \times \Phi'_v \leadsto n_0\)
+\[ \int_M \langle F, n_0 \rangle = \int_O \left\langle F, \frac{\Phi'_u \times \Phi'_v}{|\Phi'_u\times\Phi'_v} \right\rangle |\Phi'_u\times\Phi'_v|\,du\,dv =  \]
+\[ \int_O \underbrace{\langle F, \Phi'_u\times\Phi'_v \rangle}_\text{смешенное произведение} \,du\,dv \addtag\label{int_1_8} \]
+\[ \Phi(u, v) = (x(u, v), y(u, v), z(u, v)) \]
+\[ \langle F, \Phi'_u\times\Phi'_v \rangle = \det\begin{pmatrix}P & x'_u & x'_v \\ Q & y'_u & y'_v \\ R & z'_u & z'_v\end{pmatrix} \]
+\[ \ref{int_1_8} = \int_O P\cdot\begin{vmatrix} y'_u & z'_v \\ z'_u & z'_v \end{vmatrix} + Q\cdot\begin{vmatrix}z'_u & z'_v \\ x'_u & x'_v\end{vmatrix} + R\cdot\begin{vmatrix}x'_u & x'_v \\ y'_u & y'_v\end{vmatrix}\,du\,dv \]
+\end{remark}
+\begin{examp}
+График \(z(x, y)\) над областью \(G\) по верхней стороне
+\[ \iint_{\Gamma_z} R\,dx\,dy = \iint_{\Gamma_z} 0\,dy\,dz + 0\,dz\,dy + R(x, y, z)\,dx\,dy \addtag\label{int_2_8} \]
+\[ n_0 = \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
+\[ \ref{int_2_8} = \iint_{\Gamma_z} R(x, y, z)\cdot \frac{1}{\sqrt{1 + z'_x^2 + z'_y^2}}\,ds = \iint_G R(x, y, z(x, y)) \,dx\,dy = \iint_G R\,dx\,dy \]
+т.е. этот интеграл II рода равен интегралу по проекции
+\end{examp}
+\begin{corollary}
+\-
+\begin{itemize}
+\item \(V \subset \R^3\)
+\item \(M = \partial V\) --- гладкая двумерная поверхность
+\item \(n_0\) --- внешняя нормаль
+\end{itemize}
+\[ \lambda_3 V = \iint_{\partial V} z\,dx\,dy = \frac{1}{3}\iint_{\partial V} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy \]
+\end{corollary}
+\begin{corollary}
+\(\Omega\) --- гладкая кривая в \(\R^2\), \(M\) (--- цилиндр над \(\Omega\)) \(=\Omega \times [z_0, z_1]\) \\
+\uline{Тогда} (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
+\end{corollary}
+\section{Ряды Фурье}
+\label{sec:orga928b29}
+\subsection{Пространства \(L^p\)}
+\label{sec:org5d1d563}
+\begin{property}
+\-
+\begin{itemize}
+\item \((X, \A, \mu)\)
+\item \(f: X \to \C\) \\
+\(x = f(x) = u(x) + iv(x)\) \\
+\(u = \Re f,\ v = \Im f\) \\
+\item \(f\) --- измеримая, если \(u\) и \(v\) --- измеримые
+\item \(f\) --- суммируемая, \(u\) и \(v\) --- суммирумые
+\item \(f\) --- суммируемая: \(\int_E f = \int_E u + \int_E v\)
+\end{itemize}
+\end{property}
+\begin{property}[Неравенство Гёльдера]
+\-
+\begin{itemize}
+\item \(p,q > 1\) \(\frac{1}{p} + \frac{1}{q} = 1\)
+\item \((X, \A, \mu)\)
+\item \(E\) --- измеримое
+\item \(f, g: E \to \C\) --- измеримые
+\end{itemize}
+\uline{Тогда} \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \left(\int_E |g|^q\right)^{\frac{1}{q}} \]
+\label{org79c2b59}
+\end{property}
+\begin{property}[Неравенство Минковского]
+Те-же условия что и в \hyperref[orga46c7c8]{Неравенстве Гельдера}
 \[ \left(\int_E |f + g|^p\right)^{\frac{1}{p}} \le \left(\int_E |f|^p\right)^{\frac{1}{p}} + \left(\int_E |g|^p\right)^{\frac{1}{p}} \]
 \end{property}
 \begin{remark}
