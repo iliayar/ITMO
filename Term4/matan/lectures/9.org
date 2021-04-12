@@ -1,0 +1,194 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 9
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_export latex
+\newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
+#+end_export
+
+- \(\gamma: [a, b] \to \R^m\)
+\[ \int_a^b f ds \quad \int_a^b \langle F, \gamma' \rangle dt =\int_a^b \langle F, \frac{\gamma'}{|\gamma'|} \rangle ds \]
+Мера на кривой --- гладкре 1-мерное многообразие, \(\gamma\) --- параметризация. Эта мера --- образ меры Лебега в \(\R^1\) с весом \(|\gamma'|\) --- интеграл I рода. Общий случай: Интеграл II рода по \((m - 1)\)-мерной поверхности в \(\R^m\). \(F\) --- векторное поле
+\[ \int \langle F, n_0 \rangle dS_{m - 1} \quad \(|\Phi_u' \times \Phi_v'|\text{ --- вес}\)\]
+Мера Лебега на \(k\)-мерном многообразии в \(\R^m\). \(\Phi: O \subset \R^k \to \R^m\). \(\Phi'_1,\dots,\Phi'_k\), тогда \(\lambda_k(\text{Паралеллепипед}(\Phi'_1,\dots,\Phi'_k))\) --- вес
+
+* Формула Грима
+#+begin_theorem org
+\-
+- \(D \subset \R^2\) --- компактное, связное, односвязное, ограниченное
+- \(D\) --- ограничено кусочно гладкой кривой \(\partial D\)
+- Пусть граница области \(D\) \(\partial D\) ориентированна, согласована с ориентацией \(D\) (против часовой стрелки) --- обозначим \(\partial D^+\)
+- \((P, Q)\) --- гладкое векторное поле в окрестности \(D\)
+_Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\,dx\,dy = \int_{\partial D^+} P\,dx + Q\,dy \]
+#+end_theorem
+#+begin_proof org
+Ограничимся случаем D --- `криволинейный 4-х угольник`
+#+ATTR_LATEX: :scale 0.4
+[[file:9_1.png]]
+\(\partial D\) --- состоит из путей \(\gamma_1, \dots, \gamma_4\), где \(\gamma_2, \gamma_4\) --- вертикальные отрезки (возможно вырожденнные ), \(\gamma_1, \gamma_3\) --- гладкие кривые(можно считать, что это графики функций \(\varphi_1(x), \varphi_3(x)\)). Аналогично можно \fixme.
+Проверим, что:
+\[ - \iint_D \frac{\partial P}{\partial y}\,dx\,dy = \int_{\partial D^+} P\,dx + Q\,dy \]
+Левая часть:
+\[ - \int_a^b dx \int_{\varphi_1(x)}^{\varphi_3(x)} \frac{\partial P}{\partial y} dy = - \int_a^b P(x, \varphi_3(x)) - P(x, \varphi_1(x)) \,dx \]
+Правая часть:
+\[ \int_{\gamma_1} + \underbrace{\int_{\gamma_2}}_0 + \int_{\gamma_3} + \underbrace{\int{\gamma_4}}_0 =  \]
+\[ = \int_a^b P(x, \varphi_1(x))\,dx - \int_a^b P(x, \varphi_3(x))\, dx \]
+#+end_proof
+#+begin_remark org
+Теорема верна для любой области \(D\) с кусочно гладкой границей, которую можно разрезать на криволинейные 4-x угольнинки
+#+ATTR_LATEX: :scale 0.4
+[[file:9_2.png]]
+\[ \int_{\partial D^+} = \int_{\partial D_1^+} + \int_{\partial D_2^+} \fixme \]
+#+end_remark
+#+ATTR_LATEX: :options [Формула Стокса]
+#+begin_theorem org
+\-
+- \(\Omega\) --- простое гладкое двумерное многообразие в \(\R^3\) (двустороннее)
+- \(n_0\) --- сторона \(\Omega\)
+- \(\partial \Omega\) --- кусочно гладкая кривая
+- \(\partial \Omega^+\) --- ориентированная кривая с согласованной ориентацией.
+- \((P, Q, R)\) --- гладкое векторное поле в окрестности \(\Omega\)
+_Тогда_ \[ \int_{\parial \Omega^+} P\,dx + Q\,dy + R\,dz = \iint_\Omega \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right)\,dy\,dz + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right)\,dz\,dx + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)\,dx\,dy \]
+#+end_theorem
+#+begin_proof org
+Ограничимся случаем \(\Omega \in C^2\). Достаточно?:
+\[ \int_{\partial \Omega^+} P\,dx = \iint_\Omega\frac{\partial P}{\partial z}\,dz\,dx  - \frac{\partial P}{\partial y}\,dx\,dy \]
+\[ \Phi = (x(u, v), y(u, v), z(u, v)) \]
+#+ATTR_LATEX: :scale 0.5
+[[file:9_3.png]]
+\color{blue}
+\(dx\,dy = - dy\,dx\), \(dx\,dx = 0\)
+\[ dP\,dx + dQ\,dy + dR\,dz = (P'_x\,dx + P'_y\,dy + P'_z\,dz)\,dx + \dots \]
+
+\color{black}
+\[ \int_{\partial \Omega^+} P\,dx = \int_{L^+} P\cdot (\frac{\partial x}{\partial u}\,du + \frac{\partial x}{\partial v}\,dv) \addtag\label{9_2} \]
+\color{blue}
+Параметризируем: \(\gamma: [a, b] \to \R^2\), \(\gamma = (u(t), v(t))\) --- параметризируем \(L^+\)
+\[ \int_{\partial \Omega^+} P\,dx = \int_a^b P(\frac{\partial dx}{\partial u}u' + \frac{\partial x}{\partial v}v')dt \addtag\label{9_1}\]
+\(\Phi \circ \gamma\) --- парметризируем \(\partial \Omega^+\), \((\Phi \circ \gamma)' = \Phi' \cdot \gamma'\)
+\[ \ref{9_1} = \int_a^b P\cdot\frac{\partial x}{\partial u}\,du + P \cdot \frac{\partial x}{\partial v}\,dv \]
+\color{black}
+\[ \ref{9_2} = \iint_G \frac{\partial}{\partial u}\left(P\frac{\partial x}{\partial b}\right) - \frac{\partial}{\partial v} \left(P \frac{\partial x}{\partial u}\right)\,du\,dv = \]
+\[ = \iint_G (P'_x\cdot x'_u + P'_y\cdot y'_u + P'_z\cdot z'_u)x'_v + p\cdot x''_{uv} - (P'_x\cdot x'_v + P'_y\cdot y'_v + P'_z\cdot z'_v)x'_u - P\cdot x''_{uv} \,du\,dv = \]
+\[ = \iint_G \frac{\partial P}{\partial z} (z'_ux'_v - z'_vx'_u) - \frac{\partial P}{\partial y}(x'_uy'_v - x'_vy'_u) = \iint_G \frac{\partial P}{\partial z}\,dz\,dx - \frac{\partial P}{\partial x}\,dx\,dy\]
+#+end_proof
+
+- \(L^p(X, \mu)\), \(1 \le p \le +\infty \)
+\[ \left(\int_X |f|^p\,dx\right)^{\frac{1}{p}}\text{ --- сходится} \]
+- \(p = \infty:\ \esssup |f| < +\infty\)
+\[ \Vert fg \Vert_1 \le \Vert f \Vert_p \cdot \Vert g \Vert_q\]
+#+begin_theorem org
+\-
+- \(\mu E < +\infty \), \(1 \le s < r \le +\infty \)
+_Тогда_
+1. \(L^r(E, \mu) \subset L^s(E, \mu)\)
+2. \(\Vert f \Vert_s \le \muE^{\frac{1}{s} - \frac{1}{r}}\cdot \Vert f \Vert_r\)
+#+end_theorem
+#+begin_proof org
+\-
+1. Следует из 2)
+2. 
+   - \(r = \infty\) :: \[\left(\int |f|^s\,d\mu\right)^{\frac{1}{s}} \le \esssup |f| \cdot \mu E^{\frac{1}{s}}\]
+   - \(r < +\infty\) :: \(p := \frac{r}{s}\), \(q = \frac{r}{r - s}\)
+     \[ \Vert f \Vert_s^s = \int_E |f|^s \,d\mu = \int_E |f|^s\cdot 1 \, d\mu \le \left(\int_E |f|^{s \cdot \frac{r}{s}}\,d\mu\right)^{\frac{s}{r}} \cdot \left(\int_E 1^{\frac{r}{r - s}}\,d\mu\right)^{\frac{r - s}{r}} \le \]
+     \[ \le \Vert f \Vert_r^s \mu E^{1 - \frac{s}{r}} \]
+#+end_proof
+#+begin_corollary org
+\-
+- \(\mu E < +\infty\)
+- \(1 \le s < r \le +\infty \)
+- \(f_n \xrightarrow[L^r]{} f\)
+_Тогда_ \(f_n \xrightarrow[L^s]{} f\)
+#+end_corollary
+#+begin_proof org
+\[ \Vert f_n - f \Vert_s \le \mu E^{\frac{1}{r} - \frac{1}{r}} \cdot \Vert f_n - f \Vert_r \to 0 \]
+#+end_proof
+#+ATTR_LATEX: :options [о сходимости в \(L^p\) и по мере]
+#+begin_theorem org
+\-
+- \(1 \le p < +\infty \)
+- \(f_n \in L^p(X, \mu)\)
+_Тогда_
+1. \(f \in L^p\), \(f_n \to f\) в \(L^p\) \(\implies\ f_n \xRightarrow[\mu]{} f\)
+2. \(f \xRightarrow[\mu]{} f\) либо \(f_n \to f\), \(|f_n| \le g\), \(g \in L^p\) \\
+   Тогда \(f \in L^p\) и \(f_n \to f\) в \(L^p\)
+#+end_theorem
+#+begin_proof org
+\-
+1. \(X_n(\varepsilon) := X(|f_n - f| \ge \varepsilon)\)
+   \[ \mu X_n(\varepsilon) = \int_{X_n(\varepsilon)} 1 d\mu \le \frac{1}{\varepsilon^p} \int_{X_n(\varepsilon)}|f_n - f|^p\,d\mu\le \frac{1}{\varepsilon^p} \Vert f_n - f \Vert_p^p \to 0 \]
+2. \(f_n \Rightarrow f\), \(\exists n_k\ f_{n_k} \to f\) почти везде \(\implies\ |f| \le g\) почти везде \\
+   \(|f_n - f|^p \le (2g)^p\) --- суммируема (так как \(g \in L^p\)) \\
+   \(\Vert f_n - f \Vert_p^p \todo\)
+#+end_proof
+\color{blue}
+- Фундаментальная последовательность: \\
+  \(\forall \varepsilon > 0\ \exists N\ \forall k, n > N\quad \Vert f_n - f_k \Vert < \varepsilon \), т.е. \(\Vert f_n - f_k \Vert \xrightarrow[n,k\to+\infty]{} 0\)
+- \(f_n \to f\) \implies \(f_n\) --- фундаментальная \(\Vert f_n - f_k \Vert \le \underbrace{\Vert f_n - f \Vert}_{\to 0} + \underbrace{\Vert f - f_k \Vert}_{\to 0}\)
+- \(C(k)\) --- пространство непрерывных функций на компакте \(K\) \\
+  \(\Vert f \Vert = \max_K |f|\), утверждение: \(C(K)\) --- полное
+\color{black}
+#+begin_task org
+\(L^{\infty}(X, \mu)\) --- полное
+#+end_task
+#+begin_theorem org
+\-
+- \(L^p(X, \mu)\) --- полное
+- \(1 \le p < +\infty\)
+#+end_theorem
+#+begin_proof org
+\(f_n\) --- фундаментальная
+\[ \varepsilon = \frac{1}{2}\ \exists N_1\ \forall n_1, k > N\quad \Vert f_{n_1} - f_k \Vert_p < \frac{1}{2} \]
+Возьмем один такой \(n_1\) и зафиксируем:
+\[ \varepsilon = \frac{1}{4}\ \exists N_2 > n_1\ \forall n_2, k > N_2\quad \Vert f_{n_2} - f_k \Vert_p < \frac{1}{4} \]
+Повторим это действие. Получим последовательность \((n_k)\):
+\[ \sum_k \Vert f_{n_{k + 1}} - f_{n_k} \Vert_p < 1 \]
+Рассмотрим ряд:
+\[S(x) = \sum_k |f_{n_{k + 1}}(x) - f_{n_k}(x) |\quad S(x) \in [0, +\infty]\]
+\(S_N\) --- частичные суммы ряда \(S\)
+\[ \Vert S_N \Vert_p \le \sum_{k = 1}^N \Vert f_{n_{k + 1}} - f_{n_k} \Vert_p \< 1 \]
+, т.е. \(\int_X S_N^p < 1\), по теореме Фату: \(\int_X S^p\,d\mu < 1\), т.е. \(S^p\) --- суммируема \implies \(S\) --- почти везде конечна 
+\[ f(x) = f_{n_1}(x) + \sum_{k = 1}^{+\infty} (f_{n_{k + 1}}(x) - f_{n_k}(x)) \]
+--- его частичные суммы --- это \(f_{n_{N + 1}}(x)\), т.е. схоимость этого ряда почти везде означает, что \(f_{n_k} \to f\) почти везде. Проверим, что \(\Vert f_n - f \Vert_p \to 0\)
+\[ \forall \varepsilon > 0\ \exists N\ \forall m,n > N\quad \Vert f_n - f_m \Vert_p < \varepsilon \]
+Берем \(m = n_k > N\)
+\[ \Vert f_n - f_{n_k} \Vert_p^p = \int_X |f_n - f_{n_k} | ^p\,d\mu < \varepsilon^p \]
+это выполняется при всех больших \(k\). По теореме Фату:
+\[ \int_X | f_n - f |^p d\mu < \varepsilon^p \]
+, т.е. \(\Vert f_n - f \Vert < \varepsilon\)
+#+end_proof
+#+begin_definition org
+\(Y\) --- метрическое пространство, \(A \subset Y\), \(A\) --- (всюду) плотно в \(Y\)
+\[ \forall y in Y\ \forall U(y)\ \exists a \in A:\ a\in U(y) \]
+#+end_definition
+#+begin_examp org
+\(\mathbb{Q}\) плотно в \(\R\)
+#+end_examp
+#+begin_lemma org
+\-
+- \((X, \A, \mu)\)
+- \(1 \le p \le +\infty\)
+Множество ступенчатых функций (из \(L^p\)) плотно в \(L^p\)
+#+end_lemma
+#+begin_remark org
+\(\varphi \in L^p\) --- ступенчатая \implies \(\muX(\varphi \neq 0) < +\infty\)
+#+end_remark
+#+begin_proof org
+\-
+- \(p = \infty\) :: \(f \in L^\infty\), изменив \(f\) на множестве \(C\) меры \(0\), считаем, что \(|f| \le \Vert f \Vert_\infty\). Тогда существуют ступенчатые \(0\le\varphi_n \rightrightarrows f^+\), \(0 \le \psi_n \rightrightarrows f^-\). Тогда сколько угодно близко к \(f\) можно найти ступенчатую фкнцию вида \(\varphi_n + \psi_n\)
+- \(p < +\infty\) :: Пусть \(f \ge 0\). \(\exists \varphi_n \ge 0\) --- ступенчатая: \(\varphi_n \uparrow f\)
+  \[ \Vert \varphi_n - f \Vert^p_p = \int_X | \varphi_n - f |^p \to 0 \]
+  , по теореме Лебега. \(f\) --- любого знака: берем \(f^+, f^-, \dots\)
+#+end_proof
+#+begin_definition org
+\(f: \R^m \to \R\) --- *финитная*, если \(\exists B(0, r): f\equiv 0\) вне \(B(0, r)\). \\
+\(C_0(\R^m)\) --- непрерывные финитные функции. \(\forall p \ge 1\ C_0(\R^m) \subset L^p(\R^m, \lambda_m)\)
+#+end_definition
+#+begin_definition org
+Топологическое пространство \(X\) --- *нормальное*, если
+1. Точки \(X\) --- замкнутые множества
+2. \(\forall F_1, F_2 \subset X\) --- замкнутые, \(\exists U(F_1), U(F_2)\) --- открытые и \(U(F_1)\cap U(F_2) = \emptyset\)
+#+end_definition
+#+begin_task org
+\(R^m\) --- нормальное
+#+end_task
