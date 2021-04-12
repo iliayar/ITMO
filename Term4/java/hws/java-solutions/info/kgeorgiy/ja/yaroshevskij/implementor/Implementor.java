@@ -129,8 +129,14 @@ public class Implementor implements JarImpler {
         try {
             writer = new ClassWriter(aClass, path);
             writeFile(aClass);
+        } catch (IOException e) {
+            throw new ImplerException("Failed to write to file: " + e.getMessage());
         } finally {
-            writer.close();
+            try {
+                writer.close();
+            } catch (IOException e) {
+                throw new ImplerException("Failed to close file: " + e.getMessage());
+            }
         }
     }
 
@@ -163,7 +169,7 @@ public class Implementor implements JarImpler {
     public void implementJar(Class<?> aClass, Path path) throws ImplerException {
         Path temp;
         try {
-            temp = Files.createTempDirectory(Path.of("./"), "Implementer-");
+            temp = Files.createTempDirectory(Path.of("."), "Implementer-");
         } catch (IOException | SecurityException e) {
             throw new ImplerException("Cannot create temporary file");
         }
@@ -238,12 +244,13 @@ public class Implementor implements JarImpler {
      * Generate code of {@code package} in which class located and the code of whole class.
      *
      * @param aClass class to write to {@link #writer}
-     * @throws ImplerException If cannot implement class or write class
+     * @throws ImplerException If class has only private constructors
+     * @throws IOException If filed to write
      * @see #implement(Class, Path)
      * @see #writeClass(Class)
      * @see #writePackage(Package)
      */
-    private void writeFile(Class<?> aClass) throws ImplerException {
+    private void writeFile(Class<?> aClass) throws IOException, ImplerException {
         writePackage(aClass.getPackage());
         writeClass(aClass);
     }
@@ -252,19 +259,20 @@ public class Implementor implements JarImpler {
      * Generate code for whole class
      *
      * @param aClass class to generate code for
-     * @throws ImplerException If cannot implement class oe write class
+     * @throws IOException If failed to write
+     * @throws ImplerException If class has no public or protected constructors
      * @see #implement(Class, Path)
      * @see #writeClassSignature(Class)
      * @see #writeConstructor(Constructor)
      * @see #writeMethods(Class)
      */
-    private void writeClass(Class<?> aClass) throws ImplerException {
+    private void writeClass(Class<?> aClass) throws IOException, ImplerException {
         writer.indent();
         writeClassSignature(aClass);
-        writer.block(() -> {
-            writeConstructors(aClass.getDeclaredConstructors()); // FIXME
-            writeMethods(aClass);
-        });
+        writer.blockBegin();
+        writeConstructors(aClass.getDeclaredConstructors());
+        writeMethods(aClass);
+        writer.blockEnd();
     }
 
     /**
@@ -272,9 +280,9 @@ public class Implementor implements JarImpler {
      * name with {@code Impl} suffix.
      *
      * @param aClass class to generate signature for
-     * @throws ImplerException if cannot implement or write class
+     * @throws IOException if cannot implement or write class
      */
-    private void writeClassSignature(Class<?> aClass) throws ImplerException {
+    private void writeClassSignature(Class<?> aClass) throws IOException {
         writer.write("class " + writer.getClassName());
         if (aClass.isInterface()) {
             writer.write(" implements ");
@@ -288,10 +296,11 @@ public class Implementor implements JarImpler {
      * Generate code for class constructors. Also check if class has public constructors
      *
      * @param constructors constructors to generate code for
-     * @throws ImplerException If failed to write, or if class has no public constructors
+     * @throws ImplerException If class has no public constructors
+     * @throws IOException If wailed to write
      * @see #writeConstructor(Constructor)
      */
-    private void writeConstructors(Constructor<?>[] constructors) throws ImplerException {
+    private void writeConstructors(Constructor<?>[] constructors) throws IOException, ImplerException {
         List<Constructor<?>> nonPrivateConstructors = Arrays.stream(constructors)
                 .filter(ctr -> !Modifier.isPrivate(ctr.getModifiers()))
                 .collect(Collectors.toList());
@@ -308,35 +317,35 @@ public class Implementor implements JarImpler {
      * constructor for new class
      *
      * @param constructor Constructor to generate code for
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #writeModifiers(int)
      * @see #writeExceptions(Class[])
      * @see #writeParameter(Parameter)
      */
-    private void writeConstructor(Constructor<?> constructor) throws ImplerException {
+    private void writeConstructor(Constructor<?> constructor) throws IOException {
         writer.indent();
         writeModifiers(constructor.getModifiers());
         writer.write(writer.getClassName() + "(");
         writeParameters(constructor.getParameters());
         writer.write(")");
         writeExceptions(constructor.getExceptionTypes());
-        writer.block(() -> {
-            writer.indent();
-            writer.write("super(");
-            writer.joinWith(constructor.getParameters(), (p) -> writer.write(p.getName()));
-            writer.write(");");
-            writer.newLine();
-        });
+        writer.blockBegin();
+        writer.indent();
+        writer.write("super(");
+        writer.joinWith(constructor.getParameters(), (p) -> writer.write(p.getName()));
+        writer.write(");");
+        writer.newLine();
+        writer.blockEnd();
     }
 
     /**
      * Generate code for class methods. Only implements abstract methods.
      *
      * @param aClass Class to fetch methods from
-     * @throws ImplerException If Cannot write to file
+     * @throws IOException If Cannot write to file
      * @see #writeMethod(Method)
      */
-    private void writeMethods(Class<?> aClass) throws ImplerException {
+    private void writeMethods(Class<?> aClass) throws IOException {
         List<Method> methods = collectMethods(aClass).stream()
                 .map(MethodWrapper::getMethod)
                 .filter(m -> Modifier.isAbstract(m.getModifiers()))
@@ -350,14 +359,16 @@ public class Implementor implements JarImpler {
      * Generate code for single method: signature and method body.
      *
      * @param method Method to generate code for
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #writeMethodSignature(Method)
      * @see #writeMethodBody(Method)
      */
-    private void writeMethod(Method method) throws ImplerException {
+    private void writeMethod(Method method) throws IOException {
         writer.indent();
         writeMethodSignature(method);
-        writer.block(() -> writeMethodBody(method));
+        writer.blockBegin();
+        writeMethodBody(method);
+        writer.blockEnd();
     }
 
     /**
@@ -391,13 +402,13 @@ public class Implementor implements JarImpler {
      * class
      *
      * @param method Method to generate signature for
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #writeModifiers(int)
      * @see #writeType(Class)
      * @see #writeParameter(Parameter)
      * @see #writeExceptions(Class[])
      */
-    private void writeMethodSignature(Method method) throws ImplerException {
+    private void writeMethodSignature(Method method) throws IOException {
         writeModifiers(method.getModifiers());
         writeType(method.getReturnType());
         writer.write(" " + method.getName() + "(");
@@ -410,10 +421,10 @@ public class Implementor implements JarImpler {
      * Generate code for method body. Its empty if method returns nothing, and return default value otherwise.
      *
      * @param method Method to generate body for
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #writeDefaultValue(Class)
      */
-    private void writeMethodBody(Method method) throws ImplerException {
+    private void writeMethodBody(Method method) throws IOException {
         if (!method.getReturnType().equals(Void.TYPE)) {
             writer.indent();
             writer.write("return ");
@@ -429,9 +440,9 @@ public class Implementor implements JarImpler {
      * nothing if list is empty.
      *
      * @param exceptions The list of exceptions
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    private void writeExceptions(Class<?>[] exceptions) throws ImplerException {
+    private void writeExceptions(Class<?>[] exceptions) throws IOException {
         if (exceptions.length != 0) {
             writer.write(" throws ");
             writer.joinWith(exceptions, this::writeType);
@@ -442,10 +453,10 @@ public class Implementor implements JarImpler {
      * Write parameters list in method signature, separated by comma. For each parameter writes its type and name
      *
      * @param parameters Parameter to write
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #writeParameter(Parameter)
      */
-    private void writeParameters(Parameter[] parameters) throws ImplerException {
+    private void writeParameters(Parameter[] parameters) throws IOException {
         writer.joinWith(parameters, this::writeParameter);
     }
 
@@ -453,9 +464,9 @@ public class Implementor implements JarImpler {
      * Write class type fetched from {@link Class#getCanonicalName()}
      *
      * @param clazz Class, which type to write
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    private void writeType(Class<?> clazz) throws ImplerException {
+    private void writeType(Class<?> clazz) throws IOException {
         writer.write(clazz.getCanonicalName());
     }
 
@@ -464,9 +475,9 @@ public class Implementor implements JarImpler {
      *
      * @param mod The value got from {@link Method#getModifiers()}, {@link Class#getModifiers()} or
      *            {@link Constructor#getModifiers()}
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    private void writeModifiers(int mod) throws ImplerException {
+    private void writeModifiers(int mod) throws IOException {
         for (Map.Entry<Predicate<Integer>, String> entry : modifiers.entrySet()) {
             if (entry.getKey().test(mod)) {
                 writer.write(entry.getValue() + " ");
@@ -478,9 +489,9 @@ public class Implementor implements JarImpler {
      * Write single parameter in method signature. Write type and name separated by space.
      *
      * @param parameter Parameter to write
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    private void writeParameter(Parameter parameter) throws ImplerException {
+    private void writeParameter(Parameter parameter) throws IOException {
         writeType(parameter.getType());
         writer.write(" " + parameter.getName());
     }
@@ -489,9 +500,9 @@ public class Implementor implements JarImpler {
      * Write package of implemented class.
      *
      * @param pkg Package to write
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    private void writePackage(Package pkg) throws ImplerException {
+    private void writePackage(Package pkg) throws IOException {
         if (pkg != null) {
             writer.writeLine("package " + pkg.getName() + ";");
         }
@@ -502,9 +513,9 @@ public class Implementor implements JarImpler {
      * boolean} and {@code null} for all other types.
      *
      * @param clazz Type to write default value for
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    private void writeDefaultValue(Class<?> clazz) throws ImplerException {
+    private void writeDefaultValue(Class<?> clazz) throws IOException {
         if (clazz.isPrimitive()) {
             if (clazz.equals(Boolean.TYPE)) {
                 writer.write("false");
