@@ -2,7 +2,9 @@
 
 
 * Домашки
-- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/walk/][Walk]]
-- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/arrayset/][ArraySet]]
-- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/student/][Student]]
-- [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/implementor/][Implementor]]
+1. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/walk/][Walk]]
+2. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/arrayset/][ArraySet]]
+3. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/student/][Student]]
+4. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/implementor/][Implementor]]
+5. See prev
+6. See prev
