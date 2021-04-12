@@ -43,29 +43,21 @@ public class ClassWriter {
      *
      * @param aClass The origin class to implement
      * @param path   The folder to write implementation in
-     * @throws ImplerException If failed writing to destination folder or to new {@code .jar} file
+     * @throws IOException If failed writing to destination folder or to new {@code .jar} file
      */
-    ClassWriter(Class<?> aClass, Path path) throws ImplerException {
+    ClassWriter(Class<?> aClass, Path path) throws IOException {
         if (aClass.getPackage() == null) {
             packageName = "";
         } else {
-            packageName = aClass.getPackage().getName().replace(".", File.separator);
+            packageName = aClass.getPackage().getName();
         }
-        Path implementationPath = path.resolve(packageName);
 
-        try {
-            Files.createDirectories(implementationPath);
-        } catch (IOException e) {
-            throw new ImplerException("Cannot create path to class: " + e.getMessage());
-        }
+        Path implementationPath = path.resolve(getPackageSeparated(File.separator));
+        Files.createDirectories(implementationPath);
 
         className = aClass.getSimpleName() + "Impl";
 
-        try {
-            out = Files.newBufferedWriter(implementationPath.resolve(className + ".java"));
-        } catch (IOException e) {
-            throw new ImplerException("Cannot open class file: " + e.getMessage());
-        }
+        out = Files.newBufferedWriter(implementationPath.resolve(className + ".java"));
     }
 
     /**
@@ -90,39 +82,36 @@ public class ClassWriter {
     /**
      * Writes {@link System#lineSeparator()} to file
      *
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    public void newLine() throws ImplerException {
+    public void newLine() throws IOException {
         write(System.lineSeparator());
     }
 
     /**
      * Write string to file. Escapes non ASCII characters with hex value prefixed with {@code \\u}
-     *
-     * @param s String to write
-     * @throws ImplerException If failed to write
+     * Writes chars to {@link #out}.
+     * @param s      String to write
+     * @throws IOException     If failed to write
      */
-    public void write(String s) throws ImplerException {
-        try {
-            out.write(s.chars().mapToObj(c -> {
-                if (c > 255) {
-                    return String.format("\\u%04x", c);
-                } else {
-                    return String.valueOf((char) c);
-                }
-            }).collect(Collectors.joining()));
-        } catch (IOException e) {
-            throw new ImplerException("Error while writing to file: " + e.getMessage());
-        }
+    public void write(String s) throws IOException {
+        out.write(s.chars().mapToObj(c -> {
+            if (c > 255) {
+                return String.format("\\u%04x", c);
+            } else {
+                return String.valueOf((char) c);
+            }
+        }).collect(Collectors.joining()));
     }
+
 
     /**
      * Write indentation corresponding to current indent level
      *
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #indentLevel
      */
-    public void indent() throws ImplerException {
+    public void indent() throws IOException {
         write(INDENT.repeat(indentLevel));
     }
 
@@ -130,43 +119,38 @@ public class ClassWriter {
      * Write string to file with current indentation and new line in the end
      *
      * @param s String to write
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    public void writeLine(String s) throws ImplerException {
+    public void writeLine(String s) throws IOException {
         indent();
         write(s);
         newLine();
     }
 
     /**
-     * Increment indent level, call provided function and then decrement indentation
+     * Write open curly bracket without indent, new line and increase indent
      *
-     * @param callable Function to call
-     * @throws ImplerException If failed to write
-     * @see ImplerCallable
+     * @throws IOException If failed to write
+     * @see #indent()
      */
-    private void withGreaterIndent(ImplerCallable callable) throws ImplerException {
+    public void blockBegin() throws IOException {
+        write(" {");
+        newLine();
         indentLevel += 1;
-        callable.call();
-        indentLevel -= 1;
     }
 
     /**
-     * Write open curly bracket without indent, new line, then call {@link #withGreaterIndent(ImplerCallable)} and
-     * close the curly bracket with indentation, write new line
+     * Write close curly bracket with indent, followed by new line. Decrease indent
      *
-     * @param callable Function to call
-     * @throws ImplerException If failed to write
-     * @see ImplerCallable
-     * @see #withGreaterIndent(ImplerCallable)
+     * @throws IOException If failed to write
+     * @see #write(String)
+     * @see #indent()
      */
-    public void block(ImplerCallable callable) throws ImplerException {
-        write(" {");
-        newLine();
-        withGreaterIndent(callable);
+    public void blockEnd() throws IOException {
         indent();
         write("}");
         newLine();
+        indentLevel -= 1;
     }
 
     /**
@@ -176,10 +160,10 @@ public class ClassWriter {
      * @param writer    The function which writes one element
      * @param separator Separating string
      * @param <T>       Type of elements to write, using provided function
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see ImplerConsumer
      */
-    public <T> void joinWithBy(T[] elements, ImplerConsumer<T> writer, String separator) throws ImplerException {
+    public <T> void joinWithBy(T[] elements, ImplerConsumer<T> writer, String separator) throws IOException {
         joinWithBy(Arrays.asList(elements), writer, separator);
     }
 
@@ -190,11 +174,11 @@ public class ClassWriter {
      * @param elements Elements to write
      * @param writer   The function which writes one element
      * @param <T>      The of elements to write, using provided function
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see #joinWithBy(Object[], ImplerConsumer, String)
      * @see ImplerConsumer
      */
-    public <T> void joinWith(T[] elements, ImplerConsumer<T> writer) throws ImplerException {
+    public <T> void joinWith(T[] elements, ImplerConsumer<T> writer) throws IOException {
         joinWithBy(elements, writer, ", ");
     }
 
@@ -205,9 +189,9 @@ public class ClassWriter {
      * @param writer   The function which writes one element
      * @param <T>      Type of elements to write, using provided function
      * @param <I>      Iterable class type
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      */
-    public <T, I extends Iterable<T>> void joinWith(I elements, ImplerConsumer<T> writer) throws ImplerException {
+    public <T, I extends Iterable<T>> void joinWith(I elements, ImplerConsumer<T> writer) throws IOException {
         joinWithBy(elements, writer, ", ");
     }
 
@@ -220,10 +204,11 @@ public class ClassWriter {
      * @param separator Separating string
      * @param <T>       Type of elements to write, using provided function
      * @param <I>       Iterable class type
-     * @throws ImplerException If failed to write
+     * @throws IOException If failed to write
      * @see ImplerConsumer
      */
-    public <T, I extends Iterable<T>> void joinWithBy(I elements, ImplerConsumer<T> writer, String separator) throws ImplerException {
+    public <T, I extends Iterable<T>> void joinWithBy(I elements, ImplerConsumer<T> writer, String separator) throws
+            IOException {
         int i = 0;
         for (T element : elements) {
             if (i != 0) {
@@ -237,18 +222,14 @@ public class ClassWriter {
     /**
      * Close the resulting {@code .jar} file
      *
-     * @throws ImplerException If failed to close file
+     * @throws IOException If failed to close file
      */
-    public void close() throws ImplerException {
-        try {
-            out.close();
-        } catch (IOException e) {
-            throw new ImplerException("Cannot close file: " + e.getMessage());
-        }
+    public void close() throws IOException {
+        out.close();
     }
 
     /**
-     * Consumer interface which can throw a {@link ImplerException}
+     * Consumer interface which can throw a {@link IOException}
      *
      * @param <T> Accepted type
      */
@@ -258,21 +239,8 @@ public class ClassWriter {
          * Call function with parameter
          *
          * @param t Argument to function
-         * @throws ImplerException If function throws {@link ImplerException}
+         * @throws IOException If function throws
          */
-        void accept(T t) throws ImplerException;
-    }
-
-    /**
-     * Callable interface which can throw a {@link ImplerException}
-     */
-    @FunctionalInterface
-    interface ImplerCallable {
-        /**
-         * Execute function
-         *
-         * @throws ImplerException If function throws {@link ImplerException}
-         */
-        void call() throws ImplerException;
+        void accept(T t) throws IOException;
     }
 }
