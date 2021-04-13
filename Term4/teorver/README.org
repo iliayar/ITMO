@@ -21,3 +21,4 @@
 - [[file:practice/7.pdf][Практика 7]]
 - [[file:practice/8.pdf][Практика 8]]
 - [[file:practice/9.pdf][Практика 9]]
+- [[file:practice/10.pdf][Практика 10]]
