@@ -1,0 +1,87 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 10
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Правило трех \(\sigma\)
+** Равномерное распределение
+\(\xi \in U_{a, b}\)
+\[ E\xi = \frac{a + b}{2} \]
+\[ \sigma = \frac{b - a}{2\sqrt{3}} \]
+\[ p(E\xi - 3\sigma < \xi < E\xi + 3\sigma \) = 1 \]
+** Покзательное распределение
+\(\xi \in E_\alpha\)
+\[ p(E\xi - 3\sigma < \xi < E\xi + 3\sigma) = p \left(\frac{1}{\alpha} - \frac{3}{\alpha} < \xi < \frac{1}{\alpha} + \frac{3}{\alpha}\right) = \]
+\[ = p \left(-\frac{2}{\alpha} < \xi < \frac{4}{\alpha}\right) = p(0 < \xi < \frac{4}{\alpha}) = 1 - e^{-4} \approx 0.9817 \]
+
+* Задачи
+#+begin_task org
+\-
+- \(E\xi = 2\)
+- \(E\eta = -3\)
+- \(D\xi = 1\)
+- \(D\eta = 4\)
+- \(\gamma = 3\xi - 5\eta\)
+Найти \(E\gamma\), \(D\gamma\), если \(\xi\) и \(\eta\) независимы
+#+end_task
+#+begin_solution org
+\[ E\gamma = 3E\xi - 5E\eta = 3\cdot 2 - 5\cdot (-3) = 21 \]
+\[ D\gamma = 3D\xi + 5D\eta = 3^2\cdot 1 + 5^2\cdot 4 = 109  \]
+#+end_solution
+
+#+begin_task org
+\[ p_\xi = \begin{cases}
+0 & x < 0 \\
+\frac{1}{2} \sin x & 0 \le x \le \pi \\
+0 & x > \pi
+\end{cases}\]
+- \(\eta = -2\xi + \pi\)
+Найти \(p_\eta\)
+#+end_task
+#+begin_solution org
+\(\xi \in [0; \pi]\), тогда \(\eta \in [-\pi, \pi]\)
+\[ p_\eta = \frac{1}{|a|}\cdot f_\xi \left(\frac{x - b}{a}\right) \]
+\[ f_\eta = \begin{cases}
+0 & x < -\pi \\
+\frac{1}{2}\cdot\frac{1}{2}\sin \left(\frac{x - \pi}{-2}\right) = \frac{1}{4}\cos\frac{x}{2} & -\pi \le x \le pi \\
+0 & x > \pi
+\end{cases} \]
+#+end_solution
+#+begin_task org
+\-
+- \(\xi \in N_{0, 1}\)
+- \(\eta = e^{-\frac{\xi}{\sqrt{2}}}\)
+Найти \(f_\eta\)
+#+end_task
+#+begin_solution org
+\(\eta \in (0, +\infty)\)
+\[ f_\eta = \frac{1}{|h'(x)|}\cdot f_\xi(h(x)) \]
+\[ g(x) = e^{-\frac{x}{\sqrt{2}}} \implies x = -\sqrt{2}\ln g(x) \implies h(x) = -\sqrt{2}\ln x\]
+\[ f_\eta = \frac{1}{\left|\frac{-\sqrt{2}}{x}\right|}\cdot \frac{1}{\sqrt{2\pi}}\cdot e^{\textstyle-\frac{(-\sqrt{2}\ln x)^2}{2}} = \frac{|x|}{2\sqrt{\pi}}\cdot x^{\ln x} \]
+#+end_solution
+#+ATTR_LATEX: :options [Смирнова]
+#+begin_theorem org
+Пусть функция не является монотонной, тогда `обратная` функция распадается на несколько ветвей.
+\[ f_\eta(x) = \sum_{i = 1}^k \frac{1}{|h_i'(x)|} \cdot f_\xi(h_i(x)) \]
+#+end_theorem
+#+begin_examp org
+\[ f_\xi = \begin{cases}
+0 & x < 1 \\
+\frac{4}{3x^2} & 1 \le x \le 4 \\
+0 & x > 4
+\end{cases}\]
+- \(\eta = |\xi - 2|\)
+#+end_examp
+#+begin_solution org
+\(\xi \in [1, 4]\), \(\eta \in [0, 2]\)
+- \(h_1(\eta) = \eta + 2\)
+- \(h_2(\eta) = -\eta + 2\)
+\[ f_\eta = \begin{cases}
+0 & x < 0 \\
+\frac{4}{3}\cdot\frac{1}{(x + 2)^2} + \frac{4}{3}\cdot\frac{1}{(2 - x)^2} & 0 \le x \le 1 \\
+\frac{4}{3}\cdot\frac{1}{(x + 2)^2} & 1 < x \le 2 \\
+0 & x > 2
+\end{cases}\]
+
+#+end_solution
+
+

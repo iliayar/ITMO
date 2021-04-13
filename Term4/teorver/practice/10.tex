@@ -1,4 +1,4 @@
-% Created 2021-04-13 Tue 12:23
+% Created 2021-04-13 Tue 13:06
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -158,10 +158,10 @@
   {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Практика 9}
+\title{Практика 10}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Практика 9},
+ pdftitle={Практика 10},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
@@ -171,78 +171,98 @@
 \maketitle
 \tableofcontents
 
-\begin{task}
-\(\xi \in N(2, 3)\). Найти \(p(-1 < \xi < 7)\), \(p(|\xi - a| > 6.5)\)
-\end{task}
-\begin{solution}
-\[ p(-1 < \xi < 7) = \Phi\left(\frac{7 - 2}{3}\right) - \Phi\left(\frac{-1 - 2}{3}\right) = \Phi(1.67) + \Phi(1) \]
-\[ p(|\xi - a| > 6.5) = 1 - p(|\xi - a| < 6.5) = 1 - 2\Phi \left(\frac{6.5}{3}\right) = 1 - 2\Phi(2.17) \]
-\end{solution}
-\begin{task}
-Прибор точно калиброван. Среднее квадратическое отклонение ошибки.
-\end{task}
-\begin{solution}
-\(a = 0,\ \sigma = 0.5\)
-\[ p(-1.5 < \xi < 0.5) = \Phi(1)  + \Phi(3) \]
-\end{solution}
-\begin{task}
-Вероятность того, что ноормальная случаная величина отклонится от среднего занчения не более чем на 5 равна \(0ю95\)
-\end{task}
-\begin{solution}
-\[ p(|\xi - a| < 5) = 0.95 = 2\Phi \left(\frac{5}{\sigma}\right) \]
-\[ \Phi \left(\frac{5}{\sigma}\right) = 0.475 \]
-\[ \frac{5}{\sigma} = 1.96 \]
-\[ \sigma \approx 2.55 \]
-\end{solution}
-\begin{task}
-Известно, что нормальная случайная величина имеет среднее значение \(a = 100\) и \(p(88 < \xi < 112) = 0.9973\). Найти \(p(95 < \xi < 107)\)
-\end{task}
-\begin{solution}
-\[ p(88 < \xi < 112) = \Phi \left(\frac{112 - 100}{\sigma}\right) - \Phi \left(\frac{88 - 100}{\sigma}\right) = 2\Phi \left(\frac{12}{\sigma}\right) = 0.9973 \]
-\[ \Phi \left(\frac{12}{\sigma}\right) = 0.49865 \]
-\[ \frac{12}{\sigma} = 3 \]
-\[ \sigma = 4 \]
-\[ p(95 < \xi < 107) = \Phi(1.75) + \Phi(1.25) = 0.4599 + 0.3944 = 0.8543 \]
-\end{solution}
-\begin{task}
-Трамвай ходит с интервалом ровно 15 мин. Случайная величина --- время его ожидания на остановке. Найти мат ожидание и дисперсию.
-\end{task}
-\begin{solution}
-\(a = 0, b = 15\)
-\end{solution}
-\begin{task}
-Среднее время работы прибора до поломки --- 10 лет. Найти вероятност того что он проработате не менее 20 лет.
-\end{task}
-\begin{solution}
+
+\section{Правило трех \(\sigma\)}
+\label{sec:orgfd57f33}
+\subsection{Равномерное распределение}
+\label{sec:org718c2c7}
+\(\xi \in U_{a, b}\)
+\[ E\xi = \frac{a + b}{2} \]
+\[ \sigma = \frac{b - a}{2\sqrt{3}} \]
+\[ p(E\xi - 3\sigma < \xi < E\xi + 3\sigma \) = 1 \]
+\subsection{Покзательное распределение}
+\label{sec:org29ce43c}
 \(\xi \in E_\alpha\)
-\[ E\xi = \frac{1}{\alpha} = 10 \]
-\[ \alpha = 0.1 \]
-\[ p(\xi > 20) = 1 - p(0 < \xi < 20) = 1 - e^{-0\cdot0.1}  + e^{-20\cdot 0.1}\]
-\end{solution}
+\[ p(E\xi - 3\sigma < \xi < E\xi + 3\sigma) = p \left(\frac{1}{\alpha} - \frac{3}{\alpha} < \xi < \frac{1}{\alpha} + \frac{3}{\alpha}\right) = \]
+\[ = p \left(-\frac{2}{\alpha} < \xi < \frac{4}{\alpha}\right) = p(0 < \xi < \frac{4}{\alpha}) = 1 - e^{-4} \approx 0.9817 \]
 
-\section{ДЗ}
-\label{sec:org39f0d4a}
+\section{Задачи}
+\label{sec:orgf15e6f5}
 \begin{task}
-\(\xi \in N(3, 1^2)\). Найти \(p(1.8 < \xi < 3.8)\)
-\end{task}
-\begin{task}
-\(\xi \in N(a, \sigma)\), \(p(|\xi - a| < 24) = 0.42\). Найти \(\sigma\)
-\end{task}
-\begin{task}
-Двое человек договорились встретится между .. Первый сказал ..  Второй сказал что придет между 12:30 и 13:00. Случайная величина --- время ожидания. Найти числовые характеристики.
+\-
+\begin{itemize}
+\item \(E\xi = 2\)
+\item \(E\eta = -3\)
+\item \(D\xi = 1\)
+\item \(D\eta = 4\)
+\item \(\gamma = 3\xi - 5\eta\)
+\end{itemize}
+Найти \(E\gamma\), \(D\gamma\), если \(\xi\) и \(\eta\) независимы
 \end{task}
 \begin{solution}
-\begin{itemize}
-\item \(X\) --- вермя прихода первого, \(X \in U_{0, \frac{1}{2}}\)
-\item \(Y\) --- время прихода второго, \(Y \in U_{\frac{1}{2}, 1}\)
-\item \(\xi = Y - X\)
-\end{itemize}
-\[ E\xi = EY - EX = \frac{3}{4} - \frac{1}{4} = \fra{1}{2}\text{ ч.} \]
-\[ D\xi = D(Y - X) = DY + D(-X) = DY + DX = \frac{1}{48} + \frac{1}{48} = \frac{1}{24} \]
-\[ \sigma = \frac{1}{2\sqrt{6}} \approx 0.204\text{ ч.} \]
+\[ E\gamma = 3E\xi - 5E\eta = 3\cdot 2 - 5\cdot (-3) = 21 \]
+\[ D\gamma = 3D\xi + 5D\eta = 3^2\cdot 1 + 5^2\cdot 4 = 109  \]
 \end{solution}
 
 \begin{task}
-Вывести правило 3х \(\sigma\) для равномерного и показательного распределения.
+\[ p_\xi = \begin{cases}
+0 & x < 0 \\
+\frac{1}{2} \sin x & 0 \le x \le \pi \\
+0 & x > \pi
+\end{cases}\]
+\begin{itemize}
+\item \(\eta = -2\xi + \pi\)
+\end{itemize}
+Найти \(p_\eta\)
 \end{task}
+\begin{solution}
+\(\xi \in [0; \pi]\), тогда \(\eta \in [-\pi, \pi]\)
+\[ p_\eta = \frac{1}{|a|}\cdot f_\xi \left(\frac{x - b}{a}\right) \]
+\[ f_\eta = \begin{cases}
+0 & x < -\pi \\
+\frac{1}{2}\cdot\frac{1}{2}\sin \left(\frac{x - \pi}{-2}\right) = \frac{1}{4}\cos\frac{x}{2} & -\pi \le x \le pi \\
+0 & x > \pi
+\end{cases} \]
+\end{solution}
+\begin{task}
+\-
+\begin{itemize}
+\item \(\xi \in N_{0, 1}\)
+\item \(\eta = e^{-\frac{\xi}{\sqrt{2}}}\)
+\end{itemize}
+Найти \(f_\eta\)
+\end{task}
+\begin{solution}
+\(\eta \in (0, +\infty)\)
+\[ f_\eta = \frac{1}{|h'(x)|}\cdot f_\xi(h(x)) \]
+\[ g(x) = e^{-\frac{x}{\sqrt{2}}} \implies x = -\sqrt{2}\ln g(x) \implies h(x) = -\sqrt{2}\ln x\]
+\[ f_\eta = \frac{1}{\left|\frac{-\sqrt{2}}{x}\right|}\cdot \frac{1}{\sqrt{2\pi}}\cdot e^{\textstyle-\frac{(-\sqrt{2}\ln x)^2}{2}} = \frac{|x|}{2\sqrt{\pi}}\cdot x^{\ln x} \]
+\end{solution}
+\begin{theorem}[Смирнова]
+Пусть функция не является монотонной, тогда `обратная` функция распадается на несколько ветвей.
+\[ f_\eta(x) = \sum_{i = 1}^k \frac{1}{|h_i'(x)|} \cdot f_\xi(h_i(x)) \]
+\end{theorem}
+\begin{examp}
+\[ f_\xi = \begin{cases}
+0 & x < 1 \\
+\frac{4}{3x^2} & 1 \le x \le 4 \\
+0 & x > 4
+\end{cases}\]
+\begin{itemize}
+\item \(\eta = |\xi - 2|\)
+\end{itemize}
+\end{examp}
+\begin{solution}
+\(\xi \in [1, 4]\), \(\eta \in [0, 2]\)
+\begin{itemize}
+\item \(h_1(\eta) = \eta + 2\)
+\item \(h_2(\eta) = -\eta + 2\)
+\end{itemize}
+\[ f_\eta = \begin{cases}
+0 & x < 0 \\
+\frac{4}{3}\cdot\frac{1}{(x + 2)^2} + \frac{4}{3}\cdot\frac{1}{(2 - x)^2} & 0 \le x \le 1 \\
+\frac{4}{3}\cdot\frac{1}{(x + 2)^2} & 1 < x \le 2 \\
+0 & x > 2
+\end{cases}\]
+\end{solution}
 \end{document}
