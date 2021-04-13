@@ -1,8 +1,8 @@
-% Created 2021-03-17 Wed 11:34
+% Created 2021-04-13 Tue 14:19
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[english]{article}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -21,97 +21,141 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \usepackage{geometry}
-  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-  
-   \usepackage{hyperref}
-   \hypersetup{
-       colorlinks=true,
-       linkcolor=blue,
-       filecolor=orange,
-       citecolor=black,      
-       urlcolor=cyan,
-       }
 
-  \usetikzlibrary{decorations.markings}
-  \usetikzlibrary{cd}
-  \usetikzlibrary{patterns}
-  \usetikzlibrary{automata, arrows}
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
 
-  \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
-  \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
-  \newcommand{\R}{\mathbb{R}}
-  \renewcommand{\C}{\mathbb{C}}
-  \newcommand{\N}{\mathbb{N}}
-  \newcommand{\rank}{\text{rank}}
-  \newcommand{\const}{\text{const}}
-  \newcommand{\grad}{\text{grad}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
-  \theoremstyle{plain}
-  \newtheorem{axiom}{Аксиома}
-  \newtheorem{lemma}{Лемма}
-  \newtheorem{manuallemmainner}{Лемма}
-  \newenvironment{manuallemma}[1]{%
-    \renewcommand\themanuallemmainner{#1}%
-    \manuallemmainner
-  }{\endmanuallemmainner}
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
 
-  \theoremstyle{remark}
-  \newtheorem*{remark}{Примечание}
-  \newtheorem*{solution}{Решение}
-  \newtheorem{corollary}{Следствие}[theorem]
-  \newtheorem*{examp}{Пример}
-  \newtheorem*{observation}{Наблюдение}
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
-  \theoremstyle{definition}
-  \newtheorem{task}{Задача}
-  \newtheorem{theorem}{Теорема}[section]
-  \newtheorem*{definition}{Определение}
-  \newtheorem*{symb}{Обозначение}
-  \newtheorem{manualtheoreminner}{Теорема}
-  \newenvironment{manualtheorem}[1]{%
-    \renewcommand\themanualtheoreminner{#1}%
-    \manualtheoreminner
-  }{\endmanualtheoreminner}
-  \captionsetup{justification=centering,margin=2cm}
-  \newenvironment{colored}[1]{\color{#1}}{}
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
 
-  \tikzset{->-/.style={decoration={
-    markings,
-    mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
-  \makeatletter
-  \newcommand*{\relrelbarsep}{.386ex}
-  \newcommand*{\relrelbar}{%
-    \mathrel{%
-      \mathpalette\@relrelbar\relrelbarsep
-    }%
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
   }
-  \newcommand*{\@relrelbar}[2]{%
-    \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
-    \lower#2\hbox{$\m@th#1\relbar$}%
-  }
-  \providecommand*{\rightrightarrowsfill@}{%
-    \arrowfill@\relrelbar\relrelbar\rightrightarrows
-  }
-  \providecommand*{\leftleftarrowsfill@}{%
-    \arrowfill@\leftleftarrows\relrelbar\relrelbar
-  }
-  \providecommand*{\xrightrightarrows}[2][]{%
-    \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
-  }
-  \providecommand*{\xleftleftarrows}[2][]{%
-    \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
-  }
-  \makeatother
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 7}
@@ -120,7 +164,7 @@
  pdftitle={Лекция 7},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -131,16 +175,16 @@
 
 
 \section{Критерии Сильвестра}
-\label{sec:org1485cc2}
+\label{sec:org1b9587a}
 \subsection{Достаточный условия}
-\label{sec:org436db06}
+\label{sec:org374fce3}
 \begin{enumerate}
 \item \(H(x^*) > 0\) и \(x^*\) --- локальный минимум \(\Leftrightarrow\) \(\Delta_1 > 0, \Delta_2 > 0, \dots , \Delta_n > 0\)
 \item \(H(x^*) < 0\) и \(x^*\) --- локальный максимум \(\Leftrightarrow\) \(\Delta_1 < 0, \Delta_2 > 0, \dots , (-1)^n\Delta_n > 0\)
 \end{enumerate}
 , где \(\Delta_i\) --- угловой минор
 \subsection{Необходимые условия}
-\label{sec:orgcba2e8e}
+\label{sec:org1465308}
 \begin{enumerate}
 \item \(H(x^*) \ge 0\) и \(x^*\) --- может быть локальный минимум \(\Leftrightarrow\) \(\Delta_1 \ge 0, \Delta_2 \ge 0, \dots, \Delta_n \ge 0\)
 \item \(H(x^*) \le 0\) и \(x^*\) --- может быть локальный максимум \(\Leftrightarrow\) \(\Delta_1 \le 0, \Delta_2 \ge 0, \dots, (-1)^n\Delta_n \ge 0\)
@@ -148,18 +192,18 @@
 , где \(\Delta_i\) --- главный минор
 
 \section{Собственные значения}
-\label{sec:org670b785}
+\label{sec:orgf333c37}
 \begin{definition}
 \textbf{Собственные значения} \(\lambda_i\ (i = 1..n)\) \(H(x^*)_{n\times n}\) находятся как корни характеристического уравнения \(|H(x^*) - \lambda E| = 0\). Если \(H(x)\) --- вещественная, симметричная матрица, то \(\lambda_i\) --- вещественные
 \end{definition}
 \section{Общие прицнипы многмерной оптимизации}
-\label{sec:orgb5ee715}
+\label{sec:org11fb971}
 \subsection{Выпуклые квадратичные функции}
-\label{sec:orgdfaf907}
+\label{sec:org0b9b4a5}
 \[ f(x) = \frac{1}{2}ax^2 + bx + c \]
 \begin{definition}
 Функция вида
-\[ f(x) = \sum^n{i = 1}\sum^n_{j = 1}a_{ij}x_ix_j + \sum^n_{j = 1}b_j x_j + c \addtag\label{7_1_quad} \]
+\[ f(x) = \sum^n_{i = 1}\sum^n_{j = 1}a_{ij}x_ix_j + \sum^n_{j = 1}b_j x_j + c \addtag\label{7_1_quad} \]
 Называется \textbf{квадратичной функией \(n\) перменных}
 \end{definition}
 Положим \(a_{ij} = a_{ij} + a_{ji} {\color{red}??}\) \(\Rightarrow\) симметрия. матрица \(A\)
@@ -178,7 +222,7 @@
 В этом базисе все угловые миноры матрцы \(A\) и матрицы \(A - lE\) --- положительны при достаточно малом \(l: 0 < l < \lambda_\min \Rightarrow f(x)\) --- сильно выпукла
 \end{enumerate}
 \subsection{Принципы многмерной оптимизации}
-\label{sec:orga295b3a}
+\label{sec:orgcedb79d}
 \[ f(x) \to \min,\ x \in E_n \]
 \[ x^{k + 1} = \Phi(x^k, x^{k + 1}, \dots x)^0,\ x^0 \in E_n \addtag\label{5_3_iter} \]
 --- итериционная процедура(общего вида)
@@ -200,7 +244,7 @@
 Если \(f(x)\) непрерывна в \(E_n\) и множество \(U^\alpha = {x: f(x) \le \alpha}\) для некоторого \(\alpha\) непусто и ограничено, то \(f(x)\) достигает глобального минимума в \(E_n\)
 \end{theorem}
 \subsubsection{Скорость сходимости(минизирующих последовательностей)}
-\label{sec:org56f6da2}
+\label{sec:orgac729ca}
 \begin{definition}
 \(\{x^k\}\) сходится к точке \(x^*\) \textbf{линейно} (со скоростью геометрической последовательности), если \(\exists q \in (0, 1):\)
 \[ \rho(x^k, x^*) \le q \rho(x^{k - 1}, x^*) \addtag\label{5_5_linear}\]
@@ -215,7 +259,7 @@
 \[ \rho(x^k, x^*) \le \left[ c \rho(x^{k - 1}, x^*)\right]^2,\ c > 0 \]
 \end{definition}
 \subsubsection{Критерии окончания итерационного процесса}
-\label{sec:org93d6d2d}
+\label{sec:orgc02dbb4}
 \[ \rho(x^{k + 1}, x^*) < \varepsilon_1 \]
 \[ |f(x^{k + 1}) - f(x^k)| < \varepsilon_2 \addtag\label{5_6_eps2}\]
 \[ \Vert \nabla f(x^k) \Vert < \varepsilon_3 \]
