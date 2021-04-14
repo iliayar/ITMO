@@ -10,6 +10,7 @@
 - [[file:lectures/5.pdf][Лекция 5]]
 - [[file:lectures/6.pdf][Лекция 6]]
 - [[file:lectures/7.pdf][Лекция 7]]
+- [[file:lectures/8.pdf][Лекция 8]]
 * Домашки
 - [[file:hw/20.pdf][20]]
 - [[file:hw/56.pdf][56]]
