@@ -1,0 +1,156 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 12
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Прямые методы решения СЛАУ
+Виды разложения матрицы \(A\):
+- \(LU\) --- \(L\) --- нижнеругольная матрциа, \(U\) --- верхнетреугольная матрица
+- \(LL^T\) --- метод квадратного корня
+- \(LDL^T\), \(L_{ii} = 1\)
+- \(D\) --- диагональная матрица
+
+  
+\[A = LU \addtag\label{eq_2_12} \]
+\[ LUx = b \quad y = Ux\]
+\[ Ly = b \addtag\label{eq_4_12} \]
+
+1. \(A \implies L\) и \(U\)
+2. решить \(\ref{eq_4_12}\) --- прямой ход: \(y\)
+3. \(Ux = y\) --- обратный ход
+\[ L = \begin{bmatrix}
+L_{11} & 0 & 0 & \dots \\
+L_{21} & L_{22} & 0 & \dots \\
+L_{31} & L_{32} & L_{33} & \dots \\
+\vdots & \vdots & \vdots
+\end{bmatrix}
+U = \begin{bmatrix}
+1 & U_{12} & U_{13} & \dots \\
+0 & 1 & U_{23} & \dots \\
+0 & 0 & 1 & \dots \\
+\vdots & \vdots & \vdots
+\end{bmatrix} \addtag\label{5_12}\]
+Красным помечено то, что мы находим на текущем шаге
+- \( A_{11} = \color{red}L_{11} \)
+- \( A_{21} = \color{red}L_{21} \)
+- \( A_{12} = L_{11} \cdot \color{red}U_{12} \)
+- \( A_{22} = L_{21} \cdot U_{12} + \color{red}L_{22}\)
+- \( A_{31} = \color{red}L_{31}\)
+- \( A_{32} = L_{31} \cdot U_{12} + \color{red}L_{32}\)
+- \( A_{13} = L_{11} \cdot \color{red}U_{13}\)
+- \( A_{23} = L_{21} \cdot U_{13} + L_{22}\cdot \color{red}U_{23}\)
+- \( A_{33} = L_{31} \cdot U_{13} + L_{32}\cdot U_{23} + \color{red}L_{33}\)
+      #+begin_export latex
+      \begin{rualgo}[H]
+      \caption{Алгоритм разложения}
+      \begin{algorithmic}
+      \STATE \(A_{11} = L_{11}\)
+      \FOR{\(i \gets 2\) \TO \(n\)} \DO
+        \FOR{\(j \gets 1\) \TO \(i - 1\)} \DO
+          \STATE \(L_{ij} = A_{ij} - \sum_{k = 1}^{j - 1} L_{ik}\cdot U_{kj}\)
+          \STATE \(U_{ji} = \frac{1}{L_{jj}} \left[A_{ji} - \sum_{k = 1}^{j - 1} L_{jk}\cdot U_{ki}\right]\)
+        \ENDFOR
+        \STATE \(L_{ii} = A_{ii} - \sum_{k = 1}^{i - 1} L_{ik} \cdot U_{ki}\)
+      \ENDFOR
+      \end{algorithmic}
+      \end{rualgo}
+      #+end_export
+** Близкие к нулю главные элементы
+ЭВМ: 5-разрядная арифметик с плавающей точки
+\[ \begin{pmatrix}
+10 & -7 & 0 \\
+0 & -1.0\cdot 10^{-3} & 6 \\
+0 & 2.5 & 5
+\end{pmatrix}\begin{pmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{pmatrix} = \begin{pmatrix}
+7 \\
+6.001 \\
+2.5
+\end{pmatrix}\]
+\[ 6.001 \cdot 2.5 \cdot 10^{-3} = 1.50025 \cdot 10^4 \approx 1.5003 \cdot 10^4 \]
+\[ 1.5005 \cdot 10^4 \cdot x_3 = 1.5004 \cdot 10^4 \implies x_3 = \frac{1.5004 \cdot 10^4}{1.5005 \cdot 10^4} = 0.99993 \]
+\[ -1.0\cdot 10^{-3}\cdot x_2 + 6\cdot 0.99993 = 6.0001 \implies x_2 = \frac{1.5 \cdot 10^{-3}}{-1.0 \cdot 10^{-3}} = -1.5\]
+\[ 10\cdot x_1 + (-7) \cdot (-1.5) = 7 \implies x_1 = -0.35 \]
+\[ x = (-0.35, -1.50, 0.99993) \]
+Хотя правильный ответ: \(x^* = (0, -1, 1)\)
+** Вектор ошибки и невязка
+\[ \begin{pmatrix}
+0.780 & 0.563 \\
+0.457 & 0.330
+\end{pmatrix}\begin{pmatrix}
+x_1 \\
+x_2
+\end{pmatrix} = \begin{pmatrix}
+0.217 \\
+0.127
+\end{pmatrix}\]
+ЭВМ: трехразрядная десятичная арифметика
+\[ \frac{0.457}{0.780} = 0.586 \]
+\[ \begin{pmatrix}
+0.780 & 0.563 \\
+0 & 0.0000820
+\end{pmatrix}\begin{pmatrix}
+x_1 \\
+x_2
+\end{pmatrix} = \begin{pmatrix}
+0.217 \\
+-0.000162
+\end{pmatrix}\]
+\[ x_2 = \frac{-0.00162}{0.0000820} = -1.98 \]
+\[ x_1 = \frac{0.217 - 0.563\cdot x_2}{0.780} = 1.71 \]
+\[ x = (1.71, -1.98)^T \]
+#+begin_definition org
+*Невязка* \(\Gamma = b - Ax\). Если решение точное, то вектор невязки близок к \(0\)
+#+end_definition
+\[ \Gamma = (-0.00206, -0.00107)^T \]
+Точным решением является вектор \(x^* = (1, -1)^T\) \\
+Величина ошибки решения: \(\frac{\Vert x^* - x \Vert}{\Vert x^* \Vert}\)
+#+begin_definition org
+\(\mathop{\rm cond}(A)\) --- число обусловленности \(A\). Отношение максимального и минимального собственного значения матрицы
+#+end_definition
+\noindentВеличина ошибки в решении приближенно равна величине решения \(\times\) \(\mathop{\rm cond}(A) \times \varepsilon_\text{маш.}\)
+#+begin_examp org
+\(\mathop{\rm cond}(A) = 10^6,\ \varepsilon = 10^{-8}\). В решении --- 3 верных разряда
+#+end_examp
+
+** Векторные нормы
+1. 2-норма (евклидова) \todo
+2. 1-норма (манхэтенское расстояние)
+   \[ \Vert x \Vert_1 = \sum_{i = 1}^n |x_i| \]
+3. \max-норма (\infty-норма)
+   \[ \Vert x \Vert_\infty = \todo \]
+\[ \Vert x \Vert > 0\text{, если } x\neq0\ \Vert 0 \Vert = 0 \]
+\[ \Vert cx \Vert = |c|\cdot\Vert x \Vert \ \forall c \]
+\[ \Vert x + y \Vert \le \Vert x \Vert + \Vert y \Vert \]
+\[ Ax = b \]
+\[ M = \max_x \frac{\Vert Ax \Vert}{\Vert x \Vert} \implies \Vert Ax \Vert \le M \cdot \Vert x \Vert \]
+\[ m = \min_x \frac{\Vert Ax \Vert}{\Vert x \Vert} \implies \Vert Ax \Vert \ge m \cdot \Vert x \Vert \]
+\(\frac{M}{m}\) --- число обусловленности матрицы \(A\)
+\[ A(x + \Delta x) = b + \Delta b \]
+Будем считать, что \(\Delta b\) --- ошибка в \(b\), \(\Delta x\) --- ошибка в \(x\). Поскольку \(A(\Delta x) = \Delta b\), то можно сказать, что:
+\[ \Vert Ax \Vert = \Vert b \Vert \le M \cdot \Vert x \Vert \]
+\[ \Vert A\Delta x\Vert = \Vert \Delta b \Vert \ge m \cdot \Vert \Delta x \Vert \]
+При \(M \neq 0\)
+\[ \frac{\Vert \Delta x \Vert}{\Vert x \Vert} \le \mathop{\rm cond}(A) \cdot \frac{\Vert \Delta b \Vert}{\Vert b \Vert} \]
+*** Свойства числа обусловленности
+\[ M \ge m \]
+
+\beginproperty
+#+begin_property org
+\(\mathop{\rm cond}(A) \ge 1\) \\
+\(P\) --- матрица перестановок, \(\mathop{\rm cond}(P) = 1\) \\
+\(\mathop{\rm cond}(I) = 1\)
+#+end_property
+#+begin_property org
+\(\mathop{\rm cond}(c\cdot A) = \mathop{\rm cond}(A)\)
+#+end_property
+#+begin_property org
+\(D\) --- диагоняльная
+\[ \mathop{\rm cond}(D) = \frac{\max|d_{ii}|}{\min |d_{ii}|} \]
+#+end_property
+#+begin_examp org
+\(D = \mathop{\rm diag}(0.1),\ n = 100\). \(\det D = 10^{-100}\) --- малое число
+\[ \mathop{\rm cond}(A) = \frac{0.1}{0.1} = 1 \]
+#+end_examp
