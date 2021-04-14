@@ -112,18 +112,18 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 
 Модификация с постолбцовым выбором глваного элемента
 #+begin_export latex
-\begin{rualgo}[H]
-\caption{Модификация алгоритма Гаусса}
+\begin{rualgo}[h]
+\caption{модификация алгоритма гаусса}
 \begin{algorithmic}[1]
-\STATE \(m:\ m \ge k,\ |a_{mk}| = \max_{i \ge k}\{|a_{ik}|\}\)
-\IF{\(a_{mk} = 0\)}
-\STATE Нет однозначного решения. Завершить алгоритм
-\ELSE
-\FOR{\(j = k,\dots,n\)}
-\STATE Поменять местами \(b_x\) и \(b_m\)
-\STATE Поменять местами \(a_{kj}\) и \(a_{mj}\)
-\ENDFOR
-\ENDIF
+\state \(m:\ m \ge k,\ |a_{mk}| = \max_{i \ge k}\{|a_{ik}|\}\)
+\if{\(a_{mk} = 0\)}
+\state нет однозначного решения. завершить алгоритм
+\else
+\for{\(j = k,\dots,n\)}
+\state поменять местами \(b_x\) и \(b_m\)
+\state поменять местами \(a_{kj}\) и \(a_{mj}\)
+\endfor
+\endif
 \end{algorithmic}
 \end{rualgo}
 #+end_export

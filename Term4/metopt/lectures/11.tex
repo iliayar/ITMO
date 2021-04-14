@@ -1,8 +1,8 @@
-% Created 2021-04-08 Thu 13:35
+% Created 2021-04-14 Wed 12:50
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[english]{article}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -30,10 +30,10 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \usepackage{geometry}
-  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-   \usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -49,12 +49,15 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
 \newcommand{\rank}{\mathop{\rm rank}\nolimits}
 \newcommand{\const}{\var{const}}
 \newcommand{\grad}{\mathop{\rm grad}\nolimits}
@@ -171,9 +174,9 @@
 
 
 \section{Разреженный формат}
-\label{sec:org971e7fe}
+\label{sec:org3c0aff6}
 \subsection{Строчно столбцовый формат}
-\label{sec:org0417231}
+\label{sec:orga0976dc}
 \begin{enumerate}
 \item Вещественный массив \(di[n]\) --- диагональные элементы
 \item Вещественный массив \(al, au\) --- по строкам и стобцам соответсвенно
@@ -210,7 +213,7 @@ a_{11} & & & & & & & & \\
 \end{enumerate}
 \end{examp}
 \subsection{Решение СЛАУ. Метод Гаусса}
-\label{sec:orgf541446}
+\label{sec:org2225445}
 \[ \begin{cases}
 a_{11}x_1 + a_{12} x_2 + \dots + a_{1n}x_n = b_1 \\
 a_{21}x_1 + a_{22} x_2 + \dots + a_{2n}x_n = b_2 \\
@@ -259,7 +262,7 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 
 \[ a_{ij}^{(k)} = a_{ij}^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}a_{kj}^{(k - 1)} \quad b_i^{(k)} = b_i^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}b_k^{(k - 1)} \quad \ k \in \overline{1, n};\ i,j \in \overline{k + 1, n}\]
 \subsection{Обратный ход Гаусса}
-\label{sec:org5dc0690}
+\label{sec:org0f7aff8}
 \[ x_n = \frac{b_n^{(n - 1)}}{a_{nn}^{(n - 1)}} \]
 \[ \vdots \]
 \[ x_2 = \frac{b_2^{(1)} - a_{23}^{(1)} x_3 - \dots - a_{2n}^{(1)}x_n}{a_{22}^{(1)}} \]
@@ -286,18 +289,18 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 \end{rualgo}
 
 Модификация с постолбцовым выбором глваного элемента
-\begin{rualgo}[H]
-\caption{Модификация алгоритма Гаусса}
+\begin{rualgo}[h]
+\caption{модификация алгоритма гаусса}
 \begin{algorithmic}[1]
-\STATE \(m:\ m \ge k,\ |a_{mk}| = \max_{i \ge k}\{|a_{ik}|\}\)
-\IF{\(a_{mk} = 0\)}
-\STATE Нет однозначного решения. Завершить алгоритм
-\ELSE
-\FOR{\(j = k,\dots,n\)}
-\STATE Поменять местами \(b_x\) и \(b_m\)
-\STATE Поменять местами \(a_{kj}\) и \(a_{mj}\)
-\ENDFOR
-\ENDIF
+\state \(m:\ m \ge k,\ |a_{mk}| = \max_{i \ge k}\{|a_{ik}|\}\)
+\if{\(a_{mk} = 0\)}
+\state нет однозначного решения. завершить алгоритм
+\else
+\for{\(j = k,\dots,n\)}
+\state поменять местами \(b_x\) и \(b_m\)
+\state поменять местами \(a_{kj}\) и \(a_{mj}\)
+\endfor
+\endif
 \end{algorithmic}
 \end{rualgo}
 \end{document}
