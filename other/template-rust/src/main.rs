@@ -34,10 +34,43 @@ impl Scanner {
 
 //================================ CODE BEGIN ===============================================
 
+struct Edge {
+    c: i64,
+    from: usize,
+    to: usize,
+    f: i64,
+    rev: usize
+}
+
+struct State<'a> {
+    g: &'a Vec<Vec<usize>>,
+    edges: &'a Vec<Edge>
+}
+
+fn dfs(v: usize, p: i64, mark: &mut [bool], state: &State) -> i64 {
+    todo!();
+}
+
+fn denchik(state: &State) {
+
+}
+
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
 
-    let n = scan.next::<i64>();
-
+    let n = scan.next::<usize>();
+    let m = scan.next::<usize>();
+    let mut g: Vec<Vec<usize>> = vec![Vec::new(); n];
+    let mut es: Vec<Edge> = Vec::new();
+    for i in 0..m {
+	let a = scan.next::<usize>() - 1;
+	let b = scan.next::<usize>() - 1;
+	let c = scan.next::<i64>();
+	g[a].push(es.len());
+	es.push(Edge { c: c, from: a, to: b, f: 0, rev: es.len() + 1 });
+	g[b].push(es.len());
+	es.push(Edge { c: 0 , from: b, to: a, f: 0, rev: es.len() - 1 });
+    }
+    denchik(&State { g: &g, edges: &es });
     writeln!(out, "{}", n).ok();
 }
 
