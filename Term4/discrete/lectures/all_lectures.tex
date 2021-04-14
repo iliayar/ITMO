@@ -1,4 +1,4 @@
-% Created 2021-04-06 Tue 23:36
+% Created 2021-04-14 Wed 17:02
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[oneside]{book}
@@ -21,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -45,12 +48,15 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
 \newcommand{\rank}{\mathop{\rm rank}\nolimits}
 \newcommand{\const}{\var{const}}
 \newcommand{\grad}{\mathop{\rm grad}\nolimits}
@@ -123,6 +129,32 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекции по Дискретной математике 4 семестр}
@@ -140,9 +172,9 @@
 
 
 \chapter{10 февраля}
-\label{sec:org9325ed8}
+\label{sec:org761d902}
 \section{Производящие функции}
-\label{sec:org508d6a1}
+\label{sec:orgb025595}
 Последовательность \(a_0, a_1, a_2, \dots\). Запишем в виде ряда
 \[ A(t) = a_0 + a_1 t + a_2 t^2 + \dots \], где \(A(t)\) --- \textbf{производящая функция}
 \begin{property}
@@ -204,9 +236,9 @@
 \[ c_n = \sum_{k = 1}^n a_i \sum_{n=k_1 + k_2 + \dots + k_i} \prod_{j = 1}^i b_{k_j} \]
 \end{property}
 \chapter{17 февраля}
-\label{sec:org263e8b3}
+\label{sec:org378bbd1}
 \section{Производящие функции}
-\label{sec:org01340d2}
+\label{sec:org804eb20}
 \begin{definition}
 \textbf{Полином} --- степенныой ряд, у которого начиная с некоторого места
  \(n\) все коэффиценты 0.
@@ -218,7 +250,7 @@
 \(\frac{P(t)}{Q(t)}\) --- \textbf{дробно рациональная функция}
 \end{definition}
 \subsection{Рекурентные соотношения}
-\label{sec:org92cbd2e}
+\label{sec:org94c0cab}
 \begin{definition}
 \[ m: a_0, a_1, \dots, a_{m - 1} \]
 \(k \le m, n \ge m\) \[ a_n = c_1a_{n-1} + \dots + a_ka_{n - k} \], где \(c_1, \dots, c_k\) --- коэффиценты рекурентности
@@ -262,7 +294,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{theorem}
 
 \subsection{Рекурента в рациональную ПФ}
-\label{sec:org0639718}
+\label{sec:orgeb76707}
 \[ A(t) = \frac{P(t)}{Q(t)} \]
 \[ a_n = c_1 a_{n - 1} + c_2 a_{n - 2} + \dots + c_ka_{n - k} \]
 \[ m = \deg P + 1\quad k = \deg Q \]
@@ -271,11 +303,11 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ c_i = -q_i \]
 \[ a_n = \sum_{i = 1}^{\min(n, k)} c_i a_{n - i} [+ p\text{ если } n < m] \]
 \chapter{24 февраля}
-\label{sec:org8d5e7ee}
+\label{sec:org53e25c8}
 \section{Ассимпточиское поведение линейных рекуррент}
-\label{sec:org2afd8c9}
+\label{sec:org20e6208}
 \subsection{Квазимногчлен в рациональную ПФ}
-\label{sec:org522201c}
+\label{sec:orgc97c7db}
 \begin{lemma}
 \-
 \begin{itemize}
@@ -302,7 +334,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{corollary}
 
 \subsection{Рациональная ПФ в квазимногочлен}
-\label{sec:org5d85c44}
+\label{sec:org9ddf799}
 \begin{itemize}
 \item \(A(t) = \frac{P(t)}{Q(t)}\)
 \end{itemize}
@@ -321,7 +353,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ \sum_{i = 0}^m p_i u_i = \left(\sum_{i = 1}^m \frac{p_{n - i}(n)}{r^i}\right)r^n \]
 \end{corollary}
 \subsection{Оценка ассимптотического поведения}
-\label{sec:orga31ec65}
+\label{sec:org35cc18b}
 Обратные корни: \(\begin{matrix} r_1 & f_1 \\ r_2 & f_2 \\ \vdots & \vdots \\ r_s & f_s \end{matrix}\)
 \beginproperty
 \begin{property}
@@ -366,7 +398,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ \binom{\frac{1}{2}}{3} = \frac{\frac{1}{2} \cdot \left(-\frac{1}{2}\right) \left(-\frac{3}{2}\right)}{1 \cdot 2 \cdot 3} = \frac{1}{16} \]
 \end{remark}
 \chapter{3 марта}
-\label{sec:org4d36d9f}
+\label{sec:org6e17437}
 \newcommand{\vdomino}{
 \begin{tikzpicture}
 \draw (0, 0) rectangle (0.15,0.3);
@@ -378,7 +410,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{tikzpicture}}
 
 \section{Производящие функции для объектов}
-\label{sec:org687cf1a}
+\label{sec:org9998600}
 \begin{itemize}
 \item Оюъединение \\
 \(A, B\ A \cap B = \emptyset\ C = A \cup B\) \\
@@ -416,13 +448,13 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \(\text{Seq}_{\le k}(A) = \frac{1}{1 - A(t)} - \frac{A(t)^{k + 1}}{1 - A(t)} = \frac{1 - A(t)^{k + 1}}{1 - A(t)}\)
 \end{examp}
 \chapter{10 марта}
-\label{sec:org3156422}
+\label{sec:orgb5f77a6}
 \usetikzlibrary{automata}
 
 
 
 \section{Производящие функции для регулярных языков}
-\label{sec:orgfa2d9f9}
+\label{sec:org5b4661c}
 \(L\) --- регулярный язык
 \[ | L \cap \Sigma^n | = a_n \] 
 \[ L(t) = a_0 + a_1 t + \dots \]
@@ -494,7 +526,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ L_0 = \frac{t^3}{(1 - t)(1 - 2t)(1 - t - t^2)} \]
 \end{examp}
 \section{Автомат КМП и автокор. многочлен}
-\label{sec:orga168bd7}
+\label{sec:org296a994}
 Конструкция Гуибаса-Одлызко
 \[ p = \fbox{p_1, p_2, \dots, p_k} \]
 \[ c_i = [p[i+1\dots k] = p[1\dots k-i]] \]
@@ -520,7 +552,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{examp}
 
 \subsection{Пентагональная формула Эйлера}
-\label{sec:orgb17109e}
+\label{sec:orga42134c}
 \[ p_0\ p_1\ p_2\ \dots\ p_n\ \dots \]
 \(p_n\) --- количество разбиений \(n\) на слагаемые из \(\N\). Порядок не важен
 \begin{itemize}
@@ -543,13 +575,13 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ n = \frac{ek^2 \pm k}{2}, \text{то } e_n = o_n + (-1)^k \]
 \end{lemma}
 \chapter{17 марта}
-\label{sec:orgb988c34}
+\label{sec:org137edbf}
 \newcommand{\Seq}{\text{Seq}\,}
 \newcommand{\Set}{\text{Set}\,}
 \newcommand{\Cyc}{\text{Cyc}\,}
 
 \section{Помеченные КО и экспоненциальные производящие функции}
-\label{sec:org3b96502}
+\label{sec:org13fc5c6}
 \[ a_0\ a_1\ a_2\ \dots\ a_n\ \dots\quad A(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_nt^n + \dots \]
 \begin{definition}
 Экспоненциальная производящая функция:
@@ -591,7 +623,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{property}
 \textbf{Далее все производящие функции --- экспоненциальные, а объекты помеченые}
 \subsection{Помеченные объекты}
-\label{sec:orgc7421fd}
+\label{sec:org2dafd08}
 \begin{examp}
 Перестановк. \(P_n = n!\) --- количество перестановок из \(n\) элементов
 \end{examp}
@@ -604,10 +636,10 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 ЭПФ: \(\sum\limits_{n = 1}^{ + \infty} \frac{n!}{n}\cdot \frac{1}{n!}\cdot t^n = \sum\limits_{n = 1}^{ + \infty} \frac{t^n}{n} = \ln \frac{1}{1 - t}\)
 \end{examp}
 \subsection{Операции}
-\label{sec:org20acb3f}
+\label{sec:org2dabedf}
 \begin{enumerate}
 \item Дизъюнктное объединение (сумма)
-\label{sec:orge0eb872}
+\label{sec:org7f13491}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -616,7 +648,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{itemize}
 \[ c_n = a_n + b_n\quad C(t) = A(t) + B(t) \]
 \item Пара (произведение)
-\label{sec:orga7766c9}
+\label{sec:orgc87867e}
 \begin{itemize}
 \item \(A\)
 \item \(B\)
@@ -632,7 +664,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Пары перестановок. \(C(t) = \frac{1}{(1 - t)^2}\). Тогда \(c_n = (n + 1)n!\)
 \end{examp}
 \item Последовательность
-\label{sec:org71a8949}
+\label{sec:org7f8f9dd}
 \[ C = \Seq A = \emptyset + A \times \Seq A \]
 \[ C(t) = 1 + A(t)\cdot C(t) \]
 \[ C(t) = \frac{1}{1 - A(t)} \]
@@ -646,7 +678,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[P(t) = \frac{1}{1 - t}\]
 \end{examp}
 \item Множества (Set)
-\label{sec:org5fe1d7a}
+\label{sec:orgbde7ae1}
 \begin{itemize}
 \item \(\Set_k A\) ---  множества, содержащие \(k\) обхектов
 \end{itemize}
@@ -675,7 +707,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 Набор помеченных циклов являеся престановкой
 \end{examp}
 \item Циклы
-\label{sec:orgd9ad362}
+\label{sec:orgf3e6fba}
 \begin{itemize}
 \item \(\Cyc_k A\) --- количество циклов длины \(k\)
 \end{itemize}
@@ -690,7 +722,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 
 
 \subsection{Обобщение}
-\label{sec:org2b786ba}
+\label{sec:org6223b94}
 
 \begin{theorem}[о подстановке]
 \-
@@ -705,7 +737,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \(A\times A\) --- пара атомов. Их две \(B(t) = t^2 = 2 \cdot \frac{1}{2!} \cdot t^2\). Подставляем \(B(A(t)) = A(t)^2\)
 \end{examp}
 \chapter{24 марта}
-\label{sec:org54da72a}
+\label{sec:org15af83e}
 \newcommand{\stirlF}[2]{\left[\begin{matrix} #1 \\ #2 \end{matrix}\right]}
 \newcommand{\stirlS}[2]{\left\{\begin{matrix} #1 \\ #2 \end{matrix}\right\}}
 \newcommand{\Set}{\text{Set}\,}
@@ -738,7 +770,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ [s^{n - 1}]e^{ns} = \frac{n^{n - 1}}{(n - 1)!} \]
 \end{examp}
 \section{Производящая функция от нескольких перменных}
-\label{sec:orgffcd321}
+\label{sec:orgd82caf2}
 \(\binom{n}{k}\) образуют таблицу:
 \begin{center}
 \begin{tabular}{l|rrrll}
@@ -758,7 +790,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ \text{Seq}\,\{z, uz\} = [], [z], [uz], [z, z], [z, uz], [uz, z], [uz, uz], \dots \]
 \[ A(u, z) = z + uz \]
 \subsection{Числа Стирлинга I рода}
-\label{sec:org2eae1e4}
+\label{sec:orga6fc4a2}
 \fixme \\
 Помеченные перстановки, \(\text{Set}\,\text{Cyc}\,Z\)
 \[ \bigcup_{k = 0}^\infty \text{Set}_{=k}\text{Cyc}\, Z \]
@@ -768,19 +800,19 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ u \times \Cyc Z = \sum_{n = 0}^\infty \frac{\left(u \ln \left(\frac{1}{1 - Z}\right)\right)^k}{k!} = e^{u\ln\frac{1}{1 - Z}} = (1 - Z)^{-u}\]
 \[ (1 - Z)^{-u} = \sum_{n,k}\frac{\stirlF{n}{k}}{n!} Z^n u^k \]
 \subsection{Числа Стирлинга II рода}
-\label{sec:org0ab1c76}
+\label{sec:orgb5d8a7b}
 \[ \stirlS{n}{k}\quad \Set\Set_{>0} Z \]
 \[ \bigcup_{k = 0}^\infty\Set_{=k}(u\times \Set_{>0}Z) \]
 \[ \sum_{k = 0}^\infty \frac{\left(u(e^Z - 1)^k\right)}{k!} = e^{ue^Z - u} = \sum_{n,k} \frac{\stirlS{n}{k}}{n!}z^nu^k\]
 \subsection{Средняя стоимоть}
-\label{sec:orgd946881}
+\label{sec:orge76f836}
 \begin{itemize}
 \item \(A\quad a_{n,k} = [z^nu^k]A(u, z)\) --- количество объектов веса \(n\) стоимости \(k\)
 \end{itemize}
 \[ w_n = \frac{\sum_{k = 0}^\infty k a_{n,k}}{\sum_{k = 0}^\infty a_{n, k}} = \frac{\left.[z^n]\left(\frac{\partial}{\partial u}A(u ,z)\right)\right|_{u = 1}}{[z^n]A(1, z)}\]
 \begin{enumerate}
 \item Разбиение на слагаемые, порядок важен
-\label{sec:orgc88e20b}
+\label{sec:orge48622b}
 Аналогично рассотовке перегорожок, \(\Seq\Seq_{>0}Z\)
 \[ \Seq \left(u\times\Seq_{>0}Z\right) \]
 \[ \frac{1}{1 - z} - 1= \frac{z}{1 - z} \]
@@ -792,7 +824,7 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \end{description}
 Среднее число слагаемых: \[ \frac{2^n(n + 1)}{2^{n - 1}\cdot4} = \frac{n + 1}{2} \]
 \item Среднее число циклов в перестановке
-\label{sec:org8c8b2b5}
+\label{sec:orgc05db9f}
 \[ A(u ,z) = (1 - z)^{- u} \]
 \[ \frac{\partial}{\partial u}A(u, z) = \frac{\partial}{\partial u} e^{u \ln\frac{1}{1 - z}} = \ln \frac{1}{1 - z}\cdot e^{u\ln\frac{1}{1 -z }} \]
 Подставляем \(u = 1\):
@@ -804,4 +836,207 @@ f\textsubscript{n} = f\textsubscript{n - 1} + f\textsubscript{n - 2} --- чис�
 \[ (z + \frac{1}{2}z^2 + \frac{1}{3}z^3 + \dots + \frac{1}{k}z^k + \dots)\cdot(1 + z + z^2 + \dots) \]
 \[ [z^n]B(z) = \sum_{k = 1}^n \frac{1}{k} = H_n \sim \log n \]
 \end{enumerate}
+\chapter{14 апреля}
+\label{sec:org6a05e3d}
+\section{Теория вычислимости}
+\label{sec:org5715bcb}
+\(\Sigma\) --- алфавит, \(\Sigma^* = \bigcup_{k = 0}^\infty \Sigma^k\). \(L \subset \Sigma^*\) --- формальный язык.
+\begin{definition}
+\(L\) --- \textbf{разрешимый (рекурсивный)}, если \(\exists\) программа \(P\), такая что:
+\begin{itemize}
+\item \(x \in L \implies P(x) = 1\)
+\item \(x \not\in L \implies P(x) = 0\)
+\end{itemize}
+\end{definition}
+\begin{remark}
+Раньше называли рекурсивным, так как использовали рекурсивные функции. Это определение появилось до языков программирования
+\end{remark}
+\begin{remark}
+Множетво разрешимых языков счетно
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn p(x: Word) -> Res {
+    loop { }
+    return 1;
+}
+\end{minted}
+\end{remark}
+\begin{remark}
+Любой конечный язык является разрешимым
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn p(x: Word) -> Res {
+    if x == x_1 { // $x_1 \in L$
+	return 1; 
+    }
+    if x == x_2 { // $x_2 \in \L$
+	return 1;
+    }
+    // $\dots$
+}
+\end{minted}
+\end{remark}
+\begin{definition}
+\(L\) --- \textbf{полуразрешимый (перечислимый, рекурсивно перечислмый)}, если \(\exists p\), такая что:
+\begin{enumerate}
+\item \(x \in L \implies p(x) = 1\)
+\item \(x \not\in L \implies p(x) \neq 1\)
+\end{enumerate}
+\end{definition}
+\begin{remark}
+Множество полуразрешимых языков счетно
+\end{remark}
+\begin{remark}
+Разрешимый \(\implies\) Полуразрешимый
+\end{remark}
+\begin{remark}
+\(\Sigma^*\), \(\N^+\), \(\var{Prog}\) --- будут для нас эквивалентными понятиями, когда будем говорить про формальный язык.
+\begin{itemize}
+\item \(\Sigma^* \leftrightarrow \var{Prog}\) --- те строки, которые не являются программами, будем считать программами, которые `зависают` на любом входе
+\item \(\Sigma^* \leftrightarrow \N^+\) --- занумеруем строки в градуированном лексикографичеком порядке \\
+\[ \varepsilon, `0`, `1`, `00`, `01`, `10`, `11`, `000`, `001` \]
+\end{itemize}
+\end{remark}
+\begin{definition}
+Арифметические операции, \texttt{if}, \texttt{for}, \texttt{while}, вызов функций. \(p\) --- программа, \(x\) --- слово --- запустить программу \(p\) на слове \(x\), запустить программу \(p\) на слове \(x\) с ограничением на время \(\var{TL} = t\), и ограничением на память \(\var{ML} = m\)
+\end{definition}
+\begin{definition}
+\(L\) --- перечислимый, если \(\exists p\) которая на пустом входе выводит любое слово из языка хотя бы один раз. \(\forall x \in L\ \exists t(x)\quad P\big|_{\var{TL} = t}\) выводит \(x\)
+\end{definition}
+\begin{examp}
+\-
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn zeroes() {
+    for i in [0..] {
+	let s = '0' * i;
+	println!("{}", s)
+    }
+}
+\end{minted}
+\end{examp}
+\begin{theorem}
+\(L\) --- перечислимый \(\Leftrightarrow\) \(L\) --- полуразрешимый
+\end{theorem}
+\begin{proof}
+\-
+\begin{description}
+\item[{\((\Rightarrow)\)}] Пусть \texttt{listL()} --- перечисляет \(L\)
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn inL(x: Word) -> Res {
+    async { listL(); }
+    if x.is_printed() {
+	return 1;
+    }
+    return 0;
+}
+\end{minted}
+\item[{\((\Leftarrow)\)}] \texttt{inL()} --- полуразрешиель \(L\). Если напишем \texttt{listL()}, то он зависнет. Введем таймер.
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn listL() -> Res {
+    for t in [0..] {
+	for x in sigma[0..t] {
+	    if inL(x).await(t) {
+		println!("{}", x)
+	    }
+	}
+    }
+}
+\end{minted}
+\end{description}
+\end{proof}
+\begin{remark}
+Кодировать пару \(\langle x, y \rangle\) можем
+\end{remark}
+\begin{definition}
+\textbf{Универсальный язык}:
+\[ U = \{\langle p, x \rangle \big| \text{программа } p(x) = 1\} \]
+\end{definition}
+\beginproperty
+\begin{property}
+\(U\) --- полуразрешим --- Тьюринг полный
+\end{property}
+\begin{theorem}
+\(U\) --- не разрешим
+\end{theorem}
+\begin{proof}
+Допустим существует программа \texttt{rust\#inU((p, x): (Word, Word))}, которая разрешает \(U\)
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn q(x: Word) -> Res {
+    if inU((x, x)) {
+	return 0;
+    } else {
+	return 1;
+    }
+}
+\end{minted}
+\texttt{q} никогда не зависает. Вызовем \texttt{q(q)}
+\begin{itemize}
+\item \(inU(\langle q, q \rangle) = 1\)
+\begin{itemize}
+\item \(q(q) = 0\)
+\item \(\langle q, q \rangle \in U \implies q(q) = 1\)
+\end{itemize}
+\item \(inU(\langle q, q\rangle) = 0\)
+\begin{itemize}
+\item \(\langle q, q \rangle \not\in U \implies q(q) \neq 1\)
+\item \(q(q) = 1\)
+\end{itemize}
+\end{itemize}
+Получается, что \(q\) не возвращает ни 0 ни 1. Противоречие
+\end{proof}
+\beginproperty
+\begin{property}
+\(A, B\) разрешимы, \(A \cup B\) --- разрешим
+\end{property}
+\begin{property}
+\(A, B\) разрешимы, \(A \cap B\) --- резрешим
+\end{property}
+\begin{property}
+\(A\) --- разрешим, \(\overline{A} = \Sigma^* \setminus A\) --- разрешим
+\end{property}
+\begin{property}
+\(A, B\) полуразрешимы, \(A \cap B\) --- полуразрешим
+\end{property}
+\begin{property}
+\(A, B\) полуразрешимы, \(A \cup B\) --- полуразрешим
+\end{property}
+\begin{proof}
+\-
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn p() -> Res {
+    for i in [0..] {
+	if inA.await(t) {
+	    return 1;
+	}
+	if inB.await(t) {
+	    return 1;
+	}
+    }
+}
+\end{minted}
+\end{proof}
+\begin{theorem}[Поста]
+\(L\) и \(\overline{L}\) оба полуразрешимы \implies \(L\) --- разрешим
+\end{theorem}
+\begin{proof}
+\-
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn inL(x: Word) -> Res {
+    for t in [0..] {
+	if inL(x).await(t) {
+	    return 1;
+	}
+	if inCL(x).await(t) { // $\text{\rm CL} = \overline{L}$
+	    return 0;
+	}
+    }
+}
+\end{minted}
+\end{proof}
+\begin{theorem}
+Не существует языка программирования, который поддерживает все три свойства
+\begin{enumerate}
+\item Программа не зависает
+\item Любой разрешимый язык, распознается программой на этом языке
+\item Функция \(\langle p, x \rangle \mapsto p(x)\) вычислима
+\end{enumerate}
+\end{theorem}
 \end{document}
