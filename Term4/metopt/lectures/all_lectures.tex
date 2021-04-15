@@ -1,8 +1,8 @@
-% Created 2021-04-13 Tue 14:20
+% Created 2021-04-15 Thu 13:52
 % Intended LaTeX compiler: pdflatex
 
-\documentclass[oneside]{book}
-\usepackage[T1, T2A]{fontenc}
+  \documentclass[oneside]{book}
+  \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -30,9 +30,9 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-
-\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
- \usepackage{hyperref}
+  
+  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+   \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -148,8 +148,9 @@
      \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
      \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
      \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
-     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
-     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
      \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
      \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
      % Set other language requirements
@@ -172,11 +173,11 @@
 
 
 \chapter{}
-\label{sec:orgc415624}
+\label{sec:org22e15d6}
 \chapter{Лекции 1 и 2}
-\label{sec:orge8f48a6}
+\label{sec:org87a464d}
 \section{Теория погрешности}
-\label{sec:orgf749d4b}
+\label{sec:org2558ce6}
 \begin{defintion}
 Отклонение от теоретического решения
 \end{defintion}
@@ -211,7 +212,7 @@
 \end{itemize}
 
 \subsection{Значащие цифры}
-\label{sec:org67b80cc}
+\label{sec:orge29b75f}
 \begin{definition}
 Все цифры в изображении отличные от нуля, и нули если они содержатся
 между значащими цифрами, или расположены в конце числа и указывают на
@@ -229,7 +230,7 @@
 \end{examp}
 
 \subsection{Верные цифры}
-\label{sec:org2ad3fdb}
+\label{sec:orgb3a390c}
 \begin{defintion}
 Если, значащая цифра приближенного значения, находящаяся в разряде, в
 котором выполняется условие --- абсолютное значение погрешности не
@@ -249,7 +250,7 @@
 \end{examp}
 
 \subsection{Распространение погрешности}
-\label{sec:org7fd75dc}
+\label{sec:org432217d}
 \begin{examp}
 \(\left(\frac{\sqrt{2} - 1}{\sqrt{2} + 1}\right)^3 = (\sqrt{2} - 1)^6 = (3 - 2\sqrt{2})^3 = 99 - 70\sqrt{2}\) \\
 \begin{description}
@@ -301,9 +302,9 @@
 
 
 \section{Одномерная минимизация функций}
-\label{sec:orgd220ee1}
+\label{sec:org7ebc51d}
 \subsection{Унимодальные функции}
-\label{sec:org031f7cc}
+\label{sec:orgf25ade8}
 \(f(x) \to \min,\ x \in U\) \\
 \(f(x) \to \max \Rightarrow -f(x) \to min\) \\
 \(x^* \in U\) --- точка минимума: \(f(x*) \le f(x)\ \forall x \in U\) \\
@@ -353,11 +354,11 @@
 
 
 \subsection{Прямые методы}
-\label{sec:orgdf1ef35}
+\label{sec:org8a1d1ab}
 Не требуют вычисление производной. Могут использовать только известные значения. 
 \begin{enumerate}
 \item Метод дихотомии
-\label{sec:org7d643cb}
+\label{sec:orgdebb131}
 \[ x_1 = \frac{b + a - \delta}{2}\quad x_2 = \frac{b + a + \delta}{2} \addtag\label{delta_1} \]
 \[ \tau = \frac{b - x_1}{b - a} = \frac{x_2 - a}{b - a} \rightarrow \frac{1}{2} \]
 \[ X^* [a_i, b_i]\quad \frac{b_i - a_i}{2} \le \varepsilon \]
@@ -381,11 +382,11 @@
 Число итерций \(n \ge \log_2\frac{b - a - \delta}{2\varepsilon - \delta}\)
 \end{enumerate}
 \chapter{}
-\label{sec:org155a7b4}
+\label{sec:org5702f9b}
 \section{Одномерный поиск}
-\label{sec:org9aa5a50}
+\label{sec:org410062c}
 \subsection{Метод золотого сечения}
-\label{sec:org862a570}
+\label{sec:org9dc501e}
 \begin{remark}
 Возьмем отрезок \([0, 1]\)
 \begin{itemize}
@@ -433,7 +434,7 @@
 \(f^* \approx f(\bar{x})\)
 \end{enumerate}
 \subsection{Метод Фибоначчи}
-\label{sec:orge1196f2}
+\label{sec:orge9827cb}
 \[ F_{n + 2} = F_{n + 1} + F_n\quad, n = 1,\ F_1 = F_2 = 1 \]
 \[ F_n = \left(\left(\frac{1 + \sqrt{5}}{2}\right)^n - \left(\frac{1 - \sqrt{5}}{2}\right)^n\right)\cdot\frac{1}{\sqrt{5}} \]
 \[ F_n \approx \left(\frac{1 + \sqrt{5}}{2}\right)^n \cdot \frac{1}{\sqrt{5}} \quad n \to \infty \]
@@ -457,7 +458,7 @@
 \[ \frac{b_0 - a_0}{\varepsilon} < F_{n + 2} \]
 Когда \(n\) большое \(\Rightarrow\) \(\frac{F_n}{F_{n + 2}}\) --- бесконечная десятичная дробь
 \subsection{Метод парабол}
-\label{sec:orga4e3892}
+\label{sec:org3d3d562}
 \begin{itemize}
 \item \(x_1, x_2, x_3 \in [a, b]\)
 \item \(x_1 < x_2 < x_3\)
@@ -478,14 +479,14 @@
 \end{itemize}
 \[ \bar{x} = \frac{1}{2}\left(x_1 + x_2 - \frac{a_1}{a_2}\right)\text{ --- минимум параболы } q(x) \]
 \chapter{}
-\label{sec:orgf8b6a29}
+\label{sec:org3d93a15}
 \[ \frac{l_\text{з.с}^i}{l_\text{дих.}^i} \approx (0.87\dots)^n \] \[
 \frac{l_\text{з.с}^i}{l_\text{фиб.}^i} \approx 1.17 \]
 
 \section{Одномерная оптимизация}
-\label{sec:org3066a8f}
+\label{sec:orge571044}
 \subsection{Определение интервала неопределенности}
-\label{sec:org6b2618e}
+\label{sec:org7e95d6c}
 \(x_0\)
 \begin{enumerate}
 \item Если \(f(x_0) > f(x_0 + \delta)\), то:
@@ -515,7 +516,7 @@
 \end{itemize}
 \end{enumerate}
 \section{Методы с использованием производной}
-\label{sec:orgda9e49c}
+\label{sec:orgbe7fd8b}
 
 \begin{itemize}
 \item \(f(x)\) --- дифференцируемая или дважды дифференцируемая выпуклая функция
@@ -526,7 +527,7 @@
 минимума.  Если \(x^* \in [a, b]\ f'(x) \approx 0\) или \(f'(x) \le
 \varepsilon\) --- условие остановки вычислений
 \subsection{Метод средней точки}
-\label{sec:org934bcfa}
+\label{sec:org5bae3da}
 \(f'(x)\quad \bar{x} = \frac{a + b}{2}\) \\
 \begin{itemize}
 \item Если \(f'(\bar{x}) > 0\), то \(\bar{x}\in\) монотонно возрастающая
@@ -550,7 +551,7 @@
 \end{enumerate}
 \[ \Delta_n = \frac{b - a}{2^n} \]
 \subsection{Метод хорд(метод секущей)}
-\label{sec:org07e89dd}
+\label{sec:orgf921e4f}
 Если на концах \([a, b]\) \(f'(x)\): \(f'(a)\cdot f'(b) < 0\) и непрерывна,
 то на \((a, b)\) \(\exists x\ f'(x) = 0\) \\
 \(f(x)\) --- минимум на \([a, b]\), если \(f'(x) = 0\), \(x\in(a, b)\) \\
@@ -601,7 +602,7 @@
 \end{itemize}
 \end{enumerate}
 \subsection{Метод Ньютона(метод касательной)}
-\label{sec:org64ef893}
+\label{sec:org3afdbbe}
 Если выпуклая на \([a, b]\) функция \(f(x)\) --- дважды непрерывно
 дифференцируема, то \(x^* \in [a, b]:\ f'(x) = 0\) \\
 Пусть \(x_0 \in [a, b]\) --- начальное приближение к \(x^*\)
@@ -629,9 +630,9 @@
 \item \(x^* \approx f(x_k)\)
 \end{itemize}
 \chapter{}
-\label{sec:org0377ffd}
+\label{sec:orge8d8664}
 \section{Метод Ньютона(продолжение). Вывод через ряд Тейлора}
-\label{sec:org1c0be76}
+\label{sec:orgf918804}
 \begin{itemize}
 \item \(x_k\) --- текущая оценка решения \(x^*\)
 \end{itemize}
@@ -660,14 +661,14 @@
 \item Кроме \(f(x)\) нужно вычислять \(f'(x)\) и \(f''(x)\), что в реальных задачах затруднительно
 \end{enumerate}
 \subsection{Аппроксимация производных}
-\label{sec:org6b0920a}
+\label{sec:orgc8181f5}
 Правая разностная схема:
 \[ f'(x_k) \approx \frac{f(x_k + h) - f(x_k)}{h}\quad ,h \sim \varepsilon \]
 Центральная разностная схема:
 \[ f'(x_k) \approx \frac{f(x_k + h) - f(x_k - h)}{2h} \]
 порядок точности --- \(O(h^2)\)
 \subsection{Метод Ньютона(продолжение)}
-\label{sec:org5856168}
+\label{sec:org21efb81}
 Если \(f(x)\) --- квадратичная функция, то \(f'(x)\) --- линейная \\
 В \ref{nuton_1_5} точное равенство, и следовательно метод Ньютона
 сходится за один шаг, при любом выборе \(x\) \\
@@ -704,33 +705,33 @@ from sympy import *
 Выолнилось условие \(|f'(x_k)| \le 10^{-7}\) --- окончание итерационного процесса. \(x \approx 9\cdot 10^{-8} \approx 0\)
 \end{examp}
 \subsection{Модификации метода Ньютона}
-\label{sec:org7865663}
+\label{sec:org76485a0}
 \begin{enumerate}
 \item Метод Ньютона-Рафсона
-\label{sec:orgfb28c1a}
+\label{sec:orgad040bb}
 \[ x_{k + 1} = x_k - \tau_k\frac{f'(x_k)}{f''(x_k)}\quad, 0 < \tau_k \le 1 \]
 \(\tau_k = \tau = \const\) (\(\tau = 1\) --- метод Ньютона)
 \[ \varphi(\tau) = f(x_k - \tau\frac{f'(x_k)}{f''(x_k)}) \to \min \]
 \[ \tau_k = \frac{(f'(x_k))^2}{(f'(x_k))^2 + (f'(\tilde{x}_k))^2} \]
 , где \(\tilde{x} = x_k - \frac{f'(x_k)}{f''(x_k)}\)
 \item Метод Маркрафта
-\label{sec:org042b129}
+\label{sec:orgb61b9f8}
 \[ x_{k + 1} = x_k - \frac{f'(x_k)}{f''(x_k) + \mu_k}\quad,\mu_k > 0 \]
 \(\mu_0\) рекомендуется выбирать на порядок больше значения второй произвдной в \(x_0\) \\
 \(\mu_{k + 1}\): \(\mu_{k + 1} = \frac{\mu_k}{2}\), если \(f(x_{k + 1}) < f(x_k)\), иначе \(\mu_{k + 1} = 2\cdot\mu_k\)
 \end{enumerate}
 \subsection{{\bfseries\sffamily TODO} Метод минимизации многомодальных функций}
-\label{sec:org6f2b6fc}
+\label{sec:org15a0176}
 \begin{enumerate}
 \item Метод ломанных
-\label{sec:orgd67e608}
+\label{sec:org3fc2c19}
 Условие Липшица: \(f(x),\ x\in [a, b]\) будет удовлетворять условию, если:
 \[ |f(x_1) - f(x_2)| \le L|x_1 - x_2|\quad,\forall x_1, x_2 \in [a, b] \]
 \end{enumerate}
 \chapter{}
-\label{sec:org4032b13}
+\label{sec:orgf378ba3}
 \section{Постановка задачи}
-\label{sec:orgc393c58}
+\label{sec:orgb2f2739}
 \begin{enumerate}
 \item \(x^* = (x_1, x_2, \dots, x_n)^T,\ x_i \in U \subset E_n\), где \(U\) --- множество допустимых значений, \(E_n\) --- эвклидово
 пространство размера \(n\). \(f(x^*) = \min_{x \in U} f(x)\). Если
@@ -765,7 +766,7 @@ from sympy import *
 \(o(\Vert \Delta x \Vert^2)\) --- сумма всех членов разложения, имеющих порядок выше второго, \(\Delta x^T H(x) \Delta x\) --- квадратичная форма
 \end{enumerate}
 \subsection{Свойства квадратичных форм}
-\label{sec:orgccb4229}
+\label{sec:orgc2c20d7}
 Квадратичная форма \(\Delta x^T H(x) \Delta x\) (и соответсвующая матрица \(H(x)\)) называется:
 \begin{itemize}
 \item положительно опрделенной \(H(x) > 0\), если \(\forall \Delta x \neq 0\ \Delta x^T H(x) \Delta x > 0\)
@@ -778,7 +779,7 @@ from sympy import *
 \item тождественно равной нулю \(H(x) \equiv 0\), если \(\forall \Delta x\ \Delta x^T H(x) \Delta x = 0\)
 \end{itemize}
 \subsection{Свойства выпуклых множеств и выпуклых функций}
-\label{sec:orgec6702a}
+\label{sec:orgcea8084}
 \begin{definition}
 Пусть \(x, y \in E_n\). Множество точек вида \(\{z\} \subset E_n: z = \alpha x + (1 - \alpha)y\), \(\alpha \in [0, 1]\), \(z\) --- отрезок, соединяющий \(x\) и \(y\).
 \end{definition}
@@ -816,7 +817,7 @@ from sympy import *
 \item Если \(f(x)\) строго выпуклая функция множества \(U\), то она может достигать своего глобального минимума на \(U\) не более чем в одной точке
 \end{enumerate}
 \subsection{Необходимое и достаточное условие безусловного экстремума}
-\label{sec:org83c3e03}
+\label{sec:org37fc674}
 \begin{theorem}[Необходимое условие экстремума первого порядка]
 Пусть \(x^* \in E_n\) --- локальный минимум или максимум \(f(x)\) на \(E_n\) и \(f(x)\) --- дифференцируема в точке \(x^*\) \\
 \uline{Тогда} \(\nabla f(x)\) в точке \(x^*\) равен нулю \(\nabla f(x^*) = 0\), т.е.
@@ -835,7 +836,7 @@ from sympy import *
 \end{theorem}
 \begin{enumerate}
 \item Проверка выполнения условий
-\label{sec:org043eab9}
+\label{sec:org919ace0}
 \begin{itemize}
 \item вычисление угловых миноров \(H(x)\)
 \item вычисление главных миноров \(H(x)\) \\
@@ -848,21 +849,21 @@ from sympy import *
 \end{enumerate}
 \end{enumerate}
 \chapter{}
-\label{sec:org7a594a6}
+\label{sec:orgc32b47e}
 \newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
 
 
 \section{Критерии Сильвестра}
-\label{sec:org6467719}
+\label{sec:orgdce48ae}
 \subsection{Достаточный условия}
-\label{sec:org3385123}
+\label{sec:org6440058}
 \begin{enumerate}
 \item \(H(x^*) > 0\) и \(x^*\) --- локальный минимум \(\Leftrightarrow\) \(\Delta_1 > 0, \Delta_2 > 0, \dots , \Delta_n > 0\)
 \item \(H(x^*) < 0\) и \(x^*\) --- локальный максимум \(\Leftrightarrow\) \(\Delta_1 < 0, \Delta_2 > 0, \dots , (-1)^n\Delta_n > 0\)
 \end{enumerate}
 , где \(\Delta_i\) --- угловой минор
 \subsection{Необходимые условия}
-\label{sec:org81dfd0e}
+\label{sec:orgc3e7f6a}
 \begin{enumerate}
 \item \(H(x^*) \ge 0\) и \(x^*\) --- может быть локальный минимум \(\Leftrightarrow\) \(\Delta_1 \ge 0, \Delta_2 \ge 0, \dots, \Delta_n \ge 0\)
 \item \(H(x^*) \le 0\) и \(x^*\) --- может быть локальный максимум \(\Leftrightarrow\) \(\Delta_1 \le 0, \Delta_2 \ge 0, \dots, (-1)^n\Delta_n \ge 0\)
@@ -870,14 +871,14 @@ from sympy import *
 , где \(\Delta_i\) --- главный минор
 
 \section{Собственные значения}
-\label{sec:orgc81b7ec}
+\label{sec:orga039f0c}
 \begin{definition}
 \textbf{Собственные значения} \(\lambda_i\ (i = 1..n)\) \(H(x^*)_{n\times n}\) находятся как корни характеристического уравнения \(|H(x^*) - \lambda E| = 0\). Если \(H(x)\) --- вещественная, симметричная матрица, то \(\lambda_i\) --- вещественные
 \end{definition}
 \section{Общие прицнипы многмерной оптимизации}
-\label{sec:org3689cce}
+\label{sec:org96d7d3b}
 \subsection{Выпуклые квадратичные функции}
-\label{sec:orgb4e7a9f}
+\label{sec:org32a5679}
 \[ f(x) = \frac{1}{2}ax^2 + bx + c \]
 \begin{definition}
 Функция вида
@@ -900,7 +901,7 @@ from sympy import *
 В этом базисе все угловые миноры матрцы \(A\) и матрицы \(A - lE\) --- положительны при достаточно малом \(l: 0 < l < \lambda_\min \Rightarrow f(x)\) --- сильно выпукла
 \end{enumerate}
 \subsection{Принципы многмерной оптимизации}
-\label{sec:orgc2be0a9}
+\label{sec:org7c29df4}
 \[ f(x) \to \min,\ x \in E_n \]
 \[ x^{k + 1} = \Phi(x^k, x^{k + 1}, \dots x)^0,\ x^0 \in E_n \addtag\label{5_3_iter} \]
 --- итериционная процедура(общего вида)
@@ -923,7 +924,7 @@ from sympy import *
 \end{theorem}
 \begin{enumerate}
 \item Скорость сходимости(минизирующих последовательностей)
-\label{sec:org553c2ff}
+\label{sec:org93130af}
 \begin{definition}
 \(\{x^k\}\) сходится к точке \(x^*\) \textbf{линейно} (со скоростью геометрической последовательности), если \(\exists q \in (0, 1):\)
 \[ \rho(x^k, x^*) \le q \rho(x^{k - 1}, x^*) \addtag\label{5_5_linear}\]
@@ -938,7 +939,7 @@ from sympy import *
 \[ \rho(x^k, x^*) \le \left[ c \rho(x^{k - 1}, x^*)\right]^2,\ c > 0 \]
 \end{definition}
 \item Критерии окончания итерационного процесса
-\label{sec:orgcddc994}
+\label{sec:org679c1e3}
 \[ \rho(x^{k + 1}, x^*) < \varepsilon_1 \]
 \[ |f(x^{k + 1}) - f(x^k)| < \varepsilon_2 \addtag\label{5_6_eps2}\]
 \[ \Vert \nabla f(x^k) \Vert < \varepsilon_3 \]
@@ -966,12 +967,177 @@ from sympy import *
 \[ \alpha_k = -\frac{(\nabla f(x^k), p^k)}{(A p^k, p^k)} = - \frac{(Ax^k + b, p^k)}{(Ap^k, p^k)} \addtag\label{5_10_alpha}\]
 \end{theorem}
 \end{enumerate}
-\chapter{TODO}
-\label{sec:orgf9275ea}
 \chapter{}
-\label{sec:org1278a68}
+\label{sec:org335bf1e}
+\begin{definition}
+Направление вектора \(p^k\) называется \textbf{направлением убывания} функции \(f(x)\) в точке \(x^*\), если при всех достаточно малых положительных \(\alpha\) выполняется неравенство: \[f(x^k + \alpha p^k)  < f(x^k)\]
+\end{definition}
+\begin{theorem}[достаточное условие направления убывания]
+Пусть функция \(f(x)\) дифференцируема в точке \(x^k\). Если вектор \(p^k\) удовлетворяет условию:
+\[ (\nabla f(x^k), p^k) < 0 \]
+, то направление вектора \(p^k\) является направлением убывания
+\end{theorem}
+\begin{proof}
+Из свойства дифференцируемости функции и условия данной теоремы следует, что \[f(x^{k + 1}) - f(x^k) = f(x^k + \alpha p^k) - f(x^k) = (\nabla f(x^k), \alpha p^k) + o(\alpha) = \]
+\[ = \alpha \left((\nabla f(x^k), p^k) + \frac{o(\alpha)}{\alpha}\right) < 0 \]
+, при всех достаточно малых \(\alpha > 0\), т.е. \(p^k\) задает направление убывания функции \(f(x)\) в точке \(x^k\)
+\end{proof}
+\begin{remark}
+Геометрическая интерпретация \((\nabla f(x^k), p^k) < 0\) \implies \(p^k\) составляет тупой угол с \(\nabla f(x^k)\)
+\end{remark}
+
+\noindent\rule{\textwidth}{0.5pt}
+\(f(x)\) дифференцируема в \(E_n\):
+\[ x^{k + 1} = x^k + \alpha_k p^k \quad k = 0,1,\dots \addtag\label{11_8}\]
+где \(p^k\) определяется с учетом информации о частных производных, а величина шага \(\alpha_k > 0\), такова, что:
+\[ f(x^{k + 1}) < f(x^k) \quad k = 0,1,\dots \addtag\label{12_8}\]
+Останов итерационного процесса: \(\Vert \nabla f(x^k) \Vert < \varepsilon\)
+\section{Метод градиентного спуска}
+\label{sec:org78060a9}
+В \ref{11_8}: \(p^k = - \nabla f(x^k)\) --- предположение. Если \(\nabla f(x^k) \neq 0\), то \((\nabla f(x^k), p^k) < 0\), следовательно \(p^k\) --- направление убывания функции \(f(x)\), в малой окрестности точки \(x^k\) направление \(p^k\) обеспечивает \uline{наискорейшее} убывание этой функции. Таким образом можно найти такое \(\alpha_k > 0\), что выполнится \ref{12_8}
+\begin{rualgo}[H]
+\caption{метод Градиентного спуска}
+\begin{algorithmic}[1]
+\REQUIRE \(\varepsilon > 0\), \(\alpha > 0\), \(x \in E_k\), \(f(x)\)
+\LOOP
+  \STATE Вычисляем \(\nabla f(x)\)
+  \IF{Выполнено условие достижения точности \(\Vert \nabla f(x) \Vert < \varepsilon\)}
+    \RETURN \(x^* := x\), \(f^* := f(x^*)\)
+  \ENDIF
+  \LOOP
+    \STATE Найти \(y := x - \alpha \nabla f(x)\)
+    \STATE Вычислить \(f(y)\)
+    \IF{\(f(y) < f(x)\)}
+      \STATE \(x := y\)
+      \STATE \(f(x) := f(y)\)
+      \STATE Выйти из цикла
+    \ELSE
+      \STATE \(\alpha := \frac{\alpha}{2}\)
+    \ENDIF
+  \ENDLOOP
+\ENDLOOP
+\end{algorithmic}
+\end{rualgo}
+\begin{remark}
+В окрестности стационарной точки функции \(f(x)\) величина \(\Vert \nabla f(x) \Vert\) становится малой, это приводит к замедлению сходимости полседовательности \(\{x^k\}\). Поэтому в \ref{11_8} иногда полагают
+\[ p^k = \frac{-\nabla f(x^k)}{\Vert \nabla f(x^k) \Vert} \]
+\end{remark}
+\begin{theorem}
+Пусть симметричная матрица \(A\) квадратичной функции \(f(x)\) положительно определена, а \(l\) и \(L\) --- наименьшее и наибольшее собстенное значение \(A\). Тогда при любых \(\alpha \in (0, \frac{2}{L})\) и \(x^0 \in E_n\)
+\[ x^{k + 1} = x^k - \alpha \nabla f(x^k) \]
+сходится к единственной точке глобального минимума \(x^*\) функции \(f(x)\) линейно (со скоростью геометрической прогрессии)
+\[ \rho(x^k, x^*) \le q^k \rho(x^0, x^*) \]
+, где \(q = \max \{| 1 - \alpha l|, |1 - \alpha L|\}\)
+\end{theorem}
+\begin{proof}
+Т.к. \(A\) положительно определена, то \(f(x)\) --- сильно выпукла. Следовательно точка \(x^*\) --- существует и единственна. \(\nabla f(x^*) = 0\) в точке \(x^*\), тогда
+\[ \nabla f(x^k) = A x^k + b = A x^k + b - \underbrace{A x^* - b}_{\nabla f(x^*)} = A(x^k - x^*) \]
+Оценим норму разности
+\[ \Vert x^k - x^* \Vert = \Vert x^{k - 1} - \alpha \nabla f(x^{k - 1}) - x^* \Vert = \Vert x^{k - 1} - x^* - \alpha A(x^{k - 1} - x^*) \Vert = \]
+\[ = \Vert (E - \alpha A) (x^{k - 1} - x^*)  \Vert \]
+\[ \Vert x^k - x^* \Vert \le \Vert E - \alpha A \Vert \cdot \Vert x^{k - 1} - x^* \Vert \le q \Vert x^{k - 1} - x^* \Vert \le q^k \Vert x^0 - x^* \Vert \]
+--- из определения линейной сходимости, где \(q\) --- оценка нормы матрицы через величину ее собственных значений
+\[ \Vert E - \alpha A \Vert \le q = \max \{|1 - \alpha l|, |1 - \alpha L|\} \]
+Если \(\alpha \in (0; \frac{2}{L})\), то \(q < 1\) \\
+q: \(q^* = \frac{L - l}{L + l}\), при \(\alpha = \alpha^* = \frac{2}{L + l}\). Т.к. \(l < L\), то \(1 - \alpha l = - (1 - \alpha L)\). От соотношения \(L\) и \(l\) существенно зависит число итераций градиентного метода при минимизации выпуклой квадратичной функции
+\end{proof}
+\begin{examp}
+\(L = l > 0\), тогда точка минимума находится за один шаг
+\[ f(x) = x_1^2 + x_2^2 \to \min \]
+\[ x^0 = (1, 1)^T \quad \alpha = \alpha^* = \frac{2}{l + L}\]
+\end{examp}
+\begin{solution}
+\[ A = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix} \implies l = L = 2 \]
+\[ \alpha^* = \frac{2}{2 + 2} = \frac{1}{2} \]
+\[ x^1 = x^0 - \frac{1}{2}\ nabla f(x^0) = (0, 0)^T \]
+\[ x^1 = x^* \]
+\end{solution}
+\begin{remark}
+При \(l = L\) --- линии уровня \(f(x)\) --- концентрические окружности
+\end{remark}
+\begin{remark}
+\(L >> l > 0\) --- линии уровня \(f(x)\) --- эллипсы
+\end{remark}
+\begin{examp}
+\[ f(x) = x_1^2 + 100x^2_2 \to \min \]
+\[ x^0 = (1, 1)^T \]
+\[ \alpha = \alpha^* \]
+\end{examp}
+\begin{solution}
+\[ A = \begin{pmatrix} 2 & 0 \\ 0 & 200 \end{pmatrix} \implies l = 2,\ L = 200\]
+Линии уровня --- эллипсы сильно вытянутые вдоль оси \(Ox_1\)
+\[ \alpha = \alpha^* = \frac{2}{202} = \frac{1}{101} \]
+\[ -\nabla f(x^0) = (-2, -200)^T \]
+--- сильно отличается от \(x^* - x^0\)
+\[ x^* - x^0 = (-1, -1)^T \]
+--- направление точки глобального минимума
+\[ x^{k + 1} = x^k - \alpha \nabla f(x^k) \]
+\[ \nabla f(x^k) = (2x_1, 200x_2)^T \]
+\[ \begin{cases}
+x_1^{k + 1} = \frac{99}{101} x_1^k \\
+x_2^{k + 1} = - \frac{99}{101} x_2^k
+\end{cases}\]
+--- закон изменения координат точек, минимизирующей последовательности. \(\{x^k\}\) --- сходится медленно
+\end{solution}
+\begin{definition}
+\textbf{Число обусловленности} для симметричной положительно определенной матрицы \(\mu = \frac{L}{l}\). Оно характеризует вытянутость линий уровня \(f(x) = C\)
+\begin{itemize}
+\item Если \(\mu\) велико, то линии уровня сильно вытянуты и говорят что функция имеет \textbf{овражный} характер (резко меняется по одним направлением и слабо по другим) \(\implies\) \uline{Полохо обусловленная задача}
+\item Если \(\mu \sim 1\), то линии уровня близки к окружностям и задача является \uline{хорошо обусловленной}
+\end{itemize}
+\end{definition}
+\section{Метод наискорейшего спуска}
+\label{sec:org4190266}
+После вычисления в начальной точке градиента функции делают в направлении антиградиента не маленький шаг, а передвигаются до тех пор, пока функция убывает. Достигнув точки минимума на выбранном направлении снова вычисляют градиент функции и повторяют описанную процедуру
+\[ p^k = -\nabla f(x^k) \]
+\(\alpha_k\) --- находится из решения задачи одномерной оптимизации
+\[ \Phi_k(\alpha) \to \min \]
+\[ \Phi_k(\alpha) = f(x^k - \alpha \nabla f(x^k)) \quad \alpha > 0 \addtag\label{13_8} \]
+\begin{rualgo}[H]
+\caption{метод наискорейшего спуска}
+\begin{algorithmic}[1]
+\REQUIRE \(\varepsilon > 0\), \(x \in E_k\), \(f(x)\)
+\LOOP
+  \STATE Вычислить \(\nabla f(x)\)
+  \IF{\(\Vert \nabla f(x) \Vert < \varepsilon\)}
+    \RETURN \(x^* := x\), \(f^* := f(x)\)
+  \ENDIF
+  \STATE Решить задачу одномерной оптимизации \ref{13_8} для \(x^k := x\), т.е. найти \(\alpha^*\)
+  \STATE \(x := x - \alpha^* \nabla f(x)\)
+\ENDLOOP
+\end{algorithmic}
+\end{rualgo}
+\begin{definition}
+Ненулевые векторы \(p^1,\dots, p^k\) называются сопряженными относительно матрицы \(A\) размера \(n \times n\) или \(A\)-ортогональными, если
+\[ (Ap^i, p^j) = 0 \quad i\neq j \quad i, j = 1,\dots,k\]
+\end{definition}
+\begin{remark}
+Система из \(n\) векторов \(p^1,\dots,p^n\) сопряженных относительно положительно определенной матрицы \(A\) линейно независима
+\end{remark}
+\begin{remark}
+\(n\) ненулевых \(A\)-орттгональных векторов образуют базис в \(E_n\).Рассмотрим минимизацию квадратичной функции в \(E_n\)
+\[ f(x) = \frac{1}{2} (Ax, x) + (b, x) + c \]
+\(A\) --- положительно определенная. Итерационный процесс
+\[ x^k = x^{k - 1} + \alpha_k p^k \quad k = 1,2,\dots \addtag\label{14_8} \]
+, где \(p^k\) --- \(A\)-ортогональные
+\end{remark}
+\begin{remark}
+Если в итерационном процессе \ref{14_8} на каждом жаге используется исчерпывающий спуск, то
+\[ \alpha_k = -\frac{(\nabla f(x^0), p^k)}{(Ap^k, p)} \quad k = 1,2,\dots \addtag\label{15_8} \]
+\end{remark}
+\begin{proof}
+\[ x^k = x^{k - 1} + \alpha_k p^k = x^0 + \sum_{i = 1}^{k} \alpha_i p^i \addtag\label{16_8} \]
+\[ \nabla f(x) = Ax + b \]
+\[ \nabla f(x^k) = \nabla f(x^0) + \sum_{i = 0}^k \alpha_i A p^i \]
+домножим на \(p^k\) и учитываем \((\nabla f(x^k), p^k) = 0\), \(A\)-ортогональность \(p^k\)
+\[ (\nabla f(x^0), p^k) + \alpha_k (A p^k, p^k) = 0 \]
+, т.к. \(A\) --- положительно определена, то \((A p^k, p^k) > 0\), и для \(\alpha_k\):
+\[ \alpha_k = -\frac{(\nabla f(x^0), p^k)}{(A p^k, p^k)} \]
+\end{proof}
+\chapter{}
+\label{sec:org4cd6d51}
 \section{Метод сопряженных градиентов}
-\label{sec:org646a470}
+\label{sec:org76b94fb}
 \[ x^{k + 1} = x^k + \alpha_k p^k \quad k = 0,1,\dots \addtag\label{17_9}\]
 \[ p^k = - \nabla f(x^*) \]
 Направление убывания может носить зигзагообразный характер. Будем находить вектор \(p^k\) не только через антиградиент, но и через \(p^{k - 1}\).
@@ -995,7 +1161,7 @@ from sympy import *
 
 Если функция хорошо апроксимируется квадратичной функции, то метод сопряженных градиентов даст маленькое количество шагов
 \section{Метод стохастического градиентного спуска}
-\label{sec:org359577b}
+\label{sec:org7be14cf}
 Этот метод по большей части связан с большими выборками. Обычные методы пострадют, из-за дорогого вычисления функции на большом наборе данных.
 
 Наборы разбивают на \(K\) тренировочных наборов, части тренировочных наборов размера \(M\) называют minibatch. Тогда набор можно предсавить как:
@@ -1011,7 +1177,7 @@ from sympy import *
 Большая итерация: \(p = 0,1,\dots\) завершается когда проходим весь набор миниитераций. Такая большая итерация называется эпохой. Когда переходим к следующей эпохе, перемешивает тренировочный набор. В результате пермешивания, элементы будут попадать в разные minibatch'и на каждой эпохе.
 
 \subsection{Adagrad (модификация)}
-\label{sec:orgc39ac81}
+\label{sec:orgda14e40}
 Предлагается использовать разные \(\eta\), для каждого minibatch'а.
 \[ \eta_p = (\eta^{(1)}_p,\dots,\eta_p^{(d)}) \]
 \[ \eta_0 = \const \quad \eta^{(i)}_0 = \eta \quad i = 1,\dots,d\]
@@ -1024,7 +1190,7 @@ from sympy import *
 , где \(e\) --- коэффицент \(\sim 1e-8\)
 \[ \omega_{p + 1} = \omega_p - \eta_p \circdot \odot L(\omega_p) \], где \(\odot\) --- поэлементное умножение двух векторов
 \section{Метод покоординатного спуска}
-\label{sec:org924ec6b}
+\label{sec:orgb4807be}
 \[ f(x) \to \min_{x \in E_n} \]
 Алгоритм:
 \begin{itemize}
@@ -1041,9 +1207,9 @@ from sympy import *
 \end{itemize}
 \end{enumerate}
 \chapter{}
-\label{sec:orge340820}
+\label{sec:org6ef6488}
 \section{Формы хранения матриц}
-\label{sec:org73fd420}
+\label{sec:org725888f}
 \begin{definition}
 Матрица имеющая достаточное нкбольшое число ненулевых элементов называется \textbf{разреженой}
 \end{definition}
@@ -1065,7 +1231,7 @@ from sympy import *
 \end{enumerate}
 Будем называть ненулевыми элементами, те которые предполагается хранить в памяти.
 \subsection{Диагональный}
-\label{sec:org5fb935b}
+\label{sec:org51600e2}
 \begin{center}
 \includegraphics[scale=0.3]{10_1.png}
 \end{center}
@@ -1073,13 +1239,13 @@ from sympy import *
 \item \(n \times n\), где \(n\) --- размерноесть исходной матрицы, \(m\) --- количество ненулевых диагоналей
 \end{itemize}
 \subsection{Ленточный формат}
-\label{sec:org7bbe9ad}
+\label{sec:orgb1d0793}
 \begin{center}
 \includegraphics[scale=0.3]{10_2.png}
 \end{center}
 \(a_{ij} = 0\), если \(|i - j| > k\), \(k\) --- полуширина, \(m = 2k + 1\) --- ширина ленты
 \subsection{Профильный формат}
-\label{sec:orgc468dd2}
+\label{sec:org5bad7a8}
 \begin{center}
 \includegraphics[scale=0.3]{10_3.png}
 \end{center}
@@ -1114,11 +1280,11 @@ a_{11} & & & & & & & & \\
 \end{enumerate}
 \end{examp}
 \chapter{}
-\label{sec:orgca2764f}
+\label{sec:orgbe50d6d}
 \section{Разреженный формат}
-\label{sec:orge8f2a51}
+\label{sec:org0b56101}
 \subsection{Строчно столбцовый формат}
-\label{sec:org5efbdab}
+\label{sec:org799db20}
 \begin{enumerate}
 \item Вещественный массив \(di[n]\) --- диагональные элементы
 \item Вещественный массив \(al, au\) --- по строкам и стобцам соответсвенно
@@ -1155,7 +1321,7 @@ a_{11} & & & & & & & & \\
 \end{enumerate}
 \end{examp}
 \subsection{Решение СЛАУ. Метод Гаусса}
-\label{sec:org6e98aba}
+\label{sec:org97d20f7}
 \[ \begin{cases}
 a_{11}x_1 + a_{12} x_2 + \dots + a_{1n}x_n = b_1 \\
 a_{21}x_1 + a_{22} x_2 + \dots + a_{2n}x_n = b_2 \\
@@ -1204,7 +1370,7 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 
 \[ a_{ij}^{(k)} = a_{ij}^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}a_{kj}^{(k - 1)} \quad b_i^{(k)} = b_i^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}b_k^{(k - 1)} \quad \ k \in \overline{1, n};\ i,j \in \overline{k + 1, n}\]
 \subsection{Обратный ход Гаусса}
-\label{sec:org92d1cea}
+\label{sec:org8f797c2}
 \[ x_n = \frac{b_n^{(n - 1)}}{a_{nn}^{(n - 1)}} \]
 \[ \vdots \]
 \[ x_2 = \frac{b_2^{(1)} - a_{23}^{(1)} x_3 - \dots - a_{2n}^{(1)}x_n}{a_{22}^{(1)}} \]
