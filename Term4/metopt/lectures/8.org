@@ -1,0 +1,169 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 8
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_definition org
+Направление вектора \(p^k\) называется *направлением убывания* функции \(f(x)\) в точке \(x^*\), если при всех достаточно малых положительных \(\alpha\) выполняется неравенство: \[f(x^k + \alpha p^k)  < f(x^k)\]
+#+end_definition
+#+ATTR_LATEX: :options [достаточное условие направления убывания]
+#+begin_theorem org
+Пусть функция \(f(x)\) дифференцируема в точке \(x^k\). Если вектор \(p^k\) удовлетворяет условию:
+\[ (\nabla f(x^k), p^k) < 0 \]
+, то направление вектора \(p^k\) является направлением убывания
+#+end_theorem
+#+begin_proof org
+Из свойства дифференцируемости функции и условия данной теоремы следует, что \[f(x^{k + 1}) - f(x^k) = f(x^k + \alpha p^k) - f(x^k) = (\nabla f(x^k), \alpha p^k) + o(\alpha) = \]
+\[ = \alpha \left((\nabla f(x^k), p^k) + \frac{o(\alpha)}{\alpha}\right) < 0 \]
+, при всех достаточно малых \(\alpha > 0\), т.е. \(p^k\) задает направление убывания функции \(f(x)\) в точке \(x^k\)
+#+end_proof
+#+begin_remark org
+Геометрическая интерпретация \((\nabla f(x^k), p^k) < 0\) \implies \(p^k\) составляет тупой угол с \(\nabla f(x^k)\)
+#+end_remark
+-----
+\(f(x)\) дифференцируема в \(E_n\):
+\[ x^{k + 1} = x^k + \alpha_k p^k \quad k = 0,1,\dots \addtag\label{11_8}\]
+где \(p^k\) определяется с учетом информации о частных производных, а величина шага \(\alpha_k > 0\), такова, что:
+\[ f(x^{k + 1}) < f(x^k) \quad k = 0,1,\dots \addtag\label{12_8}\]
+Останов итерационного процесса: \(\Vert \nabla f(x^k) \Vert < \varepsilon\)
+* Метод градиентного спуска
+В \ref{11_8}: \( p^k = - \nabla f(x^k) \) --- предположение. Если \(\nabla f(x^k) \neq 0\), то \((\nabla f(x^k), p^k) < 0\), следовательно \(p^k\) --- направление убывания функции \(f(x)\), в малой окрестности точки \(x^k\) направление \(p^k\) обеспечивает _наискорейшее_ убывание этой функции. Таким образом можно найти такое \(\alpha_k > 0\), что выполнится \ref{12_8}
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{метод Градиентного спуска}
+\begin{algorithmic}[1]
+\REQUIRE \(\varepsilon > 0\), \(\alpha > 0\), \(x \in E_k\), \(f(x)\)
+\LOOP
+  \STATE Вычисляем \(\nabla f(x)\)
+  \IF{Выполнено условие достижения точности \(\Vert \nabla f(x) \Vert < \varepsilon\)}
+    \RETURN \(x^* := x\), \(f^* := f(x^*)\)
+  \ENDIF
+  \LOOP
+    \STATE Найти \(y := x - \alpha \nabla f(x)\)
+    \STATE Вычислить \(f(y)\)
+    \IF{\(f(y) < f(x)\)}
+      \STATE \(x := y\)
+      \STATE \(f(x) := f(y)\)
+      \STATE Выйти из цикла
+    \ELSE
+      \STATE \(\alpha := \frac{\alpha}{2}\)
+    \ENDIF
+  \ENDLOOP
+\ENDLOOP
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+#+begin_remark org
+В окрестности стационарной точки функции \(f(x)\) величина \(\Vert \nabla f(x) \Vert\) становится малой, это приводит к замедлению сходимости полседовательности \(\{x^k\}\). Поэтому в \ref{11_8} иногда полагают
+\[ p^k = \frac{-\nabla f(x^k)}{\Vert \nabla f(x^k) \Vert} \]
+#+end_remark
+#+begin_theorem org
+Пусть симметричная матрица \(A\) квадратичной функции \(f(x)\) положительно определена, а \(l\) и \(L\) --- наименьшее и наибольшее собстенное значение \(A\). Тогда при любых \(\alpha \in (0, \frac{2}{L})\) и \(x^0 \in E_n\)
+\[ x^{k + 1} = x^k - \alpha \nabla f(x^k) \]
+сходится к единственной точке глобального минимума \(x^*\) функции \(f(x)\) линейно (со скоростью геометрической прогрессии)
+\[ \rho(x^k, x^*) \le q^k \rho(x^0, x^*) \]
+, где \(q = \max \{| 1 - \alpha l|, |1 - \alpha L|\}\)
+#+end_theorem
+#+begin_proof org
+Т.к. \(A\) положительно определена, то \(f(x)\) --- сильно выпукла. Следовательно точка \(x^*\) --- существует и единственна. \( \nabla f(x^*) = 0 \) в точке \(x^*\), тогда
+\[ \nabla f(x^k) = A x^k + b = A x^k + b - \underbrace{A x^* - b}_{\nabla f(x^*)} = A(x^k - x^*) \]
+Оценим норму разности
+\[ \Vert x^k - x^* \Vert = \Vert x^{k - 1} - \alpha \nabla f(x^{k - 1}) - x^* \Vert = \Vert x^{k - 1} - x^* - \alpha A(x^{k - 1} - x^*) \Vert = \]
+\[ = \Vert (E - \alpha A) (x^{k - 1} - x^*)  \Vert \]
+\[ \Vert x^k - x^* \Vert \le \Vert E - \alpha A \Vert \cdot \Vert x^{k - 1} - x^* \Vert \le q \Vert x^{k - 1} - x^* \Vert \le q^k \Vert x^0 - x^* \Vert \]
+--- из определения линейной сходимости, где \(q\) --- оценка нормы матрицы через величину ее собственных значений
+\[ \Vert E - \alpha A \Vert \le q = \max \{|1 - \alpha l|, |1 - \alpha L|\} \]
+Если \(\alpha \in (0; \frac{2}{L})\), то \(q < 1\) \\
+q: \(q^* = \frac{L - l}{L + l}\), при \(\alpha = \alpha^* = \frac{2}{L + l}\). Т.к. \(l < L\), то \(1 - \alpha l = - (1 - \alpha L)\). От соотношения \(L\) и \(l\) существенно зависит число итераций градиентного метода при минимизации выпуклой квадратичной функции
+#+end_proof
+#+begin_examp org
+\(L = l > 0\), тогда точка минимума находится за один шаг
+\[ f(x) = x_1^2 + x_2^2 \to \min \]
+\[ x^0 = (1, 1)^T \quad \alpha = \alpha^* = \frac{2}{l + L}\]
+#+end_examp
+#+begin_solution org
+\[ A = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix} \implies l = L = 2 \]
+\[ \alpha^* = \frac{2}{2 + 2} = \frac{1}{2} \]
+\[ x^1 = x^0 - \frac{1}{2}\ nabla f(x^0) = (0, 0)^T \]
+\[ x^1 = x^* \]
+#+end_solution
+#+begin_remark org
+При \(l = L\) --- линии уровня \(f(x)\) --- концентрические окружности
+#+end_remark
+#+begin_remark org
+\(L >> l > 0\) --- линии уровня \(f(x)\) --- эллипсы
+#+end_remark
+#+begin_examp org
+\[ f(x) = x_1^2 + 100x^2_2 \to \min \]
+\[ x^0 = (1, 1)^T \]
+\[ \alpha = \alpha^* \]
+#+end_examp
+#+begin_solution org
+\[ A = \begin{pmatrix} 2 & 0 \\ 0 & 200 \end{pmatrix} \implies l = 2,\ L = 200\]
+Линии уровня --- эллипсы сильно вытянутые вдоль оси \(Ox_1\)
+\[ \alpha = \alpha^* = \frac{2}{202} = \frac{1}{101} \]
+\[ -\nabla f(x^0) = (-2, -200)^T \]
+--- сильно отличается от \(x^* - x^0\)
+\[ x^* - x^0 = (-1, -1)^T \]
+--- направление точки глобального минимума
+\[ x^{k + 1} = x^k - \alpha \nabla f(x^k) \]
+\[ \nabla f(x^k) = (2x_1, 200x_2)^T \]
+\[ \begin{cases}
+x_1^{k + 1} = \frac{99}{101} x_1^k \\
+x_2^{k + 1} = - \frac{99}{101} x_2^k
+\end{cases}\]
+--- закон изменения координат точек, минимизирующей последовательности. \(\{x^k\}\) --- сходится медленно
+#+end_solution
+#+begin_definition org
+*Число обусловленности* для симметричной положительно определенной матрицы \(\mu = \frac{L}{l}\). Оно характеризует вытянутость линий уровня \(f(x) = C\)
+- Если \(\mu\) велико, то линии уровня сильно вытянуты и говорят что функция имеет *овражный* характер (резко меняется по одним направлением и слабо по другим) \(\implies\) _Полохо обусловленная задача_
+- Если \(\mu \sim 1\), то линии уровня близки к окружностям и задача является _хорошо обусловленной_
+#+end_definition
+* Метод наискорейшего спуска
+После вычисления в начальной точке градиента функции делают в направлении антиградиента не маленький шаг, а передвигаются до тех пор, пока функция убывает. Достигнув точки минимума на выбранном направлении снова вычисляют градиент функции и повторяют описанную процедуру
+\[ p^k = -\nabla f(x^k) \]
+\(\alpha_k\) --- находится из решения задачи одномерной оптимизации
+\[ \Phi_k(\alpha) \to \min \]
+\[ \Phi_k(\alpha) = f(x^k - \alpha \nabla f(x^k)) \quad \alpha > 0 \addtag\label{13_8} \]
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{метод наискорейшего спуска}
+\begin{algorithmic}[1]
+\REQUIRE \(\varepsilon > 0\), \(x \in E_k\), \(f(x)\)
+\LOOP
+  \STATE Вычислить \(\nabla f(x)\)
+  \IF{\(\Vert \nabla f(x) \Vert < \varepsilon\)}
+    \RETURN \(x^* := x\), \(f^* := f(x)\)
+  \ENDIF
+  \STATE Решить задачу одномерной оптимизации \ref{13_8} для \(x^k := x\), т.е. найти \(\alpha^*\)
+  \STATE \(x := x - \alpha^* \nabla f(x)\)
+\ENDLOOP
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+#+begin_definition org
+Ненулевые векторы \(p^1,\dots, p^k\) называются сопряженными относительно матрицы \(A\) размера \(n \times n\) или \(A\)-ортогональными, если
+\[ (Ap^i, p^j) = 0 \quad i\neq j \quad i, j = 1,\dots,k\]
+#+end_definition
+#+begin_remark org
+Система из \(n\) векторов \(p^1,\dots,p^n\) сопряженных относительно положительно определенной матрицы \(A\) линейно независима
+#+end_remark
+#+begin_remark org
+\(n\) ненулевых \(A\)-орттгональных векторов образуют базис в \(E_n\).Рассмотрим минимизацию квадратичной функции в \(E_n\)
+\[ f(x) = \frac{1}{2} (Ax, x) + (b, x) + c \]
+\(A\) --- положительно определенная. Итерационный процесс
+\[ x^k = x^{k - 1} + \alpha_k p^k \quad k = 1,2,\dots \addtag\label{14_8} \]
+, где \(p^k\) --- \(A\)-ортогональные
+#+end_remark
+#+begin_remark org
+Если в итерационном процессе \ref{14_8} на каждом жаге используется исчерпывающий спуск, то
+\[ \alpha_k = -\frac{(\nabla f(x^0), p^k)}{(Ap^k, p)} \quad k = 1,2,\dots \addtag\label{15_8} \]
+#+end_remark
+#+begin_proof org
+\[ x^k = x^{k - 1} + \alpha_k p^k = x^0 + \sum_{i = 1}^{k} \alpha_i p^i \addtag\label{16_8} \]
+\[ \nabla f(x) = Ax + b \]
+\[ \nabla f(x^k) = \nabla f(x^0) + \sum_{i = 0}^k \alpha_i A p^i \]
+домножим на \(p^k\) и учитываем \((\nabla f(x^k), p^k) = 0\), \(A\)-ортогональность \(p^k\)
+\[ (\nabla f(x^0), p^k) + \alpha_k (A p^k, p^k) = 0 \]
+, т.к. \(A\) --- положительно определена, то \((A p^k, p^k) > 0\), и для \(\alpha_k\):
+\[ \alpha_k = -\frac{(\nabla f(x^0), p^k)}{(A p^k, p^k)} \]
+#+end_proof
