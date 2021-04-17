@@ -12,6 +12,7 @@
 - [[file:lectures/7.pdf][Лекция 7]]
 - [[file:lectures/8.pdf][Лекция 8]]
 - [[file:lectures/9.pdf][Лекция 9]]
+- [[file:lectures/10.pdf][Лекция 10]]
 * Практики
 - [[file:practice/1.pdf][Практика 1]]
 - [[file:practice/2.pdf][Практика 2]]
