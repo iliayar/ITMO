@@ -43,12 +43,12 @@ struct Edge {
     to: usize,
     f: i64,
     rev: usize,
-    im: bool
+    id: usize
 }
 
-struct State {
-    g: Vec<Vec<usize>>,
-    edges: Vec<Edge>,
+struct State<'a> {
+    g: &'a Vec<Vec<usize>>,
+    edges: &'a mut Vec<Edge>,
     t: usize,
     s: usize
 }
@@ -58,12 +58,12 @@ fn dfs(v: usize, p: i64, was: &mut [bool], state: &mut State) -> i64 {
 	return p;
     }
     was[v] = true;
-    for i in 0..state.g[v].len() {
-	let e: Edge = state.edges[state.g[v][i]];
+    for i in state.g[v].iter().cloned() {
+	let e: Edge = state.edges[i];
 	if !was[e.to] && e.f < e.c {
 	    let delta = dfs(e.to, min(p, e.c - e.f), was, state);
 	    if delta > 0 {
-		state.edges[state.g[v][i]].f += delta;
+		state.edges[i].f += delta;
 		state.edges[e.rev].f -= delta;
 		return delta;
 	    }
@@ -86,91 +86,59 @@ fn ford(state: &mut State) -> i64 {
     return res;
 }
 
-fn reachable(u: usize, was: &mut [bool], state: &State) {
-    was[u] = true;
+fn walk(u: usize, was: &mut [bool], path: &mut Vec<usize>, state: &State) -> bool {
+    path.push(u);
+    if u == state.t {
+	return true;
+    }
     for i in state.g[u].iter().cloned() {
-	if !was[state.edges[i].to] && state.edges[i].f < state.edges[i].c {
-	    reachable(state.edges[i].to, was, state);
+	if !was[i] && state.edges[i].f == 1 && i % 2 == 0 {
+	    was[i] = true;
+	    if walk(state.edges[i].to, was, path, state) {
+		return true;
+	    }
 	}
     }
-}
-
-fn add_edge(c: i64, u: usize, v: usize, state: &mut State, im: bool) {
-    add_edge_impl(c, c, u, v, state, im);
-}
-
-fn add_or_edge(c: i64, u: usize, v: usize, state: &mut State, im: bool) {
-    add_edge_impl(c, 0, u, v, state, im);
-}
-
-fn add_edge_impl(c1: i64, c2:i64, u: usize, v: usize, state: &mut State, im: bool) {
-    state.g[u].push(state.edges.len());
-    state.edges.push(Edge { c: c1, from: u, to: v, f: 0, rev: state.edges.len() + 1, im});
-    state.g[v].push(state.edges.len());
-    state.edges.push(Edge { c: c2, from: v, to: u, f: 0, rev: state.edges.len() - 1, im});
+    return false;
 }
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
 
-    let m = scan.next::<usize>();
     let n = scan.next::<usize>();
-    let mut state = State { g: vec![Vec::new(); 2 * n * m], edges: Vec::new(), t: 2 * m * n, s: 2 * m * n };
-    let mut map: Vec<Vec<u8>> = Vec::new();
+    let m = scan.next::<usize>();
+    let s = scan.next::<usize>() - 1;
+    let t = scan.next::<usize>() - 1;
+    let mut g: Vec<Vec<usize>> = vec![Vec::new(); n];
+    let mut es: Vec<Edge> = Vec::new();
     for i in 0..m {
-	map.push(scan.next::<String>().as_bytes().to_vec());
-	for j in 0..n {
-	    let u = i*n + j;
-	    add_or_edge(if map[i][j] == b'.' { 1 } else { INF }, u, m*n + u, &mut state, true);
-	    if map[i][j] == b'A' {
-		state.s = m*n + u;
-	    } else if map[i][j] == b'B' {
-		state.t = u;
-	    }
-	    let mut add_edge = |k: usize, l: usize| {
-		let v = k*n + l;
-		let mut add_with_c = |c: i64| {
-		    add_or_edge(c, m*n + u, v, &mut state, false);
-		    add_or_edge(c, m*n + v, u, &mut state, false);
-		};
-		
-		if map[i][j] == b'#' || map[k][l] == b'#' {
-		    return;
-		} else {
-		    add_with_c(INF);
-		}
-	    };
-	    if i != 0 {
-		add_edge(i - 1, j);
-	    }
-	    if j != 0 {
-		add_edge(i, j - 1);
-	    }
-	}
+	let a = scan.next::<usize>() - 1;
+	let b = scan.next::<usize>() - 1;
+	g[a].push(es.len());
+	es.push(Edge { c: 1, from: a, to: b, f: 0, rev: es.len() + 1, id: i });
+	g[b].push(es.len());
+	es.push(Edge { c: 0, from: b, to: a, f: 0, rev: es.len() - 1, id: i });
     }
-    if state.t == 2*m*n || state.s == 2*m*n {
-	writeln!(out, "-1").ok();
-	return;
-    }
+    let mut state = State { g: &g, edges: &mut es, t, s };
     let res = ford(&mut state);
-    if res >= INF {
-	writeln!(out, "-1").ok();
-	return;
+    if res >= 2 {
+	writeln!(out, "YES").ok();
+    } else {
+	writeln!(out, "NO").ok();
+	return
     }
-    writeln!(out, "{}", res).ok();
-
-    let mut was = vec![false; 2*n*m];
-    reachable(state.s, &mut was, &state);
-    for e in state.edges.iter().step_by(2) {
-	if was[e.from] != was[e.to] && e.im {
-	    let (i, j) = (e.from / n, e.from % n);
-	    if map[i][j] == b'.' {
-		map[i][j] = b'+';
-	    }
-	}
+    let mut mp: Vec<usize> = Vec::new();
+    let mut pp: Vec<usize> = Vec::new();
+    let mut was = vec![false; 2*m];
+    walk(state.s, &mut was, &mut mp, &state);
+    walk(state.s, &mut was, &mut pp, &state);
+    for u in mp.iter() {
+	write!(out, "{} ", u + 1).ok();
     }
-    for i in 0..m {
-	writeln!(out, "{}", std::str::from_utf8(&map[i]).unwrap()).ok();
+    writeln!(out, "").ok();
+    for u in pp.iter() {
+	write!(out, "{} ", u + 1).ok();
     }
+    writeln!(out, "").ok();
 }
 
 //================================ CODE END =================================================
