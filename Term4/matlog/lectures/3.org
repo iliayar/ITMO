@@ -1,0 +1,152 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 3
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Правила вывода
+Сверху посылки, снизу заключения
+- Аксиома
+  \[ \frac{}{\Gamma, \varphi \vdash \varphi} \]
+- Введение \(\to\)
+  \[ \frac{\Gamma, \varphi \vdash \psi}{\Gamma \vdash \varphi \to \psi} \]
+- Удаление \(\to\)
+  \[ \frac{\Gamma \vdash \varphi \to \psi\quad \Gamma \vdash \varphi}{\Gamma \vdash \psi} \]
+- Введение \(\&\)
+  \[ \frac{\Gamma \vdash \varphi \quad \Gamma \vdash \psi}{\Gamma \vdash \varphi \& \psi} \]
+- Удаление \(\&\)
+  \[ \frac{\Gamma \vdash \varphi \& \psi}{\Gamma \vdash \varphi} \]
+  \[ \frac{\Gamma \vdash \varphi \& \psi}{\Gamma \vdash \psi} \]
+- Введение \(\vee\)
+  \[ \frac{\Gamma \vdash \varphi}{\Gamma \vdash \varphi \vee \psi} \]
+  \[ \frac{\Gamma \vdash \psi}{\Gamma \vdash \varphi \vee \psi} \]
+- Удалние \(\vee\)
+  \[ \frac{\Gamma, \varphi \vdash \rho \quad \Gamma, \psi \vdash \rho \quad \Gamma \vdash \varphi \vee \psi}{\Gamma \vdash \rho} \]
+- Удаление \(\perp\)
+  \[ \frac{\Gamma \vdash \perp}{\Gamma \vdash \varphi} \]
+#+begin_examp org
+\[ \frac{\displaystyle\frac{}{A \vdash A}(\text{акс.})}{\vdash A \to A}(\text{вв. }\to) \]
+#+end_examp
+#+begin_examp org
+Докажем \(\frac{}{\vdash A \& B \to B \& A}\)
+\[ \frac{\displaystyle\frac{\displaystyle\frac{\displaystyle\frac{}{A \& B \vdash A \& B}(\text{акс.})}{A\& B \vdash B}(\text{уд. } \&) \quad \frac{\displaystyle\frac{}{A \& B \vdash A \& B}(\text{акс.})}{A \& B \vdash A}(\text{уд. } \&)}{A\&B \vdash B \& A}(\text{вв. } \&)}{\vdash A \& B \to B & A}(\text{вв. }\to) \]
+#+end_examp
+#+begin_definition org
+Фиксируем \(A\) \\
+Частичный порядок --- антисимметричное, транзитивное, рефлексивное отношение \\
+Линейный --- сравнимы любые 2 элемента \\
+- \(a \le b \vee b \le a\)
+- *Наименьший элемент* \(S\) --- такой \(k \in S\), что если \(x \in S\), то \(k \le x\)
+- *Минимальный элемент* \(S\) --- такой \(k \in S\), что нет \(x \in S\), что \(x \le k\)
+#+end_definition
+#+begin_examp org
+\-
+#+begin_export latex
+\begin{center}
+\begin{tikzcd}
+\([9, 9 , 9]\) \arrow{d} \arrow{dr} &  & \([1, 2, 1]\) \arrow{dll} \arrow{dl} \arrow{d} \\
+\([1, 0 , 0]\) & \([0, 1, 0]\) & \([0, 0, 1]\)
+\end{tikzcd}
+\end{center}
+#+end_export
+Нет наименьшего, но есть 3 минимальных. Стрелка из \(a\) в \(b\) обозначает \(b \le a\)
+#+end_examp
+#+begin_definition org
+\-
+- *Множество верхних граней* \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
+- *Множество нижних граней* \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
+#+end_definition
+#+begin_definition org
+\-
+- *\(a + b\)* --- нименьший элемент множества верхних граней
+- *\(a \cdot b\)* --- наибольший элемент множества нижних граней 
+#+end_definition
+#+begin_definition org
+*Решетка* = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
+т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
+#+end_definition
+#+begin_definition org
+*Дистрибутивная решетка* если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
+#+end_definition
+#+begin_lemma org
+В дистрибутивной решетке \(a + b\cdot c = (a + b) \cdot(a + c)\)
+#+end_lemma
+#+begin_definition org
+*Псевдодополнение* \(a \to b = \text{наиб.}\{c \big| a \cdot c \le b\}\)
+#+end_definition
+#+begin_definition org
+*Импликативная решетка* --- решетка, где для любых \(a, b\) есть \(a \to b\)
+#+end_definition
+#+begin_definition org
+*0* --- наименьший элемент решетки, *1* --- наибольший элемент решетки
+#+end_definition
+#+begin_definition org
+*Псевдобулева алгебра (алгебра Гейтинга)* --- импликативная решетка с \(0\)
+#+end_definition
+#+begin_definition org
+*Булева алгебра* --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
+#+end_definition
+#+begin_examp org
+\-
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (0, 0) {\(1\)};
+\node (B) at (-1, -1) {\(a\)};
+\node (C) at (1, -1) {\(b\)};
+\node (D) at (0, -2) {\(0\)};
+\draw[->] (A) -- (B);
+\draw[->] (A) -- (C);
+\draw[->] (B) -- (D);
+\draw[->] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+#+end_export
+- \(a \cdot 0 = 0\)
+- \(1\cdot b = b\)
+- \(a \cdot b = 0\)
+- \(a + b = 1\)
+- \(a \to b = \text{наиб.}\{x \big| a\cdot x \le b\} = b\) \\
+  \(\{x \big| a \cdot x \le \} = \{0, b\}\)
+- \(a \to 1 = 1\)
+- \(a \to 0 = 0\)
+Можем представить в виде пары \(\langle x, y \rangle\)
+- \(a = \langle 1, 0 \rangle\)
+- \(b = \langle 0 , 1\rangle\)
+- \(1 = \langle 1, 1 \rangle\)
+- \(0 = \langle 0, 0 \rangle\)
+#+end_examp
+#+begin_lemma org
+В импликативной решетке всегда есть \(1\).
+#+end_lemma
+#+begin_theorem org
+Любая алгебра Гейтинга --- модель ИИВ
+#+end_theorem
+#+begin_theorem org
+Любая булева алгебра --- модель КИВ
+#+end_theorem
+#+begin_defintion org
+Рассмотрим множество \(X\) --- *носитель*. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- *топология*.
+1. \(\bigcup X_i \in \Omega\), где \(X_i \in \Omega\)
+2. \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
+3. \(\emptyset, X \in \Omega\)
+#+end_defintion
+#+begin_theorem org
+\-
+- \(a + b = a \cup b\)
+- \(a \cdot b = a \cap b\)
+- \(a \to b = \left((X \setminus a) \cup b\right)^\circ\)
+- \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
+_Тогда_ \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
+#+end_theorem
+#+begin_definition org
+\(X\) --- все формулы логики
+- \(\alpha \le \beta\) --- это \(\alpha \vdash \beta\)
+- \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
+- \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
+#+end_definition
+\beginproperty
+#+begin_property org
+\(\langle X/_\approx, \le \rangle\) --- алгебра Гейтинга, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+#+end_property
+#+begin_theorem org
+Алгебра гейтинга --- полная модель ИИВ
+#+end_theorem

@@ -2,9 +2,12 @@
 #+TITLE: Лекции по Математической логике 4 семестр
 #+AUTHOR: Ilya Yaroshevskiy
 
-* TODO
-* TODO
-* TODO
+* 
+#+INCLUDE: "1.org" :lines "4-"
+* 
+#+INCLUDE: "2.org" :lines "4-"
+* 
+#+INCLUDE: "3.org" :lines "4-"
 * 5 марта
 #+INCLUDE: "4.org" :lines "4-"
 * 12 марта

@@ -1,8 +1,8 @@
-% Created 2021-04-16 Fri 15:17
+% Created 2021-04-20 Tue 00:26
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[oneside]{book}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[oneside]{book}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -30,10 +30,10 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  \usepackage{stmaryrd}
+\usepackage{stmaryrd}
 
-  \addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
-   \usepackage{hyperref}
+\addto\captionsrussian{\renewcommand{\chaptername}{Лекция}}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -150,7 +150,7 @@
      \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
      \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
      \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
-     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
      \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
      \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
      \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
@@ -173,14 +173,466 @@
 \tableofcontents
 
 
-\chapter{TODO}
-\label{sec:org269b96c}
-\chapter{TODO}
-\label{sec:orge4880f3}
-\chapter{TODO}
-\label{sec:org30da29a}
+\chapter{}
+\label{sec:org5a6a543}
+\section{Исчесление высказываний}
+\label{sec:org5a8e7d4}
+\subsection{Язык}
+\label{sec:org8250306}
+\begin{enumerate}
+\item Пропозициональные переменные \\
+\(A'_i\) --- большая буква начала латинского алфавита
+\item Связки \\
+\(\underbrace{\alpha}_\text{\color{green}метапеременная}, \beta\) --- высказывания \\
+Тогда \((\alpha \to \beta),(\alpha \& \beta),(\alpha \vee \beta), (\neg \alpha)\) --- высказывания
+\end{enumerate}
+\subsection{Мета и предметные}
+\label{sec:org9ea26c6}
+\begin{itemize}
+\item \(\alpha, \beta, \gamma, \dots, \varphi, \psi, \dots\) --- метапеременные для выражений
+\item \(X, Y, Z\) --- метапеременные для предметные переменные
+\end{itemize}
+Метавыражение: \(\alpha \to \beta\) \\
+Предметное выражение: \(A \to (A \to A)\) (заменили \(\alpha\) на \(A\), \(\beta\) на \((A \to A)\) )
+\begin{examp}
+Черным --- предметные выражения, Синим --- метавыражения
+\[ (\color{blue}X \color{black}\to\color{blue} Y\color{black})\color{blue}[X \coloneqq A, Y \coloneqq B] \color{black} \equiv A \to B \]
+\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq A, X \coloneqq B] \equiv \color{black} A \to (A \to B) \]
+\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq (A \to P), X \coloneqq B] \equiv \color{black} (A \to P) \to (A \to B) \]
+\end{examp}
+\subsection{Сокращение записи}
+\label{sec:orge161fb3}
+\begin{itemize}
+\item \(\vee, \&, \neg\) --- скобки слева направо(лево-ассоциативная)
+\item \(\to\) --- правоассоциативная
+\item Приоритет по возрастанию: \(\to, \vee, \&, \neg\)
+\end{itemize}
+\begin{examp}
+Расставление скобок
+\[ \left(A \to \left( \left(B \& C\right) \to D\right)\right) \]
+\[ \left(A \to \left(B \to C\right)\right) \]
+\end{examp}
+\subsection{Теория моделей}
+\label{sec:org480a48c}
+\begin{itemize}
+\item \(\mathcal{P}\) --- множество предметных переменных
+\item \(\llb\cdot\rrb: \mathcal{T} \to \V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
+\end{itemize}
+
+
+
+\begin{enumerate}
+\item \(\llb x \rrb: \mathcal{P} \to V\) --- задается при оценке \\
+\(\llb \rrb^{A \coloneqq v_1, B \coloneqq v_2}\):
+\begin{itemize}
+\item \(\mathcal{P} = v_1\)
+\item \(\mathcal{P} = v_2\)
+\end{itemize}
+\item \(\llb \alpha \star \beta \rrb = \llb \alpha \rrb \color{blue}\underbrace{\star}_{\substack{\text{определенно} \\ \text{ественным образом}}}\color{black} \llb \beta \rrb\), где \(\star \in [\&, \vee, \neg, \to]\)
+\begin{examp}
+\[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} \color{blue}\to\color{black}\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \color{blue} \text{И} \to \text{И} = \text{И} \]
+Также можно записать так:
+\[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = f_\to(\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}, \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}) = f_\to(\color{blue} \text{И}\color{black} , \color{blue}\text{И}\color{black}) \color{blue}= \text{И} \]
+, где \(f_\to\) определена так:
+\begin{center}
+\begin{tabular}{ll|l}
+\(a\) & \(b\) & \(f_\to\)\\
+\hline
+И & И & И\\
+И & Л & Л\\
+Л & И & И\\
+Л & Л & И\\
+\end{tabular}
+\end{center}
+\end{examp}
+\end{enumerate}
+
+\subsection{Теория доказательств}
+\label{sec:org6c69fa7}
+\begin{definition}
+\textbf{Схема высказывания} --- строка соответсвующая определению высказывания, с:
+\begin{itemize}
+\item метапеременными \(\alpha, \beta, \dots\)
+\end{itemize}
+\end{definition}
+\begin{definition}
+Аксиома --- высказывания:
+\begin{enumerate}
+\item \(\alpha \to (\beta \to \alpha)\)
+\item \((\alpha \to \beta) \to (\alpha \to \beta \to \gamma) \to (\alpha \to \gamma)\)
+\item \(\alpha \to \beta \to \alpha \& \beta\)
+\item \(\alpha \& \beta \to \alpha\)
+\item \(\alpha \& \beta \to \beta\)
+\item \(\alpha \to \alpha \vee \beta\)
+\item \(\beta \to \alpha \vee \beta\)
+\item \((\alpha \to \gamma) \to (\beta \to \gamma) \to (\alpha \vee \beta \to \gamma)\)
+\item \((\alpha \to \beta) \to (\alpha \to \neg \beta) \to \neg \alpha\)
+\item \(\neg\neg \alpha \to \alpha\)
+\end{enumerate}
+\end{definition}
+\#+begin\textsubscript{defintion} org
+\subsection{Правило Modus Ponens и доказательство}
+\label{sec:org5ac49b6}
+\begin{definition}
+\textbf{Доказательство} (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):
+\begin{itemize}
+\item аксиома
+\item существует \(k, l < i\), что \(\alpha_k = \alpha_l \to \alpha\) \\
+\[ \frac{A,\ A \to B}{B} \]
+\end{itemize}
+\end{definition}
+\begin{examp}
+\(\vdash A \to A\)
+\begin{center}
+\begin{tabular}{r|ll}
+1 & \(A \to A\ \to A\) & (схема аксиом 1)\\
+2 & \(A \to (A \to A) \to A\) & (схема аксиом 1)\\
+3 & \((A \to (A \to A)) \to (A \to (A \to A) \to A) \to (A \to A)\) & (схема аксиом 2)\\
+4 & \((A \to (A \to A) \to A) \to (A \to A)\) & (M.P. 1 и 3)\\
+5 & \(A \to A\) & (M.P. 2 и 4)\\
+\end{tabular}
+\end{center}
+\end{examp}
+\begin{definition}
+Доказательством высказывания \(\beta\) --- список высказываний \(\alpha_1, \dots, \alpha_n\)
+\begin{itemize}
+\item \(\alpha_1, \dots, \alpha_n\) --- доказательство
+\item \(\alpha_n \equiv \beta\)
+\end{itemize}
+\end{definition}
+\chapter{}
+\label{sec:orgc2e0f12}
+\begin{symb}
+\(\Gamma, \Delta, \Sigma\) --- списки высказываний
+\end{symb}
+\begin{definition}
+Следование: \(\Gamma \vDash \alpha\), если
+\begin{itemize}
+\item \(\Gamma = \gamma_1, \dots, \gamma_n\)
+\item Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
+\end{itemize}
+\end{definition}
+\begin{examp}
+\(\vDash \alpha\) --- \(\alpha\) общезначимо
+\end{examp}
+\begin{definition}
+\sout{Теория} Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
+\end{definition}
+\begin{definition}
+Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
+\end{definition}
+\begin{theorem}[о дедукции]
+\(\Gamma, \alpha \vdash \beta\) \uline{тогда и только тогда, когда} \(\Gamma \vdash \alpha \to \beta\)
+\end{theorem}
+\begin{proof}
+\-
+\begin{description}
+\item[{\((\Leftarrow)\)}] Пусть \(\Gamma \vdash \alpha \to \beta\). \\
+Т.е. существует доказательство \(\delta_1, \dots, \delta_n\), где \(\delta_n = \alpha \to \beta\) \\
+Построим новое доказательство: \(\delta_1, \dots, \delta_n, \alpha(\text{гипотеза}), \beta(\text{M.P.})\) \\
+Эта новая последовательность --- доказательство \(\Gamma, \alpha \vdash \beta\)
+\item[{\((\Rightarrow)\)}] Рассмотрим \(\delta_1, \dots, \delta_n\) --- доказательство \(\Gamma, \alpha \vdash \beta\)
+\begin{center}
+\begin{tabular}{ll}
+\(\sigma_1\) & \(\alpha \to \delta_1\)\\
+\(\vdots\) & \(\vdots\)\\
+\(\sigma_n\) & \(\alpha \to \delta_n\)\\
+\end{tabular}
+\end{center}
+Утвреждение: последовательность \(\sigma_1, \dots, \sigma_n\) можно дополнить до доказательства, т.е. каждый \(\sigma_i\) --- аксиома, гипотеза или получается по M.P. Докажем по индукции: \\
+\uline{База}: \(n = 0\) \\
+\uline{Переход}: пусть \(\sigma_0, \dots, \sigma_n\) --- доказательсво. тогда \(\sigma_{n + 1} = \alpha \to \delta_{n + 1}\) по трем вариантам:
+\begin{enumerate}
+\item \(\delta_{n + 1}\) --- аксиома или гипотеза \(\not\equiv \alpha\)
+\item \(\delta_{n + 1} \equiv \alpha\)
+\item \(\delta_k \equiv \delta_l \to \delta_{n + 1},\ k,l\le n\)
+\end{enumerate}
+Докажем каждый из трех вариантов
+\begin{enumerate}
+\item \-
+\begin{center}
+\begin{tabular}{l|ll}
+(n + 0.2) & \(\delta_{n + 1}\) & (аксиома или гипотеза)\\
+(n + 0.4) & \(\deta_{n + 1} \to \alpha \to \delta_{n + 1}\) & (сх. акс. 1)\\
+(n + 1) & \(\alpha \to \delta_{n + 1}\) & (M.P. \(n + 0.2, n + 0.4\))\\
+\end{tabular}
+\end{center}
+\item \((n + 0.2, n + 0.4, n+0.6, n+0.8, n+1)\) --- доказательтво \(\alpha \to \alpha\)
+\item \-
+\begin{center}
+\begin{tabular}{lll}
+\((k)\) & \(\alpha \to (\sigma_l \to \sigma_{n + 1})\) & \\
+\((l)\) & \(\alpha \to \sigma_l\) & \\
+\((n + 0.2)\) & \((\alpha \to \delta_l) \to (\alpha \to (\delta_l \to \delta_{n + 1})) \to (\alpha \to \delta_{n + 1})\) & (сх. 2)\\
+\((n + 0.4)\) & \((\alpha \to \delta_l \to \delta_{n + 1}) \to (\alpha \to \delta_{n + 1})\) & (M.P. \(n + 0.2, l\))\\
+\((n + 1)\) & \(\alpha \to \delta_{n + 1}\) & (M.P. \(n + 0.4, k\))\\
+\end{tabular}
+\end{center}
+\end{enumerate}
+\end{description}
+\end{proof}
+\begin{theorem}[о корректности]
+Пусть \(\vdash \alpha\) \\
+\uline{Тогда} \(\vDash \alpha\)
+\end{theorem}
+\begin{proof}
+Индукция по длине доказательства: каждая \(\llb \delta_i \rrb = \text{И}\), если \(\delta_1, \dots, \delta_k\) --- доказательство \(\alpha\) \\
+Пусть \(\llb \delta_1 \rrb = \text{И}, \dots, \llb \delta_n \rrb = \text{И}\). Тогда осн. \(\delta_{n + 1}\):
+\begin{enumerate}
+\item \(\delta_{n + 1}\) --- аксиома
+\begin{enumerate}
+\item \(\delta_{n + 1} \equiv \alpha \to \beta \to \alpha\) (Сущесвуют \(\alpha, \beta\), что) \\
+Пусть \(\delta_{n + 1} = A \to B \to A\). Тогда \(\alpha \equiv A, \beta \equiv B\) \\
+\(\llb \alpha \to \beta \to \alpha \rrb ^{\llb \alpha \rrb \coloneqq a, \llb \beta \rrb \coloneqq b} = \text{И}\)
+\begin{center}
+\begin{tabular}{ll|l|l}
+\(a\) & \(b\) & \(\beta \to \alpha\) & \(\alpha \to \beta \to \alpha\)\\
+\hline
+Л & Л & И & И\\
+Л & И & Л & И\\
+И & Л & И & И\\
+И & И & И & И\\
+\end{tabular}
+\end{center}
+\end{enumerate}
+\item \(\delta_{n + 1}\) --- M.P. \(\delta_k = \delta_l \to \delta_{n + 1}\) \\
+Фиксируем оценку \(\llb \delta_k \rrb = \llb \delta_l \rrb = \text{И}\), тогда \(\llb \delta_l \to \delta_{n + 1} \rrb = \text{И}\)
+\begin{center}
+\begin{tabular}{lll}
+\(\llb \delta_l \rrb\) & \(\llb \delta_{n + 1} \rrb\) & \(\llb \delta_k \rrb = \llb \delta_l \to \delta_{n + 1} \rrb\)\\
+\hline
+\sout{Л} & \sout{Л} & \sout{И}\\
+\sout{Л} & \sout{И} & \sout{И}\\
+\sout{И} & \sout{Л} & \sout{Л}\\
+И & И & И\\
+\end{tabular}
+\end{center}
+Т.е. \(\llb \delta_{n + 1} \rrb = \text{И}\)
+\end{enumerate}
+\end{proof}
+\begin{theorem}[о полноте]
+Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+\end{theorem}
+\begin{symb}
+\[ [\beta]^\alpha \equiv \begin{cases}
+\alpha & \llb \beta \rrb = \text{И} \\
+\neg \alpha & \llb \beta \rrb = \text{Л} 
+\end{cases}\]
+\end{symb}
+\begin{proof}
+Фиксируем набор перменных из \(\alpha\): \(P_1, \dots, P_n\) \\
+Рассмотрим \(\llb \alpha \rrb^{P_1 \coloneqq x_1, \dots P_n \coloneqq x_n} = \text{И}\).
+Докажем, что \(\underbrace{[x_1]^{P_1},\dots,[x_n]^{P_n}}_\Delta \vdash [\alpha]^\alpha\). \\
+\uline{Индукция} по длине формулы (по структуре) \\
+\uline{База}: \(\alpha \equiv P_i\) \([P_i]^{P_i} \vdash [P_i]^{P_i}\) \\
+\uline{Переход}: пусть \(\eta, \zeta\): \(\Delta \vdash [\eta]^\eta, \Delta \vdash [\zeta]^\zeta\). Покажем, что \(\Delta \vdash [\eta \star \zeta]^{\eta \star \zeta}\), где \(\star\) --- все свзяки \\
+Используя \hyperref[org56ceff8]{лемму}: \(\vDash \alpha\), т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash [\alpha]^\alpha\). Но \(\llb \alpha \rrb = \text{И}\) при любой оценке, \\
+т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\) при всех \(x_i\) \\
+\[ \left.\begin{matrix}
+[x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, P_n \vdash \alpha \\
+[x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, \neg P_n \vdash \alpha
+\end{matrix}\right| \xRightarrow{\text{лемма}} [x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}} \vdash \alpha\]
+\end{proof}
+\begin{lemma}
+\-
+\begin{itemize}
+\item \(\Gamma, \eta \vdash \zeta\)
+\item \(\Gamma, \neg \eta \dash \zeta\)
+\end{itemize}
+\uline{Тогда} \(\Gamma \vdash \zeta\)
+\label{org56ceff8}
+\end{lemma}
+\begin{lemma}
+\([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\), то \([x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n- 1}} \vdash \alpha\)
+\label{org60d070e}
+\end{lemma}
+\section{Интуиционистская логика}
+\label{sec:orgb1befea}
+\(A \vee B\) --- плохо
+\begin{examp}
+Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
+Пусть \(a = b = \sqrt{2}\). Рассмотрим \(\sqrt{2}^{\sqrt{2}} \in \R \setminus \mathbb{Q}\)
+\begin{itemize}
+\item Если да, то ОК
+\item Если нет, то возьмем \(a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}\), \(a^b = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{2} = 2\)
+\end{itemize}
+\end{examp}
+\begin{defintion}
+ВНК-интерпретация. \(\alpha, \beta\)
+\begin{itemize}
+\item \(\alpha \& \beta\) --- есть \(\alpha, \beta\)
+\item \(\alpha \vee \beta\) --- есть \(\alpha\) либо \(\beta\) и мы знаем какое
+\item \(\alpha \to \beta\) --- есть способ перестроить \(\alpha\) в \(\beta\)
+\item \(\perp\) --- конструкция без построения \(\neg \alpha \equiv \alpha \to \perp\)
+\end{itemize}
+\end{defintion}
+\chapter{}
+\label{sec:org2567763}
+\section{Правила вывода}
+\label{sec:org777a6e9}
+Сверху посылки, снизу заключения
+\begin{itemize}
+\item Аксиома
+\[ \frac{}{\Gamma, \varphi \vdash \varphi} \]
+\item Введение \(\to\)
+\[ \frac{\Gamma, \varphi \vdash \psi}{\Gamma \vdash \varphi \to \psi} \]
+\item Удаление \(\to\)
+\[ \frac{\Gamma \vdash \varphi \to \psi\quad \Gamma \vdash \varphi}{\Gamma \vdash \psi} \]
+\item Введение \(\&\)
+\[ \frac{\Gamma \vdash \varphi \quad \Gamma \vdash \psi}{\Gamma \vdash \varphi \& \psi} \]
+\item Удаление \(\&\)
+\[ \frac{\Gamma \vdash \varphi \& \psi}{\Gamma \vdash \varphi} \]
+\[ \frac{\Gamma \vdash \varphi \& \psi}{\Gamma \vdash \psi} \]
+\item Введение \(\vee\)
+\[ \frac{\Gamma \vdash \varphi}{\Gamma \vdash \varphi \vee \psi} \]
+\[ \frac{\Gamma \vdash \psi}{\Gamma \vdash \varphi \vee \psi} \]
+\item Удалние \(\vee\)
+\[ \frac{\Gamma, \varphi \vdash \rho \quad \Gamma, \psi \vdash \rho \quad \Gamma \vdash \varphi \vee \psi}{\Gamma \vdash \rho} \]
+\item Удаление \(\perp\)
+\[ \frac{\Gamma \vdash \perp}{\Gamma \vdash \varphi} \]
+\end{itemize}
+\begin{examp}
+\[ \frac{\displaystyle\frac{}{A \vdash A}(\text{акс.})}{\vdash A \to A}(\text{вв. }\to) \]
+\end{examp}
+\begin{examp}
+Докажем \(\frac{}{\vdash A \& B \to B \& A}\)
+\[ \frac{\displaystyle\frac{\displaystyle\frac{\displaystyle\frac{}{A \& B \vdash A \& B}(\text{акс.})}{A\& B \vdash B}(\text{уд. } \&) \quad \frac{\displaystyle\frac{}{A \& B \vdash A \& B}(\text{акс.})}{A \& B \vdash A}(\text{уд. } \&)}{A\&B \vdash B \& A}(\text{вв. } \&)}{\vdash A \& B \to B & A}(\text{вв. }\to) \]
+\end{examp}
+\begin{definition}
+Фиксируем \(A\) \\
+Частичный порядок --- антисимметричное, транзитивное, рефлексивное отношение \\
+Линейный --- сравнимы любые 2 элемента \\
+\begin{itemize}
+\item \(a \le b \vee b \le a\)
+\item \textbf{Наименьший элемент} \(S\) --- такой \(k \in S\), что если \(x \in S\), то \(k \le x\)
+\item \textbf{Минимальный элемент} \(S\) --- такой \(k \in S\), что нет \(x \in S\), что \(x \le k\)
+\end{itemize}
+\end{definition}
+\begin{examp}
+\-
+\begin{center}
+\begin{tikzcd}
+\([9, 9 , 9]\) \arrow{d} \arrow{dr} &  & \([1, 2, 1]\) \arrow{dll} \arrow{dl} \arrow{d} \\
+\([1, 0 , 0]\) & \([0, 1, 0]\) & \([0, 0, 1]\)
+\end{tikzcd}
+\end{center}
+Нет наименьшего, но есть 3 минимальных. Стрелка из \(a\) в \(b\) обозначает \(b \le a\)
+\end{examp}
+\begin{definition}
+\-
+\begin{itemize}
+\item \textbf{Множество верхних граней} \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
+\item \textbf{Множество нижних граней} \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
+\end{itemize}
+\end{definition}
+\begin{definition}
+\-
+\begin{itemize}
+\item \textbf{\(a + b\)} --- нименьший элемент множества верхних граней
+\item \textbf{\(a \cdot b\)} --- наибольший элемент множества нижних граней
+\end{itemize}
+\end{definition}
+\begin{definition}
+\textbf{Решетка} = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
+т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
+\end{definition}
+\begin{definition}
+\textbf{Дистрибутивная решетка} если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
+\end{definition}
+\begin{lemma}
+В дистрибутивной решетке \(a + b\cdot c = (a + b) \cdot(a + c)\)
+\end{lemma}
+\begin{definition}
+\textbf{Псевдодополнение} \(a \to b = \text{наиб.}\{c \big| a \cdot c \le b\}\)
+\end{definition}
+\begin{definition}
+\textbf{Импликативная решетка} --- решетка, где для любых \(a, b\) есть \(a \to b\)
+\end{definition}
+\begin{definition}
+\textbf{0} --- наименьший элемент решетки, \textbf{1} --- наибольший элемент решетки
+\end{definition}
+\begin{definition}
+\textbf{Псевдобулева алгебра (алгебра Гейтинга)} --- импликативная решетка с \(0\)
+\end{definition}
+\begin{definition}
+\textbf{Булева алгебра} --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
+\end{definition}
+\begin{examp}
+\-
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (0, 0) {\(1\)};
+\node (B) at (-1, -1) {\(a\)};
+\node (C) at (1, -1) {\(b\)};
+\node (D) at (0, -2) {\(0\)};
+\draw[->] (A) -- (B);
+\draw[->] (A) -- (C);
+\draw[->] (B) -- (D);
+\draw[->] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item \(a \cdot 0 = 0\)
+\item \(1\cdot b = b\)
+\item \(a \cdot b = 0\)
+\item \(a + b = 1\)
+\item \(a \to b = \text{наиб.}\{x \big| a\cdot x \le b\} = b\) \\
+\(\{x \big| a \cdot x \le \} = \{0, b\}\)
+\item \(a \to 1 = 1\)
+\item \(a \to 0 = 0\)
+\end{itemize}
+Можем представить в виде пары \(\langle x, y \rangle\)
+\begin{itemize}
+\item \(a = \langle 1, 0 \rangle\)
+\item \(b = \langle 0 , 1\rangle\)
+\item \(1 = \langle 1, 1 \rangle\)
+\item \(0 = \langle 0, 0 \rangle\)
+\end{itemize}
+\end{examp}
+\begin{lemma}
+В импликативной решетке всегда есть \(1\).
+\end{lemma}
+\begin{theorem}
+Любая алгебра Гейтинга --- модель ИИВ
+\end{theorem}
+\begin{theorem}
+Любая булева алгебра --- модель КИВ
+\end{theorem}
+\begin{defintion}
+Рассмотрим множество \(X\) --- \textbf{носитель}. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- \textbf{топология}.
+\begin{enumerate}
+\item \(\bigcup X_i \in \Omega\), где \(X_i \in \Omega\)
+\item \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
+\item \(\emptyset, X \in \Omega\)
+\end{enumerate}
+\end{defintion}
+\begin{theorem}
+\-
+\begin{itemize}
+\item \(a + b = a \cup b\)
+\item \(a \cdot b = a \cap b\)
+\item \(a \to b = \left((X \setminus a) \cup b\right)^\circ\)
+\item \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
+\end{itemize}
+\uline{Тогда} \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
+\end{theorem}
+\begin{definition}
+\(X\) --- все формулы логики
+\begin{itemize}
+\item \(\alpha \le \beta\) --- это \(\alpha \vdash \beta\)
+\item \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
+\item \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
+\end{itemize}
+\end{definition}
+\beginproperty
+\begin{property}
+\(\langle X/_\approx, \le \rangle\) --- алгебра Гейтинга, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\end{property}
+\begin{theorem}
+Алгебра гейтинга --- полная модель ИИВ
+\end{theorem}
 \chapter{5 марта}
-\label{sec:org53b908b}
+\label{sec:org6375990}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}
@@ -210,7 +662,7 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:org1d94bb0}
+\label{sec:org6188146}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
@@ -231,7 +683,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:org5c917f8}
+\label{sec:org5e7a985}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -280,7 +732,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:org9da316a}
+\label{sec:org29264a9}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
@@ -381,9 +833,9 @@
 Пусть \(\not \vdash \alpha\) и \(\not \vdash \beta\), тогда \(\varphi(\llbracket \alpha \rrbracket) \neq 1_\mathcal{L}\) и \(\varphi(\llbracket \beta \rrbracket) \neq 1_\mathcal{L}\), т.е. \(\llbracket \alpha \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\) и \(\llbracket \beta \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\), тогда \(\llbracket \alpha \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) и \(\llbracket \beta \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) \(\Rightarrow\) Противоречие
 \end{proof}
 \chapter{12 марта}
-\label{sec:org7fd4e2f}
+\label{sec:org0e77adb}
 \section{Программы}
-\label{sec:orgea3da63}
+\label{sec:org5f9b1c4}
 программа(функция)
 \begin{itemize}
 \item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
@@ -470,7 +922,7 @@ match l with
 \end{minted}
 \end{examp}
 \subsection{Исчесление предикатов}
-\label{sec:orgf2dc57d}
+\label{sec:org09257ad}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
@@ -504,7 +956,7 @@ match l with
 \end{definition}
 \begin{enumerate}
 \item Сокращение записи
-\label{sec:orga1fa527}
+\label{sec:orgd26c63c}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -513,7 +965,7 @@ match l with
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \end{enumerate}
 \subsection{Теория моделей}
-\label{sec:org85ce748}
+\label{sec:org72a2680}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -553,7 +1005,7 @@ match l with
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теория доказательств}
-\label{sec:org19c13bd}
+\label{sec:org07da556}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
@@ -588,11 +1040,11 @@ int f(int x) {
 Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
 \end{examp}
 \chapter{19 марта}
-\label{sec:orga4f5a0c}
+\label{sec:orgefce2dd}
 \section{Исчисление предикатов}
-\label{sec:org53c56fd}
+\label{sec:orgfe54ac3}
 \subsection{Расставление скобок}
-\label{sec:org7f5309c}
+\label{sec:org96f45e5}
 Кванторы имеют наименьший приоритет
 \begin{examp}
 \[ \forall x. A \& B \& \forll y. C \& D \vee \exists z. E \]
@@ -618,7 +1070,7 @@ int f(int x) {
 \end{itemize}
 \end{definition}
 \subsection{Вхождение}
-\label{sec:org109e4d0}
+\label{sec:org1cabf0c}
 \begin{examp}
 \[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
 1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
@@ -650,7 +1102,7 @@ int f(int x) {
 \end{description}
 \end{examp}
 \subsection{Свободные подстановки}
-\label{sec:orgd6d2bfe}
+\label{sec:org861578f}
 \begin{definition}
 \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
 \end{definition}
@@ -672,7 +1124,7 @@ int f(int x) {
 Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
 \end{examp}
 \subsection{Пример доказательства}
-\label{sec:orgfef1eb7}
+\label{sec:org2cd84ed}
 \begin{lemma}
 Пусть \(\vdash \alpha\). Тогда \(\vdash \forall x. \alpha\)
 \end{lemma}
@@ -693,7 +1145,7 @@ int f(int x) {
 \end{enumerate}
 \end{proof}
 \subsection{Теорема о дедукции}
-\label{sec:orgbbf32df}
+\label{sec:orgdb5e819}
 \begin{theorem}
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 \begin{enumerate}
@@ -702,7 +1154,7 @@ int f(int x) {
 \end{enumerate}
 \end{theorem}
 \chapter{2 апреля}
-\label{sec:orgb2866ee}
+\label{sec:org6002804}
 \begin{itemize}
 \item \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
 \item \(x = 0 \vdash \forall x. x = 0\)
@@ -713,7 +1165,7 @@ int f(int x) {
 \uline{Тогда} \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 \end{definition}
 \section{Полнота исчесления предикатов}
-\label{sec:orge933284}
+\label{sec:org989eafb}
 \begin{definition}
 \(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
 \end{definition}
@@ -835,9 +1287,9 @@ int f(int x) {
 \(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
 \end{corollary}
 \chapter{9 апреля}
-\label{sec:orgfc80ea0}
+\label{sec:org82d5d0c}
 \section{Исчесление предиктов}
-\label{sec:org6da72e6}
+\label{sec:orgd0e3189}
 \begin{theorem}[Геделя о полноте ИП]
 У любого н.м.з.ф. (непротиворечивого множества замкнутых формул) ИП существует модель
 \end{theorem}
@@ -947,9 +1399,9 @@ e \text{ --- } \text{nil}
 \end{enumerate}
 \end{examp}
 \chapter{16 апреля}
-\label{sec:org1b900ae}
+\label{sec:org382db56}
 \section{Теория первого порядка}
-\label{sec:org504aa19}
+\label{sec:orgada62cb}
 \begin{definition}
 \textbf{Теория I порядка} --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
 \end{definition}
@@ -964,7 +1416,7 @@ e \text{ --- } \text{nil}
 \beginproperty
 \begin{property}
 \(0\) единственный
-\label{orgf0f2504}
+\label{org18b68ce}
 \end{property}
 \begin{proof}
 \(P(x)=x = 0\) либо существует \(t:\ t' = x\)
@@ -973,14 +1425,14 @@ e \text{ --- } \text{nil}
 \item \(P(x) \to P(x')\). Заметим, что \(x'\) --- не `ноль`
 \end{itemize}
 \(P(x)\) выполнено при всех \(x \in N\)
-\label{org428f7c5}
+\label{org092f906}
 \end{proof}
 \begin{definition}
 \[ a + b = \begin{cases}
 a & b = 0 \\
 (a + c)' & b = c'
 \end{cases}\]
-Можем определить это опираясь на \hyperref[org428f7c5]{доказательтво}
+Можем определить это опираясь на \hyperref[org092f906]{доказательтво}
 \end{definition}
 \begin{definition}
 \begin{itemize}
@@ -1012,7 +1464,7 @@ a & b = 0 \\
 \beginproperty
 \begin{property}
 \(a + 0 = 0 + a\)
-\label{orgc12cd75}
+\label{orgf73d7d9}
 \end{property}
 \begin{proof}
 \(P(a) = (a + 0 = 0 + a)\) \\
@@ -1041,12 +1493,12 @@ a & b = 0 \\
 \(a + b = b + a\)
 \end{property}
 \begin{proof}
-\uline{База} \(b = 0\) --- \hyperref[orgc12cd75]{свойство} \\
+\uline{База} \(b = 0\) --- \hyperref[orgf73d7d9]{свойство} \\
 \uline{Переход} \(a + c'' = c'' + a\), если \(a + c' = c' + a\)
 \[ a + c'' = (a + c')' = (c' + a)' = c' + a' = c'' + a\]
 \end{proof}
 \subsection{Формальная арифметика}
-\label{sec:org34c6f42}
+\label{sec:org4b14e91}
 \begin{definition}
 Исчесление предикатов:
 \begin{itemize}
