@@ -1,0 +1,301 @@
+% Created 2021-04-19 Mon 19:10
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 1}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Исчесление высказываний}
+\label{sec:orgc4e9924}
+\subsection{Язык}
+\label{sec:org962d2ac}
+\begin{enumerate}
+\item Пропозициональные переменные \\
+\(A'_i\) --- большая буква начала латинского алфавита
+\item Связки \\
+\(\underbrace{\alpha}_\text{\color{green}метапеременная}, \beta\) --- высказывания \\
+Тогда \((\alpha \to \beta),(\alpha \& \beta),(\alpha \vee \beta), (\neg \alpha)\) --- высказывания
+\end{enumerate}
+\subsection{Мета и предметные}
+\label{sec:org4a2b8f7}
+\begin{itemize}
+\item \(\alpha, \beta, \gamma, \dots, \varphi, \psi, \dots\) --- метапеременные для выражений
+\item \(X, Y, Z\) --- метапеременные для предметные переменные
+\end{itemize}
+Метавыражение: \(\alpha \to \beta\) \\
+Предметное выражение: \(A \to (A \to A)\) (заменили \(\alpha\) на \(A\), \(\beta\) на \((A \to A)\) )
+\begin{examp}
+Черным --- предметные выражения, Синим --- метавыражения
+\[ (\color{blue}X \color{black}\to\color{blue} Y\color{black})\color{blue}[X \coloneqq A, Y \coloneqq B] \color{black} \equiv A \to B \]
+\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq A, X \coloneqq B] \equiv \color{black} A \to (A \to B) \]
+\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq (A \to P), X \coloneqq B] \equiv \color{black} (A \to P) \to (A \to B) \]
+\end{examp}
+\subsection{Сокращение записи}
+\label{sec:org866f94d}
+\begin{itemize}
+\item \(\vee, \&, \neg\) --- скобки слева направо(лево-ассоциативная)
+\item \(\to\) --- правоассоциативная
+\item Приоритет по возрастанию: \(\to, \vee, \&, \neg\)
+\end{itemize}
+\begin{examp}
+Расставление скобок
+\[ \left(A \to \left( \left(B \& C\right) \to D\right)\right) \]
+\[ \left(A \to \left(B \to C\right)\right) \]
+\end{examp}
+\subsection{Теория моделей}
+\label{sec:orgcdd3865}
+\begin{itemize}
+\item \(\mathcal{P}\) --- множество предметных переменных
+\item \(\llb\cdot\rrb: \mathcal{T} \to \V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
+\end{itemize}
+
+
+
+\begin{enumerate}
+\item \(\llb x \rrb: \mathcal{P} \to V\) --- задается при оценке \\
+\(\llb \rrb^{A \coloneqq v_1, B \coloneqq v_2}\):
+\begin{itemize}
+\item \(\mathcal{P} = v_1\)
+\item \(\mathcal{P} = v_2\)
+\end{itemize}
+\item \(\llb \alpha \star \beta \rrb = \llb \alpha \rrb \color{blue}\underbrace{\star}_{\substack{\text{определенно} \\ \text{ественным образом}}}\color{black} \llb \beta \rrb\), где \(\star \in [\&, \vee, \neg, \to]\)
+\begin{examp}
+\[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} \color{blue}\to\color{black}\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \color{blue} \text{И} \to \text{И} = \text{И} \]
+Также можно записать так:
+\[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = f_\to(\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}, \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}) = f_\to(\color{blue} \text{И}\color{black} , \color{blue}\text{И}\color{black}) \color{blue}= \text{И} \]
+, где \(f_\to\) определена так:
+\begin{center}
+\begin{tabular}{ll|l}
+\(a\) & \(b\) & \(f_\to\)\\
+\hline
+И & И & И\\
+И & Л & Л\\
+Л & И & И\\
+Л & Л & И\\
+\end{tabular}
+\end{center}
+\end{examp}
+\end{enumerate}
+
+\subsection{Теория доказательств}
+\label{sec:org03419ad}
+\begin{definition}
+\textbf{Схема высказывания} --- строка соответсвующая определению высказывания, с:
+\begin{itemize}
+\item метапеременными \(\alpha, \beta, \dots\)
+\end{itemize}
+\end{definition}
+\begin{definition}
+Аксиома --- высказывания:
+\begin{enumerate}
+\item \(\alpha \to (\beta \to \alpha)\)
+\item \((\alpha \to \beta) \to (\alpha \to \beta \to \gamma) \to (\alpha \to \gamma)\)
+\item \(\alpha \to \beta \to \alpha \& \beta\)
+\item \(\alpha \& \beta \to \alpha\)
+\item \(\alpha \& \beta \to \beta\)
+\item \(\alpha \to \alpha \vee \beta\)
+\item \(\beta \to \alpha \vee \beta\)
+\item \((\alpha \to \gamma) \to (\beta \to \gamma) \to (\alpha \vee \beta \to \gamma)\)
+\item \((\alpha \to \beta) \to (\alpha \to \neg \beta) \to \neg \alpha\)
+\item \(\neg\neg \alpha \to \alpha\)
+\end{enumerate}
+\end{definition}
+\#+begin\textsubscript{defintion} org
+\subsection{Правило Modus Ponens и доказательство}
+\label{sec:org6bb8cb7}
+\begin{definition}
+\textbf{Доказательство} (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):
+\begin{itemize}
+\item аксиома
+\item существует \(k, l < i\), что \(\alpha_k = \alpha_l \to \alpha\) \\
+\[ \frac{A,\ A \to B}{B} \]
+\end{itemize}
+\end{definition}
+\begin{examp}
+\(\vdash A \to A\)
+\begin{center}
+\begin{tabular}{r|ll}
+1 & \(A \to A\ \to A\) & (схема аксиом 1)\\
+2 & \(A \to (A \to A) \to A\) & (схема аксиом 1)\\
+3 & \((A \to (A \to A)) \to (A \to (A \to A) \to A) \to (A \to A)\) & (схема аксиом 2)\\
+4 & \((A \to (A \to A) \to A) \to (A \to A)\) & (M.P. 1 и 3)\\
+5 & \(A \to A\) & (M.P. 2 и 4)\\
+\end{tabular}
+\end{center}
+\end{examp}
+\begin{definition}
+Доказательством высказывания \(\beta\) --- список высказываний \(\alpha_1, \dots, \alpha_n\)
+\begin{itemize}
+\item \(\alpha_1, \dots, \alpha_n\) --- доказательство
+\item \(\alpha_n \equiv \beta\)
+\end{itemize}
+\end{definition}
+\end{document}

@@ -1,6 +1,9 @@
 #+TITLE: Математическая логика
 * Лекции
 [[file:lectures/all_lectures.pdf][Все лекции]]
+- [[file:lectures/1.pdf][Лекция 1]]
+- [[file:lectures/2.pdf][Лекция 2]]
+- [[file:lectures/3.pdf][Лекция 3]]
 - [[file:lectures/4.pdf][Лекция 4]]
 - [[file:lectures/5.pdf][Лекция 5]]
 - [[file:lectures/6.pdf][Лекция 6]]
