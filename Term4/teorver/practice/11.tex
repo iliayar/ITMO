@@ -1,0 +1,252 @@
+% Created 2021-04-20 Tue 13:04
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Практика 11}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Практика 11},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\begin{task}
+Имеются 2 случайные величина
+\begin{center}
+\begin{tabular}{l|lllll}
+\(\xi\) & \(-2\) & \(-1\) & \(0\) & \(1\) & \(2\)\\
+\hline
+\(p\) & \(0.1\) & \(0.3\) & \(0.3\) & \(0.2\) & \(0.1\)\\
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{l|lll}
+\(\eta\) & \(-3\) & \(1\) & \(4\)\\
+\hline
+\(p\) & \(0.4\) & \(0.4\) & \(0.2\)\\
+\end{tabular}
+\end{center}
+Найти: \(\gamma = \xi^2 - \eta\)
+\end{task}
+\begin{solution}
+\begin{center}
+\begin{tabular}{l|rrr}
+\(\xi^2\) & 0 & 1 & 4\\
+\hline
+\(p\) & 0.3 & 0.5 & 0.2\\
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{r|lll}
+\(\eta\textbackslash\xi^2\) & 0 & 1 & 4\\
+\hline
+-3 & \(3\) & \(4\) & \(7\)\\
+1 & \(-1\) & \(0\) & \(3\)\\
+4 & \(-4\) & \(-3\) & \(0\)\\
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{l|rrrrrrr}
+\(\gamma\) & -4 & -3 & -1 & 0 & 3 & 4 & 7\\
+\hline
+\(p\) & \(0.006\) & \(0.1\) & \(0.12\) & \(0.2 + 0.04\) & \(0.08 + 0.12\) & \(0.2\) & \(0.08\)\\
+\end{tabular}
+\end{center}
+\end{solution}
+\begin{task}
+Игрок играет в орлянку по схеме с удвоением. Если он проиграл, то следущий раз удваивает ставку. Игрок играет до тех пор пока не выиграет. Случайная величина --- его выигрышь. Вычислить мат. ожидание и дисперсию.
+\end{task}
+\begin{solution}
+\-
+\begin{center}
+\begin{tabular}{l|llllll}
+\(\xi\) & \(1\) & \(1 = 2 - 1\) & \(1 = 4 - 2 - 1\) & \(\dots\) & \(1 = 2^{n - 1} - \sum_{i = 0}^{n - 2}2^i\) & \(\dots\)\\
+\hline
+\(p\) & \(\frac{1}{2}\) & \(\frac{1}{4}\) & \(\frac{1}{8}\) & \(\dots\) & \(\frac{1}{2^n}\) & \(\dots\)\\
+\end{tabular}
+\end{center}
+\[ E\xi = 1 \cdot \sum_{n = 1}^\infty \frac{1}{2^n} = \frac{\frac{1}{2}}{1 - \frac{1}{2}} = 1 \]
+\[ D\xi = 1^2 \cdot \sum_{n = 1}^\infty \frac{1}{2^n} - 1^2 = 0 \]
+\end{solution}
+\begin{task}
+Та же задача, только \(n\) --- ограничено
+\end{task}
+\begin{solution}
+\begin{center}
+\begin{tabular}{l|llllrrll}
+\(\xi\) & \(1\) & \(1\) & \(1\) & \(\dots\) & 1 & 1 & \(-\sum_{i = 0}^{n - 1}2 ^i\) & \\
+\hline
+\(p\) & \(\frac{1}{2}\) & \(\frac{1}{4}\) & \(\frac{1}{8}\) & \(\dots\) & \(\frac{1}{2^{n - 1}}\) & \(\frac{1}{2^{n + 1}}\) & \(\frac{1}{2^{n + 1}}\) & \\
+\end{tabular}
+\end{center}
+\[ E\xi = 1\cdot \sum_{k = 1}^{n - 1} \frac{1}{2^k} + 1\cdot \frac{1}{2^{k + 1}} - \frac{1}{2^{n + 1}}\cdot \sum_{k = 0}^{n - 1}2^k =  \]
+\end{solution}
+\end{document}
