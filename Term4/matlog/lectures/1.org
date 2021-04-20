@@ -31,7 +31,7 @@
 #+end_examp
 ** Теория моделей
 - \(\mathcal{P}\) --- множество предметных переменных
-- \(\llb\cdot\rrb: \mathcal{T} \to \V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
+- \(\llb\cdot\rrb: \mathcal{T} \to V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
 
 
 
@@ -72,7 +72,6 @@
 9. \((\alpha \to \beta) \to (\alpha \to \neg \beta) \to \neg \alpha\)
 10. \(\neg\neg \alpha \to \alpha\)
 #+end_definition
-#+begin_defintion org
 ** Правило Modus Ponens и доказательство
 #+begin_definition org
 *Доказательство* (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):

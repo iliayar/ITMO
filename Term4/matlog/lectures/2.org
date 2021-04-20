@@ -5,20 +5,25 @@
 #+begin_symb org
 \(\Gamma, \Delta, \Sigma\) --- списки высказываний
 #+end_symb
+#+NAME: следование
 #+begin_definition org
 Следование: \(\Gamma \vDash \alpha\), если
 - \(\Gamma = \gamma_1, \dots, \gamma_n\)
 - Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
 #+end_definition
+#+NAME: общезначимость
 #+begin_examp org
 \(\vDash \alpha\) --- \(\alpha\) общезначимо
 #+end_examp
+#+NAME: корректность
 #+begin_definition org
 +Теория+ Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
 #+end_definition
+#+NAME: полнота
 #+begin_definition org
 Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
 #+end_definition
+#+NAME: теорема о дедукции
 #+ATTR_LATEX: :options [о дедукции]
 #+begin_theorem org
 \(\Gamma, \alpha \vdash \beta\) _тогда и только тогда, когда_ \(\Gamma \vdash \alpha \to \beta\)
@@ -53,6 +58,7 @@
      | \((n + 0.4)\) | \((\alpha \to \delta_l \to \delta_{n + 1}) \to (\alpha \to \delta_{n + 1})\)                             | (M.P. \(n + 0.2, l\)) |
      | \((n + 1)  \) | \(\alpha \to \delta_{n + 1}\)                                                                            | (M.P. \(n + 0.4, k\)) |
 #+end_proof
+#+NAME: теорема о корректности
 #+ATTR_LATEX: :options [о корректности]
 #+begin_theorem org
 Пусть \(\vdash \alpha\) \\
@@ -82,6 +88,7 @@ _Тогда_ \(\vDash \alpha\)
    | И                      | И                            | И                                                              |
    Т.е. \(\llb \delta_{n + 1} \rrb = \text{И}\)
 #+end_proof
+#+NAME: теорема о полноте
 #+ATTR_LATEX: :options [о полноте]
 #+begin_theorem org
 Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)

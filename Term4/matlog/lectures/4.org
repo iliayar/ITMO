@@ -62,6 +62,7 @@
 \end{tikzpicture}
 \end{center}
 #+end_export
+#+NAME: модель крипке
 #+begin_defintion org
 \-
 1. \( W = \{W_i\}\) --- множество миров
@@ -122,12 +123,15 @@
 2. \(\vDash_V \varphi_n\): по признаку Дирихле найдутся \(i\neq j:\llbracket p_i \rrbracket = \llbracket p_j \rrbracket\) \\
    \( \llbracket p_i \to p_j \rrbracket = \text{И}\) и \( \llbracket \varphi_n \rrbracket = \text{И}\) \\
    Значит \(\vdash \varphi_n\) --- противоречие
+#+NAME: дизъюнктивность ИИВ
 #+begin_definition org
 *Дизъюнктивность* ИИВ: \( \vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
 #+end_definition
+#+NAME: геделева алгебра
 #+begin_definition org
 Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
 #+end_definition
+#+NAME: операция гамма
 #+begin_definition org
 Пусть \(\A\) --- алгебра Гейтинга, тогда:
 1. \(\Gamma(\A)\) \\

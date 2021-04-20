@@ -11,6 +11,7 @@
 _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 #+end_definition
 * Полнота исчесления предикатов
+#+NAME: множество формул
 #+begin_definition org
 \(\Gamma\) --- *непротиворечивое* множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha \) ни при каком \(\alpha\)
 #+end_definition
@@ -30,6 +31,7 @@ _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 #+begin_definition org
 *Моделью* для непротиворечивого множества замкнутых бескванторных формул \(\Gamma\) --- такая модель, что каждая формула из \(\Gamma\) оценивается в И
 #+end_definition
+#+NAME: полное множество формул
 #+begin_definition org
 Полное непротиворечивое замкнутых бескванторных формул --- такое, что для каждой замкнутой бескванторной формулы \(\alpha\): либо \(\alpha \in \Gamma\), либо \(\neg \alpha \in \Gamma\)
 #+end_definition
@@ -78,10 +80,12 @@ _Переход_ \(\alpha \& \beta\). При этом
 2. Если \(\alpha, \beta \not\in \Gamma\) \(\llbracket \alpha \rrbracket \neq \text{И}\) или \(\llbracket \beta \rrbracket \neq \text{И}\) то \(\alpha \& \beta \not\in \Gamma\)
 Аналогично для других операций
 #+end_proof
+#+NAME: теорема геделя о полноте
 #+ATTR_LATEX: :options [Геделя о полноте]
 #+begin_theorem org
 Если \(\Gamma\) --- полное неротиворечивое множество замкнутых(не бескванторных) фомул, то оно имеет модель
 #+end_theorem
+#+NAME: следствие из теорема геделя о полноте
 #+begin_corollary org
 Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
 #+end_corollary
