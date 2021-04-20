@@ -91,6 +91,7 @@
    \end{matrix} \]
 #+end_proof
 ** Теорема о дедукции
+#+NAME: теорема о дедукции для предикатов
 #+begin_theorem org
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 1. Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если \(b\) в доказательстве \(\Gamma, \alpha \to \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)

@@ -29,6 +29,7 @@
 Докажем \(\frac{}{\vdash A \& B \to B \& A}\)
 \[ \frac{\displaystyle\frac{\displaystyle\frac{\displaystyle\frac{}{A \& B \vdash A \& B}(\text{акс.})}{A\& B \vdash B}(\text{уд. } \&) \quad \frac{\displaystyle\frac{}{A \& B \vdash A \& B}(\text{акс.})}{A \& B \vdash A}(\text{уд. } \&)}{A\&B \vdash B \& A}(\text{вв. } \&)}{\vdash A \& B \to B & A}(\text{вв. }\to) \]
 #+end_examp
+#+NAME: наименьший и наибольший элемент
 #+begin_definition org
 Фиксируем \(A\) \\
 Частичный порядок --- антисимметричное, транзитивное, рефлексивное отношение \\
@@ -49,20 +50,24 @@
 #+end_export
 Нет наименьшего, но есть 3 минимальных. Стрелка из \(a\) в \(b\) обозначает \(b \le a\)
 #+end_examp
+#+NAME: верхние и нижние грани
 #+begin_definition org
 \-
 - *Множество верхних граней* \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
 - *Множество нижних граней* \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
 #+end_definition
+#+NAME: сумма и произведение
 #+begin_definition org
 \-
 - *\(a + b\)* --- нименьший элемент множества верхних граней
 - *\(a \cdot b\)* --- наибольший элемент множества нижних граней 
 #+end_definition
+#+NAME: решетка
 #+begin_definition org
 *Решетка* = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
 т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
 #+end_definition
+#+NAME: дистрибутивная решетка
 #+begin_definition org
 *Дистрибутивная решетка* если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
 #+end_definition
@@ -72,15 +77,18 @@
 #+begin_definition org
 *Псевдодополнение* \(a \to b = \text{наиб.}\{c \big| a \cdot c \le b\}\)
 #+end_definition
+#+NAME: импликативная решетка
 #+begin_definition org
 *Импликативная решетка* --- решетка, где для любых \(a, b\) есть \(a \to b\)
 #+end_definition
 #+begin_definition org
 *0* --- наименьший элемент решетки, *1* --- наибольший элемент решетки
 #+end_definition
+#+NAME: алгебра гейтинга
 #+begin_definition org
 *Псевдобулева алгебра (алгебра Гейтинга)* --- импликативная решетка с \(0\)
 #+end_definition
+#+NAME: булева алгебра
 #+begin_definition org
 *Булева алгебра* --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
 #+end_definition
@@ -123,12 +131,22 @@
 #+begin_theorem org
 Любая булева алгебра --- модель КИВ
 #+end_theorem
-#+begin_defintion org
+#+NAME: топология
+#+begin_definition org
 Рассмотрим множество \(X\) --- *носитель*. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- *топология*.
 1. \(\bigcup X_i \in \Omega\), где \(X_i \in \Omega\)
 2. \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
 3. \(\emptyset, X \in \Omega\)
-#+end_defintion
+#+end_definition
+#+NAME: внутренность
+#+begin_definition org
+\[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.}\}\]
+#+end_definition
+#+NAME: дискретная топология
+#+begin_examp org
+Дискретная топология: \(\Omega = 2^X\) --- любое множество открыто. Тогда \(\langle \Omega, \le \rangle\) --- булева алгебра
+#+end_examp
+
 #+begin_theorem org
 \-
 - \(a + b = a \cup b\)
