@@ -47,6 +47,7 @@ struct Edge {
     f: i64,
     rev: usize,
     w: i64,
+    idx: usize
 }
 
 #[derive(Debug)]
@@ -57,19 +58,19 @@ struct State {
     s: usize
 }
 
-fn add_edge(c: i64, u: usize, v: usize, w: i64, state: &mut State) {
-    add_edge_impl(c, c, u, v, w, state);
+fn add_edge(c: i64, u: usize, v: usize, w: i64, idx: usize, state: &mut State) {
+    add_edge_impl(c, c, u, v, w, idx, state);
 }
 
-fn add_or_edge(c: i64, u: usize, v: usize, w: i64, state: &mut State) {
-    add_edge_impl(c, 0, u, v, w, state);
+fn add_or_edge(c: i64, u: usize, v: usize, w: i64, idx: usize, state: &mut State) {
+    add_edge_impl(c, 0, u, v, w, idx, state);
 }
 
-fn add_edge_impl(c1: i64, c2:i64, u: usize, v: usize, w: i64, state: &mut State) {
+fn add_edge_impl(c1: i64, c2:i64, u: usize, v: usize, w: i64, idx: usize, state: &mut State) {
     state.g[u].push(state.edges.len());
-    state.edges.push(Edge { c: c1, from: u, to: v, f: 0, rev: state.edges.len() + 1, w});
+    state.edges.push(Edge { c: c1, from: u, to: v, f: 0, rev: state.edges.len() + 1, w, idx});
     state.g[v].push(state.edges.len());
-    state.edges.push(Edge { c: c2, from: v, to: u, f: 0, rev: state.edges.len() - 1, w: -w});
+    state.edges.push(Edge { c: c2, from: v, to: u, f: 0, rev: state.edges.len() - 1, w: -w, idx});
 }
 
 fn ford(state: &State) -> (Vec<usize>, i64) {
@@ -162,40 +163,56 @@ fn min_cost(state: &mut State) -> i64 {
     return res;
 }
 
-fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-    let (n, m) = (scan.next::<usize>(), scan.next::<usize>());
-    let a: Vec<i64> = (0..n).map(|_| scan.next()).collect();
-    let mut d: Vec<Vec<i64>> = vec![vec![INF; n]; n];
-    for _ in 0..m {
-	let (u, v, w) = (scan.next::<usize>() - 1, scan.next::<usize>() - 1, scan.next::<i64>());
-	d[u][v] = w;
+fn dfs(u: usize, t: usize, was: &mut [bool], path: &mut Vec<usize>, state: &State) {
+    if u == t {
+	return;
     }
-    for i in 0..n {
-	d[i][i] = 0;
-    }
-    for k in 0..n {
-	for i in 0..n {
-	    for j in 0..n {
-		d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
-	    }
- 	}
-    }
-
-    let mut state = State {
-        g: vec![Vec::new(); 2*n + 2],
-        edges: Vec::new(),
-        t: 2*n + 1,
-        s: 2*n,
-    };
-
-    for i in 0..n {
-	for j in n..2*n {
-	    add_or_edge(1, i, j, if i == j - n { a[i] } else { d[i][j - n] }, &mut state);
+    for i in state.g[u].iter().cloned() {
+	if was[i] {
+	    continue;
 	}
-	add_or_edge(1, state.s, i, 0, &mut state);
-	add_or_edge(1, i + n, state.t, 0, &mut state);
+	let e = state.edges[i];
+	if e.f == 1 && e.c != 0 {
+	    path.push(i);
+	    was[i] = true;
+	    dfs(e.to, t, was, path, state);
+	    break;
+	}
     }
-    writeln!(out, "{}", min_cost(&mut state)).ok();
+}
+
+fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
+    let (n, m, k): (usize, usize, i64) = (scan.next(), scan.next(), scan.next());
+    let mut state = State {
+        g: vec![Vec::new(); n + 2],
+        edges: Vec::new(),
+        t: n + 1,
+        s: n,
+    };
+    for i in 0..m {
+	let (u, v, w) = (scan.next::<usize>() - 1, scan.next::<usize>() - 1, scan.next::<i64>());
+	add_or_edge(1, u, v, w, i, &mut state);
+	add_or_edge(1, v, u, w, i, &mut state);
+    }
+    add_or_edge(k, state.s, 0, 0, n, &mut state);
+    add_or_edge(k, n - 1, state.t, 0, n + 1, &mut state);
+    let c = min_cost(&mut state);
+    let flow = state.edges[state.g[state.s][0]].f;
+    if  flow < k {
+	writeln!(out, "-1").ok();
+	return;
+    }
+    writeln!(out, "{}", (c as f64) / (k as f64)).ok();
+    let mut was: Vec<bool> = vec![false; state.edges.len()];
+    for _ in 0..k {
+	let mut path: Vec<usize> = Vec::new();
+	dfs(0, n - 1, &mut was, &mut path, &state);
+	write!(out, "{}", path.len()).ok();
+	for i in path.iter().cloned() {
+	    write!(out, " {}", state.edges[i].idx + 1).ok();
+	}
+	writeln!(out, "").ok();
+    }
 }
 
 //================================ CODE END =================================================
