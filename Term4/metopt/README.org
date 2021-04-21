@@ -1,17 +1,16 @@
-#+TITLE: Методы оптимизации
+#+TITLE: [[file:Term4/metopt/][Optimization methods]]
 
-
-* Лекциии
-[[file:lectures/all_lectures.pdf][Все лекции]]
-- [[file:lectures/1-2.pdf][Лекция 1, 2]]
-- [[file:lectures/3.pdf][Лекция 3]]
-- [[file:lectures/4.pdf][Лекция 4]]
-- [[file:lectures/5.pdf][Лекция 5]]
-- [[file:lectures/6.pdf][Лекция 6]]
-- [[file:lectures/7.pdf][Лекция 7]]
-- [[file:lectures/8.pdf][Лекция 8]]
-- [[file:lectures/9.pdf][Лекция 9]]
-- [[file:lectures/10.pdf][Лекция 10]]
-- [[file:lectures/11.pdf][Лекция 11]]
-- [[file:lectures/12.pdf][Лекция 12]]
-- [[file:lectures/13.pdf][Лекция 13]]
+* Lectures
+[[file:lectures/all_lectures.pdf][All lectures]]
+- [[file:lectures/1-2.pdf][Lecture 1, 2]]
+- [[file:lectures/3.pdf][Lecture 3]]
+- [[file:lectures/4.pdf][Lecture 4]]
+- [[file:lectures/5.pdf][Lecture 5]]
+- [[file:lectures/6.pdf][Lecture 6]]
+- [[file:lectures/7.pdf][Lecture 7]]
+- [[file:lectures/8.pdf][Lecture 8]]
+- [[file:lectures/9.pdf][Lecture 9]]
+- [[file:lectures/10.pdf][Lecture 10]]
+- [[file:lectures/11.pdf][Lecture 11]]
+- [[file:lectures/12.pdf][Lecture 12]]
+- [[file:lectures/13.pdf][Lecture 13]]

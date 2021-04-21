@@ -1,3 +1,3 @@
-#+TITLE: Математический анализ
+#+TITLE: [[file:Term4/matan/][Mathematical analysis]]
 
-[[file:lectures/all_lectures.pdf][Все лекции]]
+[[file:lectures/all_lectures.pdf][All lectures]]

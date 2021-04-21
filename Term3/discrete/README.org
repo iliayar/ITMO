@@ -1,4 +1,4 @@
-#+TITLE: Дискретная математика
-* Лабы
-- [[file:labs/lab1/][Графы]]
-- [[file:labs/lab2/][Матроиды]]
+#+TITLE: Discrete math
+* Labs
+- [[file:labs/lab1/][Graphs]]
+- [[file:labs/lab2/][Matroids]]

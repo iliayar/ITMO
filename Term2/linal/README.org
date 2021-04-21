@@ -1,4 +1,4 @@
-#+TITLE: Линейная алгебра
+#+TITLE: Linear algebra
 
-* Лабы
-[[file:labs/][/Попытка/ определния фигуры в \(\mathbb{R}^3\)]]
+* Labs
+[[file:labs/][/Trying/ Determine figure in 3 dimensional space]]
