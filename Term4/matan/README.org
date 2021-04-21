@@ -1,4 +1,4 @@
-#+TITLE: [[file:Term4/matan/][Mathematical analysis]]
+#+TITLE: Mathematical analysis
 
 * Lectures
 [[file:lectures/all_lectures.pdf][All lectures]]
