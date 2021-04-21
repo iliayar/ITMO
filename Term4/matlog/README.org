@@ -1,6 +1,7 @@
 #+TITLE: [[file:Term4/matlog/][Mathematical logic]]
 * Lectures
-[[file:lectures/all_lectures.pdf][All lectures]]
+[[file:lectures/all_lectures.pdf][All lectures]] \\
+[[file:lectures/colloq1.org][First colloq]]
 - [[file:lectures/1.pdf][Lecture 1]]
 - [[file:lectures/2.pdf][Lecture 2]]
 - [[file:lectures/3.pdf][Lecture 3]]
