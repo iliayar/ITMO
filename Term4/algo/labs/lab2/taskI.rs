@@ -46,7 +46,7 @@ struct Edge {
     to: usize,
     f: i64,
     rev: usize,
-    w: i64,
+    w: i64
 }
 
 #[derive(Debug)]
@@ -110,16 +110,20 @@ fn dijkstra(state: &State) -> (Vec<usize>, i64) {
     let mut p: Vec<usize> = vec![0; state.g.len()];
     d[state.s] = 0;
     set.insert((0, state.s));
-    while let Some((dv, v))= set.iter().cloned().next() {
-	set.remove(&(dv, v));
-	for j in state.g[v].iter().cloned() {
-	    let e = state.edges[j];
-	    if d[v] + e.w < d[e.to] && e.f < e.c {
-		set.remove(&(d[e.to], e.to));
-		d[e.to] = d[v] + e.w;
-		p[e.to] = j;
-		set.insert((d[e.to], e.to));
+    loop {
+	if let Some((dv, v))= set.iter().cloned().next() {
+	    set.remove(&(dv, v));
+	    for j in state.g[v].iter().cloned() {
+		let e = state.edges[j];
+		if d[v] + e.w < d[e.to] && e.f < e.c {
+		    set.remove(&(d[e.to], e.to));
+		    d[e.to] = d[v] + e.w;
+		    p[e.to] = j;
+		    set.insert((d[e.to], e.to));
+		}
 	    }
+	} else {
+	    break;
 	}
     }
     let mut res: Vec<usize> = Vec::new();
@@ -163,37 +167,24 @@ fn min_cost(state: &mut State) -> i64 {
 }
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-    let (n, m) = (scan.next::<usize>(), scan.next::<usize>());
-    let a: Vec<i64> = (0..n).map(|_| scan.next()).collect();
-    let mut d: Vec<Vec<i64>> = vec![vec![INF; n]; n];
-    for _ in 0..m {
-	let (u, v, w) = (scan.next::<usize>() - 1, scan.next::<usize>() - 1, scan.next::<i64>());
-	d[u][v] = w;
-    }
-    for i in 0..n {
-	d[i][i] = 0;
-    }
-    for k in 0..n {
-	for i in 0..n {
-	    for j in 0..n {
-		d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
-	    }
- 	}
-    }
-
+    const N: usize = 3;
+    let score1: Vec<i64> = (0..N).map(|_| scan.next::<i64>()).collect();
+    let score2: Vec<i64> = (0..N).map(|_| scan.next::<i64>()).collect();
+    let wins: [[bool; N]; N] = [[false, true, false],
+				[false, false, true],
+				[true, false, false]];
     let mut state = State {
-        g: vec![Vec::new(); 2*n + 2],
+        g: vec![Vec::new(); N*2 + 2],
         edges: Vec::new(),
-        t: 2*n + 1,
-        s: 2*n,
+        t: N*2,
+        s: N*2 + 1,
     };
-
-    for i in 0..n {
-	for j in n..2*n {
-	    add_or_edge(1, i, j, if i == j - n { a[i] } else { d[i][j - n] }, &mut state);
+    for i in 0..N {
+	for j in N..2*N {
+	    add_or_edge(INF, i, j, if wins[i][j - N] { 1 } else { 0 }, &mut state);
 	}
-	add_or_edge(1, state.s, i, 0, &mut state);
-	add_or_edge(1, i + n, state.t, 0, &mut state);
+	add_or_edge(score1[i], state.s, i, 0, &mut state);
+	add_or_edge(score2[i], i + N, state.t, 0, &mut state);
     }
     writeln!(out, "{}", min_cost(&mut state)).ok();
 }
@@ -221,6 +212,10 @@ fn main() {
 	    sol(&mut scan, &mut out);
 	} else {
 	    let mut scan = Scanner::new(Box::new(BufReader::new(stdin())));
+
+	    // This BufWriter has not been accepted by Codeforces
+	    // LOL. Without it, task passed with time 1981ms, with TL
+	    // 2000ms LOL LOL. Codeforces sucks
 	    let mut out = &mut BufWriter::new(stdout());
 	    sol(&mut scan, &mut out);
 	}
