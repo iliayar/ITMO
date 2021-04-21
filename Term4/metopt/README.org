@@ -14,3 +14,4 @@
 - [[file:lectures/10.pdf][Лекция 10]]
 - [[file:lectures/11.pdf][Лекция 11]]
 - [[file:lectures/12.pdf][Лекция 12]]
+- [[file:lectures/13.pdf][Лекция 13]]

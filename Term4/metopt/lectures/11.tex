@@ -1,4 +1,4 @@
-% Created 2021-04-14 Wed 12:50
+% Created 2021-04-21 Wed 10:03
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -149,8 +149,9 @@
      \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
      \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
      \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
-     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Предусловие}}}%
-     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Постусловие}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
      \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
      \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
      % Set other language requirements
@@ -158,10 +159,10 @@
   {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
-\title{Лекция 10}
+\title{Лекция 11}
 \hypersetup{
  pdfauthor={Ilya Yaroshevskiy},
- pdftitle={Лекция 10},
+ pdftitle={Лекция 11},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
@@ -174,9 +175,9 @@
 
 
 \section{Разреженный формат}
-\label{sec:org3c0aff6}
+\label{sec:orgfe858c6}
 \subsection{Строчно столбцовый формат}
-\label{sec:orga0976dc}
+\label{sec:org57db295}
 \begin{enumerate}
 \item Вещественный массив \(di[n]\) --- диагональные элементы
 \item Вещественный массив \(al, au\) --- по строкам и стобцам соответсвенно
@@ -213,7 +214,7 @@ a_{11} & & & & & & & & \\
 \end{enumerate}
 \end{examp}
 \subsection{Решение СЛАУ. Метод Гаусса}
-\label{sec:org2225445}
+\label{sec:org2ee10e9}
 \[ \begin{cases}
 a_{11}x_1 + a_{12} x_2 + \dots + a_{1n}x_n = b_1 \\
 a_{21}x_1 + a_{22} x_2 + \dots + a_{2n}x_n = b_2 \\
@@ -262,7 +263,7 @@ a_{nn}^{(n - 1)}x_n = b_n^{(n - 1)}
 
 \[ a_{ij}^{(k)} = a_{ij}^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}a_{kj}^{(k - 1)} \quad b_i^{(k)} = b_i^{(k - 1)} - \frac{a_{ik}^{(k - 1)}}{a_{kk}^{(k - 1)}}b_k^{(k - 1)} \quad \ k \in \overline{1, n};\ i,j \in \overline{k + 1, n}\]
 \subsection{Обратный ход Гаусса}
-\label{sec:org0f7aff8}
+\label{sec:org1a90e8d}
 \[ x_n = \frac{b_n^{(n - 1)}}{a_{nn}^{(n - 1)}} \]
 \[ \vdots \]
 \[ x_2 = \frac{b_2^{(1)} - a_{23}^{(1)} x_3 - \dots - a_{2n}^{(1)}x_n}{a_{22}^{(1)}} \]
