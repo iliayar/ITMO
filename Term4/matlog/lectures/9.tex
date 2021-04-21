@@ -1,8 +1,8 @@
-% Created 2021-04-16 Fri 15:17
+% Created 2021-04-21 Wed 20:42
 % Intended LaTeX compiler: pdflatex
 
-  \documentclass[english]{article}
-  \usepackage[T1, T2A]{fontenc}
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
 \usepackage[english, russian]{babel}
 \usepackage{minted}
@@ -30,10 +30,10 @@
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{capt-of}
-  
-  \usepackage{geometry}
-  \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-   \usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
      linkcolor=blue,
@@ -150,7 +150,7 @@
      \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
      \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
      \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
-     \renewcommand{\algorithmicrensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
      \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
      \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
      \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
@@ -174,9 +174,10 @@
 
 
 \section{Теория первого порядка}
-\label{sec:orgd860e13}
+\label{sec:orgcf6f307}
 \begin{definition}
 \textbf{Теория I порядка} --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
+\label{orgf71ef0e}
 \end{definition}
 \begin{definition}
 Будем говорить, что \(N\) соответсвует \textbf{аксиоматике Пеано} если:
@@ -185,11 +186,12 @@
 \item задан \(0 \in N\): нет \(a \in N\), что \(a' = 0\)
 \item если \(P(x)\) --- некоторое утверждение, зависящее от \(x \in N\), такое, что \(P(0)\) и всегда, когда \(P(x)\), также и \(P(x')\). Тогда \(P(x)\)
 \end{itemize}
+\label{org7d6616e}
 \end{definition}
 \beginproperty
 \begin{property}
 \(0\) единственный
-\label{orgde224d2}
+\label{org7a375b3}
 \end{property}
 \begin{proof}
 \(P(x)=x = 0\) либо существует \(t:\ t' = x\)
@@ -198,15 +200,16 @@
 \item \(P(x) \to P(x')\). Заметим, что \(x'\) --- не `ноль`
 \end{itemize}
 \(P(x)\) выполнено при всех \(x \in N\)
-\label{org4c1cc97}
+\label{org86e7929}
 \end{proof}
 \begin{definition}
 \[ a + b = \begin{cases}
 a & b = 0 \\
 (a + c)' & b = c'
 \end{cases}\]
-Можем определить это опираясь на \hyperref[org4c1cc97]{доказательтво}
+\label{org8fe3c59}
 \end{definition}
+Можем определить это опираясь на \hyperref[org86e7929]{доказательтво}
 \begin{definition}
 \begin{itemize}
 \item \(1 = 0'\)
@@ -227,17 +230,19 @@ a & b = 0 \\
 0 & b = 0 \\
 (a \cdot c) + a & b = c'
 \end{cases}\]
+\label{org45978af}
 \end{definition}
 \begin{definition}
 \[ a^b = \begin{cases}
 1 & b = 0 \\
 (a^c)\cdot a & b = c'
 \end{cases}\]
+\label{org9112a76}
 \end{definition}
 \beginproperty
 \begin{property}
 \(a + 0 = 0 + a\)
-\label{orgf5303ba}
+\label{orgae47dd2}
 \end{property}
 \begin{proof}
 \(P(a) = (a + 0 = 0 + a)\) \\
@@ -266,12 +271,12 @@ a & b = 0 \\
 \(a + b = b + a\)
 \end{property}
 \begin{proof}
-\uline{База} \(b = 0\) --- \hyperref[orgf5303ba]{свойство} \\
+\uline{База} \(b = 0\) --- \hyperref[orgae47dd2]{свойство} \\
 \uline{Переход} \(a + c'' = c'' + a\), если \(a + c' = c' + a\)
 \[ a + c'' = (a + c')' = (c' + a)' = c' + a' = c'' + a\]
 \end{proof}
 \subsection{Формальная арифметика}
-\label{sec:org6ce972c}
+\label{sec:org57609f0}
 \begin{definition}
 Исчесление предикатов:
 \begin{itemize}

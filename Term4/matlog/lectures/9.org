@@ -26,13 +26,14 @@
 - \(P(x) \to P(x')\). Заметим, что \(x'\) --- не `ноль`
 \(P(x)\) выполнено при всех \(x \in N\)
 #+end_proof
+#+NAME: сложение
 #+begin_definition org
 \[ a + b = \begin{cases}
 a & b = 0 \\
 (a + c)' & b = c'
 \end{cases}\]
-Можем определить это опираясь на [[zero_9_proof][доказательтво]]
 #+end_definition
+Можем определить это опираясь на [[zero_9_proof][доказательтво]]
 #+begin_definition org
 - \(1 = 0'\)
 - \(2 = 0''\)
@@ -46,12 +47,14 @@ a & b = 0 \\
 #+begin_solution org
 \[ 2 + 2 = 0'' + 0'' = (0'' + 0')' = ((0'' + 0)')' = ((0'')')' = 0'''' = 4 \]
 #+end_solution
+#+NAME: умножение
 #+begin_definition org
 \[ a \cdot b = \begin{cases}
 0 & b = 0 \\
 (a \cdot c) + a & b = c'
 \end{cases}\]
 #+end_definition
+#+NAME: возведение в степень
 #+begin_definition org
 \[ a^b = \begin{cases}
 1 & b = 0 \\
