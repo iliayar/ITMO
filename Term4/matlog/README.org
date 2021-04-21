@@ -1,4 +1,4 @@
-#+TITLE: [[file:Term4/matlog/][Mathematical logic]]
+#+TITLE: Mathematical logic
 * Lectures
 [[file:lectures/all_lectures.pdf][All lectures]] \\
 [[file:lectures/colloq1.pdf][First colloq]]

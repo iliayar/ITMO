@@ -1,4 +1,4 @@
-#+TITLE: [[file:Term4/algo/][Algorithms and data structures]]
+#+TITLE: Algorithms and data structures
 
 
 * Homeworks
