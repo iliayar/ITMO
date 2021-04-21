@@ -1,16 +1,16 @@
-#+TITLE: Математическая логика
-* Лекции
-[[file:lectures/all_lectures.pdf][Все лекции]]
-- [[file:lectures/1.pdf][Лекция 1]]
-- [[file:lectures/2.pdf][Лекция 2]]
-- [[file:lectures/3.pdf][Лекция 3]]
-- [[file:lectures/4.pdf][Лекция 4]]
-- [[file:lectures/5.pdf][Лекция 5]]
-- [[file:lectures/6.pdf][Лекция 6]]
-- [[file:lectures/7.pdf][Лекция 7]]
-- [[file:lectures/8.pdf][Лекция 8]]
-- [[file:lectures/9.pdf][Лекция 9]]
-* Домашки
+#+TITLE: [[file:Term4/matlog/][Mathematical logic]]
+* Lectures
+[[file:lectures/all_lectures.pdf][All lectures]]
+- [[file:lectures/1.pdf][Lecture 1]]
+- [[file:lectures/2.pdf][Lecture 2]]
+- [[file:lectures/3.pdf][Lecture 3]]
+- [[file:lectures/4.pdf][Lecture 4]]
+- [[file:lectures/5.pdf][Lecture 5]]
+- [[file:lectures/6.pdf][Lecture 6]]
+- [[file:lectures/7.pdf][Lecture 7]]
+- [[file:lectures/8.pdf][Lecture 8]]
+- [[file:lectures/9.pdf][Lecture 9]]
+* Homeworks
 - [[file:hws/1.pdf][1.3.g]]
 - [[file:hws/2.pdf][3.4.b]]
 - [[file:hws/4.4.b.pdf][4.4.b]]

@@ -1,9 +1,9 @@
-#+TITLE: Алгоритмы и структуры данных
+#+TITLE: Algorithms and data structures
 
-* Лабы
-- [[file:lab1/][Сортировки, куча, бинпоиск]] \\
-  [[file:lab1/statements.pdf][Условия]]
-- [[file:lab2/][Стеки, очереди, СНМ]] \\
-  [[file:lab2/statements.pdf][Условия]]
-- [[file:lab3/][ДП]] \\
-  [[file:lab3/statements.pdf][Условия]]
+* Labs
+- [[file:lab1/][Sorts, Heap, Binary search]] \\
+  [[file:lab1/statements.pdf][Statements]]
+- [[file:lab2/][Stack, Queue, DSU]] \\
+  [[file:lab2/statements.pdf][Statements]]
+- [[file:lab3/][DP]] \\
+  [[file:lab3/statements.pdf][Statements]]

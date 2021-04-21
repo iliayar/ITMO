@@ -1,5 +1,5 @@
-#+TITLE: Линейная алгебра
-* Лабы
-1. [[file:LAB1/][Операции с матрицами]]
-2. [[file:LAB2/][Канонир]]
-3. [[file:LAB3/][Отражения к кубе]]
+#+TITLE: Linear algebra
+* Labs
+1. [[file:LAB1/][Matrix operations]]
+2. [[file:LAB2/][Canonear]]
+3. [[file:LAB3/][Reflections in cube]]
