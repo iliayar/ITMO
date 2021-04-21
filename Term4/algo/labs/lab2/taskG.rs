@@ -4,9 +4,6 @@ use std::cmp::{min,max};
 use std::io::{BufWriter, stdin, stdout, Write, BufRead, BufReader};
 use std::iter;
 use std::ops;
-use std::collections::BinaryHeap;
-use std::collections::BTreeSet;
-use std::cmp::Reverse;
 
 const FILENAME: &str = "filename";
 const IS_FILES: bool = false;
@@ -37,7 +34,7 @@ impl Scanner {
 
 //================================ CODE BEGIN ===============================================
 
-const INF: i64 = 1e+18 as i64;
+const INF: i64 = 100_000;
 
 #[derive(Clone, Copy, Debug)]
 struct Edge {
@@ -104,46 +101,8 @@ fn ford(state: &State) -> (Vec<usize>, i64) {
     return (res, m);
 }
 
-fn dijkstra(state: &State) -> (Vec<usize>, i64) {
-    let mut d: Vec<i64> = vec![INF; state.g.len()];
-    let mut set = BTreeSet::new();
-    let mut p: Vec<usize> = vec![0; state.g.len()];
-    d[state.s] = 0;
-    set.insert((0, state.s));
-    loop {
-	if let Some((dv, v))= set.iter().cloned().next() {
-	    set.remove(&(dv, v));
-	    for j in state.g[v].iter().cloned() {
-		let e = state.edges[j];
-		if d[v] + e.w < d[e.to] && e.f < e.c {
-		    set.remove(&(d[e.to], e.to));
-		    d[e.to] = d[v] + e.w;
-		    p[e.to] = j;
-		    set.insert((d[e.to], e.to));
-		}
-	    }
-	} else {
-	    break;
-	}
-    }
-    let mut res: Vec<usize> = Vec::new();
-    if d[state.t] == INF {
-	return (res, INF);
-    }
-
-    let mut i = p[state.t];
-    loop {
-	res.push(i);
-	if state.edges[i].from == state.s {
-	    break;
-	}
-	i = p[state.edges[i].from];
-    }
-    // res.reverse();
-    return (res, d[state.t]);
-}
-
-fn with_delta((path, m): (Vec<usize>, i64), state: &State) -> (Vec<usize>, i64, bool) {
+fn ford_with_delta(state: &State) -> (Vec<usize>, i64, bool) {
+    let (path, m) = ford(state);
     let mut delta: i64 = INF;
     for e in path.iter().cloned() {
 	delta = min(delta, state.edges[e].c - state.edges[e].f);
@@ -152,7 +111,7 @@ fn with_delta((path, m): (Vec<usize>, i64), state: &State) -> (Vec<usize>, i64, 
 }
 
 fn min_cost(state: &mut State) -> i64 {
-    while let (path, delta, true) = with_delta(dijkstra(state), state) {
+    while let (path, delta, true) = ford_with_delta(state) {
 	for e in path {
 	    let edge = state.edges[e];
 	    state.edges[e].f += delta;
@@ -168,27 +127,18 @@ fn min_cost(state: &mut State) -> i64 {
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
     let n = scan.next::<usize>();
+    let m = scan.next::<usize>();
     let mut state = State {
-        g: vec![Vec::new(); 2*n + 2],
+        g: vec![Vec::new(); n],
         edges: Vec::new(),
-        t: 2*n,
-        s: 2*n + 1,
+        t: n - 1,
+        s: 0,
     };
-    for i in 0..n {
-	for j in n..2*n {
-	    let w = scan.next::<i64>();
-	    add_or_edge(1, i, j, w, &mut state);
-	}
-	add_or_edge(1, state.s, i, 0, &mut state);
-	add_or_edge(1, i + n, state.t, 0, &mut state);
+    for _ in 0..m {
+	let (u, v, c, w) = (scan.next::<usize>() - 1, scan.next::<usize>() - 1, scan.next::<i64>(), scan.next::<i64>());
+	add_or_edge(c, u, v, w, &mut state);
     }
-    let c = min_cost(&mut state);
-    writeln!(out, "{}", c).ok();
-    for e in state.edges.iter().step_by(2) {
-	if e.f == 1 && e.to != state.t && e.from != state.s {
-	    writeln!(out, "{} {}", e.from + 1, e.to - n + 1).ok();
-	}
-    }
+    writeln!(out, "{}", min_cost(&mut state)).ok();
 }
 
 //================================ CODE END =================================================
@@ -214,10 +164,6 @@ fn main() {
 	    sol(&mut scan, &mut out);
 	} else {
 	    let mut scan = Scanner::new(Box::new(BufReader::new(stdin())));
-
-	    // This BufWriter has not been accepted by Codeforces
-	    // LOL. Without it, task passed with time 1981ms, with TL
-	    // 2000ms LOL LOL. Codeforces sucks
 	    let mut out = &mut BufWriter::new(stdout());
 	    sol(&mut scan, &mut out);
 	}
