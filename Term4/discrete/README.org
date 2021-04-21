@@ -11,6 +11,7 @@
 - [[file:lectures/6.pdf][Лекция 6]]
 - [[file:lectures/7.pdf][Лекция 7]]
 - [[file:lectures/8.pdf][Лекция 8]]
+- [[file:lectures/9.pdf][Лекция 9]]
 * Лабы
 - [[file:labs/lab1/][Производящие функции]] \\
   [[file:labs/lab1/s4-01-lab-genfunction.pdf][Условия]]

@@ -1,0 +1,233 @@
+% Created 2021-04-21 Wed 16:15
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 9}
+\hypersetup{
+ pdfauthor={Ilya Yaroshevskiy},
+ pdftitle={Лекция 9},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\(q_1, q_2, \dots, q_n, \dots\) --- программы
+\begin{enumerate}
+\item \(q_i(j)\) не зависает
+\item \(\forall\) разрешимого \(A\), \(A = \{j \big| q_i(j) = 1\}\) для некоторого\(i\)
+\item \((i, j) \mapsto q_i(j)\) --- вычислимая функция
+\end{enumerate}
+
+
+\[ L(p) = \{x \big| p(x) = 1\} \]
+\begin{itemize}
+\item \(A\) --- перечислимый язык \\
+\item \(p_A\) --- полуразрешитель \(A\)
+\item \(L(p_A) = A\)
+\begin{itemize}
+\item \(L: \var{Prog} \to 2^{\Sigma^*}\)
+\item \(L: \var{Prog} \to \var{RE}\) (Recursively Enumerable)
+\end{itemize}
+\item \(X\) --- свойство языков \(X \subset \var{RE}\)
+\item Конечные языки \(\var{Finite} \subset \var{RE}\)
+\item Языки, содержащие \(\varepsilon\) \(\underbrace{X_\varepsilon}_{\text{prop}} \subset \underbrace{\var{RE}}_{\text{prop}}\) \\
+\(\underbrace{A}_{\text{lang}} \in \underbrace{X_\varepsilon}_{\text{prop}} \Leftrightarrow \underbrace{\varepsilon}_{\text{string}} \in \underbrace{A}_{\text{lang}}\)
+\end{itemize}
+Посмторим на их типы
+\begin{itemize}
+\item \(\Sigam^*\) --- \texttt{string}
+\item \(lang\) --- \texttt{set<string>}
+\item \(prop\) --- \texttt{set<lang>}
+\end{itemize}
+\begin{definition}
+\(X\) --- \textbf{свойство перечислимых языков}. \\
+Язык свойства \(L: \var{prop} \to \var{lang}\ L(X) = \{p \big| L(p) \in X\}\)
+\end{definition}
+\begin{examp}
+\(L(RE) = \{p \big| L(p) \in RE\} = \var{Prog}\)
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn q(p: Prop) -> bool {
+    return 1;
+}
+\end{minted}
+\end{examp}
+\begin{examp}
+\(L(\emptyset_p) = \{p \big| L(p) \in \emptyset_p\} = \emptyset_e\)
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
+fn q(p: Prop) -> bool {
+    return 0;
+}
+\end{minted}
+\end{examp}
+\begin{theorem}[Rice, Успенский-Райс]
+\-
+\begin{itemize}
+\item \(X \subset \var{RE}\)
+\item \(X \neq \emptyset\)
+\item \(X \neq \var{RE}\)
+\end{itemize}
+\uline{Тогда} \(L(X)\) не разрешим
+\end{theorem}
+\todo
+\end{document}
