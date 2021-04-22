@@ -33,20 +33,23 @@
 - \(\R\) не имеет наименьшего
 #+end_examp
 * Табличные модели
+#+NAME: табличная модель
 #+begin_definition org
 Назовем модель *табличной* для ИИВ:
 - \(V\) --- множество истинностных значений \\
   \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
   Выделенные значения \(T \in V\) \\
-  \(\llbracketp+i\rrbracket \in V\) \(f_p : p_i \to V\)
+  \(\llbracket p_i \rrbracket \in V\) \(f_p : p_i \to V\)
 - \(p_i = f_\P(p_i)\) \\
   \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
   \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
 +Если \(\vdash \alpha\), то+ \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
 #+end_definition
+#+NAME: конечная модель
 #+begin_definition org
 Конечная модель: модель где \(V\) --- конечно
 #+end_definition
+#+NAME: нетабличность ИИВ
 #+begin_theorem org
 У ИИВ не существует полной табличной модели
 #+end_theorem

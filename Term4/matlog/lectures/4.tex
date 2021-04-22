@@ -1,5 +1,6 @@
-% Created 2021-03-11 Thu 22:42
+% Created 2021-04-22 Thu 20:12
 % Intended LaTeX compiler: pdflatex
+
 \documentclass[english]{article}
 \usepackage[T1, T2A]{fontenc}
 \usepackage[lutf8]{luainputenc}
@@ -20,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -30,7 +34,6 @@
 
 \usepackage{geometry}
 \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-
  \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
@@ -43,19 +46,36 @@
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{cd}
 \usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -111,6 +131,33 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 4}
@@ -119,7 +166,7 @@
  pdftitle={Лекция 4},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -155,19 +202,20 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:orga719833}
+\label{sec:org5e0f3f8}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
 \item \(V\) --- множество истинностных значений \\
 \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
 Выделенные значения \(T \in V\) \\
-\(\llbracketp+i\rrbracket \in V\) \(f_p : p_i \to V\)
+\(\llbracket p_i \rrbracket \in V\) \(f_p : p_i \to V\)
 \item \(p_i = f_\P(p_i)\) \\
 \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
 \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
 \end{itemize}
 \sout{Если \(\vdash \alpha\), то} \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
+\label{org438e499}
 \end{definition}
 \begin{definition}
 Конечная модель: модель где \(V\) --- конечно
@@ -176,7 +224,7 @@
 У ИИВ не существует полной табличной модели
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:org587a363}
+\label{sec:org81369fe}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -195,6 +243,7 @@
 \((\Vdash)  \subseteq W \times \P\) \\
 При этом, если \(W_j \Vdash p_i\) и \(W_j \preceq W_k\), то \(W_j \Vdash p\)
 \end{enumerate}
+\label{org4725051}
 \end{defintion}
 \begin{definition}
 \-
@@ -225,7 +274,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:org8ce93f9}
+\label{sec:org80b4826}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
@@ -255,9 +304,11 @@
 \end{enumerate}
 \begin{definition}
 \textbf{Дизъюнктивность} ИИВ: \(\vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
+\label{orged95800}
 \end{definition}
 \begin{definition}
 Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
+\label{orgcd66e3f}
 \end{definition}
 \begin{definition}
 Пусть \(\A\) --- алгебра Гейтинга, тогда:
@@ -277,6 +328,7 @@
 
 Добавим новый элемент \(1_{\Gamma(\A)}\) перенеименуем \(1_\A\) в  \(\omega\)
 \end{enumerate}
+\label{org9b243fc}
 \end{definition}
 \begin{theorem}
 \-

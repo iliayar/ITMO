@@ -1,4 +1,4 @@
-% Created 2021-04-21 Wed 20:44
+% Created 2021-04-22 Thu 20:20
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -174,9 +174,9 @@
 
 
 \section{Топология}
-\label{sec:org5e36104}
+\label{sec:orgba4eb89}
 \subsection{Топологическое пространство, открытое и замкнутое множество}
-\label{sec:org172b294}
+\label{sec:orgdf8afd3}
 \begin{definition}
 Рассмотрим множество \(X\) --- \textbf{носитель}. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- \textbf{топология}.
 \begin{enumerate}
@@ -184,34 +184,59 @@
 \item \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
 \item \(\emptyset, X \in \Omega\)
 \end{enumerate}
-\label{orgc32cd87}
+\label{org3fba7b7}
 \end{definition}
 \subsection{Внутренность и замыкание множества}
-\label{sec:org303a73f}
+\label{sec:orge006e07}
 \begin{definition}
 \[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.}\}\]
-\label{orga525d7c}
+\label{orgbdf33ff}
+\end{definition}
+\begin{definition}
+\textbf{Замыкание} X --- \(\overline{X} = \text{наим.}\{A \not\in \Omega \big| X \subseteq A}\)
 \end{definition}
 \subsection{Топология стрелки}
-\label{sec:orgf98160b}
+\label{sec:org52aa965}
+\begin{theorem}
+\-
+\begin{itemize}
+\item \(a + b = a \cup b\)
+\item \(a \cdot b = a \cap b\)
+\item \(a \to b = \left((X \setminus a) \cup b\right)^\circ\)
+\item \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
+\end{itemize}
+\uline{Тогда} \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
+\label{orgdaf6f57}
+\end{theorem}
 \subsection{Дискретная топология}
-\label{sec:orgfa67b97}
+\label{sec:org5c25b3d}
 \begin{examp}
 Дискретная топология: \(\Omega = 2^X\) --- любое множество открыто. Тогда \(\langle \Omega, \le \rangle\) --- булева алгебра
-\label{org5a12b02}
+\label{orga4c57fe}
 \end{examp}
 \subsection{Топология на частично упорядоченном множестве}
-\label{sec:org94bb5aa}
+\label{sec:org0b2594b}
+Топология на частично упорядоченном множестве \(\langle \Omega, \le \rangle\) --- булева алгебра, где \(\Omega\) --- дискретная топология
 \subsection{Индуцированная топология}
-\label{sec:org6009c21}
+\label{sec:org6d4b409}
+\begin{definition}
+\textbf{Индуцированная топология} на подпространстве \(\langle X, \Omega \rangle\) --- топлогия. Пусть \(Y \subset X\). Определим \(\Omega_Y\) --- семейство подмножеств \(Y\) так:
+\[ \Omega_Y = \{U \cap Y \big| U \in \Omega\} \]
+\(\Omega_Y\) --- индуцированная топология на подпространстве \(Y\).
+\end{definition}
 \subsection{Связность}
-\label{sec:org252f409}
+\label{sec:orgc6248f4}
+Связность – свойство топологических пространства, состоящее в том, что
+пространство нельзя представить в виде суммы двух отделенных друг от
+друга частей, или, более строго, непустых непересекающихся
+открыто-замкнутых подмножеств.
+
 \section{Исчисление высказываний}
-\label{sec:org2d7b466}
+\label{sec:orgd4dd57f}
 \subsection{Метапеременные, пропозициональные переменные, Высказывания}
-\label{sec:org76419e8}
+\label{sec:org334fcf0}
 \subsubsection{Язык}
-\label{sec:orga79036d}
+\label{sec:org129356e}
 \begin{enumerate}
 \item Пропозициональные переменные \\
 \(A'_i\) --- большая буква начала латинского алфавита
@@ -220,7 +245,7 @@
 Тогда \((\alpha \to \beta),(\alpha \& \beta),(\alpha \vee \beta), (\neg \alpha)\) --- высказывания
 \end{enumerate}
 \subsubsection{Мета и предметные}
-\label{sec:org99b1e11}
+\label{sec:org785537b}
 \begin{itemize}
 \item \(\alpha, \beta, \gamma, \dots, \varphi, \psi, \dots\) --- метапеременные для выражений
 \item \(X, Y, Z\) --- метапеременные для предметные переменные
@@ -234,9 +259,9 @@
 \[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq (A \to P), X \coloneqq B] \equiv \color{black} (A \to P) \to (A \to B) \]
 \end{examp}
 \subsection{Схемы аксиом, доказуемость}
-\label{sec:orge61950f}
+\label{sec:orgaf67aa8}
 \subsubsection{Теория доказательств}
-\label{sec:orge505e10}
+\label{sec:orge6e7887}
 \begin{definition}
 \textbf{Схема высказывания} --- строка соответсвующая определению высказывания, с:
 \begin{itemize}
@@ -259,9 +284,9 @@
 \end{enumerate}
 \end{definition}
 \subsection{Правило Modus Ponens, доказательство, вывод из гипотез}
-\label{sec:org162008d}
+\label{sec:org232952d}
 \subsubsection{Правило Modus Ponens и доказательство}
-\label{sec:org96d64c8}
+\label{sec:org945ba52}
 \begin{definition}
 \textbf{Доказательство} (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):
 \begin{itemize}
@@ -290,9 +315,9 @@
 \end{itemize}
 \end{definition}
 \subsection{Множество истинностных значений, модель (оценка перменных), Оценка высказывания}
-\label{sec:orgff00222}
+\label{sec:orgfa68ddc}
 \subsubsection{Теория моделей}
-\label{sec:orge560fb5}
+\label{sec:org725cf62}
 \begin{itemize}
 \item \(\mathcal{P}\) --- множество предметных переменных
 \item \(\llb\cdot\rrb: \mathcal{T} \to V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
@@ -326,70 +351,80 @@
 \end{examp}
 \end{enumerate}
 \subsection{Общезначимость}
-\label{sec:orgf99440b}
+\label{sec:org263533b}
 \begin{examp}
 \(\vDash \alpha\) --- \(\alpha\) общезначимо
-\label{org0078f4f}
+\label{org6b26a22}
 \end{examp}
 \subsection{Выполнимость}
-\label{sec:org5db5c37}
+\label{sec:orgc500486}
+Существует оценка, при которой высказывание истинно
 \subsection{Невыполнимость}
-\label{sec:org7d3be04}
+\label{sec:orgf5bd85c}
+Отрицание выполнимости
 \subsection{Следование}
-\label{sec:orge3ee7f1}
+\label{sec:org6e2a293}
 \begin{definition}
 Следование: \(\Gamma \vDash \alpha\), если
 \begin{itemize}
 \item \(\Gamma = \gamma_1, \dots, \gamma_n\)
 \item Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
 \end{itemize}
-\label{org1df6c41}
+\label{orgf0e0032}
 \end{definition}
 \subsection{Корректность}
-\label{sec:orgfe58268}
+\label{sec:orge2e46f4}
 \begin{definition}
 \sout{Теория} Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
-\label{orgfbed2ab}
+\label{orgb0b428e}
 \end{definition}
 \subsection{Полнота}
-\label{sec:org17247de}
+\label{sec:org08e3e86}
 \begin{definition}
 Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
-\label{org0d85fd2}
+\label{org427278f}
 \end{definition}
 \subsection{Противоречивость}
-\label{sec:orgee8ce80}
+\label{sec:org18a301f}
+\begin{definition}
+Множество формул \(\Gamma\) \textbf{противоречиво}, если для некоторой
+формулы \(\alpha\) имеем \(\Gamma \vdash \alpha\) и \(\Gamma \vdash
+\neg \alpha\)
+\end{definition}
 \subsection{Теорема о дедукции}
-\label{sec:orgaa4b5d4}
+\label{sec:org5727066}
 \begin{theorem}[о дедукции]
 \(\Gamma, \alpha \vdash \beta\) \uline{тогда и только тогда, когда} \(\Gamma \vdash \alpha \to \beta\)
-\label{org16b9213}
+\label{org532215c}
 \end{theorem}
 \subsection{Теорема о корректности}
-\label{sec:orgb2c5a2d}
+\label{sec:orgc26f2d9}
 \begin{theorem}[о корректности]
 Пусть \(\vdash \alpha\) \\
 \uline{Тогда} \(\vDash \alpha\)
-\label{org1047dec}
+\label{org43ed26c}
 \end{theorem}
 \subsection{Теорема о полноте ИВ}
-\label{sec:org7cda326}
+\label{sec:orgd05a430}
 \begin{theorem}[о полноте]
 Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
-\label{org3b9fe39}
+\label{orge043c8e}
 \end{theorem}
 \section{Интуиционистское исчисление высказываний}
-\label{sec:org0f0389a}
+\label{sec:org2777334}
 \subsection{Закон исключенного третьего}
-\label{sec:orgaa08da2}
+\label{sec:orgf31fa0b}
+\[ \vdash A \vee \neg A \]
 \subsection{Закон снятия двойного отрицания}
-\label{sec:org2d8e7a4}
+\label{sec:org069d72d}
+\[ \vdash \neg\neg A \to A \]
 \subsection{Закон Пирса}
-\label{sec:org54b543f}
+\label{sec:orga936c0b}
+\[ \vdash ((A \to B) \to A) \to A \]
 \subsection{ВНК-интерпретация логических связок}
-\label{sec:orgc1c2b28}
+\label{sec:orga5e88e0}
 \subsubsection{Интуиционистская логика}
-\label{sec:org4fd3e20}
+\label{sec:org2d8cd24}
 \(A \vee B\) --- плохо
 \begin{examp}
 Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
@@ -409,9 +444,12 @@
 \end{itemize}
 \end{defintion}
 \subsection{Теорема Гливенко}
-\label{sec:orgbef31f7}
+\label{sec:orgd00b656}
+\begin{theorem}
+Обозначим доказуемость высказывания \(\alpha\) в классической логике как \(\vdash_{\text{к}} \alpha\), а в интуицонистской как \(\vdash_{\text{и}}\). Оказывается возможным показать, что какое бы ни было \(\alpha\), если \(\vdash_{\text{к}} \alpha\), то \(\vdash_{\text{и}} \neg\neg \alpha\)
+\end{theorem}
 \subsection{Решетка}
-\label{sec:orga1d880e}
+\label{sec:org434fbd8}
 \begin{definition}
 Фиксируем \(A\) \\
 Частичный порядок --- антисимметричное, транзитивное, рефлексивное отношение \\
@@ -421,7 +459,7 @@
 \item \textbf{Наименьший элемент} \(S\) --- такой \(k \in S\), что если \(x \in S\), то \(k \le x\)
 \item \textbf{Минимальный элемент} \(S\) --- такой \(k \in S\), что нет \(x \in S\), что \(x \le k\)
 \end{itemize}
-\label{orgb4c067a}
+\label{orgb0ade5e}
 \end{definition}
 \begin{definition}
 \-
@@ -429,7 +467,7 @@
 \item \textbf{Множество верхних граней} \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
 \item \textbf{Множество нижних граней} \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
 \end{itemize}
-\label{org89daca7}
+\label{org87ff90c}
 \end{definition}
 \begin{definition}
 \-
@@ -437,45 +475,45 @@
 \item \textbf{\(a + b\)} --- нименьший элемент множества верхних граней
 \item \textbf{\(a \cdot b\)} --- наибольший элемент множества нижних граней
 \end{itemize}
-\label{org5312866}
+\label{org487335f}
 \end{definition}
 \begin{definition}
 \textbf{Решетка} = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
 т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
-\label{org118aef2}
+\label{orgd5b2879}
 \end{definition}
 \subsection{Дистрибутивная решетка}
-\label{sec:org88037ff}
+\label{sec:org0437a37}
 \begin{definition}
 \textbf{Дистрибутивная решетка} если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
-\label{org004cb90}
+\label{org802842e}
 \end{definition}
 \subsection{Импликативная решетка}
-\label{sec:org8545684}
+\label{sec:org6afaa4a}
 \begin{definition}
 \textbf{Импликативная решетка} --- решетка, где для любых \(a, b\) есть \(a \to b\)
-\label{orgc22fd32}
+\label{orgf9d03f8}
 \end{definition}
 \subsection{Алгебра Гейтинга}
-\label{sec:org9f8d5e9}
+\label{sec:org9dd669a}
 \begin{definition}
 \textbf{Псевдобулева алгебра (алгебра Гейтинга)} --- импликативная решетка с \(0\)
-\label{org176cd26}
+\label{org7f6779b}
 \end{definition}
 \subsection{Булева алгебра}
-\label{sec:orgc69eb7e}
+\label{sec:org9ef96c2}
 \begin{definition}
 \textbf{Булева алгебра} --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
-\label{org7e00b01}
+\label{org48a5e7f}
 \end{definition}
 \subsection{Геделева алгебра}
-\label{sec:orgdd9f3a6}
+\label{sec:org3759eff}
 \begin{definition}
 Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
-\label{orgad11f3d}
+\label{orgba0995a}
 \end{definition}
 \subsection{Операция \(\Gamma(A)\)}
-\label{sec:org91bf212}
+\label{sec:org51d75d9}
 \begin{definition}
 Пусть \(\A\) --- алгебра Гейтинга, тогда:
 \begin{enumerate}
@@ -494,20 +532,51 @@
 
 Добавим новый элемент \(1_{\Gamma(\A)}\) перенеименуем \(1_\A\) в  \(\omega\)
 \end{enumerate}
-\label{org7bb5345}
+\label{org864fe88}
 \end{definition}
 \subsection{Алгебра Линденбаума}
-\label{sec:orga096b36}
+\label{sec:org3ab6859}
+\begin{definition}
+\(X\) --- все формулы логики
+\begin{itemize}
+\item \(\alpha \le \beta\) --- это \(\alpha \vdash \beta\)
+\item \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
+\item \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
+\end{itemize}
+\label{orgba752de}
+\end{definition}
+\begin{property}
+\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\label{org738b9b3}
+\end{property}
 \subsection{Свойство дизъюнктивности ИИВ}
-\label{sec:orgfa96d89}
+\label{sec:org94b8abd}
 \begin{definition}
 \textbf{Дизъюнктивность} ИИВ: \(\vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
-\label{orgd754ffd}
+\label{orgf0dd38e}
 \end{definition}
 \subsection{Свойство нетабличности ИИВ}
-\label{sec:orgdfc67d2}
+\label{sec:orge9cf82f}
+\begin{definition}
+Назовем модель \textbf{табличной} для ИИВ:
+\begin{itemize}
+\item \(V\) --- множество истинностных значений \\
+\(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
+Выделенные значения \(T \in V\) \\
+\(\llbracket p_i \rrbracket \in V\) \(f_p : p_i \to V\)
+\item \(p_i = f_\P(p_i)\) \\
+\(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
+\(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
+\end{itemize}
+\sout{Если \(\vdash \alpha\), то} \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
+\label{orgafc9c83}
+\end{definition}
+\begin{theorem}
+У ИИВ не существует полной табличной модели
+\label{orgb852951}
+\end{theorem}
 \subsection{Модель Крипке, Вынужденность}
-\label{sec:orgbd9a4a2}
+\label{sec:orgb000dca}
 \begin{defintion}
 \-
 \begin{enumerate}
@@ -517,14 +586,14 @@
 \((\Vdash)  \subseteq W \times \P\) \\
 При этом, если \(W_j \Vdash p_i\) и \(W_j \preceq W_k\), то \(W_j \Vdash p\)
 \end{enumerate}
-\label{orgea0b0cc}
+\label{org295d109}
 \end{defintion}
 \section{Исчиление предикатов}
-\label{sec:orga5bbbc9}
-\subsection{Предикатные и функциональные символы}
-\label{sec:org0940075}
+\label{sec:orgc8f39bc}
+\subsection{Предикатные и функциональные символы, константы и пропозициональные переменные}
+\label{sec:orgcf01154}
 \subsubsection{Исчисление предикатов}
-\label{sec:orgec0474d}
+\label{sec:orgcbde718}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
@@ -558,7 +627,7 @@
 \end{definition}
 \begin{enumerate}
 \item Сокращение записи
-\label{sec:org89292cc}
+\label{sec:org95b7a72}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -566,12 +635,10 @@
 Правильный вариант(настоящее выражние):
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \end{enumerate}
-\subsection{Константы и пропозициональные переменные}
-\label{sec:org5ddc062}
 \subsection{Свободные и связанные вхождения предметных переменных в формулу}
-\label{sec:org34a6107}
+\label{sec:orgbcbaf07}
 \subsubsection{Вхождение}
-\label{sec:orgbfdc2e6}
+\label{sec:org2ad6512}
 \begin{examp}
 \[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
 1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
@@ -603,7 +670,7 @@
 \end{description}
 \end{examp}
 \subsubsection{Свободные подстановки}
-\label{sec:org7ca4d51}
+\label{sec:orgcb7cb2f}
 \begin{definition}
 \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
 \end{definition}
@@ -625,9 +692,9 @@
 Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
 \end{examp}
 \subsection{Свобода для подстановки, Правила вывода для кванторов, аксиомы исчисления предикатов для кванторов, оценки и модели в исчислении предикатов}
-\label{sec:org4273f4d}
+\label{sec:org2f18530}
 \subsubsection{Теория доказательств}
-\label{sec:orga48abc5}
+\label{sec:org352eea1}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
@@ -662,31 +729,31 @@ int f(int x) {
 Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
 \end{examp}
 \subsection{Теорема о дедукции для исчисления предикатов}
-\label{sec:org1108256}
+\label{sec:orgb88bfe1}
 \begin{theorem}
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 \begin{enumerate}
 \item Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если \(b\) в доказательстве \(\Gamma, \alpha \to \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)
 \item Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
 \end{enumerate}
-\label{org7e06597}
+\label{org209fb4e}
 \end{theorem}
 \subsection{Теорема о корректности для исчисления предикатов}
-\label{sec:org0fe561e}
+\label{sec:org9a7b325}
 \subsection{Полное множество (бескванторных) формул}
-\label{sec:org1cc34bf}
+\label{sec:orgd162598}
 \begin{definition}
 \(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
-\label{org49f0f53}
+\label{org29c9e0d}
 \end{definition}
 \begin{definition}
 Полное непротиворечивое замкнутых бескванторных формул --- такое, что для каждой замкнутой бескванторной формулы \(\alpha\): либо \(\alpha \in \Gamma\), либо \(\neg \alpha \in \Gamma\)
-\label{org5eb2a14}
+\label{orgb7be559}
 \end{definition}
 \subsection{Модель для формулы}
-\label{sec:orgeaa661b}
+\label{sec:orgf4b8074}
 \subsubsection{Теория моделей}
-\label{sec:org6720670}
+\label{sec:orga015200}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -726,37 +793,43 @@ int f(int x) {
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теорема Гёделя о полноте исчисления предикатов}
-\label{sec:org1d28c9b}
+\label{sec:orga838bf3}
 \begin{theorem}[Геделя о полноте]
 Если \(\Gamma\) --- полное неротиворечивое множество замкнутых(не бескванторных) фомул, то оно имеет модель
-\label{org9222f6f}
+\label{orga4c7648}
 \end{theorem}
 \subsection{Следствие из теоремы Гёделя о полноте исчисления предикатов}
-\label{sec:org818bc40}
+\label{sec:orgaaf2e9b}
 \begin{corollary}
 Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
-\label{org3398134}
+\label{org88ae865}
 \end{corollary}
-\subsection{Неразрешимость}
-\label{sec:org7a384a1}
-\subsection{Исчисления предикатов (формулировка, что такое неразрешимость).}
-\label{sec:orga6fd0cc}
+\subsection{Неразрешимость исчисления предикатов (формулировка, что такое неразрешимость).}
+\label{sec:org4c4654c}
+\begin{definition}
+\textbf{Язык} --- множество слов. Язык \(\mathcal{L}\) разрешим, если существует \(A\) --- алгоритм, что по слову \(w\): \\
+\(A(w)\) --- останавливается в `1`, если \(w \in \mathcal{L}\) и `0`, если \(w \not\in \mathcal{L}\)
+\label{org327a2e8}
+\end{definition}
 \begin{theorem}
 ИП неразрешимо
-\label{org8dd2b4e}
+\label{orgd4bbb8d}
 \end{theorem}
 \section{Арифметика и теории первого порядка}
-\label{sec:org44800f2}
+\label{sec:org29b37d7}
 \subsection{Теория первого порядка}
-\label{sec:org502c023}
+\label{sec:orga7bc347}
 \begin{definition}
 \textbf{Теория I порядка} --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
-\label{orgdfc51ca}
+\label{org1e37c31}
 \end{definition}
 \subsection{Модели и структуры теорий первого порядка}
-\label{sec:org37c961a}
+\label{sec:org433ced6}
+Назовём структурой теории первого порядка такую модель исчисления предикатов, что для всех нелогических
+функциональных и предикатных символов теории в ней задана оценка.
+Назовём моделью теории первого порядка такую структуру, что все нелогические аксиомы данной теории в ней истинны.
 \subsection{Аксиоматика Пеано}
-\label{sec:orgcf1b626}
+\label{sec:org8242862}
 \begin{definition}
 Будем говорить, что \(N\) соответсвует \textbf{аксиоматике Пеано} если:
 \begin{itemize}
@@ -764,35 +837,35 @@ int f(int x) {
 \item задан \(0 \in N\): нет \(a \in N\), что \(a' = 0\)
 \item если \(P(x)\) --- некоторое утверждение, зависящее от \(x \in N\), такое, что \(P(0)\) и всегда, когда \(P(x)\), также и \(P(x')\). Тогда \(P(x)\)
 \end{itemize}
-\label{org2602401}
+\label{org398cbcd}
 \end{definition}
 \subsection{Определение операций (сложение, умножение, возведение в степень)}
-\label{sec:orgad34fc6}
+\label{sec:org569ea1a}
 \begin{definition}
 \[ a + b = \begin{cases}
 a & b = 0 \\
 (a + c)' & b = c'
 \end{cases}\]
-\label{orgeb67664}
+\label{org343891e}
 \end{definition}
 \begin{definition}
 \[ a \cdot b = \begin{cases}
 0 & b = 0 \\
 (a \cdot c) + a & b = c'
 \end{cases}\]
-\label{org9dfb769}
+\label{orgbc243d6}
 \end{definition}
 \begin{definition}
 \[ a^b = \begin{cases}
 1 & b = 0 \\
 (a^c)\cdot a & b = c'
 \end{cases}\]
-\label{org4977d07}
+\label{org57f63f1}
 \end{definition}
 \subsection{Формальная арифметика (язык, схема аксиом индукции и общая характеристика остальных аксиом).}
-\label{sec:orgabf1577}
+\label{sec:orgd811106}
 \subsubsection{Формальная арифметика}
-\label{sec:orge5d2f10}
+\label{sec:org77a8d36}
 \begin{definition}
 Исчесление предикатов:
 \begin{itemize}
