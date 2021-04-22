@@ -1,4 +1,4 @@
-% Created 2021-04-20 Tue 00:26
+% Created 2021-04-22 Thu 20:20
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[oneside]{book}
@@ -174,11 +174,11 @@
 
 
 \chapter{}
-\label{sec:org5a6a543}
+\label{sec:orgdf2dfaf}
 \section{Исчесление высказываний}
-\label{sec:org5a8e7d4}
+\label{sec:org84c2c34}
 \subsection{Язык}
-\label{sec:org8250306}
+\label{sec:org2e6653d}
 \begin{enumerate}
 \item Пропозициональные переменные \\
 \(A'_i\) --- большая буква начала латинского алфавита
@@ -187,7 +187,7 @@
 Тогда \((\alpha \to \beta),(\alpha \& \beta),(\alpha \vee \beta), (\neg \alpha)\) --- высказывания
 \end{enumerate}
 \subsection{Мета и предметные}
-\label{sec:org9ea26c6}
+\label{sec:org33695ce}
 \begin{itemize}
 \item \(\alpha, \beta, \gamma, \dots, \varphi, \psi, \dots\) --- метапеременные для выражений
 \item \(X, Y, Z\) --- метапеременные для предметные переменные
@@ -201,7 +201,7 @@
 \[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq (A \to P), X \coloneqq B] \equiv \color{black} (A \to P) \to (A \to B) \]
 \end{examp}
 \subsection{Сокращение записи}
-\label{sec:orge161fb3}
+\label{sec:org5c5037a}
 \begin{itemize}
 \item \(\vee, \&, \neg\) --- скобки слева направо(лево-ассоциативная)
 \item \(\to\) --- правоассоциативная
@@ -213,10 +213,10 @@
 \[ \left(A \to \left(B \to C\right)\right) \]
 \end{examp}
 \subsection{Теория моделей}
-\label{sec:org480a48c}
+\label{sec:org2b1a160}
 \begin{itemize}
 \item \(\mathcal{P}\) --- множество предметных переменных
-\item \(\llb\cdot\rrb: \mathcal{T} \to \V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
+\item \(\llb\cdot\rrb: \mathcal{T} \to V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
 \end{itemize}
 
 
@@ -248,7 +248,7 @@
 \end{enumerate}
 
 \subsection{Теория доказательств}
-\label{sec:org6c69fa7}
+\label{sec:org57f52cb}
 \begin{definition}
 \textbf{Схема высказывания} --- строка соответсвующая определению высказывания, с:
 \begin{itemize}
@@ -270,9 +270,8 @@
 \item \(\neg\neg \alpha \to \alpha\)
 \end{enumerate}
 \end{definition}
-\#+begin\textsubscript{defintion} org
 \subsection{Правило Modus Ponens и доказательство}
-\label{sec:org5ac49b6}
+\label{sec:org07f0eb1}
 \begin{definition}
 \textbf{Доказательство} (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):
 \begin{itemize}
@@ -301,7 +300,7 @@
 \end{itemize}
 \end{definition}
 \chapter{}
-\label{sec:orgc2e0f12}
+\label{sec:orgabdcf11}
 \begin{symb}
 \(\Gamma, \Delta, \Sigma\) --- списки высказываний
 \end{symb}
@@ -311,18 +310,23 @@
 \item \(\Gamma = \gamma_1, \dots, \gamma_n\)
 \item Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
 \end{itemize}
+\label{orge65448d}
 \end{definition}
 \begin{examp}
 \(\vDash \alpha\) --- \(\alpha\) общезначимо
+\label{org27689bf}
 \end{examp}
 \begin{definition}
 \sout{Теория} Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
+\label{orgc7a28a0}
 \end{definition}
 \begin{definition}
 Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
+\label{orge44bace}
 \end{definition}
 \begin{theorem}[о дедукции]
 \(\Gamma, \alpha \vdash \beta\) \uline{тогда и только тогда, когда} \(\Gamma \vdash \alpha \to \beta\)
+\label{orgcc98543}
 \end{theorem}
 \begin{proof}
 \-
@@ -374,6 +378,7 @@
 \begin{theorem}[о корректности]
 Пусть \(\vdash \alpha\) \\
 \uline{Тогда} \(\vDash \alpha\)
+\label{org2c0b9fb}
 \end{theorem}
 \begin{proof}
 Индукция по длине доказательства: каждая \(\llb \delta_i \rrb = \text{И}\), если \(\delta_1, \dots, \delta_k\) --- доказательство \(\alpha\) \\
@@ -412,6 +417,7 @@
 \end{proof}
 \begin{theorem}[о полноте]
 Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+\label{orgcda7350}
 \end{theorem}
 \begin{symb}
 \[ [\beta]^\alpha \equiv \begin{cases}
@@ -426,7 +432,7 @@
 \uline{Индукция} по длине формулы (по структуре) \\
 \uline{База}: \(\alpha \equiv P_i\) \([P_i]^{P_i} \vdash [P_i]^{P_i}\) \\
 \uline{Переход}: пусть \(\eta, \zeta\): \(\Delta \vdash [\eta]^\eta, \Delta \vdash [\zeta]^\zeta\). Покажем, что \(\Delta \vdash [\eta \star \zeta]^{\eta \star \zeta}\), где \(\star\) --- все свзяки \\
-Используя \hyperref[org56ceff8]{лемму}: \(\vDash \alpha\), т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash [\alpha]^\alpha\). Но \(\llb \alpha \rrb = \text{И}\) при любой оценке, \\
+Используя \hyperref[org8c03883]{лемму}: \(\vDash \alpha\), т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash [\alpha]^\alpha\). Но \(\llb \alpha \rrb = \text{И}\) при любой оценке, \\
 т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\) при всех \(x_i\) \\
 \[ \left.\begin{matrix}
 [x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, P_n \vdash \alpha \\
@@ -440,14 +446,14 @@
 \item \(\Gamma, \neg \eta \dash \zeta\)
 \end{itemize}
 \uline{Тогда} \(\Gamma \vdash \zeta\)
-\label{org56ceff8}
+\label{org8c03883}
 \end{lemma}
 \begin{lemma}
 \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\), то \([x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n- 1}} \vdash \alpha\)
-\label{org60d070e}
+\label{org2a464e8}
 \end{lemma}
 \section{Интуиционистская логика}
-\label{sec:orgb1befea}
+\label{sec:orgc6c8d3f}
 \(A \vee B\) --- плохо
 \begin{examp}
 Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
@@ -467,9 +473,9 @@
 \end{itemize}
 \end{defintion}
 \chapter{}
-\label{sec:org2567763}
+\label{sec:org6a785e0}
 \section{Правила вывода}
-\label{sec:org777a6e9}
+\label{sec:orge9bd12e}
 Сверху посылки, снизу заключения
 \begin{itemize}
 \item Аксиома
@@ -507,6 +513,7 @@
 \item \textbf{Наименьший элемент} \(S\) --- такой \(k \in S\), что если \(x \in S\), то \(k \le x\)
 \item \textbf{Минимальный элемент} \(S\) --- такой \(k \in S\), что нет \(x \in S\), что \(x \le k\)
 \end{itemize}
+\label{org92021be}
 \end{definition}
 \begin{examp}
 \-
@@ -524,6 +531,7 @@
 \item \textbf{Множество верхних граней} \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
 \item \textbf{Множество нижних граней} \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
 \end{itemize}
+\label{orgffedee1}
 \end{definition}
 \begin{definition}
 \-
@@ -531,13 +539,16 @@
 \item \textbf{\(a + b\)} --- нименьший элемент множества верхних граней
 \item \textbf{\(a \cdot b\)} --- наибольший элемент множества нижних граней
 \end{itemize}
+\label{org223c2d6}
 \end{definition}
 \begin{definition}
 \textbf{Решетка} = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
 т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
+\label{orgc369ec5}
 \end{definition}
 \begin{definition}
 \textbf{Дистрибутивная решетка} если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
+\label{org6d14cc4}
 \end{definition}
 \begin{lemma}
 В дистрибутивной решетке \(a + b\cdot c = (a + b) \cdot(a + c)\)
@@ -547,15 +558,18 @@
 \end{definition}
 \begin{definition}
 \textbf{Импликативная решетка} --- решетка, где для любых \(a, b\) есть \(a \to b\)
+\label{org053bcd6}
 \end{definition}
 \begin{definition}
 \textbf{0} --- наименьший элемент решетки, \textbf{1} --- наибольший элемент решетки
 \end{definition}
 \begin{definition}
 \textbf{Псевдобулева алгебра (алгебра Гейтинга)} --- импликативная решетка с \(0\)
+\label{org9737aa9}
 \end{definition}
 \begin{definition}
 \textbf{Булева алгебра} --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
+\label{org5fd968f}
 \end{definition}
 \begin{examp}
 \-
@@ -598,14 +612,23 @@
 \begin{theorem}
 Любая булева алгебра --- модель КИВ
 \end{theorem}
-\begin{defintion}
+\begin{definition}
 Рассмотрим множество \(X\) --- \textbf{носитель}. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- \textbf{топология}.
 \begin{enumerate}
 \item \(\bigcup X_i \in \Omega\), где \(X_i \in \Omega\)
 \item \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
 \item \(\emptyset, X \in \Omega\)
 \end{enumerate}
-\end{defintion}
+\label{org37468dc}
+\end{definition}
+\begin{definition}
+\[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.}\}\]
+\label{org1be2563}
+\end{definition}
+\begin{examp}
+Дискретная топология: \(\Omega = 2^X\) --- любое множество открыто. Тогда \(\langle \Omega, \le \rangle\) --- булева алгебра
+\label{org15f9d7c}
+\end{examp}
 \begin{theorem}
 \-
 \begin{itemize}
@@ -615,6 +638,7 @@
 \item \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
 \end{itemize}
 \uline{Тогда} \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
+\label{orgf07fe70}
 \end{theorem}
 \begin{definition}
 \(X\) --- все формулы логики
@@ -623,16 +647,18 @@
 \item \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
 \item \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
 \end{itemize}
+\label{orgd4c2693}
 \end{definition}
 \beginproperty
 \begin{property}
-\(\langle X/_\approx, \le \rangle\) --- алгебра Гейтинга, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\label{org34c29ba}
 \end{property}
 \begin{theorem}
-Алгебра гейтинга --- полная модель ИИВ
+Алгебра линденбаума --- полная модель ИИВ
 \end{theorem}
 \chapter{5 марта}
-\label{sec:org6375990}
+\label{sec:org45452fc}
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\L}{\mathcal{L}}
@@ -662,28 +688,31 @@
 \end{itemize}
 \end{examp}
 \section{Табличные модели}
-\label{sec:org6188146}
+\label{sec:org8400a9b}
 \begin{definition}
 Назовем модель \textbf{табличной} для ИИВ:
 \begin{itemize}
 \item \(V\) --- множество истинностных значений \\
 \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
 Выделенные значения \(T \in V\) \\
-\(\llbracketp+i\rrbracket \in V\) \(f_p : p_i \to V\)
+\(\llbracket p_i \rrbracket \in V\) \(f_p : p_i \to V\)
 \item \(p_i = f_\P(p_i)\) \\
 \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
 \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
 \end{itemize}
 \sout{Если \(\vdash \alpha\), то} \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
+\label{org34ee35f}
 \end{definition}
 \begin{definition}
 Конечная модель: модель где \(V\) --- конечно
+\label{orgde6197e}
 \end{definition}
 \begin{theorem}
 У ИИВ не существует полной табличной модели
+\label{org4554d15}
 \end{theorem}
 \section{Модели Крипке}
-\label{sec:org5e7a985}
+\label{sec:org2c4685d}
 \begin{center}
 \begin{tikzpicture}
 \node at (0,0) (A) {\( P = NP? \)};
@@ -702,6 +731,7 @@
 \((\Vdash)  \subseteq W \times \P\) \\
 При этом, если \(W_j \Vdash p_i\) и \(W_j \preceq W_k\), то \(W_j \Vdash p\)
 \end{enumerate}
+\label{org6105943}
 \end{defintion}
 \begin{definition}
 \-
@@ -732,7 +762,7 @@
 \end{enumerate}
 \end{proof}
 \section{Доказательство нетабличности}
-\label{sec:org29264a9}
+\label{sec:orgf7fb34e}
 Пусть существует конечная табличная модель \(|V| = n\)
 \[ \varphi_n =  \bigvee_{\substack{1 \le i, j \le n + 1 \\ i \neq j}} (p_i \to p_j \&p_j \to p_i)\]
 \begin{enumerate}
@@ -762,9 +792,11 @@
 \end{enumerate}
 \begin{definition}
 \textbf{Дизъюнктивность} ИИВ: \(\vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
+\label{org4cd5baa}
 \end{definition}
 \begin{definition}
 Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
+\label{org20aab46}
 \end{definition}
 \begin{definition}
 Пусть \(\A\) --- алгебра Гейтинга, тогда:
@@ -784,6 +816,7 @@
 
 Добавим новый элемент \(1_{\Gamma(\A)}\) перенеименуем \(1_\A\) в  \(\omega\)
 \end{enumerate}
+\label{org1fc4a82}
 \end{definition}
 \begin{theorem}
 \-
@@ -833,9 +866,9 @@
 Пусть \(\not \vdash \alpha\) и \(\not \vdash \beta\), тогда \(\varphi(\llbracket \alpha \rrbracket) \neq 1_\mathcal{L}\) и \(\varphi(\llbracket \beta \rrbracket) \neq 1_\mathcal{L}\), т.е. \(\llbracket \alpha \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\) и \(\llbracket \beta \rrbracket_\mathcal{L} \neq 1_\mathcal{L}\), тогда \(\llbracket \alpha \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) и \(\llbracket \beta \rrbracket_{\Gamma(\mathcal{L})} \neq 1_{\Gamma(\mathcal{L})}\) \(\Rightarrow\) Противоречие
 \end{proof}
 \chapter{12 марта}
-\label{sec:org0e77adb}
+\label{sec:orgf726608}
 \section{Программы}
-\label{sec:org5f9b1c4}
+\label{sec:org1e1a264}
 программа(функция)
 \begin{itemize}
 \item \(P: \alpha \to \beta\) --- берет \(\alpha\), возвращает \(\beta\)
@@ -921,8 +954,8 @@ match l with
    | Cons(hd, tl) (* $\beta$ *) -> 1 + count tl (* $\beta \to \text{int}$ *)
 \end{minted}
 \end{examp}
-\subsection{Исчесление предикатов}
-\label{sec:org09257ad}
+\subsection{Исчисление предикатов}
+\label{sec:org1732ebb}
 \begin{definition}
 Язык исчисление предикатов
 \begin{itemize}
@@ -956,7 +989,7 @@ match l with
 \end{definition}
 \begin{enumerate}
 \item Сокращение записи
-\label{sec:orgd26c63c}
+\label{sec:orgfd74b55}
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]
@@ -965,7 +998,7 @@ match l with
 \[ \forall a. B(A) \& \forall b. B(b) \]
 \end{enumerate}
 \subsection{Теория моделей}
-\label{sec:org72a2680}
+\label{sec:org1b88858}
 Оценка формулы в исчислении предикатов:
 \begin{enumerate}
 \item Фиксируем \(D\) --- предметное множетво
@@ -1005,7 +1038,7 @@ match l with
 \[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
 \end{examp}
 \subsection{Теория доказательств}
-\label{sec:org07da556}
+\label{sec:org3be4112}
 Все аксимомы И.В + M.P.
 \begin{description}
 \item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
@@ -1040,11 +1073,11 @@ int f(int x) {
 Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
 \end{examp}
 \chapter{19 марта}
-\label{sec:orgefce2dd}
+\label{sec:orgd20d59c}
 \section{Исчисление предикатов}
-\label{sec:orgfe54ac3}
+\label{sec:orgc259473}
 \subsection{Расставление скобок}
-\label{sec:org96f45e5}
+\label{sec:org57bcab6}
 Кванторы имеют наименьший приоритет
 \begin{examp}
 \[ \forall x. A \& B \& \forll y. C \& D \vee \exists z. E \]
@@ -1070,7 +1103,7 @@ int f(int x) {
 \end{itemize}
 \end{definition}
 \subsection{Вхождение}
-\label{sec:org1cabf0c}
+\label{sec:org5880e0f}
 \begin{examp}
 \[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
 1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
@@ -1102,7 +1135,7 @@ int f(int x) {
 \end{description}
 \end{examp}
 \subsection{Свободные подстановки}
-\label{sec:org861578f}
+\label{sec:orge65e3ba}
 \begin{definition}
 \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
 \end{definition}
@@ -1124,7 +1157,7 @@ int f(int x) {
 Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
 \end{examp}
 \subsection{Пример доказательства}
-\label{sec:org2cd84ed}
+\label{sec:orgcc9a655}
 \begin{lemma}
 Пусть \(\vdash \alpha\). Тогда \(\vdash \forall x. \alpha\)
 \end{lemma}
@@ -1145,16 +1178,17 @@ int f(int x) {
 \end{enumerate}
 \end{proof}
 \subsection{Теорема о дедукции}
-\label{sec:orgdb5e819}
+\label{sec:orge289dd1}
 \begin{theorem}
 Пусть задана \(\Gamma,\ \alpha,\beta\)
 \begin{enumerate}
 \item Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если \(b\) в доказательстве \(\Gamma, \alpha \to \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)
 \item Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
 \end{enumerate}
+\label{org8debde0}
 \end{theorem}
 \chapter{2 апреля}
-\label{sec:org6002804}
+\label{sec:orgdbb07f7}
 \begin{itemize}
 \item \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
 \item \(x = 0 \vdash \forall x. x = 0\)
@@ -1165,9 +1199,10 @@ int f(int x) {
 \uline{Тогда} \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 \end{definition}
 \section{Полнота исчесления предикатов}
-\label{sec:org989eafb}
+\label{sec:orge7be0dc}
 \begin{definition}
 \(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
+\label{orgcb993a6}
 \end{definition}
 \begin{examp}
 Непротиворечивые:
@@ -1191,6 +1226,7 @@ int f(int x) {
 \end{definition}
 \begin{definition}
 Полное непротиворечивое замкнутых бескванторных формул --- такое, что для каждой замкнутой бескванторной формулы \(\alpha\): либо \(\alpha \in \Gamma\), либо \(\neg \alpha \in \Gamma\)
+\label{org27c4c86}
 \end{definition}
 \begin{symb}
 \textbf{з.б.} --- замкнутая бескванторная. \textbf{непр. мн} --- непротиворечивое множество
@@ -1245,9 +1281,11 @@ int f(int x) {
 \end{proof}
 \begin{theorem}[Геделя о полноте]
 Если \(\Gamma\) --- полное неротиворечивое множество замкнутых(не бескванторных) фомул, то оно имеет модель
+\label{org8c4f68b}
 \end{theorem}
 \begin{corollary}
 Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+\label{org842f362}
 \end{corollary}
 \begin{proof}
 Пусть \(\vDash \alpha\), но \(\not\vdash \alpha\). Значит \(\{\neg \alpha\}\) --- непротиворечивое множество замкнутых формул. Тогда \(\{\alpha\}\) или \(\{\neg \alpha\}\) --- непр. мн. з. ф. Пусть \(\{\alpha\}\) --- непр. мн. з.ф., а \(\{\neg \alpha\}\) --- противоречивое. При этом \(\neg \alpha \vdash \beta \& \neg \beta\), \(\neg \alpha \vdash \alpha\), \(\beta \& \neg \beta \vDash \alpha\). \(\neg \alpha \vdash \alpha\), \(\alpha \vdash \alpha\). Значит \(\vdash \alpha\)
@@ -1287,9 +1325,9 @@ int f(int x) {
 \(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
 \end{corollary}
 \chapter{9 апреля}
-\label{sec:org82d5d0c}
+\label{sec:orgf020e16}
 \section{Исчесление предиктов}
-\label{sec:orgd0e3189}
+\label{sec:org9aa0b92}
 \begin{theorem}[Геделя о полноте ИП]
 У любого н.м.з.ф. (непротиворечивого множества замкнутых формул) ИП существует модель
 \end{theorem}
@@ -1360,10 +1398,12 @@ int f(int x) {
 
 \begin{theorem}
 ИП неразрешимо
+\label{org290b04f}
 \end{theorem}
 \begin{definition}
 \textbf{Язык} --- множество слов. Язык \(\mathcal{L}\) разрешим, если существует \(A\) --- алгоритм, что по слову \(w\): \\
 \(A(w)\) --- останавливается в `1`, если \(w \in \mathcal{L}\) и `0`, если \(w \not\in \mathcal{L}\)
+\label{org84fda2f}
 \end{definition}
 \begin{remark}
 Проблема останова: не существует алгоритма, который по программе для машина Тьюринга ответит, остановится она или нет. \\
@@ -1399,11 +1439,12 @@ e \text{ --- } \text{nil}
 \end{enumerate}
 \end{examp}
 \chapter{16 апреля}
-\label{sec:org382db56}
+\label{sec:orgbfaacc2}
 \section{Теория первого порядка}
-\label{sec:orgada62cb}
+\label{sec:org16f700e}
 \begin{definition}
 \textbf{Теория I порядка} --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
+\label{orgb199f63}
 \end{definition}
 \begin{definition}
 Будем говорить, что \(N\) соответсвует \textbf{аксиоматике Пеано} если:
@@ -1412,11 +1453,12 @@ e \text{ --- } \text{nil}
 \item задан \(0 \in N\): нет \(a \in N\), что \(a' = 0\)
 \item если \(P(x)\) --- некоторое утверждение, зависящее от \(x \in N\), такое, что \(P(0)\) и всегда, когда \(P(x)\), также и \(P(x')\). Тогда \(P(x)\)
 \end{itemize}
+\label{org7afb38b}
 \end{definition}
 \beginproperty
 \begin{property}
 \(0\) единственный
-\label{org18b68ce}
+\label{org740e30d}
 \end{property}
 \begin{proof}
 \(P(x)=x = 0\) либо существует \(t:\ t' = x\)
@@ -1425,15 +1467,16 @@ e \text{ --- } \text{nil}
 \item \(P(x) \to P(x')\). Заметим, что \(x'\) --- не `ноль`
 \end{itemize}
 \(P(x)\) выполнено при всех \(x \in N\)
-\label{org092f906}
+\label{org5d84e63}
 \end{proof}
 \begin{definition}
 \[ a + b = \begin{cases}
 a & b = 0 \\
 (a + c)' & b = c'
 \end{cases}\]
-Можем определить это опираясь на \hyperref[org092f906]{доказательтво}
+\label{org55c61b4}
 \end{definition}
+Можем определить это опираясь на \hyperref[org5d84e63]{доказательтво}
 \begin{definition}
 \begin{itemize}
 \item \(1 = 0'\)
@@ -1454,17 +1497,19 @@ a & b = 0 \\
 0 & b = 0 \\
 (a \cdot c) + a & b = c'
 \end{cases}\]
+\label{org35ed872}
 \end{definition}
 \begin{definition}
 \[ a^b = \begin{cases}
 1 & b = 0 \\
 (a^c)\cdot a & b = c'
 \end{cases}\]
+\label{org1fb1520}
 \end{definition}
 \beginproperty
 \begin{property}
 \(a + 0 = 0 + a\)
-\label{orgf73d7d9}
+\label{orgc35c0f1}
 \end{property}
 \begin{proof}
 \(P(a) = (a + 0 = 0 + a)\) \\
@@ -1493,12 +1538,12 @@ a & b = 0 \\
 \(a + b = b + a\)
 \end{property}
 \begin{proof}
-\uline{База} \(b = 0\) --- \hyperref[orgf73d7d9]{свойство} \\
+\uline{База} \(b = 0\) --- \hyperref[orgc35c0f1]{свойство} \\
 \uline{Переход} \(a + c'' = c'' + a\), если \(a + c' = c' + a\)
 \[ a + c'' = (a + c')' = (c' + a)' = c' + a' = c'' + a\]
 \end{proof}
 \subsection{Формальная арифметика}
-\label{sec:org4b14e91}
+\label{sec:org92d47a0}
 \begin{definition}
 Исчесление предикатов:
 \begin{itemize}

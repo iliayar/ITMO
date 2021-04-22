@@ -1,4 +1,4 @@
-% Created 2021-04-20 Tue 10:01
+% Created 2021-04-22 Thu 20:13
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -174,7 +174,7 @@
 
 
 \section{Правила вывода}
-\label{sec:org39f5cfc}
+\label{sec:org6ee0660}
 Сверху посылки, снизу заключения
 \begin{itemize}
 \item Аксиома
@@ -212,6 +212,7 @@
 \item \textbf{Наименьший элемент} \(S\) --- такой \(k \in S\), что если \(x \in S\), то \(k \le x\)
 \item \textbf{Минимальный элемент} \(S\) --- такой \(k \in S\), что нет \(x \in S\), что \(x \le k\)
 \end{itemize}
+\label{orga45ffcc}
 \end{definition}
 \begin{examp}
 \-
@@ -229,6 +230,7 @@
 \item \textbf{Множество верхних граней} \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
 \item \textbf{Множество нижних граней} \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
 \end{itemize}
+\label{org1564c1d}
 \end{definition}
 \begin{definition}
 \-
@@ -236,13 +238,16 @@
 \item \textbf{\(a + b\)} --- нименьший элемент множества верхних граней
 \item \textbf{\(a \cdot b\)} --- наибольший элемент множества нижних граней
 \end{itemize}
+\label{orge814c74}
 \end{definition}
 \begin{definition}
 \textbf{Решетка} = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
 т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
+\label{orgacbcdc4}
 \end{definition}
 \begin{definition}
 \textbf{Дистрибутивная решетка} если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
+\label{orgf5de171}
 \end{definition}
 \begin{lemma}
 В дистрибутивной решетке \(a + b\cdot c = (a + b) \cdot(a + c)\)
@@ -252,15 +257,18 @@
 \end{definition}
 \begin{definition}
 \textbf{Импликативная решетка} --- решетка, где для любых \(a, b\) есть \(a \to b\)
+\label{org64afef2}
 \end{definition}
 \begin{definition}
 \textbf{0} --- наименьший элемент решетки, \textbf{1} --- наибольший элемент решетки
 \end{definition}
 \begin{definition}
 \textbf{Псевдобулева алгебра (алгебра Гейтинга)} --- импликативная решетка с \(0\)
+\label{orgd9df8b5}
 \end{definition}
 \begin{definition}
 \textbf{Булева алгебра} --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
+\label{orgb2c8c0d}
 \end{definition}
 \begin{examp}
 \-
@@ -303,21 +311,23 @@
 \begin{theorem}
 Любая булева алгебра --- модель КИВ
 \end{theorem}
-\begin{defintion}
+\begin{definition}
 Рассмотрим множество \(X\) --- \textbf{носитель}. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- \textbf{топология}.
 \begin{enumerate}
 \item \(\bigcup X_i \in \Omega\), где \(X_i \in \Omega\)
 \item \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
 \item \(\emptyset, X \in \Omega\)
 \end{enumerate}
-\end{defintion}
+\label{org83b1676}
+\end{definition}
 \begin{definition}
-\[ (X)^0 = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.}\}\]
+\[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.}\}\]
+\label{org10bf03a}
 \end{definition}
 \begin{examp}
 Дискретная топология: \(\Omega = 2^X\) --- любое множество открыто. Тогда \(\langle \Omega, \le \rangle\) --- булева алгебра
+\label{orgb39b534}
 \end{examp}
-
 \begin{theorem}
 \-
 \begin{itemize}
@@ -327,6 +337,7 @@
 \item \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
 \end{itemize}
 \uline{Тогда} \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
+\label{org8f6529a}
 \end{theorem}
 \begin{definition}
 \(X\) --- все формулы логики
@@ -335,12 +346,14 @@
 \item \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
 \item \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
 \end{itemize}
+\label{orgaa05791}
 \end{definition}
 \beginproperty
 \begin{property}
-\(\langle X/_\approx, \le \rangle\) --- алгебра Гейтинга, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\label{org00a4b0b}
 \end{property}
 \begin{theorem}
-Алгебра гейтинга --- полная модель ИИВ
+Алгебра линденбаума --- полная модель ИИВ
 \end{theorem}
 \end{document}

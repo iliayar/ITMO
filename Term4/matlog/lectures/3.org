@@ -146,7 +146,7 @@
 #+begin_examp org
 Дискретная топология: \(\Omega = 2^X\) --- любое множество открыто. Тогда \(\langle \Omega, \le \rangle\) --- булева алгебра
 #+end_examp
-
+#+NAME: теорема топология
 #+begin_theorem org
 \-
 - \(a + b = a \cup b\)
@@ -155,6 +155,7 @@
 - \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
 _Тогда_ \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
 #+end_theorem
+#+NAME: линденбаум оценка
 #+begin_definition org
 \(X\) --- все формулы логики
 - \(\alpha \le \beta\) --- это \(\alpha \vdash \beta\)
@@ -162,9 +163,10 @@ _Тогда_ \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
 - \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
 #+end_definition
 \beginproperty
+#+NAME: алгебра линденбаума
 #+begin_property org
-\(\langle X/_\approx, \le \rangle\) --- алгебра Гейтинга, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
 #+end_property
 #+begin_theorem org
-Алгебра гейтинга --- полная модель ИИВ
+Алгебра линденбаума --- полная модель ИИВ
 #+end_theorem

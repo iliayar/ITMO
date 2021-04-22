@@ -21,3 +21,4 @@
 - [[file:practice/6.pdf][Practice 6]]
 - [[file:practice/7.pdf][Practice 7]]
 - [[file:practice/8.pdf][Practice 8]]
+- [[file:practice/9.pdf][Practice 9]]
