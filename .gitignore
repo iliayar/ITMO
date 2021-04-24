@@ -58,3 +58,7 @@ target
 /**/ltximg
 /**/obipy-resources
 /build/
+
+# Pdfs
+/**/*.pdf
+/**/*.tex
