@@ -1,4 +1,5 @@
 #+TITLE: Mathematical analysis
 #+SETUPFILE: ../../level-subj.org
 
-[[file:lectures/all_lectures.pdf][All lectures]]
+[[file:lectures/all_lectures.pdf][All lectures]] \\
+[[file:lectures/questions.pdf][Questions for exam]]
