@@ -3,19 +3,19 @@
 
 
 * Lectures
-[[file:lectures/all_lectures.pdf][All lectures]]
-- [[file:lectures/1.pdf][Lecture 1]]
-- [[file:lectures/2.pdf][Lecture 2]]
-- [[file:lectures/3.pdf][Lecture 3]]
-- [[file:lectures/4.pdf][Lecture 4]]
-- [[file:lectures/5.pdf][Lecture 5]]
-- [[file:lectures/6.pdf][Lecture 6]]
-- [[file:lectures/7.pdf][Lecture 7]]
-- [[file:lectures/8.pdf][Lecture 8]]
-- [[file:lectures/9.pdf][Lecture 9]]
+[[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/all_lectures.pdf][All lectures]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/1.pdf][Lecture 1]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/2.pdf][Lecture 2]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/3.pdf][Lecture 3]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/4.pdf][Lecture 4]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/5.pdf][Lecture 5]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/6.pdf][Lecture 6]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/7.pdf][Lecture 7]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/8.pdf][Lecture 8]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/lectures/9.pdf][Lecture 9]]
 * Labs
 - [[file:labs/lab1/][Generating functions]] \\
   [[file:labs/lab1/s4-01-lab-genfunction.pdf][Statements]]
 * Homeworks
-- [[file:hw/20.pdf][20]]
-- [[file:hw/56.pdf][56]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/hw/20.pdf][20]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/discrete/hw/56.pdf][56]]
