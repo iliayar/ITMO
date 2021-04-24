@@ -2,5 +2,5 @@
 #+SETUPFILE: ../../level-subj.org
 
 
-- Some conspects for [[file:Test_11_5.pdf][first]] and [[file:Term3/diffur/Test2.pdf][second]] test
+- Some conspects for [[https://iliayar.ru//public-notes/conspects/Term3/diffur/Test_11_5.pdf][first]] and [[file:Term3/diffur/Test2.pdf][second]] test
 - [[file:models/][Models for 11 homework]]
