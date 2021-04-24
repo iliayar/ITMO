@@ -1,4 +1,5 @@
 #+TITLE: Linear algebra
+#+SETUPFILE: ../../level-subj.org
 
 * Labs
 [[file:labs/][/Trying/ Determine figure in 3 dimensional space]]

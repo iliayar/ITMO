@@ -1,4 +1,5 @@
 #+TITLE: Programming
+#+SETUPFILE: ../../level-subj.org
 * Homeworks
 1. Nope
 2. [[file:HW2/][Binary Search]]

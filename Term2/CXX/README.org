@@ -1,4 +1,5 @@
 #+TITLE: С++
+#+SETUPFILE: ../../level-subj.org
 * Homeworks
 ** Big
 - [[file:8-puzzle-iliayar/][8 Puzzle with A*]]

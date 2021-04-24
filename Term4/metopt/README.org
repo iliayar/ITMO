@@ -1,4 +1,5 @@
 #+TITLE: [[file:Term4/metopt/][Optimization methods]]
+#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[file:lectures/all_lectures.pdf][All lectures]]

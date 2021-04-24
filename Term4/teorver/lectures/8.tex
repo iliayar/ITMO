@@ -1,4 +1,4 @@
-% Created 2021-04-03 Sat 14:42
+% Created 2021-04-24 Sat 12:54
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -21,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -46,14 +49,18 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
 
 \newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
 \newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
@@ -123,6 +130,33 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 8}
@@ -139,10 +173,10 @@
 \tableofcontents
 
 
-\section{Стандартное абсолюютно непрерывное распределение}
-\label{sec:org83c0a15}
+\section{Стандартное абсолютно непрерывное распределение}
+\label{sec:org0078f01}
 \subsection{Равномерное распределение}
-\label{sec:org9b54868}
+\label{sec:org953dac2}
 \begin{definition}
 Случайная величина \(\xi\) \textbf{равномерно} распределена на \([a, b]\) если ее плотность постоянна на этом отрезке
 \[ f(x) = \begin{cases}
@@ -169,7 +203,7 @@
 Датчики случайных чисел имеют равномерное распределение, и с их помощью можно смоделировать другие распределения, если знаем их функции распределения
 \end{remark}
 \subsection{Экспоненциальное распределение}
-\label{sec:org464a9d9}
+\label{sec:orga7acb1e}
 \begin{definition}
 Случайная величина \(\xi\) имеет \textbf{показательное} распределение, если ее плотность имеет вид:
 \[ f(x) = \begin{cases}
@@ -208,23 +242,23 @@
 Время между появлениями двух соседних редких событий в простейшем потоке событий
 \end{examp}
 \subsection{Нормальное распределение}
-\label{sec:org8b5dcee}
+\label{sec:orgb81019f}
 \begin{definition}
 Случайная величина \(\xi\) имеет \textbf{нормальное} распределение с параметрами \(a, \sigma > 0\), если ее плотность имеет вид
 \[ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x - a)^2}{2\sigma^2}}\]
-Смысл параметров распределения: \(a = E\xi\), \(\sigma\) --- среднее квадратическое отклонения. \(D = \sigma^2\) \\
+Смысл параметров распределения: \(a = E\xi\), \(\sigma\) --- среднее квадратичное отклонения. \(D = \sigma^2\) \\
 Функция распределения
 \[ F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(t - a)^2}{2\sigma^2}} dt \]
 \end{definition}
 \begin{symb}
 \(\xi \in N_{a, \sigma}\)
 \end{symb}
-\subsection{Стандартное нормальное рапределение}
-\label{sec:orgb6b0c1c}
+\subsection{Стандартное нормальное распределение}
+\label{sec:orgeab4d75}
 \begin{definition}
 Стандартным нормальным распределением называется нормальное распределение с параметрами \(a = 0,\ \sigma = 1\) т.е. \(\xi \in N_{0, 1}\). Плотность
 \[ \varphi(x) = \frac{1{\sqrt{2\pi}}}e^{-\frac{x^2}{2}} \]
-Функиця распределения
+Функция распределения
 \[ \Phi_0(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x e^{-\frac{z^2}{2}} dz \]
 \end{definition}
 \begin{remark}
@@ -235,7 +269,7 @@
 \[ \int_{-\infty}^\infty e^{-\frac{x^2}{2}} dx = \sqrt{2\pi} \]
 \end{remark}
 \subsection{Связь между нормальным и стандартным нормальным распределениями и ее следствия}
-\label{sec:orgecb8f0b}
+\label{sec:orgc8a75e8}
 \begin{property}
 \(\xi \in N_{a, \sigma}\). Тогда
 \[ F_\xi(x) = \Phi_\xi \left(\frac{x -a}{\sigma}\right) \]
@@ -261,7 +295,7 @@
 \end{proof}
 
 \begin{property}
-Вероятность попадания случайной величины в заданый интервал
+Вероятность попадания случайной величины в заданный интервал
 \[ p(\alpha < \xi < \beta)  = \Phi \left(\frac{\beta - a}{\sigma}\right) - \Phi \left(\frac{\alpha - a}{\sigma}\right) \]
 \end{property}
 \begin{proof}
@@ -283,8 +317,8 @@
 \begin{property}[Правило трех \(\sigma\)]
 \[ p(|\xi - a| < 3\sigma) \approx 0.9973 \]
 \end{property}
-\subsection{Коэффиценты асимметрии и эксцесса}
-\label{sec:orgcad1259}
+\subsection{Коэффициенты асимметрии и эксцесса}
+\label{sec:org2a050a5}
 \begin{definition}
 Асимметрией распределения называется число
 \[ A_\xi = E \left(\frac{\xi - a}{\sigma}\right)^3 = \frac{N_{a, \sigma}}{\sigma^3} \fixme\]
@@ -294,12 +328,12 @@
 \[ E_\xi = E \left(\frac{\xi - a}{\sigma}\right)^4 - 3 = \frac{N_{a,\sigma}}{\sigma^4} - 3 \fixme \]
 \end{definition}
 \begin{remark}
-Если \(\xi \in N_{a,\sigma^2}\), то \(A\xi = 0\) и \(E\xi = 0\). Таким образом эти коэффиценты показывают насколько сильно данное распределение отличается от нормального
+Если \(\xi \in N_{a,\sigma^2}\), то \(A\xi = 0\) и \(E\xi = 0\). Таким образом эти коэффициенты показывают насколько сильно данное распределение отличается от нормального
 \end{remark}
 \subsection{Гамма функция и гамма распределение}
-\label{sec:org64043c6}
+\label{sec:orge154672}
 \begin{definition}
-Гамма функцией Гаусса называется функия
+Гамма функцией Гаусса называется функция
 \[ \Gamma(\lambda) = \int_0^\infty t^{\lambda - 1} e^{-t}dt \]
 \end{definition}
 \beginproperty

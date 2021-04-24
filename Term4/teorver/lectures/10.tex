@@ -1,4 +1,4 @@
-% Created 2021-04-17 Sat 15:31
+% Created 2021-04-24 Sat 12:54
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -174,9 +174,9 @@
 
 
 \section{Сходимость случайных величин}
-\label{sec:orgf3fbc15}
+\label{sec:orgee5df95}
 \subsection{Сходимость `почти наверное`}
-\label{sec:orga6c7b13}
+\label{sec:org1e8f9ea}
 \begin{definition}
 Случайная величина имеет некоторое свойство \textbf{почти наверное}, если: \\
 \(p(\text{случайная величина имеет свойство}) = 1\), или \(p(\text{случайная величина не имеет свойство}) = 0\)
@@ -190,7 +190,7 @@
 \end{symb}
 
 \subsection{Сходимость по вероятности}
-\label{sec:orgff08684}
+\label{sec:orgced6aa5}
 \begin{definition}
 Последовательность \(\{\xi_n\}\) \textbf{сходится по вероятности} к случайной величине \(\xi\) при \(n \to \infty\), если
 \(\forall \varepsilon > 0\ p(|\xi _n - \xi| \ge \varepsilon) \xrightarrow[n \to \infty]{} 0\) или \(p(|\xi_n - \xi| < \varepsilon) \xrightarrow[n \to \infty]{} 1\)
@@ -206,7 +206,7 @@
 Если \(\xi_n \xrightarrow{p} \xi\) и \(\eta_n \xrightarrow{p} \eta\), то \(\xi_n + \eta_n \xrightarrow{p} \xi + \eta\) и \(\xi_n \eta_n \xrightarrow{p} \xi\eta\)
 \end{property}
 \subsection{Сходимость по функции распределения}
-\label{sec:org7702674}
+\label{sec:org79213fd}
 \begin{definition}
 Последовательность случайных величин \(\{\xi_n\}\) \textbf{слабо сходится} к случайной величине \(\xi\), если \(F_{\xi_n}(x) \xrightarrow[n \to \infty]{} F_\xi(x)\ \forall x\)
 \end{definition}
@@ -218,7 +218,7 @@
 Если \(\xi_n \xrightarrow{p} C\) и \(\eta_n \rightrightarrows \eta\), то \(\xi_n \eta_n \rightrightarrows C\eta\) и \(\xi_n + \eta_n \rightrightarrows \eta + C\)
 \end{property}
 \subsection{Связь между видами сходимости}
-\label{sec:org0771788}
+\label{sec:org5a91338}
 \begin{theorem}
 \(\xi_n \xrightarrow{\text{п.н.}} \xi \implies \xi_n \xrigharrow{p} \xi \implies \xi_n \rightrightarrows \xi\)
 \end{theorem}
@@ -238,12 +238,12 @@
 \begin{theorem}
 Для произвольной Борелевской функции \(g(x)\):
 \begin{enumerate}
-\item \(Eg(x) = \sum_{n = 1}^\infty g(x_n)\cdot p(\xi = x_n)\),  если \(\xi\) --- дискретная случайеая величина
+\item \(Eg(x) = \sum_{n = 1}^\infty g(x_n)\cdot p(\xi = x_n)\),  если \(\xi\) --- дискретная случайная величина
 \item \(Eg(x) = \int_{-\infty}^\infty g(x) f_\xi(x) dx\), если \(\xi\) --- абсолютно непрерывная случайная величина
 \end{enumerate}
 \end{theorem}
 \section{Свойство моментов}
-\label{sec:org90f8e19}
+\label{sec:orgd15cbc8}
 \beginproperty
 \begin{property}
 Если случайная величина \(\xi \ge 0\) почти наверное, то \(E\xi \ge 0\)
@@ -267,7 +267,7 @@
 \todo
 \end{proof}
 \subsection{Ключевые неравенства}
-\label{sec:orgfafab7b}
+\label{sec:orgd25ba82}
 Далее \(\xi\) --- случайная величина, \(E|\xi| < \infty\) и \(D\xi < \infty\), если оно упоминается в теореме
 \begin{theorem}[неравенство Йенсена]
 Пусть функция выпукла вниз, тогда для любой случайной величины верно неравенство:
@@ -291,44 +291,44 @@
 \end{theorem}
 
 \section{Среднее арифметическое случайных величин}
-\label{sec:orgb80163e}
+\label{sec:orgefbc95b}
 Пусть \(\xi_1, \xi_2, \dots, \xi_n\) --- независимые, одинаково распределенные случайные величины с конечным вторым моментом. Обозначим \(a = E\xi\), \(d = D\xi\), \(\sigma = \sigma_{\xi}\), \(S_n = \xi_1 + \xi_2 + \dots + \xi_n\)
 \[ \frac{S_n}{n} = \frac{\xi_1 + \xi_2 + \dots + \xi_n}{n} \]
 \[ E \left(\frac{S_n}{n}\right) = \frac{1}{n}(E\xi_1 + \dots + E\xi_n) = \frac{1}{n}(a + \dots + a) = a = E\xi \]
 \[ D \left(\frac{S_n}{n}\right) = \frac{1}{n^2}(D\xi_1 + \dots + D\xi_n) = \frac{1}{n^2} \cdot n \cdot d = \frac{d}{n} = \frac{D\xi}{n} \]
 \[ \sigma_{S_n} = \frac{\sigma}{\sqrt{n}} \]
 \section{Законы больших чисел}
-\label{sec:orgafe89cf}
+\label{sec:org21fd4bd}
 \subsection{Закон больших чисел Чебышева}
-\label{sec:orge93c244}
+\label{sec:org27481bf}
 \begin{theorem}
-Пусть \(\xi_1, \xi_2, \dots\) --- последовательность незавсимых, одинаково распределенных случайных величин с конечныи вторым моментом, тогда \(\frac{\xi_1 + \dots + \xi_n}{n} \xrightarrow{p} E\xi_1\)
+Пусть \(\xi_1, \xi_2, \dots\) --- последовательность независимых, одинаково распределенных случайных величин с конечными вторым моментом, тогда \(\frac{\xi_1 + \dots + \xi_n}{n} \xrightarrow{p} E\xi_1\)
 \end{theorem}
 \begin{remark}
 При доказательстве получили полезное неравенство:
 \[ p \left(\left|\frac{S_n}{n} - a \right| \ge C\right) \le \frac{D\xi_1}{n \varepsilon^2} \]
 \end{remark}
 \subsection{Закон больших чисел Бернулли}
-\label{sec:org03c9113}
+\label{sec:orgad46fad}
 \begin{theorem}
 Пусть \(N_A\) --- число появления события \(A\) в серии из \(N\) независимых экспериментов, \(p = p(A)\) \\
 \uline{Тогда} \(\frac{N_A}{n} \xrightarrow{p} p\) 
 \end{theorem}
 \subsection{Закон больших чисел Хинчина}
-\label{sec:org4d2f0d5}
+\label{sec:org6142326}
 \begin{theorem}
 Пусть \(\xi_1, \xi_2, \dots\) --- последовательности независимых, одинаково распределенных случайных величин с конечным первым моментом \(E\xi_1 < \infty\) \\
 \uline{Тогда} \[ \frac{\xi_1 + \dots + \xi_n}{n} \xrightarrow{p} E\xi_n \]
-\label{org572e196}
+\label{orgac8e644}
 \end{theorem}
-\subsection{Усиленный закон больших чисел Колмагорова}
-\label{sec:orgb199814}
+\subsection{Усиленный закон больших чисел Колмогорова}
+\label{sec:orgb7ebc36}
 \begin{theorem}
-В условиях \hyperref[org572e196]{теоремы Хинчина}
+В условиях \hyperref[orgac8e644]{теоремы Хинчина}
 \[ \frac{\xi_1 + \xi_2 + \dots + \xi_1}{n} \xrightarrow{\text{п.н.}} E\xi_n \]
 \end{theorem}
 \subsection{Закон больших чисел Маркова}
-\label{sec:org63f2cb0}
+\label{sec:org404e2f4}
 \begin{theorem}
 Пусть имеется последовательность случайных величин \(\xi_1, \xi_2, \dots\) с конечными вторыми моментами, при чем \(D(S_n) = o(n^2)\)
 \uline{Тогда}
@@ -337,7 +337,7 @@
 \[ \frac{\xi_1 + \dots + \xi_n}{n} - \frac{E\xi_1 + \dots + E\xi_n}{n} \xrightarrow{p} 0 \]
 \end{theorem}
 \section{Центральная предельная теорема}
-\label{sec:org0335bf7}
+\label{sec:org8a80e27}
 \begin{theorem}
 Пусть \(\xi_1, \xi_2, \dots\) --- , \(0 < D\xi_1 < \infty\) и \(S_n = \sum{i = 1}^n \xi_i\) \\
 \uline{Тогда}

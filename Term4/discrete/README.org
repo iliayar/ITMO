@@ -1,4 +1,5 @@
 #+TITLE: Discrete math
+#+SETUPFILE: ../../level-subj.org
 
 
 * Lectures

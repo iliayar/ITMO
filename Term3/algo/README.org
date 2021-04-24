@@ -1,4 +1,5 @@
 #+TITLE: Algorithms and data structures
+#+SETUPFILE: ../../level-subj.org
 
 * Labs
 - [[file:labs/lab1/][Graphs]] \\

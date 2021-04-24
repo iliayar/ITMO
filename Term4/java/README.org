@@ -1,4 +1,5 @@
 #+TITLE: Java advanced
+#+SETUPFILE: ../../level-subj.org
 
 
 * Homeworks

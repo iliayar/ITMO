@@ -1,5 +1,5 @@
 #+TITLE: Probability theory
-
+#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[file:lectures/all_lectures.pdf][All lectures]]
@@ -13,6 +13,7 @@
 - [[file:lectures/8.pdf][Lecture 8]]
 - [[file:lectures/9.pdf][Lecture 9]]
 - [[file:lectures/10.pdf][Lecture 10]]
+- [[file:lectures/11.pdf][Lecture 11]]
 * Practices
 - [[file:practice/1.pdf][Practice 1]]
 - [[file:practice/2.pdf][Practice 2]]

@@ -1,4 +1,5 @@
 #+TITLE: Discrete math
+#+SETUPFILE: ../../level-subj.org
 * Labs
 - [[file:labs/lab1/][Automata]] \\
   [[file:labs/lab1/19-lab-automata.pdf][Statements]]
