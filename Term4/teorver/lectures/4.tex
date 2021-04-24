@@ -1,4 +1,4 @@
-% Created 2021-03-20 Sat 14:05
+% Created 2021-04-24 Sat 12:58
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -21,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -30,7 +33,6 @@
 
 \usepackage{geometry}
 \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-
  \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
@@ -47,16 +49,32 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -112,6 +130,33 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 4}
@@ -120,7 +165,7 @@
  pdftitle={Лекция 4},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -129,10 +174,10 @@
 
 
 \section{Схема Бернулли}
-\label{sec:orgabc06bf}
+\label{sec:org0866c17}
 \begin{definition}
 Схемой Бернулли называется серия независимых испытаний, каждое из
-которых имеет два исхода, каждое интересующее нас событие лиибо
+которых имеет два исхода, каждое интересующее нас событие либо
 произошло либо не произошло.
 \begin{itemize}
 \item \(n\) --- число испытаний
@@ -147,7 +192,7 @@
 \[ P_n(k) = C^k_np^kq^{n - k} \]
 \end{theorem}
 \begin{proof}
-Рассмотрим один из исходов благоприятных событию \(A\): \(A_1 = \underbrace{\text{УУ}\dots\text{У}}_k\underbrace{\text{НН}\dots\text{Н}}_{n - k}\) --- независмые события \\
+Рассмотрим один из исходов благоприятных событию \(A\): \(A_1 = \underbrace{\text{УУ}\dots\text{У}}_k\underbrace{\text{НН}\dots\text{Н}}_{n - k}\) --- независимые события \\
 \begin{itemize}
 \item \(P(\text{У}) = p\)
 \item \(P(\text{Н}) = q\)
@@ -170,9 +215,9 @@
 \[ P_5(3) = C^3_5 p^3q^2 = 0.2048\]
 \end{solution}
 \subsection{Наиболее вероятное число успехов}
-\label{sec:orgb26fc8d}
+\label{sec:org403c799}
 Выясним при каком значении \(k\) вероятность предшествующего числа
-успехов \(k - 1\) будет не больше чем веротяность \(k\) успехов
+успехов \(k - 1\) будет не больше чем вероятность \(k\) успехов
 \[ P_n(k - 1) \le P_n(k) \]
 \[ C^{k-1}_np^{k - 1}q^{n - k + 1} \le C^k_np^kq{n - k} \]
 \[ \frac{n!}{(k - 1)!(n -k + 1)!}q \le \frac{n!}{(k!(n - k)!)}p \]
@@ -184,7 +229,7 @@
 \begin{enumerate}
 \item \(np\) --- целое. Тогда \(np + p\) --- целое и \(k = np\) --- наиболее вероятное число исходов
 \item \(np + p\) --- не целое. Тогда \(k = [np + p]\)
-\item \(np + p\) --- целое. Тогд \(np + p - 1\) --- целое и \(P_n(k - 1)
+\item \(np + p\) --- целое. Тогда \(np + p - 1\) --- целое и \(P_n(k - 1)
    = P_n(k)\) и имеем два наиболее вероятных числа успехов:
 \begin{itemize}
 \item \(k = np + p\)
@@ -195,21 +240,21 @@
 \includegraphics[scale=0.35]{4_1.png}
 \end{center}
 \subsection{Предельные теоремы в схеме Бернулли}
-\label{sec:org101bfc4}
+\label{sec:orgdee0d35}
 \begin{definition}
-\textbf{Локальная формула} Муавра-Лапласса. Применяем когда требуется найти вероятноть точного числа успехов.
+\textbf{Локальная формула} Муавра-Лапласа. Применяем когда требуется найти вероятность точного числа успехов.
 \[ P_n(\nu_n = k) \approx \frac{1}{\sqrt{npq}}\varphi(x) \]
-, где \(\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, x = \frac{k - np}{\sqrt{npq}}\) --- функция Гауса. \\
-Свойства функции Гауса \(\varphi(x)\):
+, где \(\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}, x = \frac{k - np}{\sqrt{npq}}\) --- функция Гаусса. \\
+Свойства функции Гаусса \(\varphi(x)\):
 \begin{enumerate}
 \item \(\varphi(-x) = \varphi(x)\) --- четная
 \item при \(x > 5,\ \varphi(x) \approx 0\)
 \end{enumerate}
 \end{definition}
 \begin{definition}
-\textbf{Интегральная формула Лапласса}. Применяем если число успехов лежит в неком диапозоне.
+\textbf{Интегральная формула Лапласа}. Применяем если число успехов лежит в неком диапазоне.
 \[ P_n(k_1 \le \nu_n \le k_2) \approx \Phi(x_1) - \Phi(x_2) \]
-, где \[ \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz\] --- функция Лапласса \\
+, где \[ \Phi(x) = \frac{1}{\sqrt{2\pi}} \int_0^x e^{-\frac{z^2}{2}} dz\] --- функция Лапласа \\
 \[ x_1 = \frac{k_1 - np}{\sqrt{npq}},\ x_2 = \frac{k_2 - np}{\sqrt{npq}} \]
 
 Свойства \(\Phi(x)\):
@@ -219,7 +264,7 @@
 \end{enumerate}
 \end{definition}
 \begin{remark}
-В некоторых источниках под функцией Лапласса подразумевается несколько иная функция, чаще всего:
+В некоторых источниках под функцией Лапласа подразумевается несколько иная функция, чаще всего:
 \[ F_0(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{z^2}{2}dz \]
 \[ F_0(x) = 0.5 + \Phi(x)\text{ или }\Phi(x) = F_0(x)-0.5 \]
 \end{remark}
@@ -246,7 +291,7 @@
 \end{enumerate}
 \end{solution}
 \section{Статистическое определение вероятности}
-\label{sec:org74078d7}
+\label{sec:orgb1f3cf2}
 \begin{itemize}
 \item \(n_A\) --- число появления события \(A\) при \(n\) испытаниях
 \item \(\frac{n_A}{n}\) --- частота события \(A\)
@@ -254,16 +299,16 @@
 \[ P(A) \approx \frac{n_A}{n}, \text{при }n\to\infty \]
 
 \subsection{Вероятность отклонения относительной частоты}
-\label{sec:org49f4912}
-\(] p\) --- веротяность события \(A\), \(\frac{n_A}{n}\) --- частота \(A\) \\
-По интегральной формуле Лапласса:
+\label{sec:org2001d21}
+\(] p\) --- вероятность события \(A\), \(\frac{n_A}{n}\) --- частота \(A\) \\
+По интегральной формуле Лапласа:
 \[ P\left(\left|\frac{n_A}{n} - p| \le \varepsilon\right) = P(-\varepsilon \le \frac{n_A}{n} - p \le \varepsilon) = P(-n\varepsilon \le n_a - np \le n\varepsilon) = P(np - n\varepsilon \le n_A \le np + n\varpepsilon) \]
 \[ x_1 = \frac{np - n\varepsilon - np}{\sqrt{npq}} = -\frac{n\varepsilon}{\sqrt{npq}} \]
 \[ x_2 = \frac{np + n\varepsilon - np}{\sqrt{npq}} = \frac{n\varespilon}{\sqrt{npq}} \]
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = \Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) - \Phi\left(-\frac{n\varepsilon}{\sqrt{npq}}\right) = 2\Phi\left(\frac{n\varepsilon}{\sqrt{npq}}\right) \]
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) = 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 \subsection{Закон больших чисел Бернулли}
-\label{sec:org84585ed}
+\label{sec:orge92f660}
 Более точно последняя формула выглядит так:
 \[ P\left(\left|\frac{n_A}{n} - p\right| \le \varepsilon\right) \xrightarrow[n \to \infty]{} 2\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon\right) \]
 при \(n \to \infty\) \(\frac{\sqrt{n}}{\sqrt{pq}}\varepsilon \to \infty\) и \(\Phi\left(\frac{\sqrt{n}}{\sqrt{pq}}\right) \to 0.5\)

@@ -1,4 +1,5 @@
 #+TITLE: Mathematical logic
+#+SETUPFILE: ../../level-subj.org
 * Lectures
 [[file:lectures/all_lectures.pdf][All lectures]] \\
 [[file:lectures/colloq1.pdf][First colloq]]

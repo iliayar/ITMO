@@ -1,4 +1,5 @@
 #+TITLE: Programming
+#+SETUPFILE: ../../level-subj.org
 Java course
 * Homeworks
 1. 

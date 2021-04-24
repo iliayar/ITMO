@@ -1,4 +1,5 @@
 #+TITLE: Linear algebra
+#+SETUPFILE: ../../level-subj.org
 * Labs
 1. [[file:LAB1/][Matrix operations]]
 2. [[file:LAB2/][Canonear]]

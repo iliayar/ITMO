@@ -1,32 +1,33 @@
 #+TITLE: README
+#+SETUPFILE: level-0.org
 
-My stuff from ITMO University
+My stuff from ITMO University. All conspects hosted [[https://iliayar.ru/public-notes/conspects/README.html][here]]
 
 * Year 2
 ** Term 4
-*** [[file:Term4/matan/][Mathematical analysis]]
-*** [[file:Term4/teorver/][Probability theory]]
-*** [[file:Term4/metopt/][Optimization methods]]
-*** [[file:Term4/matlog/][Mathematical logic]]
-*** [[file:Term4/discrete/][Discrete math]]
-*** [[file:Term4/java/][Java]]
-*** [[file:Term4/algo/][Algorithms and data structures]]
+*** [[file:Term4/matan/README.org][Mathematical analysis]]
+*** [[file:Term4/teorver/README.org][Probability theory]]
+*** [[file:Term4/metopt/README.org][Optimization methods]]
+*** [[file:Term4/matlog/README.org][Mathematical logic]]
+*** [[file:Term4/discrete/README.org][Discrete math]]
+*** [[file:Term4/java/README.org][Java]]
+*** [[file:Term4/algo/README.org][Algorithms and data structures]]
 ** Term 3
-*** [[file:Term3/algo/][Algorithms and data structures]]
-*** [[file:Term3/diffur/][Differential equations]]
-*** [[file:Term3/discrete/][Discrete math]]
-*** [[file:Term3/matan/][Mathematical analysis]]
+*** [[file:Term3/algo/README.org][Algorithms and data structures]]
+*** [[file:Term3/diffur/README.org][Differential equations]]
+*** [[file:Term3/discrete/README.org][Discrete math]]
+*** [[file:Term3/matan/README.org][Mathematical analysis]]
 * Year 1
 ** Term 2
-*** [[file:Term2/programming/][Programming]]
-*** [[file:Term2/algo/][Algorithms and data structures]]
-*** [[file:Term2/discrete/][Discrete math]]
-*** [[file:Term2/linal/][Linear algebra]]
-*** [[file:Term2/matan/][Mathematical analysis]]
-*** [[file:Term2/CXX/][С++]]
+*** [[file:Term2/programming/README.org][Programming]]
+*** [[file:Term2/algo/README.org][Algorithms and data structures]]
+*** [[file:Term2/discrete/README.org][Discrete math]]
+*** [[file:Term2/linal/README.org][Linear algebra]]
+*** [[file:Term2/matan/README.org][Mathematical analysis]]
+*** [[file:Term2/CXX/README.org][С++]]
 ** Term 1
-*** [[file:Term1/Discrete/][Discrete math]]
-*** [[file:Term1/algo/][Algorithms and data structures]]
-*** [[file:Term1/programming/][Programming]]
-*** [[file:Term1/linal/][Linear algebra]]
+*** [[file:Term1/Discrete/README.org][Discrete math]]
+*** [[file:Term1/algo/README.org][Algorithms and data structures]]
+*** [[file:Term1/programming/README.org][Programming]]
+*** [[file:Term1/linal/README.org][Linear algebra]]
    

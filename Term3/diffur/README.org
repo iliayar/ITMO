@@ -1,4 +1,5 @@
 #+TITLE: Differential equations
+#+SETUPFILE: ../../level-subj.org
 
 
 - Some conspects for [[file:Test_11_5.pdf][first]] and [[file:Term3/diffur/Test2.pdf][second]] test

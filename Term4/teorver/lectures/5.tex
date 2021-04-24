@@ -1,4 +1,4 @@
-% Created 2021-03-19 Fri 22:40
+% Created 2021-04-24 Sat 12:57
 % Intended LaTeX compiler: pdflatex
 
 \documentclass[english]{article}
@@ -21,6 +21,9 @@
 \usepackage{grffile}
 \usepackage{extarrows}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
 \usepackage{rotating}
 \usepackage{placeins}
 \usepackage[normalem]{ulem}
@@ -30,7 +33,6 @@
 
 \usepackage{geometry}
 \geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
-
  \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
@@ -47,16 +49,32 @@
 
 \newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
 \newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
 
 
 \newcommand{\R}{\mathbb{R}}
 \renewcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\rank}{\text{rank}}
-\newcommand{\const}{\text{const}}
-\newcommand{\grad}{\text{grad}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
 \theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
 \newtheorem{axiom}{Аксиома}
 \newtheorem{lemma}{Лемма}
 \newtheorem{manuallemmainner}{Лемма}
@@ -112,6 +130,33 @@
   \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
 }
 \makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
 \author{Ilya Yaroshevskiy}
 \date{\today}
 \title{Лекция 5}
@@ -120,7 +165,7 @@
  pdftitle={Лекция 5},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.0.50 (Org mode )}, 
+ pdfcreator={Emacs 28.0.50 (Org mode 9.4.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -129,7 +174,7 @@
 
 
 \section{Схемы испытаний и соответствующие распределения}
-\label{sec:org04f0b8e}
+\label{sec:org40096ed}
 \begin{itemize}
 \item \(n\) --- число испытаний
 \item \(p\) --- вероятность при одном испытании
@@ -138,13 +183,13 @@
 
 
 \begin{definition}
-\[ k \to C^k_n p^k q^{n - k} \] --- биноминальное распределение с параметрами \(n\) и \(p\)
+\[ k \to C^k_n p^k q^{n - k} \] --- биномиальное распределение с параметрами \(n\) и \(p\)
 \end{definition}
 \begin{symb}
 \(B_{n,p} = B(n, p)\)
 \end{symb}
 \subsection{Схема до первого успешного испытания}
-\label{sec:org52d5daa}
+\label{sec:orgb584d21}
 \begin{definition}
 \textbf{Схема до первого успешного испытания}. Пусть проводится бесконечная
  серия испытаний, которая заканчивается после первого успеха под номером \(\tau\)
@@ -162,7 +207,7 @@
 G(p)
 \end{symb}
 \begin{remark}
-Это распределение обладает так назыаемым свойством отсутствия после действия или свойством нестарения
+Это распределение обладает так называемым свойством отсутствия после действия или свойством нестарения
 \end{remark}
 \begin{theorem}
 \(] p(\tau = k) = q^{k - 1}p\) \\
@@ -174,13 +219,13 @@ G(p)
 \[ \ref{5_1_geom} = \frac{q^{n + k}}{q^n} = q^k \]
 \end{proof}
 \begin{remark}
-То, проработет ли девайс \(k\) часов после этого, не зависит от того сколько проработал до этого
+То, проработает ли девайс \(k\) часов после этого, не зависит от того сколько проработал до этого
 \end{remark}
 \begin{remark}
 Также \(p(\tau = n + k|\tau > n) = p(\tau = k)\)
 \end{remark}
 \subsection{Испытание с несколькими исходами}
-\label{sec:org8863377}
+\label{sec:orgee81db7}
 Пусть при \(n\) испытаниях могут произойти \(m\) несовместных исходов
 \begin{itemize}
 \item \(p_i\) --- вероятность \(i\)-го исхода при одном отдельном испытании
@@ -192,11 +237,11 @@ G(p)
 \begin{proof}
 \(A_1 = \underbrace{11\dots1}_{n_1}\underbrace{22\dots2}_{n_2}\dots \underbrace{m\dots m}_{n_m}\)
 \[ p(A_1) = p_1^{n_1}\dots p_n^{n_m} \]
-Остальные благоприятные исходы отличаются лишь расположением \(i\)-х исходов по \(n\) местам, а веротяности будут те-же. Всего таких исходов будет:
+Остальные благоприятные исходы отличаются лишь расположением \(i\)-х исходов по \(n\) местам, а вероятности будут те-же. Всего таких исходов будет:
 \[ C^{n_1}_nC^{n_2}_{n - n_1}C^{n_3}_{n - n_1 - n_2}\dots C^{n_m}_{n_m} = \frac{n!}{n_1!n_2!\dots n_m!} \] --- формула для перестановок с повторениями
 \end{proof}
 \begin{task}
-Два одинаковых по силе шахматиста играют матч из 6 партий. Вероятность ничьи при одной партии --- \(0.5\). Найти веротяность того, что второй игрок две партии выиграл, а три партии свел в ничью
+Два одинаковых по силе шахматиста играют матч из 6 партий. Вероятность ничьи при одной партии --- \(0.5\). Найти вероятность того, что второй игрок две партии выиграл, а три партии свел в ничью
 \end{task}
 \begin{solution}
 Исходы:
@@ -209,19 +254,19 @@ G(p)
 \end{enumerate}
 \end{solution}
 \subsection{Урновая схема}
-\label{sec:org301e930}
+\label{sec:org8dfb43c}
 В урне \(N\) шаров. Из них \(K\) белых, а черных \(N - K\). Из нее выбираем \(n\) шаров без учета порядка. \(k\) --- число вынутых белых
 \begin{theorem}[Схема с возвратом]
-Вероятность вынуть белый шар не менятеся. \\
+Вероятность вынуть белый шар не меняется. \\
 \uline{Тогда} \[ p = \frac{K}{N}\quad p_n(k) = C^k_np^k(1 - p)^{n - k} \]
---- биноминальное распределение
+--- биномиальное распределение
 \end{theorem}
 \begin{theorem}[Схема без возврата]
 \uline{Тогда} \[ P_{N,K}(n, k) = \frac{C^k_K\cdot C^{n-k}_{N - K}}{C^n_N} \]
 \end{theorem}
 \begin{definition}
 \[ k \to \frac{C^k_K\cdot C^{n - k}_{N - K}}{C^n_N},\ k \le K \]
-назвается \textbf{гипергеометрическим} распределением веротяности
+называется \textbf{гипергеометрическим} распределением вероятности
 \end{definition}
 \begin{lemma}
 \[ C^k_K \sim \frac{K^k}{k!} \]
@@ -237,7 +282,7 @@ G(p)
 \item \(N \to \infty\)
 \item \(K \to \infty\)
 \item \(\frac{K}{N} \to p \in (0, 1)\)
-\item \(n\) и \(0 \le k \le K\) --- фиксированны
+\item \(n\) и \(0 \le k \le K\) --- фиксированы
 \end{itemize}
 \uline{Тогда} \[ P_{N,K}(n,k) = \frac{C^k_KC^{n - k}_{N - K}}{C^n_N} \to C^k_np^k(1 - p)^{n - k} \]
 \end{theorem}
@@ -246,7 +291,7 @@ G(p)
 \[ = C^k_n\left(\frac{K}{N}\right)^k\left(1 - \frac{K}{N}\right)^{n -k} \xrightarrow[N \to \infty]{} C^k_n\cdot p^k \cdot ( 1- p)^{n - k}\]
 \end{proof}
 \subsection{Схемы Пуассона. Теорема Пуассона для схемы Бернулли}
-\label{sec:orgf7a8063}
+\label{sec:org73185be}
 Схема: вероятность успеха при одном отдельном испытании зависит от числа испытаний \(n\) таким образом, чтобы \(n \cdot p_n = \lambda\)(точнее \(np_n \xrightarrow[n \to \infty]{} \lambda\)) \\
 Появление очень редких событий в длинном потоке испытаний
 \begin{theorem}[Формула Пуассона]
@@ -258,8 +303,8 @@ G(p)
 \[ p(\nu_n = k) = C^k_np_n^k(1 - p_n)^{n - k} \xrightarrow[n \to \infty]{} \frac{n^k}{k!}\cdot \frac{\lambda_n^k}{n^k}\cdot\left(1 - \frac{\lambda_n}{n}\right)^{n - k} = \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n\cdot\left(1 - \frac{\lambda_n}{n}\right)^{-k} \xrightarrow[n \to \infty]{} \]
 \[ \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(1 - \frac{\lambda_n}{n}\right)^n \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}\cdot\left(\left(1 - \frac{\lambda_n}{n}\right)^{-\frac{n}{\lambda_n}}\right)^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda_n^k}{k!}e^{-\lambda_n} \xrightarrow[n \to \infty]{} \frac{\lambda^k}{k!}e^{-\lambda} \]
 \end{proof}
-\subsubsection{Оценка погрешности в формуле Пуссона}
-\label{sec:org1e4242d}
+\subsubsection{Оценка погрешности в формуле Пуассона}
+\label{sec:org58c7d79}
 \begin{theorem}
 Пусть \(\nu_n\) -- число успехов при \(n\) испытаниях в схеме Бернулли с вероятностью \(p\)
 \[ \lambda = np\quad A \subset \{0, 1, 2, \dotsm n\}\text{ --- произвольное подмножество}\]
@@ -267,7 +312,7 @@ G(p)
 \[ \left|p(\nu_n \in A) - \sum_{k \in A} \frac{\lambda_k}{k!} e^{-\lambda}\right| \le \min(p, \lambda p) = \min(p, np^2) = \min\left(p, \frac{\lambda^2}{n}\right) \]
 \end{theorem}
 \begin{remark}
-Формулу Пуасснона иногда называют формулой редких событий. Применяем при малых \(p\), \(n \ge 100\)
+Формулу Пуассона иногда называют формулой редких событий. Применяем при малых \(p\), \(n \ge 100\)
 \end{remark}
 \begin{task}
 Прибор состоит из 1000 элементов. Вероятность отказа каждого элемента \(\frac{1}{1000}\). Какова вероятность отказа больше двух элементов
