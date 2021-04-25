@@ -1,0 +1,54 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 9
+#+AUTHOR: Ilya Yaroshevskiy
+
+
+\(q_1, q_2, \dots, q_n, \dots\) --- программы
+1. \(q_i(j)\) не зависает
+2. \(\forall\) разрешимого \(A\), \(A = \{j \big| q_i(j) = 1\}\) для некоторого\(i\)
+3. \((i, j) \mapsto q_i(j)\) --- вычислимая функция
+
+
+\[ L(p) = \{x \big| p(x) = 1\} \]
+- \(A\) --- перечислимый язык \\
+- \(p_A\) --- полуразрешитель \(A\)
+- \(L(p_A) = A\)
+  - \(L: \var{Prog} \to 2^{\Sigma^*}\)
+  - \(L: \var{Prog} \to \var{RE}\) (Recursively Enumerable)
+- \(X\) --- свойство языков \(X \subset \var{RE}\)
+- Конечные языки \(\var{Finite} \subset \var{RE}\)
+- Языки, содержащие \(\varepsilon\) \(\underbrace{X_\varepsilon}_{\text{prop}} \subset \underbrace{\var{RE}}_{\text{prop}}\) \\
+  \(\underbrace{A}_{\text{lang}} \in \underbrace{X_\varepsilon}_{\text{prop}} \Leftrightarrow \underbrace{\varepsilon}_{\text{string}} \in \underbrace{A}_{\text{lang}}\)
+Посмторим на их типы
+- \(\Sigam^*\) --- =string=
+- \(lang\) --- =set<string>=
+- \(prop\) --- =set<lang>=
+#+begin_definition org
+\(X\) --- *свойство перечислимых языков*. \\
+Язык свойства \(L: \var{prop} \to \var{lang}\ L(X) = \{p \big| L(p) \in X\}\)
+#+end_definition
+#+begin_examp org
+\(L(RE) = \{p \big| L(p) \in RE\} = \var{Prog}\)
+#+begin_src rust
+  fn q(p: Prop) -> bool {
+      return 1;
+  }
+#+end_src
+#+end_examp
+#+begin_examp org
+\(L(\emptyset_p) = \{p \big| L(p) \in \emptyset_p\} = \emptyset_e\)
+#+begin_src rust
+  fn q(p: Prop) -> bool {
+      return 0;
+  }
+#+end_src
+#+end_examp
+#+ATTR_LATEX: :options [Rice, Успенский-Райс]
+#+begin_theorem org
+\-
+- \(X \subset \var{RE}\)
+- \(X \neq \emptyset\)
+- \(X \neq \var{RE}\)
+_Тогда_ \(L(X)\) не разрешим
+#+end_theorem
+\todo

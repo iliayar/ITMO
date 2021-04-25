@@ -1,7 +1,10 @@
-#+TITLE: Алгоритмы и структуры данных
+#+TITLE: Algorithms and data structures
+#+SETUPFILE: ../../level-subj.org
 
 
-* Домашки
-- [[file:hws/3.9.pdf][3.9]]
-* Лабы
-- [[file:labs/lab1/][Паросочетания]]
+* Homeworks
+- [[https://iliayar.ru//public-notes/conspects/Term4/algo/hws/3.9.pdf][3.9]]
+* Labs
+- [[file:labs/lab1/][Matchings]] \\
+  [[file:labs/lab1/statements.pdf][Statements]]
+

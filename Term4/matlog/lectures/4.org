@@ -33,20 +33,23 @@
 - \(\R\) не имеет наименьшего
 #+end_examp
 * Табличные модели
+#+NAME: табличная модель
 #+begin_definition org
 Назовем модель *табличной* для ИИВ:
 - \(V\) --- множество истинностных значений \\
   \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
   Выделенные значения \(T \in V\) \\
-  \(\llbracketp+i\rrbracket \in V\) \(f_p : p_i \to V\)
+  \(\llbracket p_i \rrbracket \in V\) \(f_p : p_i \to V\)
 - \(p_i = f_\P(p_i)\) \\
   \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
   \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
 +Если \(\vdash \alpha\), то+ \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
 #+end_definition
+#+NAME: конечная модель
 #+begin_definition org
 Конечная модель: модель где \(V\) --- конечно
 #+end_definition
+#+NAME: нетабличность ИИВ
 #+begin_theorem org
 У ИИВ не существует полной табличной модели
 #+end_theorem
@@ -62,6 +65,7 @@
 \end{tikzpicture}
 \end{center}
 #+end_export
+#+NAME: модель крипке
 #+begin_defintion org
 \-
 1. \( W = \{W_i\}\) --- множество миров
@@ -122,12 +126,15 @@
 2. \(\vDash_V \varphi_n\): по признаку Дирихле найдутся \(i\neq j:\llbracket p_i \rrbracket = \llbracket p_j \rrbracket\) \\
    \( \llbracket p_i \to p_j \rrbracket = \text{И}\) и \( \llbracket \varphi_n \rrbracket = \text{И}\) \\
    Значит \(\vdash \varphi_n\) --- противоречие
+#+NAME: дизъюнктивность ИИВ
 #+begin_definition org
 *Дизъюнктивность* ИИВ: \( \vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
 #+end_definition
+#+NAME: геделева алгебра
 #+begin_definition org
 Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
 #+end_definition
+#+NAME: операция гамма
 #+begin_definition org
 Пусть \(\A\) --- алгебра Гейтинга, тогда:
 1. \(\Gamma(\A)\) \\

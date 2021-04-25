@@ -1,21 +1,25 @@
-#+TITLE: Математический анализ
+#+TITLE: Mathematical analysis
+#+SETUPFILE: ../../level-subj.org
 
-* Лекции
-[[file:lectures/all_lectures.pdf][Все лекции]]
-- [[file:lectures/1.pdf][Лекция 1]]
-- [[file:lectures/2.pdf][Лекция 2]]
-- [[file:lectures/3.pdf][Лекция 3]]
-- [[file:lectures/4.pdf][Лекция 4]]
-- [[file:lectures/5.pdf][Лекция 5]]
-- [[file:lectures/6.pdf][Лекция 6]]
-- [[file:lectures/7.pdf][Лекция 7]]
-- [[file:lectures/8.pdf][Лекция 8]]
-* Практики
-- [[file:practice/1.pdf][Практика 1]]
-- [[file:practice/2.pdf][Практика 2]]
-- [[file:practice/3.pdf][Практика 3]]
-- [[file:practice/4.pdf][Практика 4]]
-- [[file:practice/5.pdf][Практика 5]]
-- [[file:practice/6.pdf][Практика 6]]
-- [[file:practice/7.pdf][Практика 7]]
-- [[file:practice/8.pdf][Практика 8]]
+* Lectures
+[[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/all_lectures.pdf][All lectures]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/1.pdf][Lecture 1]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/2.pdf][Lecture 2]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/3.pdf][Lecture 3]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/4.pdf][Lecture 4]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/5.pdf][Lecture 5]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/6.pdf][Lecture 6]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/7.pdf][Lecture 7]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/8.pdf][Lecture 8]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/9.pdf][Lecture 9]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/10.pdf][Lecture 10]]
+* Practices
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/1.pdf][Practice 1]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/2.pdf][Practice 2]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/3.pdf][Practice 3]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/4.pdf][Practice 4]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/5.pdf][Practice 5]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/6.pdf][Practice 6]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/7.pdf][Practice 7]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/8.pdf][Practice 8]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/9.pdf][Practice 9]]

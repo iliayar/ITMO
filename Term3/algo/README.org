@@ -1,7 +1,10 @@
-#+TITLE: Алгоритмы и структуры данных
+#+TITLE: Algorithms and data structures
+#+SETUPFILE: ../../level-subj.org
 
-
-* Лабы
-- [[file:labs/lab1/][Графы]]
-- [[file:labs/lab2/][Кратчайших путь]]
-- [[file:labs/lab3/][Строки]]
+* Labs
+- [[file:labs/lab1/][Graphs]] \\
+  [[file:labs/lab1/statements.pdf][Statements]]
+- [[file:labs/lab2/][Shortest path]] \\
+  [[file:labs/lab2/statements.pdf][Statements]]
+- [[file:labs/lab3/][Strings]] \\
+  [[file:labs/lab3/statements.pdf][Statements]]

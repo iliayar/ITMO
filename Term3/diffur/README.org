@@ -1,5 +1,6 @@
-#+TITLE: Дифференциальные уравнения
+#+TITLE: Differential equations
+#+SETUPFILE: ../../level-subj.org
 
 
-- Немного конспектов к [[file:Test_11_5.pdf][первой]] и [[file:Term3/diffur/Test2.pdf][второй]] контрольной
-- [[file:models/][Модели к 11 домашке]]
+- Some conspects for [[https://iliayar.ru//public-notes/conspects/Term3/diffur/Test_11_5.pdf][first]] and [[https://iliayar.ru//public-notes/conspects/Term3/diffur/Term3/diffur/Test2.pdf][second]] test
+- [[file:models/][Models for 11 homework]]

@@ -1,2 +1,10 @@
-#+TITLE: Алгоритмы и структуры данных
-Здесь почти ничего нет 😞
+#+TITLE: Algorithms and data structures
+#+SETUPFILE: ../../level-subj.org
+
+* Labs
+- [[file:lab1/][Sorts, Heap, Binary search]] \\
+  [[file:lab1/statements.pdf][Statements]]
+- [[file:lab2/][Stack, Queue, DSU]] \\
+  [[file:lab2/statements.pdf][Statements]]
+- [[file:lab3/][DP]] \\
+  [[file:lab3/statements.pdf][Statements]]

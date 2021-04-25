@@ -1,0 +1,70 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 13
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Число обусловленности
+#+begin_export latex
+\newcommand{\cond}{\mathop{\rm cond}\nolimits}
+#+end_export
+
+#+begin_examp org
+\[ Ax = b \]
+\[ A = \begin{pmatrix}
+9.7 & 6.6 \\
+4.1 & 2. 8
+\end{pmatrix}\quad b = \begin{pmatrix}
+9.7 \\
+4.1
+\end{pmatrix}\quad  x = \begin{pmatrix}
+1 \\
+0
+\end{pmatrix}\]
+\[ \Vert b \Vert = 13.8 \quad \Vert x \Vert = 1 \]
+\[ \cond(A) = 2249.4 \]
+\[ b' = \begin{pmatrix}
+9.70 \\
+4.11
+\end{pmatrix} \quad x' = \begin{pmatrix}
+0.34 \\
+0.97
+\end{pmatrix}\]
+\[ \Delta b = b - b' \quad \Vert \Delta b \Vert = 0.01 \]
+\[ \Delta x = x - x' \quad \Vert \Delta x \Vert = 1.63 \]
+\[ \frac{\Vert \Delta b \Vert}{\Vert b \Vert} =0.00072464 \]
+\[ \frac{\Vert \Delta x \Vert}{\Vert x \Vert} = 1.63 \]
+#+end_examp
+** Нормы и анализ ошибок
+\[ \Vert A \Vert = \sum_{i = 1}^n \sum_{j = 1}^n |a_{ij}| \]
+\[ \Vert A x \Vert \le \Vert A \Vert \cdot \Vert x \Vert \]
+\[ \tilde{x}: \Vert A x \Vert = \Vert A \Vert \cdot \Vert \tilde{x} \Vert \]
+\[ \Vert A \Ver = M = \max_{x \neq 0} \frac{\Vert A x \Vert}{\Vert x \Vert} \]
+\[ \Vert a \Vert = \maxx_j \Vert a_j \Vert \]
+Результат Уилкинсона
+\[ x^*: (A + E) x^* = b \], где элементы \(E\) имеют уровень ошибок  округления
+\todo
+\[ \cond(A) = \Vert A \Vert \cdot \Vert A^{-1} \Vert \]
+\[ \frac{\Vert x - x^* \Vert}{\Vert x^* \Vert} \le c \cdot \cond(A)\cdot \varepsilon_{??} \]
+- \(a_j\) --- столбцы \(A\)
+- \(\tilde{a}_j\) --- столбцы \(A^{-1}\)
+\[ \cond(A) = \max_j \Vert a_j \Vert \cdot \max_j \Vert \tilde{a}_j \Vert \]
+** Оценивание числа обусловленности
+\[ \cond(A) = \max \frac{\max\frac{\Vert A x \Vert}{\Vert x \Vert}}{\min\frac{\Vert A^{-1} \Vert}{\Vert x \Vert}} \]
+\[ \cond(A) = \Vert A \Vert \cdot \Vet A^{-1} \Vert \]
+1-норма:
+- \(a_j\) --- столбец
+\[ \Vert A \Vert = \max_j \Vert a_j \Vert \]
+\todo
+* Дополнительно о градиентных методах
+\(\{x_k\}\): \(x^k = x^{k - 1} + \alpha_k u^k\quad k \in \N\) \\
+\(u^k \in E_n\). \((\nabla f(x), u) < 0\) --- условие спуска \\
+Как находить \(\alpha_k\)
+\[ f(x^{k - 1} + \alpha_k u^k) \le (1 - \lambda_k)f(x^{k - 1}) + \lambda_k \min_{\alpha \in E}f(x^{k - 1}+ \alpha u^k)\quad \lambda_k \in [0, 1] \]
+\[ f(x^{k - 1} + \alpha_k u^k) \le f(x^{k - 1}) \] --- если это выполнено, то \(\{x^k\}\) --- релаксационная
+\todo
+** Градиентный спуск
+\todo
+#+begin_theorem org
+Пусть \(f(x)\) ограничена снизу и дифференцируема в \(E_n\), а ее градиент удовлетворяет условию Липница, т.е. \(\forall x, y \in E_n\)
+\[ |\nabla f(x) - \nabla f(y)| \le L | x - y | \]
+\todo
+#+end_theorem
