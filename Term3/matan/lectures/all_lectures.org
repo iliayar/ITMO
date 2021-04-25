@@ -1,4 +1,4 @@
-#+LATEX_CLASS: general-book
+#+LATEX_CLASS: lectures
 #+TITLE: Матан 3 семестр
 #+AUTHOR: Ilya Yaroshevskiy
 

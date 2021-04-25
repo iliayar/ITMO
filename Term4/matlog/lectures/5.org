@@ -82,11 +82,11 @@
      | Cons(hd, tl) (* $\beta$ *) -> 1 + count tl (* $\beta \to \text{int}$ *)
 #+end_src
 #+end_examp
-** Исчесление предикатов
+** Исчисление предикатов
 #+begin_definition org
 Язык исчисление предикатов
-- логические выражения "предикаты"/"формулы"
-- предметные выражния "термы"
+- логические выражения ``предикаты``/``формулы``
+- предметные выражния ``термы``
 \(\Theta\) --- метаперменные для термов \\
 Термы:
 - Атомы:
@@ -102,7 +102,7 @@
   - \(P(\Theta_1, \dots, \Theta_n)\) --- применение предикатных символов
   - \(\&, \vee, \neg, \to\) --- Cвязки
   - \(\forall x.\varphi\) и \(\exists x.\varphi\) --- кванторы \\
-    \color{gray}"<квантор> <переменная>.<выражение>"\color{black} \\
+    \color{gray}``<квантор> <переменная>.<выражение>``\color{black} \\
 #+end_definition
 *** Сокращение записи
 И.В + жадность \(\forall, \exists\) \\
@@ -126,7 +126,7 @@
 - \(\llbracket P_i(\Theta_1, \dots , \Theta_n) \rrbracket = f_{P_i}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
 - \(\llbracket f_j(\Theta_1 , \dots, \Theta_n ) \rrbracket = f_{f_j}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
 - \[ \llbracket \forall x. \varphi \rrbracket = \begin{cases} \text{И} & , \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И}\text{ при всех } k \in D  \\ \text{Л} &,\text{иначе}\end{cases} \]
-- \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе}\]
+- \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе} \end{cases} \]
 \[ \llbracket \forall x.\forall y.E(x, y) \rrbracket = \text{Л} \]
 т.к. \(\llbracket E(x, y) \rrbracket^{x:=1,\ y:=2} = \text{Л} \)
 #+end_examp

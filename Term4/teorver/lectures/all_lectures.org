@@ -18,3 +18,9 @@
 #+INCLUDE: "7.org" :lines "4-"
 * 
 #+INCLUDE: "8.org" :lines "4-"
+* 10 апреля
+#+INCLUDE: "9.org" :lines "4-"
+* 17 апреля
+#+INCLUDE: "10.org" :lines "4-"
+* 24 апреля
+#+INCLUDE: "11.org" :lines "4-"

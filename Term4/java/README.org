@@ -1,7 +1,8 @@
 #+TITLE: Java advanced
+#+SETUPFILE: ../../level-subj.org
 
 
-* Домашки
+* Homeworks
 1. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/walk/][Walk]]
 2. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/arrayset/][ArraySet]]
 3. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/student/][Student]]

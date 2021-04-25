@@ -26,7 +26,7 @@
 \[ f(x) = \frac{1}{2}ax^2 + bx + c \]
 #+begin_definition org
 Функция вида
-\[ f(x) = \sum^n{i = 1}\sum^n_{j = 1}a_{ij}x_ix_j + \sum^n_{j = 1}b_j x_j + c \addtag\label{7_1_quad} \]
+\[ f(x) = \sum^n_{i = 1}\sum^n_{j = 1}a_{ij}x_ix_j + \sum^n_{j = 1}b_j x_j + c \addtag\label{7_1_quad} \]
 Называется *квадратичной функией \(n\) перменных*
 #+end_definition
 Положим \(a_{ij} = a_{ij} + a_{ji}\)\({\color{red}??}\) \Rightarrow симметрия. матрица \(A\)

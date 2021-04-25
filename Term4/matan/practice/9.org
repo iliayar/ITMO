@@ -1,0 +1,19 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 9
+#+AUTHOR: Ilya Yaroshevskiy
+
+
+\(A \subset \R^m\)
+\[ \int_A f d \lambda_M \]
+#+begin_task org
+\[ \int_0^a d x_1 \int_0^{x_1} dx_2 \int_0^{x_{n - 1}} f dx_n = \int dx_n \int dx_{n - 1} \int dx_1 \]
+#+end_task
+
+#+begin_task org
+\[ \int_0^t dt_1 \int_0^{t_1} dt_2 \dots \int_0^{t_{n - 1}} f(t_1) f(t_2) \dots f(t_n) dt_n
+= \frac{1}{n!} \left(\int_0^t f(s) ds\right)^n \]
+\[ \int_0^t f(x_1) \int_0^{x_1} f(x_2) dx_2 dx_1 \xlongequal{?} \frac{1}{2} \left(\int_0^t f(x) dx\right)^2
+= \frac{1}{2} F(t)^2 \]
+\[ \int_0^t f(x_1) \int_0^{x_1} f(x_2) dx_2 dx_1 = \int_0^t f(x_1) F(x_1) dx_1 = F^2 \big|_0^1 - \int_0^t F(x_1) f(x_1) dx\]
+#+end_task
+\todo

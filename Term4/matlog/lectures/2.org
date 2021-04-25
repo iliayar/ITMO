@@ -1,0 +1,141 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 2
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_symb org
+\(\Gamma, \Delta, \Sigma\) --- списки высказываний
+#+end_symb
+#+NAME: следование
+#+begin_definition org
+Следование: \(\Gamma \vDash \alpha\), если
+- \(\Gamma = \gamma_1, \dots, \gamma_n\)
+- Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
+#+end_definition
+#+NAME: общезначимость
+#+begin_examp org
+\(\vDash \alpha\) --- \(\alpha\) общезначимо
+#+end_examp
+#+NAME: корректность
+#+begin_definition org
++Теория+ Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
+#+end_definition
+#+NAME: полнота
+#+begin_definition org
+Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
+#+end_definition
+#+NAME: теорема о дедукции
+#+ATTR_LATEX: :options [о дедукции]
+#+begin_theorem org
+\(\Gamma, \alpha \vdash \beta\) _тогда и только тогда, когда_ \(\Gamma \vdash \alpha \to \beta\)
+#+end_theorem
+#+begin_proof org
+\-
+- \((\Leftarrow)\) :: Пусть \(\Gamma \vdash \alpha \to \beta\). \\
+  Т.е. существует доказательство \(\delta_1, \dots, \delta_n\), где \(\delta_n = \alpha \to \beta\) \\
+  Построим новое доказательство: \(\delta_1, \dots, \delta_n, \alpha(\text{гипотеза}), \beta(\text{M.P.})\) \\
+  Эта новая последовательность --- доказательство \(\Gamma, \alpha \vdash \beta\)
+- \((\Rightarrow)\) :: Рассмотрим \(\delta_1, \dots, \delta_n\) --- доказательство \(\Gamma, \alpha \vdash \beta\)
+  | \(\sigma_1\) | \(\alpha \to \delta_1\) |
+  | \(\vdots\)   | \(\vdots\)              |
+  | \(\sigma_n\) | \(\alpha \to \delta_n\) |
+  Утвреждение: последовательность \(\sigma_1, \dots, \sigma_n\) можно дополнить до доказательства, т.е. каждый \(\sigma_i\) --- аксиома, гипотеза или получается по M.P. Докажем по индукции: \\
+  _База_: \(n = 0\) \\
+  _Переход_: пусть \(\sigma_0, \dots, \sigma_n\) --- доказательсво. тогда \(\sigma_{n + 1} = \alpha \to \delta_{n + 1}\) по трем вариантам:
+  1. \(\delta_{n + 1}\) --- аксиома или гипотеза \(\not\equiv \alpha\)
+  2. \(\delta_{n + 1} \equiv \alpha\)
+  3. \(\delta_k \equiv \delta_l \to \delta_{n + 1},\ k,l\le n\)
+  Докажем каждый из трех вариантов
+  1. \-
+    | /         | <                                               |                        |
+    | (n + 0.2) | \(\delta_{n + 1}\)                              | (аксиома или гипотеза) |
+    | (n + 0.4) | \(\deta_{n + 1} \to \alpha \to \delta_{n + 1}\) | (сх. акс. 1)           |
+    | (n + 1)   | \(\alpha \to \delta_{n + 1}\)                   | (M.P. \(n + 0.2, n + 0.4\)) |
+  2. \((n + 0.2, n + 0.4, n+0.6, n+0.8, n+1)\) --- доказательтво \(\alpha \to \alpha\)
+  3. \-
+     | \((k)      \) | \(\alpha \to (\sigma_l \to \sigma_{n + 1})\)                                                             |                   |
+     | \((l)      \) | \(\alpha \to \sigma_l\)                                                                                  |                   |
+     | \((n + 0.2)\) | \((\alpha \to \delta_l) \to (\alpha \to (\delta_l \to \delta_{n + 1})) \to (\alpha \to \delta_{n + 1})\) | (сх. 2)           |
+     | \((n + 0.4)\) | \((\alpha \to \delta_l \to \delta_{n + 1}) \to (\alpha \to \delta_{n + 1})\)                             | (M.P. \(n + 0.2, l\)) |
+     | \((n + 1)  \) | \(\alpha \to \delta_{n + 1}\)                                                                            | (M.P. \(n + 0.4, k\)) |
+#+end_proof
+#+NAME: теорема о корректности
+#+ATTR_LATEX: :options [о корректности]
+#+begin_theorem org
+Пусть \(\vdash \alpha\) \\
+_Тогда_ \(\vDash \alpha\)
+#+end_theorem
+#+begin_proof org
+Индукция по длине доказательства: каждая \(\llb \delta_i \rrb = \text{И}\), если \(\delta_1, \dots, \delta_k\) --- доказательство \(\alpha\) \\
+Пусть \(\llb \delta_1 \rrb = \text{И}, \dots, \llb \delta_n \rrb = \text{И}\). Тогда осн. \(\delta_{n + 1}\):
+1. \(\delta_{n + 1}\) --- аксиома
+   1. \(\delta_{n + 1} \equiv \alpha \to \beta \to \alpha\) (Сущесвуют \(\alpha, \beta\), что) \\
+      Пусть \(\delta_{n + 1} = A \to B \to A\). Тогда \(\alpha \equiv A, \beta \equiv B\) \\
+      \(\llb \alpha \to \beta \to \alpha \rrb ^{\llb \alpha \rrb \coloneqq a, \llb \beta \rrb \coloneqq b} = \text{И}\)
+      | /     |       | <                    | <                               |
+      | \(a\) | \(b\) | \(\beta \to \alpha\) | \(\alpha \to \beta \to \alpha\) |
+      |-------+-------+----------------------+---------------------------------|
+      | Л     | Л     | И                    | И                               |
+      | Л     | И     | Л                    | И                               |
+      | И     | Л     | И                    | И                               |
+      | И     | И     | И                    | И                               |
+2. \(\delta_{n + 1}\) --- M.P. \(\delta_k = \delta_l \to \delta_{n + 1}\) \\
+   Фиксируем оценку \(\llb \delta_k \rrb = \llb \delta_l \rrb = \text{И}\), тогда \(\llb \delta_l \to \delta_{n + 1} \rrb = \text{И}\)
+   | \(\llb \delta_l \rrb\) | \(\llb \delta_{n + 1} \rrb\) | \(\llb \delta_k \rrb = \llb \delta_l \to \delta_{n + 1} \rrb\) |
+   |------------------------+------------------------------+----------------------------------------------------------------|
+   | +Л+                    | +Л+                          | +И+                                                            |
+   | +Л+                    | +И+                          | +И+                                                            |
+   | +И+                    | +Л+                          | +Л+                                                            |
+   | И                      | И                            | И                                                              |
+   Т.е. \(\llb \delta_{n + 1} \rrb = \text{И}\)
+#+end_proof
+#+NAME: теорема о полноте
+#+ATTR_LATEX: :options [о полноте]
+#+begin_theorem org
+Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+#+end_theorem
+#+begin_symb org
+\[ [\beta]^\alpha \equiv \begin{cases}
+\alpha & \llb \beta \rrb = \text{И} \\
+\neg \alpha & \llb \beta \rrb = \text{Л} 
+\end{cases}\]
+#+end_symb
+#+begin_proof org
+Фиксируем набор перменных из \(\alpha\): \(P_1, \dots, P_n\) \\
+Рассмотрим \(\llb \alpha \rrb^{P_1 \coloneqq x_1, \dots P_n \coloneqq x_n} = \text{И}\).
+Докажем, что \(\underbrace{[x_1]^{P_1},\dots,[x_n]^{P_n}}_\Delta \vdash [\alpha]^\alpha\). \\
+_Индукция_ по длине формулы (по структуре) \\
+_База_: \(\alpha \equiv P_i\) \([P_i]^{P_i} \vdash [P_i]^{P_i}\) \\
+_Переход_: пусть \(\eta, \zeta\): \(\Delta \vdash [\eta]^\eta, \Delta \vdash [\zeta]^\zeta\). Покажем, что \(\Delta \vdash [\eta \star \zeta]^{\eta \star \zeta}\), где \(\star\) --- все свзяки \\
+Используя [[леммаполнота1][лемму]]: \(\vDash \alpha\), т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash [\alpha]^\alpha\). Но \(\llb \alpha \rrb = \text{И}\) при любой оценке, \\
+т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\) при всех \(x_i\) \\
+\[ \left.\begin{matrix}
+[x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, P_n \vdash \alpha \\
+[x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, \neg P_n \vdash \alpha
+\end{matrix}\right| \xRightarrow{\text{лемма}} [x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}} \vdash \alpha\]
+#+end_proof
+#+NAME: леммаполнота1
+#+begin_lemma org
+\-
+- \(\Gamma, \eta \vdash \zeta\)
+- \(\Gamma, \neg \eta \dash \zeta\)
+_Тогда_ \(\Gamma \vdash \zeta\)
+#+end_lemma
+#+NAME: леммаполнота2
+#+begin_lemma org
+\([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\), то \([x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n- 1}} \vdash \alpha\)
+#+end_lemma
+* Интуиционистская логика
+\(A \vee B\) --- плохо
+#+begin_examp org
+Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
+Пусть \(a = b = \sqrt{2}\). Рассмотрим \(\sqrt{2}^{\sqrt{2}} \in \R \setminus \mathbb{Q}\)
+- Если да, то ОК
+- Если нет, то возьмем \(a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}\), \(a^b = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{2} = 2\)
+#+end_examp
+#+begin_defintion org
+ВНК-интерпретация. \(\alpha, \beta\)
+- \(\alpha \& \beta\) --- есть \(\alpha, \beta\)
+- \(\alpha \vee \beta\) --- есть \(\alpha\) либо \(\beta\) и мы знаем какое
+- \(\alpha \to \beta\) --- есть способ перестроить \(\alpha\) в \(\beta\)
+- \(\perp\) --- конструкция без построения \(\neg \alpha \equiv \alpha \to \perp\)
+#+end_defintion
