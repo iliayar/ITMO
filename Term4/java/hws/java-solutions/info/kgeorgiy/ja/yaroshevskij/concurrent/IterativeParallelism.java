@@ -1,6 +1,7 @@
 package info.kgeorgiy.ja.yaroshevskij.concurrent;
 
 import info.kgeorgiy.java.advanced.concurrent.ListIP;
+import info.kgeorgiy.java.advanced.mapper.ParallelMapper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,6 +12,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class IterativeParallelism implements ListIP {
+
+    private final ParallelMapper mapper;
+
+    public IterativeParallelism(ParallelMapper mapper) {
+        this.mapper = mapper;
+    }
+    public IterativeParallelism() {
+        this.mapper = null;
+    }
+
     @Override
     public String join(int threads, List<?> list) throws InterruptedException {
         return execute(threads, list, stream -> stream.map(Object::toString),
@@ -50,16 +61,25 @@ public class IterativeParallelism implements ListIP {
     }
 
     private <T> List<Stream<? extends T>> splitList(int threadsNumber, List<? extends T> list) {
-        // :NOTE: check for threadsNumber
-        threadsNumber = Math.min(threadsNumber, list.size());
-        if (threadsNumber == 0) {
+        if(threadsNumber <= 0) {
+            throw new IllegalArgumentException("Thread count must be positive number");
+        }
+        if (list.size() == 0) {
             return List.of();
         }
-        int segmentSize = (list.size() + threadsNumber - 1) / threadsNumber;
+        threadsNumber = Math.min(threadsNumber, list.size());
+        int segmentSize = list.size() / threadsNumber;
+        int extraSize = list.size() - segmentSize * threadsNumber;
+        segmentSize += 1;
         List<Stream<? extends T>> result = new ArrayList<>();
-        // :NOTE: segments size +- 1
         for (int i = 0; i < list.size(); i += segmentSize) {
-            result.add(list.subList(i, Math.min(i + segmentSize, list.size())).stream());
+            if (extraSize == 0) {
+                segmentSize -= 1;
+            }
+            if (extraSize >= 0) {
+                extraSize -= 1;
+            }
+            result.add(list.subList(i, i + segmentSize).stream());
         }
         return result;
     }
@@ -80,6 +100,9 @@ public class IterativeParallelism implements ListIP {
 
     private <T, U, R> R executeStreams(List<Stream<? extends T>> list, Function<Stream<? extends T>, U> function,
                                        Function<Stream<? extends U>, R> resulting) throws InterruptedException {
+        if(this.mapper != null) {
+            return resulting.apply(mapper.map(function, list).stream());
+        }
         List<U> results = new ArrayList<>();
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < list.size(); ++i) {
