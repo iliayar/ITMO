@@ -13,6 +13,7 @@
 - [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/8.pdf][Lecture 8]]
 - [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/9.pdf][Lecture 9]]
 - [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/10.pdf][Lecture 10]]
+- [[https://iliayar.ru//public-notes/conspects/Term4/matan/lectures/11.pdf][Lecture 11]]
 * Practices
 - [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/1.pdf][Practice 1]]
 - [[https://iliayar.ru//public-notes/conspects/Term4/matan/practice/2.pdf][Practice 2]]
