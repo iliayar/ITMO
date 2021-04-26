@@ -112,7 +112,7 @@
 \(U\) --- не разрешим
 #+end_theorem
 #+begin_proof org
-Допустим существует программа =rust#inU((p, x): (Word, Word))=, которая разрешает \(U\)
+Допустим существует программа src_rust[:exports code]{inU((p, x): (Word, Word))}, которая разрешает \(U\)
 #+BEGIN_SRC rust
   fn q(x: Word) -> Res {
       if inU((x, x)) {
