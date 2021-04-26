@@ -19,7 +19,7 @@
 - Конечные языки \(\var{Finite} \subset \var{RE}\)
 - Языки, содержащие \(\varepsilon\) \(\underbrace{X_\varepsilon}_{\text{prop}} \subset \underbrace{\var{RE}}_{\text{prop}}\) \\
   \(\underbrace{A}_{\text{lang}} \in \underbrace{X_\varepsilon}_{\text{prop}} \Leftrightarrow \underbrace{\varepsilon}_{\text{string}} \in \underbrace{A}_{\text{lang}}\)
-Посмторим на их типы
+Посмотрим на их типы
 - \(\Sigam^*\) --- =string=
 - \(lang\) --- =set<string>=
 - \(prop\) --- =set<lang>=
@@ -30,7 +30,7 @@
 #+begin_examp org
 \(L(RE) = \{p \big| L(p) \in RE\} = \var{Prog}\)
 #+begin_src rust
-  fn q(p: Prop) -> bool {
+  fn q(p: Prog) -> bool {
       return 1;
   }
 #+end_src
@@ -38,7 +38,7 @@
 #+begin_examp org
 \(L(\emptyset_p) = \{p \big| L(p) \in \emptyset_p\} = \emptyset_e\)
 #+begin_src rust
-  fn q(p: Prop) -> bool {
+  fn q(p: Prog) -> bool {
       return 0;
   }
 #+end_src
@@ -49,6 +49,57 @@
 - \(X \subset \var{RE}\)
 - \(X \neq \emptyset\)
 - \(X \neq \var{RE}\)
-_Тогда_ \(L(X)\) не разрешим
+_Тогда_ \(L(X)\) не разрешим \\
+Т.е. никакое нетривиальное свойство перечислимых _языков_ не разрешимо.
 #+end_theorem
-\todo
+#+begin_proof org
+\(X\) --- нетривиальное свойство. \\
+\(\varnothing_C \not\in X\) \\
+\(A \in X\) \\
+\(A\) полуразрешается \(p_A\) \\
+\(] L(X)\) --- разрешим \\
+\(q_X\) --- разрешитель \(L*X\)
+\[ q_X(p) = \begin{cases} 1 & L(p) \in X \\ 0 & L(p) \not\in X \end{cases}\]
+#+begin_src rust
+  fn c() {
+      loop {
+          q_x(c) = 0;
+          q_x(p_A) = 1;
+      }
+  }
+#+end_src
+#+begin_src rust
+  fn a(p: Prog, x: Word) {
+      let s = "
+  fn s(y: Word) {
+      if p(x) == 1 {
+          return p_A(y);
+      } else {
+          loop { };
+      }
+  }";
+      return q_X(s);
+  }
+#+end_src
+\[p(x) = 1 \implies \forall y\ s(y) = p_A(y) \implies L(s) = L(p_A) = A \in X \implies q_X(s) = 1\] 
+\[ p(x) \neq 1 \implies \forall y\ s(y)\text{ зависает } \implies L(s) = \varnothing_e \not\in X \implies q_X(S) = 0\]
+#+end_proof
+#+begin_definition org
+\(\text{HALT} = \{p \big| p\text{ останавливается на }\varepsilon\}\)
+#+end_definition
+#+begin_definition org
+\(m\)-сведение mapping (many-to-one).
+- \(A, B\) --- языки
+\(A \le_m B\) --- \(A\) сводится к языку \(B\), если существует всюду определенная вычислимая функция \(f\): \(x \in A \Leftrightarrow f(x) \in B\)
+#+end_definition
+#+begin_lemma org
+\(A \le_m B\), \(B\) разрешим \(\implies\) \(A\) разрешим
+#+begin_src rust
+  fn inA(x: Word) {
+      return inB(f(x));
+  }
+#+end_src
+#+end_lemma
+#+begin_lemma org
+\(A \le_m B\), \(A\) неразрешим \(\implies\) \(B\) неразрешим
+#+end_lemma
