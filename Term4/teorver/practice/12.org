@@ -1,0 +1,123 @@
+#+TITLE: Практика 12
+#+SETUPFILE: setup.org
+
+|                   / |    < |      |      |    > |          |
+| \diagbox{\eta}{\xi} |    0 |    2 |    4 |    6 |      q_j |
+|---------------------+------+------+------+------+----------|
+|                   0 | 0.15 |  0.1 |  0.1 | 0.05 |      0.4 |
+|                 0.1 |    4 |  0.1 | 0.05 |  0.1 |      0.3 |
+|                   8 | 0.05 | 0.05 |  0.1 | 0.05 |      0.3 |
+|---------------------+------+------+------+------+----------|
+|                 p_i |  0.3 | 0.25 | 0.25 |  0.2 | \sum = 1 |
+#+begin_task org
+\(p_n = ?\)
+#+end_task
+#+begin_task org
+Частичные \(\xi\) и \(\eta\). \(E\xi,D\xi, E\eta, D\eta, \sigma_\xi, \sigma_\eta\)
+#+end_task
+#+begin_solution org
+\-
+| /     |   < |      |      |     |
+| \xi_i |   0 |    2 |    4 |   6 |
+|-------+-----+------+------+-----|
+| p_i   | 0.3 | 0.25 | 0.25 | 0.2 |
+
+
+| /      |   < |     |     |
+| \eta_i |   0 |   4 |   8 |
+|--------+-----+-----+-----|
+| q_i    | 0.4 | 0.3 | 0.3 |
+
+\[ E\xi = \sum\xi_i p_i = 2.7 \]
+\[ D\xi = 4.91 \]
+\[ \sigma_\xi = 2.216 \]
+\[ E\eta = 3.6 \]
+\[ D\eta = 11.04 \]
+\[ \sigma_eta = 3.323 \]
+#+end_solution
+#+begin_task org
+Независимые?
+#+end_task
+#+begin_solution org
+\(p_{??} = 0.1\) \\
+\(p_2 \cdot q_2 = 0.25 \cdot 0.3 = 0.075\) \\
+Тогда \(\xi, \eta\) независимы
+#+end_solution
+#+begin_task org
+\[ p \left(\frac{\xi^2}{9} + \frac{\eta^2}{25} \le 1) =? \]
+#+end_task
+#+begin_solution org
+\[ p\left(\frac{\xi^2}{9} + \frac{\eta^2}{25} = 1\right) - p(\xi = 0, \eta = 0) + p(\xi = 2, \eta = 0) + p(\xi = 0, \eta = 4) = 0.15 + 0.1 + 0.05 = 0.3\]
+#+end_solution
+\[ F(x, y) = \begin{cases}
+  1 - \frac{1}{x^2} - \frac{1}{y^2} + \frac{1}{x^2y^2} & (x, y) \in \{x \ge 1, y \ge 1\} \\
+  0 &(x, y) \not\in \{x \ge 1, y \ge 1\}
+\end{cases} \]
+#+begin_task org
+\[ f_{\xi,\eta}(x, y) = ? \]
+#+end_task
+#+begin_solution org
+\[ f_{\xi, \eta} = \frac{\partial^2 F}{\partial x\partial y} \]
+\[ \frac{\partial F}{\partial x} = \frac{2}{x^2} - \frac{2}{x^3y^2} \]
+\[ \frac{\partial^2 F}{\partial x \partial y} = \frac{4}{x^3y^3} \]
+\[ f_{\xi, \eta}(x, y) = \begin{cases}
+  \frac{4}{x^3y^3} & (x, y) \in \{x \ge 1, y \ge 1\} \\
+  0 & (x, y) \not\in \{\x \ge 1, y \ge 1\}
+\end{cases} \]
+#+end_solution
+#+begin_task org
+\[ f_\xi(x) = ? \quad f_\eta(y) = ? \]
+#+end_task
+#+begin_solution org
+\begin{align}
+  f_\xi(x) = \int_{-\infty}^{+\infty} f_{\xi, \eta}(x, y)\,dy = \int_1^\infty \frac{4}{x^3y^3}\,dy & = \\
+ = -\frac{4}{x^3}\cdot \frac{1}{2y^2}\big|_1^\infty = - \frac{1}{x^3} \left(\lim_{y \to \infty} \frac{1}{y^2} - 1\right) & = \frac{2}{x^3}
+\end{align}
+\[ f_\xi(x) = \begin{cases}
+  0 & x < 1 \\
+  \frac{2}{x^3} & x \ge 1
+\end{cases} \]
+\[ f_\eta(y) = \begin{cases}
+  0 & y < 1 \\
+  \frac{2}{y^2} & y \ge 1
+\end{cases} \]
+#+end_solution
+#+begin_task org
+\[ F_\xi(x) = ? \quad F_\eta(y) = ? \]
+#+end_task
+#+begin_solution org
+\begin{align}
+  F_\xi(x) = \int_{-\infty}^x f_\xi(x)\,dx = \int_1^x \frac{2}{x^3}\,dx = -\frac{1}{x^2}\big|_1^x = 1 - \frac{1}{x^2} \\
+  F_\xi(x) = \begin{cases}
+    0 & x < 1 \\
+    1 - \frac{1}{x^2} & x \ge 1
+  \end{cases} \\
+  F_\eta(y) = \begin{cases}
+    0 & y < 1 \\
+    1 - \frac{1}{y^2} & y \ge 1
+  \end{cases}
+\end{align}
+#+end_solution
+#+begin_task org
+Независимы?
+#+end_task
+#+begin_solution org
+\begin{align}
+  f_\xi\cdot f_\eta(y) = \frac{2}{x^3}\frac{2}{y^3} = \frac{4}{x^3y^3} = f_{\xi, \eta}(x, y)
+\end{align} \implies \(\xi, \eta\) --- независимы
+\begin{align}
+F_\xi(x)\cdot F_\eta(y) = \left(1 - \frac{1}{x^2}\right)\left(1 - \frac{1}{y^2}\right) = 1 - \frac{1}{x^2} - \frac{1}{y^2} + \frac{1}{x^2y^2} = F_{\xi, \eta}(x, y)
+\end{align}
+#+end_solution
+#+begin_task org
+\[ p(2 \le y < 4, 1 < \eta < 2) = ? \]
+#+end_task
+#+begin_solution org
+\begin{align*}
+  p(2 < \xi < 4, 1 < \eta < 2) = p(2 < \xi < 4)\cdot(1 < \eta < 2) = (F_\xi(4) - F_\xi(2))\cdot F_\eta(2) = \\
+  = \left(\left(1 - \frac{1}{16}\right) - \left(1 - \frac{1}{4}\right)\right)\cdot \left(1 - \frac{1}{4}\right) \\
+  p(2 < \xi < 4, 1 < \eta < 2) = F(4, 2) - F(2, 2) - F(4, 1) + F(2, 1) = \frac{9}{64}
+\end{align*}
+
+#+end_solution
+
