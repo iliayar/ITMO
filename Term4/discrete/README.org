@@ -11,8 +11,10 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/5.pdf][Lecture 5]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/6.pdf][Lecture 6]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/7.pdf][Lecture 7]]
-- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/8.pdf][Lecture 8]]
-- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/9.pdf][Lecture 9]]
+- Lecture 8
+- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/8.pdf][Lecture 9]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/9.pdf][Lecture 10]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/10.pdf][Lecture 11]]
 * Labs
 - [[file:labs/lab1/][Generating functions]] \\
   [[file:labs/lab1/s4-01-lab-genfunction.pdf][Statements]]
