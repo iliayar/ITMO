@@ -1,0 +1,152 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 11
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Quine на Java
+#+begin_src java
+  import java.util.*;
+  import java.io.*;
+
+  class A {
+          String s = "?";
+
+          public run() {
+                  System.out.println(s)
+          }
+	
+          public static void main(String[] args) {
+                  new A().run();
+          }
+
+  }
+#+end_src
+Попробуем вставить код нашей программы в переменную =s=. Тогда будет
+выводится не код нашей программы. Что мы сделали: Подставили `старый`
+код вместо =?= в =s=. Напишем новую программу, которая будет делать
+это за нас.
+#+begin_src java
+  import java.util.*;
+  import java.io.*;
+
+  class A {
+          String s = "?";
+
+          public void run() {
+                  int d = s.find('?');
+                  System.out.println(s.substring(0, d) + s + s.substing(d + 1, 0));
+          }
+
+          public static void main(String[] args) {
+                  new A().run();
+          }
+
+          public String escape(String s) {
+                  // Escapes symbols ', ", \n
+                  return s;
+          }
+  }
+#+end_src
+#+ATTR_LATEX: :options [о рекурсии]
+#+begin_theorem org
+\-
+- \(V(x, y)\) --- вычислимая функция от 2х аргументов
+- \(\exists\) программа \(r(t)\)
+- \(\forall t\ V(r, t) = r(t)\)
+#+end_theorem
+Предположим, что по исходному коду программы можно сделать какие то выводы. Пусть программа зная свой исходный код, сделает наоборот.
+#+begin_theorem org
+halt не разрешима
+#+end_theorem
+#+begin_proof org
+Пусть существует \(halt\) --- программа которая говорит, останавливается ли программа.
+#+begin_src python
+  def q(x):
+      if halt(q):
+          while True:
+              pass
+      else:
+          return 1
+            
+#+end_src
+#+end_proof
+#+begin_proof org
+\-
+#+begin_src python
+  def V(q, x):
+      if halt(q):
+          while True:
+              pass
+      else:
+          return 1
+            
+#+end_src
+\(\forall t: r(t) = V(r , t)\). \(V(q, t)\) зависает \(\Leftrightarrow\) \(q(\varepsilon)\) останавливается. \(r(\varepsilon) = V(r, \varepsilon)\) зависает \(\Leftrightarrow\) \(r(\varepsilon)\) останавливается
+#+end_proof
+#+begin_theorem org
+\(U\) не разрешим
+#+end_theorem
+#+begin_proof org
+#+begin_src python
+  def q(x):
+      if u(q, x):
+          return 0
+      else:
+          return 1
+#+end_src
+#+end_proof
+#+begin_theorem org
+Любое нетривиальное свойство перечислимых языков не разрешимо
+#+end_theorem
+#+begin_proof org
+\(A\) --- нетривиальное свойство \(inA(p)\)
+- \(L \in A\), \(inL(x)\)
+- \(M \not\in A, \inM(x)\)
+#+begin_src python
+  def p(x):
+      if inA(p):
+          return inM(x)
+      else:
+          return inL(x)
+#+end_src
+#+end_proof
+#+begin_theorem org
+В любой достаточно богатой формальной системе существует истинное ??? утверждение.
+#+end_theorem
+#+begin_remark org
+Система достаточно богатая, если можно записать утверждение `Программа \(p\) останавливается на входе \(x\)` 
+#+end_remark
+#+begin_remark org
+Система формальная, если можно проверить, что доказательство верно.
+#+end_remark
+#+begin_export latex
+\begin{enalgo}[H]
+\caption*{\textbf{Program} \(p\)}
+\begin{algorithmic}
+\STATE \(s = `\(p\)\text{ останавливается на входе }\(x\)`\)
+\FOR {\(t \gets \Sigma^*\)} \DO
+  \IF{\(t\)\text{ --- доказательство }\(S\)} \THEN
+    \RETURN
+  \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{enalgo}
+#+end_export
+- \(S\) --- ложно \(\implies\) \(S\) --- истинна
+- \(S\) --- истинно \(\implies\) (\(S\) доказуемо \(\implies\) \(S\) ложно) \\
+  \(S\) --- истинно, \(S\) --- не доказуемо
+#+begin_theorem org
+Любая достаточно богатая система не может доказать свою непротиворечивость
+#+end_theorem
+#+ATTR_LATEX: :options [о неподвижной точке]
+#+begin_theorem org
+Для любой всюду определенной функции \(f\) существует программа \(p:\ \forall t\ p(t) = q(t)\), где \(q(t) = f(p)\)
+#+end_theorem
+#+begin_proof org
+\-
+#+begin_src python
+  def p(x):
+      q = f(p)
+      return q(x)
+#+end_src
+
+#+end_proof

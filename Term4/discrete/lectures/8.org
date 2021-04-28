@@ -1,5 +1,5 @@
 #+LATEX_CLASS: general
-#+TITLE: Лекция 8
+#+TITLE: Лекция 9
 #+AUTHOR: Ilya Yaroshevskiy
 
 * Теория вычислимости

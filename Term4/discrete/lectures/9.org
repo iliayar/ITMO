@@ -1,5 +1,5 @@
 #+LATEX_CLASS: general
-#+TITLE: Лекция 9
+#+TITLE: Лекция 10
 #+AUTHOR: Ilya Yaroshevskiy
 
 
