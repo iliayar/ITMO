@@ -24,3 +24,4 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/matan/practice/7.pdf][Practice 7]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matan/practice/8.pdf][Practice 8]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matan/practice/9.pdf][Practice 9]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matan/practice/10.pdf][Practice 10]]
