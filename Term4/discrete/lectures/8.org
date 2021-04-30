@@ -1,0 +1,189 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 9
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Теория вычислимости
+\(\Sigma\) --- алфавит, \(\Sigma^* = \bigcup_{k = 0}^\infty \Sigma^k\). \(L \subset \Sigma^*\) --- формальный язык.
+#+begin_definition org
+\(L\) --- *разрешимый (рекурсивный)*, если \(\exists\) программа \(P\), такая что:
+- \(x \in L \implies P(x) = 1\)
+- \(x \not\in L \implies P(x) = 0\)
+#+end_definition
+#+begin_remark org
+Раньше называли рекурсивным, так как использовали рекурсивные функции. Это определение появилось до языков программирования
+#+end_remark
+#+begin_remark org
+Множетво разрешимых языков счетно
+#+BEGIN_SRC rust
+  fn p(x: Word) -> Res {
+      loop { }
+      return 1;
+  }
+#+END_SRC
+#+end_remark
+#+begin_remark org
+Любой конечный язык является разрешимым
+#+BEGIN_SRC rust
+  fn p(x: Word) -> Res {
+      if x == x_1 { // $x_1 \in L$
+          return 1; 
+      }
+      if x == x_2 { // $x_2 \in \L$
+          return 1;
+      }
+      // $\dots$
+  }
+#+END_SRC
+#+end_remark
+#+begin_definition org
+\(L\) --- *полуразрешимый (перечислимый, рекурсивно перечислмый)*, если \(\exists p\), такая что:
+1. \(x \in L \implies p(x) = 1\)
+2. \(x \not\in L \implies p(x) \neq 1\)
+#+end_definition
+#+begin_remark org
+Множество полуразрешимых языков счетно
+#+end_remark
+#+begin_remark org
+Разрешимый \(\implies\) Полуразрешимый
+#+end_remark
+#+begin_remark org
+\(\Sigma^*\), \(\N^+\), \(\var{Prog}\) --- будут для нас эквивалентными понятиями, когда будем говорить про формальный язык.
+- \(\Sigma^* \leftrightarrow \var{Prog}\) --- те строки, которые не являются программами, будем считать программами, которые `зависают` на любом входе
+- \(\Sigma^* \leftrightarrow \N^+\) --- занумеруем строки в градуированном лексикографичеком порядке \\
+  \[ \varepsilon, `0`, `1`, `00`, `01`, `10`, `11`, `000`, `001` \]
+#+end_remark
+#+begin_definition org
+Арифметические операции, =if=, =for=, =while=, вызов функций. \(p\) --- программа, \(x\) --- слово --- запустить программу \(p\) на слове \(x\), запустить программу \(p\) на слове \(x\) с ограничением на время \(\var{TL} = t\), и ограничением на память \(\var{ML} = m\)
+#+end_definition
+#+begin_definition org
+\(L\) --- перечислимый, если \(\exists p\) которая на пустом входе выводит любое слово из языка хотя бы один раз. \(\forall x \in L\ \exists t(x)\quad P\big|_{\var{TL} = t}\) выводит \(x\)
+#+end_definition
+#+begin_examp org
+\-
+#+BEGIN_SRC rust
+  fn zeroes() {
+      for i in [0..] {
+          let s = '0' * i;
+          println!("{}", s)
+      }
+  }
+#+END_SRC
+#+end_examp
+#+begin_theorem org
+\(L\) --- перечислимый \(\Leftrightarrow\) \(L\) --- полуразрешимый
+#+end_theorem
+#+begin_proof org
+\-
+- \((\Rightarrow)\) :: Пусть =listL()= --- перечисляет \(L\)
+  #+BEGIN_SRC rust
+    fn inL(x: Word) -> Res {
+        async { listL(); }
+        if x.is_printed() {
+            return 1;
+        }
+        return 0;
+    }
+  #+END_SRC
+- \((\Leftarrow)\) :: =inL()= --- полуразрешиель \(L\). Если напишем =listL()=, то он зависнет. Введем таймер.
+  #+BEGIN_SRC rust
+    fn listL() -> Res {
+        for t in [0..] {
+            for x in sigma[0..t] {
+                if inL(x).await(t) {
+                    println!("{}", x)
+                }
+            }
+        }
+    }
+  #+END_SRC
+#+end_proof
+#+begin_remark org
+Кодировать пару \(\langle x, y \rangle\) можем
+#+end_remark
+#+begin_definition org
+*Универсальный язык*:
+\[ U = \{\langle p, x \rangle \big| \text{программа } p(x) = 1\} \]
+#+end_definition
+\beginproperty
+#+begin_property org
+\(U\) --- полуразрешим --- Тьюринг полный
+#+end_property
+#+begin_theorem org
+\(U\) --- не разрешим
+#+end_theorem
+#+begin_proof org
+Допустим существует программа src_rust[:exports code]{inU((p, x): (Word, Word))}, которая разрешает \(U\)
+#+BEGIN_SRC rust
+  fn q(x: Word) -> Res {
+      if inU((x, x)) {
+          return 0;
+      } else {
+          return 1;
+      }
+  }
+#+END_SRC
+=q= никогда не зависает. Вызовем =q(q)=
+- \(inU(\langle q, q \rangle) = 1\)
+  - \(q(q) = 0\)
+  - \(\langle q, q \rangle \in U \implies q(q) = 1\)
+- \(inU(\langle q, q\rangle) = 0\)
+  - \(\langle q, q \rangle \not\in U \implies q(q) \neq 1\)
+  - \(q(q) = 1\)
+Получается, что \(q\) не возвращает ни 0 ни 1. Противоречие
+#+end_proof
+\beginproperty
+#+begin_property org
+\(A, B\) разрешимы, \(A \cup B\) --- разрешим
+#+end_property
+#+begin_property org
+\(A, B\) разрешимы, \(A \cap B\) --- резрешим
+#+end_property
+#+begin_property org
+\(A\) --- разрешим, \(\overline{A} = \Sigma^* \setminus A\) --- разрешим
+#+end_property
+#+begin_property org
+\(A, B\) полуразрешимы, \(A \cap B\) --- полуразрешим
+#+end_property
+#+begin_property org
+\(A, B\) полуразрешимы, \(A \cup B\) --- полуразрешим
+#+end_property
+#+begin_proof org
+\-
+#+BEGIN_SRC rust
+  fn p() -> Res {
+      for i in [0..] {
+          if inA.await(t) {
+              return 1;
+          }
+          if inB.await(t) {
+              return 1;
+          }
+      }
+  }
+#+END_SRC
+#+end_proof
+#+ATTR_LATEX: :options [Поста]
+#+begin_theorem org
+\(L\) и \(\overline{L}\) оба полуразрешимы \implies \(L\) --- разрешим
+#+end_theorem
+#+begin_proof org
+\-
+#+BEGIN_SRC rust
+  fn inL(x: Word) -> Res {
+      for t in [0..] {
+          if inL(x).await(t) {
+              return 1;
+          }
+          if inCL(x).await(t) { // $\text{\rm CL} = \overline{L}$
+              return 0;
+          }
+      }
+  }
+#+END_SRC
+#+end_proof
+#+begin_theorem org
+Не существует языка программирования, который поддерживает все три свойства
+1. Программа не зависает
+2. Любой разрешимый язык, распознается программой на этом языке
+3. Функция \(\langle p, x \rangle \mapsto p(x)\) вычислима
+#+end_theorem

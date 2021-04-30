@@ -1,0 +1,168 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 10
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Сходимость случайных величин
+** Сходимость `почти наверное`
+#+begin_definition org
+Случайная величина имеет некоторое свойство *почти наверное*, если: \\
+\(p(\text{случайная величина имеет свойство}) = 1\), или \(p(\text{случайная величина не имеет свойство}) = 0\)
+#+end_definition
+#+begin_definition org
+\(\{\xi_n\}\) *сходится почти наверное* к случайной величине \(\xi\), при \(n \to \infty\), если \\
+\(p(\omega \in \Omega \big| \xi_n(\omega) \to \xi(\omega)) \to 1\)
+#+end_definition
+#+begin_symb org
+\(\xi_n \xrightarrow[n \to \infty]{\text{п.н.}} \xi\)
+#+end_symb
+
+** Сходимость по вероятности
+#+begin_definition org
+Последовательность \(\{\xi_n\}\) *сходится по вероятности* к случайной величине \(\xi\) при \(n \to \infty\), если
+\(\forall \varepsilon > 0\ p(|\xi _n - \xi| \ge \varepsilon) \xrightarrow[n \to \infty]{} 0\) или \(p(|\xi_n - \xi| < \varepsilon) \xrightarrow[n \to \infty]{} 1\)
+#+end_definition
+#+begin_remark org
+\(\xi_n \xrigharrow{p} \xi \not\!\!\!\implies E\xi_n \to E\xi\)
+#+end_remark
+\beginproperty
+#+begin_property org
+\(|\xi_n| \le C = \const\) \(\forall n\), тогда \(\xi_n \xrightarrow{p} \xi \implies E\xi_n \to E\xi\)
+#+end_property
+#+begin_property org
+Если \(\xi_n \xrightarrow{p} \xi\) и \(\eta_n \xrightarrow{p} \eta\), то \(\xi_n + \eta_n \xrightarrow{p} \xi + \eta\) и \(\xi_n \eta_n \xrightarrow{p} \xi\eta\)
+#+end_property
+** Сходимость по функции распределения
+#+begin_definition org
+Последовательность случайных величин \(\{\xi_n\}\) *слабо сходится* к случайной величине \(\xi\), если \(F_{\xi_n}(x) \xrightarrow[n \to \infty]{} F_\xi(x)\ \forall x\)
+#+end_definition
+#+begin_symb org
+\(\xi_n \rightrightarrows \xi\)
+#+end_symb
+\beginproperty
+#+begin_property org
+Если \(\xi_n \xrightarrow{p} C\) и \(\eta_n \rightrightarrows \eta\), то \(\xi_n \eta_n \rightrightarrows C\eta\) и \(\xi_n + \eta_n \rightrightarrows \eta + C\)
+#+end_property
+** Связь между видами сходимости
+#+begin_theorem org
+\(\xi_n \xrightarrow{\text{п.н.}} \xi \implies \xi_n \xrigharrow{p} \xi \implies \xi_n \rightrightarrows \xi\)
+#+end_theorem
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_theorem org
+Если \(\xi \rightrightarrows C\), то \(\xi \xrightarrow{p} C\)
+#+end_theorem
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_remark org
+В общем случае бессмысленно утверждение \(\xi_n \rightrightarrows \xi \implies \xi_n \xrightarrow{p} \xi\), т.к. совершенно разные случайные величины могут иметь одинаковое распределение
+#+end_remark
+
+#+begin_theorem org
+Для произвольной Борелевской функции \(g(x)\):
+1. \(Eg(x) = \sum_{n = 1}^\infty g(x_n)\cdot p(\xi = x_n)\),  если \(\xi\) --- дискретная случайная величина
+2. \(Eg(x) = \int_{-\infty}^\infty g(x) f_\xi(x) dx\), если \(\xi\) --- абсолютно непрерывная случайная величина
+#+end_theorem
+* Свойство моментов
+\beginproperty
+#+begin_property org
+Если случайная величина \(\xi \ge 0\) почти наверное, то \(E\xi \ge 0\)
+#+end_property
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_property org
+Если \(\xi \ge \eta\) почти наверное, то \(E\xi \ge E\eta\)
+#+end_property
+#+begin_proof org
+\(\xi \ge \eta\) почти наверное  \implies \(\xi - \eta \ge 0\) почти наверное \implies \(E(\xi - \eta) = E\xi - E\eta \ge 0 \implies E\xi \ge E\eta\) почти наверное
+#+end_proof
+#+begin_property org
+Если \(|\xi| \ge |\eta|\) почти наверное, то \(E|\xi|^k \ge E|\eta|^k\)
+#+end_property
+#+begin_property org
+Если существует момент \(n_t\) случайной величины \(\xi\), то существуют и ее моменты меньшего порядка \(s < t\)
+#+end_property
+#+begin_proof org
+\todo
+#+end_proof
+** Ключевые неравенства
+Далее \(\xi\) --- случайная величина, \(E|\xi| < \infty\) и \(D\xi < \infty\), если оно упоминается в теореме
+#+ATTR_LATEX: :options [неравенство Йенсена]
+#+begin_theorem org
+Пусть функция выпукла вниз, тогда для любой случайной величины верно неравенство:
+\[ Eg(\xi) \ge g(E\xi) \]
+#+end_theorem
+#+begin_remark org
+Для вогнутых функция знак неравенства меняется
+#+end_remark
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_corollary org
+Если \(E|\xi|^t < \infty\), то \(\forall 0 < s < t\)
+\[ \sqrt[s]{E|\xi|^s} \le \sqrt[t]{E|\xi|^t} \]
+#+end_corollary
+#+ATTR_LATEX: :options [неравентво Маркова]
+#+begin_theorem org
+\[p(|\xi| \ge \varepsilon) \le \frac{E|\xi|}{\varepsilon}\ \forall \varepsilon > 0\]
+#+end_theorem
+#+ATTR_LATEX: :options [неравентво Чебышева]
+#+begin_theorem org
+\[ p(|\xi - E\xi| \ge \varepsilon) \le \frac{D\xi}{\varepsilon}\ \forall \varepsilon > 0 \]
+
+#+end_theorem
+
+* Среднее арифметическое случайных величин
+Пусть \(\xi_1, \xi_2, \dots, \xi_n\) --- независимые, одинаково распределенные случайные величины с конечным вторым моментом. Обозначим \(a = E\xi\), \(d = D\xi\), \(\sigma = \sigma_{\xi}\), \(S_n = \xi_1 + \xi_2 + \dots + \xi_n\)
+\[ \frac{S_n}{n} = \frac{\xi_1 + \xi_2 + \dots + \xi_n}{n} \]
+\[ E \left(\frac{S_n}{n}\right) = \frac{1}{n}(E\xi_1 + \dots + E\xi_n) = \frac{1}{n}(a + \dots + a) = a = E\xi \]
+\[ D \left(\frac{S_n}{n}\right) = \frac{1}{n^2}(D\xi_1 + \dots + D\xi_n) = \frac{1}{n^2} \cdot n \cdot d = \frac{d}{n} = \frac{D\xi}{n} \]
+\[ \sigma_{S_n} = \frac{\sigma}{\sqrt{n}} \]
+* Законы больших чисел
+** Закон больших чисел Чебышева
+#+begin_theorem org
+Пусть \(\xi_1, \xi_2, \dots\) --- последовательность независимых, одинаково распределенных случайных величин с конечными вторым моментом, тогда \(\frac{\xi_1 + \dots + \xi_n}{n} \xrightarrow{p} E\xi_1\)
+#+end_theorem
+#+begin_remark org
+При доказательстве получили полезное неравенство:
+\[ p \left(\left|\frac{S_n}{n} - a \right| \ge C\right) \le \frac{D\xi_1}{n \varepsilon^2} \]
+#+end_remark
+** Закон больших чисел Бернулли
+#+begin_theorem org
+Пусть \(N_A\) --- число появления события \(A\) в серии из \(N\) независимых экспериментов, \(p = p(A)\) \\
+_Тогда_ \(\frac{N_A}{n} \xrightarrow{p} p\) 
+#+end_theorem
+** Закон больших чисел Хинчина
+#+NAME: теоремахинчина
+#+begin_theorem org
+Пусть \(\xi_1, \xi_2, \dots\) --- последовательности независимых, одинаково распределенных случайных величин с конечным первым моментом \(E\xi_1 < \infty\) \\
+_Тогда_ \[ \frac{\xi_1 + \dots + \xi_n}{n} \xrightarrow{p} E\xi_n \]
+#+end_theorem
+** Усиленный закон больших чисел Колмогорова
+#+begin_theorem org
+В условиях [[теоремахинчина][теоремы Хинчина]]
+\[ \frac{\xi_1 + \xi_2 + \dots + \xi_1}{n} \xrightarrow{\text{п.н.}} E\xi_n \]
+
+#+end_theorem
+** Закон больших чисел Маркова
+#+begin_theorem org
+Пусть имеется последовательность случайных величин \(\xi_1, \xi_2, \dots\) с конечными вторыми моментами, при чем \(D(S_n) = o(n^2)\)
+_Тогда_
+\[ \frac{S_n}{n} \xrightarrow{p} E \left(\frac{S_n}{n}\right) \]
+или
+\[ \frac{\xi_1 + \dots + \xi_n}{n} - \frac{E\xi_1 + \dots + E\xi_n}{n} \xrightarrow{p} 0 \]
+#+end_theorem
+* Центральная предельная теорема
+#+begin_theorem org
+Пусть \(\xi_1, \xi_2, \dots\) --- , \(0 < D\xi_1 < \infty\) и \(S_n = \sum{i = 1}^n \xi_i\) \\
+_Тогда_
+\[ \frac{S_n - nE\xi_1}{\sqrt{nD\xi_1}} \rightrightarrows N_{0,1} \]
+#+end_theorem
+#+begin_remark org
+\(a = E\xi_1,\ \sigma = \sigma_{\xi_1}\), тогда \(\sigma \left(\frac{S_n}{n}\right) = \frac{\sigma}{\sqrt{n}}\)
+\[ \frac{\frac{S_n}{n} - a}{\sigma \left(\frac{S_n}{n}\right)} \rightrightarrows N_{0,1} \]
+Т.е. стандартизованное среднее арифметическое слабо сходится к стандартному нормальному распределению
+#+end_remark
+

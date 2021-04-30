@@ -1,3 +1,5 @@
-#+TITLE: Математический анализ
+#+TITLE: Mathematical analysis
+#+SETUPFILE: ../../level-subj.org
 
-[[file:lectures/all_lectures.pdf][Все лекции]]
+[[https://iliayar.ru/public-notes/conspects/Term3/matan/lectures/all_lectures.pdf][All lectures]] \\
+[[https://iliayar.ru/public-notes/conspects/Term3/matan/lectures/questions.pdf][Questions for exam]]

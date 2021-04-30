@@ -1,0 +1,95 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 1
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Исчесление высказываний
+** Язык
+1. Пропозициональные переменные \\
+   \(A'_i\) --- большая буква начала латинского алфавита
+2. Связки \\
+   \(\underbrace{\alpha}_\text{\color{green}метапеременная}, \beta\) --- высказывания \\
+   Тогда \((\alpha \to \beta),(\alpha \& \beta),(\alpha \vee \beta), (\neg \alpha)\) --- высказывания
+** Мета и предметные
+- \(\alpha, \beta, \gamma, \dots, \varphi, \psi, \dots\) --- метапеременные для выражений
+- \(X, Y, Z\) --- метапеременные для предметные переменные
+Метавыражение: \(\alpha \to \beta\) \\
+Предметное выражение: \(A \to (A \to A)\) (заменили \(\alpha\) на \(A\), \(\beta\) на \((A \to A)\) )
+#+begin_examp org
+Черным --- предметные выражения, Синим --- метавыражения
+\[ (\color{blue}X \color{black}\to\color{blue} Y\color{black})\color{blue}[X \coloneqq A, Y \coloneqq B] \color{black} \equiv A \to B \]
+\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq A, X \coloneqq B] \equiv \color{black} A \to (A \to B) \]
+\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq (A \to P), X \coloneqq B] \equiv \color{black} (A \to P) \to (A \to B) \]
+#+end_examp
+** Сокращение записи
+- \(\vee, \&, \neg\) --- скобки слева направо(лево-ассоциативная)
+- \(\to\) --- правоассоциативная
+- Приоритет по возрастанию: \(\to, \vee, \&, \neg\)
+#+begin_examp org
+Расставление скобок
+\[ \left(A \to \left( \left(B \& C\right) \to D\right)\right) \]
+\[ \left(A \to \left(B \to C\right)\right) \]
+#+end_examp
+** Теория моделей
+- \(\mathcal{P}\) --- множество предметных переменных
+- \(\llb\cdot\rrb: \mathcal{T} \to V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
+
+
+
+1. \(\llb x \rrb: \mathcal{P} \to V\) --- задается при оценке \\
+   \(\llb \rrb^{A \coloneqq v_1, B \coloneqq v_2}\):
+   - \(\mathcal{P} = v_1\)
+   - \(\mathcal{P} = v_2\)
+2. \(\llb \alpha \star \beta \rrb = \llb \alpha \rrb \color{blue}\underbrace{\star}_{\substack{\text{определенно} \\ \text{ественным образом}}}\color{black} \llb \beta \rrb\), где \(\star \in [\&, \vee, \neg, \to]\)
+   #+begin_examp org
+   \[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} \color{blue}\to\color{black}\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \color{blue} \text{И} \to \text{И} = \text{И} \]
+   Также можно записать так:
+   \[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = f_\to(\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}, \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}) = f_\to(\color{blue} \text{И}\color{black} , \color{blue}\text{И}\color{black}) \color{blue}= \text{И} \]
+   , где \(f_\to\) определена так:
+   | /     | >     |           |
+   | \(a\) | \(b\) | \(f_\to\) |
+   |-------+-------+-----------|
+   | И     | И     | И         |
+   | И     | Л     | Л         |
+   | Л     | И     | И         |
+   | Л     | Л     | И         |
+   #+end_examp
+
+** Теория доказательств
+#+begin_definition org
+*Схема высказывания* --- строка соответсвующая определению высказывания, с:
+- метапеременными \(\alpha, \beta, \dots\)
+#+end_definition
+#+begin_definition org
+Аксиома --- высказывания:
+1. \(\alpha \to (\beta \to \alpha)\)
+2. \((\alpha \to \beta) \to (\alpha \to \beta \to \gamma) \to (\alpha \to \gamma)\)
+3. \(\alpha \to \beta \to \alpha \& \beta\)
+4. \(\alpha \& \beta \to \alpha\)
+5. \(\alpha \& \beta \to \beta\)
+6. \(\alpha \to \alpha \vee \beta\)
+7. \(\beta \to \alpha \vee \beta\)
+8. \((\alpha \to \gamma) \to (\beta \to \gamma) \to (\alpha \vee \beta \to \gamma)\)
+9. \((\alpha \to \beta) \to (\alpha \to \neg \beta) \to \neg \alpha\)
+10. \(\neg\neg \alpha \to \alpha\)
+#+end_definition
+** Правило Modus Ponens и доказательство
+#+begin_definition org
+*Доказательство* (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):
+- аксиома
+- существует \(k, l < i\), что \(\alpha_k = \alpha_l \to \alpha\) \\
+  \[ \frac{A,\ A \to B}{B} \]
+#+end_definition
+#+begin_examp org
+\(\vdash A \to A\)
+| / | <                                                               |                 |
+| 1 | \(A \to A\ \to A\)                                              | (схема аксиом 1) |
+| 2 | \(A \to (A \to A) \to A\)                                       | (схема аксиом 1) |
+| 3 | \((A \to (A \to A)) \to (A \to (A \to A) \to A) \to (A \to A)\) | (схема аксиом 2) |
+| 4 | \((A \to (A \to A) \to A) \to (A \to A)\)                       | (M.P. 1 и 3)     |
+| 5 | \(A \to A\)                                                     | (M.P. 2 и 4)     |
+#+end_examp
+#+begin_definition org
+Доказательством высказывания \(\beta\) --- список высказываний \(\alpha_1, \dots, \alpha_n\)
+- \(\alpha_1, \dots, \alpha_n\) --- доказательство
+- \(\alpha_n \equiv \beta\)
+#+end_definition

@@ -1,0 +1,110 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 10
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_task org
+\[ \int_{\Omega_+} \pair{F, n_0}\,ds\]
+#+end_task
+#+begin_solution org
+\-
+- \(F = (P, Q, R)\)
+- \(\Phi: G \subset \R^2 \to \R^3\)
+\[ \int \dots = \int \pair{F, \frac{\Phi'_u \times\Phi'_v}{|\dots|}} \cdot | \dots | \,du\,dv = \int \pair{F, \Phi'_u \times \Phi'_v} = \]
+\[ = \int P \begin{vmatrix}
+  y'_u & y_v \\
+  z'_u & z'_v
+\end{vmatrix} + Q \begin{vmatrix}
+  z'_u & z'_v \\
+  x'_u & x'_v
+\end{vmatrix} + R \begin{vmatrix}
+  x'_u & x'_v \\
+  y'_u & y'_v
+\end{vmatrix}\,du\,dv \]
+\[ \det \begin{pmatrix}
+  P & x'_u & x'_v \\
+  Q & y'_u & y'_v \\
+  R & z'_u & z'_v
+\end{pmatrix} = \int_G P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy \]
+#+end_solution
+#+begin_task org
+\[ \iint (2z - x)\,dy\,dx + (x + 2z)\,dz\,dx + 3z \,dx\,dy \]
+- \(x + 4y + z = 4\)
+- \(z,y,z \ge 0\)
+- верхняя сторона
+#+end_task
+#+begin_solution org
+\[ \iint \dots = \iint \pair{\begin{pmatrix}
+  2z - x \\
+  x + 2z \\
+  3z
+\end{pmatrix}, \begin{pmatrix}
+    \frac{1}{\sqrt{18}} \\
+    \frac{4}{\sqrt{18}} \\
+    \frac{1}{\sqrt{18}}
+\end{pmatrix}}\,ds = \frac{1}{\sqrt{18}} \iint (13z + 3x)\,ds\]
+\[ = \frac{1}{\sqrt{18}}\int_0^4\,dx\int_0^{1 - \frac{x}{4}}\,dy 13(4 - x - 4y) + 3x \sqrt{18}\,dy \]
+#+end_solution
+#+begin_task org
+\[ \iint_{S_+} (x - 1)^2\,dy\,dz + 0\,dz\,dx + 0\,dx\,dy \]
+- \( x^2 + y^2 + z^2 = 2x\)
+- \(z \le 0\)
+- верхняя сторона
+#+ATTR_LATEX: :scale 0.4
+[[file:10_2.png]]
+#+end_task
+#+begin_solution org
+\-
+- \(x = x\)
+- \(y = y\)
+- \(z = -\sqrt{2x - x^2 - y^2}\)
+\[ \begin{matrix}
+  x'_x = 1 & x'_y = 0 \\
+  y'_x = 0 & y'_y = 1 \\
+  z'_x = \frac{x - 1}{\sqrt{-x^2 - y^2 + 2x}} & z'_y = \frac{y}{-x^2 - y^2 + 2x}
+\end{matrix} \]
+\[ \iint_0^2 \,dx \int_{-\sqrt{2 - x^2}}^{\sqrt{2 - x^2}} (x - 1)^2 \begin{vmatrix}
+  0 & 1 \\
+  \frac{x - 1}{\sqrt{-x^2 - y^2 + 2x}} & \frac{y}{\sqrt{-x^2 - y^2 + 2x}}
+\end{vmatrix} = \iint (x - 1)^2 \left(-\frac{(x - 1)}{\sqrt{-x^2 - y^2 + 2x}}\right)\]
+
+#+end_solution
+#+begin_solution org
+\color{red}Немного не та задача\color{black}
+- \(x = 1 + r\cos\varphi\cos\psi\)
+- \(y = 2\sin\varphi\cos\psi\)
+- \(z = r\sin\psi\)
+- \(\frac{\partial}{\partial \varphi}\) ::
+    \[ \begin{matrix}
+    -r \sin \varphi \cos \psi \\
+    r \cos \varphi \cos \psi \\
+    0
+  \end{matrix} \]
+- \(\frac{\partial}{\partial \psi}\) ::
+    \[ \begin{matrix}
+    -r \cos \varphi \sin \psi \\
+    -r \sin \varphi \sin \psi \\
+    r \cos \psi
+  \end{matrix} \]
+\[ \Phi'_u \times \Phi'_v: \begin{matrix}
+  r \cos \varphi \cos^2 \psi \\
+  r \sin \varphi \cos^2 \psi \\
+  r \sin \psi \cos \psi
+\end{matrix} \]
+\[ \iint \dots = \int_0^{2\pi}\,d\varphi \int_{-\frac{\pi}{2}}^0\,d\psi \cos\varphi \cos \psi \cdot \cos \varphi \cos^2 \psi = \]
+\[ = \pi \int_{-\frac{\pi}{2}}^0 ( 1 - \sin^2 \psi) d\sin\psi = \pi \left(s - \frac{s}{3}\right)^3 \big|_{-1}^0 \]
+
+
+
+#+end_solution
+
+#+begin_task org
+\[ \iint x\,dy\,dz + y\,dz\,dx + z\,dx\,dy \]
+- \(z = x^2 - y^2\)
+- \(|y| \le x \le a\)
+- верхняя сторона
+#+ATTR_LATEX: :scale 0.4
+[[file:10_1.png]]
+#+end_task
+#+begin_solution org
+\[ \iint x(-2x) + y(2y) + (x^2 - y^2)\cdot1\,dx\,dy \]
+#+end_solution

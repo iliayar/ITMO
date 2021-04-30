@@ -1,6 +1,7 @@
-#+TITLE: Дискретная математика
-* Лабы
-- [[file:labs/lab1/][Автоматы]] \\
-  [[file:labs/lab1/19-lab-automata.pdf][Условия]]
-- [[file:labs/lab2/][Грамматики]] \\
-  [[file:labs/lab2/04-lab-cf-grammar.pdf][Условия]]
+#+TITLE: Discrete math
+#+SETUPFILE: ../../level-subj.org
+* Labs
+- [[file:labs/lab1/][Automata]] \\
+  [[file:labs/lab1/19-lab-automata.pdf][Statements]]
+- [[file:labs/lab2/][Grammars]] \\
+  [[file:labs/lab2/04-lab-cf-grammar.pdf][Statements]]
