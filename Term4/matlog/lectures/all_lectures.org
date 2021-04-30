@@ -20,3 +20,5 @@
 #+include: "8.org" :lines "4-"
 * Лекция 9
 #+include: "9.org" :lines "4-"
+* Лекция 10
+#+include: "10.org" :lines "4-"
