@@ -1,0 +1,161 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 10
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_HEADER: \usepackage{cmll}
+
+* Рекурсивные функции
+\(f: \N^n \to \N\)
+1. \(Z: \N \to \N\) \\
+   \(\color{green}Z(x) = 0\)
+2. \(N: \N \to \N\) \\
+   \(\color{green}N(x) = x + 1\)
+3. \(S_k: \N^m \to \N\)
+   - \(f_1, \dots, f_k:\ \N^m \to \N\)
+   - \(g: \N^k \to \N\)
+   \[\color{green}S_k \pair{g, f_1, \dots, f_k}(x_1,\dots,x_m) = g(f_1(\overline{x}), f_2(\overline{x}),\dots,f_k(\overline{x}))\] \\
+   , где \(\color{green}\overline{x} = x_1,\dots,x_m\)
+4. \(P^l_k: \N^k \to \N\), \(l \le k\)
+   \[ \color{green} P^l_k(x_1, \dots, x_k) = x_l \]
+5. \(R\pair{f, h}: \N^{m + 1} \to \N\) --- *примитивная рекурсия*
+   - \(f: \N^m \to \N\)
+   - \(g: \N^{m + 2} \to \N\)
+      \[ \color{green} R\pair{f, g}(y, x_1, \dots, x_m) = \begin{cases}
+        f(x_1, \dots, x_m) & y = 0 \\
+        g(y - 1, R\pair{f, g}(y - 1, x_1, \dots, x_m), x_1, \dots, x_m) & y > 0
+      \end{cases} \]
+   #+begin_examp org
+   \[ R\pair{f, g}(0, x) = f(x) \]
+   \[ R\pair{f, g}(1, x) = g(0, f(x), x) \]
+   \[ R\pair{f, g}(2, x) = g(1, g(0, f(x), x), x) \]
+   #+end_examp
+#+begin_definition org
+\(f: \N^m \to \N\) --- *примитивно-рекурсивная*, если найдется \(g\) -- выражение \(f\) через примитивы \(Z, N, S, P, R\), т.е. \(f(x_1, \dots, x_n) = g(x_1, \dots, x_n)\)
+#+end_definition
+#+begin_examp org
+\-
+- \(1 = S\pair{N, Z}\)
+- \((+2) = S\pair{N, N}\)
+  \[ S\pair{\underset{g}{N}, \underset{f}{N}}(x) = g(f(x)) = N(N(x)) = x + 2 \]
+- \((+3) = S\pair{N, (+2)}\)
+- \((\times 2)_a = R\pair{P^1_1, S\pair{N, P^2_3}}\)
+    \[ f(a, b) = \begin{cases}
+    b & a = 0 \\
+    f(a - 1, b + 1) & a > 0
+  \end{cases} \]
+  --- это почти определение \(+\), т.е. \(f(x, x) = x\cdot 2\)
+    \[ (\times 2)_a = \begin{cases}
+    P^1_1(a) & y = 0 \\
+    b + 1 & y > 0
+  \end{cases} \fixme \]
+  , где \(a\) --- счетчик, \(b\) --- предыдущее значение, \(c\) --- \(x\)
+- \((\times 2) = S \pair{(\times 2)_a, P^1_1, P^1_1}\)
+#+end_examp
+6. [@6] \(M\pair{f}: \N^m \to \N\) --- *минимизация*
+   - \(f: \N^{m + 1} \to \N\)
+   \[ M\pair{f}(x_1, \dots, x_m) = y \]
+   --- минимальный \(y\)
+   \[ f(y, x_1, \dots, x_m) = 0 \]
+   Если \(f(y, x_1, \dots, x_m) > 0\) при всех \(y\), то результат не определен
+#+begin_theorem org
+\((+), (\cdot), (x^y), (:), (\sqrt)\), деление с остатком --- примитивно-рекурсивные функции
+#+end_theorem
+#+begin_lemma org
+\(p_1, p_2, \dots\) --- простые числа. \\
+\(p(i): \N \to \N\), \(p(i) - p_i\) --- примитивно-рекурсивная функция
+#+end_lemma
+#+begin_export latex
+\newcommand{\plog}{\mathop{\rm plog}}
+#+end_export
+#+begin_definition org
+\(\plog_nk = \max t: n^t | k\) --- примитивно-рекурсивная функция
+#+end_definition
+#+begin_examp org
+\-
+- \(\plog_5 120 = 1\)
+- \(\plog_2 120 = 3\)
+#+end_examp
+** Функция Аккермана
+\[ A(m, n) = \begin{cases}
+  n + 1 & m = 0 \\
+  A(m - 1, 1) & m > 0,\ n = 0 \\
+  A(m - 1, A(m, n - 1)) & m > 0, n > 0
+\end{cases} \]
+#+begin_lemma org
+\(A(m, n)\) --- не примитивно-рекурсивная
+#+end_lemma
+Можно сказать что если есть текст длинны \(n\), которые выводит текст длинны \(k\), то текст длинны \(n + 1\) не может выводить текст больше чем \(k^k\) \fixme
+* Связь с формальной арифметикой
+#+begin_theorem org
+\(f\) --- рекурсивная функция, тогда \(f\) представима в формальной арифметика
+#+end_theorem
+#+begin_theorem org
+Если \(f\) представима в формальной арифметике, то она рекурсивна
+#+end_theorem
+#+begin_remark org
+\-
+- \(\vdash \varphi\) --- доказательство (\varphi) в ФА
+- \(\delta_1, \dots, \delta_n \equiv \varphi\) --- доказательство
+- \(C\) --- функция(рекурсивная), превращающая доказательство в ФА \\
+    \[ C(p, x) \begin{matrix}
+    = 0 & \text{если доказательство корректно} \\
+    \neq 0 & \text{если не доказуемо}
+  \end{matrix} \], где \(p\) --- запись доказательства, \(x\) --- формула
+- Формула \(\delta(p, x, y)\) -- доказательство
+#+end_remark
+\todo
+#+begin_remark org
+Проблема останова
+\[P(p, x) = \begin{cases}
+  0, \text{если }p(x)\text{ останавливается} \\
+  1, \text{если не останавливается}
+\end{cases} \]
+\[ Q(p, x) = \text{\color{red}if } P(p, p) = 1 \text{ \color{red}then } 0 \text{ \color{red}else while \color{blue}true \color{red}do;}\]
+#+end_remark
+#+begin_theorem org
+Примитивы \(Z, N, S, P\) представимы в ФА
+#+end_theorem
+#+begin_proof org
+Аргументы: \(x_1, \dots, x_n\)
+1. \(Z(x): \N \to \N\)
+   \[ \xi \coloneqq x_1 = x_1 \& x_2 = 0 \]
+2. \(N(x): \N \to \N\)
+   \[ \nu \coloneqq x_2 = x_1' \]
+3. \(P_k^l(x, \dots, x_k): \N^k \to \N\)
+   \[ \pi_k^l \coloneqq x_1 = x_1 \& x_2 = x_2 \& \dots \& x_l = x_{k + 1} \& \dots \& x_k = x_k\]
+   \[ \left(\bigwith_{i \neq l} x_i = x_i\right) \& x_l = x_{k + 1} \]
+4. \(S\pair{\underset{\gamma}{g}, \underset{\varphi_1}{f_1}, \dots, \underset{\varphi_k}{f_k}}\)
+   - \((x_1, \dots, x_m) = x_{m + 1}\)
+   \[ \exists r_1. \exists r_2. \dots\exists r_k. \varphi_1(x_1, \dots, x_m, r_1) \& \dots \& \varphi_k(x_1, \dots, x_m, r_k) \& \gamma(r_1, \dots, r_k, x_{m + 1}) \]
+5. \(M\pair{f}\)
+   - \(f: \N^{m + 1} \to \N\)
+      \[ \varphi(x_{m + 1}, x_1, \dots, x_m, \overline{0}) \& \forall y. y < x_{m + 1} \to \neg \varphi(y, x_1, \dots, x_m, \overline{0}) \]
+      , где \((a < b) = (\exists n. a+ n = b)\&\neg a = b\)
+#+end_proof
+#+begin_definition org
+\(beta\)-функция Геделя
+\[ \beta(b, c, i) = b \div (1 + c\cdot(i + 1)) \]
+#+end_definition
+#+begin_theorem org
+\-
+- \(a_0, a_1, \dots, a_k\) --- некоторые значения \(\in \N\)
+_Тогда_ найдутся \(b\) и \(c\), что
+\[ \beta(b, c, i) = a_i \]
+#+end_theorem
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_remark org
+\(\beta\)-функция Геделя --- представима в ФА
+\[ B(b, c, i, q) = (\exists p. b = p\cdot(q + c\cdot(1 + i)) + q) \& q < bg \]
+#+end_remark
+#+begin_remark org
+\[R\pair{g, x_1, \dots, x_n}  = \begin{cases}
+  f(x_1, \dots, x_n) y = 0 & y = 0 \\
+  g(y - 1, R(y - 1, x_1, \dots, x_n), x_1, \dots, x_n) & y > 0
+\end{cases}\]
+\[ \exists b. \exists c. \exists f. \varphi(x_1, \dots, x_n f) \& B(b, c, \overline{0}, f) \& \\ \]
+\[ \& \forall y. y < x_{n + 1} \to \exists r_{y}. B(b, c, y, r_{y})\&\exists r_{y + 1}. B(b, c, y + 1, r_{y + 1})\&\gamma(y, r_{y}, x_1, \dots, x_n, r_{y + 1}) \]
+
+
+
+#+end_remark
