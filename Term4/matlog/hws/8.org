@@ -1,0 +1,43 @@
+#+LATEX_CLASS: general
+#+OPTIONS: num:nil toc:nil
+
+* 9.2.a
+\[a 9 (b + c) = (a + b) + c\ ?\]
+- _База_ :: \(b = 0\), \( a + (0 + c) = a + (c + 0) = a + c = (a + 0) + c \)
+- _Переход_ :: \(a + (x + c) = (a + x) + c\), тогда \( a + (x' + c) = (a + x') + c\) 
+  \[ a + (x' + c) = a + (c + x') = a + (c + x)' = a + (x + c)' = (a + (x + c))' \]
+  \[ (a + x') + c = (a + x)' + c = c + (a + x)' = (c + (a + x))' = ((a + x) + c)'\]
+* 9.2.b
+1. \(a \cdot 0 = 0 \cdot a\) ?
+   - _База_ :: \(a= 0,\ 0 \cdot 0 = 0 \cdot 0\)
+   - _Переход_ :: Пусть \(x \cdot 0 = 0 \cdot x\), тогда \(x' \cdot 0 = 0 \cdot x'\)
+     \[ x' \cdot 0 = 0 = x \cdot 0 \]
+     \[ 0 \cdot x' = (0 \cdot x) + 0 = 0 \cdot x \]
+2. \(a' \cdot b = a \cdot b + b\) ?
+   - _База_ :: \(b = 0,\ a' \cdot 0 = 0 = a \cdot 0 = a \cdot 0 + 0\)
+   - _Переход_ :: Пусть \(a' \cdot x = a \cdot x + x\), тогда \(a' \cdot x' = a \cdot x' + x'\)
+     \[ a' \cdot x' = a' \cdot x + a' = a \cdot x + x + a' = a \cdot x + a + x'\]
+     \[ a \cdot x' + x' = a \cdot x + a + x' \]
+
+3. \( a \cdot b = b \cdot a\) ?
+   - _База_ :: \(b = 0,\ a \cdot 0 = 0 \cdot a\)
+   - _Переход_ ::  Пусть \(a \cdot x = x \cdot a\), тогда \(a \cdot x' = x' \cdot a\)
+     \[ a \cdot x' = a\cdot x + a = x \cdot a + a \]
+     \[ x' \cdot a = x \cdot a + a \]
+* 9.2.c
+\[ (a + b)\cdot c = a \cdot c + b \cdot c\ ? \]
+- _База_ :: \(b = 0,\ (a + 0)\cdot c = a \cdot c = a \cdot c + 0 = a\cdot c  + 0 \cdot c\)
+- _Переход_ :: Пусть \((a + x) \cdot c = a \cdot c + x \cdot c\), тогда \((a + x') \cdot c = a \cdot c + x' \cdot c\)
+  \[ (a + x') \cdot c = (a + x)' \cdot c = (a + x) \cdot c + c = a\cdot c + x\cdot c + c \]
+  \[ a\cdot c + x' \cdot c = a \cdot c + x \cdot c + c \]
+
+* 9.3.a
+\[ x \le x + y\ ? \]
+- _База_ :: \(x = 0,\ 0 \le 0 + y \Leftrightarrow 0 \le y \)
+- _Переход_ :: Пусть \(a \le a + y\), тогда \(a' \le a' + y\)
+  \[ a \le a + y \Leftrightarrow a' \le (a + y)' \Leftrightarrow a' \le a' + y \]
+* 9.3.b
+\[ a'' + b'' \le (a'')\cdot(b'')\ ? \]
+\[ a'' + b'' \le a'' + b''+ a\cdot b + a + b \Leftrightarrow a'' + b'' \le a\cdot b + a + b' + a' + b'' \Leftrightarrow \]
+\[ \Leftrightarrow a'' + b'' \le (a')\cdot(b') + a' + b'' \Leftrightarrow a'' + b'' \le (a'')\cdot(b'') \]
+
