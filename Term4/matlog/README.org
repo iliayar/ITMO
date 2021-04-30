@@ -1,12 +1,20 @@
-#+TITLE: Математическая логика
-* Лекции
-[[file:lectures/all_lectures.pdf][Все лекции]]
-- [[file:lectures/4.pdf][Лекция 4]]
-- [[file:lectures/5.pdf][Лекция 5]]
-- [[file:lectures/6.pdf][Лекция 6]]
-- [[file:lectures/7.pdf][Лекция 7]]
-- [[file:lectures/8.pdf][Лекция 8]]
-* Домашки
-- [[file:hws/1.pdf][1.3.g]]
-- [[file:hws/2.pdf][3.4.b]]
-- [[file:hws/4.4.b.pdf][4.4.b]]
+#+TITLE: Mathematical logic
+#+SETUPFILE: ../../level-subj.org
+* Lectures
+[[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/all_lectures.pdf][All lectures]] \\
+[[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/colloq1.pdf][First colloq]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/1.pdf][Lecture 1]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/2.pdf][Lecture 2]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/3.pdf][Lecture 3]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/4.pdf][Lecture 4]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/5.pdf][Lecture 5]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/6.pdf][Lecture 6]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/7.pdf][Lecture 7]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/8.pdf][Lecture 8]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/9.pdf][Lecture 9]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/10.pdf][Lecture 10]]
+* Homeworks
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/1.pdf][1.3.g]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/2.pdf][3.4.b]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/4.4.b.pdf][4.4.b]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/8.pdf][Some of 9]]

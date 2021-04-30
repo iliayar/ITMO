@@ -1,0 +1,164 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 9
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Теория первого порядка
+#+NAME: теория первого порядка
+#+begin_definition org
+*Теория I порядка* --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
+#+end_definition
+#+NAME: аксиоматика пеано
+#+begin_definition org
+Будем говорить, что \(N\) соответсвует *аксиоматике Пеано* если:
+- задан \(('): N \to N\) --- инъективная функция (для разных элементов, разные значения)
+- задан \(0 \in N\): нет \(a \in N\), что \(a' = 0\)
+- если \(P(x)\) --- некоторое утверждение, зависящее от \(x \in N\), такое, что \(P(0)\) и всегда, когда \(P(x)\), также и \(P(x')\). Тогда \(P(x)\)
+#+end_definition
+\beginproperty
+#+NAME: zero_9
+#+begin_property org
+\(0\) единственный
+#+end_property
+#+NAME: zero_9_proof
+#+begin_proof org
+\(P(x)=x = 0\) либо существует \(t:\ t' = x\)
+- \(P(0): 0 = 0\)
+- \(P(x) \to P(x')\). Заметим, что \(x'\) --- не `ноль`
+\(P(x)\) выполнено при всех \(x \in N\)
+#+end_proof
+#+NAME: сложение
+#+begin_definition org
+\[ a + b = \begin{cases}
+a & b = 0 \\
+(a + c)' & b = c'
+\end{cases}\]
+#+end_definition
+Можем определить это опираясь на [[zero_9_proof][доказательтво]]
+#+begin_definition org
+- \(1 = 0'\)
+- \(2 = 0''\)
+- \(3 = 0'''\)
+- \(4 = 0''''\)
+- \(\dots\)
+#+end_definition
+#+begin_task org
+\(2 + 2 = 4\)
+#+end_task
+#+begin_solution org
+\[ 2 + 2 = 0'' + 0'' = (0'' + 0')' = ((0'' + 0)')' = ((0'')')' = 0'''' = 4 \]
+#+end_solution
+#+NAME: умножение
+#+begin_definition org
+\[ a \cdot b = \begin{cases}
+0 & b = 0 \\
+(a \cdot c) + a & b = c'
+\end{cases}\]
+#+end_definition
+#+NAME: возведение в степень
+#+begin_definition org
+\[ a^b = \begin{cases}
+1 & b = 0 \\
+(a^c)\cdot a & b = c'
+\end{cases}\]
+#+end_definition
+\beginproperty
+#+NAME: prop_9_1
+#+begin_property org
+\(a + 0 = 0 + a\)
+#+end_property
+#+begin_proof org
+\(P(a) = (a + 0 = 0 + a)\) \\
+_База_ \(P(0): 0 + 0 = 0 + 0\) \\
+_Переход_ \(P(x) \to P(x')\)
+\[ x + 0 = 0 + x \]
+\[ x' + 0 \xlongequal{?} 0 + x' \]
+\[ 0 + x' = (0 + x)' \quad\text{определение }+ \]
+\[ (0 + x)' = (x + 0)' \quad\text{предположение} \]
+\[ (x + 0)' = x' \quad\text{определение }+\]
+\[ x' = x' + 0 \quad\text{определение }+ \]
+#+end_proof
+#+begin_property org
+\(a + b' = a' + b\)
+#+end_property
+#+begin_proof org
+\-
+- \(b = 0\) :: \(a + 0' = a' + 0\)
+  \[ a' = (a + 0)' = a + 0' = a'+0 = a' \]
+- \(b = c'\) :: Есть: \(a + c' = a' + c\). Покажем: \(a + c'' = a' + c'\)
+  \[ (a + c')' = (a' + c)' = a' + c \]
+#+end_proof
+#+begin_property org
+\(a + b = b + a\)
+#+end_property
+#+begin_proof org
+_База_ \(b = 0\) --- [[prop_9_1][свойство]] \\
+_Переход_ \(a + c'' = c'' + a\), если \(a + c' = c' + a\)
+\[ a + c'' = (a + c')' = (c' + a)' = c' + a' = c'' + a\]
+#+end_proof
+** Формальная арифметика
+#+begin_definition org
+Исчесление предикатов:
+- Функциональные символы:
+  - \(0\) --- 0-местный
+  - \((')\) --- 1-местный
+  - \((\cdot)\) --- 2-местный
+  - \((+)\) --- 2-местный
+- \((=)\) --- 2-местный предикатный символ
+Аксимомы:
+1. \(a = b \to a' = b'\)
+2. \(a = b \to a = c \to b = c\)
+3. \(a' = b' \to a= b \)
+4. \(\neg a' = 0\)
+5. \(a + b' = (a + b)'\)
+6. \(a + 0 = a\)
+7. \(a\cdot 0 = 0\)
+8. \(a\cdot b' = a\cdot b + a\)
+9. Схема аксиом индукции:
+   \[ (\psi[x:=0])\&(\forall x. \psi \to (\psi[x:=x'])) \to \psi \]
+   \(x\) входит свободно в \(\psi\)
+#+end_definition
+\beginproperty
+#+begin_property org
+\[ ((a + 0 = a) \to (a + 0 = a) \to (a = a)) \]
+#+end_property
+#+begin_proof org
+\[ \forall a. \forall b. \forall c. a = b \to a = c \to b = c \]
+\[ (\forall a. \forall b. \forall c. a = b \to a = c \to b = c) \to \forall b. \forall c. (a + 0 = b \to a + 0 = c \to b = c) \]
+\[ \forall b. \forall c. a + 0 = b \to a + 0 = c\to b = c \]
+\[ (\forall b. \forall c. a + 0 = b \to a + 0 = c \to b = c) \to \forall c.(a + 0 = a \to a + 0 = c \to a=c) \]
+\[ \forall c. a + 0 = a \to a + 0 = c \to a = c \]
+\[ (\forall c. a + 0 = a \to a + 0 = c \to a = c) \to a+0 = a \to a + 0 = a \to a= a \]
+\[ a + 0  = a \to a + 0 = a \to a = a \]
+\[ a + 0 = a \]
+\[ a + 0 = a \to a = a \]
+\[ a = a \]
+\[ \forall b. \forall c. a = b \to a = c \to b = c \]
+\[ (0 = 0 \to 0 = 0 \to 0 = 0) \]
+\[ (\forall b. \forall c. a = b \to a = c\ to b = c) \to (0 = 0 \to 0 = 0 \to 0 = 0) \to \phi \]
+\fixme
+#+end_proof
+#+begin_definition org
+\(\exists! x.\varphi(x) \equiv (\exists x. \varphi(x))\&\forall p.\forall q. \varphi(p)\&\varphi(q) \to p = q\) \\
+Можно также записать \(\exists ! x.\neg \exists s. s' = x\) или \((\forall q.(\exists x. x' = q)\vee q= 0)\)
+#+end_definition
+#+begin_definition org
+\(a \le b\) --- сокращение для \(\exists n. a + n = b\)
+#+end_definition
+#+begin_definition org
+\[ \overline{n} = 0^{(n)}\]
+\[ 0^{(n)} = \begin{cases}
+0 & n = 0 \\
+0^{(n - 1)'} & n > 0
+\end{cases}\]
+#+end_definition
+#+begin_definition org
+\(W \subseteq \N_0^n\). \(W\) --- выразимое в формальной арифметике. отношение, если существует формула \(\omega\) со свободными переменными \(x_1,\dots,x_n\). Пусть \(k_1,\dots,k_n \in \N\)
+- \((k_1,\dots,k_n) \in W\), тогда \(\vdash \omega[x_1:=\overline{k_1}, \dots, x_n := \overline{k_n}]\)
+- \((k_1,\dots,k_n) \not\in W\), тогда \(\vdash \neg \omega[x_1:=\overline{k_1},\dots,x_n:=\overline{k_n}]\)
+\[ \omega[x_1:=\Theta_1,\dots,x_n:=\Theta_n] \equiv \omega(\Theta_1, \dots, \Theta_n) \]
+#+end_definition
+#+begin_definition org
+\(f: \N^n \to \N\) --- представим в формальной арифметике, если найдется \(\varphi\) --- фомула с \(n + 1\) свободными переменными \(k_1, \dots, k_{n + 1} \in \N\)
+- \(f(k_1,\dots,k_n) = k_{n + 1}\), то \(\vdash \varphi(\overline{k_1},\dots,\overline{k_{n + 1}})\) \\
+- \(\vdash \exists! x.\varphi(\overline{k_1},\dots,\overline{k_n},x)\)
+#+end_definition

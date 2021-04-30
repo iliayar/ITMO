@@ -3,21 +3,25 @@
 #+AUTHOR: Ilya Yaroshevskiy
 
 
-* 
+* Лекция 1
 #+INCLUDE: "1.org" :lines "4-"
-* 
+* Лекция 2
 #+INCLUDE: "2.org" :lines "4-"
-* 
+* Лекция 3
 #+INCLUDE: "3.org" :lines "4-"
-* 
+* Лекция 4
 #+INCLUDE: "4.org" :lines "4-"
-* 
+* Лекция 5
 #+INCLUDE: "5.org" :lines "4-"
-* 
+* Лекция 6
 #+INCLUDE: "6.org" :lines "4-"
-* 
+* Лекция 7
 #+INCLUDE: "7.org" :lines "4-"
-* 5 апреля
+* Лекция 8
 #+INCLUDE: "8.org" :lines "4-"
-* 12 апреля
-#+INCLUDE: "8.org" :lines "4-"
+* Лекция 9
+#+INCLUDE: "9.org" :lines "4-"
+* Лекция 10
+#+INCLUDE: "10.org" :lines "4-"
+* Лекция 11
+#+INCLUDE: "11.org" :lines "4-"

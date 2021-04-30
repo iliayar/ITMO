@@ -187,6 +187,96 @@ fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
 
 //================================ CODE END =================================================
 
+fn comb<T>(n: usize, k: usize) -> Num<T>
+where
+    T: Numeric
+{
+    let mut res = Num::one();
+    for i in (n - k + 1)..=n {
+	res = res * Num::from(i);
+    }
+    for i in 1..=k {
+	res = res / Num::from(i);
+    }
+    return res;
+}
+
+fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
+
+
+    let k = scan.next::<usize>();
+    let mut n = scan.next::<usize>() - 1;
+
+    let a: Vec<Num<Finite>> = (0..k).map(|_| Num::from(scan.next::<i64>())).collect();
+    let c: Vec<Num<Finite>> = (0..k).map(|_| Num::from(scan.next::<i64>())).collect();
+
+    let (p, q) = Polynom::from_recursive(&a[..], &c[..]);
+    let mut p = p.value.value;
+    let mut q = q.value.value;
+    p.resize(k + 1, Num::zero());
+    q.resize(k + 1, Num::zero());
+    // println!("DBG: p = {:?}", p);
+    // println!("DBG: q = {:?}", q);
+
+    let mut nq: Vec<Num<Finite>> = vec![Num::zero(); k + 1];
+    let mut pt: Vec<Num<Finite>> = vec![Num::zero(); 2*k + 2];
+    let mut qt: Vec<Num<Finite>> = vec![Num::zero(); 2*k + 1];
+    while n >= k {
+	// println!("===========================================");
+	for i in 0..=k {
+	    if i % 2 == 0 {
+		nq[i] = q[i];
+	    } else {
+		nq[i] = q[i] * Num::from(-1);
+	    }
+	}
+	for i in 0..=(2*k + 1) {
+	    pt[i] = Num::zero();
+	}
+	for i in 0..=2*k {
+	    qt[i] = Num::zero();
+	}
+	for i in 0..=k {
+	    for j in 0..=k {
+		pt[i + j] = pt[i + j] + p[i] * nq[j];
+	    }
+	}
+	for i in 0..=k {
+	    for j in 0..=k {
+		qt[i + j] = qt[i + j] + q[i] * nq[j];
+	    }
+	}
+
+	// println!("DBG: pt = {:?}", pt);
+	// println!("DBG: qt = {:?}", qt);
+
+	for i in 0..=k {
+	    q[i] = qt[i * 2];
+	}
+	for i in 0..=k {
+	    p[i] = pt[i * 2 + (n % 2)];
+	}
+
+	// println!("DBG: p = {:?}", p);
+	// println!("DBG: q = {:?}", q);
+
+	n /= 2;
+	// println!("DBG: p = {}", p);
+	// println!("DBG: q = {}", q);
+    }
+
+    let mut a  = vec![Num::from(0); k];
+    for i in 0..=n {
+	a[i] = p[i];
+	for j in 1..=i {
+	    a[i] = a[i] - a[i - j] * q[j];
+	}
+	a[i] = a[i] / q[0];
+    }
+
+    writeln!(out, "{}", a[n]).ok();
+}
+
 fn main() {
     
     let mut local = false;

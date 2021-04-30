@@ -1,0 +1,3 @@
+#+LATEX_CLASS: general
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_HEADER: \usepackage{diagbox}

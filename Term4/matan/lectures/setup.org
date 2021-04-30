@@ -1,0 +1,6 @@
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_CLASS: general
+#+LATEX_HEADER: \newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
+#+LATEX_HEADER: \renewcommand{\H}{\mathcal{H}}
+#+LATEX_HEADER: \newcommand{\norm}[1]{\custombracketsame{\Vert}{#1}}
+
