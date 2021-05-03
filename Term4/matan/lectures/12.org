@@ -1,0 +1,208 @@
+#+TITLE: Лекция 11
+#+SETUPFILE: setup.org
+
+\(\H\) --- гильбертово \\
+\(\{e_k\}\) --- ортогональная система, \(x \in \H\)
+\[ c_k(x) = \frac{\pair{x, e_k}}{\norm{e_k}^2} \]
+\[ \sum_{k = 1}^{+\infty} c_k(x)e_k \]
+\[ \norm{\sum_{k = 1}^{n} c_k(x)e_k} \le \norm{x} \]
+#+ATTR_LATEX: :options [Неравенство Бесселя]
+#+begin_corollary org
+\[ \sum_{k = 1}^{\infty} |c_k(x)|^2 \cdot \norm{e_k}^2 \le \norm{x}^2 \]
+#+end_corollary
+#+ATTR_LATEX: :options [Рисс, Фишер]
+#+begin_theorem org
+\-
+- \(\{e_k\}\) --- ОС в \(\H\)
+- \(x \in \H\)
+_Тогда_
+1. ряд Фурье вектора \(x\) сходится в \(\H\)
+2. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k + z \quad z \perp e,\ \forall k \]
+3. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k \Leftrightarrow \sum |c_k(x)|^2 \norm{e_k}^2 = \norm{x}^2 \]
+#+end_theorem
+#+begin_proof org
+\-
+1. Ряд Фурье --- ортогональный ряд. Сходимость ряда Фурье \(\Leftrightarrow\) сходимость
+   \[ \sum |c_k(x)|^2 \norm{e_k}^2 \]
+   Это выполняется по неравенству Бесселя
+2. \(z = x - \sum_{l = 1}^{+\infty} c_k(x)e_k\)
+   \[ \pair{z, e_k} = \pair{x, e_k} - \sum c_k(x)\pair{e_k, e_n} = \pair{x, e_n} - c_n(x)\norm{e_n}^2 = 0 \]
+3. 
+   - \((\Rightarrow)\) :: Теорема 1.3?
+   - \((\Leftarrow)\) :: из п.2    \(\norm{x}^2 = \norm{\sum c_k(x)e_k} + \norm{z}^2 \implies \sum |c_k(x)|^2\norm{e_k}^2 + \norm{z}^2\) \\
+     Дано: \[ \norm{x}^2 = \sum |c_k(x)|^2 \norm{e_k} \implies z = 0 \implies x = \sum c_k(x)e_k \]
+#+end_proof
+#+begin_remark org
+\(\mathcal{L} = \mathop{\rm Cl}(\mathop{\rm Lin}(e_1, e_2, \dots))\), где \(\mathop{\rm Cl}\) --- замыкание \\
+\(\sum c_k(x)e_k \) --- проекция \(x\) на \(\mathcal{L}\)
+#+end_remark
+#+begin_remark org
+\(\H\), \(e_k\) --- ОНС, тогда последовательность \((c_k(x))_{x \in \N} \in l_2\) \\
+Обратное тоже верно: \(\forall c(x) \in l_2\ \exists x \in \H\ c_k = c_k(x)\) [\(x \coloneqq \sum c_k e_k\) --- сходится]
+#+end_remark
+#+begin_remark org
+Если ортогональный ряд сходится, то он есть ряд Фурье своей суммы
+#+end_remark
+#+begin_definition org
+\(\{e_k\}\) --- ОС --- *базис* \(\H\), если \(\forall x\in \H\  x = \sum c_k(x)e_k\)
+#+end_definition
+#+begin_definition org
+ОС -- *полная*, если \(\not\exists z \neq 0:\ z \perp \text{всем }e_k\)
+#+end_definition
+#+begin_definition org
+ОС --- *замкнутая*, если \(\forall x\ \sum|c_k(x)|^2\norm{e_k}^2 = \norm{x}^2\)
+#+end_definition
+#+ATTR_LATEX: :options [о характеристике базиса]
+#+begin_theorem org
+\(e_k\) --- ОС в \(\H\). _Тогда_ эквивалентны
+1. \(\{e_k\}\) --- базис
+2. \(\forall x, y\) --- выполняется обобщенное уравнение замкнутости \\
+   \[ \pair{x, y} = \sum c_k(x)\overline{c_k(y)} \cdot \norm{e_k}^2 \]
+3. \(\{e_k\}\) --- замкнута
+4. \(\{e_k\}\) --- полная
+5. \(\mathop{\rm Lin}(e_1, e_2, \dots)\) --- полная в \(\H\), т.е. \(\mathop{\rm Cl}\mathop{\rm Lin}(e_1, e_2, \dots) = \H\)
+#+end_theorem
+#+begin_proof org
+\(1 \Rightarrow 2 \Rightarrow 3 \Rightarrow 4 \Rightarrow 1\quad 4 \Leftrightarrow 5\)
+- \((1 \Rightarrow 2)\) :: Берем \(x = \sum c_k(x)e_k\) и скалярное умножаем на \(y\):
+  \[ \pair{e_k, y} = \overline{\pair{y, e_k}} = \overline{c_k(y)\cdot \norm{e_k}^2} = \overline{c_k(y)}\cdot \norm{e_k}^2 \]
+  \[ \pair{x, y} = \dots \]
+- \((2 \Rightarrow 3)\) :: \(y \coloneqq x\) в обобщенное уравнение
+- \((3 \Rightarrow 4)\) :: \(\exists z: \forall n\ \pair{z, e_n} = 0\) ?, т.е. \(c_n(z) = 0\) \\
+  Для этого \(z\) уравнение замыкания \(\norm{z}^2 = \sum |c_k(z)|^2\norm{e_k}^2 = 0\)
+- \((4 \Rightarrow 1)\) :: по теореме Рисса-Фишера \(x = \sum c_k(x)e_k + z\), где \(z \perp e_k \fixme\). В силу полноты ОС \(z = 0\)
+- \((4 \Rightarrow 5)\) :: \(\mathcal{L} \coloneqq \mathop{\rm Cl}\mahtop{\rm Lin}\{e_k\}\). Надо проверить \(\mathcal{L} = \H\). \\
+  Если \(\exists x \in \H \setminus \mathcal{L}\), то по теореме Рисса-Фишера как в предыдущем пункте \(z = 0\), т.е. \(x \in \mathcal{L}\)
+- \((5 \Rightarrow 4)\) :: Если \(z \perp \text{всем } e_k \implies z \perp \mathop{\rm Lin}\{e_k\} \impies z \perp \mathcal{L}\), но \(\mathcal{L} = \H \implies z \perp z\), т.е. \(\pair{z, z} = 0\)
+#+end_proof
+* Тригонометрические ряды Фурье
+#+begin_definition org
+\(T_n(x) = \frac{a_0}{2} + \sum_{k = 1}^n a_k\cos kx + b_k\sum kx\) --- *тригонометрический полином* степени не выше \(n\)
+#+end_definition
+#+begin_definition org
+\[ \frac{a_0}{2} + \sum_{k = 1}^{\infty} a_k\cos kx + b_k\sum kx \] --- *тригонометрический ряд*, \(a_k, b_k\) --- *коэффициенты тригонометрического ряда*
+#+end_definition
+#+begin_definition org
+\[ \cos kx = \frac{e^{ikx} + e^{-ikx}}{2}\quad \sin kx = \frac{e^{ikx} - e^{-ikx}}{2i} \]
+\[ T_n(x) = \sum_{k = -n}^{n} c_ke^{ikx} \] --- *комплексный тригонометрический полином* или *тригонометрический полином в комплексной записи*
+#+end_definition
+#+begin_definition org
+\[ \sum_{k \in \mathbb{Z}} c_k e^{ikx} \] --- *тригонометрический ряд в комплексной записи*
+\[ \lim_{N \to +\infty} S_N = \lim \sum_{k = -N}^N c_k e^{ikx} \]
+#+end_definition
+#+begin_lemma org
+Дан тригонометрический ряд(вещественный или комплексный). Пусть \(S_n \to f\) в \(L^1[-\pi, \pi]\) (\(\norm{S_n - f}_1 = \int_{[-\pi,\pi]}|S_n - f| \to 0\)) \\
+_Тогда_
+\[ a_k = \frac{1}{\pi} \int_{-\pi}^\pi f(t) \cos kt\,dt \]
+\[ b_k = \frac{1}{\pi} \int_{-\pi}^\pi f(t) \sin kt\,dt \]
+или
+\[ c_k = \frac{1}{2\pi}\int_{-\pi}^\pi f(t) e^{-ikt}\,dt \]
+#+end_lemma
+#+begin_proof org
+Докажем для \(a_k\). Пусть \(n \ge k\)
+\[ \int_{-\pi}^\pi S_n(t) \cos kt \,dt = 0 + \int_{-\pi}^\pi \a_k \cos^2 kt\,dt = \pi a_k \]
+При \(k = 0: \int_{\pi}^\pi \frac{a_0}{2} \cdot 1 = \pi a_0\)
+\[ \left|\pi a_k - \int_{-\pi}^\pi f(t) \cos kt\,dt\right| = \left|\int_{-\pi}^\pi (S_n(t) - f(t)) \cos kt\,dt\right| \le \int_{-\pi}^\pi |S_n(t) - f(t)|\,dt = \norm{S_n - f}_1 \to 0\]
+#+end_proof
+#+begin_definition org
+\(f \in L^1[-\pi, \pi]\). \(a_k(f), b_k(f), c_k(f)\) --- заданные в лемме называются *коэффициентами Фурье функции \(f\)* а ряд
+\[ \frac{a_0}{2} + \sum_{k = 1}^{+\infty} a_k(f)\cos kx + b_k(f)\sin kx \]
+или
+\[ \sum_{k = -\infty}^{+\infty} c_k(f)e^{ikx} \]
+называются *рядом Фурье функции \(f\)*
+#+end_definition
+#+NAME: четное нечетное разложение
+#+begin_remark org
+\(f \in L^1[-\pi, \pi]\)
+- \(f\) --- четная \(\implies\) \(\forall k\ b_k(f) = 0\), \(a_k(f) = \frac{2}{\pi}\int_0^\pi f(t) \cos kt\,dt\)
+- \(f\) --- нечетная \(\implies\) \(a_k(f) = 0\), \(b_k(f) = \frac{2}{\pi} \int_0^\pi f(t)\sin kt\,dt\)
+#+end_remark
+#+begin_remark org
+\(f \in L^1[0, \pi]\) --- для таких функций рассматривается два ряда Фурье --- для четного и нечетного продолжения \(f\)
+\[ f \sim \frac{a_0}{2} + \sum a_k(f)\cos kx \]
+, где \(a_k\) -- из [[четное нечетное разложение][1 пункта замечания]] 
+\[ f \sim \sum b_k(f)\sin kx \]
+, где \(b_k\) -- из [[четное нечетное разложение][2 пункта замечания]] 
+#+end_remark
+#+begin_symb org
+\[ A_k(f, x) \coloneqq \left[\begin{array}{ll}
+  \frac{1}{2}a_0(f) & k = 0 \\
+  a_k(f)\cos kx + b_k(f) \sin kx & k = 1,2,\dots
+\end{array}\right. \]
+Тогда \[A_k(f, x) = \left[\begin{array}{l}
+  \frac{1}{2\pi} \int_{-\pi}^\pi f(x + t)\,dt \\
+  \frac{1}{\pi} \int_{-\pi}^\pi f(x + t)\cos kt \,dt
+\end{array}\right. \]
+#+end_symb
+#+begin_proof org
+\-
+- (\(A\)) ::
+  \[ A_k(f, x) = \frac{1}{\pi}\int_{-\pi}^\pi f(t) \cos kt \cos kx + f(t)\sin kt \sin kx\,dx =  \]
+  \[ = \frac{1}{\pi}\int_{-\pi}^\pi f(t) \cos(k(t - x))\,dt = \left|\begin{array}{l}
+  t = x + \tau
+  \end{array}\right. = \frac{1}{\pi}\int_{-\pi}^\pi f(x + \tau) \cos k\tau\,d\tau \]
+- (\(B\)) :: Если \(f \in L^1[-\pi, \pi]\), то \(|a_k(f)|, |b_k(f)|, |2c_k(f)| \le \frac{1}{\pi}\norm{f}_1\)
+    \[ |A_k(t)| \le \left[\begin{array}{ll}
+    \frac{1}{\pi} \norm{f}_1 & k = 0 \\
+    \frac{1}{2\pi} \norm{f}_1 & k = 1,2,\dots
+  \end{array}\right. \]
+#+end_proof
+#+begin_examp org
+Контрпримеры
+1. До Буа Реймонд \(\exists f \in \tilde{c}\) --- ряд Фурье расходится в некоторой точке
+2. Лебег \(\exists f \in \tilde{c}\) --- ряд Фурье сходится неравномерно
+3. Колмагоров \(\exists f \in L^1\) --- ряд Фурье расходится в каждой точке
+4. Карлесон \(f \in L^2\) --- ряд Фурье сходится почти везде
+5. Хант \(f \in L^p,\ 1 < p < +\infty\) -- ряд Фурье сходится почти везде
+#+end_examp
+#+ATTR_LATEX: :options [Римана-Лебега]
+#+begin_theorem org
+\-
+- \(E \subset \R^1\)
+- \(f \in L^1(E)\)
+_Тогда_
+\[ \int_E f(t) e^{i \lambda t}\,dt \xrightarrow[\lambda \to +\infty]{} 0 \]
+\[ \int_E f(t) \cos \lambda t \to 0 \]
+\[ \int_E f(t) \sin \lambda t \to 0 \]
+В частности \(f \in L^1[-\pi, \pi]\) \(a_k(f), b_k(f), c_k(f) \xrightarrow[k \to +\infty]{} 0\)
+#+end_theorem
+#+begin_proof org
+н.у.о \(E = \R\) [пусть \(f = 0\) на \(E\)]
+\[ \int_\R f(t) e^{i\lambda t}\,dt = \left|\begin{array}{l}
+t = \tau + \frac{\pi}{\lambda}
+\end{array} \right. = - \int_\R f(\tau + \frac{\pi}{\lambda})e^{i\lambda \tau}\,d\tau\]
+Значит
+\[ \int_\R f(t) e^{i\lambda t} \,dt = \frac{1}{2}\int_\R \left(f(t) - f \left(t + \frac{\pi}{\lambda}\right)\right) e^{i\lambda t} \,dt \]
+\[ \left|\int_\R f(t) e^{i \lambda t}\,dt\right| \le \frac{1}{2} \int_\R \left|f(t) - f\left(t + \frac{\pi}{\lambda}\right) \right| \cdot | e^{i\lambda t}| \,dt \xrightarrow[\lambda \to +\infty]{} 0\]
+По Лемме о непрерывности сдвига
+#+end_proof
+#+begin_corollary org
+Пусть \[\omega(f, h) = \sup_{\substack{x, y \in E \\ |x - y| \le h}} |f(x) - f(y)|\] --- модуль непрерывности
+Если \(f \in \tilde{c}[-\pi, \pi]\), то \(|a_k(f)|, |b_k(f)|, |2c_k(f)| \le \omega  \left(f, \frac{\pi}{k}\right)\)
+#+end_corollary
+#+begin_proof org
+\[ |2c_{-k}(f)| = \left| \frac{1}{\pi} \int_{-\pi}^\pi f(t) e^{ikt} \,dt\right| \le \frac{1}{2\pi} \cdot\int_{-\pi}^\pi \left|f(t) - f \left(t + \frac{\pi}{k}\right) \right|  \,dt \le \]
+\[ \le 2\pi \int_{-\pi}^\pi \omega \left(f, \frac{\pi}{k}\right) \,dt = \omega \left(f, \frac{\pi}{k}\right) \]
+#+end_proof
+#+begin_corollary org
+\-
+- \(E \subset \R\), \(E = \pair{a, b}\)
+Класс Липшица: \(M > 0\), \(\alpha \in \R,\ \alpha \in (0, 1]\)
+\[ \mathop{\rm Lip}_M \alpha(E) = \{f: E \to \R: \forall x, y\ |f(x) - f(y)| \le M|x - y|^\alpha\} \]
+Пусть  \(f \in \mahtop{\rm Lip}_M \alpha\), тогда при \(k \neq 0\)
+\[ |a_k(f)|, |b_k(f)|, |2c_k(f)| \le \frac{M\pi^\alpha}{|k|^\alpha} \]
+#+end_corollary
+\(f \in \tilde{c}[-\pi, \pi]\), тогда при \(k \neq 0\)
+\[ a_k(f') = k b_k (f) \]
+\[ b_k(f') = -ka_k(f) \]
+\[ c_k(f') = ik c_k(f) \]
+--- интегрирование по частям
+\[ c_k(f') = \frac{1}{2\pi} \int_{-\pi}^\pi f'(t) e^{-ikt}\,dt =\frac{1}{2\pi} \left(f(t)e^{-ikt} \bigg|_{-\pi}^\pi + \int_{-\pi}^\pi f(t) \cdot ik \cdot e^{ikt}\,dt \right) \]
+#+begin_corollary org
+\-
+1. \(f \int \tilde{c}^{(r)}[-\pi, \pi]\) \\
+   _Тогда_ \(|a_k(f)|, |b_k(f)|, |c_k(f)| \le \frac{\const}{|k|^2}\)
+2. \(f \in \tilde{c}^{(r)}\), \(f^{(r)} \in \mathop{\rm Lip}_m\alpha,\ 0 < \alpha \le 1\) \\
+   _Тогда_ \(|a_k(f)|, |b_k(f)|, |rc_k(f)| \le \frac{M\pi^\alpha}{|k|^{r + \alpha}}\)
+
+#+end_corollary
