@@ -1,0 +1,113 @@
+#+LATEX_CLASS: general
+#+TITLE: Задания 112-147
+#+AUTHOR: Ilya Yaroshevskiy
+#+OPTIONS: num:nil toc:nil
+* 116
+\[ \sigma_1(n) = \sum_{d | n} d \]
+\[ \zeta(s - 1): a_n = n \]
+\[ \zeta(s - 1) \cdot \zeta(s): a_n = \sum_{d|n} a_d\cdot b_{\frac{d}{n}} = \sum_{d|n} d\cdot 1 = \sum_{d|n} d^1 = \sigma_1(n)\]
+* 117
+\[ \zeta(s - k): a_n = n^k \]
+\[ \zeta(s - k) \cdot \zeta(s): a_n = \sum_{d|n} a_d \cdot b_{\frac{d}{n}} = \sum_{d|n} d^k = \sigma_k(n) \]
+* 118
+\[ \zeta\left(s - \frac{1}{2}\right) = \sum_{n = 1}^\infty \frac{1}{n^{s - \frac{1}{2}}} = \frac{\sqrt{n}}{n^s} \]
+\[ a_n = \sqrt{n} \]
+* 119
+\[ A(s) = \zeta(2s) = \sum_{n = 1}^\infty \frac{1}{(n^2)^s} \]
+* 121
+\[ C(s) = - A'(s) = - \sum_{n = 1}^\infty \left(\frac{a_n}{n^s}\right)' = - \sum_{n = 1}^\infty a_n\cdot(n^{-s})' = \]
+\[ = - \sum_{n = 1}^\infty - a_n \cdot \ln n \cdot n^{-s}= \sum_{n = 1}^\infty \frac{a_n\ln n}{n^s} \]
+
+
+* 133
+- \(A, B\) --- перечислимые языки
+- \(a, b\) --- программы для \(A, B\)
+Сделаем программу \(p\) которая выводит каждое слово из языка \(A \cup B\) хотябы один раз.
+#+begin_export latex
+\begin{enalgo}[H]
+\caption*{\textbf{Program} \(p\)}
+\begin{algorithmic}
+\FOR{\(t \gets [0..]\)}
+  \STATE \(a()\big|_{\text{TL} = t}\)
+  \STATE \(b()\big|_{\text{TL} = t}\)
+  \FOR{\(w \gets (\Sigma^*)[1..t]\)}
+    \IF{ \(w\in a\).out \OR \(w \in b\).out } \THEN
+    \STATE print(\(w\))
+    \ENDIF
+  \ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{enalgo}
+#+end_export
+* 134
+#+begin_src python
+  def p():
+      for t in [0..]:
+          a().wait(t)
+          b().wait(t)
+          for w in sigma[0..t]:
+              if w in a.out and w.out in wb:
+                  print(w)
+                
+#+end_src
+* 135
+#+begin_src python
+  def p():
+      for t in [0..]:
+          for w1 in sigma[0..t]:
+              for w2 in sigma[0..t]:
+                  if inA(w1).wait(t) and inB(w2).wait(t):
+                      print(w1 + w2)
+#+end_src
+* 136
+\(L\) --- перечислим \(\implies\) \(L^n\) --- перечислим \implies \(\bigcup_{i = 1}^\infty L^i\) --- перечислим \\
+Почему \(\bigcup_{i = 1}^\infty A_i\), где \(A_i\) --- перечислим перечислим? \\
+Путь не перечислим, значит \(\exists w \in L, \forall t\  p\big|_{\text{TL}=t}\) не выводит \(w\)
+* 137
+#+begin_src python
+  def p((w1, w2)):
+      return p1(w1) and p2(w2)
+#+end_src
+
+* 138
+#+begin_src python
+  def pf(w1):
+      for t in [0..]:
+          for w2 in sigma[0..t]:
+              if p((w1, w2)).wait(t):
+                  return True
+#+end_src
+* 139
+Универсальный язык
+* 141
+Сделаем перечислитель образа из полуразрешителья прообраза только будем выводить \(f(x)\). \\
+\(f: A \to B\), \(pf\) --- вычисляет \(f\), \(inA\) --- полуразрешитель \(A\)
+#+begin_src python
+  def pB():
+      for t in [0..]:
+          for w in sigma[0..t]:
+              if inA(w).wait(t):
+                  print(pf(w))
+#+end_src
+
+* 142????
+\(f: A \to B\), \(pf\) --- вычисляет \(f\), \(inB\) --- полуразрешитель \(B\)
+#+begin_src python
+  def inA(w):
+      return inB(pf(w))
+#+end_src
+
+* 148
+Пусть \(B\) перечислимо, тогда \(\exists inB\) --- полуразрешитель \(B\)
+#+begin_src python
+  def inA(w):
+      return inB(f(w))
+#+end_src
+Это полуразрешитель \(A\), тогда как \(A\) неперчислимо --- противоречие \Rightarrow \(B\) --- неперечислимо
+* 154
+Докажем полуразрешимость::
+#+begin_src python
+  def pFinite(p):
+      return p(x_1) or p(x_2) or ... or p(x_n)
+#+end_src
+Пусть свойство языков с конечным числом слов --- \({\rm Finite}\), тогда по теореме Райса \({\rm Finite} \subset {\rm RE}\) и \({\rm Finite}\) не разрешим
