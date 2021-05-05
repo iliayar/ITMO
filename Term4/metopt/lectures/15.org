@@ -1,0 +1,134 @@
+#+TITLE: Лекция 15
+#+SETUPFILE: setup.org
+
+* Метод Ньютона
+Если целевая функция дважды дифференцируема в пространстве \(E_n\) в процессе
+поиска можно использовать не только информации о градиенте, но и
+матрице Гесса. Для оптимизируемой функции \(f(x) \in E_n\) разложение по формуле Тейлора:
+\[ f(x) = f(x^{k - 1}) + (\nabla f(x^{k - 1}), x - x^{k - 1}) + \frac{1}{2} (H(x^{k - 1}) (x - x^{k - 1}), x - x^{k - 1}) + o(|x - x^{k - 1}|)\]
+\[ \varphi_k(x) = f(x^{k - 1}) + (\nabla f(x^{k - 1}), x - x^{k - 1}) + \frac{1}{2}(H(x^{k - 1})(x - x^{k - 1}), x - x^{k - 1}) \]
+\[ \nabla \varphi_k(x) = \nabla f(x^{k - 1}) + H(x^{k - 1})(x - x^{k - 1}) \]
+\[ \left[\begin{array}{ll}
+  \nabla(a^T x) = a; & \nabla(x^T A x) = 2 A x
+\end{array}\right] \]
+\[ x^k = x^{k - 1} - H^{-1}(x^{k - 1}) \nabla f(x^{k - 1})\quad k \in \N \addtag\label{15_1} \]
+\(\tilde{x}^k\) --- вспомогательная точка для построения релаксационной последовательности \(\{x^k\}\)
+\[ x^k = x^{k - 1} + \alpha_k(\tilde{x}^k - x^{k - 1}) = x^{k - 1} + \alpha_k p^k \quad \alpha_k > 0 \addtag\label{15_2} \]
+\(p^k = \tilde{x}^k - x^{k - 1}\) --- направление спуска
+\[ p^k = -H^{-1}(x^{k - 1}) \nabla f(x^{k - 1}) \addtag\label{15_3}\]
+\[ (\nabla f(x^{k - 1}), p^k) = - (\nabla f(x^{k - 1}), H^{-1}(x^{k- 1})\nabla f(x^{k - 1})) < 0\]
+\(H\) --- положительно определена \(\implies\) \(H^{-1}\) --- положительно определена
+Выбор \(\alpha_k \to \)
+1. \(varphi_k(\alpha) = f(x^{k - 1} + \alpha p^k) \to \min\)
+2. исчерпывающий спуск по \(p^k\)
+3. дробление \(\alpha_k\)
+-----
+\(f(x)\) --- квадратичная функция с положительно определенной матрицей \(A\). \(x^0\) --- \(p^k\) --- ньютоновское направление \(\implies\) точка минимума за одну итерацию
+\[ f(x) = \frac{1}{2}(Ax, x) + (b, x); \quad A = H \]
+\[ p^1 = -A^{-1}\nabla f(x^0) = -A^{-1}(Ax^0 + b) = -x^0 - A^{-1}b \]
+\[ x^1 = x^0 + p^1 = -A^{-1}b \]
+** Сходимость метода Ньютона
+- Зависит от \(x^0\). Если \(f(x)\) сильно выпуклая и \(\forall x, y \in E_n\)
+  \[ H(x):\ \norm{H(x) - H(y)} \le L|x - y| \quad L > 0 \]
+  и удачный выбор \(x^0\) (\(x^0\) близок к \(x^*\)), то метод Ньютона при \(\alpha_k = 1\) в \ref{15_2} обладает квадратичной сходимости
+  \[ |x^k - x^*| \le C|x^{k - 1} - x^*|^2 \quad C = \const \]
+  Если \(f(x)\) не является сильно выпуклой или начальное приближение \(x^0\) далеко от \(x^*\) \(\implies\) метод Ньютона может расходиться
+
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{Метод Ньютона}
+\begin{algorithmic}
+\REPEAT
+  \STATE Вычислить \(\nabla f(x)\)
+  \STATE \(H = \nabla^2 f(x)\)
+  \STATE Решить СЛАУ: \(Hp^k = - \nabla f(x)\)
+  \STATE \(x^k = x^{k - 1} + p^k\)
+\UNTIL{\(\norm{x^k - x^{k - 1}} < \varepsilon\) (\(\norm{p^k} < \varepsilon\))}
+\STATE \(x^* = x^k\)
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+** Метод Ньютона с одномерным поиском
+\(x^k \to\) одномерный поиск в направлении \(p^k\)
+\[ \alpha_k = \min_\alpha f(x^k + \alpha p^k) \addtag\label{15_4} \]
+\[ H(x^{k - 1})p^k = - \nabla f(x^{k - 1}) \]
+Пока \(\todo\)
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{Метод Ньютона с одномерным поиском}
+\begin{algorithmic}
+\REPEAT
+  \STATE Вычислить \(\nabla f(x)\)
+  \STATE \(H = \nabla^2 f(x)\)
+  \STATE Решить СЛАУ: \(Hp^k = - \nabla f(x)\)
+  \STATE \(\alpha_k = \min_\alpha f(x^{k - 1}+ \alpha p^k)\)
+  \STATE \(x^k = x^{k - 1} + \alpha_kp^k\)
+\UNTIL{\(\norm{x^k - x^{k - 1}} < \varepsilon\) (\(\norm{p^k} < \varepsilon\))}
+\STATE \(x^* = x^k\)
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+Метод надежнее обычного метода Ньютона, но его эффективность существенно зависит от того, является ли \(p^k\) направлением спуска
+** Метод Ньютона с направлением спуска
+Если \(p^k\) --- направление спуска: \((p^k)^T \nabla f(x^k) < 0\). Если \((p^k)^T \nabla f(x^k) > 0\), то \(p^k\) --- не является направлением спуска, в этом случае использовать антиградиент --- \(\nabla f(x^k)\).
+\[ H(x^k)p^k = - \nabla f(x^k) \implies p^k = \begin{cases}
+  p^k & (p^k)^T\nabla f(x^k) < 0 \\
+  -\nabla f(x^k) & (p^k)^T \nabla f(x^k) > 0
+\end{cases} \addtag\label{15_5} \]
+\[ x^1 = x^0 + \alpha_0 p^0 \quad p^0 = -\nabla f(x^0) \quad \alpha_0 = \min_\alpha f(x^0 + \alpha p^0) \addtag\label{15_6}\]
+(\(k > 1\))
+\[ x^k = x^{k - 1} + \alpha_k p^k \quad \alpha_k = \min_\alpha f(x^{k - 1} + \alpha p^{k - 1}) \addtag\label{15_7} \]
+\[ \norm{x^k - x^{k - 1}} > \varepsilon \]
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{Метод Ньютона с направлением спуска}
+\begin{algorithmic}
+\REPEAT
+  \STATE Вычислить \(\nabla f(x)\)
+  \STATE \(H = \nabla^2 f(x)\)
+  \STATE Решить СЛАУ: \(Hp^k = - \nabla f(x)\)
+  \IF{\((p^k)^T\nabla f(x^k) > 0\)}\THEN
+    \STATE \(p^k = -\nabla f(x^k)\)
+  \ENDIF
+  \STATE \(\alpha_k = \min_\alpha f(x^{k - 1}+ \alpha p^k)\)
+  \STATE \(x^k = x^{k - 1} + \alpha_kp^k\)
+\UNTIL{\(\norm{x^k - x^{k - 1}} < \varepsilon\) (\(\norm{p^k} < \varepsilon\))}
+\STATE \(x^* = x^k\)
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+** Метод Ньютона с дроблением шага
+\[ f(x^{k - 1}) - f(x^k) \ge - \omega \alpha_k (\nabla f(x^{k - 1}), p^k) \quad \omega \in \left(0, \frac{1}{2}\right) \addtag\label{15_8}\]
+Начальное \(\alpha_k = 1\) \(\implies\) проверим условие \ref{15_8}, если нарушено, то \(\alpha_k\) --- корректировка, \(\alpha_k^*\nu\), \(\nu\) --- коэффициент,снова проверка \(\dots\), \(\nu \in (0, 1)\)
+#+begin_export latex
+\begin{rualgo}[H]
+\caption{Метод Ньютона с дроблением шага}
+\begin{algorithmic}
+\REPEAT
+  \STATE Вычислить \(\nabla f(x)\)
+  \STATE \(H = \nabla^2 f(x)\)
+  \STATE Решить СЛАУ: \(Hp^k = - \nabla f(x)\)
+  \IF{\((p^k)^T\nabla f(x^k) > 0\)}\THEN
+    \STATE \(p^k = -\nabla f(x^k)\)
+  \ENDIF
+  \STATE \(\alpha_k = \min_\alpha f(x^{k - 1}+ \alpha p^k)\)
+  \WHILE{\(f(x^{k - 1}) -f(x^k) < -\omega \alpha_k (\nabla f(x^{k - 1}), p^k)\)}\DO
+    \STATE \(\alpha_k = \alpha_k \cdot \nu\)\fixme
+  \ENDWHILE
+  \STATE \(x^k = x^{k - 1} + \alpha_kp^k\)
+\UNTIL{\(\norm{x^k - x^{k - 1}} < \varepsilon\) (\(\norm{p^k} < \varepsilon\))}
+\STATE \(x^* = x^k\)
+\end{algorithmic}
+\end{rualgo}
+#+end_export
+** О сходимости
+Квадратичная сходимость: \(|x^k - x^*| \le L|x^{k - 1} - x^*|^2\)
+1. \(x^0 \quad H(x^0), H^{-1}\)
+   \[ p^k = -H^{-1}(x_0)\nabla f(x^{k - 1}) \addtag\label{15_9} \]
+   Если \(H(x^0)\) не является положительно определенной, то в \ref{15_9}
+   \[ \tilde{H}^1 = \tau_1 I + H(x^0) \]
+   , \(\tau_1 \implies \tilde{H}^1\) --- положительно определенная. Этот подход дает линейную скорость сходимости \(|x_k - x^*| \le q|x^{k - 1} - x^*|\), \(q > 0\)
+2. \(H\) --- обновляется через фиксированное количество итераций \\
+   - \(m\) :: \(H^{-1}(x^0)\) \\
+   - \(2m\) :: \(H^{-1}(x^m)\)
+   Этот подход имеет сверхлинейную скорость сходимости: \(|x^{km} - x^*| \le C |x^{(k - 1)m} - x^*|^{m + 1}\), \(C > 0\)
