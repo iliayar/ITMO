@@ -1,6 +1,5 @@
-#+LATEX_CLASS: general
 #+TITLE: Лекция 13
-#+AUTHOR: Ilya Yaroshevskiy
+#+SETUPFILE: setup.org
 
 * Число обусловленности
 #+begin_export latex
