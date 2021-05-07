@@ -13,6 +13,7 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/8.pdf][Lecture 8]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/9.pdf][Lecture 9]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/10.pdf][Lecture 10]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/matlog/lectures/11.pdf][Lecture 11]]
 * Homeworks
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/1.pdf][1.3.g]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/2.pdf][3.4.b]]
