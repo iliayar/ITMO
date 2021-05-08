@@ -90,9 +90,9 @@ p1 <|> p2 = Parser {
     runParser =
         \input -> 
             case runParser p1 input of
-                (input', Left err)
-                    | input' == input -> runParser p2 input
-                    | otherwise -> (input', Left err)
+                (input', Left err) -> runParser p2 input
+                    -- | input' == input -> runParser p2 input
+                    -- | otherwise -> (input', Left err)
                 success -> success
 }
 
@@ -125,7 +125,7 @@ char :: Char -> Parser Char
 char c = satisfy [c] (== c)
 
 whitespace :: Parser Char
-whitespace = satisfy "space" (`elem` " \t")
+whitespace = satisfy "space" (`elem` " \t\r")
 
 digit :: Parser Char
 digit = satisfy "digit" isDigit
