@@ -1,0 +1,86 @@
+#+TITLE: Практика 13
+#+SETUPFILE: setup.org
+
+#+begin_task org
+Дана двемерная дискретная случайная величина 
+|                   / |    < |      |     |    > |              |
+| \diagbox{\eta}{\xi} |    1 |    2 |   3 |    5 |      \(g_j\) |
+|---------------------+------+------+-----+------+--------------|
+|                   0 |  0.1 |  0.1 | 0.1 |  0.1 |          0.4 |
+|                   2 | 0.15 | 0.15 |   0 |  0.5 |         0.35 |
+|                   4 | 0.05 | 0.05 | 0.1 | 0.05 |         0.25 |
+|---------------------+------+------+-----+------+--------------|
+|             \(p_i\) |  0.3 |  0.3 | 0.2 |  0.2 | \(\sum = 1\) |
+#+end_task
+#+begin_solution org
+\-
+| /       | <   |     |     |     |
+| \(\xi\) |   1 |   2 |   3 |   5 |
+|---------+-----+-----+-----+-----|
+| \(p_i\) | 0.3 | 0.3 | 0.2 | 0.2 |
+
+
+| /        | <   |      |      |
+| \(\eta\) |   0 |    2 |    4 |
+|----------+-----+------+------|
+| \(g_j\)  | 0.4 | 0.35 | 0.25 |
+\(\xi | \eta = 0\):
+| /                       | <               |                 |                 |                 |   |
+| \(\xi \vert  \eta = 0\) |               1 |               2 |               3 |               5 |   |
+|-------------------------+-----------------+-----------------+-----------------+-----------------+---|
+| \(p_i\)                 | \(\frac{1}{4}\) | \(\frac{1}{4}\) | \(\frac{1}{4}\) | \(\frac{1}{4}\) |   |
+\[ p(\xi = 1 | eta = 0) = \frac{0.1}{0.4} = \frac{1}{4} \]
+\[ E(\xi|eta = 0) = 1\cdot \frac{1}{4} + 2 \cdot \frac{1}{4} + 3\cdot \frac{1}{4} + 5\cdot\frac{1}{4} = 2.75 \]
+| /                      | <               |                 |                 |
+| \(\eta \vert \xi = 1\) |               0 |               2 |               4 |
+|------------------------+-----------------+-----------------+-----------------|
+| \(g_i\)                | \(\frac{1}{3}\) | \(\frac{1}{2}\) | \(\frac{1}{6}\) |
+\[ E(\eta | \xi = 1) = 1 + \frac{2}{3} = \frac{5}{3} \]
+#+end_solution
+#+begin_task org
+\-
+#+ATTR_LATEX: :scale 0.5
+[[file:13_1.png]]
+#+end_task
+#+begin_solution org
+\(f_{\xi, \eta} = C\)
+\[ \iint_D f(x, y)\,dx\,dy = \iint_D C \,dx\,dy = C \iint_D \,dx\,dy = C \cdot \int_D = 1 \implies f_{\xi, \eta}(x, y) = 1 \]
+#+end_solution
+#+begin_solution org
+\[ f_\xi(x) = \int_{-\infty}^\infty f_{\xi, \eta}(x, y)\,dy = \int_0^{1 - \frac{x}{2}} \,dy = 1 - \frac{x}{2} \quad 0 \le x \le 2 \]
+\[ f_\eta(y) = \int_{-\infty}^\infty f_{\xi, \eta}(x, y)\,dx = \int_0^{2 - 2y}\,dx = 2- 2y \quad 0 \le y \le 1 \]
+\[ E\xi = \int_{-\infty}^\infty xf_\xi(x)\,dx = \int_0^2x (1 - \frac{x}{2}) \,dx = \frac{2}{3}\]
+\[ E\eta = \int_0^1 y(2 - 2y) \,dy = \frac{1}{3} \]
+#+end_solution
+#+begin_solution org
+\[ f(y | x) = \frac{f_{\xi, \eta}(x, y)}{f_\xi(x)} = \frac{1}{1 - \frac{x}{2}} \quad 0 \le x \le 2 \]
+#+end_solution
+#+begin_solution org
+\[ E(\eta|\xi) = \int_{-\infty}^\infty y \cdot f(y | x)\,dy = \int_0^{1 - \frac{x}{2}} y \cdot \frac{1}{1 - \frac{x}{2}} \,dy = \frac{1}{1 - \frac{x}{2}}\cdot \frac{y^2}{2}\bigg|_0^!{1 - \frac{x}{2}} = \]
+\[ = \frac{1}{2} \cdot \frac{\left(1 - \frac{x}{2}\right)^2}{\left(1 - \frac{x}{2}\right)}  = \frac{2 - x}{4} \quad 0 \le x \le 2\]
+\[ E(\eta | \xi = 1) = \frac{2 - 1}{4} = \frac{1}{4} \]
+#+end_solution
+#+begin_task org
+\(\eta = g(\xi_1, \xi_2)\)
+\[ F_\eta(z) = \int_{D_z} f_{\xi_1, \xi_2}(x, y)\,dx\,dy \]
+\[ D_z = \{(x, y) | g(x, y) < z\} \]
+#+end_task
+#+begin_solution org
+\[ f_\xi(x) = \begin{cases}
+  0 & x < 0 \\
+  e^{-x} & x \ge 0
+\end{cases} \]
+\[ f_\eta(y) = \begin{cases}
+  0 & y < 0 \\
+  e^{-y} & y \ge 0
+\end{cases} \]
+Т.к. неравномерна, то при \(x, y \ge 0\)
+\[ f_{\xi ,\eta}(x, y) = f_\xi(x)\cdotf_\eta(y) = e^{-x - y} \]
+#+end_solution
+#+begin_solution org
+\[ D_z = \{(x, y) | \frac{x}{y} < z \} = \{(x, y) | x < z y\} \]
+--- Прямая проходящая через начало координат
+\[ F_\eta(z) = \int_0^\infty\,dy \int_0^{zy}e^{-x - y}\,dx \]
+
+#+end_solution
+
