@@ -1,0 +1,37 @@
+#+LATEX_CLASS: general
+#+TITLE: ДЗ 168-184
+#+AUTHOR: Ilya Yaroshevskiy
+
+* 168
+Пусть \(e\) разрешает язык программ, которые останавливаются на
+пустом входе.
+#+begin_src python
+  def q(x):
+      if e(q):
+          while True:
+              pass
+      else:
+          return True
+#+end_src
+Получается, что если \(q\) останавливается на пустом входе, то \(e(q) = 1\) и \(q\) зависает --- противоречие. \\
+Покажем, что \(e\) полуразрешим:
+#+ATTR_LATEX: :options {escapeinside=||}
+#+begin_src python
+  def e(p):
+      p(|\(\varepsilon\)|)
+      return True
+#+end_src
+* 169
+Пусть \(ne\) разрешает язык, программ, которые не останавливаются на
+пустом входе.
+#+begin_src python
+  def q(x):
+      if not ne(q):
+          while True:
+              pass
+      else:
+          return True
+#+end_src
+
+* 171
+Пусть \(s\) разрешает язык программ, которые допускают свой собственный код
