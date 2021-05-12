@@ -1,0 +1,154 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 12
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Абстрактные вычислители
+** Машина Тьюринга
+Можно построить теорию вычислимоcти поставив в начало машину Тьюринга. Если существует машина Тьюринга, такая что останавливается на слове \dots
+#+begin_definition org
+*Тезис Тьюринга-Черча* --- 
+#+end_definition
+
+#+begin_definition org
+Машина Тьюринга
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw (-4, 0.3) -- (4, 0.3);
+\draw (-4, -0.3) -- (4, -0.3);
+\draw (-3, 0.3) -- (-3, -0.3);
+\draw (-2, 0.3) -- (-2, -0.3);
+\draw (-1, 0.3) -- (-1, -0.3);
+\draw (0, 0.3) -- (0, -0.3);
+\draw (1, 0.3) -- (1, -0.3);
+\draw (2, 0.3) -- (2, -0.3);
+\draw (3, 0.3) -- (3, -0.3);
+\draw[color=red] (-2.2, 0.4) rectangle (2.2, -0.4);
+\node[below,color=red] at (0, -0.4) {\(x \in \Sigma^*\)};
+\draw[color=blue,->] (-1.5, 1) node[above] {head} -- (-1.5, 0.2);
+\node at (-3.5, 0) {0};
+\node at (-2.5, 0) {B};
+\node at (3.5, 0) {B};
+\node at (2.5, 0) {B};
+\end{tikzpicture}
+\end{center}
+#+end_export
+- Ленточный алфавит \(\Pi\)
+- \(B \in \Pi\) --- пробел
+- Входной алфавит \(\Sigma \subset \Pi\), \(|\Sigma| \ge 2\)
+- \(B \not\in \Sigma\)
+- \(Q\) --- конечной множество состояний
+- \(s, Y, N \in Q\)
+- \(\delta: Q \times \Pi \to Q \times \Pi \times \{\leftarrow, \rightarrow, \downarrow\}\) --- переходы
+#+end_definition
+#+begin_examp org
+Язык \(0^*\)
+| / | <                |                  |                  |
+|   |                0 |                1 | B                |
+|---+------------------+------------------+------------------|
+| S | S, 0 \rightarrow | N, 1, \downarrow | Y, B, \downarrow |
+#+end_examp
+#+begin_examp org
+Палиндромы
+| /       | <                       |                         |                        |                        |
+|         | \(0\)                   | \(1\)                   | \(B\)                  | \(x\)                  |
+|---------+-------------------------+-------------------------+------------------------+------------------------|
+| \(S\)   | \(r_0, x, \rightarrow\) |                         |                        |                        |
+| \(r_0\) | \(r_0, 0, \rightarrow\) | \(r_0, 1, \rightarrow\) | \(c_0, B, \leftarrow\) | \(c_0, x, \leftarrow\) |
+| \(c_0\) | \(l, x, \leftarrow\)    | \(N\)                   |                        | \(Y\)                  |
+| \(l\)   | \(l, 0, \leftarrow\)    | \(l, 1, \leftarrow\)    | \(s, B, \rightarrow\)  | \(S, x, \rightarrow\)  |
+| \(r_1\) | \(r_1, 0, \rightarrow\) | \(r_1, 1, \rightarrow\) | \(c_1, B, \leftarrow\) | \(c_1, x, \leftarrow\) |
+| \(c_1\) | \(l, x, \leftarrow\)    | \(N\)                   |                        | \(Y\)                  |
+#+end_examp
+#+begin_remark org
+\(0^n1^n2^n\) --- не контекстно свободный, распознается машиной Тьюринга
+#+end_remark
+#+begin_definition org
+*Машина Тьюринга* --- \(\pair{\Sigma, \Pi, B \in \Pi \setminus \Sigma, Q, s \in Q, Y \in Q, N \in Q, \delta}\) \\
+#+end_definition
+#+begin_definition org
+*Мгновенное описание машины Тьюринга* (snapshot) --- \(\pair{t, q, pos}\), где \(t\) --- слово на ленте (без trailing/leading пробелов), \(q\) --- состояние, \(pos\) --- позиция головки
+#+end_definition
+#+begin_definition org
+\(\pair{t, q, pos} \vdash \pair{t', q', pos'}\) --- *переходит за один шаг*
+#+end_definition
+#+begin_definition org
+\(L(m) = \{x \big| \pair{x, s, 1} \vdash^* \pair{t, Y, pos}\}\) --- множество слов, *допускаемых машиной Тьюринга*
+#+end_definition
+** Многодорожечная машина Тьюринга
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw (-4, 0.9) -- (4, 0.9);
+\draw (-4, 0.3) -- (4, 0.3);
+\draw (-4, -0.3) -- (4, -0.3);
+\draw (-4, -0.9) -- (4, -0.9);
+\draw[color=red,thick] (-2, 1) rectangle (-1.6, -1);
+\draw[color=red,thick] (-1.9, 0.8) rectangle (1.9, 0.4);
+\node at (0, 0.6) {\(x\)};
+\end{tikzpicture}
+\end{center}
+#+end_export
+#+begin_definition org
+Одна головка, но \(k\) дорожек \\
+\(\delta: Q \times \Pi^k \to Q\times \Pi^k \times \{\leftarrow, \rightarrow, \downarrow\}\)
+#+end_definition
+#+begin_lemma org
+МДМТ = МТ (равно по мощности), \(\Pi^1 = \Pi^k\)
+#+end_lemma
+** Многоленточная машина Тьюринга
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\draw (-4, 0.9) -- (4, 0.9);
+\draw (-4, 0.3) -- (4, 0.3);
+\draw (-4, -0.4) -- (4, -0.4);
+\draw (-4, -1) -- (4, -1);
+\draw (-4, -1.7) -- (4, -1.7);
+\draw (-4, -2.3) -- (4, -2.3);
+\draw[color=red,thick] (-2, 1) rectangle (-1.6, 0.2);
+\draw[color=red,thick] (-2, -0.3) rectangle (-1.6, -1.1);
+\draw[color=red,thick] (-2, -1.6) rectangle (-1.6, -2.4);
+\draw[color=red,thick] (-1.9, 0.8) rectangle (1.9, 0.4);
+\node at (0, 0.6) {\(x\)};
+\end{tikzpicture}
+\end{center}
+#+end_export
+#+begin_definition org
+\(k\) дорожек, у каждой головка \\
+\(\delta: Q \times \Pi^k \to Q \times \Pi^k \times \{\leftarrow, \rightarrow, \downarrow\}^k\)
+#+end_definition
+#+begin_theorem org
+МЛМТ \(\equiv\) МТ
+#+end_theorem
+#+begin_proof org
+\(k\) лент \(\mapsto\) \(2k\) дорожек \(\mapsto\) \(1\) лента
+#+end_proof
+#+begin_remark org
+Многоленточная машина Тьюринга уже больше похожа на `обычный компьютер`:
+- процессор
+  - регистры
+- память
+  - данные
+  - код
+  - стек
+Лента /входа/ (только читаем). Для каждого типа памяти заведем ленту, и еще одну ленту для /регистров/, еще одну ленту для /счетчиков/. Ленту /счетчиков/ используем для доступа к произвольному адресу в памяти /данных/.
+#+end_remark
+
+#+begin_remark org
+*Тезис Тьюринга-Черча* (и другие) \\
+\(L\) --- разрешим (перечислим) \(\Leftrightarrow\) \(L\) можно распознать (полуразрешить, перечислить) на МТ.
+#+end_remark
+#+begin_remark org
+*Бонус* \\
+\(T\) --- время на компьютере, тогда на МТ --- \(\mathop{\rm poly}(T)\)
+#+end_remark
+#+begin_remark org
+Потребуем от МТ дополнительных ограничений:
+- Лента односторонне бесконечной
+- На ленту не записывается \(B\)
+--- *Экологичная МТ*
+#+end_remark
+#+begin_remark org
+Односторонняя бесконечная лента + не писать \(B\) \(\equiv\) МТ
+#+end_remark

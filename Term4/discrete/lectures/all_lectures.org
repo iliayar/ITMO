@@ -16,9 +16,12 @@
 #+INCLUDE: "6.org" :lines "4-"
 * Лекция 7
 #+INCLUDE: "7.org" :lines "4-"
+* TODO Лекция 8
 * Лекция 9
 #+INCLUDE: "8.org" :lines "4-"
 * Лекция 10
 #+INCLUDE: "9.org" :lines "4-"
 * Лекция 11
-#+INCLUDE: "9.org" :lines "4-"
+#+INCLUDE: "10.org" :lines "4-"
+* Лекция 12
+#+INCLUDE: "11.org" :lines "4-"
