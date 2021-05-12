@@ -17,3 +17,4 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/13.pdf][Lecture 13]]
 - Lecture 14
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/15.pdf][Lecture 15]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/16.pdf][Lecture 16]]
