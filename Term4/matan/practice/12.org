@@ -1,0 +1,123 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 12
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+ATTR_LATEX: :options [4382]
+#+begin_task org
+\[ V = \frac{1}{3} \iint_S (x\cos\alpha + y\cos\beta + z\cos\gamma)\,dS =  \]
+\[ = \frac{1}{3}\iint x\,dy\,dz + y\,dz\,dx + z\,dx\,dy \]
+#+end_task
+#+ATTR_LATEX: :options [4391]
+#+begin_task org
+Доказать формулу
+\[ \iiint_V \frac{d\xi d\eta d\zeta}{r}  = \frac{1}{2} \iint_S \cos(r, n)\,dS \]
+\[ r = \sqrt{(\xi - x_0)^2 + (\eta - y_0)^2 + (\zeta - z_0)^2} \]
+#+end_task
+#+begin_solution org
+\[ r = \begin{pmatrix}
+  \xi - x_0 \\
+  \eta - y_0 \\
+  \zeta - z_0
+\end{pmatrix} \]
+\[ I = \frac{1}{2} \iint \frac{\xi - x_0}{r}\,d\eta\,d\zeta + \frac{\eta - y_0}{r}\,d\zeta\,d\xi + \frac{\zeta - z_0}{r}\,d\xi\,d\eta = \]
+\[ = \frac{1}{2}\iiint \frac{1}{r} - \frac{(\xi - x_0)^2}{r^3} + \frac{1}{r} - \frac{(\eta - y_0)^2}{r^3} + \frac{1}{r} - \frac{(\zeta - z_0)}{r^3}\,d\xi\,d\eta\,d\zeta = \iiint \frac{1}{r}\,d\xi\,d\eta\,d\zeta \]
+#+end_solution
+* Формула Стокса
+Вычисляем по кривой
+\[ \int P\,dx + Q\,dy + R\,dz = \iint_\Omega \pair{\mathop{\rm rot}\begin{pmatrix}
+  P \\
+  Q \\
+  R
+\end{pmatrix}, n_0}\,dS = \]
+\[ = \iint_\Omega (R'_y - Q'_z)\,dy\,dz + (P'_x - R'_z)\,dz\,dx + (Q'_x - P'_y)\,dx\,dy\]
+#+ATTR_LATEX: :scale 0.3
+[[file:12_1.png]]
+Здесь сторона \(\Omega\) согласована с направлением кривой \(L\)
+#+ATTR_LATEX: :scale 0.3
+[[file:12_2.png]]
+
+#+begin_task org
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:12_3.png]]
+\[ \int_L y^2 \,dx + z^2\,dy + x^2\,dz \]
+\[ \Omega = \triangle ABC \]
+\[ n = (1, 1, 1) \]
+#+end_task
+#+begin_solution org
+\[ I = \iint\limits_\triangle - 2z\,dy\,dz - 2x\,dz\,dx - 2y\,dx\,dy = \iint\limits_\triangle -2\underbrace{(x + y + z)}_a\,dS = -2a \cdot \int\limits_{\triangle ABC} \]
+#+end_solution
+#+begin_task org
+\[ \int (x^2 - z^2)\,dx + (z^2 - x^2)\,dy + (x^2 - y^2)\,dz \]
+\(L\): границы сечения куба
+\[ |x| \le a \quad |y| \le a \quad |z| \le a \]
+плоскостью \(x + y + z = \frac{3a}{2}\) \\
+ориентированно положительно относительно \((1, 0, 0)\)
+#+end_task
+#+begin_solution org
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:12_4.png]]
+\(n = (1, 1, 1)\)
+#+ATTR_LATEX: :scale 0.3
+[[file:12_5.png]]
+\[ \begin{pmatrix}
+  x \\ y \\
+  \frac{3a}{2} -x - y
+\end{pmatrix} \quad \begin{pmatrix}
+  1 \\ 0 \\ -1
+\end{pmatrix} \quad \begin{pmatrix}
+  0 \\ 1 \\ -1
+\end{pmatrix}\]
+\[ I = \iint\limits_\triangle -2 y\,dy\,dz - (2z + 2x)\,dz\,dx - 2x \,dx\,dy =  \]
+\[ = \int_{-\frac{a}{2}}^a\,dx\int_{\frac{a}{2} - x}^a -2y\cdot(-1) - (3a - 2x - 2y + 2x)\cdot 1 - 2x \cdot 1\,dx\,dy \]
+#+end_solution
+
+#+begin_task org
+\[ \int z^3 \,dx + x^3\,dy + y^3\,dz \]
+\[ L: \left|\begin{matrix}
+  2x^2 - y^2 + z^2 = a^2 \\
+  x + y = 0
+\end{matrix}\right. \]
+
+#+end_task
+#+begin_solution org
+\[ 2x^2 + z^2 = (-x^2) + a^2 \]
+\[ \begin{cases}
+  x^2 + z^2 = a^2 \\
+  y = -x
+\end{cases} \]
+#+ATTR_LATEX: :scale 0.3
+[[file:12_6.png]]
+#+ATTR_LATEX: :scale 0.3
+[[file:12_7.png]]
+\[ I = \iint 3y^2\,dy\,dz + 3z^2\,dz\,dx + 3x^2\,dx\,dy =  \]
+\[ = 3\iint\pair{\begin{pmatrix}
+  y^2 \\ z^2 \\ x^2
+\end{pmatrix}, \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} \\
+    0
+\end{pmatrix}}\,dS = \frac{3}{\sqrt{2}} \iint \underbrace{y^2 + z^2}_{\substack{= x^2 + z^2 \\ = a^2}} \,ds = \]
+\[ = \frac{3a^2}{\sqrt{2}} \iint \,ds = \frac{3a^2}{\sqrt{2}} S = \frac{3a^2}{\sqrt{2}} \cdot \frac{\pi a^2}{\cos(\text{угол между } xOz\text{, и плоскостью }x + y = 0)} \]
+#+end_solution
+
+#+begin_task org
+\[ \int (x^2 - yz)\,dx + (y^2 - zx)\,dy + (z^2 - xy)\,dz \]
+\[ L: \left|\begin{matrix}
+  x = a\cos t \\
+  y = a\sin t \\
+  z = \frac{ht}{2\pi}
+\end{matrix}\right. \quad t \in [0; 2\pi] \]
+#+end_task
+#+begin_solution org
+Ротор равен нулю
+\[ AB: \begin{matrix}
+  x = a \\
+  y = 0
+\end{matrix} \quad z = t \quad t \in [0; h] \]
+\[ I = -\int_{AB} \dots = -\int_a^l t^2\,dt \]
+
+
+#+end_solution
+
