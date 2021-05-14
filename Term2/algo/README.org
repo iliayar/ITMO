@@ -6,4 +6,4 @@
 2. [[file:labs/lab2/][Search tree]] \\
    [[file:labs/lab2/statements.pdf][Statements]]
 3. [[file:labs/lab3/][RMQ, etc]] \\
-   [[file:labs/lab3/statements.pdf][Условия]]
+   [[file:labs/lab3/statements.pdf][Statements]]
