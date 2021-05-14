@@ -1,0 +1,156 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 11
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
+
+* Теория множеств
+#+begin_definition org
+*Теория множеств* --- теория первого порядка с нелогическим предикатом `принадлежность` \((\in)\) и следующими аксиомами и схемами аксиом.
+
+#+end_definition
+#+begin_definition org
+B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
+\[ \pair{a, b} = \{\{a\}, \{a, b\}\} \]
+\[ \mathop{\rm snd}\pair{a, b} = \bigcup\left(\bigcup \pair{a, b} \setminus \bigcap \pair{a, b}\right) = \{b\} \]
+\[ \mathop{\rm fst}\pair{a, b} = \bigcup\left(\bigcap \pair{a, b}\right) = \{a\} \]
+#+end_definition
+#+begin_definition org
+\(a \subseteq b\), если \(\forall x. x \in a \to x \in b\)
+#+end_definition
+#+begin_remark org
+Что такое равенство?
+- Duck typing: принцип Лейбница (неразличимость) --- \(A = B\), если для любого \(P \quad P(A) \leftrightarrow P(B)\) \\
+  \(a \leftrightarrow b\), если \((a \to b)\&(b \to a)\)
+- Определение равенства как структур в C (принцип объемности) --- \(A\) и \(B\) состоят из одинаковых элементов
+#+end_remark
+#+begin_definition org
+\(a = b\), если \(a \subseteq b \& b \subseteq a\)
+#+end_definition
+#+begin_remark org
+Пустое множество имеет тип 0, множество с одним элементов имеет тип 1 и т.д. Запретим запросы `принадлежит` на одинаковых типах
+#+end_remark
+#+begin_definition org
+Предикат \(P(x)\) --- множество \(\{x \big| P(x)\}\)
+#+end_definition
+#+ATTR_LATEX: :options [равенства]
+#+begin_axiom org
+Равные множества содержатся в одних и тех же множествах
+\[ \forall a.\forall b.\forall c. a = b\&a\in c\to b \in c \]
+#+end_axiom
+#+ATTR_LATEX: :options [пустого множества]
+#+begin_axiom org
+Существует \(\varnothing\): \(\forall x. \neg x \in \varnothing\)
+#+end_axiom
+#+NAME: аксиома пары
+#+ATTR_LATEX: :options [пары]
+#+begin_axiom org
+Если \(a \neq b\), то \(\{a, b\}\) --- множество
+\[ \forall a. \forall b. a\neq b \to \exists p. a \in p \& b\in p \& \forall t. t \in p \to t = a \vee t = b \]
+#+end_axiom
+#+ATTR_LATEX: :options [объединения]
+#+begin_axiom org
+Если \(x\) --- непустое множество, то \(\bigcup x\) --- множество
+\[ \forall x. (\exists y. y \in x) \to \exists p. \forall y. y\in p \leftrightarrow \exists s. y \in s \& s \in x \]
+#+end_axiom
+#+begin_examp org
+\[ \bigcup \{1, \{2, 3\}, \{\{4\}\}\} = 1 \cup \{2, 3, \{4\}\}\]
+Почему \(2 \in p\), потому что \(2 \in \underbrace{\{2 , 3\}}_s,\ \{2, 3\} \in x\)
+#+end_examp
+#+ATTR_LATEX: :options [Степени]
+#+begin_axiom org
+Для множества \(x\), существует \(\mathcal{P}(x)\) --- множество всех подмножеств
+\[ \forall x. \exists p. \forall y. y\in p \leftrightarrow y \subseteq x  \]
+#+end_axiom
+#+begin_examp org
+\[ \mathcal{P}(\{a, b\}) = \{\varnothing, \{a\}, \{b\}, \{a, b\}\} \]
+\[ \mathcal{P}(\{\{4\}\}) = \{\varnothing, \{\{4\}\}\} \]
+#+end_examp
+#+ATTR_LATEX: :options [Схема аксиом выделения]
+#+begin_axiom org
+Если \(a\) --- множество, \(\varphi(x)\) --- формула, которую не входит свободно \(b\), то \(\{x \big| x \in a \& \varphi(x)\}\)
+\[ \forall x. \exists b. \forall y. y \in b \leftrightarrow y \in x \& \varphi(y) \]
+#+end_axiom
+#+ATTR_LATEX: :options [Аксиома бесконечности]
+#+begin_axiom org
+Существует множество \(N\), такие, что
+\[ \varnothing \in N \& \forall x. x \in N \to x \cup \{x\} \in N \]
+#+end_axiom
+#+begin_theorem org
+Если \(x\) --- множество, то \(\{x\}\) --- множество
+\[ \exists t. a \in t \leftirightarrow a = x \]
+#+end_theorem
+#+NAME: теорема множество множества
+#+begin_proof org
+\-
+- \(x = \varnothing\), тогда \(t \coloneqq \mathcal{P}(x)\), \(\mathcal{P}(\varnothing) = \varnothing\)
+- \(x \neq \varnothing\), тогда \(s \coloneqq \{x, \varnothing\}\) --- аксиома пары, \(t \coloneqq \{z \big| z \in s \& z \neq \varnothing\}\)
+#+end_proof
+#+begin_theorem org
+\(a, b\) --- множества, то \(a \cup b\) --- множество
+#+end_theorem
+#+begin_proof org
+\-
+- \(a = b\), тогда \(a\cup b = \{a\}\) [[теорема множество множества][по теореме]]
+- \(a \neq b\), тогда \(a\cup b = \{a, b\}\) [[аксиома пары][по аксиоме]]
+#+end_proof
+#+begin_symb org
+\(a, b\) --- множества, \(a \cup b = \) такое \(c\)
+\[ a \in c \& b \in c \& \forall t. t\in c \to t = a \vee t = b \]
+#+end_symb
+#+begin_definition org
+\(a' = a \cup \{a\}\)
+#+end_definition
+#+begin_definition org
+*Ординальные числа*
+- \(\overline{0} = \varnothing\)
+- \(\overline{1} = \varnothing' = \{\varnothing\}\)
+- \(\overline{2} = \varnothing'' = \{\varnothing\}' = \{\varnothing, \{\varnothing\}\}\)
+- \(\dots\)
+#+end_definition
+#+begin_definition org
+Множество \(S\) *транзитивно*, если
+\[ \forall a. \forall b. a \in b \& b \in S \to a \in S \]
+#+end_definition
+#+begin_definition org
+Множество \(S\) *вполне упорядочено* отношением \(\in\), если
+1. \(\forall a. \forall b. a\neq b\& a \in S \& b \in S \to a \in b \vee b \in a\) --- линейный
+2. \(\forall t. t \subseteq S \to \exists a. a\in t \&\forall b. b \in t \to b = a \vee a \in b\) --- в любом множестве есть наименьший элемент
+#+end_definition
+#+begin_definition org
+*Ординал* (Ординальное число) --- вполне упорядоченное отношением \(\in\), транзитивное множество
+#+end_definition
+#+begin_definition org
+*Предельный ординал* \(s \neq \varnothing\) --- ординал, не имеющий предшественника
+\[ \forall p. p' \neq s \]
+#+end_definition
+#+begin_examp org
+\[ \omega = \{\varnothing, 1, 2, 3, 4, \dots\} \]
+Очевидно, что \(\omega \subseteq N\)
+#+end_examp
+#+begin_theorem org
+\(\omega\) --- множество
+#+end_theorem
+#+begin_definition org
+\[ a + b = \begin{cases}
+  a & b = 0 \\
+  (a + c)' & b = c' \\
+  \sup\limits_{c \in b}(a + c) & \text{если }b\text{ --- предельный}
+\end{cases} \]
+#+end_definition
+#+begin_definition org
+\(\sup t\) --- минимальный ординал, содержащий все элементы из \(t\)
+#+end_definition
+#+begin_examp org
+\(\{0, 1, 3\}\) --- ординал?
+- упорядоченный
+- _не транзитивный_
+\(\sup \{0, 1, 3\} = \{0, 1, 2, 3\}\)
+#+end_examp
+#+begin_examp org
+\[1 + \omega = \sup\limits_{c \in \omega}(1 + c) = \sup \{0 + 1, 1 + 1, 2+ 1, \dots\}\]
+\[ \sup \{1, 2, 3, 4, 5, \dots\} = \omega \]
+#+end_examp
+#+begin_examp org
+\[ \omega + 1 = \omega' = \omega \cup \{\omega\} = \{0, 1, 2, 3, \dots, \omega\} \]
+#+end_examp
+
