@@ -20,3 +20,7 @@ instance Show Expression where
     show (Not e1) = "(¬" ++ (show e1) ++ ")"
     show (Var v) = v
 
+contextToExpressions :: Context -> [Expression]
+contextToExpressions (Context es) = es
+contextToExpressions EmptyContext = []
+
