@@ -1,6 +1,7 @@
 import Grammar (parseProof)
 import Proof
 import ProofChecker
+import qualified Natural as N
 
 main = do
     content <- readFile "input.txt"
