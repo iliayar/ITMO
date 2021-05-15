@@ -1,6 +1,6 @@
-#+LATEX_CLASS: lectures
 #+TITLE: Лекции по Методам оптимизации 4 семестр
-#+AUTHOR: Ilya Yaroshevskiy
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: lectures
 
 * Лекции 1 и 2
 #+INCLUDE: "1-2.org" :lines "4-"

@@ -1,6 +1,6 @@
-#+LATEX_CLASS: lectures
 #+TITLE: Лекции по Математическому анализу 4 семестр
-#+AUTHOR: Ilya Yaroshevskiy
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: lectures
 
 
 * Лекция 1
