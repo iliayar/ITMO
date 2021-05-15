@@ -1,0 +1,211 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 13
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_remark org
+Если \(\xi = \eta\) почти наверное, т.е. \(p(\xi = \eta) = 1\), то ..., что \(\xi = \eta\)
+#+end_remark
+\((\Omega, \mathcal{F}, p)\) --- вероятностное пространство \\
+Введем \(L_2(\Omega, \mathcal{F}, p) = \{\xi \big| E\xi^2 < \infty\}\)
+#+begin_definition org
+*Скалярным произведением* случайных величин \(\xi,\eta \in L_2(\Omega, \mathcal{F}, p)\), называется число
+\[ \pair{\xi,\eta} = E(\xi\eta) \]
+#+end_definition
+#+begin_remark org
+\(\pair{\xi, \eta}\) --- фиксированная двумерная случайная величина с ... законом распределения \(p(\xi = x_i, \eta = y_i) = p_{ij}\), то
+\[ E\xi\eta = \sum_{i, j} x_i y_j p_{ij} \]
+#+end_remark
+#+begin_remark org
+Если \(\pair{\xi, \eta}\) --- обе непрерывно дифф. случайные величины с плотностью \(f_{\xi,\eta}(x, y)\), то
+\[ E\xi\eta = \iint_{\R^2} xyf_{\xi,\eta}(x, y)\,dx\,dy \]
+#+end_remark
+#+begin_remark org
+Свойства \(\pair{\xi, \eta}\)
+1. \(\pair{\xi, \eta} = \pair{\eta, \xi}\)
+2. \(\pair{C\xi, \eta} = C\pair{\xi, \eta}\)
+3. \(\pair{\xi_1 + \xi_2, \eta} = \pair{\xi_1,\eta} + \pair{\xi_2, \eta}\)
+4. \(\pair{\xi, \xi} \ge 0\)
+5. \(\pair{\xi\,xi} = 0 \Leftrightarrow \xi = 0\) почти наверное
+Т.е. это скалярное произведение
+#+end_remark
+#+begin_definition org
+\(\norm{\xi} = \sqrt{E\xi^2}\) и \(\rho(\xi, \eta) = \norm{\xi - \eta}\), получаем \(L_2(\Omega, \mathcal{F}, p)\)
+#+end_definition
+#+ATTR_LATEX: :options [неравенство Коши-Буняковсого-Шварца]
+#+begin_theorem org
+Пусть случайные величины \(\xi, \eta\) имеют конечные вторые моменты \\
+_Тогда_
+\[ |E\xi\eta| \le \sqrt{E\xi^2 \cdot E\eta^2} \]
+Причем \( |E\xi\eta| \le \sqrt{E\xi^2 \cdot E\eta^2} \Leftrightarrow \eta = C\xi\), почти наверное, \(C = \const\)
+#+end_theorem
+#+begin_proof org
+\[ P_2(x) = E(x\xi - \eta)^2 = E(\x^2\xi^2 - 2x\xi\eta + \eta^2) = x^2E\xi^2 - 2xE\xi\eta + E\eta^2 \ge 0 \]
+\[ \forall x \in \R \Leftrightarrow D = (E\xi\eta)^2 - E\xi^2\cdot E\eta^2 < 0 \Leftrightarrow |E\xi\eta| \le \sqrt{E\xi^2\cdot E\eta^2} \]
+#+end_proof
+#+ATTR_LATEX: :options [неравенство треугольника]
+#+begin_corollary org
+\[ \norm{\xi + \eta} \le \norm{\xi} + \norm{\eta} \]
+#+end_corollary
+#+begin_proof org
+\[ \norm{\xi + \eta}^2 = E(\xi + \eta)^2 = E\xi^2 + 2E\xi\eta + E\eta^2 \le \]
+\[ \le E\xi^2 + 2\sqrt{E\xi^2}\cdot\sqrt{E\eta^2} = \norm{\xi}^2 + 2\norm{\xi}\norm{\eta} + \norm{\eta}^2 = (\norm{\xi} + \norm{\eta})^2 \implies \]
+\[ \implies \norm{\xi + \eta} \le \norm{\xi} + \norm{\eta} \]
+#+end_proof
+* Условное математическое ожидание (УМО)
+Рассмотрим линейное подпространство:
+\[ L(\eta) = \{g(\eta) \big| Dg(\eta) < \infty\} \]
+--- множество случайных величин вида \(g(\eta), g(x)\) --- борелевская функция с конечным вторым моментом \\
+Ясно, что \(L(\eta) \subset L_2(\Omega,\mathcal{F}, p)\)
+#+begin_definition org
+*Условное математическое ожидание* случайной величины \(\xi\) относительно случайной величины \(\eta\) --- ортогональная проекция \(\xi\) на подпространство \(L(\eta)\) 
+#+end_definition
+#+begin_symb org
+\(\hat{\xi} = E(\xi | \eta)\)
+#+end_symb
+\beginpoperty
+#+begin_property org
+\[ \hat{\xi} = E(\xi | \eta) \Leftrightarrow E(\xi \cdot g(\eta)) = E(\hat{\xi}\cdot g(\eta)) \quad \forall g(\eta) \in L(\eta)\]
+#+end_property
+#+begin_proof org
+\[ \hat{\xi} = E(\xi | \eta) \Leftrightarrow E((\xi - \hat{\xi})\cdot g(\eta)) = 0 \Leftrightarrow E(\xi \cdot g(\eta)) = E(\hat{\xi}\cdot g(\eta)) \]
+#+end_proof
+#+begin_property org
+\[ \min_{L(\eta)} E(\xi g(\eta))^2 = E(\xi - \hat{\xi})^2 \]
+#+end_property
+#+begin_property org
+\[ E(C_1\xi_1 + C_2\xi_2 | \eta) = C_1 E(\xi_1|\eta) + C_2 E(\xi_2|\eta) \]
+#+end_property
+#+NAME: относительная свойство 4
+#+begin_property org
+Пусть \(f\) --- ограниченная функция, тогда
+\[ E(f(\eta)\cdot\xi | \eta) = f(\eta)\cdot E(\xi | \eta) \]
+#+end_property
+#+begin_proof org
+\(g(\eta), f(\eta)\) --- ограниченные функции и \(Eg(\eta) < \infty\), то
+\[h(\eta) = f(\eta)\cdot g(\eta) \in L(\eta)\]
+--- также имеет конечные второй момент
+\[ E(f(\eta)\cdot \xi \cdot g(\eta)) = E(f(\eta)\cdot E(\xi | \eta) \cdot g(\eta))? \]
+\[ E(f(\eta)\cdot \xi \cdot g(\eta)) = E(\xi \cdot h(\eta)) = E(\hat{\xi}\cdot h(\eta)) = E(\hat{\xi}\cdot f(\eta)g(\eta)) =  \]
+\[ = E(f(\eta)\cdot E(\xi | \eta)\cdot g(\eta)) \]
+#+end_proof
+#+begin_property org
+Пусть \(f(\eta) \in L(\eta)\), тогда \(E(f(\eta) | \eta) = f(\eta)\)
+#+end_property
+#+begin_proof org
+из [[относительная свойство 4][свойства]] при \(\xi \le 1\)
+#+end_proof
+#+begin_property org
+\(E\xi = E(E(\xi | \eta))\) или \(E\xi = E\hat{\xi}\)
+#+end_property
+#+begin_proof org
+при \(g(\eta) = 1\)
+#+end_proof
+#+begin_property org
+Если случайные величины \(\xi, \eta\) независимы
+\[ E(\xi | \eta) = E\xi \]
+#+end_property
+#+begin_proof org
+\[ E(E\xi \cdot g(\eta)) = E\xi \cdot Eg(\eta) = E(\xi \cdot g(\eta)) \]
+, т.к. \(\xi, g(\eta)\) независимы
+#+end_proof
+#+begin_remark org
+т.е. \(\xi\) и \(\eta\) --- независимы, если \((\xi - E\xi) \perp L(\eta)\) и \((\xi - E\xi)\perp \eta\)
+#+end_remark
+#+begin_remark org
+\[ E(\eta | \eta) = f(\eta) \]
+, где \(f(g) = E(\xi | \eta = g)\)
+#+end_remark
+#+begin_proof org
+\todo
+#+end_proof
+** Числовые характеристики зависимости случайных величин
+#+begin_export latex
+\newcommand{\cov}{\mathop{\rm cov}}
+#+end_export
+
+#+begin_definition org
+*Ковариацией* \(\mathop{\rm cov}(\xi, \eta)\) называется число
+\[ \mathop{\rm cov}(\xi, \eta) =E((\xi -E\xi)\cdot(\eta - E\eta)) \]
+#+end_definition
+\beginproperty
+#+begin_property org
+\(\cov(\xi, \eta) = E\xi\eta - E\xi\cdot E\eta\)
+#+end_property
+#+begin_property org
+\(\cov(\xi, \xi) = D\xi\)
+#+end_property
+#+begin_property org
+\(\cov(\xi, \eta) = \cov(\eta, \xi)\)
+#+end_property
+#+begin_property org
+\(\cov(C\xi, \eta) = C\cov(\xi, \eta)\)
+#+end_property
+#+begin_property org
+\(D(\xi + \eta) = D\xi + D\eta + 2\cov(\xi, \eta)\)
+#+end_property
+#+begin_property org
+\[ D(\xi_1 + \dots + \xi_n) = \sum_{i = 1}^n D\xi_i + 2\sum_{i < j}\cov(\xi_i, \xi_j) = \sum_{i, j}\cov(\xi_i, \xi_j) \]
+#+end_property
+#+begin_property org
+\-
+1. Если \(\xi, \eta\) --- независимы, то \(\cov(\xi, \eta) = 0\)
+2. Если \(\cov(\xi, \eta)\neq 0\), то \(\xi, \eta\) --- не независимы
+#+end_property
+#+begin_property org
+\-
+1. Если \(\cov(\xi, \eta)> 0\), то зависимость прямая
+2. Если \(\cov(\xi, \eta) < 0\), то зависимость обратная
+#+end_property
+#+begin_remark org
+Т.к. ковариация зависит от .., то по ее величине нельзя судить о силе связи
+#+end_remark
+** Коэффициент линейной ковариации
+\[ r_{\xi, \eta} = \frac{\cov(\xi, \eta)}{\sqrt{D\xi}\sqrt{D\eta}} = \frac{E\xi\eta - E\xi\cdot E\eta}{\sigma_\xi\cdot \sigma_\eta} \]
+\beginproperty
+#+begin_property org
+\(r_{\xi,\eta} = r_{\eta, \xi}\)
+#+end_property
+#+begin_property org
+\-
+1. Если \(\xi\) и \(\eta\) независимы, то \(r_{\xi, \eta} = 0\)
+2. Если \(r_{\xi, \eta} \neq 0\), то \(\xi, \eta\) не независимы
+#+end_property
+#+begin_property org
+\(|r_{\xi,\eta}| \le 1\)
+#+end_property
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_property org
+\(|r_{\xi, \eta}| = 1 \Leftrightarrow \eta = a\xi + b\) почти наверное
+#+end_property
+#+begin_proof org
+По неравенству Шварца: \(|r_{\xi ,\eta}| = 1 \Leftrightarrow \eta - E\eta = C\cdot(\xi - E\xi)\) \\
+\(\eta = \underbrace{C}_a\xi + \underbrace{(E\eta - CE\xi)}_b\)
+#+end_proof
+#+begin_property org
+\-
+1. Если \(r_{\xi, \eta} = 1\), то \(\eta = a\xi + b\) и \(a > 0\)
+2. Если \(r_{\xi, \eta} = -1\), то \(\eta = a\xi + b\) и \(a < 0\)
+#+end_property
+#+begin_proof org
+Т.к. \(|r_{\xi,\eta}| = 1\), то \(\eta = a\xi + b\) \\
+\todo
+#+end_proof
+#+begin_definition org
+Если коэффициент корреляции \(r_{\xi, \eta} \neq 0\), то говорят, что случайные величины \(\xi, \eta\) *коррелированы* друг с другом \\
+- Если \(r_{\xi,\eta} > 0\), то прямая корреляция
+- Если \(r_{\xi,\eta} < 0\), то обратная корреляция
+#+end_definition
+#+begin_remark org
+Если \(r(\xi_1, \xi_2) > 0\) и \(r(\xi_2, \xi_3) > 9\) \(\not\Rightarrow\) \(r(\xi_1, \xi_3) > 0\) --- нет транзитивности
+#+end_remark
+#+begin_examp org
+| \xi \setminus \eta |  -1 |   0 |   1 |
+|                 -1 | 0.1 | 0.2 | 0.1 |
+|                  2 | 0.2 | 0.3 | 0.1 |
+\[ E\xi = 0.8 \quad E\eta = -0.1 \quad \sigma_\xi = 1.47 \quad \sigma_\eta = 0.7 \]
+\[ E_\xi\eta = \sum_{i, j} x_i \cdot y_j p_{ij} = -1\cdot(-1)\cdot 0.1 + (-1)\cdot 0 \cdot 0.2 + (-1)\cdot 1\ cdot 0.1 + 2\cdot(-1)\cdot 0.2 + 2\cdot 0 \cdot 0.3 + 2\cdot 1 \cdot 0.1 = -0.2 \]
+\[ r_{\xi,\eta} = \frac{E\xi\eta - E\xi \cdot E\eta}{\sigma_\xi \cdot \sigma_\eta} = \frac{-0.2 - 0.8\cdot(-0.1)}{1.47\cdot 0.7} \approx -0.12 \]
+#+end_examp
+
