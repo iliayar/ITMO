@@ -15,6 +15,7 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/teorver/lectures/10.pdf][Lecture 10]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/teorver/lectures/11.pdf][Lecture 11]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/teorver/lectures/12.pdf][Lecture 12]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/teorver/lectures/13.pdf][Lecture 13]]
 * Practices
 - [[https://iliayar.ru/public-notes/conspects/Term4/teorver/practice/1.pdf][Practice 1]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/teorver/practice/2.pdf][Practice 2]]
