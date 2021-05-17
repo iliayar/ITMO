@@ -1,4 +1,4 @@
-#+TITLE: Лекция 11
+#+TITLE: Лекция 12
 #+SETUPFILE: setup.org
 
 \(\H\) --- гильбертово \\

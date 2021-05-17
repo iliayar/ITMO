@@ -1,0 +1,195 @@
+#+TITLE: Лекция 13
+#+SETUPFILE: setup.org
+
+* Суммируемость ряда Фурье
+#+begin_definition org
+\[ D_n(t) = \frac{1}{\pi} \left(\frac{1}{2} + \sum_{k = 1}^n \cos kt\right) \]
+--- *ядро Дирихле* (ядро в смысле kernel) \\
+\color{blue}Ядро \(K(x, y)\)
+\[ f \mapsto \int_E f(t) K(x, y)\,dt \]
+--- линейный оператор
+#+end_definition
+#+begin_lemma org
+\-
+1. \[ D_n(t) = \frac{\sin \left(n + \frac{1}{2}\right)t}{2\pi\cdot \sin \frac{t}{2}} = \frac{1}{2\pi}\left(\ctg \frac{t}{2}\sin nt + \cos nt\right)\]
+1. \[ \Phi_n(t) = \frac{1}{2\pi(n + 1)}\cdot \frac{\sin^2 \frac{n + 1}{2}t}{\sin^2 \frac{t}{2}} \]
+3. \(D_n, \Phi_n\) --- четные, \(\Phi_n \ge 0\)
+   \[ \int_{-\pi}^\pi D_n = \int_{-\pi}^\pi \Phi_n = 1 \]
+4. \(g \in L^1[-\pi, \pi]\)
+   \[ S_n(f, x) = \int_{-\pi}^\pi f(x + t)D_n(t)\,dt \]
+#+end_lemma
+#+begin_proof org
+\-
+1. \[ 2 \sin \frac{t}{2}\cos kt = \sin \left(k + \frac{1}{2}\right)t - \sin \left(k - \frac{1}{2}\right)t \]
+   Получается телескопическая сумма
+2. Достаточно проверить
+   \[ \sum \sin \left(n + \frac{1}{2}\right)t = \frac{\sin^2 \frac{n + 1}{2}t}{\sin \frac{t}{2}} \]
+   \[ \sum_{k = 0}^n \sin \frac{t}{2}\sin \left(k + \frac{1}{2}\right)t = \frac{1}{2} \sum \cos kt - \cos (k + 1)t = \]
+   \[ \frac{1 - \cos(n + 1)t}{2} = \sin^2 \frac{n + 1}{2}t \]
+3. Очевидно
+4. \[ A_k(f, x) = \left[\begin{matrix}
+   \frac{a_0}{2} & k = 0 \\
+   a_k \cos kx + l_k \sin k x
+   \end{matrix}\right. \]
+      \[ A_k(f, x) = \begin{matrix}
+     \frac{1}{2\pi}\int_{-\pi}^\pi f(x + t)\,dt \\
+     \frac{1}{\pi}\int_{-\pi}^\pi f(x + t)\cos x t \,dt
+   \end{matrix} \]
+   \[ S_n(f, x) = \sum_{k = 0}^n A_k(f, x) = \int_{-\pi}^\pi f(x + t)D_n(t)\,dt \]
+#+end_proof
+#+ATTR_LATEX: :options [принцип локализации Римана]
+#+begin_theorem org
+\-
+- \(f, g \in L^1[-\pi, \pi]\)
+- \(x_0 \in \R\)
+- \(\delta > 0\)
+- \(\forall x \in (x_0 - \delta, x_0 + \delta) \quad f(x) = g(x)\)
+_Тогда_ Ряды Фурье \(f\) и \(g\) ведут себя одинаково в точке \(x_0\):
+\[ S_n(f, x_0) - S_n(g, x_0) \xrightarrow[n \to +\infty]{} 0 \]
+#+end_theorem
+#+begin_remark org
+Переформулировка:
+- \(h \coloneqq f - g \in L^1(-\pi, \pi)\)
+- \(h \equiv 0\) на \(x_0 - \delta, x_0 + \delta\)
+_Тогда_ \(S_n(h, x_0) \to 0\)
+#+end_remark
+#+begin_proof org
+\[ S_n(h, x_0) = \frac{1}{2\pi}\int_{-\pi}^\pi h(x_0 + t)(\ctg \frac{t}{2}\sin nt + \cos nt) \,dt = b_n(h_1) + a_n(h_2)\]
+, где
+\[ h_1(t) = \frac{1}{2}h(x_0 + t) \cdot \ctg \frac{t}{2} \quad h_2(t) = \frac{1}{2}f(x_0 + t) \]
+Это рассуждение верно если \(h_1, h_2 \in L^1[-\pi, \pi]\)
+- Для \(h_2\) --- очевидно
+- Для \(h_1\): \(h_1 \equiv 0\) при \(t \in (-\delta, \delta)\)
+  \[ |h_1(t)| \le |h(x_0 + t)|\cdot \ctg\frac{\delta}{2}\in L^1 \]
+  Тогда \(b_n(h_1) \to 0,\ a_n(h_2) \to 0\) по теореме Римана-Лебега
+#+end_proof
+#+begin_remark org
+\-
+1. Если \([a, b] \subset (x_0 - \delta, x_0 + \delta)\) \\
+   \( S_n(h, x) \rightrightarrows 0 \) на \([a, b]\)
+2. Для определения ряда Фурье нужен весь \([-\pi, \pi]\), а его измерение в точке \(x_0\) зависит от его окрестности
+3. \(f \in L^1 [0, \pi]\) --- можно разложить по \(\sin\) или по \(\cos\). Тогда в точках \((0, \pi)\) эти разложения ведут себя одинаково
+#+end_remark
+#+ATTR_LATEX: :options [признак Дини]
+#+begin_theorem org
+\-
+- \(f \in L^1[-\pi, \pi]\)
+- \(x_0 \in \R\)
+- \(S \in \R\) (или \(\C\))
+Пусть
+\[ \int_0^\pi \frac{|f(x_0 + t) - 2S + f(x_0 - t)|}{t}\,dt < + \infty \addtag\label{13_dini} \]
+_Тогда_ ряд Фурье \(f\) сходится к \(S\) в точке \(x_0\), т.е. \(S_n(f, x_0) \to S\)
+#+end_theorem
+#+begin_proof org
+\[ \varphi(t) \coloneqq f(x_0 + t) - 2S + f(x_0 - t) \]
+\[ S_n(f, x_0) - S = \int_{-\pi}^\pi (f(x_0 + t) -S)D_n(t)\,dt = \int_0^\pi + \int_{-\pi}^0 \dots =  \]
+\[ = \int_0^\pi \varphi(t) D_n(t) = \frac{1}{\pi} \int_0^\pi \frac{1}{2}\varphi(t) \cdot \left(\ctg \frac{t}{2}\sin nt + \cos nt\right) = b_n(h_1) + a_n(h_2) \]
+, где
+\[ h_1 = \left[\begin{matrix}
+  0 & t \in [-\pi, 0] \\
+  \frac{1}{2}\varphi(t)\ctg \frac{t}{2} & t \in [0, \pi]
+\end{matrix}\right. \quad h_2 = \left[\begin{matrix}
+  0 & t \in [-\pi, 0] \\
+  \frac{1}{2}\varphi(t) & t \in [0, \pi]
+\end{matrix}\right. \]
+Доказываемое утверждение следует из теоремы Римана-Лебега, если \(h_1, h_2 \in L^1[-\pi, \pi]\) \\
+\(h_1, h_2 \in L^1[-\pi, \pi]? \) --- да, по формуле \ref{13_dini}
+\[ \ctg \frac{t}{2} = \frac{1}{\tg \frac{t}{2}} < \frac{1}{\frac{t}{2}} = \frac{2}{t} \quad \frac{t}{2} \in \left[0, \frac{\pi}{2}\right] \]
+\[ \int_{-\pi}^\pi |h_1| = \int_0^\pi |h_1| = \frac{1}{2} \int_0^\pi |\varphi(t)| \cdot \ctg \frac{t}{2} < \int_0^\pi \frac{|\varphi(t)|}{t} < +\infty \]
+--- по \ref{13_dini}
+#+end_proof
+#+begin_remark org
+\-
+1. \ref{13_dini} \(\Leftrightarrow \forall \delta > 0 \int_0^\delta \frac{|\varphi(t)|}{t} < +\infty\)
+2. \(f(x) = \frac{1}{\ln |x|}\quad x \in [-\pi, \pi]\) \\
+   \(\forall S\) интеграл \ref{13_dini} расходится (\(x_0 = 0\))
+   \[ s = 0:\ \int_0^\pi \frac{1}{t|\ln(t)|} = +\infty \]
+#+end_remark
+#+NAME: следствие 1 дини
+#+begin_corollary org
+\-
+- \(f \in L^1[-\pi, \pi]\)
+- \(x_0 \in [-\pi, \pi]\)
+Пусть существует четыре конечных предела: \(f(x_0 + 0), f(x_0 - 0)\)
+\[ \alpha_\pm \coloneqq \lim_{t \to \pm 0} \frac{f(x_0 + t) - f(x_0 \pm 0)}{t} \]
+_Тогда_ ряд Фурье \(f\) в точке \(x_0\) сходится к \(S = \frac{1}{2}(f(x_0 + 0) + f(x_0 - 0))\)
+#+end_corollary
+#+begin_proof org
+\[ \frac{\varphi(t)}{t} = \frac{f(x_0 + t) - f(x_0 + 0) + f(x_0 - t) - f(x_0 -0)}{t} \xrightarrow[t \to + 0] \alpha_+ - \alpha_-  \]
+, т.е. \(\frac{\varphi(t)}{t}\) --- ограничена вблизи \(0\) на \([0, \pi] \implies\) по замечанию 1, интеграл \ref{13_dini}
+#+end_proof
+#+begin_corollary org
+\-
+- \(f \in L^1[-\pi, \pi]\)
+- \(f\) --- непрерывна в точке \(x_0\)
+- \(\exists\) конечный односторонние производные в точке \(x_0\) (либо \(f\) дифференцируема в \(x_0\))
+_Тогда_ \(S_n(f, x_0) \to f(x_0)\)
+#+end_corollary
+#+begin_proof org
+Следует из [[следствие 1 дини]]
+#+end_proof
+#+begin_examp org
+\-
+- \(f(x) = x \quad [-\pi, \pi]\)
+- \(a_k(f) = 0\)
+- \(b_k(f) = \frac{2}{\pi}\int_0^\pi t \sin kt = \)
+  \[ = \frac{2}{\pi}t\cdot (-\cos kt)\cdot \frac{1}{k}\big|_0^\pi + \frac{2}{\pi}\int_0^\pi \cos kt = \frac{2}{k}(-1)^{k - 1} \]
+При \(x_0 = \frac{\pi}{2}\):
+\[ \sum (-1)^{k - 1}\cdot \frac{2}{k}\sin kx = 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \dots = \frac{\pi}{4} \]
+При \(x_0 = \pi\) работает [[следствие 1 дини]]
+\[ \sum \dots \sin \pi x = 0 \]
+#+end_examp
+* Свертки и аппроксимативная единица
+#+begin_definition org
+\(f, k \in L^1[-\pi, \pi]\)
+\[ (f * k)(x) = \int_{-\pi}^\pi f(x - t)k(t)\,dt \]
+--- *свертка* функций \(f\) и \(k\)
+#+end_definition
+\beginproperty
+#+begin_property org
+Корректность определения
+\[ g(x, t) = f(x - t)\cdot k(t) \]
+1. Проверим, что \(\varphi(x, y) \coloneqq f(x - t)\) --- измерима как функция \(\R^2 \to \overline{\R}\), тогда и \(g: \R^2 \to \overline{\R}\) --- измерима. Обозначим \(a \in \R\) \(E_a \coloneqq \R(f(x) < a)\)
+   \[ V(\R^2(\varphi < a)) = E_a \times \R \]
+   --- измеримо в \(\R^2\) \implies \(\R^2(\varphi < a)\) --- тоже измеримо в \(\R^2\)
+2. \(g \in L^1([-\pi, \pi]\times [-\pi, \pi])\) ?
+   \[ \iint_{[-\pi, \pi]^2} |g(x, t)| = \int_{-\pi}^\pi \,dt |k(t)| \int_{-\pi}^\pi |f(x - t)|\,dx = \norm{f}_1\cdot \norm{k}_1 \]
+   Тогда по теореме Фубини для интеграла:
+   \[ \int_{-\pi}^\pi\,dx = \int_{-\pi}^\pi f(x - t)k(t)\,dt \]
+   --- при почти всех \(x \in [-\pi, \pi]\) этот интеграл сходится и задает по \(x\) функцию из \(L^1(-\pi, \pi]\), т.е. \(f*k\) определен при почти всех \(x\), \(\in L^1[-\pi, \pi]\)
+#+end_property
+#+begin_property org
+\(f * k = k * f\)
+#+end_property
+#+begin_proof org
+\(t \coloneqq -t\)
+#+end_proof
+#+begin_property org
+\(C_n(f* k) = 2\pi \cdot C_n(f)\cdot C_n(k)\)
+#+end_property
+#+begin_proof org
+\[ 2\pi C_n(f * k) = \int_{-\pi}^\pi \int_{-\pi}^\pi f(x - t)k(t)\cdot e^{-inx} \,dt\,dx = \]
+\[ = \int_{-\pi}^\pi k(t) e^{-int}\int_{-\pi}^\pi f(x - t)e^{-in(x - t)}\,dx\,dt = 2\pi C_n(f)\cdot 2\pi C_n(k) \]
+#+end_proof
+#+begin_property org
+\-
+- \(f \in L^p[-\pi, \pi]\)
+- \(k \in L^q[-\pi, \pi]\)
+- \(\frac{1}{p} + \frac{1}{q} = 1 \quad 1 \le p \le +\infty\)
+_Тогда_ \(f*k\) --- непрерывная функция и \(\norm{f * k}_\infty \le \norm{k}_q \cdot \norm{f}_p\)
+#+end_property
+#+begin_proof org
+Неравенство очевидно --- это неравенство Гельдера
+\[ \left| \int_{-\pi}^\pi f(x - t)k(t)\,dt \right| \le \int_{-\pi}^\pi |f(x - t)|\cdot |k(t)| \,dt \le \]
+\[ \le \left( \int_{-\pi}^\pi |f(x - t)|^p \right)^{\frac{1}{p}} \cdot \left( \int_{-\pi}^\pi |k(t)|^1 \right)^{\frac{1}{q}} = \norm{f}_p \cdot \norm{k}_q \]
+Непрерывность:
+\[ | f*k(x + h) - f*k(x)| = \left|\int_{-\pi}^\pi \left(f(x + h - t) - f(x - t)\right)k(t)\,dt\right| \le \norm{k}_q\cdot \norm{f_h(x) - f(x)}_p \]
+#+end_proof
+#+begin_property org
+\-
+- \(f \in L^p[-\pi, \pi] \quad 1 \le p \le +\infty\)
+- \(k \in L^1[-\pi, \pi]\)
+_Тогда_ \(f*k \in L^p[-\pi, \pi]\)
+\[ \norm{f*k}_p \le \norm{k}_1\cdot \norm{f}_p \]
+#+end_property
+
