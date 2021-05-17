@@ -10,3 +10,7 @@
 5. See prev
 6. See prev
 7. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/concurrent/][IterativeParallelism]]
+8. See prev
+9. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/crawler/][Web Crawler]]
+10. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/hello/][Hello UDP]]
+11. [[file:hws/java-solutions/info/kgeorgiy/ja/yaroshevskij/bank/][Bank]]
