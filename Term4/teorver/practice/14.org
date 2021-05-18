@@ -1,0 +1,28 @@
+#+TITLE: Практика 14
+#+SETUPFILE: setup.org
+
+|                   / |   < |      |      |
+| \diagbox{\eta}{\xi} |  -2 |    0 |    2 |
+|---------------------+-----+------+------|
+|                   1 | 0.2 | 0.05 |    0 |
+|                   2 | 0.1 |  0.3 | 0.05 |
+|                   3 |   0 |  0.1 |  0.2 |
+\todo
+#+begin_task org
+Независимые случайные величины \(\xi, \eta\) имеют одинаковые распределения. Найти коэффицент их корреляции случайных величин \(\xi + \eta\) и \(\xi - \eta\)
+#+end_task
+#+begin_solution org
+\[ r (\xi + \eta, \xi - \eta) = \frac{E((\xi + \eta)(\xi - \eta)) - E(\xi + \eta)\cdot E(\xi - \eta)}{\sqrt{D(\xi + \eta)}\cdot\sqrt(D(\xi - \eta))} = \frac{E\xi^2 - E\xi^2}{2D\xi} = 0 \]
+#+end_solution
+#+begin_task org
+Веротяность попадания стрелка в цель --- 0.5. Найти среднее значение попаданий
+#+end_task
+#+begin_solution org
+\[ E\xi = E(E(\xi | \eta)) =  \sum_{n = 1}^6 E(\xi | \eta = n)\cdot p(\eta = n) = \frac{1}{6}\cdot 0.5 \cdot 1 + \frac{1}{6}\cdot 0.5 \cdot 2 + \dots = \frac{7}{4} \]
+, (\xi) --- число попаданий, \(\eta\) --- число очков 
+| /    | <           |             |             |             |             |             |
+| \eta |           1 |           2 |           3 |           4 |           5 |           6 |
+|------+-------------+-------------+-------------+-------------+-------------+-------------|
+| \xi  | \(\(\frac{1}{6}\)\) | \(\frac{1}{6}\) | \(\frac{1}{6}\) | \(\frac{1}{6}\) | \(\frac{1}{6}\) | \(\frac{1}{6}\) |
+\[ E(\xi | eta = n) \in B_{n, p} \quad p =0.5 \quad E(E(\xi | e\ta = n)) = np = 0.5 n \]
+#+end_solution
