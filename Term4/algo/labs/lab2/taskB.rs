@@ -4,6 +4,7 @@ use std::cmp::{min,max};
 use std::io::{BufWriter, stdin, stdout, Write, BufRead, BufReader};
 use std::iter;
 use std::ops;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 const FILENAME: &str = "filename";
 const IS_FILES: bool = false;
@@ -25,136 +26,137 @@ impl Scanner {
     }
 
     fn new(reader: Box<dyn BufRead>) -> Scanner {
-	Scanner {
-	    buffer: vec![],
-	    reader
-	}
+        Scanner {
+            buffer: vec![],
+            reader
+        }
     }
 }
 
 //================================ CODE BEGIN ===============================================
 
-const INF: i64 = 100_000;
 
-#[derive(Clone, Copy)]
-struct Edge {
-    c: i64,
-    from: usize,
-    to: usize,
-    f: i64,
-    rev: usize,
-    id: usize
+fn xorshift(n: i64) -> i64 {
+    let mut x: i64 = n;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    if x < 0 { -x } else { x }
 }
 
-struct State<'a> {
-    g: &'a Vec<Vec<usize>>,
-    edges: &'a mut Vec<Edge>,
-    t: usize,
-    s: usize
+fn rand() -> i64 {
+    xorshift(SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .subsec_nanos() as i64)
 }
 
-fn dfs(v: usize, p: i64, was: &mut [bool], state: &mut State) -> i64 {
-    if v == state.t {
-	return p;
+fn gcd(a: i64, b: i64) -> i64 {
+    if b == 0 {
+	return a;
+    } else {
+	return gcd(b, a % b);
     }
-    was[v] = true;
-    for i in state.g[v].iter().cloned() {
-	let e: Edge = state.edges[i];
-	if !was[e.to] && e.f < e.c {
-	    let delta = dfs(e.to, min(p, e.c - e.f), was, state);
-	    if delta > 0 {
-		state.edges[i].f += delta;
-		state.edges[e.rev].f -= delta;
-		return delta;
+}
+
+fn modmul(a: i64, b: i64, m:i64) -> i64 {
+    (((a as i128) * (b as i128)) % (m as i128)) as i64
+}
+
+fn pow(n: i64, k: i64, m: i64) -> i64 {
+    if m == 0 {
+	return 1;
+    }
+    let mut b: i64 = 1;
+    let mut k = k;
+    let mut n = n % m;
+    while k > 1 {
+	if k % 2 == 0 {
+	    n = modmul(n, n, m);
+	    k /= 2;
+	} else {
+	    b = modmul(b, n, m);
+	    k -= 1;
+	}
+    }
+    return modmul(b, n, m);
+}
+
+fn div2cnt(n: i64) -> (i64, i64) {
+    let mut res = 0;
+    let mut n = n;
+    while n % 2 == 0 {
+	res += 1;
+	n /= 2;
+    }
+    return (res, n);
+}
+
+fn prime_test(n: i64) -> bool {
+    if n == 1 {
+	return false;
+    }
+    if n == 2 {
+	return true;
+    }
+    for i in 0..10 {
+	let a = xorshift(!i) % (n - 2) + 2;
+	if gcd(a, n) != 1 {
+	    return false;
+	}
+	let (c, mut y) = div2cnt(n - 1);
+	let mut a = pow(a, y, n);
+	let mut ok = true;
+	for _ in 0..c {
+	    if a != 1 {
+		ok = a == n - 1;
 	    }
+	    a = modmul(a, a, n);
 	}
-    }
-    return 0;
-}
-
-fn ford(state: &mut State) -> i64 {
-    let mut was: Vec<bool> = vec![false; state.g.len()];
-    while dfs(state.s, INF, &mut was, state) > 0 {
-	for i in 0..state.g.len() {
-	    was[i] = false;
+	if(!ok) {
+	    return false;
 	}
-    }
-    let mut res: i64  = 0;
-    for i in state.g[state.s].iter().cloned() {
-	res += state.edges[i].f.abs();
-    }
-    return res;
-}
-
-fn reachable(u: usize, was: &mut [bool], state: &State) {
-    // if u == state.t {
-    // 	return;
-    // }
-    was[u] = true;
-    for i in state.g[u].iter().cloned() {
-	if !was[state.edges[i].to] && state.edges[i].f < state.edges[i].c {
-	    reachable(state.edges[i].to, was, state);
-	}
-    }
+    } 
+    return true;
 }
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-
-    let n = scan.next::<usize>();
-    let m = scan.next::<usize>();
-    let mut g: Vec<Vec<usize>> = vec![Vec::new(); n];
-    let mut es: Vec<Edge> = Vec::new();
-    for i in 0..m {
-	let a = scan.next::<usize>() - 1;
-	let b = scan.next::<usize>() - 1;
-	let c = scan.next::<i64>();
-	g[a].push(es.len());
-	es.push(Edge { c, from: a, to: b, f: 0, rev: es.len() + 1, id: i });
-	g[b].push(es.len());
-	es.push(Edge { c, from: b, to: a, f: 0, rev: es.len() - 1, id: i });
-    }
-    let mut state = State { g: &g, edges: &mut es, t: n - 1, s: 0 };
-    let res = ford(&mut state);
-    let mut was = vec![false; n];
-    let mut cut = Vec::new();
-    reachable(state.s, &mut was, &state);
-    for e in state.edges.iter().step_by(2) {
-	if was[e.from] != was[e.to] {
-	    cut.push(e.id)
+    let n = scan.next::<i64>();
+    for _ in 0..n {
+	let m = scan.next::<i64>();
+	if prime_test(m) {
+	    writeln!(out, "YES").ok();
+	} else {
+	    writeln!(out, "NO").ok();
 	}
     }
-    writeln!(out, "{} {}", cut.len(), res).ok();
-    for id in cut {
-	write!(out, "{} ", id + 1).ok();
-    }
-    writeln!(out, "").ok();
 }
 
 //================================ CODE END =================================================
 
 fn main() {
-    
+
     let mut local = false;
     for arg in std::env::args() {
-	if arg == "LOCAL" {
-	    local = true;
-	}
+        if arg == "LOCAL" {
+            local = true;
+        }
     }
     if local {
-	let mut scan = Scanner::new(Box::new(BufReader::new(std::fs::File::open("local.in").expect("Cannot open local.in"))));
-	let mut out = &mut BufWriter::new(std::fs::File::create("local.out").expect("Cannot open local.out"));
-	let now = std::time::Instant::now();
-	sol(&mut scan, &mut out);
-	writeln!(out, "{}ms", now.elapsed().as_millis()).ok();
+        let mut scan = Scanner::new(Box::new(BufReader::new(std::fs::File::open("local.in").expect("Cannot open local.in"))));
+        let mut out = &mut BufWriter::new(std::fs::File::create("local.out").expect("Cannot open local.out"));
+        let now = std::time::Instant::now();
+        sol(&mut scan, &mut out);
+        writeln!(out, "{}ms", now.elapsed().as_millis()).ok();
     } else {
-	if IS_FILES {
-	    let mut scan = Scanner::new(Box::new(BufReader::new(std::fs::File::open(FILENAME.to_owned() + ".in").expect("Cannot open remote input"))));
-	    let mut out = &mut BufWriter::new(std::fs::File::create(FILENAME.to_owned() + ".out").expect("Cannot open remote output"));
-	    sol(&mut scan, &mut out);
-	} else {
-	    let mut scan = Scanner::new(Box::new(BufReader::new(stdin())));
-	    let mut out = &mut BufWriter::new(stdout());
-	    sol(&mut scan, &mut out);
-	}
+        if IS_FILES {
+            let mut scan = Scanner::new(Box::new(BufReader::new(std::fs::File::open(FILENAME.to_owned() + ".in").expect("Cannot open remote input"))));
+            let mut out = &mut BufWriter::new(std::fs::File::create(FILENAME.to_owned() + ".out").expect("Cannot open remote output"));
+            sol(&mut scan, &mut out);
+        } else {
+            let mut scan = Scanner::new(Box::new(BufReader::new(stdin())));
+            let mut out = &mut BufWriter::new(stdout());
+            sol(&mut scan, &mut out);
+        }
     }
 }
