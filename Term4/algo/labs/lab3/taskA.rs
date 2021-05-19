@@ -4,7 +4,6 @@ use std::cmp::{min,max};
 use std::io::{BufWriter, stdin, stdout, Write, BufRead, BufReader};
 use std::iter;
 use std::ops;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 const FILENAME: &str = "filename";
 const IS_FILES: bool = false;
@@ -35,64 +34,21 @@ impl Scanner {
 
 //================================ CODE BEGIN ===============================================
 
-
-fn gcdext(a: i64, b: i64) -> (i64, i64, i64) {
-    if a == 0 {
-	return (b, 0, 1);
-    }
-    let (d, x, y) = gcdext(b % a, a);
-    (d, y - (b / a) * x, x)
-}
-
-fn solve_eq(a: i64, b: i64, c: i64) -> Option<(i64, i64)> {
-    let (mut d, x, y) = gcdext(a, b);
-    if c % d != 0 {
-	return None;
-    }
-    return Some((x * (c / d), y * (c / d)));
-}
-fn modmul(a: i64, b: i64, m:i64) -> i64 {
-    (((a as i128) * (b as i128)) % (m as i128)) as i64
-}
-
-fn pow(n: i64, k: i64, m: i64) -> i64 {
-    if m == 0 {
-	return 1;
-    }
-    let mut b: i64 = 1;
-    let mut k = k;
-    let mut n = n % m;
-    while k > 1 {
-	if k % 2 == 0 {
-	    n = modmul(n, n, m);
-	    k /= 2;
-	} else {
-	    b = modmul(b, n, m);
-	    k -= 1;
-	}
-    }
-    return modmul(b, n, m);
-}
-
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-    let mut n = scan.next::<i64>();
-    let mut e = scan.next::<i64>();
-    let mut c = scan.next::<i64>();
-    let mut p = 2;
+    let mut n: i64 = scan.next();
     let m = (n as f64).sqrt().floor() as i64;
-    while p <= m {
-	if n % p == 0 {
-	    break;
-	}
-	p += 1;
+    let mut i: i64 = 2;
+    while i <= m {
+        if n % i == 0 {
+            print!("{} ", i);
+            n /= i;
+        } else {
+            i += 1;
+        }
     }
-    let q = n / p;
-    let mut d = 1;
-    while (e * d) % ((p - 1)*(q - 1)) != 1 {
-	d += 1;
-    }
-    let m = pow(c, d, n);
-    writeln!(out, "{}", m).ok();
+    if n != 1 {
+        print!("{}", n);
+    }   
 }
 
 //================================ CODE END =================================================
