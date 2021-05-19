@@ -36,98 +36,44 @@ impl Scanner {
 //================================ CODE BEGIN ===============================================
 
 
-fn xorshift(n: i64) -> i64 {
-    let mut x: i64 = n;
-    x ^= x << 13;
-    x ^= x >> 17;
-    x ^= x << 5;
-    if x < 0 { -x } else { x }
+fn gcdext(a: i64, b: i64) -> (i64, i64, i64) {
+    if a == 0 {
+	return (b, 0, 1);
+    }
+    let (d, x, y) = gcdext(b % a, a);
+    (d, y - (b / a) * x, x)
 }
 
-fn rand() -> i64 {
-    xorshift(SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .subsec_nanos() as i64)
-}
-
-fn gcd(a: i64, b: i64) -> i64 {
-    if b == 0 {
-	return a;
-    } else {
-	return gcd(b, a % b);
+fn solve_eq(a: i64, b: i64, c: i64) -> Option<(i64, i64)> {
+    let (mut d, x, y) = gcdext(a, b);
+    if c % d != 0 {
+	return None;
     }
-}
-
-fn modmul(a: i64, b: i64, m:i64) -> i64 {
-    (((a as i128) * (b as i128)) % (m as i128)) as i64
-}
-
-fn pow(n: i64, k: i64, m: i64) -> i64 {
-    if m == 0 {
-	return 1;
-    }
-    let mut b: i64 = 1;
-    let mut k = k;
-    let mut n = n % m;
-    while k > 1 {
-	if k % 2 == 0 {
-	    n = modmul(n, n, m);
-	    k /= 2;
-	} else {
-	    b = modmul(b, n, m);
-	    k -= 1;
-	}
-    }
-    return modmul(b, n, m);
-}
-
-fn div2cnt(n: i64) -> (i64, i64) {
-    let mut res = 0;
-    let mut n = n;
-    while n % 2 == 0 {
-	res += 1;
-	n /= 2;
-    }
-    return (res, n);
-}
-
-fn prime_test(n: i64) -> bool {
-    if n == 1 {
-	return false;
-    }
-    if n == 2 {
-	return true;
-    }
-    for i in 0..10 {
-	let a = xorshift(!i) % (n - 2) + 2;
-	if gcd(a, n) != 1 {
-	    return false;
-	}
-	let (c, mut y) = div2cnt(n - 1);
-	let mut a = pow(a, y, n);
-	let mut ok = true;
-	for _ in 0..c {
-	    if a != 1 {
-		ok = a == n - 1;
-	    }
-	    a = modmul(a, a, n);
-	}
-	if(!ok) {
-	    return false;
-	}
-    } 
-    return true;
+    return Some((x * (c / d), y * (c / d)));
 }
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-    let n = scan.next::<i64>();
-    for _ in 0..n {
-	let m = scan.next::<i64>();
-	if prime_test(m) {
-	    writeln!(out, "YES").ok();
-	} else {
-	    writeln!(out, "NO").ok();
+    let mut a = scan.next::<i64>();
+    let mut b = scan.next::<i64>();
+    let mut n = scan.next::<i64>();
+    let mut m = scan.next::<i64>();
+    // let (a1, b1, c1) = (-m, n, b - a);
+    // if let Some((x, y)) = solve_eq(a1, b1, c1) {
+    // 	// println!("{}⋅x + {}⋅y = {} ⇔ x = {}, y = {}", a1, b1, c1, x, y);
+    // 	assert_eq!(a + y*n, b + x*m);
+    // 	writeln!(out, "{}", (a + y*n + m*n) % (m * n)).ok();
+    // } else {
+    // 	unreachable!("Hmmm....");
+    // }
+    if n < m {
+	std::mem::swap(&mut a, &mut b);
+	std::mem::swap(&mut n, &mut m);
+    }
+    for y in 0..n {
+	let x = a + y * n;
+	if x % m == b {
+	    writeln!(out, "{}", x).ok();
+	    return;
 	}
     }
 }
