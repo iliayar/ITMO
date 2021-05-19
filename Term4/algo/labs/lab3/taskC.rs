@@ -51,48 +51,31 @@ fn solve_eq(a: i64, b: i64, c: i64) -> Option<(i64, i64)> {
     }
     return Some((x * (c / d), y * (c / d)));
 }
-fn modmul(a: i64, b: i64, m:i64) -> i64 {
-    (((a as i128) * (b as i128)) % (m as i128)) as i64
-}
-
-fn pow(n: i64, k: i64, m: i64) -> i64 {
-    if m == 0 {
-	return 1;
-    }
-    let mut b: i64 = 1;
-    let mut k = k;
-    let mut n = n % m;
-    while k > 1 {
-	if k % 2 == 0 {
-	    n = modmul(n, n, m);
-	    k /= 2;
-	} else {
-	    b = modmul(b, n, m);
-	    k -= 1;
-	}
-    }
-    return modmul(b, n, m);
-}
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
+    let mut a = scan.next::<i64>();
+    let mut b = scan.next::<i64>();
     let mut n = scan.next::<i64>();
-    let mut e = scan.next::<i64>();
-    let mut c = scan.next::<i64>();
-    let mut p = 2;
-    let m = (n as f64).sqrt().floor() as i64;
-    while p <= m {
-	if n % p == 0 {
-	    break;
+    let mut m = scan.next::<i64>();
+    // let (a1, b1, c1) = (-m, n, b - a);
+    // if let Some((x, y)) = solve_eq(a1, b1, c1) {
+    // 	// println!("{}⋅x + {}⋅y = {} ⇔ x = {}, y = {}", a1, b1, c1, x, y);
+    // 	assert_eq!(a + y*n, b + x*m);
+    // 	writeln!(out, "{}", (a + y*n + m*n) % (m * n)).ok();
+    // } else {
+    // 	unreachable!("Hmmm....");
+    // }
+    if n < m {
+	std::mem::swap(&mut a, &mut b);
+	std::mem::swap(&mut n, &mut m);
+    }
+    for y in 0..n {
+	let x = a + y * n;
+	if x % m == b {
+	    writeln!(out, "{}", x).ok();
+	    return;
 	}
-	p += 1;
     }
-    let q = n / p;
-    let mut d = 1;
-    while (e * d) % ((p - 1)*(q - 1)) != 1 {
-	d += 1;
-    }
-    let m = pow(c, d, n);
-    writeln!(out, "{}", m).ok();
 }
 
 //================================ CODE END =================================================
