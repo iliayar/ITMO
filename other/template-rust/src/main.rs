@@ -5,6 +5,7 @@ use std::io::{BufWriter, stdin, stdout, Write, BufRead, BufReader};
 use std::iter;
 use std::ops;
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::f64::consts::{PI};
 
 const FILENAME: &str = "filename";
 const IS_FILES: bool = false;
@@ -35,73 +36,137 @@ impl Scanner {
 
 //================================ CODE BEGIN ===============================================
 
-
-fn gcdext(a: i64, b: i64) -> (i64, i64, i64) {
-    if a == 0 {
-	return (b, 0, 1);
-    }
-    let (d, x, y) = gcdext(b % a, a);
-    (d, y - (b / a) * x, x)
+#[derive(Clone, Copy, Debug)]
+struct Comp {
+    re: f64,
+    im: f64,
 }
 
-fn solve_eq(a: i64, b: i64, c: i64) -> Option<(i64, i64)> {
-    let (d, mut x, mut y) = gcdext(a.abs(), b.abs());
-    if c % d != 0 {
-	return None;
+impl Comp {
+    fn from_exp(x: f64) -> Comp {
+	Comp { re: x.cos(), im: x.sin() }
     }
-    if a < 0 {
-	x *= - 1;
-    }
-    if b < 0 {
-	y *= -1;
-    }
-    return Some((x * (c / d), y * (c / d)));
-}
-fn modmul(a: i64, b: i64, m:i64) -> i64 {
-    (((a as i128) * (b as i128)) % (m as i128)) as i64
-}
 
-fn pow(n: i64, k: i64, m: i64) -> i64 {
-    if m == 0 {
-	return 1;
-    }
-    let mut b: i64 = 1;
-    let mut k = k;
-    let mut n = n % m;
-    while k > 1 {
-	if k % 2 == 0 {
-	    n = modmul(n, n, m);
-	    k /= 2;
-	} else {
-	    b = modmul(b, n, m);
-	    k -= 1;
+    fn pow(&self, k: usize) -> Comp {
+	let mut b: Comp = Comp::from(1f64);
+	if k == 0 {
+	    return b;
 	}
+	let mut k = k;
+	let mut n = self.clone();
+	while k > 1 {
+	    if k % 2 == 0 {
+		n = n * n;
+		k /= 2;
+	    } else {
+		b = b * n;
+		k -= 1;
+	    }
+	}
+	return b * n;
     }
-    return modmul(b, n, m);
 }
+
+impl From<f64> for Comp {
+    fn from(x: f64) -> Self {
+	Comp { re: x as f64, im: 0 as f64 }
+    }
+}
+
+impl std::ops::Add<&Comp> for &Comp {
+    type Output = Comp;
+
+    fn add(self, rhs: &Comp) -> Self::Output {
+	Comp { re: self.re + rhs.re, im: self.im + rhs.im }
+    }
+}
+
+impl std::ops::Mul<&Comp> for &Comp {
+    type Output = Comp;
+
+    fn mul(self, rhs: &Comp) -> Self::Output {
+	Comp { re: self.re*rhs.re - self.im*rhs.im, im: self.re*rhs.im + self.im*rhs.re }
+    }
+}
+
+impl std::ops::Add<Comp> for Comp {
+    type Output = Comp;
+
+    fn add(self, rhs: Comp) -> Self::Output {
+	&self + &rhs
+    }
+}
+
+impl std::ops::Mul<Comp> for Comp {
+    type Output = Comp;
+
+    fn mul(self, rhs: Comp) -> Self::Output {
+	&self * &rhs
+    }
+}
+
+fn fft(p: &[Comp], inv: bool) -> Vec<Comp>{
+    let n = p.len();
+    let w = Comp::from_exp(if inv { -1f64 } else { 1f64 } * 2f64*PI/(n as f64));
+    if n == 1 {
+	return vec![p[0]];
+    }
+    let p0: Vec<Comp> = p.iter().cloned().step_by(2).collect();
+    let p1: Vec<Comp> = p.iter().cloned().skip(1).step_by(2).collect();
+    let f = fft(&p0, inv);
+    let g = fft(&p1, inv);
+    // println!("DBG: n = {:?}, f = {:?}, g = {:?}", n, f , g);
+    let mut a: Vec<Comp> = Vec::new();
+    for i in 0..n {
+	a.push(f[i % (n / 2)] + w.pow(i) * g[i % (n/2)]);
+	// println!("DBG: i = {}, a = {:?}", i, a);
+    }
+    return a;
+}
+
+fn furie(p: &[i64], q: &[i64]) -> Vec<i64> {
+    let p: Vec<Comp> = p.iter().cloned().map(|e| Comp::from(e as f64)).collect();
+    let q: Vec<Comp> = q.iter().cloned().map(|e| Comp::from(e as f64)).collect();
+    let a = fft(&p, false);
+    // println!("DBG: a = {:?}", a);
+    let b = fft(&q, false);
+    // println!("DBG: b = {:?}", b);
+    let c: Vec<Comp> = a.iter().zip(b.iter()).map(|(l, r)| l*r).collect();
+    let res = fft(&c, true);
+    return res.iter().cloned().map(|c| (c.re/ (p.len() as f64)).round() as i64).collect();
+}
+
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-    let n = scan.next::<i64>();
-    let e = scan.next::<i64>();
-    let c = scan.next::<i64>();
-    let mut p = 2;
-    let m = (n as f64).sqrt().floor() as i64;
-    while p <= m {
-	if n % p == 0 {
-	    break;
+    let s = scan.next::<String>();
+    let t = s.as_bytes();
+    let mut m = t.len();
+    let mut k: u32 = 0;
+    while m > 0 {
+	k += 1;
+	m /= 2;
+    }
+    // let w = Comp::from_exp(2f64*PI/(2i64.pow(k) as f64));
+    // println!("w = {:?}", w);
+    // for i in 0..2usize.pow(k) {
+    // 	println!("w^{:?} = {:?}", i, w.pow(i));
+    // }
+    let p: Vec<i64> = t.iter().map(|e| (*e - b'0') as i64).chain(iter::repeat(0)).take((2 as usize).pow(k + 1)).collect();
+    // let p: Vec<i64> = (0..n).map(|_| scan.next::<i64>()).collect();
+    // let q: Vec<i64> = (0..n).map(|_| scan.next::<i64>()).collect();
+    // p.reverse(); q.reverse();
+    let res = furie(&p, &p);
+    let mut sum: i64 = 0;
+    for (r, c) in res.iter().step_by(2).zip(t.iter()) {
+	if *c == b'1' {
+	    sum += r / 2;
 	}
-	p += 1;
     }
-    let q = n / p;
-    assert_eq!(n, p * q);
-    if let Some((mut d, _)) = solve_eq(e, -(p - 1)*(q - 1), 1) {
-	d = ((p - 1)*(q - 1) + d) % ((p - 1)*(q - 1));
-	assert_eq!(modmul(e, d.abs(), (p - 1)*(q - 1)), 1);
-	let m = pow(c, d.abs(), n);
-	writeln!(out, "{}", m).ok();
-    } else {
-	unreachable!("Oopss....");
-    }
+    writeln!(out, "{}", sum).ok(); // 🤔
+    // for r in res.iter().take(2*(n - 1) + 1) {
+    // 	write!(out, "{} ", r).ok();
+    // }
+    // writeln!(out, "").ok();
 }
 
 //================================ CODE END =================================================
