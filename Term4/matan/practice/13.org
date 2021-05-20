@@ -1,0 +1,77 @@
+#+LATEX_CLASS: general
+#+TITLE: Практика 12
+#+AUTHOR: Ilya Yaroshevskiy
+
+* Формула Стокса
+\[ \iint A \cos \alplha + B \cos \beta + C \cos \gamma \,ds = \iint \pair{ \begin{pmatrix}
+  A \\ B \\ C
+\end{pmatrix}, n_0 } \,ds = \]
+\[ = \iint_S \begin{vmatrix}
+  \cos \alpha & \cos \beta & \cos \gamma \\
+  \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+  P & Q & R
+\end{vmatrix} \]
+
+#+begin_task org
+\[ \int_C y\,dx + z\,dy + x\,dz \]
+Окружность \(x^2 + y^2 + z^2 = 1\)
+#+end_task
+#+begin_solution org
+\[ I = \iint -\,dy\,dz - \,dz\,dx - \,dx\,dy = -\sqrt{3}\iint_{?}ds \]
+#+end_solution
+#+ATTR_LATEX: :options [4372]
+#+begin_task org
+\[ \int_C (y^2 + z^2)\,dx + (x^2 + z^2)\,dy + (x^2 + y^2)\,dz \]
+\(C\) --- кривая \(x^2 + y^2 + z^2 = 2Rx\), \(x^2 + y^2 = 2rx\ (0 < r < R,\ z > 0)\)
+#+end_task
+#+begin_solution org
+Забавное замечание
+\[ I = \int_C (x^2 + y^2 + z^2)\,dx + (x^2 + y^2 + z^2)\,dy + (x^2 + y^2 + z^2)\,dz = \]
+\[ = \int_C 2Rx \,dx + 2Rx\,dy + 2Rx\,dz \]
+#+end_solution
+#+ATTR_LATEX: :options [4323]
+#+begin_task org
+в \(R^2\)
+\[ \int_C \cos(\vec{l}, \vec{n})\,ds = 0 \]
+#+end_task
+#+begin_solution org
+\color{blue}
+\[ x(t)\ y(t) \quad \tau = \begin{pmatrix} x' \\ y' \end{pmatrix} \]
+\[ \int A\,dx + B\,dy = \omt A x' + B y' \,dt = \int\limits_{\substack{\text{против} \\ \text{ч.с.}}} A(x, y)\,dx + B(x, y)\,dy = \iint - A'_y + B'_x \,dx\,dy \]
+\color{black}
+\[ I = \pm \int l_1 \cdot \frac{y'}{\sqrt{x'^2 + y'^2}} - l_2 \frac{x'}{\sqrt{x'^2 + y'^2}}\,ds = \pm \int_{t_0}^{t_1} l_1 y' - l_2 x' \,dt =  \]
+, где \(|\vec{l}| = 1\), \color{blue}натуральная параметризация\color{black}
+\[ = \pm \int -l_2 \,dx + l_1\,dy = 0 \]
+#+end_solution
+#+ATTR_LATEX: :options [4324]
+#+begin_task org
+\[ \int_C x \cos(\vec{n}, x) + y \cos(\vec{n}, y)\,ds \]
+#+end_task
+#+begin_solution org
+\[ I = \int_C - y\,dx + x\,dy + 2 \iint \,dx\,dy = 2 S \]
+#+end_solution
+#+ATTR_LATEX: :options [4391]
+#+begin_task org
+\[ \iiint_V \frac{d\xi d\eta d\zeta}{r} = \frac{1}{2}\iint_S \cos(\vec{r}, \vec{n_0})\,ds \]
+\[ \vec{r} = (\xi - x, \eta - y, \zeta - z) \]
+#+end_task
+#+begin_solution org
+\[ I = \frac{1}{2} \iint \pair{\frac{1}{r}\cdot \begin{pmatrix} \xi - x \\ \eta - y \\ \zeta - z \end{pmatrix}, n_0} \,ds = \frac{1}{2} \iiint \]
+\[ = \frac{1}{2} \iint \frac{\xi -x}{2}\,d\eta\,d\xi + \frac{\eta - y}{2}\,d\xi\,d\zeta + \frac{\zeta - z}{2}\,d\xi\,d\eta \]
+
+#+end_solution
+#+ATTR_LATEX: :options [4392]
+#+begin_task org
+\[ \iint \frac{\cos{\vec{r}, \vec{n}}}{r^2}\,ds \]
+#+end_task
+#+begin_solution org
+\[ I = \iint_C \frac{\xi -x}{r^3}\,d\eta\,d\zeta + \frac{\eta - y}{r^3}\,d\xi\,d\zeta + \frac{\zeta - z}{r^3}\,d\xi,d\eta =  \]
+\[ = \iiint \left(\frac{1}{r^3} - 3\cdot \frac{(\xi -x)^2}{r^3}\right) + B'\eta + C'\zeta \,d\xi\,d\eta\,d\zeta = 0 \addtag\label{13_1} \]
+\ref{13_1} это формул Остроградского
+#+end_solution
+
+#+ATTR_LATEX: :options [4393]
+#+begin_task org
+\[ \iint_S \frac{\partial u}{\partial n} = \iiint \Delta u\,dx\,dy\,dz \quad \Delta u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} \]
+
+#+end_task
