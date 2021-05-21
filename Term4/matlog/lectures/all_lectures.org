@@ -26,3 +26,5 @@
 #+include: "11.org" :lines "4-"
 * Лекция 12
 #+include: "12.org" :lines "4-"
+* Лекция 13
+#+include: "13.org" :lines "4-"
