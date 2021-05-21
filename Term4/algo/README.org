@@ -10,5 +10,6 @@
   [[file:labs/lab1/statements.pdf][Statements]]
 - [[file:labs/lab2/][Flow, Mincost]] \\
   [[file:labs/lab2/statements.pdf][Statements]]
-  
+- [[file:labs/lab3/][Math]] \\
+  [[file:labs/lab3/statements.pdf][Statements]]  
 
