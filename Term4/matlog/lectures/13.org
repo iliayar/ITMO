@@ -1,0 +1,77 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 13
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
+
+* Аксиома выбора
+#+ATTR_LATEX: :options {\bf Аксиома 8.}
+#+begin_axiom* org
+На любом семействе множеств можно определить функцию \( f: S \to A_S \), которая по множеству возвращает его элемент
+#+end_axiom*
+#+begin_examp org
+\-
+- Любое множество можно вполне упорядочить
+- Для любой сюрьективной функции \(f: A \to B\), найдется частично обратная \(g: B \to A\), \(g(f(x)) = x\)
+#+end_examp
+#+begin_definition org
+*Дизъюнктное множество* --- семейство непересекающихся множеств
+\[ D(y):\ \forall p.\forall q. p \in y \& q \in y \to p \cup q = \varnothing \]
+#+end_definition
+#+begin_definition org
+*Прямое произведение* дизъюнктного множества
+\[ XS = \{t \big| \forall p. p \in S \leftrightarrow \exists ! c. c \in p \& c \in t\} \]
+#+end_definition
+\noindent
+#+ATTR_LATEX: :options {\bf Аксиома 8.}
+#+begin_axiom* org
+Если \(D(y)\& \forall t. t \in y \to t \neq \varnothing\), то \(xy \neq \varnothing\)
+#+end_axiom*
+#+ATTR_LATEX: :options [Диаконеску]
+#+begin_theorem org
+Рассморим \(ZF\) ?? ИИП. Если доваите аксиому выбора то \(\vdash \alpha \lor \lnot \alpha\)
+#+end_theorem
+* Аксиома фундирования
+\noindent
+#+ATTR_LATEX: :options {\bf Аксиома 9.} 
+#+begin_axiom* org
+\[ \forall x. x = \varnothing \lor \exists y. y \in x \& y \cup x = \varnothing \]
+В каждом непустом множестве есть элемент, не пересекающийся с ним
+#+end_axiom*
+\noindent
+#+ATTR_LATEX: :options {\bf Аксиома 10.}
+* Схема аксиом подстановки
+#+begin_axiom* org
+\(S\) --- множество, \(f\) --- функция, то \(f(S)\) --- множество, т.е. существует формула \(\varphi(x, y)\):
+\[\forall x \in S. \exists ! y. \varphi(x, y)\]
+#+end_axiom*
+\[ f(x) = \begin{cases} {x} & p(x) \\ \varnothing & \neg p(x) \end{cases} \]
+\[ \{x \in S | p(x)\} = \cup f(S) \]
+* Мощность множества
+#+begin_definition org
+*Равномощность* \(|a| = |b|\), если существует биекция \(a \to b\)
+#+end_definition
+#+begin_definition org
+*Кардинальное число* \(t\) --- ординал \(x\): для всех \(y \in x\): \(|y| \neq |x|\)
+#+end_definition
+#+begin_definition org
+Мощность множества \(|x|\) --- такое кардинальное число \(t\), что \(|t| = |x|\)
+#+end_definition
+#+begin_lemma org
+\(a, b\) --- кардиналы и \(|a| = |b|\), то \(a = b\)
+#+end_lemma
+#+begin_remark org
+\-
+- \(\overline{0}, \overline{1}, \overline{2}, \overline{3}, \dots\) --- конечные кардиналы
+- \(\aleph_0 = |\omega|\)
+- \(\aleph_1\) --- следующий кардинал за \(\aleph_0\)
+#+end_remark
+#+ATTR_LATEX: :options [Кантора]
+#+begin_theorem org
+Рассмотрим \(S\) --- множетво, \(\mathcal{P}(S)\) --- множество всех подмножеств \\
+_Тогда_ \(|\mathcal{P}(S)| > |S|\)
+#+end_theorem
+#+ATTR_LATEX: :options [Кантора-Бернштейна]
+#+begin_theorem org
+Если \(a, b\) --- множества, \(f: a \to b\), \(g: b \to a\) --- инъективны \\
+_Тогда_ существует биекция \(a \to b\)
+#+end_theorem
