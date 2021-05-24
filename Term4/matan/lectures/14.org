@@ -1,4 +1,4 @@
-#+TITLE: Лекция 13
+#+TITLE: Лекция 14
 #+SETUPFILE: setup.org
 
 \(f, g \in L^1[-\pi, \pi]\)
