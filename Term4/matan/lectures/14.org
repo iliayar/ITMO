@@ -1,0 +1,219 @@
+#+TITLE: Лекция 13
+#+SETUPFILE: setup.org
+
+\(f, g \in L^1[-\pi, \pi]\)
+\[ (f * g)(x) = \int_{-\pi}^\pi f(x - t)g(t)\,dt \]
+-------
+
+#+begin_examp org
+\(g:\)
+#+ATTR_LATEX: :scale 0.4
+[[file:14_1.png]]
+\(f\) --- непрерывна \\
+\((f*g) \approx f\)
+\[ g = \left[\begin{matrix} 0 & x \neq 0 \\\ \infty & x = 0 \end{matrix}\right. \quad \int_{-\pi}^\pi g = 1\]
+\(\delta_0:\ \mu\{0\} = 1 \quad \mu(\R \setminus \{0\}) = 0\)
+\[ \mu E = \int_E g\,dx \]
+#+end_examp
+#+begin_examp org
+
+#+end_examp
+#+begin_definition org
+*Аппроксимативная единица*
+- \(D \subset \R\)
+- \(h_0\) --- предлеьная точка в \(\overline{\R}\)
+Семейство функций \(\{K_h\}_{h \in D}\) --- называется аппроксимативной единицей
+- *АЕ1* :: \(\forall h \in D\), \(K_n \in L^1[-\pi, \pi]\), \(\int_{-\pi}^\pi K_h = 1\)
+- *АЕ2* :: \(L_1\) --- нормы функций \(K_h\) ограничены в совокупности
+   \[ \exists M\ \forall h\ \int_{[-\pi, \pi]} |K_h| \le M \]
+- *АЕ3* :: \(\forall \delta \in (0, \pi) \quad \int_{E\delta} |K_h|\,dx \xrightarrow[h \to h_0]{} 0\)
+#+end_definition
+#+begin_remark org
+\(K_h \ge 0\ \forall h\) \\
+Тогда АЕ1 \(\Leftrightarrow\) АЕ2
+#+end_remark
+#+begin_remark org
+\-
+- *АЕ3'* \(K_h \in L^\infty[-\pi, \pi]\) и \(\forall \delta \in (0; \pi)\)
+  \[ \esssup_{t \in E_\deta} |K_h(t)| \xrightarrow[h \to h_0]{} 0 \]
+#+end_remark
+#+begin_lemma org
+АЕ3' \(\Leftrightarrow\) АЕ3
+#+end_lemma
+#+begin_definition org
+АЕ1 + АЕ2 + АЕ3' = *усиленная аппроксимативная единица*
+#+end_definition
+#+begin_theorem org
+\(K_h\) --- а.е. \\
+_Тогда_
+1. \(f \in \tilde{C}[-\pi, \pi] \implies f * K_h \xrightrightarrows[h \to h_0]{ [ -\pi , \pi ] } f\)
+2. \(g \in L^1[-\pi, \pi] \Rightarrow \Vert f*K_h - f \Vert_1 \xrightarrow[h \to h_0]{} 0\)
+3. \(K_h\) --- усиленная а.е. \(f \in L^1[-\pi, \pi]\), \(f\) --- непрерывная в x
+_Тогда_
+- \(f*K_h\) --- непрерывна в \(x\)
+- \(f * K_h(x) \xrightarrow[h \to h_0]{} f(x)\)
+#+end_theorem
+#+begin_proof org
+\[ f*K_h(x) - f(x) = \int_{-\pi}^\pi (f(x - t) - f(x))K_h\,dt \]
+1. \(\varepsilon > 0\), \(f\) --- равномерно непрерывна
+   \[ \exists \delta > 0\ \forall t, |t| < \delta\ \forall x |f(x - t) - f(x)| < \frac{\varepsilon}{2M} \]
+   \[ |f*K_h(x) - f(x)| \le \int_{-\pi}^\pi |f(x - t) - f(x)| |K_h(t)| \,dt = \int_{-\delta}^\delta + \int_{E_\delta}  = I_1 + I_2 \color{gray} < \varepsilon \]
+   \[ I_1 \le \frac{\varepsilon}{2M}\cdot \int_{-\delta}^\delta |K_h| \le \frac{\varepsilon}{2M} \cdot \int_{-\pi}^\pi |K_h| \le \frac{\varepsilon}{2} \]
+   \[ I_2 \le 2 \cdot \norm{f}_\infty \cdot \int_{E_\delta}|K_h| \xrightarrow[h \to h_0]{} 0 \xRightarrow[\text{АЕ3}]{} \exists V(h_0)\ \forall h \in V(h_0)\ I_2 \le \frac{\varepsilon}{2}\]
+3. [@3] \(f \in L^1\), \(h_h \in L^\infty\) \(\implies\) \(f*K_h\) --- непрерывна \\
+  Для данного \(x\) проверим утверждение \(\varepsilon > 0;\ I_1 + I_2 < \varepsilon;\ \exists V(h_0)\ \forall h\in V(h_0)\) \\
+  \(f\) --- непрерывна в \(x\)
+  \[ \forall \varepsilon > 0\ \exists \delta > 0\ \forall t,\ |t| < \delta\quad |f(x - t) - f(x)| < \frac{\varepsilon}{2M} \]
+  \[ I_1 \le \frac{\varepsilon}{2} \]
+  \[ I_2 \le \int_{E_\delta} |f(x - t)|\cdot |K_h(t)|\,dt + |f(x)| \int_{E_\delta} |K_h(t)|\,dt \]
+  \[ \le \esssup_{E_\delta}|K_h|\cdot \left(\norm{f}_1 + 2\pi |f(x)|\right) \xrightarrow[h \to h_0]{} 0 \]
+  , т.е. \(\exists V(h_0)\ \forall h\in V(h_0)\ I_2 < \frac{\varepsilon}{2}\)
+2. [@2] \[ \norm{f * K_h - f}_1 = \int_{-\pi}^\pi \left| \int_{-\pi}^\pi(f(x - t) - f(x)) K_h \,dt\right|\,dx \le \]
+   \[ \le \int_{-\pi}^\pi \int_{-\pi}^\pi |f(x - t) - f(x)| \cdot |K_h(t)|\,dx\,dt = \]
+   \[ = \norm{K_h}_1 \cdot \int_{-\pi}^\pi g(-t) \frac{|K_h(t)|}{\norm{K_h}_1}\,dt \]
+   , где \(g(t) = \int_{-\pi}^\pi |f(x + t) - f(x)|\) --- непрерывна (по теореме о непрерывности сдвига)
+   \[ = \norm{K_h}_1 \left(g * \frac{|K_h|}{\norm{K_h}}\right)(0) \]
+   --- по п.1 \(g(0) = 0\)
+#+end_proof
+#+begin_remark org
+Модификация п. 2
+\[ f \in L^p[-\pi, \pi] \Rightarrow \norm{f * K_h - f}_p \xrightarrow[h \to h_0]{} 0 \]
+#+end_remark
+#+begin_remark org
+Модификация п. 3
+\[ f \in L^1 \quad \exists f(x - 0), f(x + 0) \]
+\(K_h\) --- усиленная а.е. \(\forall h\ K_h\) --- четная \\
+_Тогда_
+\[ (f * K_h)(x) \to \frac{1}{2}(f(x - 0) + f(x_0 + 0)) \]
+#+end_remark
+* Суммирование рядов Фурье
+** Метод средних арифметических
+\[ \sum a_n \quad S_n \coloneqq \sum_{k = 0}^n a_k \]
+\[ \delta_n \coloneqq \frac{1}{n + 1} (S_0 + S_1 + \dots + S_n) \]
+\[ \sum a_n \xlongequal[\text{сред. арифм.}] S \]
+, если \(\delta_n \to S\)
+#+begin_theorem org
+\[ \sum a_n = S \implies \sum a_n \xlongequal[\text{с.а.}]{} = S \]
+#+end_theorem
+#+begin_proof org
+\(\forall \varepsilon > 0\ \exists N,\ \forall n > N,\ |S_n - S| < \frac{\varepsilon}{2}\)
+\[ |\delta_n - S| - \left|\frac{1}{n + 1}\sum_{k = 0}^n (S_k - S)\right| \le \frac{1}{n + 1}\sum |S_k - S| = \]
+\[ = \frac{\sum_{k = 0}^{N_1}|S_k - S|}{n + 1} + \frac{\sum_{k = N_1 + 1}^n |S_k - S|}{n + 1} \]
+\(\forall N\ \forall n > N\) эта дробь \(< \frac{\varepsilon}{2}\)
+#+end_proof
+#+begin_definition org
+\(f \in L^1[-\pi, \pi]\), \(S_n(f)\) --- частичная сумма ряда Фурье
+\[ G_n(f) = \frac{1}{n + 1}\sum_{k = 1}^n S_k(f) \] --- суммы Фейера
+#+end_definition
+#+begin_remark org
+\[ S_n(f) = \int_{-\pi}^\pi f(x + t) D_n(t)\,dt \]
+\[ G_n(f, x) = \int_{-\pi}^\pi f(x + t) \Phi_n(t)\,dt \]
+, где \(\displaystyle\Phi_n = \frac{1}{n + 1}(D_0 + \dots + D_n) = \frac{1}{2\pi(n + 1)}\cdot \frac{\sin^2\left(\frac{n + 1}{2}t\right)}{\sin^2\frac{t}{2}}\)
+#+end_remark
+#+ATTR_LATEX: :options [Фейера]
+#+begin_theorem org
+\-
+1. \(f \in \tilde{C}[-\pi, \pi]\) \\
+   _Тогда_ \(\sigma_n(f) \xrightrightarrows{[-\pi, \pi]} f\)
+2. \(f \in L^p[-\pi, \pi] \implies \norm{\delta_n(f) - f}_p \to 0\)
+3. \(f \in L^1\), \(f\) --- непрерывна в \(x\) \(\implies\) \(\sigma_n (f, x) \xrightarrow[x \to +\infty]{} f(x)\)
+#+end_theorem
+#+begin_proof org
+Проверим: \(\Phi_n\) --- усиленная а.е. и тогда 1-3 следуют из свойства а.е.
+- *АЕ1* :: \(\Phi_n \in L^1\), т.к. \(\Phi_n\) --- непрерывная (и даже \(\Phi_n \in L^\infty\))
+  \[ \int_{-\pi}^\pi \Phi_n = 1 \]
+- *АЕ2* :: следует из АЕ1, поскольку \(\Phi_n \ge 0\)
+- *АЕ3* :: \(t \in E_\delta\)
+  \[ 0 \le \Phi_n(t) = \frac{1}{2\pi(n + 1)}\cdot \frac{\sin^2\frac{n + 1}{2}t}{\sin^2 \frac{t}{2}} \le \frac{1}{2\pi(n + 1)}\cdot \frac{1}{\sin^2\frac{\delta}{2}} \xrightarrow[n \to +\infty]{} 0\]
+#+end_proof
+#+begin_remark org
+в п.2 \(p = 1\) --- свойство а.е. было доказано, \(p > 1\) --- без доказательства
+#+end_remark
+#+begin_corollary org
+\(f \in L^1[-\pi, \pi]\) --- непрерывна в \(x\). Если ряд Фурье \(f\) сходится в точке \(x\)
+\[ \exists \lin_{n \to \infty} S_n(f, x)\text{ --- конечный}\]
+, то \(S_n(f, x) \to f(x)\)
+#+end_corollary
+#+begin_proof org
+\[ \sigma_n(f, x) \to f(x) \]
+и по теореме Коши
+#+end_proof
+#+begin_corollary org
+\-
+1. Тригонометрическая система полна в \(L^2[-\pi, \pi]\)
+2. \(f \in L^1[-\pi, \pi]\ \forall k\ a_k(f) = 0,\ b_k(f) = 0\) \color{gray}либо \(\forall k \in \mathbb{Z}\) C_k(f) = 0\color{black} \\
+    _Тогда_ \(f = 0\) почти везде
+#+end_corollary
+#+begin_proof org
+\-
+1. Следствие из 2.: \(\forall k\ f \perp \cos kx\) и \(f \perp \sin kx\)
+   \[ 0 = \pair{f, \cos x} = \int_{-\pi}^\pi f(x) \cos kx = \pi a_k(f) \]
+   , т.е. \(a_k = 0\)
+2. \(S_n(f) = 0\) почти везде, \(\sigma_n(f) = 0\) почти везде \(\implies f = 0\) почти везде
+#+end_proof
+#+begin_corollary org
+\(f \in L^2[-\pi, \pi]\) \\
+_Тогда_ ряд Фурье \(f\) сходится к \(f\) в \(L^2\):
+\[ S_n(f) \to f\text{ в }L^2 \quad \norm{S_n(f) - f}_2 \to 0 \]
+--- общее свойство базиса
+#+end_corollary
+#+begin_corollary org
+\(f \in L^1[0, \pi]\). Коэффициенты \(f\) по системе \(\{\cos kx\}\) равно 0 \\
+_Тогда_ \(f = 0\) почти везде \\
+Аналогично для \(\{\sin kx\}\)
+#+end_corollary
+#+ATTR_LATEX: :options [теорема Вейерштрасса]
+#+begin_corollary org
+Тригонометрический полином плотный в \(L^p[-\pi, \pi]\) и \(\tilde{C}[-\pi, \pi]\), \(1 le p < +\infty\)
+#+end_corollary
+#+begin_corollary org
+\(f, g \in L^2[-\pi, \pi]\) Тогда выполняются равенства Парсеваля:
+1. \[ \int\limits_{[\-pi, \pi]} f\overline{g} = 2\pi \sum_{k \in \mathbb{Z}} c_k(f) \overline{c_k(h)} \]
+2. \[ \int_{-\pi}^\pi |f|^2 = 2\pi \sum |c_k(f)|^2 \]
+3. \[ \int_{-\pi}^\pi fg = \pi \left(\frac{a_0(f)a_0(h)}{2} + \sum_{k = 1}^{+\infty}a_k(f)a_k(g) + b_k(f)b_k(g)\rigth) \]
+4. \[ \int_{-\pi}^\pi f^2 = \pi \left(\frac{a_0(f)^2}{2} + \sum a_k(f)^2 + b_k(f)^2\right) \]
+#+end_corollary
+#+begin_lemma org
+\(D_n(t) = \frac{1}{2\pi}\cdot \frac{\sin \left(n + \frac{1}{2}\right)t}{\sin \frac{t}{2}}\) --- ядро Дирихле \\
+_Тогда_ \(\forall x \in [-2\pi, 2\pi]\)
+\[ \left|\int_0^x D_n(t)\right| < 2 \]
+#+end_lemma
+#+begin_remark org
+\(D_n\) --- не является а.е. --- не выполняется АЕ2
+\[ \int_{-\pi}^\pi D_n \asymp \ln n \]
+#+end_remark
+#+begin_theorem org
+\(f \in L^1[-\pi, \pi]\) \\
+_Тогда_ \(\forall a, b \in \R\)
+\[ \int_a^b f(x)\,dx = \sum_{k \in \mathbb{Z}} c_k(f) \int_a^b e^{ikx}\,dx \]
+#+end_theorem
+#+begin_remark org
+ряд Фурье при этом может расходится в том числе всюду
+#+end_remark
+#+begin_proof org
+Достаточно доказать: \(-\pi \le a < b \le \pi\), \(\chi = \chi_{[a, b]}\)
+\[ \sum_{k = -n}^n c_k(f)\int_a^b e^{ikx}\,dx = \sum \frac{1}{2\pi}\int_{-\pi}^\pi f(t) e^{-ikt}\,dt\cdot 2\pi c_{-k}(\chi) = \]
+\[ = \int_{-\pi}^\pi f(t)\cdot S_n(\chi, t) \,dt \to \int_{-\pi}^\pi f\cdot \chi = \int_a^b f \]
+\[ S_n(\chi, t) \xrightarrow[n \to +\infty] \chi(t) \]
+при \(t \in [-\pi, \pi],\ t \neq a, b\) по признаку Дини
+\[ S_n(\chi, t) = \int \chi \cdot D_n = \int_a^b D_n(x - t) = \int_0^{b - t} D_n(x)\,dx - \int_0^{a - t} D_n(x) \]
+по лемме \(|S_n(x, t)| \le \)
+#+end_proof
+#+ATTR_LATEX: :options [о `слабой` сходимости рядов Фурье]
+#+begin_theorem org
+\(f \in L^1[-\pi, \pi]\) \(\forall u \in \tilde{C}^1[-\pi, \pi]\)
+\[ \int_{-\pi}^\pi S_n(f, x)\cdot u(x)\,dx \to \int_{-\pi}^\pi f(x)u(x)\,dx \]
+#+end_theorem
+#+begin_proof org
+\-
+1. \(f \in L^1\) \(u\) --- непрерывна \(\implies\) \(u \in L^\infty\) \(\implies\) \(f*u\) --- непрерывная и даже гладкая
+   \[ \frac{d}{dx}(f*u)(x) = \frac{d}{dx}\int_{-\pi}^\pi f(t)u(x - t)\,dt = \]
+   \[ = \int_{-\pi}^\pi f(t)u'_x(x - t)\,dt \]
+   --- обобщенный предел Лейбница
+2. \[ \int_{-\pi}^\pi S_n(f, x)u(x)\,dx = \sum_{k = -n}^n c_k(f)\int_{-\pi}^\pi e^{ikx}u(x)\,dx \xlongequal[\underline{u}(x) \coloneqq u(-x)]{}  \]
+   \[ =\sum c_k(f)c_k(\underline{u})\cdot 2\pi = \sum_{k = -n}^n c_k(f * \underline{u}) =  \]
+   \[ = \sum_{k = -n}^n c_k(f * \underline{u})e^{ikx}\big|_{x = 0} \to f*\underline{u} \big|_{x = 0} = \]
+    --- по признаку Дини
+    \[ = f* \underline{u} (0) = \int_{-\pi}^\pi f(-t)u(-t)\,dt = \int_{-\pi}^\pi f(t)u(t)\,dt \]
+
+#+end_proof
