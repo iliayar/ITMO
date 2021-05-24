@@ -12,7 +12,7 @@ findError lines res = case findError' 1 lines of
                     r@(Just _) -> r
                     _ -> let (_, e) = last lines 
                             in if e /= res
-                                then Just 0 else Nothing
+                                then Just (length lines - 1) else Nothing
     where 
         findError' n ((Just r, e):ls) = findError' (n + 1) ls
         findError' n ((Nothing, r):ls) = Just n
