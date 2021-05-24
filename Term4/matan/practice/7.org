@@ -34,9 +34,9 @@ y = r^{\frac{2}{3}}\sin^{\frac{2}{3}}\varphi
 * Тройной интеграл
 Есть трехмерная фигура \(\Omega\)
 \[ \iiint\limits_\Omega f\,dx\,dy\,dz \addtag\label{int_1} \]
-- \(3 = 1 + 2\) ::
+- \(3 = 1 + 2\) :: Берем сечение по одной из осей и итегрируем по двумерной области
  \[ \ref{int_1} = \int_a^b dx \iint_{\Omega_x} f \,dy\,dz \]
-- \(3 = 2 + 1\) ::
+- \(3 = 2 + 1\) :: Спроецируем по x и y фигуру на область \(\Omega_{xy}\), интегрируем по отрезку.
   \[ \ref{int_1} = \iint_{\Omega_{xy}} dx\,dy \int_{z(x, y)}^{z_2(x, y)}f\,dz \]
 \[ \iiint x y^2 z^3 \addtag\label{int_2} \]
 - \(z = xy\)
@@ -55,7 +55,7 @@ y = r^{\frac{2}{3}}\sin^{\frac{2}{3}}\varphi
 \[ \int\limits_0^1 dx \int\limits_0^{1 - x}dy\int\limits_0^{x + y} f\, dz \]
 #+end_task
 #+begin_solution org
-\[ = \int\limits_0^1 dz \int\limits_z^1 dx \int\limits_0^{z - x} f\, dy + \int_0^z dx \int_{z - x}^{1 - x} f\, dy \]
+\[ = \int\limits_0^1 dz \left(\int\limits_z^1 dx \int\limits_0^{z - x} f\, dy + \int_0^z dx \int_{z - x}^{1 - x} f\, dy\right) \]
 #+end_solution
 
 #+begin_task org
