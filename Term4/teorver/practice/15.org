@@ -1,0 +1,58 @@
+#+TITLE: Практика 15
+#+SETUPFILE: setup.org
+
+#+begin_task org
+\-
+| /       |   < |     |     |     |     |
+| \(\xi\) |  -2 |  -1 |   0 |   1 |   2 |
+|---------+-----+-----+-----+-----+-----|
+| \(p\)   | 0.1 | 0.2 | 0.4 | 0.2 | 0.1 |
+\(\varphi_\xi(t) = ?\)
+#+end_task
+#+begin_solution org
+\[ \varphi_\xi(t) = Ee^{it\xi} = 0.1\cdot e^{-2it} + 0.2\cdot e^{-1it} + 0.4 \cdot e^{it\cdot 0} + 0.2 \cdot e^{it} + 0.1 \cdot e^{2it} = \]
+\[ = 0.2 \cdot \frac{e^{-2it} + e^{2it}}{2} + 0.4 \cdot \frac{e^{-it} + e^{it}}{2} + 0.4 = 0.2 \cdot \cos 2t + 0.4 \cdot \cos t + 0.4 \]
+#+end_solution
+#+begin_task org
+\(\xi \in U(a, b)\) \\
+\(\varphi_\xi(t) = ?\) \
+Частный случай \(\xi_1, \xi_2 \in U(0, 1)\) --- независимые
+#+end_task
+#+begin_solution org
+\[ \varphi_\xi(t) = E e^{itx} = \int_{-\infty}^\infty e^{itx} f_xi(x)\,dx = \int_a^b e^{itx} \frac{1}{b - a} \,dx = \frac{1}{it}\cdot e^{itx}\cdot \frac{1}{b - a}\bigg|_a^b = \frac{e^{ibt} - e^{iat}}{i(b - a)t} \]
+\[ \varphi_{\xi_1 + \xi_2}(t) = \varphi_{\xi_1}(t) \cdot \varphi_{\xi_2}(t) = \left(\frac{e^{it} - 1}{it}\right)^2 = -\frac{e^{2it}}{t^2} \]
+--- не является зарактеристической функции равномерного распределения (значит равномерное распределение не устойчиво по суммированию), это треугольное распредление симпсона?
+#+end_solution
+#+begin_task org
+\(\xi \in N(0, 1)\) \\
+\(E\xi^k = ? \forall k\)
+#+end_task
+#+begin_solution org
+\[ \varphi_\xi^{(k)}(0) = i^k \cdot E\xi^k \]
+\[ \varphi_\xi(t) = e^{-\frac{t^2}{2}} \]
+\[ E\xi^k = \frac{\varphi_\xi^{(k)}(0)}{i^k} \]
+\[ \varphi_\xi'(t) = -t e^{-\frac{t^2}{2}} \]
+\[ \color{blue} (uv)^{(n)} = \sum_{k = 0}^n \binom{n}{k} u^{(n - k)}\cdot v^{(k)} \]
+\[ - (t \cdot e^{-\frac{t^2}{2}})^{(n)} = - \sum_{k = 0}^n \binom{n}{k} t^{(n - k)} \cdot (e^{-\frac{t^2}{2}})^{(k)} = -t \cdot (e^{-\frac{t^2}{2}})^{(n)} - n \cdot (e^{-\frac{t^2}{2}})^{(n - 1)}\]
+\[ \varphi_\xi^{(k + 1)}(0) = -k \varphi_\xi^{(k - 1)}(0) \]
+\[ E\xi^k = \frac{\varphi_\xi^{(k)}(0)}{i^k} = k \frac{\varphi_\xi^{(k - 2)}(0)}{i^{(k - 2)}} = k E\xi^{k - 2} \]
+- \(k\) --- нечетное
+  \[ E\xi^k = 0 \]
+- \(k\) --- четное
+  \[ E\xi^{2k} = (2k - 1)!! \]
+#+end_solution
+#+begin_task org
+\(\xi_\lambda \in \Pi_\lambda\) \\
+Доказать, что
+\[ \eta_\lambda = \frac{\xi_\lambda - \lambda}{\sqrt{\lambda}} \rightrightarrows N_{0, 1} \]
+#+end_task
+#+begin_solution org
+\[ \varphi_{\xi_\lambda}\left(t\right) = \exp\left(\lambda\left(e^{it} - 1\right)\right) \]
+\[ \varphi_{\xi_\lambda - \lambda}\left(t\right) = e^{-it\lambda} \exp\left(\lambda\left(e^{it} - 1\right)\right) = \exp\left(\lambda\left(e^{it} - it - 1\right)\right) \]
+\[ \varphi_{\frac{\xi_\lambda - \lambda}{\sqrt{\lambda}}} = \varphi_{\xi_\lambda - \lambda}\left\left(\frac{t}{\sqrt{\lambda}}\right\right) = \exo\left(\lambda\left(e^{i\frac{t}{\sqrt{\lambda}}} - i\cdot \frac{t}{\sqrt{\lambda}} - 1\right)\right) = \]
+\[ = \exp\left(\lambda\left(1 + i \cdot \frac{t}{\sqrt{\lambda}} + \frac{1}{2} \cdot \left(\frac{it}{\sqrt{\lambda}}\right)^2 + o\left(\left(\frac{it}{\sqrt{\lambda}}\right)^2\right) - i\cdot \frac{t}{\sqrt{\lambda}} - 1\right)\right) = \]
+\[ = \exp\left(-\frac{1}{2}t^2 + \lambda \cdot o\left(\frac{1}{\lambda}\right)\right) \xrightarrow[\lambda \to \infty]{} e^{-\frac{t^2}{2}} \]
+
+#+end_solution
+
+
