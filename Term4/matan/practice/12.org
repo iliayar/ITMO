@@ -24,15 +24,15 @@
 #+end_solution
 * Формула Стокса
 Вычисляем по кривой
-\[ \int P\,dx + Q\,dy + R\,dz = \iint_\Omega \pair{\mathop{\rm rot}\begin{pmatrix}
+\[ \int_L P\,dx + Q\,dy + R\,dz = \iint_\Omega \pair{\mathop{\rm rot}\begin{pmatrix}
   P \\
   Q \\
   R
-\end{pmatrix}, n_0}\,dS = \]
+\end{pmatrix}, n_0}\,ds = \]
 \[ = \iint_\Omega (R'_y - Q'_z)\,dy\,dz + (P'_x - R'_z)\,dz\,dx + (Q'_x - P'_y)\,dx\,dy\]
 #+ATTR_LATEX: :scale 0.3
 [[file:12_1.png]]
-Здесь сторона \(\Omega\) согласована с направлением кривой \(L\)
+Здесь сторона \(\Omega\) согласована с направлением на кривой \(L\)
 #+ATTR_LATEX: :scale 0.3
 [[file:12_2.png]]
 
@@ -45,7 +45,7 @@
 \[ n = (1, 1, 1) \]
 #+end_task
 #+begin_solution org
-\[ I = \iint\limits_\triangle - 2z\,dy\,dz - 2x\,dz\,dx - 2y\,dx\,dy = \iint\limits_\triangle -2\underbrace{(x + y + z)}_a\,dS = -2a \cdot \int\limits_{\triangle ABC} \]
+\[ I = \iint\limits_\triangle - 2z\,dy\,dz - 2x\,dz\,dx - 2y\,dx\,dy = \iint\limits_\triangle -2\underbrace{(x + y + z)}_a\,dS = -2a \cdot S_{\triangle ABC} = -2 a  \cdot \frac{1}{2} |\vec{AB} \times \vec{BC}| \]
 #+end_solution
 #+begin_task org
 \[ \int (x^2 - z^2)\,dx + (z^2 - x^2)\,dy + (x^2 - y^2)\,dz \]

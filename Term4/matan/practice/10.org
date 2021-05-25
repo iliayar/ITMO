@@ -9,8 +9,8 @@
 \-
 - \(F = (P, Q, R)\)
 - \(\Phi: G \subset \R^2 \to \R^3\)
-\[ \int \dots = \int \pair{F, \frac{\Phi'_u \times\Phi'_v}{|\dots|}} \cdot | \dots | \,du\,dv = \int \pair{F, \Phi'_u \times \Phi'_v} = \]
-\[ = \int P \begin{vmatrix}
+\[ I = \int \pair{F, \frac{\Phi'_u \times\Phi'_v}{|\Phi'_u \times\Phi'_v|}} \cdot |\Phi'_u \times\Phi'_v| \,du\,dv = \int_G \pair{F, \Phi'_u \times \Phi'_v} = \]
+\[ = \int_G P \begin{vmatrix}
   y'_u & y_v \\
   z'_u & z'_v
 \end{vmatrix} + Q \begin{vmatrix}
@@ -19,12 +19,14 @@
 \end{vmatrix} + R \begin{vmatrix}
   x'_u & x'_v \\
   y'_u & y'_v
-\end{vmatrix}\,du\,dv \]
-\[ \det \begin{pmatrix}
+\end{vmatrix}\,du\,dv = \]
+\[ = \int_G P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy  \]
+\[ \Phi = (x(u, v), y(u, v), z(u, v)) \]
+\[ \pair{F, \Phi'_u \times \Phi'_v} = \det \begin{pmatrix}
   P & x'_u & x'_v \\
   Q & y'_u & y'_v \\
   R & z'_u & z'_v
-\end{pmatrix} = \int_G P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy \]
+\end{pmatrix}\]
 #+end_solution
 #+begin_task org
 \[ \iint (2z - x)\,dy\,dx + (x + 2z)\,dz\,dx + 3z \,dx\,dy \]
@@ -33,6 +35,9 @@
 - верхняя сторона
 #+end_task
 #+begin_solution org
+\-
+#+ATTR_LATEX: :scale 0.4
+[[file:10_3.png]]
 \[ \iint \dots = \iint \pair{\begin{pmatrix}
   2z - x \\
   x + 2z \\
@@ -42,7 +47,7 @@
     \frac{4}{\sqrt{18}} \\
     \frac{1}{\sqrt{18}}
 \end{pmatrix}}\,ds = \frac{1}{\sqrt{18}} \iint (13z + 3x)\,ds\]
-\[ = \frac{1}{\sqrt{18}}\int_0^4\,dx\int_0^{1 - \frac{x}{4}}\,dy 13(4 - x - 4y) + 3x \sqrt{18}\,dy \]
+\[ = \frac{1}{\sqrt{18}}\int_0^4\,dx\int_0^{1 - \frac{x}{4}}\,dy 13(4 - x - 4y) + 3x \sqrt{18} \]
 #+end_solution
 #+begin_task org
 \[ \iint_{S_+} (x - 1)^2\,dy\,dz + 0\,dz\,dx + 0\,dx\,dy \]
@@ -60,13 +65,12 @@
 \[ \begin{matrix}
   x'_x = 1 & x'_y = 0 \\
   y'_x = 0 & y'_y = 1 \\
-  z'_x = \frac{x - 1}{\sqrt{-x^2 - y^2 + 2x}} & z'_y = \frac{y}{-x^2 - y^2 + 2x}
+  z'_x = \frac{x - 1}{\sqrt{-x^2 - y^2 + 2x}} & z'_y = \frac{y}{\sqrt{-x^2 - y^2 + 2x}}
 \end{matrix} \]
-\[ \iint_0^2 \,dx \int_{-\sqrt{2 - x^2}}^{\sqrt{2 - x^2}} (x - 1)^2 \begin{vmatrix}
+\[ \iint_0^2 \,dx \int_{-\sqrt{2x - x^2}}^{\sqrt{2x - x^2}} (x - 1)^2 \begin{vmatrix}
   0 & 1 \\
   \frac{x - 1}{\sqrt{-x^2 - y^2 + 2x}} & \frac{y}{\sqrt{-x^2 - y^2 + 2x}}
 \end{vmatrix} = \iint (x - 1)^2 \left(-\frac{(x - 1)}{\sqrt{-x^2 - y^2 + 2x}}\right)\]
-
 #+end_solution
 #+begin_solution org
 \color{red}Немного не та задача\color{black}
@@ -92,11 +96,7 @@
 \end{matrix} \]
 \[ \iint \dots = \int_0^{2\pi}\,d\varphi \int_{-\frac{\pi}{2}}^0\,d\psi \cos\varphi \cos \psi \cdot \cos \varphi \cos^2 \psi = \]
 \[ = \pi \int_{-\frac{\pi}{2}}^0 ( 1 - \sin^2 \psi) d\sin\psi = \pi \left(s - \frac{s}{3}\right)^3 \big|_{-1}^0 \]
-
-
-
 #+end_solution
-
 #+begin_task org
 \[ \iint x\,dy\,dz + y\,dz\,dx + z\,dx\,dy \]
 - \(z = x^2 - y^2\)
@@ -106,5 +106,10 @@
 [[file:10_1.png]]
 #+end_task
 #+begin_solution org
+\[ \begin{vmatrix}
+  x & 1 & 0 \\
+  y & 0 & 1 \\
+  x^2 - y^2 & 2x & -2y
+\end{vmatrix} \]
 \[ \iint x(-2x) + y(2y) + (x^2 - y^2)\cdot1\,dx\,dy \]
 #+end_solution
