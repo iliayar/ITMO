@@ -19,7 +19,7 @@
 \[ x > 0 \quad y > 0 \quad x+ y < a \quad z > 0 \]
 \[ x^2 + y^2 + z^2 = a^2 \]
 #+end_task
-* Задания с ДЗ lul
+* Задания с ДЗ
 #+begin_task org
 \[ \iint_S \pair{\begin{pmatrix}
   x \\ y \\ z
@@ -41,18 +41,26 @@
 \end{matrix} \]
 #+end_solution
 * Функия Гаусса-Остроградского
-\[ \iint\limits_{\Omega,\text{внеш. сторона}}P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy = \iiint\limits_V P'_x + q'_y + R'_z\,dx\,dy\,dz \]
+\[ \iint\limits_{\Omega,\text{внеш. сторона}}P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy = \iiint\limits_V P'_x + Q'_y + R'_z\,dx\,dy\,dz \]
 \[ \Omega = \partial B \quad (P, Q, R) \in C^1(\text{окр}(V)) \]
 #+ATTR_LATEX: :options [4362]
 #+begin_task org
 \[ \iint x \,dy\,dz + y\,dz\,dx + z\,dx\,dy = \iiint\limits_{\text{шар}} 3\,dz = - 3\cdot \frac{4}{3}\pi a^3 \]
 #+end_task
 ----------
-\[ \iint x^3 \,dy\,dz + y^3\,dz\,dx + z^3\,dx\,dy = I \]
+#+begin_task org
+\[ \iint_\triangle \underbrace{x^3 \,dy\,dz + y^3\,dz\,dx + z^3\,dx\,dy}_\omega = I \]
 \[ x + y + z = a \quad x, y, z > 0 \]
+#+end_task
+#+begin_solution org
+\-
+#+ATTR_LATEX: :scale 0.4
+[[file:10_4.png]]
 Получается тетраэдр T, 
-\[ I + I_1 + I_2 + I_3 = \iint_{\partial T}\omega = 3\iiint_T x^2 + y^2 + z^2 \,dx\,dy\,dz \]
+\[ I + I_1 + I_2 + I_3 = \iint_{\partial T}\omega = - 3\iiint_T x^2 + y^2 + z^2 \,dx\,dy\,dz \]
 \[ I_3 = \iint\limits_{\substack{x, y> 0, z = 0 \\ x + y < a}} \omega = 0 \]
+#+end_solution
+
 #+begin_task org
 Есть коническая воронка(перевернутый конус)
 #+ATTR_LATEX: :scale 0.3
@@ -61,9 +69,9 @@
 \[ \iint z\,dx\,dy + (5x + y)\,dy\,dz \]
 #+end_task
 #+begin_solution org
-\\[ I = \iiint\limits_{\text{конус}} 6\,dx\,dy\,dz = 6\cdot\frac{1}{3}\pi = 2\pi \]
-\[ \iint\limits_{x^ + y^2 \le 1} \pair{\begin{pmatrix}
-  45 x + y \\ 0 \\ z
+\[ I = \iiint\limits_{\text{конус}} 6\,dx\,dy\,dz = 6\cdot\frac{1}{3}\pi = 2\pi \]
+\[ I + \iint\limits_{\text{вверх}} = \iint\limits_{x^ + y^2 \le 1} \pair{\begin{pmatrix}
+  5 x + y \\ 0 \\ z
 \end{pmatrix}, \begin{pmatrix}
     0 \\ 0 \\ 1
 \end{pmatrix}} = \iint\limits_{x^2 + y^2 \le 1} dx\,dy = \pi \]
@@ -75,7 +83,7 @@
 [[file:11_2.png]]
 #+end_task
 #+begin_solution org
-\[ \iint x^2 \,dy\,dz + y^2\,dz\,dx + z^2\,dx\,dy + \iint\limits_{\substack{y = 0 \\ \text{влево вниз}}} + \iint\limits_{\substack{y = 10 \\ \text{вправо вверх}}} + \iint\limits_{\text{вверх}} \]
+\[ I + \iint\limits_{\substack{y = 0 \\ \text{на нас} \\ = 0}} + \iint\limits_{\substack{y = 10 \\ \text{от нас} \\ = 100\cdot \frac{\pi a^2}{2}}} + \iint\limits_{\substack{\text{вверх} \\ = 100 \cdot 10 \cdot 2a}} \]
 \[ = \iiint\limits_{\text{полено}} 2(x + y + z)\,dx\,dy\,dz + 0 + \frac{1}{2} \pi a^2 \cdot \frac{y^2}{2}\bigg|_0^{10} + \int_0^a 27\cdot 10 \cdot 2 \sqrt{a^2 - z^2}\,dz \]
 #+end_solution
 #+begin_task org
@@ -83,10 +91,11 @@
 \[ \iint x^2 \,dy\,dz + y^2\,dz\,dx + z^2\,dx\,dy \]
 #+end_task
 #+begin_solution org
-\[ \iint x^2 \,dy\,dz + y^2\,dz\,dx + z^2\,dx\,dy  + \iint\limits_{\substack{\text{влево} \\ z = 0}} + \iint\limits_{\substack{\text{впарво} \\ z = 2}}\]
+\-
 #+ATTR_LATEX: :scale 0.3
 [[file:11_3.png]]
-\[ I = \iiint 2x + 2y + 2z \,dx\,dy\,dz = \int_0^1 2z\cdot \pi |z + 1|^2 + \int_1^2 2z\cdot \pi(2 - z)^2 \]
+\[ I  + \iint\limits_{\substack{\text{влево} \\ z = 0}} + \iint\limits_{\substack{\text{впарво} \\ z = 2}} = \]
+\[ = \iiint 2x + 2y + 2z \,dx\,dy\,dz = \int_0^1 2z\cdot \pi |z + 1|^2 + \int_1^2 2z\cdot \pi(2 - z)^2 \]
 #+end_solution
 #+ATTR_LATEX: :options [4358.1]
 #+begin_task org
