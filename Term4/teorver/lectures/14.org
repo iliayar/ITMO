@@ -75,7 +75,7 @@
 \(\xi \in \Pi_\lambda\)
 \[ p(\xi = k) = \frac{\lambda^k}{k!}e^{-\lambda}\]
 \[ \varphi_\xi(t) = Ee^{it\xi} = \sum_{n = 0}^\infty e^{itk} \cdot p(\xi = k) = \sum_{n = 0}^\infty e^{itk} \frac{\lambda^k}{k!}e^{-\lambda} =  \]
-\[ = e^{-\lambda} \sum_{n = 0}^\infty \frac{(\lambda e^{it})^k}{k!} = e^{-\lambda}e^{i\lambda t} = \exp(\lambda(it - 1))\quad \fixme\]
+\[ = e^{-\lambda} \sum_{n = 0}^\infty \frac{(\lambda e^{it})^k}{k!} = e^{-\lambda}e^{\lambda e^{it}} = \exp(\lambda(e^{it} - 1))\quad \fixme\]
 \beginproperty
 #+begin_property org
 Если \(\xi \in \Pi_\lambda\), \(\eta \in \Pi_\mu\) --- независимые случайные величины, то \(\xi + \eta = \Pi_{\lambda + \mu}\)
