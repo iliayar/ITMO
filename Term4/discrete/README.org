@@ -17,6 +17,7 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/10.pdf][Lecture 11]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/11.pdf][Lecture 12]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/13.pdf][Lecture 13]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/14.pdf][Lecture 14]]
 * Labs
 - [[file:labs/lab1/][Generating functions]] \\
   [[file:labs/lab1/s4-01-lab-genfunction.pdf][Statements]]
