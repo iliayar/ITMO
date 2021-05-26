@@ -1,0 +1,61 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 14
+#+AUTHOR: Ilya Yaroshevskiy
+
+#+begin_definition org
+PCP (ПСП) --- Проблема соответствия Поста
+- \(|\Sigma| \ge 2\)
+- \(n\) пар слов: \(\pair{a_i, b_i},\ a_i,b_i \in \Sigma^*\)
+\((A, B) \in PCP\) \\
+\(\exists i_1, i_2, \dots, i_k\) \\
+\(i_j \in \{1, 2, \dots, n\}\) \\
+\(k \ge 1\)
+\[ a_{i_1}a_{i_2}\dots a_{i_k} = b_{i_1}b_{i_2}\dots b_{i_k} \]
+#+end_definition
+#+begin_theorem org
+PCP не разрешим (но перечислим)
+\[ U_{TM} \le_m PCP_1 \le_m PCP \]
+, где \(PCP_1 = \{(A, B) \in PCP \big| \exists\text{ решение } i_1 = 1\}\)
+#+end_theorem
+#+begin_lemma org
+\(PCP_1 \le_m PCP\)
+#+end_lemma
+#+begin_proof org
+\todo
+#+end_proof
+#+begin_definition org
+*Язык списка*
+- \(x_1, x_2, \dots, x_n \in \Sigma^*\)
+- \(I_n = \{\fbox{1}, \fbox{2}, \dots, \fbox{n}\}\)
+- \(L_X \subset (\Sigma \cup I_n)^*\)
+\[ \begin{array}{l}
+S \to x_iS\,\fbox{i} \quad i = \overline{1, n} \\
+S \to \varepsilon
+\end{array} \]
+#+end_definition
+#+begin_examp org
+\({\rm UAG} = \{\Gamma \big| \Gamma\text{ --- КС грамматика, }\forall x\text{ имеет }\le 1\text{ деревьев разбора}\}\) \\
+UAG --- не разрешимый \\
+\(PCP \le_m \overline{\rm UAG}\)
+#+end_examp
+#+begin_proof org
+Построим язык \(L_A \cup L_B\)
+\[ \Gamma_{L_A \cup L_B}: \begin{array}{l} S \to A \\ S \to B \\ A \to \text{язык списка }A \\ B \to \text{язык списка }B \end{array} \]
+Если PCP имеет решение, то грамматика является неоднозначной. Если грамматика неоднозначная, то PCP имеет решение. Этим UAG сводится к PCP
+#+end_proof
+#+begin_examp org
+\({\rm DG} = \{\pair{\Gamma_1, \Gamma_2} \big| L_{\Gamma_1} \cap L_{\Gamma_2} \neq \varnothing\}\) \\
+DG --- не разрешимый
+#+end_examp
+#+begin_proof org
+Возьмем язык списка грамматики \(\Gamma_A\) и \(\Gamma_B\). Они пересекаются тогда и только тогда, когда PCP имеет решение
+#+end_proof
+#+begin_examp org
+Задача о замощении \({\rm TILING}_{4, \frac{1}{4}}\) --- 4-сетка, \(\frac{1}{4}\) плоскости \\
+- Набор типов полимино \(\mathbb{P} = \pair{P_1, P_2, \dots, P_n}\)
+- \({\rm TILING}_{4, \frac{1}{4}} = \{\mathbb{P} \big|\text{можно замостить }\frac{1}{4}\text{ плоскости полимино из }\mathbb{P}\}\)
+#+end_examp
+#+begin_proof org
+\(\overline{\rm HALT}_{TM} \le_m {\rm TILING}\)
+\todo
+#+end_proof
