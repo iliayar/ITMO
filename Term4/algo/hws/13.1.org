@@ -1,0 +1,14 @@
+#+LATEX_CLASS: general
+#+TITLE: ДЗ
+#+AUTHOR: Ilya Yaroshevskiy
+#+OPTIONS: num:nil toc:nil
+* Задание 13.1
+Даны массивы \(\{a_0, a_1, \dots, a_n\}\), \(\{b_0, b_1, \dots, b_m\}\). Найти суммы \(s_k = \sum\limits_{i = 0}^{\min(n, m - k)} a_ib_{i + k}\)
+-----
+Построим новый массив \(\tilde{b}\), в котором \(\tilde{b}_i = b_{m - i}\). Посчитаем с помощью быстрого преобразования Фурье полином \(\tilde{s} = a \cdot \tilde{b}\). Тогда при \(k \in [0, m + n]\)
+\[ \tilde{s}_k = \sum_{i = 0}^{\min(n, k)} a_i \cdot \tilde{b}_{k - i} = \sum_{i = 0}^{\min(n, k)} a_i \cdot b_{i + m - k}\]
+Построим новый массив \(s\), в котором \(s_k = \tilde{s}_{m - k}\), тогда
+\[ s_k = \tilde{s}_{m - k} = \sum_{i = 0}^{\min(n, m - k)}a_i\cdot b_{i + k}  \]
+Массивы перестраиваем за \(O(n)\), перемножение полиномов с помощью быстрого преобразования Фурье \(O(n \log n)\). Итоговая асимптотика --- \(O(n \log n)\)
+
+
