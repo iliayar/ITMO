@@ -40,7 +40,8 @@
   z = c\sin\psi
 \end{matrix} \]
 #+end_solution
-* Функия Гаусса-Остроградского
+* Формула Гаусса-Остроградского
+Если фигура \(\Omega\) --- граница некоторой трехмерной фигуры
 \[ \iint\limits_{\Omega,\text{внеш. сторона}}P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy = \iiint\limits_V P'_x + Q'_y + R'_z\,dx\,dy\,dz \]
 \[ \Omega = \partial B \quad (P, Q, R) \in C^1(\text{окр}(V)) \]
 #+ATTR_LATEX: :options [4362]
