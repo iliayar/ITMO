@@ -1,23 +1,26 @@
 .PHONY: all run pack clean collect
 
-lab_SRCS:=$(wildcard *.hs)
+tasknum=B
 
 all: Main
 
-run: Main
-	@./Main
+run:
+	./Main
 
-Main: $(lab_SRCS)
-	ghc Main.hs -o Main -dynamic
+test:
+	echo ${SOURCES}
+
+Main: Main.hs
+	ghc Main.hs -o Main
 
 pack: collect
-	@zip B.zip B/*
-	@rm -R B
+	zip $(tasknum).zip $(tasknum)/*
+	rm -R $(tasknum)
 
 collect: *.hs Makefile
-	@mkdir B
-	cp $? B/
-	@cp Makefile B/
+	mkdir $(tasknum)
+	cp $? $(tasknum)/
+	cp Makefile $(tasknum)/
 
 
 clean: *.hi *.o

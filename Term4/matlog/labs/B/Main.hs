@@ -1,6 +1,6 @@
 import Grammar (parseProof)
 import Proof
-import ProofChecker (checkProof, findError)
+import ProofChecker (checkProof, findError, ProofError(Line, Whole, Ok))
 import qualified ProofChecker as PC
 import qualified Natural as N
 import qualified Converter as C
@@ -17,7 +17,8 @@ main = do
             do
                 let proof = checkProof (contextToExpressions ctx) exprs
                 case findError proof res of
-                    (Just n) -> putStrLn $ "Proof is incorrect at line " ++ (show $ n + 1)
-                    _ -> do
+                    (Line n) -> putStrLn $ "Proof is incorrect at line " ++ (show $ n + 1)
+                    Whole -> putStrLn $ "The proof does not prove the required expression"
+                    Ok -> do
                             putStrLn $ N.showTree $ C.convert (contextToExpressions ctx) res $ PC.catProofMaybes proof
 
