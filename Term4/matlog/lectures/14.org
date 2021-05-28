@@ -1,5 +1,5 @@
 #+LATEX_CLASS: general
-#+TITLE: Лекция 13
+#+TITLE: Лекция 14
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
 
