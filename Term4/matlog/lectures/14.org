@@ -1,0 +1,97 @@
+#+LATEX_CLASS: general
+#+TITLE: Лекция 13
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
+
+* Теорема Левенгейма-Сголема
+#+begin_definition org
+*Мощность модели*
+- \(D\) --- предметное множество
+Тогда \(|D|\) --- мощность модели
+#+end_definition
+#+begin_definition org
+Пусть есть две модели \(M, M'\). \(M'\) --- *элементарная подмодель* \(M\), если
+- предметное множество \(M' \subseteq\) предметное множество \(M\)
+- пусть \(\vDash_M\varphi\), тогда \(\vDash_{M'}\varphi\)
+- Все функции и предикаты \(M'\) --- сужение соответствующих функций и предикатов из \(M\)
+#+end_definition
+#+NAME: теорема л-с
+#+begin_theorem org
+Пусть задана теория и модель \(M\). Все ее формулы образуют множество \(T\) \\
+_Тогда_ для нее существует элементарная подмодель \(M'\)
+\[ |M'| = \max(|T|, \aleph_0) \]
+#+end_theorem
+#+begin_proof org
+\(D_0 \subseteq D_1 \subseteq D_2 \subseteq \dots \) --- предметные множества. \(D_i \subseteq D\) \\
+\(D' = \bigcup D_i\) --- ?? предметное множество \\
+Рассмотрим все формулы из \(T\) \\
+Определим операцию преобразования \(D\):
+\[ \varphi \in T \quad \underset{y,x_i \in D_n}{\eval{\varphi(y, x_1, \dots x_k)}} = \text{И} \]
+\todo
+#+end_proof
+#+begin_remark org
+*``Парадокс`` Сколена* \\
+Известно, что:
+1. вещественные числа + матан --- счетно-аксиоматизированны
+2. \(|\R| > \aleph_0\) \color{gray} --- внутри теории, на предметном языке\color{black}
+3. У вещественных чисел есть счетная модель \(|\R| = \aleph_0\) --- по [[теорема л-с][теореме]] \color{gray} --- вне теории, на метаязыке\color{black}
+#+end_remark
+* Про \(\omega\)
+#+begin_definition org
+\[ a \cdot b = \begin{cases}
+  0 & b = 0 \\
+  a\cdot c + a & b = c' \\
+  \sup_{c \le b}\{a \cdot c\} & b\text{ --- }
+\end{cases} \]
+#+end_definition
+#+begin_remark org
+\[ \sup \omega = \omega \]
+\[ \cup \{\omega\} = \omega + 1 \]
+#+end_remark
+
+#+begin_examp org
+\(\omega \cdot 1 < \omega \cdot 2\)
+\[ \omega + \omega = \sup \{\omega + 0, \omega + 1, \omega + 2, \dots\} \]
+#+end_examp
+#+begin_examp org
+\((a, b) > (c, d)\), если
+1. \(a > c\)
+2. \(a = c, b > d\)
+\((a, b) \to \omega \cdot a + b\)
+1. \(a > c \implies \omega \cdot a + b > \omega \cdot c + d\)
+2. \(a = c, b > d \implies \omega \cdot a + b > \omega \cdot c + d\) \fixme
+#+end_examp
+#+begin_examp org
+\[ \omega \cdot \omega = \sup \{\omega \cdot 0, \omega \cdot 1, \omega \cdot 2, \omega \cdot 3, \dots\} \]
+#+end_examp
+#+begin_examp org
+\[ \omega^\omega = \sup \{\omega, \omega \cdot \omega, \omega \cdot \omega \cdot \omega, \dots\} \]
+#+end_examp
+#+begin_examp org
+\(\omega + 1\)
+#+begin_src pascal
+  record:
+         i: integer,
+         case i of
+           0 : a: boolean;
+           1 : b: integer
+         end
+  end
+#+end_src
+\fixme
+#+end_examp
+#+begin_examp org
+\(\omega + \omega + 2\)
+#+begin_src pascal
+  record:
+         i: integer,
+         case i of
+           0 : a: integer;
+           1 : b: integer;
+           2 : c: boolean;
+         end
+  end
+#+end_src
+#+end_examp
+
+

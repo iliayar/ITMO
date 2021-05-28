@@ -51,6 +51,9 @@
 *Равномощность* \(|a| = |b|\), если существует биекция \(a \to b\)
 #+end_definition
 #+begin_definition org
+*Строго большая мощность* \(|a| > |b|\), если существует \(f: a \to b\) --- инъекция, но не биекция
+#+end_definition
+#+begin_definition org
 *Кардинальное число* \(t\) --- ординал \(x\): для всех \(y \in x\): \(|y| \neq |x|\)
 #+end_definition
 #+begin_definition org
