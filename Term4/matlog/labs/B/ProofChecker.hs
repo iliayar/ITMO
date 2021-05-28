@@ -7,16 +7,18 @@ import Data.Maybe (isJust)
 data Reason = Axiom Int | ModusPonens Int Int | Hypo
     deriving (Show)
 
-findError :: [(Maybe Reason, Expression)] -> Expression -> Maybe Int
+data ProofError = Line Int | Whole | Ok
+
+findError :: [(Maybe Reason, Expression)] -> Expression -> ProofError
 findError lines res = case findError' 1 lines of
-                    r@(Just _) -> r
+                    r@(Line _) -> r
                     _ -> let (_, e) = last lines 
                             in if e /= res
-                                then Just (length lines - 1) else Nothing
+                                then Whole else Ok
     where 
         findError' n ((Just r, e):ls) = findError' (n + 1) ls
-        findError' n ((Nothing, r):ls) = Just n
-        findError' _ [] = Nothing
+        findError' n ((Nothing, r):ls) = Line n
+        findError' _ [] = Ok
 
 checkProof :: [Expression] -> [Expression] -> [(Maybe Reason, Expression)]
 checkProof = checkProof' []
