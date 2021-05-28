@@ -52,7 +52,7 @@ _Тогда_
 * Преобразование случайных величин
 \(\xi\) --- случайная величина на \((\Omega, \mathcal{F}, p)\), \(g: \R \to \R\). Тогда функция \(g(\xi)\)
 #+begin_definition org
-Функция \(g(x): \R \to \R\) --- Борелевская функция, если \(\forall B \in mathfrak{B}\), \(g^{-1}(B) \in \mathfrak{B}\)
+Функция \(g(x): \R \to \R\) --- Борелевская функция, если \(\forall B \in \mathfrak{B}\), \(g^{-1}(B) \in \mathfrak{B}\)
 #+end_definition
 #+begin_theorem org
 Если \(g(x)\) --- Борелевская функция и \(\xi\) --- случайная величина на \((\Omega, \mathcal{F}, p)\), то \(g(\xi)\) --- случайная величина на \((\Omega, \mathcal{F}, p)\)

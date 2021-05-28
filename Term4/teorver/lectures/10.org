@@ -22,7 +22,7 @@
 \(\forall \varepsilon > 0\ p(|\xi _n - \xi| \ge \varepsilon) \xrightarrow[n \to \infty]{} 0\) или \(p(|\xi_n - \xi| < \varepsilon) \xrightarrow[n \to \infty]{} 1\)
 #+end_definition
 #+begin_remark org
-\(\xi_n \xrigharrow{p} \xi \not\!\!\!\implies E\xi_n \to E\xi\)
+\(\xi_n \xrightarrow{p} \xi \not\!\!\!\implies E\xi_n \to E\xi\)
 #+end_remark
 \beginproperty
 #+begin_property org
@@ -44,7 +44,7 @@
 #+end_property
 ** Связь между видами сходимости
 #+begin_theorem org
-\(\xi_n \xrightarrow{\text{п.н.}} \xi \implies \xi_n \xrigharrow{p} \xi \implies \xi_n \rightrightarrows \xi\)
+\(\xi_n \xrightarrow{\text{п.н.}} \xi \implies \xi_n \xrightarrow{p} \xi \implies \xi_n \rightrightarrows \xi\)
 #+end_theorem
 #+begin_proof org
 \todo
@@ -101,16 +101,16 @@
 \todo
 #+end_proof
 #+begin_corollary org
-Если \(E|\xi|^t < \infty\), то \(\forall 0 < s < t\)
+Если \(E|\xi|^t < \infty\), то \(\forall s:\ 0 < s < t\)
 \[ \sqrt[s]{E|\xi|^s} \le \sqrt[t]{E|\xi|^t} \]
 #+end_corollary
 #+ATTR_LATEX: :options [неравентво Маркова]
 #+begin_theorem org
-\[p(|\xi| \ge \varepsilon) \le \frac{E|\xi|}{\varepsilon}\ \forall \varepsilon > 0\]
+\[p(|\xi| \ge \varepsilon) \le \frac{E|\xi|}{\varepsilon} \quad \forall \varepsilon > 0\]
 #+end_theorem
 #+ATTR_LATEX: :options [неравентво Чебышева]
 #+begin_theorem org
-\[ p(|\xi - E\xi| \ge \varepsilon) \le \frac{D\xi}{\varepsilon}\ \forall \varepsilon > 0 \]
+\[ p(|\xi - E\xi| \ge \varepsilon) \le \frac{D\xi}{\varepsilon} \quad \forall \varepsilon > 0 \]
 
 #+end_theorem
 
@@ -156,7 +156,10 @@ _Тогда_
 #+end_theorem
 * Центральная предельная теорема
 #+begin_theorem org
-Пусть \(\xi_1, \xi_2, \dots\) --- , \(0 < D\xi_1 < \infty\) и \(S_n = \sum{i = 1}^n \xi_i\) \\
+\-
+- \(\xi_1, \xi_2, \dots\)
+- \(0 < D\xi_1 < \infty\)
+- \(S_n = \sum_{i = 1}^n \xi_i\)
 _Тогда_
 \[ \frac{S_n - nE\xi_1}{\sqrt{nD\xi_1}} \rightrightarrows N_{0,1} \]
 #+end_theorem

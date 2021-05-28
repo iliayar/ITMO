@@ -25,7 +25,7 @@
 2. \(\pair{C\xi, \eta} = C\pair{\xi, \eta}\)
 3. \(\pair{\xi_1 + \xi_2, \eta} = \pair{\xi_1,\eta} + \pair{\xi_2, \eta}\)
 4. \(\pair{\xi, \xi} \ge 0\)
-5. \(\pair{\xi\,xi} = 0 \Leftrightarrow \xi = 0\) почти наверное
+5. \(\pair{\xi,\xi} = 0 \Leftrightarrow \xi = 0\) почти наверное
 Т.е. это скалярное произведение
 #+end_remark
 #+begin_definition org

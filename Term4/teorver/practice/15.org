@@ -15,7 +15,7 @@
 #+end_solution
 #+begin_task org
 \(\xi \in U(a, b)\) \\
-\(\varphi_\xi(t) = ?\) \
+\(\varphi_\xi(t) = ?\) \\
 Частный случай \(\xi_1, \xi_2 \in U(0, 1)\) --- независимые
 #+end_task
 #+begin_solution org
