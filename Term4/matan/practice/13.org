@@ -1,9 +1,9 @@
 #+LATEX_CLASS: general
-#+TITLE: Практика 12
+#+TITLE: Практика 13
 #+AUTHOR: Ilya Yaroshevskiy
 
 * Формула Стокса
-\[ \iint A \cos \alplha + B \cos \beta + C \cos \gamma \,ds = \iint \pair{ \begin{pmatrix}
+\[ \iint A \cos \alpha + B \cos \beta + C \cos \gamma \,ds = \iint \pair{ \begin{pmatrix}
   A \\ B \\ C
 \end{pmatrix}, n_0 } \,ds = \]
 \[ = \iint_S \begin{vmatrix}
@@ -17,7 +17,12 @@
 Окружность \(x^2 + y^2 + z^2 = 1\)
 #+end_task
 #+begin_solution org
-\[ I = \iint -\,dy\,dz - \,dz\,dx - \,dx\,dy = -\sqrt{3}\iint_{?}ds \]
+\-
+#+ATTR_LATEX: :scale 0.3
+[[file:13_1.png]]
+\[ n_0 = \begin{pmatrix} \frac{1}{\sqrt{3}} \\ \frac{1}{\sqrt{3}} \\ \frac{1}{\sqrt{3}} \end{pmatrix} \]
+
+\[ I = \iint -\,dy\,dz - \,dz\,dx - \,dx\,dy = -\sqrt{3}\iint ds \]
 #+end_solution
 #+ATTR_LATEX: :options [4372]
 #+begin_task org
@@ -25,8 +30,8 @@
 \(C\) --- кривая \(x^2 + y^2 + z^2 = 2Rx\), \(x^2 + y^2 = 2rx\ (0 < r < R,\ z > 0)\)
 #+end_task
 #+begin_solution org
-Забавное замечание
 \[ I = \int_C (x^2 + y^2 + z^2)\,dx + (x^2 + y^2 + z^2)\,dy + (x^2 + y^2 + z^2)\,dz = \]
+--- это неравенство справедливо, т.к. петля замкнута и при дальнешем применении формулы Стокса добавленные слагаемые не внесут изменений
 \[ = \int_C 2Rx \,dx + 2Rx\,dy + 2Rx\,dz \]
 #+end_solution
 #+ATTR_LATEX: :options [4323]
@@ -73,5 +78,10 @@
 #+ATTR_LATEX: :options [4393]
 #+begin_task org
 \[ \iint_S \frac{\partial u}{\partial n} = \iiint \Delta u\,dx\,dy\,dz \quad \Delta u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2} \]
-
 #+end_task
+#+begin_remark org
+Производная по направлению
+\[ \frac{\partial f}{\partial x}\cdot l_1 + \frac{\partial f}{\partial y}\cdot l_2 + \dots \]
+
+#+end_remark
+
