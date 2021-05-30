@@ -11,7 +11,7 @@ test:
 	echo ${SOURCES}
 
 Main: Main.hs
-	ghc Main.hs -o Main
+	ghc Main.hs -O5 -o Main
 
 pack: collect
 	zip $(tasknum).zip $(tasknum)/*
