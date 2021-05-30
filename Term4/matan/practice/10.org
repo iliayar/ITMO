@@ -106,10 +106,13 @@
 [[file:10_1.png]]
 #+end_task
 #+begin_solution org
-\[ \begin{vmatrix}
-  x & 1 & 0 \\
-  y & 0 & 1 \\
-  x^2 - y^2 & 2x & -2y
-\end{vmatrix} \]
+\[ \Phi = \begin{pmatrix}
+  x \\ y \\ x^2 - y^2
+  \end{pmatrix} \quad
+  \begin{pmatrix}
+  1 & 0  \\
+  0 & 1 \\
+  2x & -2y
+\end{pmatrix} \]
 \[ \iint x(-2x) + y(2y) + (x^2 - y^2)\cdot1\,dx\,dy \]
 #+end_solution

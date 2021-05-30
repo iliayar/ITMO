@@ -49,7 +49,7 @@
 #+begin_solution org
 \[ \varphi_{\xi_\lambda}\left(t\right) = \exp\left(\lambda\left(e^{it} - 1\right)\right) \]
 \[ \varphi_{\xi_\lambda - \lambda}\left(t\right) = e^{-it\lambda} \exp\left(\lambda\left(e^{it} - 1\right)\right) = \exp\left(\lambda\left(e^{it} - it - 1\right)\right) \]
-\[ \varphi_{\frac{\xi_\lambda - \lambda}{\sqrt{\lambda}}} = \varphi_{\xi_\lambda - \lambda}\left\left(\frac{t}{\sqrt{\lambda}}\right\right) = \exo\left(\lambda\left(e^{i\frac{t}{\sqrt{\lambda}}} - i\cdot \frac{t}{\sqrt{\lambda}} - 1\right)\right) = \]
+\[ \varphi_{\frac{\xi_\lambda - \lambda}{\sqrt{\lambda}}} = \varphi_{\xi_\lambda - \lambda}\left\left(\frac{t}{\sqrt{\lambda}}\right\right) = \exp\left(\lambda\left(e^{i\frac{t}{\sqrt{\lambda}}} - i\cdot \frac{t}{\sqrt{\lambda}} - 1\right)\right) = \]
 \[ = \exp\left(\lambda\left(1 + i \cdot \frac{t}{\sqrt{\lambda}} + \frac{1}{2} \cdot \left(\frac{it}{\sqrt{\lambda}}\right)^2 + o\left(\left(\frac{it}{\sqrt{\lambda}}\right)^2\right) - i\cdot \frac{t}{\sqrt{\lambda}} - 1\right)\right) = \]
 \[ = \exp\left(-\frac{1}{2}t^2 + \lambda \cdot o\left(\frac{1}{\lambda}\right)\right) \xrightarrow[\lambda \to \infty]{} e^{-\frac{t^2}{2}} \]
 
