@@ -32,4 +32,6 @@ echo "Hamcrest path: ${HAMCREST}"
 
 javac -cp "${JUNIT}:${HAMCREST}" -d . $SOURCES || abort
 java -cp ".:${JUNIT}:${HAMCREST}" "info.kgeorgiy.ja.yaroshevskij.bank.BankTests"
+RET=$?
 cleanup
+exit $RET
