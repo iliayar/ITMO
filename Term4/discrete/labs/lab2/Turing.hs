@@ -5,7 +5,7 @@ import Data.Maybe
 
 charset :: String
 --charset = map toEnum [0..255]
-charset = "01+_-~=*^$#:"
+charset = "01-<_"
 
 data Move = R | L | T
 data State = State { name :: String, transitions :: Char -> Maybe (State, Char, Move) }
