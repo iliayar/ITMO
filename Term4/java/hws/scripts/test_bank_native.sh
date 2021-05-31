@@ -43,4 +43,6 @@ for test in ${TESTS[@]}; do
 done
 echo "Running tests: " ${FULL_TESTS[@]}
 java -cp ".:${JUNIT}:${HAMCREST}" "org.junit.runner.JUnitCore" ${FULL_TESTS[@]}
+RET=$?
 cleanup
+exit $RET
