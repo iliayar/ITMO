@@ -1,14 +1,15 @@
 {-# LANGUAGE TupleSections #-}
-module Turing where
+module TuringStrings where
 
 import Data.Maybe
+import Data.List
 
-charset :: String
+charset :: [String]
 --charset = map toEnum [0..255]
-charset = "0123456789-_+*^$#<>()"
+charset = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "_", "+", "*", "^", "$", "#", "<", ">", "(", ")"]
 
 data Move = R | L | T
-data State = State { name :: String, transitions :: Char -> Maybe (State, Char, Move) }
+data State = State { name :: String, transitions :: String -> Maybe (State, String, Move) }
 
 instance Eq State where
   st1 == st2 = name st1 == name st2
@@ -23,22 +24,22 @@ instance Show State where
         { name = nm
         , transitions=transitions }
         = unlines $ map (showTransition nm) $ mapMaybe (\c -> (c,) <$> transitions c) charset
-            where showTransition nm (ch, (st, c, m)) = nm ++ " " ++ [ch] ++ " -> " ++ name st ++ " " ++ [c] ++ " " ++ show m
+            where showTransition nm (ch, (st, c, m)) = nm ++ " " ++ ch ++ " -> " ++ name st ++ " " ++ c ++ " " ++ show m
 
-data Machine = Machine { states :: [State], start :: State, accept :: State, reject :: State, blank :: Char }
+data Machine = Machine { states :: [State], start :: State, accept :: State, reject :: State, blank :: String }
 
 instance Show Machine where
     show m = unlines $
         [ "start: " ++ name (start m)
         , "accept: " ++ name (accept m)
         , "reject: " ++ name (reject m)
-        , "blank: " ++ [blank m]]
+        , "blank: " ++ blank m]
         ++ map show (states m)
 
-stateFromFunc :: String -> (Char -> (State, Char, Move)) -> State
+stateFromFunc :: String -> (String -> (State, String, Move)) -> State
 stateFromFunc s f = State { name  = s, transitions = Just . f }
 
-stateFromList :: String -> [(Char, State, Char, Move)] -> State
+stateFromList :: String -> [(String, State, String, Move)] -> State
 stateFromList n ts = State { name = n,
             transitions = transitions' }
     where
@@ -67,12 +68,12 @@ logStr = Logger ()
 logStrLn :: String -> Logger ()
 logStrLn = logStr . (++"\n")
 
-data MachineState = MachineState { pos :: Int, string :: String, state :: State }
+data MachineState = MachineState { pos :: Int, string :: [String], state :: State }
 
 -- runMachineDefault = runMachine 10000000 500
 runMachineDefault = runMachine 200 500
 
-runMachine :: Int -> Int -> String -> Machine -> Logger (Either String (Verdict, State))
+runMachine :: Int -> Int -> [String] -> Machine -> Logger (Either String (Verdict, State))
 runMachine stepsLimit statesLimit string machine
     = if statesLimit < length (states machine)
         then return $ Left "Too many states"
@@ -81,14 +82,14 @@ runMachine stepsLimit statesLimit string machine
 machineStep :: Int -> Int -> Machine -> MachineState -> Logger (Either String (Verdict, State))
 machineStep stepsLimit steps machine MachineState { pos = p, string = s, state = st}
     = do
-        logStrLn (name st)
-        logStrLn s
-        logStrLn $ replicate p ' ' ++ "^"
+        logStrLn $ name st
+        logStrLn $ intercalate " " s
+        logStrLn $ intercalate " " $ map (:[]) $ replicate p ' ' ++ "^"
         if stepsLimit < steps
             then return $ Left "Steps limit"
             else case transitions st (s !! p) of
                     Nothing -> do
-                      logStrLn s
+                      logStrLn (intercalate " " s)
                       logStrLn $ replicate p ' ' ++ "^"
                       return $ if st == accept machine then Right (Accept, st) else Right (Reject, st)
                     Just (ns, ch, m) ->
