@@ -23,3 +23,12 @@
 * Homeworks
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/20.pdf][20]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/56.pdf][56]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/133-147.pdf][121, 149]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/224-239.pdf][226, 232]]
+- [[file:hw/183.rs][183]] --- quine in Rust
+  #+include: "./hw/183.rs" src rust
+- [[file:hw/184_172_1.nim][184]] -- 172 in Nim
+  #+include: "./hw/184_172_1.nim" src nim
+  #+include: "./hw/184_172_2.nim" src nim
+Unchecked:
+- Couple from [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/168-184.pdf][168-184]]
