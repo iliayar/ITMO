@@ -1,0 +1,133 @@
+start: s
+accept: ac
+reject: rj
+blank: _
+s 0 -> right_to_blank 0 ^
+s 1 -> right_to_blank 1 ^
+s 2 -> right_to_blank 2 ^
+s 3 -> right_to_blank 3 ^
+s 4 -> right_to_blank 4 ^
+s 5 -> right_to_blank 5 ^
+s 6 -> right_to_blank 6 ^
+s 7 -> right_to_blank 7 ^
+s 8 -> right_to_blank 8 ^
+s 9 -> right_to_blank 9 ^
+s - -> right_to_blank - ^
+s _ -> right_to_blank _ ^
+s + -> right_to_blank + ^
+s * -> right_to_blank * ^
+s ^ -> right_to_blank ^ ^
+s $ -> right_to_blank $ ^
+s # -> right_to_blank # ^
+s < -> right_to_blank < ^
+s > -> right_to_blank > ^
+s ( -> right_to_blank ( ^
+s ) -> right_to_blank ) ^
+
+
+
+right_to_blank 0 -> right_to_blank 0 >
+right_to_blank 1 -> right_to_blank 1 >
+right_to_blank 2 -> right_to_blank 2 >
+right_to_blank 3 -> right_to_blank 3 >
+right_to_blank 4 -> right_to_blank 4 >
+right_to_blank 5 -> right_to_blank 5 >
+right_to_blank 6 -> right_to_blank 6 >
+right_to_blank 7 -> right_to_blank 7 >
+right_to_blank 8 -> right_to_blank 8 >
+right_to_blank 9 -> right_to_blank 9 >
+right_to_blank - -> right_to_blank - >
+right_to_blank _ -> after_right_to_blank _ ^
+right_to_blank + -> right_to_blank + >
+right_to_blank * -> right_to_blank * >
+right_to_blank ^ -> right_to_blank ^ >
+right_to_blank $ -> right_to_blank $ >
+right_to_blank # -> right_to_blank # >
+right_to_blank < -> right_to_blank < >
+right_to_blank > -> right_to_blank > >
+right_to_blank ( -> right_to_blank ( >
+right_to_blank ) -> right_to_blank ) >
+
+after_right_to_blank _ -> move_to_copy_left : ^
+
+move_to_copy_left 0 -> move_to_copy_left 0 <
+move_to_copy_left 1 -> move_to_copy_left 1 <
+move_to_copy_left 2 -> move_to_copy_left 2 <
+move_to_copy_left 3 -> move_to_copy_left 3 <
+move_to_copy_left 4 -> move_to_copy_left 4 <
+move_to_copy_left 5 -> move_to_copy_left 5 <
+move_to_copy_left 6 -> move_to_copy_left 6 <
+move_to_copy_left 7 -> move_to_copy_left 7 <
+move_to_copy_left 8 -> move_to_copy_left 8 <
+move_to_copy_left 9 -> move_to_copy_left 9 <
+move_to_copy_left - -> move_to_copy_left - <
+move_to_copy_left _ -> move_to_copy_left _ <
+move_to_copy_left + -> move_to_copy_left + <
+move_to_copy_left * -> move_to_copy_left * <
+move_to_copy_left ^ -> move_to_copy_left ^ <
+move_to_copy_left $ -> move_to_copy_left $ <
+move_to_copy_left # -> move_to_copy_left # <
+move_to_copy_left < -> move_to_copy_left < <
+move_to_copy_left > -> move_to_copy_left > <
+move_to_copy_left ( -> move_to_copy_left ( <
+move_to_copy_left ) -> move_to_copy_left ) <
+
+
+start_copy_left2 0 -> start_copy_left3t0 : >
+start_copy_left2 1 -> start_copy_left3t1 : >
+start_copy_left2 _ -> finish _ >
+
+
+
+start_copy_left 0 -> copy_right0 0 ^
+start_copy_left 1 -> copy_right1 1 ^
+
+copy_right1 0 -> copy_right1 0 >
+copy_right1 1 -> copy_right1 1 >
+copy_right1 2 -> copy_right1 2 >
+copy_right1 3 -> copy_right1 3 >
+copy_right1 4 -> copy_right1 4 >
+copy_right1 5 -> copy_right1 5 >
+copy_right1 6 -> copy_right1 6 >
+copy_right1 7 -> copy_right1 7 >
+copy_right1 8 -> copy_right1 8 >
+copy_right1 9 -> copy_right1 9 >
+copy_right1 - -> copy_right1 - >
+copy_right1 _ -> copy_right1t _ ^
+copy_right1 + -> copy_right1 + >
+copy_right1 * -> copy_right1 * >
+copy_right1 ^ -> copy_right1 ^ >
+copy_right1 $ -> copy_right1 $ >
+copy_right1 # -> copy_right1 # >
+copy_right1 < -> copy_right1 < >
+copy_right1 > -> copy_right1 > >
+copy_right1 ( -> copy_right1 ( >
+copy_right1 ) -> copy_right1 ) >
+
+copy_right1t _ -> move_to_copy_left 1 ^
+
+copy_right0 0 -> copy_right0 0 >
+copy_right0 1 -> copy_right0 1 >
+copy_right0 2 -> copy_right0 2 >
+copy_right0 3 -> copy_right0 3 >
+copy_right0 4 -> copy_right0 4 >
+copy_right0 5 -> copy_right0 5 >
+copy_right0 6 -> copy_right0 6 >
+copy_right0 7 -> copy_right0 7 >
+copy_right0 8 -> copy_right0 8 >
+copy_right0 9 -> copy_right0 9 >
+copy_right0 - -> copy_right0 - >
+copy_right0 _ -> copy_right0t _ ^
+copy_right0 + -> copy_right0 + >
+copy_right0 * -> copy_right0 * >
+copy_right0 ^ -> copy_right0 ^ >
+copy_right0 $ -> copy_right0 $ >
+copy_right0 # -> copy_right0 # >
+copy_right0 < -> copy_right0 < >
+copy_right0 > -> copy_right0 > >
+copy_right0 ( -> copy_right0 ( >
+copy_right0 ) -> copy_right0 ) >
+
+copy_right0t _ -> move_to_copy_left 0 ^
+
+

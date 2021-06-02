@@ -18,6 +18,8 @@
 * Labs
 - [[file:labs/lab1/][Generating functions]] \\
   [[file:labs/lab1/s4-01-lab-genfunction.pdf][Statements]]
+- [[file:labs/lab2/][Turing Machine]] \\
+  [[file:labs/lab2/s4-02-lab-turing.pdf][Statements]]
 * Homeworks
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/20.pdf][20]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/hw/56.pdf][56]]
