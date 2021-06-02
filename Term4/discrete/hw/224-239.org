@@ -1,0 +1,26 @@
+#+LATEX_CLASS: general
+#+OPTIONS: num:nil
+
+* 226
+\[ {\rm NEI} = \{\pair{\Gamma_1, \Gamma_2} | \Gamma_1 \cap \Gamma_2 \neq \varnothing \} \]
+Пусть \(\pair{A, B}\) --- экземпляр PCP. Построим грамматики \(\Gamma_A, \Gamma_B\)
+- \(\Gamma_A\): \\
+  \(S \to a_i S i\quad \forall i\) \\
+  \(S \to \varepsilon\)
+- \(\Gamma_B\): \\
+  \(S \to b_i S i\quad \forall i\) \\
+  \(S \to \varepsilon\)
+Сведем PCP к NEI:
+- \(\pair{A, B}\) имеет решение w \(\implies\) \(wi_1\dots i_k\) выводится в \(\Gamma_A\) и \(\Gamma_B\), т.е. \(L_{\Gamma_A} \cap L_{\Gamma_B} \neq \varnothing\)
+- \(\pair{A, B}\) не имеет решение \(\implies\) \(\not \exists w: a_{i_1}\dots a_{i_k} = b_{i_1}\dots b_{i_k} = w\), значит \(L_{\Gamma_A} \cap L_{\Gamma_B} = \varnothing\)
+PCP неразрешим \(\implies\) NEI неразрешим \(\implies\) \(\overline{NEI}\) неразрешим
+* 232
+\[ {\rm P} = \{\Gamma | \Gamma\text{ --- содержит палиндром}\} \]
+\(\pair{A, B}\) --- экземпляр PCP. Построим грамматику \(\Gamma\): \\
+\(S \to a_i S b_i'\) \\
+\(S \to \#\) \\
+где \(b_i'\) --- развернутое слово \(b_i\) \\
+Сведем PCP к P
+- \(\pair{A, B}\) имеет решение w \(\implies\) \(w\#w'\) --- палиндром, где \(w'\) --- развернутое слово \(w\). Тогда \(w\#w'\) выводится в \(\Gamma\)
+- \(w\#w'\) выводится в \(\Gamma\) \(\implies\) \(w\) --- решение \(\pair{A, B}\)
+PCP неразрешим \(\implies\) P неразрешим
