@@ -1,7 +1,5 @@
 import Turing
 
-import Control.Monad.Logger
-
 filename = "aplusb"
 
 blk = '_'
