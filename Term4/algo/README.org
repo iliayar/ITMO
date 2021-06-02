@@ -5,6 +5,7 @@
 * Homeworks
 - [[https://iliayar.ru/public-notes/conspects/Term4/algo/hws/3.9.pdf][3.9]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/algo/hws/10.3.1.pdf][10.3.1]]
+- [[https://iliayar.ru/public-notes/conspects/Term4/algo/hws/13.1.pdf][13.1]]
 * Labs
 - [[file:labs/lab1/][Matchings]] \\
   [[file:labs/lab1/statements.pdf][Statements]]
