@@ -1,7 +1,5 @@
 #+TITLE: Дифференциальные уравнения
 
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-bigblow.setup
-
 #+LaTeX_HEADER: \usepackage[utf8]{inputenc}
 #+LaTeX_HEADER: \usepackage[russian]{babel}
 
