@@ -12,7 +12,6 @@ tokens :-
   $white+                       ;
   &                             { \s -> TokenAnd }
   \|                            { \s -> TokenOr }
-  \n                            { \s -> TokenNewLine }
   "|-"                          { \s -> TokenTurn }
   "->"                          { \s -> TokenImpl }
   !                             { \s -> TokenNot }
@@ -25,6 +24,7 @@ tokens :-
   \(                            { \s -> TokenLParen }
   \)                            { \s -> TokenRParen }
   \.                            { \s -> TokenDot }
+  \'                            { \s -> TokenSucc }
   [$upperAlpha]+                { \s -> TokenPred s }
   [$lowerAlpha]+                { \s -> TokenVar s }
 
@@ -46,8 +46,9 @@ data Token = TokenAnd
            | TokenLParen
            | TokenRParen
            | TokenDot
-	   | TokenVar String
-	   | TokenPred String
+           | TokenSucc
+           | TokenVar String
+           | TokenPred String
            deriving (Eq,Show)
 
 scanTokens = alexScanTokens
