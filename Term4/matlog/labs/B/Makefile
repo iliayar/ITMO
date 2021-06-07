@@ -1,27 +1,17 @@
-.PHONY: all run pack clean collect
+.PHONY: all run pack clean
 
 tasknum=B
 
 all: Main
 
 run:
-	./Main
-
-test:
-	echo ${SOURCES}
+	@./Main
 
 Main: Main.hs
 	ghc Main.hs -O5 -o Main
 
-pack: collect
-	zip $(tasknum).zip $(tasknum)/*
-	rm -R $(tasknum)
+pack: 
+	zip $(tasknum).zip *.hs Makefile
 
-collect: *.hs Makefile
-	mkdir $(tasknum)
-	cp $? $(tasknum)/
-	cp Makefile $(tasknum)/
-
-
-clean: *.hi *.o
-	rm $?
+clean:
+	rm *.hi *.o
