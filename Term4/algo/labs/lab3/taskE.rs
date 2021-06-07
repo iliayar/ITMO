@@ -138,9 +138,8 @@ fn furie(p: &[i64], q: &[i64]) -> Vec<i64> {
 
 
 fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
-    let s = scan.next::<String>();
-    let t = s.as_bytes();
-    let mut m = t.len();
+    let n = scan.next::<usize>() + 1;
+    let mut m = n;
     let mut k: u32 = 0;
     while m > 0 {
 	k += 1;
@@ -151,22 +150,16 @@ fn sol(scan: &mut Scanner, out: &mut dyn Write ) {
     // for i in 0..2usize.pow(k) {
     // 	println!("w^{:?} = {:?}", i, w.pow(i));
     // }
-    let p: Vec<i64> = t.iter().map(|e| (*e - b'0') as i64).chain(iter::repeat(0)).take((2 as usize).pow(k + 1)).collect();
+    let p: Vec<i64> = (0..n).map(|_| scan.next::<i64>()).chain(iter::repeat(0)).take((2 as usize).pow(k + 1)).collect();
+    let q: Vec<i64> = (0..n).map(|_| scan.next::<i64>()).chain(iter::repeat(0)).take((2 as usize).pow(k + 1)).collect();
     // let p: Vec<i64> = (0..n).map(|_| scan.next::<i64>()).collect();
     // let q: Vec<i64> = (0..n).map(|_| scan.next::<i64>()).collect();
     // p.reverse(); q.reverse();
-    let res = furie(&p, &p);
-    let mut sum: i64 = 0;
-    for (r, c) in res.iter().step_by(2).zip(t.iter()) {
-	if *c == b'1' {
-	    sum += r / 2;
-	}
+    let res = furie(&p, &q);
+    for r in res.iter().take(2*(n - 1) + 1) {
+	write!(out, "{} ", r).ok();
     }
-    writeln!(out, "{}", sum).ok(); // 🤔
-    // for r in res.iter().take(2*(n - 1) + 1) {
-    // 	write!(out, "{} ", r).ok();
-    // }
-    // writeln!(out, "").ok();
+    writeln!(out, "").ok();
 }
 
 //================================ CODE END =================================================
