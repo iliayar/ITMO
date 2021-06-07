@@ -19,7 +19,7 @@
 \[ (\nabla f(x^{k - 1}), p^k) = - (\nabla f(x^{k - 1}), H^{-1}(x^{k- 1})\nabla f(x^{k - 1})) < 0\]
 \(H\) --- положительно определена \(\implies\) \(H^{-1}\) --- положительно определена
 Выбор \(\alpha_k \to \)
-1. \(varphi_k(\alpha) = f(x^{k - 1} + \alpha p^k) \to \min\)
+1. \(\varphi_k(\alpha) = f(x^{k - 1} + \alpha p^k) \to \min\)
 2. исчерпывающий спуск по \(p^k\)
 3. дробление \(\alpha_k\)
 -----
