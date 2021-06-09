@@ -2,6 +2,7 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
+[[https://iliayar.ru/public-notes/conspects/Term4/matan/lectures/questions.pdf][Questions for exam]] \\
 [[https://iliayar.ru/public-notes/conspects/Term4/matan/lectures/all_lectures.pdf][All lectures]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matan/lectures/1.pdf][Lecture 1]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matan/lectures/2.pdf][Lecture 2]]
