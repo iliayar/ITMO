@@ -5,35 +5,40 @@ import Data
 import Annotation
 import BindingRules
 import Helpers
-import Data.Maybe (mapMaybe)
+import Data.Maybe (mapMaybe, isJust)
 import Data.Map (Map, empty, insert, mapWithKey)
 import qualified Data.Map as M
-import Control.Exception (try)
+import Control.Applicative ((<|>))
+
 
 annotate :: File -> Either AnnotationErrorFile AnnotatedFile
 annotate (File e es) =
-  let (aes, err) = annotateExprs es
+  let (aes, err) = annotateExprs e es
   in case err of
     Just err -> Left $ AnnotationErrorFile (AnnotatedFile e aes) err
     Nothing -> Right $ AnnotatedFile e aes
 
-annotateExprs :: [Expr] -> ([AnnotatedExpr], Maybe AnnotationError)
-annotateExprs = annotateExprs' 1 empty
+annotateExprs :: Expr -> [Expr] -> ([AnnotatedExpr], Maybe AnnotationError)
+annotateExprs e es' =
+  let (es, err) = annotateExprs' 1 empty es'
+  in case err of
+    Just e -> (es, err)
+    Nothing ->
+      if getExpr (last es) /= e
+      then (es, Just WrongExpressionProved)
+      else (es, Nothing)
 
 annotateExprs' :: Int -> Map Expr Int -> [Expr] -> ([AnnotatedExpr], Maybe AnnotationError)
 annotateExprs' n prev (e:es) =
-  let ret ae = (let (aes, err) = annotateExprs' (n + 1) (insert e n prev) es in (ae : aes, err))
-  in case checkScheme n e of
-       Left err -> ([], Just err)
-       Right (Just ae) -> ret ae
-       Right Nothing ->
-         case checkAxiom n e of
-           Just ae -> ret ae
-           Nothing ->
-             case checkRules n prev e of
-               Left err -> ([], Just err)
-               Right (Just ae) -> ret ae
-               Right Nothing -> ([], Just $ NotProved n)
+  case checkScheme n e
+       <?> checkAxiom n e
+       <?> checkRules n prev e
+  of
+    Left err -> ([], Just err)
+    Right Nothing -> ([], Just $ NotProved n)
+    Right (Just ae) ->
+      let (aes, err) = annotateExprs' (n + 1) (M.insertWith min e n prev) es
+      in (ae : aes, err)
 annotateExprs' _ _ [] = ([], Nothing)
 
 
@@ -52,16 +57,9 @@ checkScheme n e =
                , checkScheme10]
   of
     (s:_) -> Right $ Just $ AnnotatedExpr e $ AxiomScheme n $ Number s
-    [] -> case checkSchemeForall e of
-            Right True -> Right $ Just $ AnnotatedExpr e $ AxiomScheme n $ Number 11
-            Left (var, term) -> Left $ NonFreeForallAxiom n var term
-            Right False ->
-              case checkSchemeExists e of
-                Right True -> Right $ Just $ AnnotatedExpr e $ AxiomScheme n $ Number 12
-                Left (var, term) -> Left $ NonFreeExistsAxiom n var term
-                Right False -> if checkSchemeInduction e
-                               then Right $ Just $ AnnotatedExpr e $ AxiomScheme n $ ArithmeticNumber 9
-                               else Right Nothing
+    [] ->  checkSchemeForall n e
+           <?> checkSchemeExists n e
+           <?> checkSchemeInduction n e
     where
       checkSimpleScheme' :: Expr -> (Int, Expr -> Bool) -> Maybe Int
       checkSimpleScheme' e (n, checker) = if checker e then Just n else Nothing
@@ -97,35 +95,36 @@ checkScheme10 (Impl (Not (Not alpha)) alpha') =
     alpha == alpha'
 checkScheme10 _ = False
 
-checkSubstitutionScheme :: Int -> Var -> Expr -> Expr -> Either (Var, Term) Bool
-checkSubstitutionScheme n x phi phi' =
+checkSubstitutionScheme :: (Var -> Term -> AnnotationError) -> AnnotatedExpr -> Var -> Expr -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkSubstitutionScheme errF ae x phi phi' =
   case findSubstitution x phi phi' of
     Just (Just t) -> checkSubstitution' x t phi
-    Just Nothing -> Right True
-    Nothing -> Right False
+    Just Nothing -> Right $ Just ae
+    Nothing -> Right Nothing
   where
     checkSubstitution' var t e =
       if checkSubstitution var t e
-      then Right True
-      else Left (var, t)
+      then Right $ Just ae
+      else Left $ errF var t
 
-checkSchemeForall :: Expr -> Either (Var, Term) Bool
-checkSchemeForall (Impl (Forall x phi) phi') = checkSubstitutionScheme 11 x phi phi'
-checkSchemeForall _ = Right False
+checkSchemeForall :: Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkSchemeForall n e@(Impl (Forall x phi) phi') = checkSubstitutionScheme (NonFreeForallAxiom n) (AnnotatedExpr e $ AxiomScheme n $ Number 11) x phi phi'
+checkSchemeForall _ _ = Right Nothing
 
-checkSchemeExists :: Expr -> Either (Var, Term) Bool
-checkSchemeExists (Impl phi' (Exists x phi)) = checkSubstitutionScheme 12 x phi phi'
-checkSchemeExists _ = Right False
+checkSchemeExists :: Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkSchemeExists n e@(Impl phi' (Exists x phi)) = checkSubstitutionScheme (NonFreeExistsAxiom n) (AnnotatedExpr e $ AxiomScheme n $ Number 12) x phi phi'
+checkSchemeExists _ _ = Right Nothing
 
-checkSchemeInduction :: Expr -> Bool
-checkSchemeInduction (Impl (And phi0 (Forall x (Impl phi phi'))) phi'') =
-  phi'' == phi &&
-  case (findSubstitution x phi phi0, findSubstitution x phi phi') of
-    (Just (Just Zero), Just (Just (Succ (TermVar x')))) -> x == x'
-    _ -> False
-checkSchemeInduction _ = False
+checkSchemeInduction :: Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkSchemeInduction n e@(Impl (And phi0 (Forall x (Impl phi phi'))) phi'') =
+  if phi'' == phi
+  then case (findSubstitution x phi phi0, findSubstitution x phi phi') of
+         (Just (Just Zero), Just (Just (Succ (TermVar x')))) -> Right $ Just $ AnnotatedExpr e $ AxiomScheme n $ ArithmeticNumber 9
+         _ -> Right Nothing
+  else Right Nothing
+checkSchemeInduction _ _ = Right Nothing
 
-checkAxiom :: Int -> Expr -> Maybe AnnotatedExpr
+checkAxiom :: Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
 checkAxiom n e =
   case mapMaybe (applyAxiom e) $ zip [1..]
        [ axiom1
@@ -137,27 +136,27 @@ checkAxiom n e =
        , axiom7
        , axiom8 ]
   of
-    (a:_) -> Just $ AnnotatedExpr e $ ArithmeticAxiom n $ ArithmeticNumber a
-    [] -> Nothing
+    (a:_) -> Right $ Just $ AnnotatedExpr e $ ArithmeticAxiom n $ ArithmeticNumber a
+    [] -> Right Nothing
   where
     applyAxiom e (n, ax) = if ax e then Just n else Nothing
 
-axiom1 (Impl (ExprPred (PredEq (TermVar a) (TermVar b))) (Impl (ExprPred (PredEq (TermVar a') (TermVar c))) (ExprPred (PredEq (TermVar b') (TermVar c'))))) =
-  a == a' && b == b' && c == c'
-axiom1 _ = False
-axiom2 (Impl (ExprPred (PredEq (TermVar a) (TermVar b))) (ExprPred (PredEq (Succ (TermVar a')) (Succ (TermVar b'))))) =
+axiom1 (Impl (ExprPred (PredEq (TermVar a) (TermVar b))) (ExprPred (PredEq (Succ (TermVar a')) (Succ (TermVar b'))))) =
   a == a' && b == b'
+axiom1 _ = False
+axiom2 (Impl (ExprPred (PredEq (TermVar a) (TermVar b))) (Impl (ExprPred (PredEq (TermVar a') (TermVar c))) (ExprPred (PredEq (TermVar b') (TermVar c'))))) =
+  a == a' && b == b' && c == c'
 axiom2 _ = False
 axiom3 (Impl (ExprPred (PredEq (Succ (TermVar a)) (Succ (TermVar b)))) (ExprPred (PredEq (TermVar a') (TermVar b')))) =
   a == a' && b == b'
 axiom3 _ = False
 axiom4 (Not (ExprPred (PredEq (Succ (TermVar a)) Zero))) = True
 axiom4 _ = False
-axiom5 (ExprPred (PredEq (Plus (TermVar a) Zero) (TermVar a'))) =
-  a == a'
-axiom5 _ = False
-axiom6 (ExprPred (PredEq (Plus (TermVar a) (Succ (TermVar b))) (Succ (Plus (TermVar a') (TermVar b'))))) =
+axiom5 (ExprPred (PredEq (Plus (TermVar a) (Succ (TermVar b))) (Succ (Plus (TermVar a') (TermVar b'))))) =
   a == a' && b == b'
+axiom5 _ = False
+axiom6 (ExprPred (PredEq (Plus (TermVar a) Zero) (TermVar a'))) =
+  a == a'
 axiom6 _ = False
 axiom7 (ExprPred (PredEq (Times (TermVar a) Zero) Zero)) = True
 axiom7 _ = False
@@ -166,25 +165,16 @@ axiom8 (ExprPred (PredEq (Times (TermVar a) (Succ (TermVar b))) (Plus (Times (Te
 axiom8 _ = False
 
 checkRules :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
-checkRules n es e =
-  case checkModusPonens n es e of
-    ae@(Just _) -> Right ae
-    Nothing ->
-      case checkExistsRule n es e of
-        err@(Left _) -> err
-        a@(Right (Just _)) -> a
-        Right Nothing ->
-          case checkForallRule n es e of
-            err@(Left _) -> err
-            a@(Right (Just _)) -> a
-            Right Nothing -> Right Nothing
+checkRules n es e = checkModusPonens n es e
+                    <?> checkExistsRule n es e
+                    <?> checkForallRule n es e
 
-checkModusPonens :: Int -> Map Expr Int -> Expr  -> Maybe AnnotatedExpr
+checkModusPonens :: Int -> Map Expr Int -> Expr  -> Either AnnotationError (Maybe AnnotatedExpr)
 checkModusPonens n es e =
   let es' = M.mapMaybeWithKey (check' e es) es
   in case findMin es' of
-    Just (_, (k, l)) -> Just $ AnnotatedExpr e $ ModusPonens n k l
-    Nothing -> Nothing
+    Just (_, (k, l)) -> Right $ Just $ AnnotatedExpr e $ ModusPonens n k l
+    Nothing -> Right Nothing
   where
     check' :: Expr -> Map Expr Int -> Expr -> Int -> Maybe (Int, Int)
     check' e es (Impl e1 e') l =
@@ -198,13 +188,17 @@ checkModusPonens n es e =
 checkExistsRule :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
 checkExistsRule n es e@(Impl (Exists x phi) psi) =
   case M.lookup (Impl phi psi) es of
-    Just k -> if hasFree x phi then Right $ Just (AnnotatedExpr e $ ExistsRule n k) else Left $ NonFreeExists n x
+    Just k -> if hasFree x phi
+              then Right $ Just (AnnotatedExpr e $ ExistsRule n k)
+              else Left $ NonFreeExists n x
     Nothing -> Right Nothing
 checkExistsRule _ _ _ = Right Nothing
 
 checkForallRule :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
 checkForallRule n es e@(Impl phi (Forall x psi)) =
   case M.lookup (Impl phi psi) es of
-    Just k -> if hasFree x phi then Right $ Just (AnnotatedExpr e $ ForallRule n k) else Left $ NonFreeForall n x
+    Just k -> if hasFree x phi
+              then Right $ Just (AnnotatedExpr e $ ForallRule n k)
+              else Left $ NonFreeForall n x
     Nothing -> Right Nothing
 checkForallRule _ _ _ = Right Nothing
