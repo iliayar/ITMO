@@ -4,7 +4,7 @@ tasknum=A
 
 all: Main
 
-run:
+run: Main
 	@./Main
 
 Main: parser Main.hs

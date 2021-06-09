@@ -1,17 +1,24 @@
-.PHONY: all run pack clean
+.PHONY: all run pack clean parser
 
 tasknum=B
 
 all: Main
 
-run:
+run: Main
 	@./Main
 
-Main: Main.hs
+Main: parser Main.hs
 	ghc Main.hs -O5 -o Main
 
-pack: 
-	zip $(tasknum).zip *.hs Makefile
+parser: Tokens.hs Grammar.hs
+
+Tokens.hs: Tokens.x
+	alex Tokens.x
+Grammar.hs: Grammar.y
+	happy Grammar.y
+
+pack: parser
+	zip $(tasknum).zip *.hs Tokens.x Grammar.y Makefile
 
 clean:
-	rm *.hi *.o
+	rm *.hi *.o Grammar.hs Tokens.hs

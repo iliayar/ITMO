@@ -42,7 +42,7 @@ File : Header Proof { File $1 $2 }
 Header : turn Expr { $2 }
 
 Proof : Expr Proof { $1 : $2 }
-      | {- empty -} { [] }
+     | {- empty -} { [] }
 
 Expr : Expr impl Expr { Impl $1 $3 }
      | Expr or Expr { Or $1 $3 }
