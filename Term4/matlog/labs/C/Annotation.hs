@@ -6,6 +6,9 @@ data AnnotatedFile = AnnotatedFile Expr [AnnotatedExpr]
 
 data AnnotatedExpr = AnnotatedExpr Expr Annotation
 
+getExpr :: AnnotatedExpr -> Expr
+getExpr (AnnotatedExpr e _) = e
+
 data AxiomNumber = Number Int | ArithmeticNumber Int
 
 data Annotation = AxiomScheme Int AxiomNumber
