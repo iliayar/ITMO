@@ -12,7 +12,7 @@ data Expression = And Expression Expression
                 | Impl Expression Expression
                 | Not Expression
                 | Var String
-    deriving (Eq)
+    deriving (Eq, Ord)
 instance Show Expression where
     show (Impl e1 e2) = "(" ++ (show e1) ++ " → " ++ (show e2) ++ ")"
     show (And e1 e2) = "(" ++ (show e1) ++ " & " ++ (show e2) ++ ")"

@@ -4,7 +4,11 @@ module ProofChecker (annotate) where
 import Data
 import Annotation
 import BindingRules
+import Helpers
 import Data.Maybe (mapMaybe)
+import Data.Map (Map, empty, insert, mapWithKey)
+import qualified Data.Map as M
+import Control.Exception (try)
 
 annotate :: File -> Either AnnotationErrorFile AnnotatedFile
 annotate (File e es) =
@@ -14,11 +18,11 @@ annotate (File e es) =
     Nothing -> Right $ AnnotatedFile e aes
 
 annotateExprs :: [Expr] -> ([AnnotatedExpr], Maybe AnnotationError)
-annotateExprs = annotateExprs' 1 []
+annotateExprs = annotateExprs' 1 empty
 
-annotateExprs' :: Int -> [Expr] -> [Expr] -> ([AnnotatedExpr], Maybe AnnotationError)
+annotateExprs' :: Int -> Map Expr Int -> [Expr] -> ([AnnotatedExpr], Maybe AnnotationError)
 annotateExprs' n prev (e:es) =
-  let ret ae = (let (aes, err) = annotateExprs' (n + 1) (e:prev) es in (ae : aes, err))
+  let ret ae = (let (aes, err) = annotateExprs' (n + 1) (insert e n prev) es in (ae : aes, err))
   in case checkScheme n e of
        Left err -> ([], Just err)
        Right (Just ae) -> ret ae
@@ -26,7 +30,7 @@ annotateExprs' n prev (e:es) =
          case checkAxiom n e of
            Just ae -> ret ae
            Nothing ->
-             case checkRules n (reverse prev) e of
+             case checkRules n prev e of
                Left err -> ([], Just err)
                Right (Just ae) -> ret ae
                Right Nothing -> ([], Just $ NotProved n)
@@ -161,7 +165,7 @@ axiom8 (ExprPred (PredEq (Times (TermVar a) (Succ (TermVar b))) (Plus (Times (Te
   a == a' && a' == a'' && b == b'
 axiom8 _ = False
 
-checkRules :: Int -> [Expr] -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkRules :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
 checkRules n es e =
   case checkModusPonens n es e of
     ae@(Just _) -> Right ae
@@ -174,45 +178,33 @@ checkRules n es e =
             err@(Left _) -> err
             a@(Right (Just _)) -> a
             Right Nothing -> Right Nothing
-            
 
-checkModusPonens :: Int -> [Expr] -> Expr -> Maybe AnnotatedExpr
+checkModusPonens :: Int -> Map Expr Int -> Expr  -> Maybe AnnotatedExpr
 checkModusPonens n es e =
-  case mapMaybe (check e) [(i, j) | i <- zip [1..] es, j <- zip [1..] es] of
-    ((k, l):_) -> Just $ AnnotatedExpr e $ ModusPonens n k l
-    [] -> Nothing
+  let es' = M.mapMaybeWithKey (check' e es) es
+  in case findMin es' of
+    Just (_, (k, l)) -> Just $ AnnotatedExpr e $ ModusPonens n k l
+    Nothing -> Nothing
   where
-    check e ((k, e1), (l, Impl e1' e')) = if e1' == e1 && e == e' then Just (k, l) else Nothing
-    check _ _ = Nothing
-
-checkExistsRule :: Int -> [Expr] -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
-checkExistsRule n es e =
-  case mapMaybe (check e) $ zip [1..] es of
-    ((Left e):_) -> Left $ NonFreeExists n e
-    ((Right k):_) -> Right $ Just (AnnotatedExpr e $ ExistsRule n k)
-    [] -> Right Nothing
-  where
-    check :: Expr -> (Int, Expr) -> Maybe (Either Var Int)
-    check (Impl (Exists x phi) psi) (k, Impl phi' psi') =
-      if phi == phi' && psi == psi'
-      then if hasFree x phi
-              then Just $ Right k
-              else Just $ Left x
+    check' :: Expr -> Map Expr Int -> Expr -> Int -> Maybe (Int, Int)
+    check' e es (Impl e1 e') l =
+      if e == e'
+      then case M.lookup e1 es of
+             Just k -> Just (k, l)
+             Nothing -> Nothing
       else Nothing
-    check _ _ = Nothing
+    check' _ _ _ _ = Nothing
 
-checkForallRule :: Int -> [Expr] -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
-checkForallRule n es e =
-  case mapMaybe (check e) $ zip [1..] es of
-    ((Left e):_) -> Left $ NonFreeForall n e
-    ((Right k):_) -> Right $ Just (AnnotatedExpr e $ ForallRule n k)
-    [] -> Right Nothing
-  where
-    check :: Expr -> (Int, Expr) -> Maybe (Either Var Int)
-    check (Impl phi (Forall x psi)) (k, Impl phi' psi') =
-      if phi == phi' && psi == psi'
-      then if hasFree x phi
-              then Just $ Right k
-              else Just $ Left x
-      else Nothing
-    check _ _ = Nothing
+checkExistsRule :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkExistsRule n es e@(Impl (Exists x phi) psi) =
+  case M.lookup (Impl phi psi) es of
+    Just k -> if hasFree x phi then Right $ Just (AnnotatedExpr e $ ExistsRule n k) else Left $ NonFreeExists n x
+    Nothing -> Right Nothing
+checkExistsRule _ _ _ = Right Nothing
+
+checkForallRule :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
+checkForallRule n es e@(Impl phi (Forall x psi)) =
+  case M.lookup (Impl phi psi) es of
+    Just k -> if hasFree x phi then Right $ Just (AnnotatedExpr e $ ForallRule n k) else Left $ NonFreeForall n x
+    Nothing -> Right Nothing
+checkForallRule _ _ _ = Right Nothing
