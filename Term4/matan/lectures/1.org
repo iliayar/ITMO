@@ -104,7 +104,7 @@ $a \in \R\quad E(f < a)$ --- измеримо(т.е. $\in \A$)
 #+NAME: функция_измеримая_на_множестве_обозначения
 #+begin_symb org
 \-
-- $f$ --- измеримо на $X$ --- говорят просто "измеримо"
+- $f$ --- измерима на $X$ --- говорят просто "измерима"
 - $X = \R^m$, мера Лебега --- измеримо по Лебегу
 #+end_symb
 #+NAME: функция_измеримая_на_множестве_эквивалентность
@@ -138,8 +138,7 @@ $a \in \R\quad E(f < a)$ --- измеримо(т.е. $\in \A$)
 #+begin_theorem org
 $f_n$ --- измерима на $X$. \\
 _Тогда_:
-1. \[ \sup_{n \in \N} f_n;\quad \inf_{n \in \N} f_n \addtag\label{sup_inf_1} \]
-   $\ref{sup_inf_1}$ --- измеримы
+1. \( \sup_{n \in \N} f_n;\quad \inf_{n \in \N} f_n \) --- измеримы
 2. $\overline{\lim} f_n;\quad\underline{\lim} f_n$ --- измеримы
 3. Если \[ \forall x\ \exists \lim_{n \to +\infty}f_n(x) = h(x) \], то $h(x)$ --- измеримо
 #+end_theorem
