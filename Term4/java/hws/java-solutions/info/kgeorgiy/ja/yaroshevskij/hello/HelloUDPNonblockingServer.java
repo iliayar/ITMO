@@ -9,7 +9,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,24 +44,16 @@ public class HelloUDPNonblockingServer extends AbstractUDPServer {
         private final Selector selector;
         private final DatagramChannel channel;
         private final ExecutorService executor;
-        private final ExecutorService converters;
 
         Receiver(int port, int threads) throws IOException {
-            this.messages = new ConcurrentLinkedQueue<>();
-            this.converters = Executors.newFixedThreadPool(threads);
-            this.selector = Selector.open();
-            this.channel = createChannel();
+            this.messages = new ArrayDeque<>();
             SocketAddress address = new InetSocketAddress(port);
+            selector = Selector.open();
+            channel = createChannel();
             channel.bind(address);
             channel.register(selector, SelectionKey.OP_READ);
             executor = Executors.newSingleThreadExecutor();
             executor.submit(this::listen);
-        }
-
-        private void convert(ByteBuffer buffer, SocketAddress address, SelectionKey key) {
-                String request = byteBufferToString(buffer);
-                messages.add(new MessageData(request, address));
-                key.interestOpsOr(SelectionKey.OP_WRITE);
         }
 
         private void listen() {
@@ -77,20 +68,22 @@ public class HelloUDPNonblockingServer extends AbstractUDPServer {
 
         private void handle(SelectionKey key) {
             if (key.isReadable()) {
-                receive(key);
+                receive();
             } else if (key.isWritable()) {
                 send();
             }
-            if (messages.isEmpty()) {
-                key.interestOps(SelectionKey.OP_READ);
+            key.interestOps(SelectionKey.OP_READ);
+            if (!messages.isEmpty()){
+                key.interestOpsOr(SelectionKey.OP_WRITE);
             }
         }
 
-        private void receive(SelectionKey key) {
+        private void receive() {
             ByteBuffer buffer = ByteBuffer.allocate(NONBLOCKING_BUFFER_SIZE);
             try {
                 SocketAddress address = channel.receive(buffer);
-                converters.submit(() -> convert(buffer, address, key));
+                String request = byteBufferToString(buffer);
+                messages.add(new MessageData(request, address));
             } catch (IOException e) {
                 System.err.println("Failed to receive data: " + e.getMessage());
             }
