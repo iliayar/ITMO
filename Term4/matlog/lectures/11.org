@@ -5,8 +5,9 @@
 
 
 * Геделева нумерация
+#+NAME: Гёделева нумерация
 #+begin_definition org
-\((\gedel{})\)
+\((\gedel{\bullet})\)
 #+ATTR_LATEX: :align l|l
 | \(s\)       | \(\gedel{s}\)                 |
 |-------------+-------------------------------|
@@ -42,6 +43,7 @@
 - \((\cdot) = f^2_1\)
 - \((') = f^1_0\)
 #+end_definition
+#+NAME: Гёделева нумерация_список
 #+begin_definition org
 \(\gedel{a_0a_1\dots a_{n - 1}} = 2^{\gedel{a_0}}\cdot 3^{\gedel{a_1}} \cdot \dots \cdot p_n^{\gedel{a_{n - 1}}}\)
 #+end_definition
@@ -60,6 +62,7 @@
   0 & \text{иначе}
 \end{cases}\), Proof --- рекурсивна
 #+end_theorem
+#+NAME: Рекурсивность представимых в формальной арифметике функций
 #+begin_theorem org
 Если функция представима в формальной арифметике, то она рекурсивна
 #+end_theorem
@@ -82,10 +85,12 @@ S\langle{\rm plog}_2, \\
 
 \(\chi\) --- формула формальной арифметики, \(W_1(\gedel{x}, \gedel{p}) = 0\) --- \(p\)-доказательство самоприменения \(x\), \(\chi[x_0\coloneqq\overline{\gedel{\chi}}]\). Реализация \(W_1\) через Subst очевидна. Значит \(W_1\) представима в формальной арифметике. Самоприменение \(x\) недоказуемо
 \((x) = \forall p. \neg \omega_1(x, p)\), \(\vdash^? \delta(\overline{\gedel{\delta}})\)
+#+NAME: \omega-непротиворечивость
 #+begin_definition org
 \(\omega\)-непротиворечивость. Теория \(\omega\)-непротиворечива, если для любой формулы \(\varphi(x)\):
 - если \(\vdash \varphi(\overline{0}), \vdash \varphi(\overline{1}), \dots\), то \(\not\vdash \exists x. \neg \varphi{x}\)
 #+end_definition
+#+NAME: Непротиворечивость (эквивалентные определения, доказательство эквивалентности)
 #+begin_lemma org
 Если теория \(\omega\)-непротиворечива, то непротиворечива
 #+end_lemma
@@ -94,6 +99,7 @@ S\langle{\rm plog}_2, \\
 \[ \vdash \overline{0} = \overline{0} \quad \vdash \overline{1} = \overline{1} \quad \dots\]
 Т.е. \(\not\vdash \exists x. x\neq x\)
 #+end_proof
+#+NAME: Первая теорема Гёделя о неполноте арифметики
 #+ATTR_LATEX: :options [Геделя о неполноте арифметике №1]
 #+begin_theorem org
 \-
@@ -115,12 +121,14 @@ S\langle{\rm plog}_2, \\
    \end{matrix}\right\} \text{ иначе} \vdash \sigma(\overline{\gedel{\sigma}})  \]
    \[ \not\vdash \exists p. \omega_1(\overline{\gedel{\sigma}}, p) \]
 #+end_proof
+#+NAME: Неполнота арифметики
 #+begin_corollary org
 Формальная арифметика со стандартной интерпретацией неполна
 #+end_corollary
 #+begin_proof org
 \todo
 #+end_proof
+#+NAME: Формулировка первой теоремы Гёделя о неполноте арифметики в форме Россера
 #+ATTR_LATEX: :options [Геделя о неполноте арифметики №1 в форме Россера]
 #+begin_theorem org
 \-
@@ -129,15 +137,18 @@ S\langle{\rm plog}_2, \\
 #+end_theorem
 \[ \rho(x) = \forall p. \omega_1(x, p) \to \exists q. q < p \& \omega_2(x, q) \]
 \todo
+#+NAME: Consis
 #+begin_definition org
 \[{\rm Consis} \equiv \forall p. \neg \pi(\overline{\gedel{1 = 0}}, p)\]
 #+end_definition
 
+#+NAME: Формулировка второй теоремы Гёделя о неполноте арифметики
 #+ATTR_LATEX: :options [Геделя о неполноте арифметики №2]
 #+begin_theorem org
 \[ \vdash {\rm Consis} \to \sigma{\overline{\gedel{\sigma}}} \]
 Т.е. если докажем, что если формальная арифметика непротиворечива, то автоматически \(\sigma(\overline{\gedel{\sigma}})\)
 #+end_theorem
+#+NAME: Неформальное пояснение метода доказательства
 #+ATTR_LATEX: :options [схема]
 #+begin_proof org
 Прочтем что написано в теореме: \(\sigma(\overline{\gedel{\sigma}})\) раскрывается в \(\forall p. \neg \omega_1(\overline{\gedel{\sigma}}, p)\), т.е. если формальная арифметика противоречива, то не существует \(p\), что \(\omega_1(\overline{\gedel{\sigma}}, p)\), а это в точности утверждение теоремы Геделя о неполноте №1, а это в точности утверждение теоремы Геделя о неполноте №1. Т.е. эта теорема --- формализация теоремы Геделя о неполноте №1.

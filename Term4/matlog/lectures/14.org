@@ -29,6 +29,7 @@ _Тогда_ для нее существует элементарная под�
 \[ \varphi \in T \quad \underset{y,x_i \in D_n}{\eval{\varphi(y, x_1, \dots x_k)}} = \text{И} \]
 \todo
 #+end_proof
+#+NAME: парадокс Сколема
 #+begin_remark org
 *``Парадокс`` Сколена* \\
 Известно, что:
@@ -48,7 +49,6 @@ _Тогда_ для нее существует элементарная под�
 \[ \sup \omega = \omega \]
 \[ \cup \{\omega\} = \omega + 1 \]
 #+end_remark
-
 #+begin_examp org
 \(\omega \cdot 1 < \omega \cdot 2\)
 \[ \omega + \omega = \sup \{\omega + 0, \omega + 1, \omega + 2, \dots\} \]
