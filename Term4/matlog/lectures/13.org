@@ -4,6 +4,7 @@
 #+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
 
 * Аксиома выбора
+#+NAME: Аксиома выбора
 #+ATTR_LATEX: :options {\bf Аксиома 8.}
 #+begin_axiom* org
 На любом семействе множеств можно определить функцию \( f: S \to A_S \), которая по множеству возвращает его элемент
@@ -22,10 +23,12 @@
 \[ XS = \{t \big| \forall p. p \in S \leftrightarrow \exists ! c. c \in p \& c \in t\} \]
 #+end_definition
 \noindent
+#+NAME: Аксиома выбора_2
 #+ATTR_LATEX: :options {\bf Аксиома 8.}
 #+begin_axiom* org
 Если \(D(y)\& \forall t. t \in y \to t \neq \varnothing\), то \(xy \neq \varnothing\)
 #+end_axiom*
+#+NAME: теорема Диаконеску
 #+ATTR_LATEX: :options [Диаконеску]
 #+begin_theorem org
 Рассморим \(ZF\) ?? ИИП. Если доваите аксиому выбора то \(\vdash \alpha \lor \lnot \alpha\)
@@ -68,11 +71,13 @@
 - \(\aleph_0 = |\omega|\)
 - \(\aleph_1\) --- следующий кардинал за \(\aleph_0\)
 #+end_remark
+#+NAME: теорема Кантора
 #+ATTR_LATEX: :options [Кантора]
 #+begin_theorem org
 Рассмотрим \(S\) --- множетво, \(\mathcal{P}(S)\) --- множество всех подмножеств \\
 _Тогда_ \(|\mathcal{P}(S)| > |S|\)
 #+end_theorem
+#+NAME: Теорема Кантора-Бернштейна
 #+ATTR_LATEX: :options [Кантора-Бернштейна]
 #+begin_theorem org
 Если \(a, b\) --- множества, \(f: a \to b\), \(g: b \to a\) --- инъективны \\

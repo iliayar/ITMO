@@ -1,6 +1,6 @@
 #+TITLE: Вопросы к экзамену
 #+SETUPFILE: setup.org
-#+LATEX_CLASS: lectures
+#+LATEX_CLASS: general
 #+OPTIONS: pri:t
 
 * Теоремы
