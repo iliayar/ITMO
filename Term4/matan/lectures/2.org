@@ -14,7 +14,7 @@
 - $\forall a \in R\quad X(f < a) \in \A$
 - $\X_E\quad \sum \alpha_k \X_{E_k}$
 #+NAME: характеризацияизмеримостифункцииспомощьюступенчатых
-#+ATTR_LATEX: :options [характеризация измеримости функции с помощью ступенчатых]
+#+ATTR_LATEX: :options [характеризация измеримых функции с помощью ступенчатых]
 #+begin_theorem org
 \-
 - $f: X \to \overline{R}$
@@ -26,7 +26,8 @@ _Тогда_ $\exists f_n$ --- ступенчатая
 #+end_theorem
 #+NAME: характеризацияизмеримостифункцииспомощьюступенчатыхдок
 #+begin_proof org
-#+ATTR_LATEX: :scale 0.5
+\-
+#+ATTR_LATEX: :scale 0.3
 [[file:2_1.png]]
 \[ e^{(n)}_k = X(\frac{k - 1}{n} \le f \le \frac{k}{n}) \quad k = 1,\dots,n^2 \]
 \[ e^{(n)}_{n^2 + 1} = X(n \le f) \]
@@ -108,6 +109,7 @@ _Тогда_ $f$ --- измерима
 $f$ --- непрерывна на $\langle a, b \rangle$ за исключением возможно счетного числа точек
 #+end_proof
 ** Сходимость почти везде и по мере
+#+NAME: Свойство, выполняющееся почти везде
 #+begin_defintion org
 - $(X, \A, \mu)$
 - $E \in \A$
@@ -150,6 +152,7 @@ $\exists e, \mu e = 0$, при $x\in E \setminus e\quad f_n(x) \xrightarrow[n \t
    _Тогда_ утверждение $"$ $\forall n\ W_n(x)$ --- истинно $"$ --- верно при почти всех $x$ \\
    Это высказывание верно при \[ x \in X \setminus (\bigcup_{i = 1}^{+ \infty} e_i)\quad\mu(\bigcup e_i) = 0 \]
 #+end_remark
+#+NAME: Сходимость по мере и почти везде
 #+begin_defintion org
 \-
 - $f_n, f : X \to \overline{\R}$ --- почти везде конечные \\
@@ -187,6 +190,7 @@ $\lim f_n(x)$ --- не существует ни при каких $x$ \\
 \[ \lambda X(f_n > \varepsilon) = \frac{1}{2^k} \xrightarrow[n \to + \infty]{} 0 \]
 \[ f_n \xRightarrow[\lambda]{} 0 \]
 #+end_examp
+#+NAME: Теорема Лебега о сходимости почти везде и сходимости по мере
 #+ATTR_LATEX: :options [Лебега]
 #+begin_theorem org
 \-
@@ -196,6 +200,7 @@ $\lim f_n(x)$ --- не существует ни при каких $x$ \\
 - $\mu X$ --- конечна
 _Тогда_ $f_n \xRightarrow[\mu]{} f$
 #+end_theorem
+#+NAME: Теорема Лебега о сходимости почти везде и сходимости по мере_док
 #+begin_proof org
 Переопределим $f_n, f$ на множестве меры 0, чтобы сходимость была всюду
 _Частный случай_: $\forall x$ последовательность $f_n(x)$ монотонно убывает к 0(т.е. $f < 0$)
@@ -206,6 +211,7 @@ _Общий случай_: $f_n \to f$
 \[ X(|f_n - f| \ge \varepsilon) \subset X(\varphi_n \ge \varepsilon) \]
 \[ \mu X(|f_n - f| \ge \varepsilon) \le \mu X(\varphi_n \ge \varepsilon) \to 0 \]
 #+end_proof
+#+NAME: Теорема Рисса о сходимости по мере и сходимости почти везде
 #+ATTR_LATEX: :options [Рисс]
 #+begin_theorem org
 \-
@@ -214,6 +220,7 @@ _Общий случай_: $f_n \to f$
 - $f_n \xRightarrow[\mu]{} f$
 _Тогда_ $\exists n_k f_{n_k} \to f$ почти везде
 #+end_theorem
+#+NAME: Теорема Рисса о сходимости по мере и сходимости почти везде_док
 #+begin_proof org
 $\forall k\ \mu X(|f_n - f| \ge \frac{1}{k}) \to 0$ \\
 $\exists n_k$: при $n > n_k\ \mu X(|f_n - f| \ge \frac{1}{k}) < \frac{1}{2^k}$ \\
@@ -235,6 +242,7 @@ _Тогда_ $|f| \le g$ почти везде
 #+begin_proof org
 $\exists n_k:\ f_{n_k} \to f$ почти везде
 #+end_proof
+#+NAME: Теорема Егорова о сходиомсти почти везде и почти равномерной сходиомсти
 #+ATTR_LATEX: :options [Егорова]
 #+begin_theorem org
 \-
@@ -243,9 +251,6 @@ $\exists n_k:\ f_{n_k} \to f$ почти везде
 - $f_n \to f$ почти везде
 _Тогда_  $\forall \varepsilon > 0\ \exists e \subset X,\ \mu e < \varepsilon\quad f_n \rightrightarrows f$ на $X \setminus e$
 #+end_theorem
-#+begin_export latex
-\xymatrix@1{A\ar[r]^>>{+}&B}
-#+end_export
 
 * Интеграл
 $(X, \A, \mu)$
@@ -279,7 +284,8 @@ $f \ge 0$ --- измерима \\
 - $\int_X f^+$ или $\int_x f^-$ конечный
 _Тогда_ \[ \int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu \]
 #+end_definition
-#+ATTR_LATEX: :options [Тонедди]
+#+NAME: Теорема Тонелли
+#+ATTR_LATEX: :options [Тонелли]
 #+begin_theorem org
 \-
 - $f: \R^{m + n} \to \overline{\R}$
