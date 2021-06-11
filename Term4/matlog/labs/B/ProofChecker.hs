@@ -41,7 +41,7 @@ checkProof' n was hypos (e:es) = (checkStatement was hypos e, e) : checkProof' (
         checkMP es e =
           let es' = M.mapMaybeWithKey (checkMP' e es) es
           in case findMin es' of
-            Just (_, (k, l)) -> Just $ ModusPonens l k
+            Just (_, (k, l)) -> Just $ ModusPonens k l
             Nothing -> Nothing
         checkMP' e es (Impl e1 e') l =
           if e == e'
