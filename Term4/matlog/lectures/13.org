@@ -16,7 +16,7 @@
 #+end_examp
 #+begin_definition org
 *Дизъюнктное множество* --- семейство непересекающихся множеств
-\[ D(y):\ \forall p.\forall q. p \in y \& q \in y \to p \cup q = \varnothing \]
+\[ D(y):\ \forall p.\forall q. p \in y \& q \in y \to p \cap q = \varnothing \]
 #+end_definition
 #+begin_definition org
 *Прямое произведение* дизъюнктного множества
@@ -31,13 +31,13 @@
 #+NAME: теорема Диаконеску
 #+ATTR_LATEX: :options [Диаконеску]
 #+begin_theorem org
-Рассморим \(ZF\) ?? ИИП. Если доваите аксиому выбора то \(\vdash \alpha \lor \lnot \alpha\)
+Рассморим \(ZF\)(аксиоматика Цермело-Френкеля) поверх ИИП. Если добавим аксиому выбора то \(\vdash \alpha \lor \lnot \alpha\)
 #+end_theorem
 * Аксиома фундирования
 \noindent
 #+ATTR_LATEX: :options {\bf Аксиома 9.} 
 #+begin_axiom* org
-\[ \forall x. x = \varnothing \lor \exists y. y \in x \& y \cup x = \varnothing \]
+\[ \forall x. x = \varnothing \lor \exists y. y \in x \& y \cap x = \varnothing \]
 В каждом непустом множестве есть элемент, не пересекающийся с ним
 #+end_axiom*
 \noindent
@@ -50,21 +50,26 @@
 \[ f(x) = \begin{cases} {x} & p(x) \\ \varnothing & \neg p(x) \end{cases} \]
 \[ \{x \in S | p(x)\} = \cup f(S) \]
 * Мощность множества
+#+NAME: Равномощность
 #+begin_definition org
 *Равномощность* \(|a| = |b|\), если существует биекция \(a \to b\)
 #+end_definition
+#+NAME: Строго большая мощность
 #+begin_definition org
 *Строго большая мощность* \(|a| > |b|\), если существует \(f: a \to b\) --- инъекция, но не биекция
 #+end_definition
+#+NAME: Кардинальное число
 #+begin_definition org
 *Кардинальное число* \(t\) --- ординал \(x\): для всех \(y \in x\): \(|y| \neq |x|\)
 #+end_definition
+#+NAME: Мощность множества
 #+begin_definition org
 Мощность множества \(|x|\) --- такое кардинальное число \(t\), что \(|t| = |x|\)
 #+end_definition
 #+begin_lemma org
 \(a, b\) --- кардиналы и \(|a| = |b|\), то \(a = b\)
 #+end_lemma
+#+NAME: \aleph
 #+begin_remark org
 \-
 - \(\overline{0}, \overline{1}, \overline{2}, \overline{3}, \dots\) --- конечные кардиналы

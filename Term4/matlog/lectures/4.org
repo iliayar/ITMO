@@ -72,8 +72,9 @@
 2. частичный порядок(\(\succeq\))
 3. отношение вынужденности: \(W_j \Vdash p_i\) \\
    \( (\Vdash)  \subseteq W \times \P\) \\
-   При этом, если \( W_j \Vdash p_i \) и \( W_j \preceq W_k\), то \( W_j \Vdash p\)
+   При этом, если \( W_j \Vdash p_i \) и \( W_j \preceq W_k\), то \( W_k \Vdash p\)
 #+end_defintion
+#+NAME: модель крипке_доп
 #+begin_definition org
 \-
 1. \( W_i \Vdash \alpha\) и \( W_i \Vdash \beta\), тогда (и только тогда) \( W_i \Vdash \alpha \& \beta\) \\

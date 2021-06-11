@@ -78,13 +78,15 @@ S\langle{\rm plog}_2, \\
 \quad\quad S \pair{{\rm plog}_3, P^1_{n + 1}} \\
 \quad \rangle \\
 \rangle
-\end{array}
+\end{array} \\
 #+end_export
 \color{gray}\({\rm Subst}_{n + 1}\) --- функция которая заменяет ?? на 0 со штрихами\color{black} \\
 #+end_proof
-
+#+NAME: про \sigma
+#+begin_remark org
 \(\chi\) --- формула формальной арифметики, \(W_1(\gedel{x}, \gedel{p}) = 0\) --- \(p\)-доказательство самоприменения \(x\), \(\chi[x_0\coloneqq\overline{\gedel{\chi}}]\). Реализация \(W_1\) через Subst очевидна. Значит \(W_1\) представима в формальной арифметике. Самоприменение \(x\) недоказуемо
-\((x) = \forall p. \neg \omega_1(x, p)\), \(\vdash^? \delta(\overline{\gedel{\delta}})\)
+\(\sigma(x) = \forall p. \neg \omega_1(x, p)\), \(\vdash^? \sigma(\overline{\sigma{\delta}})\)
+#+end_remark
 #+NAME: \omega-непротиворечивость
 #+begin_definition org
 \(\omega\)-непротиворечивость. Теория \(\omega\)-непротиворечива, если для любой формулы \(\varphi(x)\):
