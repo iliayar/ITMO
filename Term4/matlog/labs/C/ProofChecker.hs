@@ -6,7 +6,7 @@ import Annotation
 import BindingRules
 import Helpers
 import Data.Maybe (mapMaybe, isJust)
-import Data.Map (Map, empty, insert, mapWithKey)
+import Data.Map (Map, empty, mapWithKey)
 import qualified Data.Map as M
 import Control.Applicative ((<|>))
 
