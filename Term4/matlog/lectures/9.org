@@ -151,12 +151,14 @@ _Переход_ \(a + c'' = c'' + a\), если \(a + c' = c' + a\)
 0^{(n - 1)'} & n > 0
 \end{cases}\]
 #+end_definition
+#+NAME: Выразимость отношений в формальной арифметике
 #+begin_definition org
 \(W \subseteq \N_0^n\). \(W\) --- выразимое в формальной арифметике. отношение, если существует формула \(\omega\) со свободными переменными \(x_1,\dots,x_n\). Пусть \(k_1,\dots,k_n \in \N\)
 - \((k_1,\dots,k_n) \in W\), тогда \(\vdash \omega[x_1:=\overline{k_1}, \dots, x_n := \overline{k_n}]\)
 - \((k_1,\dots,k_n) \not\in W\), тогда \(\vdash \neg \omega[x_1:=\overline{k_1},\dots,x_n:=\overline{k_n}]\)
 \[ \omega[x_1:=\Theta_1,\dots,x_n:=\Theta_n] \equiv \omega(\Theta_1, \dots, \Theta_n) \]
 #+end_definition
+#+NAME: Представимость функций в формальной арифметике
 #+begin_definition org
 \(f: \N^n \to \N\) --- представим в формальной арифметике, если найдется \(\varphi\) --- фомула с \(n + 1\) свободными переменными \(k_1, \dots, k_{n + 1} \in \N\)
 - \(f(k_1,\dots,k_n) = k_{n + 1}\), то \(\vdash \varphi(\overline{k_1},\dots,\overline{k_{n + 1}})\) \\

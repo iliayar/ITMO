@@ -117,7 +117,7 @@ _Переход_: пусть \(\eta, \zeta\): \(\Delta \vdash [\eta]^\eta, \Delt
 #+begin_lemma org
 \-
 - \(\Gamma, \eta \vdash \zeta\)
-- \(\Gamma, \neg \eta \dash \zeta\)
+- \(\Gamma, \neg \eta \vdash \zeta\)
 _Тогда_ \(\Gamma \vdash \zeta\)
 #+end_lemma
 #+NAME: леммаполнота2

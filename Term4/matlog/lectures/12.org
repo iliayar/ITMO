@@ -87,7 +87,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+end_axiom
 #+begin_theorem org
 Если \(x\) --- множество, то \(\{x\}\) --- множество
-\[ \exists t. a \in t \leftirightarrow a = x \]
+\[ \exists t. a \in t \leftrightarrow a = x \]
 #+end_theorem
 #+NAME: теорема множество множества
 #+begin_proof org
@@ -139,6 +139,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 *Предельный ординал* \(s \neq \varnothing\) --- ординал, не имеющий предшественника
 \[ \forall p. p' \neq s \]
 #+end_definition
+#+NAME: \omega
 #+begin_examp org
 \[ \omega = \{\varnothing, 1, 2, 3, 4, \dots\} \]
 Очевидно, что \(\omega \subseteq N\)
@@ -163,10 +164,12 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 - _не транзитивный_
 \(\sup \{0, 1, 3\} = \{0, 1, 2, 3\}\)
 #+end_examp
+#+NAME: \omega - не коммутативна по сложению_1
 #+begin_examp org
 \[1 + \omega = \sup\limits_{c \in \omega}(1 + c) = \sup \{0 + 1, 1 + 1, 2+ 1, \dots\}\]
 \[ \sup \{1, 2, 3, 4, 5, \dots\} = \omega \]
 #+end_examp
+#+NAME: \omega - не коммутативна по сложению_2
 #+begin_examp org
 \[ \omega + 1 = \omega' = \omega \cup \{\omega\} = \{0, 1, 2, 3, \dots, \omega\} \]
 #+end_examp
