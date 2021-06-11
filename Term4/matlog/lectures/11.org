@@ -88,7 +88,7 @@ S\langle{\rm plog}_2, \\
 #+NAME: \omega-непротиворечивость
 #+begin_definition org
 \(\omega\)-непротиворечивость. Теория \(\omega\)-непротиворечива, если для любой формулы \(\varphi(x)\):
-- если \(\vdash \varphi(\overline{0}), \vdash \varphi(\overline{1}), \dots\), то \(\not\vdash \exists x. \neg \varphi{x}\)
+- если \(\vdash \varphi(\overline{0}), \vdash \varphi(\overline{1}), \dots\), то \(\not\vdash \exists x. \neg \varphi(x)\)
 #+end_definition
 #+NAME: Непротиворечивость (эквивалентные определения, доказательство эквивалентности)
 #+begin_lemma org
@@ -100,7 +100,7 @@ S\langle{\rm plog}_2, \\
 Т.е. \(\not\vdash \exists x. x\neq x\)
 #+end_proof
 #+NAME: Первая теорема Гёделя о неполноте арифметики
-#+ATTR_LATEX: :options [Геделя о неполноте арифметике №1]
+#+ATTR_LATEX: :options [Геделя о неполноте арифметики №1]
 #+begin_theorem org
 \-
 1. Если формальная арифметика непротиворечива, то \(\not\vdash \sigma(\overline{\gedel{\sigma}})\)

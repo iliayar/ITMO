@@ -12,7 +12,8 @@
 \[ \int \langle F, n_0 \rangle dS_{m - 1} \quad \(|\Phi_u' \times \Phi_v'|\text{ --- вес}\)\]
 Мера Лебега на \(k\)-мерном многообразии в \(\R^m\). \(\Phi: O \subset \R^k \to \R^m\). \(\Phi'_1,\dots,\Phi'_k\), тогда \(\lambda_k(\text{Паралеллепипед}(\Phi'_1,\dots,\Phi'_k))\) --- вес
 
-* Формула Грима
+* Формула Грина
+#+NAME: Формула Грина
 #+begin_theorem org
 \-
 - \(D \subset \R^2\) --- компактное, связное, односвязное, ограниченное
@@ -21,6 +22,7 @@
 - \((P, Q)\) --- гладкое векторное поле в окрестности \(D\)
 _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\,dx\,dy = \int_{\partial D^+} P\,dx + Q\,dy \]
 #+end_theorem
+#+NAME: Формула Грина_док
 #+begin_proof org
 Ограничимся случаем D --- `криволинейный 4-х угольник`
 #+ATTR_LATEX: :scale 0.4
@@ -40,6 +42,7 @@ _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\parti
 [[file:9_2.png]]
 \[ \int_{\partial D^+} = \int_{\partial D_1^+} + \int_{\partial D_2^+} \fixme \]
 #+end_remark
+#+NAME: Формула Стокса
 #+ATTR_LATEX: :options [Формула Стокса]
 #+begin_theorem org
 \-
@@ -50,6 +53,7 @@ _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\parti
 - \((P, Q, R)\) --- гладкое векторное поле в окрестности \(\Omega\)
 _Тогда_ \[ \int_{\parial \Omega^+} P\,dx + Q\,dy + R\,dz = \iint_\Omega \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right)\,dy\,dz + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right)\,dz\,dx + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)\,dx\,dy \]
 #+end_theorem
+#+NAME: Формула Стокса_док
 #+begin_proof org
 Ограничимся случаем \(\Omega \in C^2\). Достаточно?:
 \[ \int_{\partial \Omega^+} P\,dx = \iint_\Omega\frac{\partial P}{\partial z}\,dz\,dx  - \frac{\partial P}{\partial y}\,dx\,dy \]
@@ -103,6 +107,7 @@ _Тогда_ \(f_n \xrightarrow[L^s]{} f\)
 #+begin_proof org
 \[ \Vert f_n - f \Vert_s \le \mu E^{\frac{1}{r} - \frac{1}{r}} \cdot \Vert f_n - f \Vert_r \to 0 \]
 #+end_proof
+#+NAME: Теорема о сходимости в \(L_p\) и по мере
 #+ATTR_LATEX: :options [о сходимости в \(L^p\) и по мере]
 #+begin_theorem org
 \-
@@ -113,6 +118,7 @@ _Тогда_
 2. \(f \xRightarrow[\mu]{} f\) либо \(f_n \to f\), \(|f_n| \le g\), \(g \in L^p\) \\
    Тогда \(f \in L^p\) и \(f_n \to f\) в \(L^p\)
 #+end_theorem
+#+NAME: Теорема о сходимости в \(L_p\) и по мере_док
 #+begin_proof org
 \-
 1. \(X_n(\varepsilon) := X(|f_n - f| \ge \varepsilon)\)
@@ -131,11 +137,13 @@ _Тогда_
 #+begin_task org
 \(L^{\infty}(X, \mu)\) --- полное
 #+end_task
+#+NAME: Полнота \(L^p\)
 #+begin_theorem org
 \-
 - \(L^p(X, \mu)\) --- полное
 - \(1 \le p < +\infty\)
 #+end_theorem
+#+NAME: Полнота \(L^p\)_док
 #+begin_proof org
 \(f_n\) --- фундаментальная
 \[ \varepsilon = \frac{1}{2}\ \exists N_1\ \forall n_1, k > N\quad \Vert f_{n_1} - f_k \Vert_p < \frac{1}{2} \]
@@ -164,6 +172,7 @@ _Тогда_
 #+begin_examp org
 \(\mathbb{Q}\) плотно в \(\R\)
 #+end_examp
+#+NAME: Плотность в \(L^p\) множества ступенчатых функций
 #+begin_lemma org
 \-
 - \((X, \A, \mu)\)
@@ -173,6 +182,7 @@ _Тогда_
 #+begin_remark org
 \(\varphi \in L^p\) --- ступенчатая \implies \(\muX(\varphi \neq 0) < +\infty\)
 #+end_remark
+#+NAME: Плотность в \(L^p\) множества ступенчатых функций_док
 #+begin_proof org
 \-
 - \(p = \infty\) :: \(f \in L^\infty\), изменив \(f\) на множестве \(C\) меры \(0\), считаем, что \(|f| \le \Vert f \Vert_\infty\). Тогда существуют ступенчатые \(0\le\varphi_n \rightrightarrows f^+\), \(0 \le \psi_n \rightrightarrows f^-\). Тогда сколько угодно близко к \(f\) можно найти ступенчатую фкнцию вида \(\varphi_n + \psi_n\)

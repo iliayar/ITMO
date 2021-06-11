@@ -69,17 +69,14 @@
 \(p_1, p_2, \dots\) --- простые числа. \\
 \(p(i): \N \to \N\), \(p(i) - p_i\) --- примитивно-рекурсивная функция
 #+end_lemma
-#+begin_export latex
-\newcommand{\plog}{\mathop{\rm plog}}
-#+end_export
 #+NAME: Примитивная рекурсивность частичного логарифма
 #+begin_definition org
-\(\plog_nk = \max t: n^t | k\) --- примитивно-рекурсивная функция
+\(\mathop{\rm plog}_nk = \max t: n^t | k\) --- примитивно-рекурсивная функция
 #+end_definition
 #+begin_examp org
 \-
-- \(\plog_5 120 = 1\)
-- \(\plog_2 120 = 3\)
+- \(\mathop{\rm plog}_5 120 = 1\)
+- \(\mathop{\rm plog}_2 120 = 3\)
 #+end_examp
 ** Функция Аккермана
 \[ A(m, n) = \begin{cases}
@@ -94,7 +91,7 @@
 * Связь с формальной арифметикой
 #+NAME: представимость функций в формальной арифметике
 #+begin_theorem org
-\(f\) --- рекурсивная функция, тогда \(f\) представима в формальной арифметика
+\(f\) --- рекурсивная функция, тогда \(f\) представима в формальной арифметике
 #+end_theorem
 #+NAME: Выразимость отношений
 #+begin_theorem org
@@ -143,7 +140,7 @@
 #+end_proof
 #+NAME: Бета-функция Гёделя
 #+begin_definition org
-\(beta\)-функция Геделя
+\(\beta\)-функция Геделя
 \[ \beta(b, c, i) = b \div (1 + c\cdot(i + 1)) \]
 #+end_definition
 #+begin_theorem org

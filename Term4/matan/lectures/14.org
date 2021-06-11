@@ -15,9 +15,7 @@
 \(\delta_0:\ \mu\{0\} = 1 \quad \mu(\R \setminus \{0\}) = 0\)
 \[ \mu E = \int_E g\,dx \]
 #+end_examp
-#+begin_examp org
-
-#+end_examp
+#+NAME: Аппроксимативная единица
 #+begin_definition org
 *Аппроксимативная единица*
 - \(D \subset \R\)
@@ -32,6 +30,7 @@
 \(K_h \ge 0\ \forall h\) \\
 Тогда АЕ1 \(\Leftrightarrow\) АЕ2
 #+end_remark
+#+NAME: Усиленная аппроксимативная единица_АЕ3
 #+begin_remark org
 \-
 - *АЕ3'* \(K_h \in L^\infty[-\pi, \pi]\) и \(\forall \delta \in (0; \pi)\)
@@ -40,9 +39,11 @@
 #+begin_lemma org
 АЕ3' \(\Leftrightarrow\) АЕ3
 #+end_lemma
+#+NAME: Усиленная аппроксимативная единица
 #+begin_definition org
 АЕ1 + АЕ2 + АЕ3' = *усиленная аппроксимативная единица*
 #+end_definition
+#+NAME: Теорема о свойствах аппроксимативной единицы
 #+begin_theorem org
 \(K_h\) --- а.е. \\
 _Тогда_
@@ -53,6 +54,7 @@ _Тогда_
 - \(f*K_h\) --- непрерывна в \(x\)
 - \(f * K_h(x) \xrightarrow[h \to h_0]{} f(x)\)
 #+end_theorem
+#+NAME: Теорема о свойствах аппроксимативной единицы_док
 #+begin_proof org
 \[ f*K_h(x) - f(x) = \int_{-\pi}^\pi (f(x - t) - f(x))K_h\,dt \]
 1. \(\varepsilon > 0\), \(f\) --- равномерно непрерывна
@@ -88,19 +90,25 @@ _Тогда_
 #+end_remark
 * Суммирование рядов Фурье
 ** Метод средних арифметических
+#+NAME: Метод суммирования средними арифметическими
+#+begin_definition org
 \[ \sum a_n \quad S_n \coloneqq \sum_{k = 0}^n a_k \]
 \[ \delta_n \coloneqq \frac{1}{n + 1} (S_0 + S_1 + \dots + S_n) \]
 \[ \sum a_n \xlongequal[\text{сред. арифм.}] S \]
 , если \(\delta_n \to S\)
+#+end_definition
+#+NAME: Теорема о перманентности метода средних арифметических
 #+begin_theorem org
 \[ \sum a_n = S \implies \sum a_n \xlongequal[\text{с.а.}]{} = S \]
 #+end_theorem
+#+NAME: Теорема о перманентности метода средних арифметических_док
 #+begin_proof org
 \(\forall \varepsilon > 0\ \exists N,\ \forall n > N,\ |S_n - S| < \frac{\varepsilon}{2}\)
 \[ |\delta_n - S| - \left|\frac{1}{n + 1}\sum_{k = 0}^n (S_k - S)\right| \le \frac{1}{n + 1}\sum |S_k - S| = \]
 \[ = \frac{\sum_{k = 0}^{N_1}|S_k - S|}{n + 1} + \frac{\sum_{k = N_1 + 1}^n |S_k - S|}{n + 1} \]
 \(\forall N\ \forall n > N\) эта дробь \(< \frac{\varepsilon}{2}\)
 #+end_proof
+#+NAME: Суммы Фейера
 #+begin_definition org
 \(f \in L^1[-\pi, \pi]\), \(S_n(f)\) --- частичная сумма ряда Фурье
 \[ G_n(f) = \frac{1}{n + 1}\sum_{k = 1}^n S_k(f) \] --- суммы Фейера
@@ -110,6 +118,7 @@ _Тогда_
 \[ G_n(f, x) = \int_{-\pi}^\pi f(x + t) \Phi_n(t)\,dt \]
 , где \(\displaystyle\Phi_n = \frac{1}{n + 1}(D_0 + \dots + D_n) = \frac{1}{2\pi(n + 1)}\cdot \frac{\sin^2\left(\frac{n + 1}{2}t\right)}{\sin^2\frac{t}{2}}\)
 #+end_remark
+#+NAME: Теорема Фейера
 #+ATTR_LATEX: :options [Фейера]
 #+begin_theorem org
 \-
@@ -118,6 +127,7 @@ _Тогда_
 2. \(f \in L^p[-\pi, \pi] \implies \norm{\delta_n(f) - f}_p \to 0\)
 3. \(f \in L^1\), \(f\) --- непрерывна в \(x\) \(\implies\) \(\sigma_n (f, x) \xrightarrow[x \to +\infty]{} f(x)\)
 #+end_theorem
+#+NAME: Теорема Фейера_док
 #+begin_proof org
 Проверим: \(\Phi_n\) --- усиленная а.е. и тогда 1-3 следуют из свойства а.е.
 - *АЕ1* :: \(\Phi_n \in L^1\), т.к. \(\Phi_n\) --- непрерывная (и даже \(\Phi_n \in L^\infty\))
@@ -129,21 +139,25 @@ _Тогда_
 #+begin_remark org
 в п.2 \(p = 1\) --- свойство а.е. было доказано, \(p > 1\) --- без доказательства
 #+end_remark
+#+NAME: Следствия из теоремы Фейера_1
 #+begin_corollary org
 \(f \in L^1[-\pi, \pi]\) --- непрерывна в \(x\). Если ряд Фурье \(f\) сходится в точке \(x\)
 \[ \exists \lin_{n \to \infty} S_n(f, x)\text{ --- конечный}\]
 , то \(S_n(f, x) \to f(x)\)
 #+end_corollary
+#+NAME: Следствия из теоремы Фейера_1_док
 #+begin_proof org
 \[ \sigma_n(f, x) \to f(x) \]
 и по теореме Коши
 #+end_proof
+#+NAME: Следствия из теоремы Фейера_2
 #+begin_corollary org
 \-
 1. Тригонометрическая система полна в \(L^2[-\pi, \pi]\)
 2. \(f \in L^1[-\pi, \pi]\ \forall k\ a_k(f) = 0,\ b_k(f) = 0\) \color{gray}либо \(\forall k \in \mathbb{Z}\) C_k(f) = 0\color{black} \\
     _Тогда_ \(f = 0\) почти везде
 #+end_corollary
+#+NAME: Следствия из теоремы Фейера_2_док
 #+begin_proof org
 \-
 1. Следствие из 2.: \(\forall k\ f \perp \cos kx\) и \(f \perp \sin kx\)
@@ -151,21 +165,25 @@ _Тогда_
    , т.е. \(a_k = 0\)
 2. \(S_n(f) = 0\) почти везде, \(\sigma_n(f) = 0\) почти везде \(\implies f = 0\) почти везде
 #+end_proof
+#+NAME: Следствия из теоремы Фейера_3
 #+begin_corollary org
 \(f \in L^2[-\pi, \pi]\) \\
 _Тогда_ ряд Фурье \(f\) сходится к \(f\) в \(L^2\):
 \[ S_n(f) \to f\text{ в }L^2 \quad \norm{S_n(f) - f}_2 \to 0 \]
 --- общее свойство базиса
 #+end_corollary
+#+NAME: Следствия из теоремы Фейера_4
 #+begin_corollary org
 \(f \in L^1[0, \pi]\). Коэффициенты \(f\) по системе \(\{\cos kx\}\) равно 0 \\
 _Тогда_ \(f = 0\) почти везде \\
 Аналогично для \(\{\sin kx\}\)
 #+end_corollary
+#+NAME: Следствия из теоремы Фейера_5
 #+ATTR_LATEX: :options [теорема Вейерштрасса]
 #+begin_corollary org
 Тригонометрический полином плотный в \(L^p[-\pi, \pi]\) и \(\tilde{C}[-\pi, \pi]\), \(1 le p < +\infty\)
 #+end_corollary
+#+NAME: Следствия из теоремы Фейера_6
 #+begin_corollary org
 \(f, g \in L^2[-\pi, \pi]\) Тогда выполняются равенства Парсеваля:
 1. \[ \int\limits_{[\-pi, \pi]} f\overline{g} = 2\pi \sum_{k \in \mathbb{Z}} c_k(f) \overline{c_k(h)} \]
@@ -182,6 +200,7 @@ _Тогда_ \(\forall x \in [-2\pi, 2\pi]\)
 \(D_n\) --- не является а.е. --- не выполняется АЕ2
 \[ \int_{-\pi}^\pi D_n \asymp \ln n \]
 #+end_remark
+#+NAME: Теорема об интегрировании ряда Фурье
 #+begin_theorem org
 \(f \in L^1[-\pi, \pi]\) \\
 _Тогда_ \(\forall a, b \in \R\)
@@ -190,6 +209,7 @@ _Тогда_ \(\forall a, b \in \R\)
 #+begin_remark org
 ряд Фурье при этом может расходится в том числе всюду
 #+end_remark
+#+NAME: Теорема об интегрировании ряда Фурье_док
 #+begin_proof org
 Достаточно доказать: \(-\pi \le a < b \le \pi\), \(\chi = \chi_{[a, b]}\)
 \[ \sum_{k = -n}^n c_k(f)\int_a^b e^{ikx}\,dx = \sum \frac{1}{2\pi}\int_{-\pi}^\pi f(t) e^{-ikt}\,dt\cdot 2\pi c_{-k}(\chi) = \]
@@ -199,11 +219,13 @@ _Тогда_ \(\forall a, b \in \R\)
 \[ S_n(\chi, t) = \int \chi \cdot D_n = \int_a^b D_n(x - t) = \int_0^{b - t} D_n(x)\,dx - \int_0^{a - t} D_n(x) \]
 по лемме \(|S_n(x, t)| \le \)
 #+end_proof
+#+NAME: Лемма о слабой сходимости сумм Фурье
 #+ATTR_LATEX: :options [о `слабой` сходимости рядов Фурье]
 #+begin_theorem org
 \(f \in L^1[-\pi, \pi]\) \(\forall u \in \tilde{C}^1[-\pi, \pi]\)
 \[ \int_{-\pi}^\pi S_n(f, x)\cdot u(x)\,dx \to \int_{-\pi}^\pi f(x)u(x)\,dx \]
 #+end_theorem
+#+NAME: Лемма о слабой сходимости сумм Фурье_док
 #+begin_proof org
 \-
 1. \(f \in L^1\) \(u\) --- непрерывна \(\implies\) \(u \in L^\infty\) \(\implies\) \(f*u\) --- непрерывная и даже гладкая

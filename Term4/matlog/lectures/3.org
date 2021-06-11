@@ -140,7 +140,7 @@
 #+end_definition
 #+NAME: внутренность
 #+begin_definition org
-\[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.}\}\]
+\[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.} \} \]
 #+end_definition
 #+NAME: дискретная топология
 #+begin_examp org
