@@ -8,8 +8,10 @@ braced :: String -> String
 braced s = "(" ++ s ++ ")"
 
 
-findMin :: Ord k => M.Map k a -> Maybe (k, a)
-findMin m = if M.null m then Nothing else Just $ M.findMin m
+findMin :: (Ord a) => M.Map k a -> Maybe (k, a)
+findMin m = case  M.toList m of
+              lst@(_:_) -> Just $ foldr1 (\ (kl, l) (kr, r) -> if l < r then (kl, l) else (kr, r)) lst
+              [] -> Nothing
 
 
 (<?>) :: Either a (Maybe b) -> Either a (Maybe b) -> Either a (Maybe b)
