@@ -6,10 +6,12 @@
 \[ c_k(x) = \frac{\pair{x, e_k}}{\norm{e_k}^2} \]
 \[ \sum_{k = 1}^{+\infty} c_k(x)e_k \]
 \[ \norm{\sum_{k = 1}^{n} c_k(x)e_k} \le \norm{x} \]
+#+NAME: Неравенство Бесселя
 #+ATTR_LATEX: :options [Неравенство Бесселя]
 #+begin_corollary org
 \[ \sum_{k = 1}^{\infty} |c_k(x)|^2 \cdot \norm{e_k}^2 \le \norm{x}^2 \]
 #+end_corollary
+#+NAME: Теорема Рисса -- Фишера о сумме ряда Фурье
 #+ATTR_LATEX: :options [Рисс, Фишер]
 #+begin_theorem org
 \-
@@ -20,6 +22,7 @@ _Тогда_
 2. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k + z \quad z \perp e,\ \forall k \]
 3. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k \Leftrightarrow \sum |c_k(x)|^2 \norm{e_k}^2 = \norm{x}^2 \]
 #+end_theorem
+#+NAME: Теорема Рисса -- Фишера о сумме ряда Фурье_док
 #+begin_proof org
 \-
 1. Ряд Фурье --- ортогональный ряд. Сходимость ряда Фурье \(\Leftrightarrow\) сходимость
@@ -43,15 +46,19 @@ _Тогда_
 #+begin_remark org
 Если ортогональный ряд сходится, то он есть ряд Фурье своей суммы
 #+end_remark
+#+NAME: базис
 #+begin_definition org
 \(\{e_k\}\) --- ОС --- *базис* \(\H\), если \(\forall x\in \H\  x = \sum c_k(x)e_k\)
 #+end_definition
+#+NAME: полная
 #+begin_definition org
 ОС -- *полная*, если \(\not\exists z \neq 0:\ z \perp \text{всем }e_k\)
 #+end_definition
+#+NAME: замкнутая
 #+begin_definition org
 ОС --- *замкнутая*, если \(\forall x\ \sum|c_k(x)|^2\norm{e_k}^2 = \norm{x}^2\)
 #+end_definition
+#+NAME: Теорема о характеристике базиса
 #+ATTR_LATEX: :options [о характеристике базиса]
 #+begin_theorem org
 \(e_k\) --- ОС в \(\H\). _Тогда_ эквивалентны
@@ -62,6 +69,7 @@ _Тогда_
 4. \(\{e_k\}\) --- полная
 5. \(\mathop{\rm Lin}(e_1, e_2, \dots)\) --- полная в \(\H\), т.е. \(\mathop{\rm Cl}\mathop{\rm Lin}(e_1, e_2, \dots) = \H\)
 #+end_theorem
+#+NAME: Теорема о характеристике базиса_док
 #+begin_proof org
 \(1 \Rightarrow 2 \Rightarrow 3 \Rightarrow 4 \Rightarrow 1\quad 4 \Leftrightarrow 5\)
 - \((1 \Rightarrow 2)\) :: Берем \(x = \sum c_k(x)e_k\) и скалярное умножаем на \(y\):
@@ -76,20 +84,25 @@ _Тогда_
 - \((5 \Rightarrow 4)\) :: Если \(z \perp \text{всем } e_k \implies z \perp \mathop{\rm Lin}\{e_k\} \impies z \perp \mathcal{L}\), но \(\mathcal{L} = \H \implies z \perp z\), т.е. \(\pair{z, z} = 0\)
 #+end_proof
 * Тригонометрические ряды Фурье
+#+NAME: тригонометрический полином
 #+begin_definition org
 \(T_n(x) = \frac{a_0}{2} + \sum_{k = 1}^n a_k\cos kx + b_k\sum kx\) --- *тригонометрический полином* степени не выше \(n\)
 #+end_definition
+#+NAME: Тригонометрический ряд
 #+begin_definition org
 \[ \frac{a_0}{2} + \sum_{k = 1}^{\infty} a_k\cos kx + b_k\sum kx \] --- *тригонометрический ряд*, \(a_k, b_k\) --- *коэффициенты тригонометрического ряда*
 #+end_definition
+#+NAME: комплексный тригонометрический полином
 #+begin_definition org
 \[ \cos kx = \frac{e^{ikx} + e^{-ikx}}{2}\quad \sin kx = \frac{e^{ikx} - e^{-ikx}}{2i} \]
 \[ T_n(x) = \sum_{k = -n}^{n} c_ke^{ikx} \] --- *комплексный тригонометрический полином* или *тригонометрический полином в комплексной записи*
 #+end_definition
+#+NAME: тригонометрический ряд в комплексной записи
 #+begin_definition org
 \[ \sum_{k \in \mathbb{Z}} c_k e^{ikx} \] --- *тригонометрический ряд в комплексной записи*
 \[ \lim_{N \to +\infty} S_N = \lim \sum_{k = -N}^N c_k e^{ikx} \]
 #+end_definition
+#+NAME: Лемма о вычислении коэффициентов тригонометрического ряда
 #+begin_lemma org
 Дан тригонометрический ряд(вещественный или комплексный). Пусть \(S_n \to f\) в \(L^1[-\pi, \pi]\) (\(\norm{S_n - f}_1 = \int_{[-\pi,\pi]}|S_n - f| \to 0\)) \\
 _Тогда_
@@ -98,12 +111,14 @@ _Тогда_
 или
 \[ c_k = \frac{1}{2\pi}\int_{-\pi}^\pi f(t) e^{-ikt}\,dt \]
 #+end_lemma
+#+NAME: Лемма о вычислении коэффициентов тригонометрического ряда_док
 #+begin_proof org
 Докажем для \(a_k\). Пусть \(n \ge k\)
 \[ \int_{-\pi}^\pi S_n(t) \cos kt \,dt = 0 + \int_{-\pi}^\pi \a_k \cos^2 kt\,dt = \pi a_k \]
 При \(k = 0: \int_{\pi}^\pi \frac{a_0}{2} \cdot 1 = \pi a_0\)
 \[ \left|\pi a_k - \int_{-\pi}^\pi f(t) \cos kt\,dt\right| = \left|\int_{-\pi}^\pi (S_n(t) - f(t)) \cos kt\,dt\right| \le \int_{-\pi}^\pi |S_n(t) - f(t)|\,dt = \norm{S_n - f}_1 \to 0\]
 #+end_proof
+#+NAME: Коэффициенты Фурье функции
 #+begin_definition org
 \(f \in L^1[-\pi, \pi]\). \(a_k(f), b_k(f), c_k(f)\) --- заданные в лемме называются *коэффициентами Фурье функции \(f\)* а ряд
 \[ \frac{a_0}{2} + \sum_{k = 1}^{+\infty} a_k(f)\cos kx + b_k(f)\sin kx \]
@@ -124,7 +139,7 @@ _Тогда_
 \[ f \sim \sum b_k(f)\sin kx \]
 , где \(b_k\) -- из [[четное нечетное разложение][2 пункта замечания]] 
 #+end_remark
-#+begin_symb org
+#+begin_lemma org
 \[ A_k(f, x) \coloneqq \left[\begin{array}{ll}
   \frac{1}{2}a_0(f) & k = 0 \\
   a_k(f)\cos kx + b_k(f) \sin kx & k = 1,2,\dots
@@ -133,7 +148,7 @@ _Тогда_
   \frac{1}{2\pi} \int_{-\pi}^\pi f(x + t)\,dt \\
   \frac{1}{\pi} \int_{-\pi}^\pi f(x + t)\cos kt \,dt
 \end{array}\right. \]
-#+end_symb
+#+end_lemma
 #+begin_proof org
 \-
 - (\(A\)) ::
@@ -155,6 +170,7 @@ _Тогда_
 4. Карлесон \(f \in L^2\) --- ряд Фурье сходится почти везде
 5. Хант \(f \in L^p,\ 1 < p < +\infty\) -- ряд Фурье сходится почти везде
 #+end_examp
+#+NAME: Теорема Римана--Лебега
 #+ATTR_LATEX: :options [Римана-Лебега]
 #+begin_theorem org
 \-
@@ -166,6 +182,7 @@ _Тогда_
 \[ \int_E f(t) \sin \lambda t \to 0 \]
 В частности \(f \in L^1[-\pi, \pi]\) \(a_k(f), b_k(f), c_k(f) \xrightarrow[k \to +\infty]{} 0\)
 #+end_theorem
+#+NAME: Теорема Римана--Лебега_док
 #+begin_proof org
 н.у.о \(E = \R\) [пусть \(f = 0\) на \(E\)]
 \[ \int_\R f(t) e^{i\lambda t}\,dt = \left|\begin{array}{l}
@@ -176,14 +193,17 @@ t = \tau + \frac{\pi}{\lambda}
 \[ \left|\int_\R f(t) e^{i \lambda t}\,dt\right| \le \frac{1}{2} \int_\R \left|f(t) - f\left(t + \frac{\pi}{\lambda}\right) \right| \cdot | e^{i\lambda t}| \,dt \xrightarrow[\lambda \to +\infty]{} 0\]
 По Лемме о непрерывности сдвига
 #+end_proof
+#+NAME: Три следствия об оценке коэффициентов Фурье_1
 #+begin_corollary org
 Пусть \[\omega(f, h) = \sup_{\substack{x, y \in E \\ |x - y| \le h}} |f(x) - f(y)|\] --- модуль непрерывности
 Если \(f \in \tilde{c}[-\pi, \pi]\), то \(|a_k(f)|, |b_k(f)|, |2c_k(f)| \le \omega  \left(f, \frac{\pi}{k}\right)\)
 #+end_corollary
+#+NAME: Три следствия об оценке коэффициентов Фурье_1_док
 #+begin_proof org
 \[ |2c_{-k}(f)| = \left| \frac{1}{\pi} \int_{-\pi}^\pi f(t) e^{ikt} \,dt\right| \le \frac{1}{2\pi} \cdot\int_{-\pi}^\pi \left|f(t) - f \left(t + \frac{\pi}{k}\right) \right|  \,dt \le \]
 \[ \le 2\pi \int_{-\pi}^\pi \omega \left(f, \frac{\pi}{k}\right) \,dt = \omega \left(f, \frac{\pi}{k}\right) \]
 #+end_proof
+#+NAME: Три следствия об оценке коэффициентов Фурье_2
 #+begin_corollary org
 \-
 - \(E \subset \R\), \(E = \pair{a, b}\)
@@ -192,12 +212,16 @@ t = \tau + \frac{\pi}{\lambda}
 Пусть  \(f \in \mahtop{\rm Lip}_M \alpha\), тогда при \(k \neq 0\)
 \[ |a_k(f)|, |b_k(f)|, |2c_k(f)| \le \frac{M\pi^\alpha}{|k|^\alpha} \]
 #+end_corollary
+#+NAME: Три следствия об оценке коэффициентов Фурье_2_док
+#+begin_proof org
 \(f \in \tilde{c}[-\pi, \pi]\), тогда при \(k \neq 0\)
 \[ a_k(f') = k b_k (f) \]
 \[ b_k(f') = -ka_k(f) \]
 \[ c_k(f') = ik c_k(f) \]
 --- интегрирование по частям
 \[ c_k(f') = \frac{1}{2\pi} \int_{-\pi}^\pi f'(t) e^{-ikt}\,dt =\frac{1}{2\pi} \left(f(t)e^{-ikt} \bigg|_{-\pi}^\pi + \int_{-\pi}^\pi f(t) \cdot ik \cdot e^{ikt}\,dt \right) \]
+#+end_proof
+#+NAME: Три следствия об оценке коэффициентов Фурье_3
 #+begin_corollary org
 \-
 1. \(f \int \tilde{c}^{(r)}[-\pi, \pi]\) \\

@@ -1,6 +1,7 @@
 #+LATEX_CLASS: general
 #+TITLE: Вопросы к зачету
 #+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
 
 #+begin_export latex
 \renewcommand{\P}{\mathcal{P}}

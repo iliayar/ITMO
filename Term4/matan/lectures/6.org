@@ -44,11 +44,12 @@
 \[ = \dots = \int\limits_{\Omega_{m - 1}}r^{m - 1}\sin^{n - 2}\varphi_{1} \dots \sin\varphi_{m - 2}\]
 #+end_examp
 * Произведение мер
+#+NAME: Произведение мер
+#+begin_definition org
 - \((X, \A, \mu)\)
 - \((Y, \B, \nu)\)
-#+begin_lemma org
 \(\A, \B\) --- п/к \Rightarrow \(\A \times \B = \{A\times B \subset X \times Y | A \in \A,\ B\in\B\}\)
-#+end_lemma
+#+end_definition
 #+begin_examp org
 Ячейки: В \(\R^2 = \R^1 \times \R^1\ \A = \mathcal{P}^1,\ \B \in \mathcal{P}^1 \) \\
 \(A \times B\) --- ячейка из \(\mathcal{P}\)

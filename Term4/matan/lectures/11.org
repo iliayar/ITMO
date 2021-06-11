@@ -22,6 +22,7 @@
 - \(h \in \R^m\)
 \(f_h(x) \coloneqq f(x + h)\) --- *Сдвиг*
 #+end_definition
+#+NAME: Теорема о непрерывности сдвига
 #+ATTR_LATEX: :options [о непрерывности сдвига]
 #+begin_theorem org
 \-
@@ -45,6 +46,7 @@
    непрерывно в нуле \(\implies\) непрерывно всюду
    \[ \Vert f_h - f\Vert_p - \Vert f_{h_0} - f \Vert_p \le \Vert f_h - f_{h_0} \Vert_p = \Vert f_{h - h_0} - f \Vert_p \xrightarrow[h \to h_0]{} 0 \]
 #+end_remark
+#+NAME: Теорема о непрерывности сдвига_док
 #+begin_proof org
 - 2), 4) :: \(\forall \varepsilon > 0\ \forall f \in L^p[0, T]\ \exists g\) --- непрерывная
   \[ \Vert f - g \Vert_p < \frac{\varepsilon}{3} \]
@@ -63,6 +65,7 @@
   3. \(\pair{x, y} = \pair{y, x}\) (\(\pari{x, y} = \overline{\pair{y, x}}\))
   Неравенство Коши-Буняковского: \(|\pair{x, y}|^2 \le \pair{x, x}\pair{y, y}\)
   \[ \Vert x \Vert \xlongequals{\text{def}} \sqrt{\pair{x, x}} \]
+#+NAME: Гильбертово пространство
 #+begin_definition org
 \(\mathcal{H}\) --- линейное пространство в котором задано скалярное произведение и соответствующая норма. Если при это \(\mathcal{H}\) --- полное (как метрическое пространство), то оно называется *Гильбертовым пространством*
 #+end_definition
@@ -85,17 +88,20 @@
       \color{gray}\mu --- дискретная мера на \(\N\), \(\forall i \mu\{i\} = 1\ \mu(\R\setminus\N) = 0\) \color{black}
       \[ \Vert x \Vert = \sqrt{\sum|x_j|^2} \]
 #+end_examp
+#+NAME: Сходящийся ряд в гильбертовом пространстве
 #+begin_definition org
 Сходящийся ряд: \(\sum a_n,\ a_n \in \H\)
 \[S_N = \sum_{1 \le n \le N} a_n\]
 Если \(\exists S \in \H\ S_N \to S\) в \(\H\)
 #+end_definition
+#+NAME: ортогональность
 #+begin_definition org
 \(x, y \in \H\) \(x\) ортогонально \(y\) \(x \perp y\) если \(\pair{x, y} = 0\)
 #+end_definition
 #+begin_definition org
 \(A \subset \H\) \(x \perp A: \forall a\in A\ \pair<x, a> = 0\)
 #+end_definition
+#+NAME: Ортогональный ряд
 #+begin_definition org
 Ряд \(\sum a_k\) --- ортогональный, если \(\forall k, l\ a_k \perp a_l\)
 #+end_definition
@@ -104,37 +110,41 @@
 \[ \sum a_k = S = (1, \frac{1}{2}, \frac{1}{3}, \dots) \in l^2 \]
 #+end_examp
 \beginproperty
+#+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_1
 #+begin_property org
 \(X_n \to X\), \(Y_n \to Y\) в \(\H\) \\
 _Тогда_ \(\pair{x_n, y_n} \to \pair{x, y}\)
 #+end_property
+#+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_1_док
 #+begin_proof org
 \[ | \pair{x_n, y_n} - \pair{x, y}| \le |\pair{x_n, y_n} - \pair{x, y_n}| + |\pair{x, y_n} - \pair{x, y}| \le \]
 \[ \le \Vert x_n - x \Vert \cdot \Vert y_n \Vert + \Vert x \Vert \cdot \Vert y_n - y \Vert \to 0 \]
-
-
-
 #+end_proof
+#+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_2
 #+begin_property org
 \(\sum x_k\) --- сходится \\
 _Тогда_ \(\forall y \in \H\) \(\pair{\sum x_k, y} = \sum \pair{x_k, y}\)
 #+end_property
+#+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_2_док
 #+begin_proof org
 \[ S_N = \sum_{k = 1}^N x_k \xrightarrow[N \to +\infty]{} S \]
 \[ \pair{S_N, y} \to \pair{S, y} = \pair{\sum x_n, y} \]
 \[ \pair{S_N, y} = \pair{\sum_{k = 1}^N x_k, y} = \sum \pair{x_k, y} \]
 --- это частичные сумма ряда из правой части
 #+end_proof
+#+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_3
 #+begin_property org
 \(\sum x_k\) --- ортогональный ряд \\
 _Тогда_ \(\sum x_k\) --- сходится \Leftrightarrow \(\sum \Vert x_k \Vert^2\) --- сходится
 #+end_property
+#+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_3_док
 #+begin_proof org
 \(S_n = \sum_{k = 1}^N x_k\)
 \[ \Vert S_N \Vert^2 = \pair{\sum{k = 1}^N x_k, \sum{j = 1}^N x_j} = \sum_{k, j} \pair{x_k, x_j} = \sum_{k = 1}^N \pair{x_k, x_k} = \sum_{k = 1}^N \norm{x_k}^2\]
 - \(\Rightarrow\) :: \(C_N\) --- фундаментальная \(\implies\) \(S_N\) --- фундаментальная в \(H\)
 - \(\Leftarrow\) :: \(S_N\) --- сходится в \(\H\) 
 #+end_proof
+#+NAME: Ортогональная система (семейство) векторов
 #+begin_definition org
 \(\{e_k\} \subset \H\) --- ортогональное семейство. Если:
 1. \(\forall k, l\ e_k \perp e_l\)
@@ -163,6 +173,7 @@ _Тогда_ \(\sum x_k\) --- сходится \Leftrightarrow \(\sum \Vert x_k 
 \(L^2[0, \pi]\)
 \[ \left\{\frac{1}{\sqrt{\pi}}, \sqrt{\frac{2}{\pi}} \cos t, \sqrt{\frac{2}{\pi}}\cos 2t, \dots \right\}\text{ --- О.Н.С.} \]
 #+end_examp
+#+NAME: Теорема о коэффициентах разложения по ортогональной системе
 #+begin_theorem org
 \(\{e_k\}\) --- О.С. в \(\H\), \(x \in \H\). \(x = \sum_{k = 1}^\infty c_k e_k\), где \(c_k \in \R(\C)\) \\
 _Тогда_
@@ -171,12 +182,14 @@ _Тогда_
 3. \(c_k e_k\) --- это проекция \(x\) на прямую \(\{t e_k\, t \in \R(\C)}\) \\
    \(x = c_k e_k + z,\ z \perp e_k\)
 #+end_theorem
+#+NAME: Теорема о коэффициентах разложения по ортогональной системе_док
 #+begin_proof org
 1. \(\sum_{k = 1}^N \alpha_k e_k = 0\) \\
    \(\alpha_n \norm{e_k}^2 = 0\)
 2. \[\pair{x, e_k} = 2 \sum\pair{c_je_j, e_k} \]
 \todo
 #+end_proof
+#+NAME: Коэффициенты Фурье
 #+begin_definition org
 \(\{e_k\}\) --- О.С. \(x \in \H\)
 \[ c_k(x) \coloneqq \frac{\pair{x, e_k}}{\norm{e_k}^2} \]
@@ -189,6 +202,7 @@ _Тогда_
 \[ \frac{\pair{x, \tilde{e}_k}}{\norm{\tilde{e}_k}^2} = \pair{x, \frac{e_k}{\norm{e_k}}} = \frac{\pair{x, e_k}}{\norm{e_k}} \]
 \[ \tilde{c}_k \cdot \tilde{e}_k = \frac{\pair{x, e_k}}{\norm{e_k}} \cdot \frac{e_k}{\norm{e_k}} = \frac{\pair{x, e_k}}{\norm{e_k}^2} \cdot e_k = c_k(x) \cdot e_k \]
 #+end_remark
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя
 #+ATTR_LATEX: :options [о свойствах частичных сумм ряда Фурье]
 #+begin_theorem org
 \-
@@ -199,26 +213,30 @@ _Тогда_
 _Тогда_
 #+end_theorem
 \beginproperty
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя_1
 #+begin_property org
 \(S_n\) --- проекция \(x\) на \(\mathcal{L}_n\), т.е. \(x = S_n + z \implies z \perp \mathcal{L}_n\)
 #+end_property
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя_1_док
 #+begin_proof org
 \(k = 1,\dots,n\)
 \[ \pair{z, e_k} = \pair{x - S_n, e_k} = \pair{x, e_k} - c_k(x)\norm{e_k}^2 = 0 \]
-
 #+end_proof
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя_2
 #+begin_property org
 \(S_n\) --- элемент наилучшего приближения для \(x\) в \(\mathcal{L}_n\)
 \[ \norm{x - S_n} = \min_{y \in \mathcal{L}_n}\norm{x - y} \]
 #+end_property
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя_2_док
 #+begin_proof org
 \(x = S_n + z\)
 \[ \norm{x - y}^2 = \Vert \underbrace{(S_n - y)}_{\in \mathcal{L}_n} + \underbrace{z}_{\perp \mathcal{L}_n} \Vert = \norm{S_n - y}^2 + \norm{z}^2 \ge \norm{z}^2 = \norm{x - S_n}^2\]
 #+end_proof
-
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя_3
 #+begin_property org
 \(\norm{S_n} \le \norm{x}\)
 #+end_property
+#+NAME: Теорема о свойствах частичных сумм ряда Фурье. Неравенство Бесселя_3_док
 #+begin_proof org
 \[ \norm{x}^2 = \norm{S_n}^2 + \norm{z}^2 \ge \norm{S_n}^2 \]
 #+end_proof

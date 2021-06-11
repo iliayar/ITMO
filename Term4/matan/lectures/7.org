@@ -32,7 +32,6 @@ _Тогда_ \(\int\limits_a^b f(x)\,dx = \int\limits_{[a, b]} f\,d\lambda_1\)
 #+begin_remark org
 Для [[remark_1_7][замечания 1]] и [[remark_2_7][замечания 2]] требуется инвариантность меры относительно движения \(\R^m\)
 #+end_remark
-
 #+begin_definition org
 \-
 - \(C \subset X \times Y\)

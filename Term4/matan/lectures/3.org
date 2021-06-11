@@ -8,6 +8,8 @@
 #+end_export
 
 * Интеграл
+#+NAME: Итеграл ступенчатой, неотрицательной измеримой, суммируемой функции, суммируемая функция
+#+begin_definition org
 1. $f \ge 0$, ступенчатые \\
    $f = \sum_\text{кон.} \alpha_k \chi_{E_k}$, $E_k$ --- измеримое \\
    $\int_X f = \sum \alpha_k \mu E_k$
@@ -16,10 +18,7 @@
 3. \label{int_3_3} $f$ --- измерима, $f^+, f^- \ge 0$ --- измеримые \\
    Пусть $\int_X f^+$ или $\int_X f^-$ --- конечные \\
    Тогда $\int_X f = \int_X f^+ - \int_X f^-$
-   #+NAME: Суммируемая функция
-   #+begin_definition org
    Если $\int_x f^+,\ \int_X f^-$ --- оба конечные, то $f$ назывется *суммируемой*
-   #+end_definition
    #+begin_remark org
    $f$ --- измеримая, $\ge 0$, интеграл \ref{int_3_3} = интеграл \ref{int_3_2}
    #+end_remark
@@ -28,7 +27,7 @@
    $E \subset X$ --- измеримое, $f$ --- измерима на $X$ \\
    $\int_E f d\mu = \int_X f\cdot\chi_E$
    #+end_definition
-
+#+end_definition
 #+begin_remark org
 $f = \sum \alpha_k \chi_{E_k}\ \int_E f = \sum \alpha_k \mu(E_k \cap E)$
 #+end_remark
@@ -236,5 +235,4 @@ _Тогда_ $\sum \frac{a_n}{\sqrt{|x - x_n|}}$ --- абсолютно сход
 \[ \int_{[-N , N]} \frac{|a_n|}{\sqrt{|x - x_n|}} = \int_{-N}^N \frac{|a_n|}{\sqrt{|x - x_n|}} dx = |a_n| \int_{-N - x_n}^{N - x_n} \frac{dx}{\sqrt{|x|}} \le \]
 \[ \le |a_n| \int_{-N}^N \frac{dx}{\sqrt{|x|}} = 4\sqrt{N}\cdot|a_n| \]
 \[ \sum_n \int_{[-N, N]}\frac{|a_n|}{\sqrt{|x - x_n|}} \le 4 \int_N \sum |a_n| < + \infty \]
-
 #+end_proof

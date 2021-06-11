@@ -47,6 +47,7 @@
 \[n := \Phi'_x \times \Phi'_y = \begin{pmatrix} -z'_x \\ -z'_y \\ 1 \end{pmatrix}\] --- нормаль
 \[ n_0 = \pm \left(-\frac{z'_x}{\sqrt{1 + z'_x^2 + z'_y^2}}, -\frac{z'_y}{\sqrt{\dots}}, \frac{1}{\sqrt{\dots}}\right) \]
 #+end_remark
+#+NAME: Задание стороны поверхности с помощью касательных реперов
 #+begin_remark org
 Другой способ задания стороны поверхности
 1. \(u, v\) --- касательные векторы \\
@@ -54,10 +55,12 @@
    Если задано непрерывное поле реперов, то они задают сторону \(n = u \times v\)(отнормировать)
 2. Задана петля + указано непрерывное движение
 #+end_remark
+#+NAME: Ориентация контура, согласованная со стороной поверхности
 #+begin_definition org
 \(M\) --- поверхность в \(\R^3\), \(n_0\) --- сторона, \(\gamma\) --- контур(петля) в \(M\) --- ориентированный. \\
 Говорят, что сторона поверхности \(n_0\) согласована с ориентацией \(\gamma\): \((\gamma' \times N_\text{внутр.}) \parallel n_0\). Т.е. если ориентация \gamma задает сторону \(n_0\)
 #+end_definition
+#+NAME: Интеграл II рода
 #+begin_definition org
 \-
 - \(M\) --- простое двумерное гладкое многообразие
@@ -78,7 +81,7 @@
 #+begin_remark org
 \(\Phi, n = \Phi'_u \times \Phi'_v \leadsto n_0\)
 \[ \int_M \langle F, n_0 \rangle = \int_O \left\langle F, \frac{\Phi'_u \times \Phi'_v}{|\Phi'_u\times\Phi'_v} \right\rangle |\Phi'_u\times\Phi'_v|\,du\,dv =  \]
-\[ \int_O \underbrace{\langle F, \Phi'_u\times\Phi'_v \rangle}_\text{смешенное произведение} \,du\,dv \addtag\label{int_1_8} \]
+\[ \int_O \underbrace{\langle F, \Phi'_u\times\Phi'_v \rangle}_\text{смешанное произведение} \,du\,dv \addtag\label{int_1_8} \]
 \[ \Phi(u, v) = (x(u, v), y(u, v), z(u, v)) \]
 \[ \langle F, \Phi'_u\times\Phi'_v \rangle = \det\begin{pmatrix}P & x'_u & x'_v \\ Q & y'_u & y'_v \\ R & z'_u & z'_v\end{pmatrix} \]
 \[ \ref{int_1_8} = \int_O P\cdot\begin{vmatrix} y'_u & z'_v \\ z'_u & z'_v \end{vmatrix} + Q\cdot\begin{vmatrix}z'_u & z'_v \\ x'_u & x'_v\end{vmatrix} + R\cdot\begin{vmatrix}x'_u & x'_v \\ y'_u & y'_v\end{vmatrix}\,du\,dv \]
@@ -123,6 +126,7 @@ _Тогда_ (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
 - \(f, g: E \to \C\) --- измеримые
 _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \left(\int_E |g|^q\right)^{\frac{1}{q}} \]
 #+end_property
+#+NAME: Неравенство Минковского
 #+ATTR_LATEX: :options [Неравенство Минковского]
 #+begin_property org
 Те-же условия что и в [[gelder_8][Неравенстве Гельдера]]
@@ -131,6 +135,7 @@ _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \le
 #+begin_remark org
 При \(p = 1\) неравенство тоже верно
 #+end_remark
+#+NAME: Пространство \(L^p(E,\mu)\)
 #+begin_property org
 #+begin_definition org
 \(L^p\), \(1 \le p \le +\infty \)
@@ -141,7 +146,7 @@ _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \le
 \(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = h\text{ почти везде}\). \(\mathcal{L}^p/_N = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
 #+end_definition
 #+end_property
-
+#+NAME: Пространство \(L^\infty(E,\mu)\)
 #+begin_property org
 \-
 - \(L^\infty(E,\mu)\)
@@ -161,7 +166,6 @@ _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \le
 \(B = \esssup f\) \\
 Тогда \(\)
 #+end_proof
-
 #+begin_property org
 \(f\) --- сумм, \(\esssup_E |g| < +\infty\) \\
 _Тогда_ \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
@@ -181,5 +185,3 @@ _Тогда_ \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
 #+begin_remark org
 \(f \in L^p\) \Rightarrow \(f\) --- почти везде конечны. \(1 \le p \le +\infty\) \Rightarrow можно считать \(f\) --- задана всюду на \(E\), и всюду конечна
 #+end_remark
-
-

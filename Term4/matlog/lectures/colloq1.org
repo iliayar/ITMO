@@ -8,7 +8,7 @@
 ** Внутренность и замыкание множества
 #+include: "3.org::внутренность"
 #+begin_definition org
-*Замыкание* X --- \(\overline{X} = \text{наим.}\{A \not\in \Omega \big| X \subseteq A}\)
+*Замыкание* X --- \(\overline{X} = \text{наим.}\{A \not\in \Omega \big| X \subseteq A \}\)
 #+end_definition
 ** Топология стрелки
 #+include: "3.org::теорема топология"

@@ -148,6 +148,8 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 #+end_proof
 * Плотность одной меры по отношению к другой
 ** Замена перменных в интеграле
+#+NAME: Плотность одной меры по отношению к другой
+#+begin_definition org
 - $(X, \A, mu)$
 - $(Y, \B, \cdot)$
 - $\Phi: X \to Y$
@@ -158,9 +160,10 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 
 \noindentДля $E \in \B$ положим $\nu(E) = \mu \Phi^{-1}(E)$ \\
 Тогда $\nu$ --- мера:
-\[ \nu(\bigsqcuo E_n) = \mu(\Phi^{-1}(\bigsqcup E)n) = \mu(\bigsqcup\Phi^{-1}(E_n)) = \sum \mu \Phi^{-1} (E_n) = \sum \nu E_n\]
+\[ \nu(\bigsqcup E_n) = \mu(\Phi^{-1}(\bigsqcup E)n) = \mu(\bigsqcup\Phi^{-1}(E_n)) = \sum \mu \Phi^{-1} (E_n) = \sum \nu E_n\]
 Мера $\nu$ называется образом $\mu$ при отображении $\Phi$ и
 \[ \nu E = \int_{\Phi^{-1}(E)} 1 d\mu \]
+#+end_definition
 #+begin_remark org
 \-
 - $f: Y \to \overline{\R}$ --- измерима относительно $\B$

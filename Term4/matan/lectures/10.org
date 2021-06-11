@@ -7,6 +7,7 @@
 \newcommand{\M}{\mathfrak{M}}
 #+end_export
 
+#+NAME: Формула Гаусса--Остроградского
 #+ATTR_LATEX: :options [Формула Остроградского]
 #+begin_theorem org
 \-
@@ -19,18 +20,22 @@
 _Тогда_
 \[ \iiint_V \frac{\partial R}{\partial z}\,dx\,dy\,dz = \iint_{\partial V}R\,dx\,dy = \color{blue} \iint_{\partial V} 0\,dy\,dz + 0\,dz\,dx + R\,dx\,dy \color{black} \]
 #+end_theorem
+#+NAME: Формула Гаусса--Остроградского_док
 #+begin_proof org
 \[ \iiint_V \frac{\partial R}{\partial z} = \iint_G \,dx\,dy \int_{f(x, y)}^{F(x, y)} \frac{\partial R}{\partial z}\,dz = \iint_G R(x, y, F(x, y))\,dx\,dy - \iint_G R(x, y, f(x, y)) \,dx\,dy =  \]
 \[ = \iint_{\Omega_F} R(x, y, z)\,dx\,dy + \iint_{\Omega_f} R\,dx\,dy + \underbrace{\iint_{\Omega} R \,dx\,dy}_0 \]
 #+end_proof
+#+NAME: Формула Гаусса--Остроградского_след
 #+ATTR_LATEX: :options [обобщение формула Остроградского]
 #+begin_corollary org
 \[ \iiint_V \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} \, dx\,dy\,dz = \iint_{\partial V_\text{внеш.}} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy\]
 #+end_corollary
+#+NAME: Дивергенция
 #+begin_definition org
 \(V\) --- гладкое векторное поле. *Дивергенция*:
 \[ \mathop{\rm div}V = \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} \]
 #+end_definition
+#+NAME: Бескоординатное определение ротора и дивергенции
 #+begin_remark org
 \[ \mathop{\rm div} = \lim_{\varepsilon \to 0} \frac{1}{\frac{4}{3}\pi\varepsilon^3} \iiint_{B(a, \varepsilon)} \mathop{\rm div} V \,dx\,dy\,dz  = \lim_{\varepsilon \to 0} \frac{1}{\frac{4}{3}\pi\varepsilon^3} \iint_{S(a, \varepsilon)} \langle V, \overline{n}_0 \rangle ds\]
 --- не зависит от координат
@@ -42,9 +47,13 @@ _Тогда_
 \[ \iiint_V \frac{\partial f}{\partial l} \,dx\,dy\,dz = \iint_{\partial V} f\cdot \langle f, n_0 \rangle ds \]
 #+end_corollary
 * Формула Стокса
+#+NAME: ротор
+#+begin_definition org
 \[ \int_{\partial \Omega}P\,dx + Q\,dy + R\,dz = \iint_\Omega \langle \mathop{\em rot}(V), n_0 \rangle ds\]
 \[ \mathop{\rm rot}V = \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}, \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}, \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) \]
 --- ротор векторного поля (вихрь векторного поля)
+#+end_definition
+
 #+begin_examp org
 \[ V(x, y, z) = (-y, x, 0) \]
 \[ \rot V = (0, 0, 2) \]
@@ -60,11 +69,13 @@ _Тогда_
 - \(\Omega\) --- область
 _Тогда_ \(V\) --- потенциально \Leftrightarrow \(\rot V = 0\)
 #+end_theorem
+#+NAME: Соленоидальное векторное поле
 #+begin_definition org
 Векторное поле \(A = (A_1, A_2, A_3)\) --- *соленоидально* в области \(\Omega \subset \R^2\), если \(\exists\) гладкое векторное поле \(B\) в \(\Omega\):
 \[ A = \rot B \]
 \(B\) --- называется *векторным потенциалом* \(A\)
 #+end_definition
+#+NAME: Соленоидальность бездивергентного векторного поля
 #+ATTR_LATEX: :options [Пуанкаре']
 #+begin_theorem org
 \-
@@ -72,6 +83,7 @@ _Тогда_ \(V\) --- потенциально \Leftrightarrow \(\rot V = 0\)
 - \(A\) --- векторное поле в \(\Omega\), \(A \in C^1\)
 _Тогда_ \(A\) --- соленоидально \(\Leftrightarrow\) \(\mathop{\rm div} A = 0\)
 #+end_theorem
+#+NAME: Соленоидальность бездивергентного векторного поля_док
 #+begin_proof org
 \-
 - \((\Rightarrow)\) :: \(\mathop{\rm div} \rot B = 0\)
@@ -98,13 +110,15 @@ _Тогда_ \(A\) --- соленоидально \(\Leftrightarrow\) \(\mathop{
 \[ \int_{\partial \Omega} A_l\,dl = \int_{\partial \Omega} \langle A, l_0 \rangle \,dl = \iint_{\Omega} (\rot A)_n \,ds \]
 \[ (\rot A)_n(a) = \lim_{\varepsilon \to 0} \frac{1}{\lambda(\Omega_\varepsilon)} \iint_{\Omega_\varepsilon} (\rot A)_n\,ds = \lim_{\varepsilon \to 0}\frac{1}{\lambda \Omega} \cdot \int_{\partial \Omega_\varepsilon} A_l\,dl \]
 #+end_remark
-#+ATTR_LATEX: :options [Урнсона]
+#+NAME: Лемма Урысона
+#+ATTR_LATEX: :options [Урысона]
 #+begin_lemma org
 \-
 - \(X\) --- нормальное
 - \(F_0, F_1 \subset X\) --- замкнутые, \(F_0 \cap F_1 = \emptyset\)
 _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1\), \(f\big|_{F_0} = 0\), \(f\big|_{F_1} = 1\)
 #+end_lemma
+#+NAME: Лемма Урысона_док
 #+begin_proof org
 Перефразируем нормальность: Если \(\underset{\text{замк.}}{F} \subset \underset{\text{октр.}{G}}\), то \(\exists U(F)\) --- открытое: \[F \subset U(F) \subset \overline{U(F)} \subset G\].
 \[ F \leftrightarrow F_0 \quad G \leftrightarrow (F_1)^C \quad F_0 \subset \underbrace{U(F_0)}_{G_0} \subset \underbrace{\overline{U(F_0)}}_{\overline{G_0}} \subset \underbrace{F_1^C}_{G_1} \]
@@ -124,6 +138,7 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
    - \((\subset)\) :: \(q, r\) --- двоично рациональные
      \[ \bigsqcap_{\substack{q > a \\ \text{всех}}} G_q \supset \bigcap_{\substack{r > a \\ \text{некоторых}}} \overline{G_r} \supset \bigcap_{\substack{r > a \\ \text{всех}}} \overline{G_r} \]
 #+end_proof
+#+NAME: Плотность в \(L^p\) непрерывных финитных функций
 #+begin_theorem org
 \-
 - \((\R, \M, \lambda_\M)\)
@@ -133,6 +148,7 @@ _Тогда_ в \(L^P(E, \lambda_\M)\) множество непрерывных
 #+begin_remark org
 \(f\) --- финитная в \(\R^m\) = \(\exists\) шар \(B\ f = 0\) вне \(B\). \(f\) --- непрерывная финитная на \(E\) = \(\exists g \in C_0(\R^m)\ f = g\big|_E\)
 #+end_remark
+#+NAME: Плотность в \(L^p\) непрерывных финитных функций_док
 #+begin_proof org
 \todo
 #+end_proof
