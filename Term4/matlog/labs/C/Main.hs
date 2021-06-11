@@ -11,6 +11,6 @@ main = do
     s <- getContents
     let ast = parseFile (scanTokens s)
     case annotate ast of
-      (Right annotated) -> print annotated
+      (Right annotated) -> putStr $ show annotated
       (Left errorAnnotated) -> print errorAnnotated
 
