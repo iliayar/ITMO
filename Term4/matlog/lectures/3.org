@@ -69,11 +69,13 @@
 #+end_definition
 #+NAME: дистрибутивная решетка
 #+begin_definition org
-*Дистрибутивная решетка* если всегда  \(a \cdot (b + c) = a\codt b + a \cdot c\)
+*Дистрибутивная решетка* если всегда  \(a \cdot (b + c) = a \cdot b + a \cdot c\)
 #+end_definition
+#+NAME: дистрибутивная решетка_лем
 #+begin_lemma org
 В дистрибутивной решетке \(a + b\cdot c = (a + b) \cdot(a + c)\)
 #+end_lemma
+#+NAME: Псевдодополнение
 #+begin_definition org
 *Псевдодополнение* \(a \to b = \text{наиб.}\{c \big| a \cdot c \le b\}\)
 #+end_definition
@@ -81,6 +83,7 @@
 #+begin_definition org
 *Импликативная решетка* --- решетка, где для любых \(a, b\) есть \(a \to b\)
 #+end_definition
+#+NAME: импликативная решетка 0 и 1
 #+begin_definition org
 *0* --- наименьший элемент решетки, *1* --- наибольший элемент решетки
 #+end_definition
@@ -92,6 +95,7 @@
 #+begin_definition org
 *Булева алгебра* --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
 #+end_definition
+#+NAME: булева алгебра_пример
 #+begin_examp org
 \-
 #+begin_export latex
@@ -122,12 +126,15 @@
 - \(1 = \langle 1, 1 \rangle\)
 - \(0 = \langle 0, 0 \rangle\)
 #+end_examp
+#+NAME: 1 в импликативной решетке
 #+begin_lemma org
 В импликативной решетке всегда есть \(1\).
 #+end_lemma
+#+NAME: алгебра гейтинга модель ИИВ
 #+begin_theorem org
 Любая алгебра Гейтинга --- модель ИИВ
 #+end_theorem
+#+NAME: булева алгебра модель ИВ
 #+begin_theorem org
 Любая булева алгебра --- модель КИВ
 #+end_theorem
@@ -167,6 +174,7 @@ _Тогда_ \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
 #+begin_property org
 \(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
 #+end_property
+#+NAME: алгебра линденбаума модель ИИВ
 #+begin_theorem org
 Алгебра линденбаума --- полная модель ИИВ
 #+end_theorem

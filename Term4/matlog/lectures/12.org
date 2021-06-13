@@ -34,7 +34,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+end_remark
 #+NAME: множество предикат
 #+begin_definition org
-Предикат \(P(x)\) --- множество \(\{x \big| P(x)\}\)
+``Предикат`` \(P(x)\) --- множество \(\{x \big| P(x)\}\)
 #+end_definition
 #+ATTR_LATEX: :options [равенства]
 #+NAME: Аксиома равенства
@@ -100,12 +100,12 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+end_theorem
 #+begin_proof org
 \-
-- \(a = b\), тогда \(a\cup b = \{a\}\) [[теорема множество множества][по теореме]]
-- \(a \neq b\), тогда \(a\cup b = \{a, b\}\) [[аксиома пары][по аксиоме]]
+- \(a = b\), тогда \(a\cup b = a\) [[теорема множество множества][по теореме]]
+- \(a \neq b\), тогда \(a\cup b = \bigcup\{a, b\}\) [[аксиома пары][по аксиоме]]
 #+end_proof
 #+begin_symb org
 \(a, b\) --- множества, \(a \cup b = \) такое \(c\)
-\[ a \in c \& b \in c \& \forall t. t\in c \to t = a \vee t = b \]
+\[ a \subseteq c \& b \subseteq c \& \forall t. t\in c \to t \in a \vee t \in b \]
 #+end_symb
 #+NAME: штрих
 #+begin_definition org
@@ -128,7 +128,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+begin_definition org
 Множество \(S\) *вполне упорядочено* отношением \(\in\), если
 1. \(\forall a. \forall b. a\neq b\& a \in S \& b \in S \to a \in b \vee b \in a\) --- линейный
-2. \(\forall t. t \subseteq S \to \exists a. a\in t \&\forall b. b \in t \to b = a \vee a \in b\) --- в любом множестве есть наименьший элемент
+2. \(\forall t. t \subseteq S \to \exists a. a\in t \&\forall b. b \in t \to b = a \vee a \in b\) --- в любом подмножестве есть наименьший элемент
 #+end_definition
 #+NAME: ординал
 #+begin_definition org
@@ -148,6 +148,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+begin_theorem org
 \(\omega\) --- множество
 #+end_theorem
+#+NAME: Определение сложения ординалов
 #+begin_definition org
 \[ a + b = \begin{cases}
   a & b = 0 \\
@@ -155,6 +156,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
   \sup\limits_{c \in b}(a + c) & \text{если }b\text{ --- предельный}
 \end{cases} \]
 #+end_definition
+#+NAME: Определение \sup
 #+begin_definition org
 \(\sup t\) --- минимальный ординал, содержащий все элементы из \(t\)
 #+end_definition

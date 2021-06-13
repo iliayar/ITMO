@@ -62,7 +62,7 @@
 \[ (\forall x. \forall y. \forall x. P(x))[x := y] \equiv \forall x. \forall y. \forall x. P(x) \]
 #+end_examp
 #+begin_examp org
-\[ P(x) \vee \forall x. P(x)\ [x := y] \equiv P(y) \vee \forall x. P(y) \]
+\[ (P(x) \vee \forall x. P(x))[x := y] \equiv P(y) \vee \forall x. P(x) \]
 #+end_examp
 #+begin_examp org
 \[ (\forall y. x = y)\ [x := \underbrace{y}_{\equiv \Theta}] \equiv \forall y. \underset{1}{y} = y\]
@@ -94,6 +94,6 @@
 #+NAME: теорема о дедукции для предикатов
 #+begin_theorem org
 Пусть задана \(\Gamma,\ \alpha,\beta\)
-1. Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если в доказательстве \(\Gamma, \alpha \to \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)
+1. Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если в доказательстве \(\Gamma, \alpha \vdash \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)
 2. Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
 #+end_theorem

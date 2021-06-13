@@ -5,6 +5,7 @@
 - \(\Gamma \vDash \alpha\) --- \(\alpha\) следует из \(\Gamma\) при всех оценках, что все \(\gamma \in \Gamma\quad \llbracket \gamma \rrbracket = \text{И}\), выполнено \(\llbracket \alpha \rrbracket = \text{И}\)
 - \(x = 0 \vdash \forall x. x = 0\)
 - \(x = 0 \not\vDash \forall x. x = 0\)
+#+NAME: Условие для корректности
 #+ATTR_LATEX: :options [Условие для корректности]
 #+begin_definition org
 Правила для кванторов по свободным перменным из \(\Gamma\) запрещены. \\
@@ -22,12 +23,14 @@ _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 Противоречивые:
 - \(A \& \neg A\)
 #+end_examp
+#+NAME: множество формул_нмзбф
 #+begin_remark org
-Непротиворечивое множество замкнутых(не имеющая сводных перменных) бескванторных формул
+Непротиворечивое множество замкнутых(не имеющих сводных перменных) бескванторных формул
 #+end_remark
 #+begin_examp org
 \(\{A\}, \{0 = 0\}\)
 #+end_examp
+#+NAME: множество формул_модель
 #+begin_definition org
 *Моделью* для непротиворечивого множества замкнутых бескванторных формул \(\Gamma\) --- такая модель, что каждая формула из \(\Gamma\) оценивается в И
 #+end_definition
@@ -38,6 +41,7 @@ _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 #+begin_symb org
 *з.б.* --- замкнутая бескванторная. *непр. мн* --- непротиворечивое множество
 #+end_symb
+#+NAME: полное множество формул_1
 #+begin_theorem org
 Если \(\Gamma\) --- непротиворечивое множество з.б. фомул и \(\alpha\) --- з.б.  формула. \\
 То либо \(\Gamma \cup \{\alpha\}\), либо \(\Gamma \cup \{\neg \alpha\}\) --- непр. мн. з.б. формул
@@ -45,17 +49,23 @@ _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 #+begin_proof org
 Пусть и \(\Gamma \cup \{\alpha\}\) и \(\Gamma \cup \{\neg \alpha\}\)\todo
 #+end_proof
+#+NAME: полное множество формул_2
 #+begin_theorem org
 Если \(\Gamma\) --- непр. мн. з.б. фомул, то можно построить \(\Delta\) --- полное непр. мн. з.б. формул. \(\Gamma \subseteq \Delta\) и в языке --- счетное количество формул
 #+end_theorem
+#+NAME: полное множество формул_3
+#+begin_definition org
 \(\varphi_1, \varphi_2, \varphi_3, \dots\) --- формулы з.б. \\
 - \(\Gamma_0 = \Gamma\)
 - \(\Gamma_1 = \Gamma_0 \cup \{\varphi_1\}\) либо \(\Gamma_0 \cup \{\neg \varphi_1\}\) --- смотря что непротиворечивое
 - \(\Gamma_2 = \Gamma_1 \cup \{\varphi_2\}\) либо \(\Gamma_1 \cup \{\neg \varphi_2\}\)
 \[ \Gamma^* = \bigcup_i \Gamma_i \]
+#+end_definition
+#+NAME: полное множество формул_4
 #+begin_property org
 \(\Gamma^*\) --- полное
 #+end_property
+#+NAME: полное множество формул_5
 #+begin_property org
 \(\Gamma^*\) --- непрерывное
 #+end_property
@@ -64,6 +74,7 @@ _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 Конечное доказательство \(\gamma_1, \dots \gamma_n\), часть из которых гипотезы: \(\gamma_1, \dots, \gamma_k\) \\
 \(\gamma_i \in \Gamma_{R_i}\). Возьмем \(\Gamma_{\max{R_i}}\). Правда ли \(\Gamma_{\max{R_i}} \vdash B \& \neg B\)
 #+end_proof
+#+NAME: полное множество формул_6
 #+begin_theorem org
 Любое полное непротиворечивое множество замкнутых бескванторных формул \(\Gamma\) имеет модель, т.е. существует оценка \(\llbracket \rrbracket\): если \(\gamma \in \Gamma\), то \(\llbracket \gamma \rrbracket = \text{И}\)
 #+end_theorem
@@ -97,9 +108,11 @@ _Переход_ \(\alpha \& \beta\). При этом
 - по теореме о существование модели: \(M^\triangle\) --- модель для \(F^\triangle\)
 - покажем, что \(M^\triangle\) --- модель для \(\Gamma\) --- \(M\)
 \(\Gamma_0 = \Gamma\), где все формулы --- в предварительной нормальной форме
+#+NAME: пнф
 #+begin_definition org
-ПНФ --- формула, где \(\forall \exists \forall \dots(\tau)\), \(\tau\) --- формула без кванторов
+*Предваренная нормальная форма* --- формула, где \(\forall \exists \forall \dots(\tau)\), \(\tau\) --- формула без кванторов
 #+end_definition
+#+NAME: пнф_1
 #+begin_theorem org
 Если \(\varphi\) --- формула, то существует \(\psi\) --- в п.ф., то \(\varphi \to \psi\) и \(\psi \to \varphi\)
 #+end_theorem
@@ -113,12 +126,15 @@ _Переход_ \(\alpha \& \beta\). При этом
 3. \(\varphi_j \equiv \exists x. \psi\) --- добавим \(\psi[x:=d^j_i]\)
 \(\Gamma_{i + 1} = \Gamma_i \cup \{\text{все добавленные формулы}\}\) --- счетное количество
 #+end_proof
+#+NAME: полное множество формул_7
 #+begin_theorem org
 Если \(\Gamma_i\) --- непротиворечиво, то \(\Gamma_{i + 1}\) --- непротиворечиво
 #+end_theorem
+#+NAME: полное множество формул_8
 #+begin_theorem org
 \(\Gamma*\) --- непротиворечиво
 #+end_theorem
+#+NAME: полное множество формул_9
 #+begin_corollary org
 \(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
 #+end_corollary
