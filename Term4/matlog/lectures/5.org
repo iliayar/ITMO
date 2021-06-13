@@ -82,9 +82,10 @@
      | Cons(hd, tl) (* $\beta$ *) -> 1 + count tl (* $\beta \to \text{int}$ *)
 #+end_src
 #+end_examp
-** Исчисление предикатов
+* Исчисление предикатов
+#+NAME: исчисление предикатов
 #+begin_definition org
-Язык исчисление предикатов
+Язык исчисления предикатов
 - логические выражения ``предикаты``/``формулы``
 - предметные выражния ``термы``
 \(\Theta\) --- метаперменные для термов \\
@@ -104,7 +105,7 @@
   - \(\forall x.\varphi\) и \(\exists x.\varphi\) --- кванторы \\
     \color{gray}``<квантор> <переменная>.<выражение>``\color{black} \\
 #+end_definition
-*** Сокращение записи
+** Сокращение записи
 И.В + жадность \(\forall, \exists\) \\
 Метавыражение:
 \[ \forall x. \color{green}(\color{black}P(x) \& \color{green}(\color{black}\forall y. P(y) \color{green}))\color{black} \]

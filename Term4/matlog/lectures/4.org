@@ -11,7 +11,7 @@
 \newcommand{\B}{\mathcal{B}}
 #+end_export
 
-
+* Упорядоченность
 #+begin_definition org
 *Предпорядок* --- транзитивное, рефлексивнре
 #+end_definition
@@ -39,8 +39,8 @@
 - \(V\) --- множество истинностных значений \\
   \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
   Выделенные значения \(T \in V\) \\
-  \(\llbracket p_i \rrbracket \in V\) \(f_p : p_i \to V\)
-- \(p_i = f_\P(p_i)\) \\
+  \(\llbracket p_i \rrbracket \in V\) \(f_\P : p_i \to V\)
+- \(\eval{p_i} = f_\P(p_i)\) \\
   \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
   \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
 +Если \(\vdash \alpha\), то+ \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
@@ -65,7 +65,7 @@
 \end{tikzpicture}
 \end{center}
 #+end_export
-#+NAME: модель крипке
+#+NAME: модель Крипке
 #+begin_defintion org
 \-
 1. \( W = \{W_i\}\) --- множество миров
@@ -74,7 +74,7 @@
    \( (\Vdash)  \subseteq W \times \P\) \\
    При этом, если \( W_j \Vdash p_i \) и \( W_j \preceq W_k\), то \( W_k \Vdash p\)
 #+end_defintion
-#+NAME: модель крипке_доп
+#+NAME: модель Крипке_1
 #+begin_definition org
 \-
 1. \( W_i \Vdash \alpha\) и \( W_i \Vdash \beta\), тогда (и только тогда) \( W_i \Vdash \alpha \& \beta\) \\
@@ -84,12 +84,15 @@
 4. \( W_i \Vdash \neg \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
    \(W_i \preceq W_j\), то \(W_j \not\Vdash \alpha\)
 #+end_definition
+#+NAME: модель Крипке_2
 #+begin_theorem org
 Если \(W_i \Vdash \alpha\) и \( W_i \preceq W_j\), то \(W_j \Vdash \alpha\)
 #+end_theorem
+#+NAME: модель Крипке_3
 #+begin_definition org
 Если \(W_i \Vdash \alpha\) при всех \( W_i \in W\), то \(\vDash \alpha\)
 #+end_definition
+#+NAME: модель Крипке_4
 #+begin_theorem org
 ИИВ корректна в модели Крипке
 #+end_theorem
@@ -155,11 +158,13 @@
 
    Добавим новый элемент \( 1_{\Gamma(\A)}\) перенеименуем \( 1_\A \) в  \(\omega\)
 #+end_definition
+#+NAME: операция гамма_теорема
 #+begin_theorem org
 \-
 - \( \Gamma(\A) \) --- алгебра Гейтинга
 - \( \Gamma(\A) \) --- Геделева
 #+end_theorem
+#+NAME: Гомоморфизм алгебр Гейтинга
 #+begin_definition org
 *Гомоморфизм* алгебр Гейтинга \\
 - \(\varphi: \A \to \B \)
@@ -167,9 +172,11 @@
 - \(\varphi(1_\A) = 1_\B\)
 - \(\varphi(0_\A) = 0_\B\)
 #+end_definition
+#+NAME: Гомоморфизм алгебр Гейтинга_1
 #+begin_theorem org
 \( a \le b\), то \(\varphi(a) \le \varphi(b)\)
 #+end_theorem
+#+NAME: Гомоморфизм алгебр Гейтинга_2
 #+begin_definition org
 \-
 - \(\alpha\) --- формула ИИВ
@@ -178,9 +185,11 @@
 - \(g\): ИИВ \to \(\B\)
 \(\varphi\) согласованы \(f, g\), если \(\varphi(f(\alpha)) = g(\alpha)\)
 #+end_definition
+#+NAME: Гомоморфизм алгебр Гейтинга_3
 #+begin_theorem org
 если \(\varphi: \A \to \B\) согласована с \(f, g\) и оценка \(\llbracket \alpha \rrbracket_g \neq 1_\B\), то \(\llbracket \alpha \rrbracket_f \neq 1_\A\)
 #+end_theorem
+#+NAME: Гомоморфизм алгебр Гейтинга_4
 #+begin_theorem org
 ИИВ дизъюнктивно
 #+end_theorem

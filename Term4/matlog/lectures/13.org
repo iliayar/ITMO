@@ -4,25 +4,20 @@
 #+LATEX_HEADER: \newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
 
 * Аксиома выбора
-#+NAME: Аксиома выбора
 #+ATTR_LATEX: :options {\bf Аксиома 8.}
 #+begin_axiom* org
-На любом семействе множеств можно определить функцию \( f: S \to A_S \), которая по множеству возвращает его элемент
-#+end_axiom*
-#+begin_examp org
-\-
+- На любом семействе непустых множеств \(\{A_S\}_{S \in \mathbb{S}}\) можно определить функцию \( f: \mathbb{S} \to \bigcup_{S}A_S \), которая по множеству возвращает его элемент
 - Любое множество можно вполне упорядочить
 - Для любой сюрьективной функции \(f: A \to B\), найдется частично обратная \(g: B \to A\), \(g(f(x)) = x\)
-#+end_examp
+#+end_axiom*
 #+begin_definition org
-*Дизъюнктное множество* --- семейство непересекающихся множеств
+*Дизъюнктное семейство множество* --- семейство непересекающихся множеств
 \[ D(y):\ \forall p.\forall q. p \in y \& q \in y \to p \cap q = \varnothing \]
 #+end_definition
 #+begin_definition org
 *Прямое произведение* дизъюнктного множества
-\[ XS = \{t \big| \forall p. p \in S \leftrightarrow \exists ! c. c \in p \& c \in t\} \]
+\[ \bigtimes S = \{t \big| \forall p. p \in S \leftrightarrow \exists ! c. c \in p \& c \in t\} \]
 #+end_definition
-\noindent
 #+NAME: Аксиома выбора_2
 #+ATTR_LATEX: :options {\bf Аксиома 8.}
 #+begin_axiom* org
@@ -34,21 +29,22 @@
 Рассморим \(ZF\)(аксиоматика Цермело-Френкеля) поверх ИИП. Если добавим аксиому выбора то \(\vdash \alpha \lor \lnot \alpha\)
 #+end_theorem
 * Аксиома фундирования
-\noindent
 #+ATTR_LATEX: :options {\bf Аксиома 9.} 
 #+begin_axiom* org
 \[ \forall x. x = \varnothing \lor \exists y. y \in x \& y \cap x = \varnothing \]
 В каждом непустом множестве есть элемент, не пересекающийся с ним
 #+end_axiom*
-\noindent
-#+ATTR_LATEX: :options {\bf Аксиома 10.}
 * Схема аксиом подстановки
+ZFC --- Zemelo-Frenkel Choice \\
+#+ATTR_LATEX: :options {\bf Аксиома 10.}
 #+begin_axiom* org
 \(S\) --- множество, \(f\) --- функция, то \(f(S)\) --- множество, т.е. существует формула \(\varphi(x, y)\):
 \[\forall x \in S. \exists ! y. \varphi(x, y)\]
 #+end_axiom*
+#+begin_examp org
 \[ f(x) = \begin{cases} {x} & p(x) \\ \varnothing & \neg p(x) \end{cases} \]
 \[ \{x \in S | p(x)\} = \cup f(S) \]
+#+end_examp
 * Мощность множества
 #+NAME: Равномощность
 #+begin_definition org

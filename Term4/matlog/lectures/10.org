@@ -56,6 +56,7 @@
 #+end_examp
 #+NAME: Примитивно-рекурсивные_акс_6
 #+begin_definition org
+\-
 6. [@6] \(M\pair{f}: \N^m \to \N\) --- *минимизация*
    - \(f: \N^{m + 1} \to \N\)
    \[ M\pair{f}(x_1, \dots, x_m) = y \]
@@ -125,6 +126,7 @@
 #+begin_theorem org
 Примитивы \(Z, N, S, P\) представимы в ФА
 #+end_theorem
+#+NAME: Представимость примитивов N, Z, S, U в формальной арифметике_док
 #+begin_proof org
 Аргументы: \(x_1, \dots, x_n\)
 1. \(Z(x): \N \to \N\)
@@ -137,10 +139,6 @@
 4. \(S\pair{\underset{\gamma}{g}, \underset{\varphi_1}{f_1}, \dots, \underset{\varphi_k}{f_k}}\)
    - \((x_1, \dots, x_m) = x_{m + 1}\)
    \[ \exists r_1. \exists r_2. \dots\exists r_k. \varphi_1(x_1, \dots, x_m, r_1) \& \dots \& \varphi_k(x_1, \dots, x_m, r_k) \& \gamma(r_1, \dots, r_k, x_{m + 1}) \]
-5. \(M\pair{f}\)
-   - \(f: \N^{m + 1} \to \N\)
-      \[ \varphi(x_{m + 1}, x_1, \dots, x_m, \overline{0}) \& \forall y. y < x_{m + 1} \to \neg \varphi(y, x_1, \dots, x_m, \overline{0}) \]
-      , где \((a < b) = (\exists n. a+ n = b)\&\neg a = b\)
 #+end_proof
 #+NAME: Бета-функция Гёделя
 #+begin_definition org
@@ -163,10 +161,14 @@ _Тогда_ найдутся \(b\) и \(c\), что
 #+end_remark
 #+NAME: Представимость примитивов $R$ и $M$ и рекурсивных функций в формальной арифметике
 #+begin_remark org
-\[R\pair{g, x_1, \dots, x_n}  = \begin{cases}
-  f(x_1, \dots, x_n) y = 0 & y = 0 \\
-  g(y - 1, R(y - 1, x_1, \dots, x_n), x_1, \dots, x_n) & y > 0
-\end{cases}\]
-\[ \exists b. \exists c. \exists f. \varphi(x_1, \dots, x_n f) \& B(b, c, \overline{0}, f) \& \\ \]
-\[ \& \forall y. y < x_{n + 1} \to \exists r_{y}. B(b, c, y, r_{y})\&\exists r_{y + 1}. B(b, c, y + 1, r_{y + 1})\&\gamma(y, r_{y}, x_1, \dots, x_n, r_{y + 1}) \]
+\-
+- \(M\pair{f}\),  \(f: \N^{m + 1} \to \N\)
+  \[ \varphi(x_{m + 1}, x_1, \dots, x_m, \overline{0}) \& \forall y. y < x_{m + 1} \to \neg \varphi(y, x_1, \dots, x_m, \overline{0}) \]
+  , где \((a < b) = (\exists n. a+ n = b)\&\neg a = b\)
+- \[R\pair{g, x_1, \dots, x_n}  = \begin{cases}
+    f(x_1, \dots, x_n) y = 0 & y = 0 \\
+    g(y - 1, R(y - 1, x_1, \dots, x_n), x_1, \dots, x_n) & y > 0
+  \end{cases}\]
+  \[ \exists b. \exists c. \exists f. \varphi(x_1, \dots, x_n f) \& B(b, c, \overline{0}, f) \& \\ \]
+  \[ \& \forall y. y < x_{n + 1} \to \exists r_{y}. B(b, c, y, r_{y})\&\exists r_{y + 1}. B(b, c, y + 1, r_{y + 1})\&\gamma(y, r_{y}, x_1, \dots, x_n, r_{y + 1}) \]
 #+end_remark

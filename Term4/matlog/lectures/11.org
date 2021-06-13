@@ -84,8 +84,9 @@ S\langle{\rm plog}_2, \\
 #+end_proof
 #+NAME: про \sigma
 #+begin_remark org
-\(\chi\) --- формула формальной арифметики, \(W_1(\gedel{x}, \gedel{p}) = 0\) --- \(p\)-доказательство самоприменения \(x\), \(\chi[x_0\coloneqq\overline{\gedel{\chi}}]\). Реализация \(W_1\) через Subst очевидна. Значит \(W_1\) представима в формальной арифметике. Самоприменение \(x\) недоказуемо
-\(\sigma(x) = \forall p. \neg \omega_1(x, p)\), \(\vdash^? \sigma(\overline{\sigma{\delta}})\)
+\(\chi\) --- формула формальной арифметики, \(W_1(\gedel{x}, \gedel{p}) = 0\) --- \(p\)-доказательство самоприменения \(x\), \(\chi[x_0\coloneqq\overline{\gedel{\chi}}]\) --- самоприменение \(\chi\). Реализация \(W_1\) через Subst очевидна. Значит \(W_1\) представима в формальной арифметике формулой \(\omega_1\). \\
+\(\sigma(x) = \forall p. \neg \omega_1(x, p)\) --- ``самоприменение \(x\) недоказуемо``
+\[\vdash^? \sigma(\overline{\gedel{\sigma}})\]
 #+end_remark
 #+NAME: \omega-непротиворечивость
 #+begin_definition org
@@ -133,15 +134,18 @@ S\langle{\rm plog}_2, \\
 #+NAME: Формулировка первой теоремы Гёделя о неполноте арифметики в форме Россера
 #+ATTR_LATEX: :options [Геделя о неполноте арифметики №1 в форме Россера]
 #+begin_theorem org
-\-
+\[ W_2(x, p) = \begin{cases} 0 & \text{если }p\text{ --- доказательство }\lnot x(\overline{\gedel{x}}) \\ 1 & \text{иначе} \end{cases} \]
+\(\omega_2\) --- формула соответствующая \(W_2\)
+\[ \rho(x) = \forall p. \omega_1(x, p) \to \exists q. q < p \& \omega_2(x, q) \]
+
 1. Если формальная арифметика непротиворечива, то \(\not\vdash \rho(\overline{\gedel{\rho}})\)
 2. Если формальная арифметика непротиворечива, то \(\not\vdash \neg\rho(\overline{\gedel{\rho}})\)
 #+end_theorem
-\[ \rho(x) = \forall p. \omega_1(x, p) \to \exists q. q < p \& \omega_2(x, q) \]
 \todo
 #+NAME: Consis
 #+begin_definition org
 \[{\rm Consis} \equiv \forall p. \neg \pi(\overline{\gedel{1 = 0}}, p)\]
+\(\pi\) --- формула соответствующая \(Proof(x, p)\), т.е. \(p\) --- доказательство \(x\)
 #+end_definition
 
 #+NAME: Формулировка второй теоремы Гёделя о неполноте арифметики
@@ -153,6 +157,6 @@ S\langle{\rm plog}_2, \\
 #+NAME: Неформальное пояснение метода доказательства
 #+ATTR_LATEX: :options [схема]
 #+begin_proof org
-Прочтем что написано в теореме: \(\sigma(\overline{\gedel{\sigma}})\) раскрывается в \(\forall p. \neg \omega_1(\overline{\gedel{\sigma}}, p)\), т.е. если формальная арифметика противоречива, то не существует \(p\), что \(\omega_1(\overline{\gedel{\sigma}}, p)\), а это в точности утверждение теоремы Геделя о неполноте №1, а это в точности утверждение теоремы Геделя о неполноте №1. Т.е. эта теорема --- формализация теоремы Геделя о неполноте №1.
+Прочтем что написано в теореме: \(\sigma(\overline{\gedel{\sigma}})\) раскрывается в \(\forall p. \neg \omega_1(\overline{\gedel{\sigma}}, p)\), т.е. если формальная арифметика противоречива, то не существует \(p\), что \(\omega_1(\overline{\gedel{\sigma}}, p)\), а это в точности утверждение теоремы Геделя о неполноте №1. Т.е. эта теорема --- формализация теоремы Геделя о неполноте №1.
 #+end_proof
 
