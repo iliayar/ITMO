@@ -76,7 +76,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+NAME: Схема аксиом выделения
 #+ATTR_LATEX: :options [Схема аксиом выделения]
 #+begin_axiom org
-Если \(a\) --- множество, \(\varphi(x)\) --- формула, которую не входит свободно \(b\), то \(\{x \big| x \in a \& \varphi(x)\}\)
+Если \(a\) --- множество, \(\varphi(x)\) --- формула, в которую не входит свободно \(b\), то \(\{x \big| x \in a \& \varphi(x)\}\)
 \[ \forall x. \exists b. \forall y. y \in b \leftrightarrow y \in x \& \varphi(y) \]
 #+end_axiom
 #+NAME: Аксиома бесконечности

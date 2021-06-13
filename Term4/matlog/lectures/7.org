@@ -67,7 +67,7 @@ _Тогда_ \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
 #+end_property
 #+NAME: полное множество формул_5
 #+begin_property org
-\(\Gamma^*\) --- непрерывное
+\(\Gamma^*\) --- непротиворечивое
 #+end_property
 #+begin_proof org
 Пусть \(\Gamma^* \vdash \beta \& \neg \beta\) \\

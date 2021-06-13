@@ -51,7 +51,7 @@
 #+end_definition
 #+NAME: нетабличность ИИВ
 #+begin_theorem org
-У ИИВ не существует полной табличной модели
+У ИИВ не существует полной конечной табличной модели
 #+end_theorem
 * Модели Крипке
 #+begin_export latex
@@ -156,7 +156,7 @@
    \end{center}
    #+end_export
 
-   Добавим новый элемент \( 1_{\Gamma(\A)}\) перенеименуем \( 1_\A \) в  \(\omega\)
+   Добавим новый элемент \( 1_{\Gamma(\A)}\) переименуем \( 1_\A \) в  \(\omega\)
 #+end_definition
 #+NAME: операция гамма_теорема
 #+begin_theorem org
@@ -183,7 +183,7 @@
 - \(f, g \): оценки ИИВ
 - \(f\): ИИВ \to \(\A\)
 - \(g\): ИИВ \to \(\B\)
-\(\varphi\) согласованы \(f, g\), если \(\varphi(f(\alpha)) = g(\alpha)\)
+\(\varphi\) согласована с \(f, g\), если \(\varphi(f(\alpha)) = g(\alpha)\)
 #+end_definition
 #+NAME: Гомоморфизм алгебр Гейтинга_3
 #+begin_theorem org

@@ -8,20 +8,20 @@
 #+begin_definition org
 \(f: \N^n \to \N\)
 1. \(Z: \N \to \N\) \\
-   \(\color{green}Z(x) = 0\)
+   \(Z(x) = 0\)
 2. \(N: \N \to \N\) \\
-   \(\color{green}N(x) = x + 1\)
+   \(N(x) = x + 1\)
 3. \(S_k: \N^m \to \N\)
    - \(f_1, \dots, f_k:\ \N^m \to \N\)
    - \(g: \N^k \to \N\)
-   \[\color{green}S_k \pair{g, f_1, \dots, f_k}(x_1,\dots,x_m) = g(f_1(\overline{x}), f_2(\overline{x}),\dots,f_k(\overline{x}))\] \\
-   , где \(\color{green}\overline{x} = x_1,\dots,x_m\)
+   \[S_k \pair{g, f_1, \dots, f_k}(x_1,\dots,x_m) = g(f_1(\overline{x}), f_2(\overline{x}),\dots,f_k(\overline{x}))\] \\
+   , где \(\overline{x} = x_1,\dots,x_m\)
 4. \(P^l_k: \N^k \to \N\), \(l \le k\)
-   \[ \color{green} P^l_k(x_1, \dots, x_k) = x_l \]
+   \[ P^l_k(x_1, \dots, x_k) = x_l \]
 5. \(R\pair{f, h}: \N^{m + 1} \to \N\) --- *примитивная рекурсия*
    - \(f: \N^m \to \N\)
    - \(g: \N^{m + 2} \to \N\)
-      \[ \color{green} R\pair{f, g}(y, x_1, \dots, x_m) = \begin{cases}
+      \[ R\pair{f, g}(y, x_1, \dots, x_m) = \begin{cases}
         f(x_1, \dots, x_m) & y = 0 \\
         g(y - 1, R\pair{f, g}(y - 1, x_1, \dots, x_m), x_1, \dots, x_m) & y > 0
       \end{cases} \]
