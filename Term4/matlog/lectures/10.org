@@ -3,7 +3,7 @@
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_HEADER: \usepackage{cmll}
 
-* Рекурсивные функции
+* [#C] Рекурсивные функции
 #+NAME: Примитивно-рекурсивные_акс
 #+begin_definition org
 \(f: \N^n \to \N\)
@@ -143,8 +143,9 @@
 #+NAME: Бета-функция Гёделя
 #+begin_definition org
 \(\beta\)-функция Геделя
-\[ \beta(b, c, i) = b \div (1 + c\cdot(i + 1)) \]
+\[ \beta(b, c, i) = b \mathop{\rm mod} (1 + c\cdot(i + 1)) \]
 #+end_definition
+#+NAME: Бета-функция Гёделя_теорем
 #+begin_theorem org
 \-
 - \(a_0, a_1, \dots, a_k\) --- некоторые значения \(\in \N\)
@@ -157,7 +158,7 @@ _Тогда_ найдутся \(b\) и \(c\), что
 #+NAME: Бета-функция Гёделя_вФА
 #+begin_remark org
 \(\beta\)-функция Геделя --- представима в ФА
-\[ B(b, c, i, q) = (\exists p. b = p\cdot(q + c\cdot(1 + i)) + q) \& q < bg \]
+\[ B(b, c, i, q) = (\exists p. b = p\cdot(q + c\cdot(1 + i)) + q) \& q < b \]
 #+end_remark
 #+NAME: Представимость примитивов $R$ и $M$ и рекурсивных функций в формальной арифметике
 #+begin_remark org

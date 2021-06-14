@@ -21,7 +21,7 @@
 #+NAME: Аксиома выбора_2
 #+ATTR_LATEX: :options {\bf Аксиома 8.}
 #+begin_axiom* org
-Если \(D(y)\& \forall t. t \in y \to t \neq \varnothing\), то \(xy \neq \varnothing\)
+Если \(D(y)\& \forall t. t \in y \to t \neq \varnothing\), то \(\bigtimes y \neq \varnothing\)
 #+end_axiom*
 #+NAME: теорема Диаконеску
 #+ATTR_LATEX: :options [Диаконеску]
@@ -52,7 +52,7 @@ ZFC --- Zemelo-Frenkel Choice \\
 #+end_definition
 #+NAME: Строго большая мощность
 #+begin_definition org
-*Строго большая мощность* \(|a| > |b|\), если существует \(f: a \to b\) --- инъекция, но не биекция
+*Строго большая мощность* \(|a| > |b|\), если существует \(f: b \to a\) --- инъекция, но не биекция
 #+end_definition
 #+NAME: Кардинальное число
 #+begin_definition org

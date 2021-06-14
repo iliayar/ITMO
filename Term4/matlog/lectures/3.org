@@ -168,13 +168,15 @@ _Тогда_ \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
 - \(\alpha \le \beta\) --- это \(\alpha \vdash \beta\)
 - \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
 - \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
+- \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\(\pair{X/_\approx, \le}\) --- алгебра Гейтинга
 #+end_definition
 \beginproperty
 #+NAME: алгебра линденбаума
 #+begin_property org
-\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X, \approx\) --- из интуиционистской логики
 #+end_property
 #+NAME: алгебра линденбаума модель ИИВ
 #+begin_theorem org
-Алгебра линденбаума --- полная модель ИИВ
+Алгебра Гейтинга --- полная модель ИИВ
 #+end_theorem
