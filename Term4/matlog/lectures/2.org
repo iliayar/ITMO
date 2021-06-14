@@ -129,8 +129,8 @@ _Тогда_ \(\Gamma \vdash \zeta\)
 #+begin_examp org
 Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
 Пусть \(a = b = \sqrt{2}\). Рассмотрим \(\sqrt{2}^{\sqrt{2}} \in \R \setminus \mathbb{Q}\)
-- Если да, то ОК
-- Если нет, то возьмем \(a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}\), \(a^b = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{2} = 2\)
+- Если нет, то ОК
+- Если да, то возьмем \(a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}\), \(a^b = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{2} = 2\)
 #+end_examp
 #+begin_defintion org
 ВНК-интерпретация. \(\alpha, \beta\)
