@@ -76,13 +76,13 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+NAME: Схема аксиом выделения
 #+ATTR_LATEX: :options [Схема аксиом выделения]
 #+begin_axiom org
-Если \(a\) --- множество, \(\varphi(x)\) --- формула, в которую не входит свободно \(b\), то \(\{x \big| x \in a \& \varphi(x)\}\)
+Если \(a\) --- множество, \(\varphi(x)\) --- формула, в которую не входит свободно \(b\), то \(\{x \big| x \in a \& \varphi(x)\}\) --- множество
 \[ \forall x. \exists b. \forall y. y \in b \leftrightarrow y \in x \& \varphi(y) \]
 #+end_axiom
 #+NAME: Аксиома бесконечности
 #+ATTR_LATEX: :options [Аксиома бесконечности]
 #+begin_axiom org
-Существует множество \(N\), такие, что
+Существуют множества \(N\), такие, что
 \[ \varnothing \in N \& \forall x. x \in N \to x \cup \{x\} \in N \]
 #+end_axiom
 #+begin_theorem org
@@ -142,7 +142,7 @@ B -- *бинарное отношение* на \(X\): \(B \subseteq X^2\)
 #+NAME: \omega
 #+begin_examp org
 \[ \omega = \{\varnothing, 1, 2, 3, 4, \dots\} \]
-Очевидно, что \(\omega \subseteq N\)
+Очевидно, что \(\omega \subseteq N\) (из [[Аксиома бесконечности][аксиомы бесконечности]])
 #+end_examp
 #+NAME: \omega множество
 #+begin_theorem org

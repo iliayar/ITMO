@@ -18,7 +18,7 @@
    , где \(\overline{x} = x_1,\dots,x_m\)
 4. \(P^l_k: \N^k \to \N\), \(l \le k\)
    \[ P^l_k(x_1, \dots, x_k) = x_l \]
-5. \(R\pair{f, h}: \N^{m + 1} \to \N\) --- *примитивная рекурсия*
+5. \(R\pair{f, g}: \N^{m + 1} \to \N\) --- *примитивная рекурсия*
    - \(f: \N^m \to \N\)
    - \(g: \N^{m + 2} \to \N\)
       \[ R\pair{f, g}(y, x_1, \dots, x_m) = \begin{cases}

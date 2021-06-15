@@ -158,7 +158,7 @@ S\langle{\rm plog}_2, \\
 #+NAME: Формулировка второй теоремы Гёделя о неполноте арифметики
 #+ATTR_LATEX: :options [Геделя о неполноте арифметики №2]
 #+begin_theorem org
-\[ \vdash {\rm Consis} \to \sigma{\overline{\gedel{\sigma}}} \]
+\[ \vdash {\rm Consis} \to \sigma(\overline{\gedel{\sigma}}) \]
 Т.е. если докажем, что если формальная арифметика непротиворечива, то автоматически \(\sigma(\overline{\gedel{\sigma}})\), т.е. ФА противоречива
 #+end_theorem
 #+NAME: Неформальное пояснение метода доказательства

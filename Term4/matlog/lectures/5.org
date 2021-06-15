@@ -166,7 +166,7 @@
 Заменим ~y := x~. Код сломается, т.к. у нас нет свобод для подстановки
 #+end_examp
 - (Правило \(\forall\)) :: \[\frac{\varphi \to \psi}{\varphi \to \forall x. \psi}\]
-- (Правило \(\exists\)) :: \[ \frac{\psi \to \varphi}{\exists x.\psi \to \varphi} \]
+- (Правило \(\exists\)) :: \[ \frac{\psi \to \varphi}{(\exists x.\psi) \to \varphi} \]
 В обоих правилах \(x\) не входит свободно в \(\varphi\)
 #+begin_examp org
 \[ \frac{x = 5 \to x^2 = 25}{x = 5 \to \forall x. x^2 = 25} \]
