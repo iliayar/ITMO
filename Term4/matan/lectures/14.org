@@ -19,9 +19,9 @@
 #+begin_definition org
 *Аппроксимативная единица*
 - \(D \subset \R\)
-- \(h_0\) --- предлеьная точка в \(\overline{\R}\)
+- \(h_0\) --- предельная точка в \(\overline{\R}\)
 Семейство функций \(\{K_h\}_{h \in D}\) --- называется аппроксимативной единицей
-- *АЕ1* :: \(\forall h \in D\), \(K_n \in L^1[-\pi, \pi]\), \(\int_{-\pi}^\pi K_h = 1\)
+- *АЕ1* :: \(\forall h \in D\), \(K_h \in L^1[-\pi, \pi]\), \(\int_{-\pi}^\pi K_h = 1\)
 - *АЕ2* :: \(L_1\) --- нормы функций \(K_h\) ограничены в совокупности
    \[ \exists M\ \forall h\ \int_{[-\pi, \pi]} |K_h| \le M \]
 - *АЕ3* :: \(\forall \delta \in (0, \pi) \quad \int_{E\delta} |K_h|\,dx \xrightarrow[h \to h_0]{} 0\)
@@ -33,8 +33,8 @@
 #+NAME: Усиленная аппроксимативная единица_АЕ3
 #+begin_remark org
 \-
-- *АЕ3'* \(K_h \in L^\infty[-\pi, \pi]\) и \(\forall \delta \in (0; \pi)\)
-  \[ \esssup_{t \in E_\deta} |K_h(t)| \xrightarrow[h \to h_0]{} 0 \]
+- *АЕ3'* :: \(K_h \in L^\infty[-\pi, \pi]\) и \(\forall \delta \in (0; \pi)\)
+  \[ \esssup_{t \in E_\delta}|K_h(t)| \xrightarrow[h \to h_0]{} 0 \]
 #+end_remark
 #+begin_lemma org
 АЕ3' \(\Leftrightarrow\) АЕ3
@@ -45,14 +45,13 @@
 #+end_definition
 #+NAME: Теорема о свойствах аппроксимативной единицы
 #+begin_theorem org
-\(K_h\) --- а.е. \\
-_Тогда_
+\(K_h\) --- а.е.
 1. \(f \in \tilde{C}[-\pi, \pi] \implies f * K_h \xrightrightarrows[h \to h_0]{ [ -\pi , \pi ] } f\)
-2. \(g \in L^1[-\pi, \pi] \Rightarrow \Vert f*K_h - f \Vert_1 \xrightarrow[h \to h_0]{} 0\)
-3. \(K_h\) --- усиленная а.е. \(f \in L^1[-\pi, \pi]\), \(f\) --- непрерывная в x
-_Тогда_
-- \(f*K_h\) --- непрерывна в \(x\)
-- \(f * K_h(x) \xrightarrow[h \to h_0]{} f(x)\)
+2. \(g \in L^1[-\pi, \pi] \implies \Vert f*K_h - f \Vert_1 \xrightarrow[h \to h_0]{} 0\)
+3. \(K_h\) --- усиленная а.е. \(f \in L^1[-\pi, \pi]\), \(f\) --- непрерывная в x \\
+   _Тогда_
+   - \(f*K_h\) --- непрерывна в \(x\)
+   - \(f * K_h(x) \xrightarrow[h \to h_0]{} f(x)\)
 #+end_theorem
 #+NAME: Теорема о свойствах аппроксимативной единицы_док
 #+begin_proof org
@@ -94,29 +93,30 @@ _Тогда_
 #+begin_definition org
 \[ \sum a_n \quad S_n \coloneqq \sum_{k = 0}^n a_k \]
 \[ \delta_n \coloneqq \frac{1}{n + 1} (S_0 + S_1 + \dots + S_n) \]
-\[ \sum a_n \xlongequal[\text{сред. арифм.}] S \]
+\[ \sum a_n \xlongequal[\text{сред. арифм.}]{} S \]
 , если \(\delta_n \to S\)
 #+end_definition
 #+NAME: Теорема о перманентности метода средних арифметических
 #+begin_theorem org
-\[ \sum a_n = S \implies \sum a_n \xlongequal[\text{с.а.}]{} = S \]
+\[ \sum a_n = S \implies \sum a_n \xlongequal[\text{с.а.}]{} S \]
 #+end_theorem
 #+NAME: Теорема о перманентности метода средних арифметических_док
 #+begin_proof org
 \(\forall \varepsilon > 0\ \exists N,\ \forall n > N,\ |S_n - S| < \frac{\varepsilon}{2}\)
-\[ |\delta_n - S| - \left|\frac{1}{n + 1}\sum_{k = 0}^n (S_k - S)\right| \le \frac{1}{n + 1}\sum |S_k - S| = \]
+\[ |\sigma_n - S| - \left|\frac{1}{n + 1}\sum_{k = 0}^n (S_k - S)\right| \le \frac{1}{n + 1}\sum |S_k - S| = \]
 \[ = \frac{\sum_{k = 0}^{N_1}|S_k - S|}{n + 1} + \frac{\sum_{k = N_1 + 1}^n |S_k - S|}{n + 1} \]
-\(\forall N\ \forall n > N\) эта дробь \(< \frac{\varepsilon}{2}\)
+\(\exists N\ \forall n > N\) эта дробь \(< \frac{\varepsilon}{2}\)
 #+end_proof
 #+NAME: Суммы Фейера
 #+begin_definition org
 \(f \in L^1[-\pi, \pi]\), \(S_n(f)\) --- частичная сумма ряда Фурье
-\[ G_n(f) = \frac{1}{n + 1}\sum_{k = 1}^n S_k(f) \] --- суммы Фейера
+\[ \sigma_n(f) = \frac{1}{n + 1}\sum_{k = 1}^n S_k(f) \] --- суммы Фейера
 #+end_definition
+#+NAME: Ядро Фейера
 #+begin_remark org
 \[ S_n(f) = \int_{-\pi}^\pi f(x + t) D_n(t)\,dt \]
-\[ G_n(f, x) = \int_{-\pi}^\pi f(x + t) \Phi_n(t)\,dt \]
-, где \(\displaystyle\Phi_n = \frac{1}{n + 1}(D_0 + \dots + D_n) = \frac{1}{2\pi(n + 1)}\cdot \frac{\sin^2\left(\frac{n + 1}{2}t\right)}{\sin^2\frac{t}{2}}\)
+\[ \sigma_n(f, x) = \int_{-\pi}^\pi f(x + t) \Phi_n(t)\,dt \]
+, где \(\displaystyle\Phi_n = \frac{1}{n + 1}(D_0 + \dots + D_n) = \frac{1}{2\pi(n + 1)}\cdot \frac{\sin^2\left(\frac{n + 1}{2}t\right)}{\sin^2\frac{t}{2}}\) --- *ядро Фейера*
 #+end_remark
 #+NAME: Теорема Фейера
 #+ATTR_LATEX: :options [Фейера]
@@ -124,7 +124,7 @@ _Тогда_
 \-
 1. \(f \in \tilde{C}[-\pi, \pi]\) \\
    _Тогда_ \(\sigma_n(f) \xrightrightarrows{[-\pi, \pi]} f\)
-2. \(f \in L^p[-\pi, \pi] \implies \norm{\delta_n(f) - f}_p \to 0\)
+2. \(f \in L^p[-\pi, \pi] \implies \norm{\sigma_n(f) - f}_p \to 0\)
 3. \(f \in L^1\), \(f\) --- непрерывна в \(x\) \(\implies\) \(\sigma_n (f, x) \xrightarrow[x \to +\infty]{} f(x)\)
 #+end_theorem
 #+NAME: Теорема Фейера_док
@@ -142,7 +142,7 @@ _Тогда_
 #+NAME: Следствия из теоремы Фейера_1
 #+begin_corollary org
 \(f \in L^1[-\pi, \pi]\) --- непрерывна в \(x\). Если ряд Фурье \(f\) сходится в точке \(x\)
-\[ \exists \lin_{n \to \infty} S_n(f, x)\text{ --- конечный}\]
+\[ \exists \lim_{n \to \infty} S_n(f, x)\text{ --- конечный}\]
 , то \(S_n(f, x) \to f(x)\)
 #+end_corollary
 #+NAME: Следствия из теоремы Фейера_1_док
@@ -181,14 +181,14 @@ _Тогда_ \(f = 0\) почти везде \\
 #+NAME: Следствия из теоремы Фейера_5
 #+ATTR_LATEX: :options [теорема Вейерштрасса]
 #+begin_corollary org
-Тригонометрический полином плотный в \(L^p[-\pi, \pi]\) и \(\tilde{C}[-\pi, \pi]\), \(1 le p < +\infty\)
+Тригонометрический полином плотный в \(L^p[-\pi, \pi]\) и \(\tilde{C}[-\pi, \pi]\), \(1 \le p < +\infty\)
 #+end_corollary
 #+NAME: Следствия из теоремы Фейера_6
 #+begin_corollary org
 \(f, g \in L^2[-\pi, \pi]\) Тогда выполняются равенства Парсеваля:
 1. \[ \int\limits_{[\-pi, \pi]} f\overline{g} = 2\pi \sum_{k \in \mathbb{Z}} c_k(f) \overline{c_k(h)} \]
 2. \[ \int_{-\pi}^\pi |f|^2 = 2\pi \sum |c_k(f)|^2 \]
-3. \[ \int_{-\pi}^\pi fg = \pi \left(\frac{a_0(f)a_0(h)}{2} + \sum_{k = 1}^{+\infty}a_k(f)a_k(g) + b_k(f)b_k(g)\rigth) \]
+3. \[ \int_{-\pi}^\pi fg = \pi \left(\frac{a_0(f)a_0(h)}{2} + \sum_{k = 1}^{+\infty}a_k(f)a_k(g) + b_k(f)b_k(g)\right) \]
 4. \[ \int_{-\pi}^\pi f^2 = \pi \left(\frac{a_0(f)^2}{2} + \sum a_k(f)^2 + b_k(f)^2\right) \]
 #+end_corollary
 #+begin_lemma org

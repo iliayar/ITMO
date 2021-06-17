@@ -3,19 +3,23 @@
 #+AUTHOR: Ilya Yaroshevskiy
 
 #+begin_export latex
-\newcommand{\X}{\chi}
+\newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
 #+end_export
 
 * Принцип Кавальери
+#+begin_definition org
+\(X \times \Y, \nu, \mu, m\)
 1. \(C_x\) --- имзмерима при почти всех \(x\)
 2. \(x \mapsto \nu C_x\) --- измерима*
 3. \(mC = \int\limits_X \mathcal{X}_x d\mu\)
+#+end_definition
+
 #+begin_corollary org
 \(f: [a, b] \to \R\) --- непрерывная \\
-_Тогда_ \(\int\limits_a^b f(x)\,dx = \int\limits_{[a, b]} f\,d\lambda_1\)
+_Тогда_ \[\int\limits_a^b f(x)\,dx = \int\limits_{[a, b]} f\,d\lambda_1\]
 #+end_corollary
 #+begin_proof org
 \(f>0\ \text{ПГ}(f[a, b])\) --- измеримое множество в \(\R^2\). \(C_x = [0, f(x)]\ \lambda_1(C_x) = f(x)\)
@@ -39,34 +43,54 @@ _Тогда_ \(\int\limits_a^b f(x)\,dx = \int\limits_{[a, b]} f\,d\lambda_1\)
 - \(\forall x \in X\ f_x\) --- это функция(сечение) \(f_x(y) = f(x, y)\), можно считать что она задана на \(C_x\)
 - \(f^y\) --- аналогичное сечение
 #+end_definition
+#+NAME: Теорема Тонелли
+#+ATTR_LATEX: :options [Тонелли]
 #+begin_theorem org
 \-
 - \((X, \A, \mu)\)
 - \((Y, \B, \nu)\)
 - \(\mu, \nu\) --- \(\sigma\)-конечные меры, полные
-- \(m = \mu x \nu\)
-- \(f: X \times Y \to \overline{R}, f \ge 0\) --- измерима относительно \(A\otimes B\)
+- \(m = \mu \times \nu\)
+- \(f: X \times Y \to \overline{\R}, f \ge 0\) --- измерима относительно \(A\otimes B\)
 _Тогда_
 1. при  почти всех \(x\) \(f_x\) --- измеримая на \(Y\) \color{blue}\(f^y\) --- измерима на \(X\) почти везде\color{black}
 2. \(x \mapsto \varphi(x)=\int\limits_Y f_x d\nu = \int\limits_Y f(x, y) = d\nu(y)\) --- измеримая* на \(X\) \\
    \color{blue}\(y \mapsto \psi(y) = \int\limits_X f^y d\mu\) --- измеримая* на \(Y\)\color{black}
-3. \(\int\limits_{X \times Y} d fm = \int\limits_X \varphi d\mu = \int\limits_X\left(\int\limits_Y f(x, y) d\nu(y)\right)d\mu(x)\) \\
+3. \(\int\limits_{X \times Y} f\,dm = \int\limits_X \varphi d\mu = \int\limits_X\left(\int\limits_Y f(x, y) d\nu(y)\right)d\mu(x)\) \\
    \color{blue}\(= \int\limits_Y \psi d\nu = \int\limits_Y\left(\int\limits_X f(x, y) d\mu(x)\right)d\nu(y)\)
 #+end_theorem
+#+NAME: Теорема Тонелли_док
 #+begin_proof org
-\todo
+\-
+1. Пусть \(f = \X_C\), \(C \subset X \times T\) --- измеримо относительно \(m\). Тогда \(f_x(y) = \X_{C_x}(y)\). \(C_x\) --- измеримо при почти всех \(x\) \(\implies\) \(f_x\) --- измерима при почти всех \(x\)
+   \[\varphi(x) = \int_Y f_x d\nu = \nu C_x\]
+   \(\varphi(x)\) --- измерима (по принципу Кавальери)
+   \[ \int_X \varphi(x)d\mu = \int_X \nu C_x d\mu \xlongequal[\text{пр. Кавальери}]{} mC = \int_{X \times Y} f dm \]
+2. \(f\) --- ступенчатая, \(\ge 0\)
+   \[ f = \sum \alpha_k \X_{C_k} \quad f_x = \sum \alpha_k \X_{(C_k)_x}\]
+   \(f_x\) --- измерима при почти всех \(x\)
+   \[ \varphi(x) = \int_Y f_x d\nu = \sum \alpha_k\nu(C_k)_x\]
+   \[ \int_X \varphi(x) = \sum \alpha_k \int_X \nu(C_k)_x = \sum \alpha_k mC_k = \int_{X \times Y} f dm \]
+3. \(f \ge 0\) --- измеримая. \(f = \lim g_n\) (\(f(x, y) = \lim g_n(x, y)\) при всех \((x, y)\)), где \(g_n\) возврасатют, \(g_n \ge 0\), \(g_n\) --- ступенчатые
+   \[ f_x = \lim_{n \to + \infty} (g_n)_x \]
+   \(\implies f_x\) --- измеримая на \(Y\)
+   \[ \varphi(x) = \int_Y f_x d\nu \xlongequal[\text{т. Леви}]{} \lim \underbrace{\int_Y (g_n)_x d\nu}_{\varphi_n(x)} \]
+   --- верно т.к. \((g_n)_x \le (g_{n + 1})_x\). \(\varphi_n(x)\) --- измерима \(\implies \varphi\) --- измерима* \\
+   Заметим что \(\varphi_n \le \varphi_{n + 1} \le \dots\) почти везде
+   \[ \int_X \varphi(x) \xlongequal[\text{т. Леви}]{} \lim \int_X \varphi_n = \lim \int_{X \times Y} g_n \xlongequal[\text{т. Леви}]{} \int_{X \times Y} f dm \]
+
 #+end_proof
-#+begin_corllary org
+#+begin_corollary org
 \(C \subset X \times Y\) \(P_1(C)\) --- измеримо. \\
 _Тогда_ \[ \int\limits_C f dm = \int\limits_{f_1(C)}\left(\int_{C_x} f(x, y) d\nu(y)\right)d\mu(x) \]
-#+end_corllary
+#+end_corollary
 #+NAME: Теорема Фубини
 #+ATTR_LATEX: :options [Фубини]
 #+begin_theorem org
 \-
 - \((X, \A, \mu)\)
-- \(Y, B, \nu\)
-- \(\nu, mu\) --- \(\sigma\)-конечные
+- \((Y, \B, \nu)\)
+- \(\nu, \mu\) --- \(\sigma\)-конечные
 - \(m = \nu \times \mu\)
 - \(f\) --- суммируема на \(X \times Y\) относительно \(m\)
 _Тогда_
@@ -77,7 +101,34 @@ _Тогда_
 #+begin_proof org
 \color{green}Без доказательства\color{black}
 #+end_proof
-\todo
+#+NAME: Формула для Бета-функции
+#+begin_examp org
+\[B(s, t) = \int_0^1 x^{s - 1} (1 - x)^{t - 1} dx \quad s,t > 0\]
+_Тогда_ \[ B(s, t) = \frac{\Gamma(s) \Gamma(t)}{\Gamma(s + t)} \quad \Gamma(s) = \int_0^{ + \infty} x^{s - 1}e^{-x} dx \]
+#+end_examp
+#+NAME: Формула для Бета-функции_док
+#+begin_proof org
+\[\Gamma(s)\Gamma(t) = \int_0^{ + \infty} x^{s - 1} e^{-x} \left(\int_0^{ + \infty} y^{t - 1}e^{-y}dy\right)dx = \]
+\[ = \int_0^{ + \infty} \left(\int_0^{ + \infty} x^{s - 1} y^{t - 1} e^{-x} e^{-y} dy\right) dx \xlongequal[y = u - x]{} \int_0^{ + \infty} \left(\int_x^{ + \infty} x^{s - 1}(u - x)^{t - 1}e^{-u} du \right) dx = \]
+\[ = \int\limits_{\dots} \dots d\lambda_2 = \int_0^{ + \infty}\left(\int_0^u x^{s - 1}(u - x)^{t - 1}e^{-u} dx\right) du =  \]
+\[ \xlongequal[x = u \cdot v]{} \int_0^{ + \infty} \left(\int_0^1 (uv)^{s - 1}(u - uv)^{t - 1}e^{-u}\cdot u\,dx\right)du = \]
+\[ = \int_0^{ + \infty}u^{s + t - 1} e^{-u} \left(\int_0^1 v^{s - 1}(1 - v)^{t - 1}\,dv \right)du = B(s, t) \Gamma(s + t) \]
+#+end_proof
+#+NAME: Объем шара в \(\R^m\)
+#+begin_examp org
+Объем(мера) шара в \(\R^m\). \[\alpha_m = \lambda_m(B(0, 1)) \quad \lambda_m(B(0, r)) = r^m \cdot \alpha_m\]
+\[ B(0, 1) = \{x \in \R^m \big| x_1^2 + x_2^2 + \dots + x_m^2 \le 1\} \]
+\[ B(0, 1)_{x_m} = \{x \in \R^{m - 1} \big| x_1^2 + \dots + x_{m - 1}^2 \le 1 - x_m^2\} \]
+\[ \alpha_m = \int_{-1}^1 \lambda_{m - 1}(B(0, \sqrt{1 - y^2})) dy = \int_{-1}^1 \alpha_{m - 1}(1 - y^2)^{\frac{m - 1}{2}}dy =  \]
+\[ = 2 \alpha_{m - 1} \int_0^1 (1 - t)^{\frac{m - 1}{2}} \cdot \frac{1}{2} t^{-\frac{1}{2}} dt = B\left(\frac{m + 1}{2}, \frac{1}{2}\right) \alpha_{m - 1} = \frac{\Gamma\left(\frac{m + 1}{2}\right)\Gamma\left(\frac{1}{2}\right)}{\Gamma\left(\frac{m + 2}{2}\right)} \alpha_{m - 1}\]
+\[ \alpha_m = \underbrace{\frac{\Gamma\left(\frac{m + 1}{2}\right)\Gamma\left(\frac{1}{2}\right)}{\Gamma\left(\frac{m + 2}{2}\right)} \cdot \frac{\Gamma\left(\frac{m}{2}\right)\Gamma\left(\frac{1}{2}\right)}{\Gamma\left(\frac{m + 1}{2}\right)} \cdot \dots \cdot \frac{\Gamma\left(\frac{3}{2}\right)\Gamma\left(\frac{1}{2}\right)}{\Gamma\left(\frac{4}{2}\right)}}_{m - 1} \cdot \underbrace{\alpha_1}_2 = \]
+\[ = \frac{\Gamma\left(\frac{3}{2}\right)\Gamma\left(\frac{1}{2}\right)^{m - 1}}{\Gamma\left(\frac{m}{2} + 1\right)} \cdot 2 = \]
+\[ \color{blue} \Gamma(x + 1) = x \cdot \Gamma(x) \quad \Gamma\left(\frac{1}{2}\right) = \sqrt{\pi} \]
+\[ = \frac{\pi^{\frac{m}{2}}}{\Gamma\left(\frac{m}{2} + 1\right)} \]
+\(m = 3\):
+\[ \frac{\pi^{\frac{3}{2}}}{\Gamma\left(\frac{3}{2} + 1\right)} = \frac{4}{3}\pi \]
+#+end_examp
+
 * Поверхностные интегралы
 ** Поверхностные интегралы I рода
 #+NAME: Измеримое множество на простой двумерной поверхности в \(\R^3\)
@@ -105,8 +156,8 @@ _Тогда_
 #+end_remark
 #+begin_remark org
 \(S\) не зависит от \(\varphi\)
-\[ |\overline{\varphi'_s}\times\overline{\varphi'_v}| = |(\overline{\varphi'_s}\cdot u'_s + \overline{\varphi'_v}\cdot v'_s) \times (\overline{\varphi'_u}\cdot u'_t + \overline{\varphi'_v}\cdot v'_t)| = \]
-\[ = | \overline{(\varphi'_u \times \varphi'_v)}\cdot(u'_s\cdot v'_t - v'_s\cdot u'_t)| = \todo \]
+\[ |\overline{\varphi'_s}\times\overline{\varphi'_t}| = |(\overline{\varphi'_u}\cdot u'_s + \overline{\varphi'_v}\cdot v'_s) \times (\overline{\varphi'_u}\cdot u'_t + \overline{\varphi'_v}\cdot v'_t)| = \]
+\[ = | \overline{(\varphi'_u \times \varphi'_v)}\cdot(u'_s\cdot v'_t - v'_s\cdot u'_t)| = | \varphi'_u \times \varphi'_v | \cdot \left|\det \begin{pmatrix} u'_s & u'_t \\ v'_s & v'_t \end{pmatrix} \right| \]
 #+end_remark
 #+begin_remark org
 \-
@@ -118,21 +169,21 @@ _Тогда_
 #+ATTR_LATEX: :options [поверхностный интеграл I рода]
 #+begin_definition org
 \-
-- \(M\) --- простое гладкое двумерное иногообразие в \(\R^3\)
+- \(M\) --- простое гладкое двумерное многообразие в \(\R^3\)
 - \(\varphi\) --- параметризация
 - \(f: M \to \overline{R}\) --- суммируема по мере \(S\)
-То \[ \iint\limits_M f\,ds = \iint\limits_M f(x, y, z)\,ds \]
+Тогда \[ \iint\limits_M f\,ds = \iint\limits_M f(x, y, z)\,ds \]
 называется *интегралом I рода от \(f\) по многообразию \(M\)*
 #+end_definition
 #+begin_remark org
 По теореме об интегрировании по взвешенному образу меры
-\[ \iint\limits_M f\,ds = \iint\limits_G f(\varphi(u, v)) |\varphi'_v \times \varphi'_v|\,dudv \]
+\[ \iint\limits_M f\,ds = \iint\limits_G f(\varphi(u, v)) |\varphi'_v \times \varphi'_v|\,du\,dv \]
 \[ \varphi'_u \times \varphi'_v = \begin{pmatrix}
 i & x'_u & x'_v \\
 j & y'_u & y'_v \\
 k & z'_u & z'_v
 \end{pmatrix}\]
-\[ |\varphi'_u \times \varphi'_v| = |\varphi'_u| \cdot |\varphi'_v|\sun\alpha = \sqrt{|\varphi'_u|^2 \cdot |varphi'_v|^2 \cdot (1 - \cos^2\alpha)} = \sqrt{EG - F^2} \]
+\[ |\varphi'_u \times \varphi'_v| = |\varphi'_u| \cdot |\varphi'_v|\sin\alpha = \sqrt{|\varphi'_u|^2 \cdot |\varphi'_v|^2 \cdot (1 - \cos^2\alpha)} = \sqrt{EG - F^2} \]
 \[ E = |\varphi'_u| = x'_u^2 + y'_u^2 + z'_u^2 \]
 \[ F = \langle \varphi'_u, \varphi'_v \rangle = x'_ux'_v + y'_uy'_v + z'_u z'_v \quad F = |\varphi'_v|^2 \]
 #+end_remark

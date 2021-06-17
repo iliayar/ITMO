@@ -11,11 +11,11 @@
 - \(M\)
 - \(\Phi: O \subset \R^2 \to \R^3\)
 - \(f\)
-- \(f \citc \Phi\)
-\[ \int_{M/E} d fs = \int_{O/\Phi^{-1}(E)} f \circ \Phi \cdot |\Phi'u\times\Phi'v|\,du\,dv \]
+- \(f \circ \Phi\)
+\[ \int_{M/E} d fs = \int_{O/\Phi^{-1}(E)} f \circ \Phi \cdot |\Phi'_u\times\Phi'_v|\,du\,dv \]
 #+begin_definition org
-\(M \subset \R^3\) --- *кусочно гладкое двумерное многообразие*, если
-\(M\) --- конечное объединение
+\(M \subset \R^3\) --- *кусочно-гладкое* двумерное многообразие, если
+\(M\) --- конечное объединение:
 - простых гладких двумерных многообразий \(M_i\)
 - гладких кривых
 - точек
@@ -33,8 +33,9 @@
 #+NAME: Сторона поверхности
 #+begin_definition org
 *Сторона поверхности* --- непрерывное семейство единичных нормалей к этой поверхности \\
-\(M \subset \R^3 \quad W: M \to \R^3\) \\
-\(\forall x\ W(x)\) --- нормаль к \(M\), \(|w(x)| = 1\), \(w(x) \perp \Phi'u,\Phi'_v\)
+- \(M \subset \R^3\)
+- \(W: M \to \R^3\)
+\(\forall x\ W(x)\) --- нормаль к \(M\), \(|W(x)| = 1\), \(W(x) \perp \Phi'_u,\Phi'_v\)
 #+end_definition
 #+begin_remark org
 Локльно каждая повехность --- двустороннее. В общем случае --- 1 или 2 стороны
@@ -106,11 +107,12 @@ _Тогда_ (сторона \(M\) любая) \(\int_M R\,dx\,dy = 0\)
 #+end_corollary
 * Ряды Фурье
 ** Пространства \(L^p\)
+#+NAME: Интеграл комплекснозначной функции
 #+begin_property org
 \-
 - \((X, \A, \mu)\)
 - \(f: X \to \C\) \\
-  \(x = f(x) = u(x) + iv(x)\) \\
+  \(f(x) = u(x) + iv(x)\) \\
   \(u = \Re f,\ v = \Im f\) \\
 - \(f\) --- измеримая, если \(u\) и \(v\) --- измеримые
 - \(f\) --- суммируемая, \(u\) и \(v\) --- суммирумые
@@ -146,16 +148,16 @@ _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \le
 \(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = h\text{ почти везде}\). \(\mathcal{L}^p/_N = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
 #+end_definition
 #+end_property
-#+NAME: Пространство \(L^\infty(E,\mu)\)
+#+NAME: Существенный супремум
 #+begin_property org
 \-
 - \(L^\infty(E,\mu)\)
 - \((X, \A, \mu)\)
 - \(E\) --- измеримое
 - \(f\) --- почти везде \(E \to \overline{\R}\) --- измеримая
-\[ \esssup_{x \in E} f = \inf \{A \in \overline{R}\Big| f \le A\text{ почти везде}\} \]
+\[ \esssup_{x \in E} f = \inf \{A \in \overline{\R}\Big| f \le A\text{ почти везде}\} \]
 #+end_property
-\beginproperties
+\beginproperty
 #+begin_property org
 \(\esssup f \le \sup f\)
 #+end_property
@@ -164,7 +166,7 @@ _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \le
 #+end_property
 #+begin_proof org
 \(B = \esssup f\) \\
-Тогда \(\)
+Тогда \(\forall n\ f \le B + \frac{1}{n}\) почти везде
 #+end_proof
 #+begin_property org
 \(f\) --- сумм, \(\esssup_E |g| < +\infty\) \\
@@ -173,6 +175,7 @@ _Тогда_ \[ \left| \int_E fg \right| \le \esssup |g| \cdot \int_E |f| \]
 #+begin_proof org
 \[ \left| \int_E fg \right| \le \int_E |fg| \le \int_E \esssup |g|\cdot|f| \]
 #+end_proof
+#+NAME: Пространство \(L^\infty(E,\mu)\)
 #+begin_remark org
 \(L^\infty(E, \mu) = \{f: \text{п.в. } E \to \overline{\R}(\overline{\C}),\text{ изм.}, \esssup |f| < +\infty \}/_\sim\). Эквивалентные функции отождествленны --- это нормированное пространство
 \[ \Vert f \Vert_{L^\infty(E, \mu)} := \esssup_E |f| = \Vert f \Vert_\infty \]

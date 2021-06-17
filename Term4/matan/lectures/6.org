@@ -3,7 +3,7 @@
 #+AUTHOR: Ilya Yaroshevskiy
 
 #+begin_export latex
-\newcommand{\X}{\chi}
+\newcommand{\X}{\mathcal{X}}
 \newcommand{\A}{\mathfrak{A}}
 \newcommand{\B}{\mathfrak{B}}
 \newcommand{\M}{\mathfrak{M}}
@@ -44,19 +44,24 @@
 \[ = \dots = \int\limits_{\Omega_{m - 1}}r^{m - 1}\sin^{n - 2}\varphi_{1} \dots \sin\varphi_{m - 2}\]
 #+end_examp
 * Произведение мер
-#+NAME: Произведение мер
-#+begin_definition org
+#+begin_lemma org
+\-
 - \((X, \A, \mu)\)
 - \((Y, \B, \nu)\)
-\(\A, \B\) --- п/к \Rightarrow \(\A \times \B = \{A\times B \subset X \times Y | A \in \A,\ B\in\B\}\)
-#+end_definition
+\(\A, \B\) --- п/к \Rightarrow \(\A \times \B = \{A\times B \subset X \times Y | A \in \A,\ B\in\B\}\) --- п/к
+#+end_lemma
 #+begin_examp org
-Ячейки: В \(\R^2 = \R^1 \times \R^1\ \A = \mathcal{P}^1,\ \B \in \mathcal{P}^1 \) \\
-\(A \times B\) --- ячейка из \(\mathcal{P}\)
+Ячейки: В \(\R^2 = \R^1 \times \R^1\ \A \in \mathcal{P}^1,\ \B \in \mathcal{P}^1 \) \\
+\(A \times B\) --- ячейка из \(\mathcal{P}^2\)
 #+end_examp
+#+begin_symb org
+\(\mathcal{P} = \A \times \B\) --- множества из этой системы называются измеримыми прямоугольниками
+#+end_symb
+#+NAME: мера измеримого прямоуголинка
 #+begin_definition org
-\(\mathcal{P} = \A \times \B\) --- множества из этой системы называются измеримыми прямоуг. \(m_o(A \times B) = \mu A\cdot \nu B\)
+\(m_0(A \times B) = \mu A\cdot \nu B\) --- недоделанная *мера измеримого прямоугольника*
 #+end_definition
+
 #+NAME: Теорема о произведении мер
 #+begin_theorem org
 \-
@@ -68,11 +73,11 @@
 \-
 1. ?\(m_0\) --- счетно аддитивна ?\(m_0 P = \sum m_o P_k\), если
    \[ A \times B = P = \bigsqcup P_k\text{, где }P_k=A_k\times B_k \]
-   Наблюдение: \(\chi_{A \times B}(x, y) = \chi_A(x)\cdot\chi_B(y)\) \\
-   Тогда \(\chi_P = \sum \chi_{P_k}\), т.е.
-   \[ \forall x \in X, y \in Y\quad\chi_A(x)\chi_B(y) = \sum \chi_{A_k}(x)\chi_{B_k}(y) \]
+   Наблюдение: \(\X_{A \times B}(x, y) = \X_A(x)\cdot\X_B(y)\) \\
+   Тогда \(\X_P = \sum \X_{P_k}\), т.е.
+   \[ \forall x \in X, y \in Y\quad\X_A(x)\X_B(y) = \sum \X_{A_k}(x)\X_{B_k}(y) \]
    проинтегрируем по \(y\) по мере \(\nu\):
-   \[ \chi_A(x) \nu B = \sum \chi_A(x)\cdot \nu B_k \]
+   \[ \X_A(x) \nu B = \sum \X_A(x)\cdot \nu B_k \]
    Интегрируем по \(x\):
    \[ \mu A \cdot \nu B - \sum \mu A_k \cdot \nu B_k  \]
 2. Очев. \(\mu\) --- \(\sigma\)-конечная \Rightarrow \(X = \bigcup X_k\), \(\mu X_k\) --- конечная
@@ -80,14 +85,20 @@
    \[ X \times Y = \bigcup X_k \timesy Y_n\quad m_0 \mu X_k \nu Y_n\text{ --- конечная} \]
    \Rightarrow \(m_0\) --- \(\sigma\)-конечная мера
 #+end_proof
+#+NAME: Произведение мер
 #+begin_definition org
 \-
 - \((X, \A, \mu)\), \((Y, \B, \nu)\) --- пространства с мерой
 - \(\mu, \nu\) --- \(\sigma\)-конечные
-Пусть \(m\) --- лебеговское продолжение меры \(m_0\) с п/к \(\A \times \B\) на \(\sigma\)-алгебра, которую будет обозначать \(\A \otimes \B\)
+Пусть \(m\) --- лебеговское продолжение меры \(m_0\) с п/к \(\A \times \B\) на \(\sigma\)-алгебру, которую будем обозначать \(\A \otimes \B\)
 #+end_definition
+#+NAME: Произведение мер_обозн
+#+begin_symb org
+\(m = \mu \times \nu\)
+#+end_symb
+#+NAME: Произведение пространств с мерой
 #+begin_definition org
-\((X \times Y, \A \otimes \B, \nu \times \mu)\) --- произведение пространств с мерой \((X, \A, \mu)\) и \((Y, \B, \nu)\)
+\((X \times Y, \A \otimes \B, \nu \times \mu)\) --- *произведение пространств с мерой* \((X, \A, \mu)\) и \((Y, \B, \nu)\)
 #+end_definition
 #+begin_remark org
 \-
@@ -98,8 +109,9 @@
 \(\lambda_m \times \lambda_n = \lambda_{n + m}\)
 #+end_theorem
 #+begin_proof org
-\color{red}Без доказательсва\color{black}
+\color{green}Без доказательсва\color{black}
 #+end_proof
+#+NAME: Принцип Кавальери_опр
 #+begin_definition org
 \-
 - \(X, Y\) --- множества
@@ -142,8 +154,8 @@ _Тогда_:
 \(\mathcal{D}\) --- система множеств, для которых выполнено 1. - 3. 
 1. \(C = A\times B \Rightarrow C \in \mathcal{D}\)
    1. \( C_x = \left[\begin{matrix} \emptyset & x \not\in A \\ B & x \in A\end{matrix}\right. \)
-   2. \(x \mapsto \nu(x)\) --- это функция \(\nu B \cdot \chi_A\)
-   3. \(\int \nu(C_x) d\mu = \int\limits_X \nu B \cdot \chi_A d\mu = \nu B \cdot \mu A = mC\)
+   2. \(x \mapsto \nu(x)\) --- это функция \(\nu B \cdot \X_A\)
+   3. \(\int \nu(C_x) d\mu = \int\limits_X \nu B \cdot \X_A d\mu = \nu B \cdot \mu A = mC\)
 2. \(E_i \in D\), dis \Rightarrow \(\bigsqcup E_i \in D\) \\
    \(E_i \in D \Rightarrow (E_i)_X\) --- измеримое почти везде \(\Rightarrow\) при почти всех \(x\) все \((E_i)_X\) -- измеримое \\
    1. Тогда при этих \(x\ E_X = \bigsqcup(E_i)_X \in \B\)
@@ -155,11 +167,11 @@ _Тогда_:
    2. Таким образом \(x \mapsto \nu E_X\) --- измеримая\(\footnotemark[\value{footnote}]\)
    3. \[ \int\limits_X \nu E_X d\mu = \lim \int \nu(E_i)_X d\mu = \lim mE_i = mE \]
       Первое равенство по теореме Лебега о предельном переходе под знаком интеграла: \(|\nu (E_i)_X| \le \nu (E_1)_X\) --- из\(\footnotemark[\value{footnote}]\)
-Итог: \(A_{ij} \in \mathcal{P} = \A \times \B\), то \(\color{red}??\color{black}\bigcup A_{ij} \in \mathcal{D}\)
+Итог: \(A_{ij} \in \mathcal{P} = \A \times \B\), то \(\bigcap\bigcup A_{ij} \in \mathcal{D}\)
 4. [@4] \(mE = 0 \Rightarrow E \in \mathcal{D}\)
-   \[ mE = \inf\{\sum m_0 P_k | E \subset \bigcup P_k,\ P_k \in \mathcal{P}\} \]
+   \[ mE = \inf\left\{\sum m_0 P_k | E \subset \bigcup P_k,\ P_k \in \mathcal{P}\right\} \]
    --- теорема о лебеговском продолжении. \\
-   \exists множества \(H\) вида \(\bigcap\limits_e\bigsqcup\limits_X P_{ke}\) (т.е. \(H \in \mathcal{D}\)) \\
+   \exists множества \(H\) вида \(\bigcap\limits_l\bigcup\limits_k P_{kl}\) (т.е. \(H \in \mathcal{D}\)) \\
    \(E \subset H, mH = mE = 0\)
    \[ 0 = mH = \int\limits_X \nu H_x d\mu \Rightarrow \nu H_X \sim 0\text{ (\(=0\) при почти всех \(x\))} \]
    \(E_X \subset H_x, \nu\) --- полная \Rightarrow
@@ -167,7 +179,7 @@ _Тогда_:
    2. \(\nu E_X = 0\) почти везде
    3. \(\int \nu E_X d\mu = 0 = m E\)
 5. \(C\) --- \(m\)-измеримо, \(mC < + \infty\) тогда \(C \in \mathcal{D}\) \\
-   \(C = H \setminus e\), где \(H\) --- вида \(\color{red}???\color{black}\bigcup P_{ke},\ me = 0,\ mC = mH\)
+   \(C = H \setminus e\), где \(H\) --- вида \(\bigcap\limits_l\bigcup\limits_k P_{kl},\ me = 0,\ mC = mH\)
    1. \(C_x = H_x \setminus e_X\) --- измерима при почти всех \(x\), т.к. \(\nu\) --- полная
    2. \(\nu e_X = 0\) при почти всех \(x\) \Rightarrow \(\nu C_x = \nu H_x - \nu e_X = \nu H_X\) \Rightarrow измерима
    3. \(\int\limits_X \nu C_x d\mu = \int\limits_X \nu H_x d\mu = mH = mC\)
@@ -176,7 +188,7 @@ _Тогда_:
    \[ C = \bigsqcup (C \cap (X_k \times Y_j))\text{ --- используем 2.}\]
 #+end_proof
 #+begin_corollary org
-\(C\) --- измеримое в \(X\times Y\). Пусть \(P_q(C) = \{x \in X| C_x \neq 0\}\) --- проекция \(C\) на \(X\). Если \(P_1(C)\) --- измеримое, то:
+\(C\) --- измеримое в \(X\times Y\). Пусть \(P_1(C) = \{x \in X| C_x \neq 0\}\) --- проекция \(C\) на \(X\). Если \(P_1(C)\) --- измеримое, то:
 \[ mC = \int\limits_{P_1(C)} \nu(C_x) d\mu \]
 #+end_corollary
 #+begin_proof org
@@ -184,7 +196,7 @@ _Тогда_:
 #+end_proof
 #+begin_remark org
 \-
-1. \(С\) --- измеримое \(\not\Rightarrow\) \(P_1(C)\) --- измеримое
+1. \(C\) --- измеримое \(\not\Rightarrow\) \(P_1(C)\) --- измеримое
 2. \(C\) --- измеримое \(\not\Rightarrow\) \(\forall x\ C_x\) --- измеримо
 3. \(\forall x\forall y\ C_x,C^y\) --- измеримые \(\not\Rightarrow\) \(C\) --- измеримое (пример Серпинского)
 #+end_remark

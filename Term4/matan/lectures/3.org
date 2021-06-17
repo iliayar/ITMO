@@ -10,34 +10,39 @@
 * Интеграл
 #+NAME: Итеграл ступенчатой, неотрицательной измеримой, суммируемой функции, суммируемая функция
 #+begin_definition org
-1. $f \ge 0$, ступенчатые \\
-   $f = \sum_\text{кон.} \alpha_k \chi_{E_k}$, $E_k$ --- измеримое \\
-   $\int_X f = \sum \alpha_k \mu E_k$
-2. \label{int_3_2} $f \ge 0$, измеримая \\
-   $\int_X f d\mu = \sup_{\substack{0 \le g \le g \\ f\text{ --- ступ.}}} \int_X g d\mu$
-3. \label{int_3_3} $f$ --- измерима, $f^+, f^- \ge 0$ --- измеримые \\
+\-
+1. \-
+   - $f \ge 0$, ступенчатые
+   - $f = \sum_\text{кон.} \alpha_k \chi_{E_k}$, $E_k$ --- измеримое
+   \[ \int_X f = \sum \alpha_k \mu E_k \]
+2. \label{int_3_2}
+   - $f \ge 0$, измеримая
+   \[ \int_X f d\mu = \sup_{\substack{0 \le g \le f \\ g\text{ --- ступ.}}} \int_X g d\mu \]
+3. \label{int_3_3}
+   - $f$ --- измерима
+   - $f^+, f^- \ge 0$ --- измеримые
    Пусть $\int_X f^+$ или $\int_X f^-$ --- конечные \\
-   Тогда $\int_X f = \int_X f^+ - \int_X f^-$
-   Если $\int_x f^+,\ \int_X f^-$ --- оба конечные, то $f$ назывется *суммируемой*
+   Тогда $\int_X f = \int_X f^+ - \int_X f^-$ \\
+   Если $\int_X f^+,\ \int_X f^-$ --- оба конечные, то $f$ назывется *суммируемой*
    #+begin_remark org
    $f$ --- измеримая, $\ge 0$, интеграл \ref{int_3_3} = интеграл \ref{int_3_2}
    #+end_remark
-4. 
-   #+begin_definition org
-   $E \subset X$ --- измеримое, $f$ --- измерима на $X$ \\
-   $\int_E f d\mu = \int_X f\cdot\chi_E$
-   #+end_definition
+4. \-
+   - $E \subset X$ --- измеримое
+   - $f$ --- измерима на $X$ \\
+   \[ \int_E f d\mu = \int_X f\cdot\chi_E \]
 #+end_definition
 #+begin_remark org
-$f = \sum \alpha_k \chi_{E_k}\ \int_E f = \sum \alpha_k \mu(E_k \cap E)$
+\[ f = \sum \alpha_k \chi_{E_k}\ \int_E f = \sum \alpha_k \mu(E_k \cap E) \]
 #+end_remark
 #+begin_remark org
-$\int_E f d\mu = \sup \{fg:\ 0 \le g \le f\text{ на } E, g\text{ --- ступенчатые}\}$, можно считать что $g$ ---
-тождественный 0 вне множества $E$
+\[ \int_E f d\mu = \sup \{fg:\ 0 \le g \le f\text{ на } E, g\text{ --- ступенчатые}\} \]
+, можно считать что $g$ --- тождественный 0 вне множества $E$
 #+end_remark
 #+begin_remark org
 $\int_E f$ не зависит от значений $f$ вне $E$
 #+end_remark
+#+NAME: Простейшие свойства интеграла Лебега
 #+begin_remark org
 $(X, \A, \mu)$ $E\subset X$ --- измеримое, $g, f$ --- измеримые. Свойства:
 1. \label{prop_3_1} Монотонность $f \le g$ $\int_E f \le \int_E g$
@@ -53,11 +58,11 @@ $(X, \A, \mu)$ $E\subset X$ --- измеримое, $g, f$ --- измеримы�
 2. $\int_E Ad\mu = \mu E\ \int_E 0 d\mu = 0$
 3. \label{prop_3_3} $\mu E = 0\ \int_E f= 0$
    #+begin_proof org
+   \-
    1. $f$ --- ступенчатая
    2. $f \ge 0$ --- измеримая
    #+end_proof
-
-   /Змечание/: \\
+   /Замечание/: \\
    $f$ --- измеримая. Тогда $f$ --- суммируемая \Leftrightarrow $\int |f| < + \infty$ \\
    - $(\Leftarrow)$ :: следует из cвойства \ref{prop_3_1}. $f^+, f^- \le |f|$
    - $(\Rightarrow)\label{remark_3_1_proof}$ :: позже
@@ -85,15 +90,18 @@ $(X, \A, \mu)$ $E\subset X$ --- измеримое, $g, f$ --- измеримы�
 #+end_remark
 #+begin_lemma org
 \label{lemma_3_1}
-\[ A = \bigsqcup_{i - 1}^{ + \infty} A_i \]
+\[ A = \bigsqcup_{i = 1}^{ + \infty} A_i \]
 --- измеримые, $g$ --- ступенчатая, $g \ge 0$ \\
 _Тогда_ \[ \int_A g d\mu = \sum_{i = 1}^{ + \infty}\int_{A_i}g d\mu \]
 #+end_lemma
 #+begin_proof org
-$\int_A g d\mu = \sum_\text{кон.} \alpha_k \mu(E_k \cap A) = \sum_k\sum_i \underbrace{\alpha_k\mu(E_k \cap A_i)}_{\ge 0} = \sum_i \sum_k \dots = \sum_i\int_{A_i} gd\mu$
+\[ \int_A g d\mu = \sum_\text{кон.} \alpha_k \mu(E_k \cap A) = \sum_k\sum_i \underbrace{\alpha_k\mu(E_k \cap A_i)}_{\ge 0} = \sum_i \sum_k \dots = \sum_i\int_{A_i} gd\mu \]
 #+end_proof
 #+begin_theorem org
-$A = \bigsqcup A_i$ --- измеримые, $f: X \to \overline{\R}$ --- измеримая на $A$, $f \ge 0$ \\
+\-
+- $A = \bigsqcup A_i$ --- измеримые
+- $f: X \to \overline{\R}$ --- измеримая на $A$
+- $f \ge 0$
 _Тогда_ $\int_A fd\mu = \sum_{i = 1}^{ + \infty} \int_{A_i} f d\mu$
 #+end_theorem
 #+begin_proof org
@@ -116,6 +124,7 @@ _Тогда_ $\int_A fd\mu = \sum_{i = 1}^{ + \infty} \int_{A_i} f d\mu$
      \[ \int_A f = \sum_{i = 1}^n \int_{A_i} f + \int_{B_n} f \ge \sum_{i = 1}^n \int_{A_i} f \]
 #+end_proof
 #+begin_corollary org
+\-
 - $f \ge 0$ --- измеримая
 - $\nu: \A \to \overline{\R}_+$
 - $\nu E := \int_E fd\mu$
@@ -129,7 +138,7 @@ _Тогда_ \[ \int_A f = \sum \int_{A_i} f \]
 #+end_corollary
 #+NAME: Счетная аддитивность интеграла (по множеству)_док
 #+begin_proof org
-$f^+, f^- \dots$ $\color{red}???$
+Объединяем два сходящихся ряда для $f^+$ и $f^-$
 #+end_proof
 ** Предельный переход под знаком интеграла
 $f_n \to f$. Можно ли утверждать $\int_E f_n \to \int_E f$?
@@ -141,8 +150,10 @@ $f_n = \frac{1}{n} \cdot \chi_{[0, n]}\ f\equiv 0\ f_n \to f$ (даже $f_n \ri
 #+NAME: Теорема Леви
 #+ATTR_LATEX: :options [Леви]
 #+begin_theorem org
-$(X, \A, \mu)$, $f_n$ --- измеримая \\
-$\forall n\ 0 \le f_n \le f_{n + 1}$  почти везде $f(x) := \lim_{n\to + \infty} f_n(x)$ почти везде \\
+\-
+- $(X, \A, \mu)$, $f_n$ --- измеримая
+- $\forall n\ 0 \le f_n \le f_{n + 1}$  почти везде
+- $f(x) := \lim_{n\to + \infty} f_n(x)$ почти везде
 _Тогда_ $\lim_{n \to + \infty}\int_X f_n d \mu = \int_x fd\mu$
 #+end_theorem
 #+begin_remark org
@@ -165,20 +176,23 @@ _Тогда_ $f$ --- измерима на $X$.
   Последнее равентсво справедливо в силу непрерывности мнизу меры $\nu: E \mapsto \int_E g$
 #+end_proof
 
+#+NAME: линейной интеграла_сумма
 #+begin_theorem org
-$f, g \ge 0$ измерима на $E$ \\
+$f, g \ge 0$ измеримы на $E$ \\
 _Тогда_ \[ \int_E f + g = \int_E f + \int_E g \]
 #+end_theorem
+#+NAME: линейной интеграла_сумма_док
 #+begin_proof org
 \-
 1. $f, g$ --- ступенчатые \\
    \[ f = \sum \alpha_k\chi_{E_k},\ g = \sum \beta_k\chi_{E_k} \]
    \[ \int_E f + g = \sum (\alpha_k + \beta_k)\mu(E_k \cap E) = \sum \alpha_k \mu(E_k \cap E) + \sum \beta_l \mu(E_k \cap E) = \int_E f + \int_E g \]
-2. $f \ge 0$ --- измерима \Rightarrow \exists стпенчатая $f_n:\ 0 \le f_n \le f_{n + 1} \le \dots \ \lim f_n = f$ \\
-   $g \ge 0$ --- измерима \Rightarrow \exists стпенчатая $g_n:\ 0 \le g_n \le g_{n + 1} \le \dots \ \lim g_n = g$ \\
-   $f_n + g_n \to f + g\ \int_E f_n + g_n \to \int_E f + g$ \\
-   $\int_E f_n + g_n = \int_E f_n + \int_E g_n \to \int_E f + \int_E g = \int_E f+g$
+2. $f \ge 0$ --- измерима \Rightarrow \exists ступенчатая $f_n:\ 0 \le f_n \le f_{n + 1} \le \dots \ \lim f_n = f$ \\
+   $g \ge 0$ --- измерима \Rightarrow \exists ступенчатая $g_n:\ 0 \le g_n \le g_{n + 1} \le \dots \ \lim g_n = g$
+   \[ f_n + g_n \to f + g\ \int_E f_n + g_n \to \int_E f + g \]
+   \[ \int_E f_n + g_n = \int_E f_n + \int_E g_n \to \int_E f + \int_E g = \int_E f+g \]
 #+end_proof
+#+NAME: линейной интеграла_сумма_след
 #+begin_corollary org
 $f, g$ --- суммируемы на $E$ \\
 _Тогда_ $f+g$ --- суммируема и $\int_E f + g = \int_E f + \int_E g$
@@ -194,9 +208,11 @@ $h = f + g$. Тогда:
 \[ \int_E h^+ - \int_E h^- = \int_E f^+ - \int_E f^- + \int_E g^+ - \int_E g^- \]
 \[ \int_E h = \int_E f + \int_E g \]
 #+end_proof
+#+NAME: множество суммиремых функций
 #+begin_definition org
-$\mathcal{L}(X) =$ множество функций суммируемых на X
+$\mathcal{L}(X)$ --- *множество функций суммируемых на X*
 #+end_definition
+#+NAME: линейной интеграла_сумма_линейность
 #+begin_corollary org
 $\mathcal{L}(X)$ --- линейное пространство, а отображение $f \mapsto \int_X f$ --- это линейный функционал на $\mathcal{L}(X)$
 , т.е. $\forall f_1, \dots, f_n \in \mathcal{L}(X)\ \forall \alpha_1, \dots, \alpha_k \in \R$
@@ -205,13 +221,18 @@ $\mathcal{L}(X)$ --- линейное пространство, а отобра�
 #+NAME: Теорема об интегрировании положительных рядов
 #+ATTR_LATEX: :options [об интегрировании положительных рядов]
 #+begin_theorem org
-$(X, \A, \mu)\ E \in \A\ \underset{\text{изм.}}{u_n}: X \to \overline{\R}\ u_n \ge 0$ почти везде \\
-_Тогда_ \[ \int_E(\sum_{n = 1}^{ + \infty} u_n(x))d\mu(x) = \sum_{n = 1}^{ + \infty} \int_E u_n d\mu \]
+\-
+- $(X, \A, \mu)$
+- $E \in \A$
+- $u_n: X \to \overline{\R}$ --- измеримая
+- $u_n \ge 0$ почти везде
+_Тогда_ \[ \int_E\left(\sum_{n = 1}^{ + \infty} u_n(x)\right)d\mu(x) = \sum_{n = 1}^{ + \infty} \int_E u_n d\mu \]
 #+end_theorem
 #+NAME: Теорема об интегрировании положительных рядов_док
 #+begin_proof org
-по т. Леви: $S_n := \sum_{k = 1}^n u_k\ 0 \le S_n \le S_{n + 1} \le \dots\ S_n \to S$ --- сумма ряда $\sum u_n$ \\
-Тогда $\int_E S_n \to \int_E S$, $\int_E S_n = \sum_{k = 1}^n \int_E u_k \to \int_E S$
+по т. Леви: $S_n := \sum_{k = 1}^n u_k$ \\
+$0 \le S_n \le S_{n + 1} \le \dots\ S_n \to S$ --- сумма ряда $\sum u_n$ \\
+Тогда $\int_E S_n \to \int_E S$ \[ \int_E S_n = \sum_{k = 1}^n \int_E u_k \to \int_E S \]
 #+end_proof
 #+NAME: Следствие о рядах, сходящихся почти везде
 #+begin_corollary org
