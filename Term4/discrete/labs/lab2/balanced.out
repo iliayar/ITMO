@@ -1,0 +1,630 @@
+start: s
+accept: ac
+reject: rj
+blank: _
+s 0 -> sums_0 0 ^
+s 1 -> sums_0 1 ^
+s 2 -> sums_0 2 ^
+s 3 -> sums_0 3 ^
+s 4 -> sums_0 4 ^
+s 5 -> sums_0 5 ^
+s 6 -> sums_0 6 ^
+s 7 -> sums_0 7 ^
+s 8 -> sums_0 8 ^
+s 9 -> sums_0 9 ^
+s - -> sums_0 - ^
+s _ -> sums_0 _ ^
+s + -> sums_0 + ^
+s * -> sums_0 * ^
+s ^ -> sums_0 ^ ^
+s $ -> sums_0 $ ^
+s # -> sums_0 # ^
+s < -> sums_0 < ^
+s > -> sums_0 > ^
+s ( -> sums_0 ( ^
+s ) -> sums_0 ) ^
+
+
+
+sums_0 _ -> ac _ ^
+sums_0 ( -> sums1 ( >
+sums_0 ) -> rj ) ^
+
+sums1 ( -> sums2 ( >
+sums1 ) -> sums_0 ) >
+
+sums2 ( -> sums3 ( >
+sums2 ) -> sums1 ) >
+
+sums3 ( -> sums4 ( >
+sums3 ) -> sums2 ) >
+
+sums4 ( -> sums5 ( >
+sums4 ) -> sums3 ) >
+
+sums5 ( -> sums6 ( >
+sums5 ) -> sums4 ) >
+
+sums6 ( -> sums7 ( >
+sums6 ) -> sums5 ) >
+
+sums7 ( -> sums8 ( >
+sums7 ) -> sums6 ) >
+
+sums8 ( -> sums9 ( >
+sums8 ) -> sums7 ) >
+
+sums9 ( -> sums10 ( >
+sums9 ) -> sums8 ) >
+
+sums10 ( -> sums11 ( >
+sums10 ) -> sums9 ) >
+
+sums11 ( -> sums12 ( >
+sums11 ) -> sums10 ) >
+
+sums12 ( -> sums13 ( >
+sums12 ) -> sums11 ) >
+
+sums13 ( -> sums14 ( >
+sums13 ) -> sums12 ) >
+
+sums14 ( -> sums15 ( >
+sums14 ) -> sums13 ) >
+
+sums15 ( -> sums16 ( >
+sums15 ) -> sums14 ) >
+
+sums16 ( -> sums17 ( >
+sums16 ) -> sums15 ) >
+
+sums17 ( -> sums18 ( >
+sums17 ) -> sums16 ) >
+
+sums18 ( -> sums19 ( >
+sums18 ) -> sums17 ) >
+
+sums19 ( -> sums20 ( >
+sums19 ) -> sums18 ) >
+
+sums20 ( -> sums21 ( >
+sums20 ) -> sums19 ) >
+
+sums21 ( -> sums22 ( >
+sums21 ) -> sums20 ) >
+
+sums22 ( -> sums23 ( >
+sums22 ) -> sums21 ) >
+
+sums23 ( -> sums24 ( >
+sums23 ) -> sums22 ) >
+
+sums24 ( -> sums25 ( >
+sums24 ) -> sums23 ) >
+
+sums25 ( -> sums26 ( >
+sums25 ) -> sums24 ) >
+
+sums26 ( -> sums27 ( >
+sums26 ) -> sums25 ) >
+
+sums27 ( -> sums28 ( >
+sums27 ) -> sums26 ) >
+
+sums28 ( -> sums29 ( >
+sums28 ) -> sums27 ) >
+
+sums29 ( -> sums30 ( >
+sums29 ) -> sums28 ) >
+
+sums30 ( -> sums31 ( >
+sums30 ) -> sums29 ) >
+
+sums31 ( -> sums32 ( >
+sums31 ) -> sums30 ) >
+
+sums32 ( -> sums33 ( >
+sums32 ) -> sums31 ) >
+
+sums33 ( -> sums34 ( >
+sums33 ) -> sums32 ) >
+
+sums34 ( -> sums35 ( >
+sums34 ) -> sums33 ) >
+
+sums35 ( -> sums36 ( >
+sums35 ) -> sums34 ) >
+
+sums36 ( -> sums37 ( >
+sums36 ) -> sums35 ) >
+
+sums37 ( -> sums38 ( >
+sums37 ) -> sums36 ) >
+
+sums38 ( -> sums39 ( >
+sums38 ) -> sums37 ) >
+
+sums39 ( -> sums40 ( >
+sums39 ) -> sums38 ) >
+
+sums40 ( -> sums41 ( >
+sums40 ) -> sums39 ) >
+
+sums41 ( -> sums42 ( >
+sums41 ) -> sums40 ) >
+
+sums42 ( -> sums43 ( >
+sums42 ) -> sums41 ) >
+
+sums43 ( -> sums44 ( >
+sums43 ) -> sums42 ) >
+
+sums44 ( -> sums45 ( >
+sums44 ) -> sums43 ) >
+
+sums45 ( -> sums46 ( >
+sums45 ) -> sums44 ) >
+
+sums46 ( -> sums47 ( >
+sums46 ) -> sums45 ) >
+
+sums47 ( -> sums48 ( >
+sums47 ) -> sums46 ) >
+
+sums48 ( -> sums49 ( >
+sums48 ) -> sums47 ) >
+
+sums49 ( -> sums50 ( >
+sums49 ) -> sums48 ) >
+
+sums50 ( -> sums51 ( >
+sums50 ) -> sums49 ) >
+
+sums51 ( -> sums52 ( >
+sums51 ) -> sums50 ) >
+
+sums52 ( -> sums53 ( >
+sums52 ) -> sums51 ) >
+
+sums53 ( -> sums54 ( >
+sums53 ) -> sums52 ) >
+
+sums54 ( -> sums55 ( >
+sums54 ) -> sums53 ) >
+
+sums55 ( -> sums56 ( >
+sums55 ) -> sums54 ) >
+
+sums56 ( -> sums57 ( >
+sums56 ) -> sums55 ) >
+
+sums57 ( -> sums58 ( >
+sums57 ) -> sums56 ) >
+
+sums58 ( -> sums59 ( >
+sums58 ) -> sums57 ) >
+
+sums59 ( -> sums60 ( >
+sums59 ) -> sums58 ) >
+
+sums60 ( -> sums61 ( >
+sums60 ) -> sums59 ) >
+
+sums61 ( -> sums62 ( >
+sums61 ) -> sums60 ) >
+
+sums62 ( -> sums63 ( >
+sums62 ) -> sums61 ) >
+
+sums63 ( -> sums64 ( >
+sums63 ) -> sums62 ) >
+
+sums64 ( -> sums65 ( >
+sums64 ) -> sums63 ) >
+
+sums65 ( -> sums66 ( >
+sums65 ) -> sums64 ) >
+
+sums66 ( -> sums67 ( >
+sums66 ) -> sums65 ) >
+
+sums67 ( -> sums68 ( >
+sums67 ) -> sums66 ) >
+
+sums68 ( -> sums69 ( >
+sums68 ) -> sums67 ) >
+
+sums69 ( -> sums70 ( >
+sums69 ) -> sums68 ) >
+
+sums70 ( -> sums71 ( >
+sums70 ) -> sums69 ) >
+
+sums71 ( -> sums72 ( >
+sums71 ) -> sums70 ) >
+
+sums72 ( -> sums73 ( >
+sums72 ) -> sums71 ) >
+
+sums73 ( -> sums74 ( >
+sums73 ) -> sums72 ) >
+
+sums74 ( -> sums75 ( >
+sums74 ) -> sums73 ) >
+
+sums75 ( -> sums76 ( >
+sums75 ) -> sums74 ) >
+
+sums76 ( -> sums77 ( >
+sums76 ) -> sums75 ) >
+
+sums77 ( -> sums78 ( >
+sums77 ) -> sums76 ) >
+
+sums78 ( -> sums79 ( >
+sums78 ) -> sums77 ) >
+
+sums79 ( -> sums80 ( >
+sums79 ) -> sums78 ) >
+
+sums80 ( -> sums81 ( >
+sums80 ) -> sums79 ) >
+
+sums81 ( -> sums82 ( >
+sums81 ) -> sums80 ) >
+
+sums82 ( -> sums83 ( >
+sums82 ) -> sums81 ) >
+
+sums83 ( -> sums84 ( >
+sums83 ) -> sums82 ) >
+
+sums84 ( -> sums85 ( >
+sums84 ) -> sums83 ) >
+
+sums85 ( -> sums86 ( >
+sums85 ) -> sums84 ) >
+
+sums86 ( -> sums87 ( >
+sums86 ) -> sums85 ) >
+
+sums87 ( -> sums88 ( >
+sums87 ) -> sums86 ) >
+
+sums88 ( -> sums89 ( >
+sums88 ) -> sums87 ) >
+
+sums89 ( -> sums90 ( >
+sums89 ) -> sums88 ) >
+
+sums90 ( -> sums91 ( >
+sums90 ) -> sums89 ) >
+
+sums91 ( -> sums92 ( >
+sums91 ) -> sums90 ) >
+
+sums92 ( -> sums93 ( >
+sums92 ) -> sums91 ) >
+
+sums93 ( -> sums94 ( >
+sums93 ) -> sums92 ) >
+
+sums94 ( -> sums95 ( >
+sums94 ) -> sums93 ) >
+
+sums95 ( -> sums96 ( >
+sums95 ) -> sums94 ) >
+
+sums96 ( -> sums97 ( >
+sums96 ) -> sums95 ) >
+
+sums97 ( -> sums98 ( >
+sums97 ) -> sums96 ) >
+
+sums98 ( -> sums99 ( >
+sums98 ) -> sums97 ) >
+
+sums99 ( -> sums100 ( >
+sums99 ) -> sums98 ) >
+
+sums100 ( -> sums101 ( >
+sums100 ) -> sums99 ) >
+
+sums101 ( -> sums102 ( >
+sums101 ) -> sums100 ) >
+
+sums102 ( -> sums103 ( >
+sums102 ) -> sums101 ) >
+
+sums103 ( -> sums104 ( >
+sums103 ) -> sums102 ) >
+
+sums104 ( -> sums105 ( >
+sums104 ) -> sums103 ) >
+
+sums105 ( -> sums106 ( >
+sums105 ) -> sums104 ) >
+
+sums106 ( -> sums107 ( >
+sums106 ) -> sums105 ) >
+
+sums107 ( -> sums108 ( >
+sums107 ) -> sums106 ) >
+
+sums108 ( -> sums109 ( >
+sums108 ) -> sums107 ) >
+
+sums109 ( -> sums110 ( >
+sums109 ) -> sums108 ) >
+
+sums110 ( -> sums111 ( >
+sums110 ) -> sums109 ) >
+
+sums111 ( -> sums112 ( >
+sums111 ) -> sums110 ) >
+
+sums112 ( -> sums113 ( >
+sums112 ) -> sums111 ) >
+
+sums113 ( -> sums114 ( >
+sums113 ) -> sums112 ) >
+
+sums114 ( -> sums115 ( >
+sums114 ) -> sums113 ) >
+
+sums115 ( -> sums116 ( >
+sums115 ) -> sums114 ) >
+
+sums116 ( -> sums117 ( >
+sums116 ) -> sums115 ) >
+
+sums117 ( -> sums118 ( >
+sums117 ) -> sums116 ) >
+
+sums118 ( -> sums119 ( >
+sums118 ) -> sums117 ) >
+
+sums119 ( -> sums120 ( >
+sums119 ) -> sums118 ) >
+
+sums120 ( -> sums121 ( >
+sums120 ) -> sums119 ) >
+
+sums121 ( -> sums122 ( >
+sums121 ) -> sums120 ) >
+
+sums122 ( -> sums123 ( >
+sums122 ) -> sums121 ) >
+
+sums123 ( -> sums124 ( >
+sums123 ) -> sums122 ) >
+
+sums124 ( -> sums125 ( >
+sums124 ) -> sums123 ) >
+
+sums125 ( -> sums126 ( >
+sums125 ) -> sums124 ) >
+
+sums126 ( -> sums127 ( >
+sums126 ) -> sums125 ) >
+
+sums127 ( -> sums128 ( >
+sums127 ) -> sums126 ) >
+
+sums128 ( -> sums129 ( >
+sums128 ) -> sums127 ) >
+
+sums129 ( -> sums130 ( >
+sums129 ) -> sums128 ) >
+
+sums130 ( -> sums131 ( >
+sums130 ) -> sums129 ) >
+
+sums131 ( -> sums132 ( >
+sums131 ) -> sums130 ) >
+
+sums132 ( -> sums133 ( >
+sums132 ) -> sums131 ) >
+
+sums133 ( -> sums134 ( >
+sums133 ) -> sums132 ) >
+
+sums134 ( -> sums135 ( >
+sums134 ) -> sums133 ) >
+
+sums135 ( -> sums136 ( >
+sums135 ) -> sums134 ) >
+
+sums136 ( -> sums137 ( >
+sums136 ) -> sums135 ) >
+
+sums137 ( -> sums138 ( >
+sums137 ) -> sums136 ) >
+
+sums138 ( -> sums139 ( >
+sums138 ) -> sums137 ) >
+
+sums139 ( -> sums140 ( >
+sums139 ) -> sums138 ) >
+
+sums140 ( -> sums141 ( >
+sums140 ) -> sums139 ) >
+
+sums141 ( -> sums142 ( >
+sums141 ) -> sums140 ) >
+
+sums142 ( -> sums143 ( >
+sums142 ) -> sums141 ) >
+
+sums143 ( -> sums144 ( >
+sums143 ) -> sums142 ) >
+
+sums144 ( -> sums145 ( >
+sums144 ) -> sums143 ) >
+
+sums145 ( -> sums146 ( >
+sums145 ) -> sums144 ) >
+
+sums146 ( -> sums147 ( >
+sums146 ) -> sums145 ) >
+
+sums147 ( -> sums148 ( >
+sums147 ) -> sums146 ) >
+
+sums148 ( -> sums149 ( >
+sums148 ) -> sums147 ) >
+
+sums149 ( -> sums150 ( >
+sums149 ) -> sums148 ) >
+
+sums150 ( -> sums151 ( >
+sums150 ) -> sums149 ) >
+
+sums151 ( -> sums152 ( >
+sums151 ) -> sums150 ) >
+
+sums152 ( -> sums153 ( >
+sums152 ) -> sums151 ) >
+
+sums153 ( -> sums154 ( >
+sums153 ) -> sums152 ) >
+
+sums154 ( -> sums155 ( >
+sums154 ) -> sums153 ) >
+
+sums155 ( -> sums156 ( >
+sums155 ) -> sums154 ) >
+
+sums156 ( -> sums157 ( >
+sums156 ) -> sums155 ) >
+
+sums157 ( -> sums158 ( >
+sums157 ) -> sums156 ) >
+
+sums158 ( -> sums159 ( >
+sums158 ) -> sums157 ) >
+
+sums159 ( -> sums160 ( >
+sums159 ) -> sums158 ) >
+
+sums160 ( -> sums161 ( >
+sums160 ) -> sums159 ) >
+
+sums161 ( -> sums162 ( >
+sums161 ) -> sums160 ) >
+
+sums162 ( -> sums163 ( >
+sums162 ) -> sums161 ) >
+
+sums163 ( -> sums164 ( >
+sums163 ) -> sums162 ) >
+
+sums164 ( -> sums165 ( >
+sums164 ) -> sums163 ) >
+
+sums165 ( -> sums166 ( >
+sums165 ) -> sums164 ) >
+
+sums166 ( -> sums167 ( >
+sums166 ) -> sums165 ) >
+
+sums167 ( -> sums168 ( >
+sums167 ) -> sums166 ) >
+
+sums168 ( -> sums169 ( >
+sums168 ) -> sums167 ) >
+
+sums169 ( -> sums170 ( >
+sums169 ) -> sums168 ) >
+
+sums170 ( -> sums171 ( >
+sums170 ) -> sums169 ) >
+
+sums171 ( -> sums172 ( >
+sums171 ) -> sums170 ) >
+
+sums172 ( -> sums173 ( >
+sums172 ) -> sums171 ) >
+
+sums173 ( -> sums174 ( >
+sums173 ) -> sums172 ) >
+
+sums174 ( -> sums175 ( >
+sums174 ) -> sums173 ) >
+
+sums175 ( -> sums176 ( >
+sums175 ) -> sums174 ) >
+
+sums176 ( -> sums177 ( >
+sums176 ) -> sums175 ) >
+
+sums177 ( -> sums178 ( >
+sums177 ) -> sums176 ) >
+
+sums178 ( -> sums179 ( >
+sums178 ) -> sums177 ) >
+
+sums179 ( -> sums180 ( >
+sums179 ) -> sums178 ) >
+
+sums180 ( -> sums181 ( >
+sums180 ) -> sums179 ) >
+
+sums181 ( -> sums182 ( >
+sums181 ) -> sums180 ) >
+
+sums182 ( -> sums183 ( >
+sums182 ) -> sums181 ) >
+
+sums183 ( -> sums184 ( >
+sums183 ) -> sums182 ) >
+
+sums184 ( -> sums185 ( >
+sums184 ) -> sums183 ) >
+
+sums185 ( -> sums186 ( >
+sums185 ) -> sums184 ) >
+
+sums186 ( -> sums187 ( >
+sums186 ) -> sums185 ) >
+
+sums187 ( -> sums188 ( >
+sums187 ) -> sums186 ) >
+
+sums188 ( -> sums189 ( >
+sums188 ) -> sums187 ) >
+
+sums189 ( -> sums190 ( >
+sums189 ) -> sums188 ) >
+
+sums190 ( -> sums191 ( >
+sums190 ) -> sums189 ) >
+
+sums191 ( -> sums192 ( >
+sums191 ) -> sums190 ) >
+
+sums192 ( -> sums193 ( >
+sums192 ) -> sums191 ) >
+
+sums193 ( -> sums194 ( >
+sums193 ) -> sums192 ) >
+
+sums194 ( -> sums195 ( >
+sums194 ) -> sums193 ) >
+
+sums195 ( -> sums196 ( >
+sums195 ) -> sums194 ) >
+
+sums196 ( -> sums197 ( >
+sums196 ) -> sums195 ) >
+
+sums197 ( -> sums198 ( >
+sums197 ) -> sums196 ) >
+
+sums198 ( -> sums199 ( >
+sums198 ) -> sums197 ) >
+
+sums199 ( -> rj ( >
+sums199 ) -> sums198 ) >
+
+

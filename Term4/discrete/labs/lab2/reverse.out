@@ -1,0 +1,146 @@
+start: s
+accept: ac
+reject: rj
+blank: _
+s 0 -> right_to_end 0 ^
+s 1 -> right_to_end 1 ^
+s 2 -> right_to_end 2 ^
+s 3 -> right_to_end 3 ^
+s 4 -> right_to_end 4 ^
+s 5 -> right_to_end 5 ^
+s 6 -> right_to_end 6 ^
+s 7 -> right_to_end 7 ^
+s 8 -> right_to_end 8 ^
+s 9 -> right_to_end 9 ^
+s - -> right_to_end - ^
+s _ -> right_to_end _ ^
+s + -> right_to_end + ^
+s * -> right_to_end * ^
+s ^ -> right_to_end ^ ^
+s $ -> right_to_end $ ^
+s # -> right_to_end # ^
+s < -> right_to_end < ^
+s > -> right_to_end > ^
+s ( -> right_to_end ( ^
+s ) -> right_to_end ) ^
+
+
+
+right_to_end 0 -> right_to_end 0 >
+right_to_end 1 -> right_to_end 1 >
+right_to_end 2 -> right_to_end 2 >
+right_to_end 3 -> right_to_end 3 >
+right_to_end 4 -> right_to_end 4 >
+right_to_end 5 -> right_to_end 5 >
+right_to_end 6 -> right_to_end 6 >
+right_to_end 7 -> right_to_end 7 >
+right_to_end 8 -> right_to_end 8 >
+right_to_end 9 -> right_to_end 9 >
+right_to_end - -> right_to_end - >
+right_to_end _ -> left_border _ ^
+right_to_end + -> right_to_end + >
+right_to_end * -> right_to_end * >
+right_to_end ^ -> right_to_end ^ >
+right_to_end $ -> right_to_end $ >
+right_to_end # -> right_to_end # >
+right_to_end < -> right_to_end < >
+right_to_end > -> right_to_end > >
+right_to_end ( -> right_to_end ( >
+right_to_end ) -> right_to_end ) >
+
+left_border _ -> left_to_dias # ^
+
+left_to_dias 0 -> left_to_dias 0 <
+left_to_dias 1 -> left_to_dias 1 <
+left_to_dias 2 -> left_to_dias 2 <
+left_to_dias 3 -> left_to_dias 3 <
+left_to_dias 4 -> left_to_dias 4 <
+left_to_dias 5 -> left_to_dias 5 <
+left_to_dias 6 -> left_to_dias 6 <
+left_to_dias 7 -> left_to_dias 7 <
+left_to_dias 8 -> left_to_dias 8 <
+left_to_dias 9 -> left_to_dias 9 <
+left_to_dias - -> left_to_dias - <
+left_to_dias _ -> left_to_dias _ <
+left_to_dias + -> left_to_dias + <
+left_to_dias * -> left_to_dias * <
+left_to_dias ^ -> left_to_dias ^ <
+left_to_dias $ -> left_to_dias $ <
+left_to_dias # -> copy_begin # ^
+left_to_dias < -> left_to_dias < <
+left_to_dias > -> left_to_dias > <
+left_to_dias ( -> left_to_dias ( <
+left_to_dias ) -> left_to_dias ) <
+
+copy_begin # -> copy_begin1 - <
+
+copy_begin1 0 -> move_left0 # ^
+copy_begin1 1 -> move_left1 # ^
+copy_begin1 _ -> clear_right _ >
+
+move_left1 0 -> move_left1 0 >
+move_left1 1 -> move_left1 1 >
+move_left1 2 -> move_left1 2 >
+move_left1 3 -> move_left1 3 >
+move_left1 4 -> move_left1 4 >
+move_left1 5 -> move_left1 5 >
+move_left1 6 -> move_left1 6 >
+move_left1 7 -> move_left1 7 >
+move_left1 8 -> move_left1 8 >
+move_left1 9 -> move_left1 9 >
+move_left1 - -> move_left1 - >
+move_left1 _ -> left_to_dias 1 ^
+move_left1 + -> move_left1 + >
+move_left1 * -> move_left1 * >
+move_left1 ^ -> move_left1 ^ >
+move_left1 $ -> move_left1 $ >
+move_left1 # -> move_left1 # >
+move_left1 < -> move_left1 < >
+move_left1 > -> move_left1 > >
+move_left1 ( -> move_left1 ( >
+move_left1 ) -> move_left1 ) >
+
+move_left0 0 -> move_left0 0 >
+move_left0 1 -> move_left0 1 >
+move_left0 2 -> move_left0 2 >
+move_left0 3 -> move_left0 3 >
+move_left0 4 -> move_left0 4 >
+move_left0 5 -> move_left0 5 >
+move_left0 6 -> move_left0 6 >
+move_left0 7 -> move_left0 7 >
+move_left0 8 -> move_left0 8 >
+move_left0 9 -> move_left0 9 >
+move_left0 - -> move_left0 - >
+move_left0 _ -> left_to_dias 0 ^
+move_left0 + -> move_left0 + >
+move_left0 * -> move_left0 * >
+move_left0 ^ -> move_left0 ^ >
+move_left0 $ -> move_left0 $ >
+move_left0 # -> move_left0 # >
+move_left0 < -> move_left0 < >
+move_left0 > -> move_left0 > >
+move_left0 ( -> move_left0 ( >
+move_left0 ) -> move_left0 ) >
+
+clear_right 0 -> ac 0 ^
+clear_right 1 -> ac 1 ^
+clear_right 2 -> ac 2 ^
+clear_right 3 -> ac 3 ^
+clear_right 4 -> ac 4 ^
+clear_right 5 -> ac 5 ^
+clear_right 6 -> ac 6 ^
+clear_right 7 -> ac 7 ^
+clear_right 8 -> ac 8 ^
+clear_right 9 -> ac 9 ^
+clear_right - -> clear_right _ >
+clear_right _ -> ac _ ^
+clear_right + -> ac + ^
+clear_right * -> ac * ^
+clear_right ^ -> ac ^ ^
+clear_right $ -> ac $ ^
+clear_right # -> ac # ^
+clear_right < -> ac < ^
+clear_right > -> ac > ^
+clear_right ( -> ac ( ^
+clear_right ) -> ac ) ^
+
