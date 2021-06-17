@@ -10,10 +10,12 @@
 #+end_export
 
 * Плотности
-
-\noindentПлотность \((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- мера \\
-Плотность  меры \(\nu\) онсительно \(\mu\) --- это функция \(\omega: X \to \overline{\R}\) \\
-\(\forall B \in A\quad \nu B = \int_B \omega d\mu\)
+#+NAME: Плотность одной меры по отношению к другой
+#+begin_definition org
+\((X, \A, \mu)\) и \(\nu: \A \to \overline{\R}\) --- меры \\
+*Плотность  меры \(\nu\) онсительно \(\mu\)* --- это функция \(\omega: X \to \overline{\R},\ \omega \ge 0\) --- измеримая \\
+\(\forall B \in \A\quad \nu B = \int_B \omega d\mu\)
+#+end_definition
 
 #+NAME: Критерий плотности
 #+ATTR_LATEX: :options [критерий плотности]
@@ -46,6 +48,7 @@ _Тогда_ \(\omega\) --- плотность \(\nu\) отнсительно \(
 #+NAME: Критерий плотности_док
 #+ATTR_LATEX: :options [Доказательство критерия плотности]
 #+begin_proof org
+\-
 - \((\Rightarrow)\) :: очевидно
 - \((\Leftarrow)\) :: Не умаляя общности \(\omega > 0: e = X(\omega = 0)\) \\
   \(\nu(e) = \int_e \omega d\mu = 0\) \\
@@ -77,8 +80,7 @@ _Тогда_ \(\omega\) --- плотность \(\nu\) отнсительно \(
 \-
 - \(f, g\) --- суммируемые
 - \((X, \A, \mu)\)
-- \(\forall A \in \A\)
-- \(\int_A f = \int_A g\)
+- \(\forall A \in \A\): \(\int_A f = \int_A g\)
 _Тогда_ \(f = g\) почти везде
 #+end_lemma
 #+NAME: Лемма о единственности плотности_док
@@ -173,7 +175,7 @@ _Тогда_ \(\forall A \in \M^m, A \in O\)
 #+begin_theorem org
 \-
 - \(\Phi: O \subset \R^m \to \R^m\) --- дифференцируемое
-_Тогда_ \(\forall f\) --- измеримых, \(\ge 0\), заданная на \(O' = \Phi(O)\)
+_Тогда_ \(\forall f\) --- измеримых, \(\ge 0\), заданных на \(O' = \Phi(O)\)
 \[ \int_{O'}f(y) d\lambda = \int_O f(\Phi(x)) \cdot J_\Phi \cdot d\lambda \]
 , где \(J_\Phi(x) = |\det \Phi'(x)|\). То же верно для суммируемых функций \(f\)
 #+end_theorem
@@ -200,8 +202,9 @@ _Тогда_ \(\forall f\) --- измеримых, \(\ge 0\), заданная �
 #+end_proof
 #+begin_examp org
 Полярные координаты в \(R^2\). \\
-\(\left\{\begin{array}{l} x = r\cos\varphi \\ y = r\sin\varphi \end{array}\right., \Phi: \{(r, \varphi), r> 0, \varphi \in (0, 2\pi)\} \to \R^2\) \\
-диффеоморфизм \[ \Phi = \begin{pmatrix} \cos \varphi & -r \sin\varphi \\ \sin \varphi & r \cos\varphi\end{pmatrix} \]
+\[\left\{\begin{array}{l} x = r\cos\varphi \\ y = r\sin\varphi \end{array}\right.\]
+\[ \Phi: \{(r, \varphi), r> 0, \varphi \in (0, 2\pi)\} \to \R^2\] --- диффеоморфизм
+\[ \Phi = \begin{pmatrix} \cos \varphi & -r \sin\varphi \\ \sin \varphi & r \cos\varphi\end{pmatrix} \]
 \[ \det \Phi' = r\quad J_\Phi = r \]
 \[ \iint_\Omega f(x, y) = d\lambda_r = \iint_{\Phi^{-1}(\Omega)} f(r \cos\varphi, r\sin\varphi) r \underset{d \lambda_r(r, \varphi)}{d\lambda_r} \]
 #+end_examp

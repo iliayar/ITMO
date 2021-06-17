@@ -1,6 +1,5 @@
-#+LATEX_CLASS: general
 #+TITLE: Лекция 10
-#+AUTHOR: Ilya Yaroshevskiy
+#+SETUPFILE: setup.org
 
 #+begin_export latex
 \newcommand{\rot}{\mathop{\rm rot}\nolimits}
@@ -15,8 +14,8 @@
 - \(G\) --- компактно
 - \(\partial G\) --- кусочно гладкая
 - \(f, F \in C^1\)
-- \(R\) в окрестности \(V\) \to \(\R\), \(\in C^1\)
-Фиксируем внешнюю сторону поверхности \\
+- Фиксируем внешнюю сторону поверхности
+- \(R\): окр.(\(V\)) \to \(\R\), \(\in C^1\)
 _Тогда_
 \[ \iiint_V \frac{\partial R}{\partial z}\,dx\,dy\,dz = \iint_{\partial V}R\,dx\,dy = \color{blue} \iint_{\partial V} 0\,dy\,dz + 0\,dz\,dx + R\,dx\,dy \color{black} \]
 #+end_theorem
@@ -26,7 +25,7 @@ _Тогда_
 \[ = \iint_{\Omega_F} R(x, y, z)\,dx\,dy + \iint_{\Omega_f} R\,dx\,dy + \underbrace{\iint_{\Omega} R \,dx\,dy}_0 \]
 #+end_proof
 #+NAME: Формула Гаусса--Остроградского_след
-#+ATTR_LATEX: :options [обобщение формула Остроградского]
+#+ATTR_LATEX: :options [обобщение формулы Остроградского]
 #+begin_corollary org
 \[ \iiint_V \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} \, dx\,dy\,dz = \iint_{\partial V_\text{внеш.}} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy\]
 #+end_corollary
@@ -63,7 +62,7 @@ _Тогда_
 \(V = (P, Q, R)\) --- потенциально, \(\exists f\)
 \[ V = \grad f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\right) \]
 #+end_remark
-#+ATTR_LATEX: [Пуанкаре]
+#+ATTR_LATEX: :options [Пуанкаре]
 #+begin_theorem org
 \-
 - \(\Omega\) --- область
@@ -120,7 +119,7 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 #+end_lemma
 #+NAME: Лемма Урысона_док
 #+begin_proof org
-Перефразируем нормальность: Если \(\underset{\text{замк.}}{F} \subset \underset{\text{октр.}{G}}\), то \(\exists U(F)\) --- открытое: \[F \subset U(F) \subset \overline{U(F)} \subset G\].
+Перефразируем нормальность: Если \(\underset{\text{замк.}}{F} \subset \underset{\text{октр.}}{G}\), то \(\exists U(F)\) --- открытое: \[F \subset U(F) \subset \overline{U(F)} \subset G\].
 \[ F \leftrightarrow F_0 \quad G \leftrightarrow (F_1)^C \quad F_0 \subset \underbrace{U(F_0)}_{G_0} \subset \underbrace{\overline{U(F_0)}}_{\overline{G_0}} \subset \underbrace{F_1^C}_{G_1} \]
 Строим \(G_\frac{1}{2}\): \[ \overline{G_0} \subset \underbrace{U(\overline{G_0})}_{G_\frac{1}{2}} \subset \underbrace{\overline{U(\overline{G_0})}}_{\overline{G_\frac{1}{2}}} \subset G_1 \]
 Строим \(G_\frac{1}{4}\), \(G_\frac{3}{4}\): \[ \overline{G_\frac{1}{2}} \subset \underbrace{U(\overline{G_\frac{1}{2}})}_{G_\frac{3}{4}} \subset \overline{U(\overline{G_\frac{1}{2}})} \subset G_1 \]
@@ -141,16 +140,23 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 #+NAME: Плотность в \(L^p\) непрерывных финитных функций
 #+begin_theorem org
 \-
-- \((\R, \M, \lambda_\M)\)
+- \((\R^m, \M, \lambda_\M)\)
 - \(E \subset \R^m\) --- измеримое
-_Тогда_ в \(L^P(E, \lambda_\M)\) множество непрерывных финитных функция плотно
+_Тогда_ в \(L^p(E, \lambda_\M)\), \(1 \le p < +\infty\) множество непрерывных финитных функция плотно
 #+end_theorem
 #+begin_remark org
 \(f\) --- финитная в \(\R^m\) = \(\exists\) шар \(B\ f = 0\) вне \(B\). \(f\) --- непрерывная финитная на \(E\) = \(\exists g \in C_0(\R^m)\ f = g\big|_E\)
 #+end_remark
 #+NAME: Плотность в \(L^p\) непрерывных финитных функций_док
 #+begin_proof org
-\todo
+Ступенчатые функции плотны в \(L^p(E, \lambda_\M)\). Достаточно показать, что \(\forall \varepsilon > 0\ \forall A \subset E\) --- ограниченного, \(\exists f\) --- финитная непрерывная: \(\norm{f - \X_A}_p < \varepsilon\). \\
+Как потсроить для \(\forall h \in L^p\) финитную непрерывную \(f\): \(\norm{h - f}_p < \varepsilon\)? \(\exists g\) --- ступенчатая:
+\[ g = \sum_\text{кон.}a_k \X_{A_k} \quad \norm{h - g}_p < \frac{\varepsilon}{2} \]
+Подберем \(f_k\): \(\norm{f_k - \X_{A_k}} < \frac{\varepsilon}{\sum |a_i| \cdot 2}\)
+\[ \norm{h - f}_p \le \norm{h - g} + \norm{g - f} < \frac{\varepsilon}{2} + \sum |a_k| \norm{\X_{a_k} - f_k} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon \]
+\[\forall \varepsilon > 0\ \exists \underset{\text{замкн.}}{F} \subset A \subset \underset{\text{откр.}}{G} \quad \lambda_\M(G \setminus F) < \varepsilon\]
+По лемме Урысона \(\exists f: \R^m \to R\) --- непрерывная: \(f\Big|_F \equiv 1\), \(f\Big|_{G^C} \equiv 0\)
+\[ \norm{f - \X_A}^p_p = \int_{\R^m} |f - \X_A|^p \,d\lambda_\M = \int_{G \setminus F} |f - \X_A|^p \le 1 \cdot \lambda_\M(G \setminus F) = \varepsilon \]
 #+end_proof
 #+begin_remark org
 В \(L^\infty(E, \lambda_\M)\) утверждение теоремы неверно. \(L^\infty(\R, \lambda)\) \(B\left(\chi_{[a, b]}, \frac{1}{2}\right)\) не содержит непрерывных функций
@@ -159,7 +165,8 @@ _Тогда_ в \(L^P(E, \lambda_\M)\) множество непрерывных
 #+end_remark
 #+begin_remark org
 В \(L^p(E, \lambda_\M)\), \(p < +\infty\) плотны:
+- Линейные комбинации характеристических функций ячеек
 - Гладкие функции
+- Рациональные линейные комбинации рациональных ячеек
 - Непрерывные функции
-- \todo
 #+end_remark

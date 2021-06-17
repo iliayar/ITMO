@@ -20,7 +20,7 @@ _Тогда_ $\forall \varepsilon > 0\ \exists \delta > 0\ \forall E$ --- изм
 #+begin_corollary org
 \-
 - $f$ --- суммируемая
-- $\mu E \to 0$
+- $\mu E_n \to 0$
 _Тогда_ $\int_{E_n} f \to 0$
 #+end_corollary
 #+NAME: Абсолютная непрерывность интеграла_док
@@ -49,7 +49,7 @@ _Тогда_ $\int_{E_n} f \to 0$
 - $f_n \xRightarrow[\mu]{} f$
 - $\exists g$ --- *суммируемая мажоранта*:
   1. \label{lebega_1} $\forall n\ |f_n| \le g$ почти везде
-  2. $g$ --- усммируемая везде
+  2. $g$ --- суммируемая везде
 _Тогда_ $f_n, f$ --- суммируемые и $\int_X |f_n - f|d\mu\xrightarrow[n \to + \infty]{}0$, и 'тем более' $\int_X f_n d\mu \to \int_X f d\mu$
 #+end_theorem
 #+NAME: Теорема Лебега о мажорированной сходимости для случая сходимости по мере_док
@@ -143,25 +143,23 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 #+NAME: Теорема Фату_след2_док
 #+begin_proof org
 Как в теореме: \[ \int_X g_n \le \int_X f_n \]
-Выберем $n_k$: \[ \int_X f_{n_k} \xrightarrow[n \to + \infty]{} \underline{\lim}\int_X f_n \]
-\color{red}Zzz..\color{black}
+Выберем $n_k$: \[ \int_X f_{n_k} \xrightarrow[k \to + \infty]{} \underline{\lim}\int_X f_n \]
+Рассмотрим первое неравенство для \(n_k\):
+\[ \int_X g_{n_k} \le \int_X f_{n_k} \]
+\[\int_X g_{n_k} \to \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n\]
 #+end_proof
 * Плотность одной меры по отношению к другой
 ** Замена перменных в интеграле
-#+NAME: Плотность одной меры по отношению к другой
+#+NAME: Образ меры при отображении
 #+begin_definition org
-- $(X, \A, mu)$
+\-
+- $(X, \A, \mu)$
 - $(Y, \B, \cdot)$
 - $\Phi: X \to Y$
-
-
-- Пусть $\Phi$ --- измеримо в следующем смысле:
-  \[ \Phi^{-1}(\B) \subset \A \]
-
-\noindentДля $E \in \B$ положим $\nu(E) = \mu \Phi^{-1}(E)$ \\
+Пусть $\Phi$ --- измеримо в следующем смысле: \( \Phi^{-1}(\B) \subset \A \). Для $E \in \B$ положим $\nu(E) = \mu \Phi^{-1}(E)$ \\
 Тогда $\nu$ --- мера:
 \[ \nu(\bigsqcup E_n) = \mu(\Phi^{-1}(\bigsqcup E)n) = \mu(\bigsqcup\Phi^{-1}(E_n)) = \sum \mu \Phi^{-1} (E_n) = \sum \nu E_n\]
-Мера $\nu$ называется образом $\mu$ при отображении $\Phi$ и
+Мера $\nu$ называется *образом $\mu$ при отображении $\Phi$* и
 \[ \nu E = \int_{\Phi^{-1}(E)} 1 d\mu \]
 #+end_definition
 #+begin_remark org
@@ -175,7 +173,7 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 \-
 - $\omega: X\to\overline{\R}$ --- измерима(на $X$ относительно $\A$)
 - $\omega \ge 0$
-\[ \forall B \in \B\ \nu(B) = \int_{\Phi^{-1}(B)}\omega(x)d\mu(x) \]
+\[ \forall B \in \B\ \mu(B) = \int_{\Phi^{-1}(B)}\omega(x)d\mu(x) \]
 --- *взвешенный образ меры* $\mu$ при отображении $\Phi$, $\omega$ --- *вес*
 #+end_definition
 #+NAME: Теорема о вычислении интеграла по взвешенному образу меры
@@ -186,7 +184,8 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 - $\Phi: X \to Y$
 - $\nu$ --- взвешенный образ меры $\mu$ при отображении $\Phi$ с весом $\omega$
 - $\omega \ge 0$ --- измерима на $X$
-_Тогда_ $\forall f$ --- измеримые на $Y$ относительно $\B$, $f \ge 0$ $f\circ \Phi$ --- измеримая на $X$ относительно $\A$ и
+_Тогда_ $\forall f$ --- измеримые на $Y$ относительно $\B$, $f \ge 0$ \\
+$f\circ \Phi$ --- измеримая на $X$ относительно $\A$ и
 \[ \int_Y f(y) d\nu(y) = \int_X f(\Phi(x))\cdot\omega(x)\d\mu(x) \label{weight_1}\addtag \]
 То же верно для суммируемых $f$
 #+end_theorem
@@ -196,14 +195,16 @@ $f\circ \Phi$ --- измеримая \\
 1. Пусть $f = \X_B, B \in \B$
    \[ f\circ \Phi(x) = f(\Phi(x)) = \left[\begin{array}{ll} 1 & ,\Phi(x) \in B \\ 0 & ,\Phi(x) \not\in B\end{array}\right. =\X_{\Phi^{-1}(B)} \]
    Тогда \ref{weight_1}:
-   \[ \nu B \overset{?}{=} \int_X \X_{\Phi^{-1}(B)}\cdot\omegad\mu = \int_{\Phi^{-1}(B)}\omegad\mu  \]
+   \[ \nu B \overset{?}{=} \int_X \X_{\Phi^{-1}(B)}\cdot\omega d\mu = \int_{\Phi^{-1}(B)}\omega d\mu  \]
    --- это определение $\nu$
 2. $f$ --- ступенчатая. \ref{weight_1} следует из линейности интеграла
-3. $f \ge 0$ --- измеримая: таким образом ??? измеримая функция ступенчатая + т. Леви
+3. $f \ge 0$ --- измеримая: теорема об аппроксимации измеримой функции ступенчатыми + т. Леви
    \[ 0 \le h_1 \le h_2 \le \dots,\ h_i\text{ --- ступенчатая}\ h_i \le f\ h_i \to f \]
-   \[ \int_Y h_i d\nu = \int_X h_i \circ \Phi\cdot\omega d\mu \xrightarrow[i \to \infty]{} \]
-4. $f$ --- измеримая \Rightarrow для $|f|$ выполнено \ref{weight_1} \Rightarrow $|f|$ и $|f\circ \Phi|\cdot \omega$ \\
-   \color{red}Что-то про $f_+$ \color{black}
+   \[ \int_Y h_i d\nu = \int_X h_i \circ \Phi\cdot\omega d\mu \xrightarrow[i \to \infty]{} \ref{weight_1}\text{ для }f \]
+4. $f$ --- измеримая \Rightarrow для $|f|$ выполнено \ref{weight_1} \Rightarrow $|f|$ и $|f\circ \Phi|\cdot \omega$ --- суммируемы одновременно \\
+   Берем \(f_+, f_-\), для них интегралы конечные. 
+   \[ (f \circ \Phi \cdot \omega)_+ = f_+ \circ \Phi \cdot \omega \]
+
 #+end_proof
 #+begin_corollary org
 В условиях теоремы:
@@ -212,7 +213,7 @@ $f\circ \Phi$ --- измеримая \\
 _Тогда_ \[ \int_B f d\nu = \int_{\Phi^{-1}(B)}f(\Phi(x))\omega(x)d\mu\]
 #+end_corollary
 #+begin_proof org
-В теорему подствить $f \leftrightarrow f\cdot\X_{B}$
+В теорему подставить $f \leftrightarrow f\cdot\X_{B}$
 #+end_proof
 #+begin_remark org
 Частный случай.

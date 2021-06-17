@@ -27,9 +27,10 @@ $W := V^*V$ \color{gray} * --- транспонирование в $\R^m$ \color
 \color{gray} $W$ --- самосопряженный оператор(матрица симметрична относительно диагонали) \color{black} \\
 Собственные числа $c_1, \dots, c_m$ --- вещественные \\
 Собственные векторы $g_1, \dots, g_m$ \\
-Заметим что $c_i\langle g_i, g_i \rangle = \langle Wg_i, g_i \rangle = \langle Vg_i, Vg_i \rangle > 0 \Rightarrow c_i > 0$ \\
-- $S_i := \sqrt{c_i}$ \\
-- $h_i := \frac{1}{S_i} Vg_i$ \\
+Заметим что:
+\[ c_i\langle g_i, g_i \rangle = \langle Wg_i, g_i \rangle = \langle Vg_i, Vg_i \rangle > 0 \Rightarrow c_i > 0 \]
+- $S_i := \sqrt{c_i}$
+- $h_i := \frac{1}{S_i} Vg_i$
 \[ \langle h_i, h_j \rangle = \frac{1}{S_iS_j}\langle Vg_i, Vg_j\rangle = \frac{1}{S_iS_j}\langle Wg_i, g_j\rangle = \frac{c_i}{S_iS_j}\langle g_i, g_j \rangle = \delta_i \]
 \[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
@@ -61,14 +62,15 @@ _Тогда_:
 \-
 1. $E$ --- множество, $E = \underset{\text{кон.}}{\bigsqcup}e_i$ --- *разбиение множества*
 2. $f: X \to \R$ --- *ступенчатая*, если \\
-   $\exists$ разбиение $X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i$ \\
+   $\exists$ разбиение:
+   \[ X = \underset{\text{кон.}}{\bigsqcup}e_i:\ \forall i\ f\big\vert_{e_i} = \const = c_i \]
    При этом такое разбиение --- *допустимое разбиение*
 #+end_definition
 #+NAME: ступенчатая_функция_пример
 #+begin_examp org
 \-
-1. Характеристическая функция множества $E \subset \mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}$
-2. $f = \subset{\text{кон.}}{\sum}c_i\mathcal{X}_{e_i}$, где $\mathcal{X} = \bigsqcup e_i$
+1. Характеристическая функция множества $E \subset X$ $\mathcal{X}_E(x) = \left[\begin{array}{ll} 1 & x \in E \\ 0 & x \in X \setminus E \end{array}$
+2. $f = \sum\limits_{\text{кон.}}c_i\mathcal{X}_{e_i}$, где $X = \bigsqcup e_i$
 #+end_examp
 #+NAME: свойства_ступенчатых_функций
 #+begin_remark org
@@ -82,7 +84,9 @@ _Тогда_:
 #+end_remark
 #+NAME: лебегово_множество_функции
 #+begin_definition org
-$f: E\subset X \to \overline{\R},\ a \in \R$ \\
+\-
+- \(f: E\subset X \to \overline{\R}\)
+- \(a \in \R\)
 $E(f < a) = \{x\in E: f(x) < a\}$ --- *лебегово множество функции $f$* \\
 $E(f \le a),\ E(f > a), E(f \ge a)$ --- также лебеговы множества \\
 Если $f$ задана на $X$: $X(f < a),\ X(f \le a), \dots$ --- лебеговы множества
@@ -90,7 +94,7 @@ $E(f \le a),\ E(f > a), E(f \ge a)$ --- также лебеговы множес
 #+NAME: дополнение_лебегова_множества
 #+begin_remark org
 $E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C$ \\
-\[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E(f < a + \frac{1}{n})\]
+\[ E(f \le a) = \bigcap_{b > a} E(f < b) = \bigcap_{n \in \N}E\left(f < a + \frac{1}{n}\right)\]
 #+end_remark
 #+NAME: функция_измеримая_на_множестве
 #+begin_definition org
@@ -99,7 +103,7 @@ $E(f \ge a) = E(f < a)^C;\ E(f < a) = E(f \ge a)^C$ \\
 - $f: X \to \overline{\R}$
 - $E \in \A$
 $f$ --- *измерима на множестве $E$*: \\
-$a \in \R\quad E(f < a)$ --- измеримо(т.е. $\in \A$)
+$\forall a \in \R\quad E(f < a)$ --- измеримо(т.е. $\in \A$)
 #+end_definition
 #+NAME: функция_измеримая_на_множестве_обозначения
 #+begin_symb org
@@ -117,20 +121,21 @@ $a \in \R\quad E(f < a)$ --- измеримо(т.е. $\in \A$)
 #+end_remark
 #+NAME: функция_измеримая_на_множестве_пример 
 #+begin_examp org
-1. $E \subset X$, $E$ --- измеримо, $\mathcal{X}_E$ --- измеримо \\
-   $E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 <= a <= 1 \\ X & ,a > 1 \end{array}$
+\-
+1. $E \subset X$, $E$ --- измеримо, $\mathcal{X}_E$ --- измеримо
+   \[ E(\mathcal{X}_E < a) = \left[\begin{array}{ll} \emptyset & ,a < 0 \\ X \setminus E & ,0 \le a \le 1 \\ X & ,a > 1 \end{array} \]
 2. $f: \R^m \to \R$ --- непрерывна. Тогда $f$ --- измеримо по Лебегу
 #+end_examp
 #+NAME: функция_измеримая_на_множестве_свойства
 #+begin_remark org
 /Свойства/:
 1. $f$ --- измерима на $E$
-   - $\Rightarrow$ :: $\forall a \in \R$ $E(f = a)$ --- измеримо \\
+   - $\Rightarrow$ :: $\forall a \in \R$ $E(f = a)$ --- измеримо
    - $\not \Leftarrow$ :: $f: \R \to \R\quad f(x) = \mathcal{X} + \mathcal{X}_\text{неизм.}$
 2. $f$ --- измерима \Rightarrow $\forall \alpha \in R\quad \alpha f$ --- измерима
 3. $f$ --- измерима $E_1, E_2, \dots \Rightarrow f$ --- измерима на $E = \bigcup E_k$
-4. $f$ --- измерима на $E$; $\underset{\text{изм.}}{E'} \subset E \Rightarrow f$ --- измерима на $E'$ \\
-   $E'(f < a) = E(f < a) \cap E'$
+4. $f$ --- измерима на $E$; $\underset{\text{изм.}}{E'} \subset E \Rightarrow f$ --- измерима на $E'$
+   \[ E'(f < a) = E(f < a) \cap E' \]
 5. $f \neq 0$ --- измерима на $E$ \Rightarrow $\frac{1}{f}$ --- измерима на $E$
 6. $f \ge 0$, измерима на $E$, $\alpha \in \R$. _Тогда_ $f^\alpha$ --- измерима на $E$
 #+end_remark
@@ -153,9 +158,12 @@ _Тогда_:
 ** Меры Лебега-Стильеса
 #+NAME: мера_лебега_стилтьеса
 #+begin_definition org
-$\R, \P^1, g:\R \to \R$ --- возрастает, непрерывна \\
+\-
+- \(\R\)
+- \(\P^1\)
+- \(g: \R \to \R\) --- возрастает, непрерывна
 $\mu[a, b) := g(b) - g(a)$ --- \sigma-конечный объем \\
-\[ g(a + 0) = \lim_{x \to a + 0}g(x), g(a - 0) = \lim_{x \to a - 0}g(x) \]
+\[ g(a + 0) = \lim_{x \to a + 0}g(x) \] \[ g(a - 0) = \lim_{x \to a - 0}g(x) \]
 \[ \mu[a, b) := g(b-0) - g(a - 0) \]
 --- тоже \sigma-конечная мера \\
 Применим теорему о продолжении, получим меру $\mu g$ на некой \sigma-алгебре --- *мера Лебега-Стилтьеса* 

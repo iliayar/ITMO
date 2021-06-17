@@ -78,7 +78,7 @@ _Тогда_
 - \((2 \Rightarrow 3)\) :: \(y \coloneqq x\) в обобщенное уравнение
 - \((3 \Rightarrow 4)\) :: \(\exists z: \forall n\ \pair{z, e_n} = 0\) ?, т.е. \(c_n(z) = 0\) \\
   Для этого \(z\) уравнение замыкания \(\norm{z}^2 = \sum |c_k(z)|^2\norm{e_k}^2 = 0\)
-- \((4 \Rightarrow 1)\) :: по теореме Рисса-Фишера \(x = \sum c_k(x)e_k + z\), где \(z \perp e_k \fixme\). В силу полноты ОС \(z = 0\)
+- \((4 \Rightarrow 1)\) :: по теореме Рисса-Фишера \(x = \sum c_k(x)e_k + z\), где \(\forall k:\ z \perp e_k\). В силу полноты ОС \(z = 0\)
 - \((4 \Rightarrow 5)\) :: \(\mathcal{L} \coloneqq \mathop{\rm Cl}\mahtop{\rm Lin}\{e_k\}\). Надо проверить \(\mathcal{L} = \H\). \\
   Если \(\exists x \in \H \setminus \mathcal{L}\), то по теореме Рисса-Фишера как в предыдущем пункте \(z = 0\), т.е. \(x \in \mathcal{L}\)
 - \((5 \Rightarrow 4)\) :: Если \(z \perp \text{всем } e_k \implies z \perp \mathop{\rm Lin}\{e_k\} \impies z \perp \mathcal{L}\), но \(\mathcal{L} = \H \implies z \perp z\), т.е. \(\pair{z, z} = 0\)
@@ -86,11 +86,11 @@ _Тогда_
 * Тригонометрические ряды Фурье
 #+NAME: тригонометрический полином
 #+begin_definition org
-\(T_n(x) = \frac{a_0}{2} + \sum_{k = 1}^n a_k\cos kx + b_k\sum kx\) --- *тригонометрический полином* степени не выше \(n\)
+\(T_n(x) = \frac{a_0}{2} + \sum_{k = 1}^n a_k\cos kx + b_k\sin kx\) --- *тригонометрический полином* степени не выше \(n\)
 #+end_definition
 #+NAME: Тригонометрический ряд
 #+begin_definition org
-\[ \frac{a_0}{2} + \sum_{k = 1}^{\infty} a_k\cos kx + b_k\sum kx \] --- *тригонометрический ряд*, \(a_k, b_k\) --- *коэффициенты тригонометрического ряда*
+\[ \frac{a_0}{2} + \sum_{k = 1}^{\infty} a_k\cos kx + b_k\sin kx \] --- *тригонометрический ряд*, \(a_k, b_k\) --- *коэффициенты тригонометрического ряда*
 #+end_definition
 #+NAME: комплексный тригонометрический полином
 #+begin_definition org
@@ -224,7 +224,7 @@ t = \tau + \frac{\pi}{\lambda}
 #+NAME: Три следствия об оценке коэффициентов Фурье_3
 #+begin_corollary org
 \-
-1. \(f \int \tilde{c}^{(r)}[-\pi, \pi]\) \\
+1. \(f \in \tilde{c}^{(r)}[-\pi, \pi]\) \\
    _Тогда_ \(|a_k(f)|, |b_k(f)|, |c_k(f)| \le \frac{\const}{|k|^2}\)
 2. \(f \in \tilde{c}^{(r)}\), \(f^{(r)} \in \mathop{\rm Lip}_m\alpha,\ 0 < \alpha \le 1\) \\
    _Тогда_ \(|a_k(f)|, |b_k(f)|, |rc_k(f)| \le \frac{M\pi^\alpha}{|k|^{r + \alpha}}\)

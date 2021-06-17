@@ -1,6 +1,5 @@
-#+LATEX_CLASS: general
 #+TITLE: Лекция 9
-#+AUTHOR: Ilya Yaroshevskiy
+#+SETUPFILE: setup.org
 
 #+begin_export latex
 \newcommand{\esssup}{\mathop{\rm ess\,sup}\limits}
@@ -27,7 +26,7 @@ _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\parti
 Ограничимся случаем D --- `криволинейный 4-х угольник`
 #+ATTR_LATEX: :scale 0.4
 [[file:9_1.png]]
-\(\partial D\) --- состоит из путей \(\gamma_1, \dots, \gamma_4\), где \(\gamma_2, \gamma_4\) --- вертикальные отрезки (возможно вырожденнные ), \(\gamma_1, \gamma_3\) --- гладкие кривые(можно считать, что это графики функций \(\varphi_1(x), \varphi_3(x)\)). Аналогично можно \fixme.
+\(\partial D\) --- состоит из путей \(\gamma_1, \dots, \gamma_4\), где \(\gamma_2, \gamma_4\) --- вертикальные отрезки (возможно вырожденнные), \(\gamma_1, \gamma_3\) --- гладкие кривые(можно считать, что это графики функций \(\varphi_1(x), \varphi_3(x)\)). Аналогично можно описать границу по отношнию к оси \(Oy\).
 Проверим, что:
 \[ - \iint_D \frac{\partial P}{\partial y}\,dx\,dy = \int_{\partial D^+} P\,dx + Q\,dy \]
 Левая часть:
@@ -40,7 +39,7 @@ _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\parti
 Теорема верна для любой области \(D\) с кусочно гладкой границей, которую можно разрезать на криволинейные 4-x угольнинки
 #+ATTR_LATEX: :scale 0.4
 [[file:9_2.png]]
-\[ \int_{\partial D^+} = \int_{\partial D_1^+} + \int_{\partial D_2^+} \fixme \]
+\[ \int_{\partial D^+} = \int_{\partial D_1^+} + \int_{\partial D_2^+} \]
 #+end_remark
 #+NAME: Формула Стокса
 #+ATTR_LATEX: :options [Формула Стокса]
@@ -81,13 +80,15 @@ _Тогда_ \[ \int_{\parial \Omega^+} P\,dx + Q\,dy + R\,dz = \iint_\Omega \le
 \[ \left(\int_X |f|^p\,dx\right)^{\frac{1}{p}}\text{ --- сходится} \]
 - \(p = \infty:\ \esssup |f| < +\infty\)
 \[ \Vert fg \Vert_1 \le \Vert f \Vert_p \cdot \Vert g \Vert_q\]
+#+NAME: Теорема о вложении пространств \(L^p\)
 #+begin_theorem org
 \-
 - \(\mu E < +\infty \), \(1 \le s < r \le +\infty \)
 _Тогда_
 1. \(L^r(E, \mu) \subset L^s(E, \mu)\)
-2. \(\Vert f \Vert_s \le \muE^{\frac{1}{s} - \frac{1}{r}}\cdot \Vert f \Vert_r\)
+2. \(\Vert f \Vert_s \le \mu E^{\frac{1}{s} - \frac{1}{r}}\cdot \Vert f \Vert_r\)
 #+end_theorem
+#+NAME: Теорема о вложении пространств \(L^p\)_док
 #+begin_proof org
 \-
 1. Следует из 2)
@@ -125,7 +126,7 @@ _Тогда_
    \[ \mu X_n(\varepsilon) = \int_{X_n(\varepsilon)} 1 d\mu \le \frac{1}{\varepsilon^p} \int_{X_n(\varepsilon)}|f_n - f|^p\,d\mu\le \frac{1}{\varepsilon^p} \Vert f_n - f \Vert_p^p \to 0 \]
 2. \(f_n \Rightarrow f\), \(\exists n_k\ f_{n_k} \to f\) почти везде \(\implies\ |f| \le g\) почти везде \\
    \(|f_n - f|^p \le (2g)^p\) --- суммируема (так как \(g \in L^p\)) \\
-   \(\Vert f_n - f \Vert_p^p \todo\)
+   \[\norm{f_n - f}_p^p = \int_X |f_n - f|^p \xrightarrow[\text{т. Лебега}]{} 0\]
 #+end_proof
 \color{blue}
 - Фундаментальная последовательность: \\
@@ -167,7 +168,7 @@ _Тогда_
 #+end_proof
 #+begin_definition org
 \(Y\) --- метрическое пространство, \(A \subset Y\), \(A\) --- (всюду) плотно в \(Y\)
-\[ \forall y in Y\ \forall U(y)\ \exists a \in A:\ a\in U(y) \]
+\[ \forall y \in Y\ \forall U(y)\ \exists a \in A:\ a\in U(y) \]
 #+end_definition
 #+begin_examp org
 \(\mathbb{Q}\) плотно в \(\R\)
@@ -190,6 +191,7 @@ _Тогда_
   \[ \Vert \varphi_n - f \Vert^p_p = \int_X | \varphi_n - f |^p \to 0 \]
   , по теореме Лебега. \(f\) --- любого знака: берем \(f^+, f^-, \dots\)
 #+end_proof
+#+NAME: Финитная функция
 #+begin_definition org
 \(f: \R^m \to \R\) --- *финитная*, если \(\exists B(0, r): f\equiv 0\) вне \(B(0, r)\). \\
 \(C_0(\R^m)\) --- непрерывные финитные функции. \(\forall p \ge 1\ C_0(\R^m) \subset L^p(\R^m, \lambda_m)\)
