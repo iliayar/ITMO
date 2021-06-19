@@ -32,7 +32,8 @@ $W := V^*V$ \color{gray} * --- транспонирование в $\R^m$ \color
 - $S_i := \sqrt{c_i}$
 - $h_i := \frac{1}{S_i} Vg_i$
 \[ \langle h_i, h_j \rangle = \frac{1}{S_iS_j}\langle Vg_i, Vg_j\rangle = \frac{1}{S_iS_j}\langle Wg_i, g_j\rangle = \frac{c_i}{S_iS_j}\langle g_i, g_j \rangle = \delta_i \]
-\[ V(x) = V(\sum_{i=1}^n\langle x, g_i \rangle g_i) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum s_i \langle x, g_i \rangle h_i \]
+, где \(\delta_i\) --- символ Кронекера (0 если \(i \neq j\), 1 иначе)
+\[ V(x) = V\left(\sum_{i=1}^n\langle x, g_i \rangle g_i\right) = \sum_{i = 1}^m \langle x, g_i \rangle V(g_i) = \sum S_i \langle x, g_i \rangle h_i \]
 \[ (\det V)^2 = \det(V^*V) = \det W = c_1\dots c_m \addtag\label{diag_1} \]
 $\ref{diag_1}$ --- т.к. диагональная матрица
 #+end_proof

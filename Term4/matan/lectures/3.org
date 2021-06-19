@@ -48,14 +48,36 @@ $(X, \A, \mu)$ $E\subset X$ --- измеримое, $g, f$ --- измеримы�
 1. \label{prop_3_1} Монотонность $f \le g$ $\int_E f \le \int_E g$
    #+begin_proof org
    \-
-   #+ATTR_LATEX: :scale 0.3
-   [[file:3_1.png]]
+   #+begin_export latex
+   \begin{center}
+   \begin{tikzpicture}
+   \draw[->] (0, 0) -- (0, 5);
+   \draw[->] (-1, 0) -- (7, 0);
+   \draw plot [smooth] coordinates { (-1, 2) (3.5, -1) (7, 2) };
+   \draw plot [smooth] coordinates { (-1.5, 1) (3, -2) (7.5, 1) };
+   \draw[line cap=round, double distance=5pt, double=red, color=red, opacity=0.3, rounded corners] (-1, 2) -- (1.5, 0) -- (5.2, 0) -- (7, 2);
+   \draw[line cap=round, double distance=5pt, double=orange, color=orange, opacity=0.3, rounded corners] (-1.5, 1) -- (-0.4, 0) -- (6.4, 0) -- (7.5, 1);
+   \draw[line cap=round, double distance=5pt, double=green, color=green, opacity=0.3, rounded corners] plot [smooth] coordinates { (1.5, 0) (3.5, 1) (5.2, 0) };
+   \draw[line cap=round, double distance=5pt, double=magenta, color=magenta, opacity=0.3, rounded corners] plot [smooth] coordinates { (-0.4, 0) (3, 2) (6.4, 0) };
+   \draw[line cap=round, double distance=5pt, double=magenta, color=magenta, opacity=0.3, rounded corners] (-1, 0) -- (-0.4, 0);
+   \draw[line cap=round, double distance=5pt, double=magenta, color=magenta, opacity=0.3, rounded corners] (6.4, 0) -- (7, 0);
+   \draw[line cap=round, double distance=5pt, double=green, color=green, opacity=0.3, rounded corners] (0.5, 0) -- (1.5, 0);
+   \draw[line cap=round, double distance=5pt, double=green, color=green, opacity=0.3, rounded corners] (5.2, 0) -- (6.3, 0);
+   \node[above, color=green] at (3.5, 1) {\(g^-\)};
+   \node[above, color=magenta] at (3, 2) {\(f^-\)};
+   \node[above, color=red] at (7, 2) {\(g^+\)};
+   \node[above, color=orange] at (7.2, 1) {\(f^+\)};
+   \node[below] at (3.5, -1) {\(g\)};
+   \node[below] at (3, -2) {\(f\)};
+   \end{tikzpicture} 
+   \end{center}
+   #+end_export
    1. $f, g \ge 0$ --- очевидно 
    2. $f, g$ --- произвольные \\
-      $f^+ \le g^+\ f^- \le g^-$ \\
-      $\int_E f^+ \le \int_E g^+\ \int_E f^- \le \int_E g^- \Rightarrow \text{OK}$
+      $f^+ \le g^+\ f^- \ge g^-$ \\
+      $\int_E f^+ \le \int_E g^+\ \int_E f^- \ge \int_E g^- \Rightarrow \text{OK}$
    #+end_proof
-2. $\int_E Ad\mu = \mu E\ \int_E 0 d\mu = 0$
+2. $\int_E 1d\mu = \mu E; \int_E 0 d\mu = 0$
 3. \label{prop_3_3} $\mu E = 0\ \int_E f= 0$
    #+begin_proof org
    \-
@@ -97,6 +119,7 @@ _Тогда_ \[ \int_A g d\mu = \sum_{i = 1}^{ + \infty}\int_{A_i}g d\mu \]
 #+begin_proof org
 \[ \int_A g d\mu = \sum_\text{кон.} \alpha_k \mu(E_k \cap A) = \sum_k\sum_i \underbrace{\alpha_k\mu(E_k \cap A_i)}_{\ge 0} = \sum_i \sum_k \dots = \sum_i\int_{A_i} gd\mu \]
 #+end_proof
+#+NAME: Счетная аддитивность интеграла (по множеству)
 #+begin_theorem org
 \-
 - $A = \bigsqcup A_i$ --- измеримые
@@ -104,6 +127,7 @@ _Тогда_ \[ \int_A g d\mu = \sum_{i = 1}^{ + \infty}\int_{A_i}g d\mu \]
 - $f \ge 0$
 _Тогда_ $\int_A fd\mu = \sum_{i = 1}^{ + \infty} \int_{A_i} f d\mu$
 #+end_theorem
+#+NAME: Счетная аддитивность интеграла (по множеству)_док
 #+begin_proof org
 \-
 - $(\le)$ :: ступенчатая $g:\ 0 \le g \le f\ \int_a g = \sum\int_{A_i} g d\mu \le \sum \int_{A_i} f$ --- по \hyperref[lemma_3_1]{Лемме}
@@ -130,13 +154,11 @@ _Тогда_ $\int_A fd\mu = \sum_{i = 1}^{ + \infty} \int_{A_i} f d\mu$
 - $\nu E := \int_E fd\mu$
 _Тогда_ $\nu$ --- мера
 #+end_corollary
-#+NAME: Счетная аддитивность интеграла (по множеству)
 #+ATTR_LATEX: :options [аддитивности интеграла]
 #+begin_corollary org
 $f$ --- суммируема на $A = \bigsqcup A_i$ --- измеримые \\
 _Тогда_ \[ \int_A f = \sum \int_{A_i} f \]
 #+end_corollary
-#+NAME: Счетная аддитивность интеграла (по множеству)_док
 #+begin_proof org
 Объединяем два сходящихся ряда для $f^+$ и $f^-$
 #+end_proof
@@ -154,7 +176,7 @@ $f_n = \frac{1}{n} \cdot \chi_{[0, n]}\ f\equiv 0\ f_n \to f$ (даже $f_n \ri
 - $(X, \A, \mu)$, $f_n$ --- измеримая
 - $\forall n\ 0 \le f_n \le f_{n + 1}$  почти везде
 - $f(x) := \lim_{n\to + \infty} f_n(x)$ почти везде
-_Тогда_ $\lim_{n \to + \infty}\int_X f_n d \mu = \int_x fd\mu$
+_Тогда_ $\lim_{n \to + \infty}\int_X f_n d \mu = \int_X fd\mu$
 #+end_theorem
 #+begin_remark org
 $f$ --- задана всюду, кроме множества меры $0$. Считаем, что $f = 0$ на $e$ \\
@@ -169,7 +191,7 @@ _Тогда_ $f$ --- измерима на $X$.
   \[ \lim \int_X f_n \ge \int_X g \]
   Достаточно: $\forall c \in (0, 1)$
   \[ \lim \int_X f_n \ge c \int_X g \]
-  \[ E_n := X(f_n \le c g) \dots \subset E_n \subset E_{n + 1} \subset \dots \]
+  \[ E_n := X(f_n \le c g) \quad \dots \subset E_n \subset E_{n + 1} \subset \dots \]
   $\bigcup E = X$ т.к. $c < 1$
   \[ \int_x f_n \ge \int_{E_n} f_n \ge c \int_{E_n} g \]
   Тогда $\lim \int_X f_n \ge c \lim \int_{E_n} g = c\int_X g$ \\
@@ -186,7 +208,7 @@ _Тогда_ \[ \int_E f + g = \int_E f + \int_E g \]
 \-
 1. $f, g$ --- ступенчатые \\
    \[ f = \sum \alpha_k\chi_{E_k},\ g = \sum \beta_k\chi_{E_k} \]
-   \[ \int_E f + g = \sum (\alpha_k + \beta_k)\mu(E_k \cap E) = \sum \alpha_k \mu(E_k \cap E) + \sum \beta_l \mu(E_k \cap E) = \int_E f + \int_E g \]
+   \[ \int_E f + g = \sum (\alpha_k + \beta_k)\mu(E_k \cap E) = \sum \alpha_k \mu(E_k \cap E) + \sum \beta_k \mu(E_k \cap E) = \int_E f + \int_E g \]
 2. $f \ge 0$ --- измерима \Rightarrow \exists ступенчатая $f_n:\ 0 \le f_n \le f_{n + 1} \le \dots \ \lim f_n = f$ \\
    $g \ge 0$ --- измерима \Rightarrow \exists ступенчатая $g_n:\ 0 \le g_n \le g_{n + 1} \le \dots \ \lim g_n = g$
    \[ f_n + g_n \to f + g\ \int_E f_n + g_n \to \int_E f + g \]

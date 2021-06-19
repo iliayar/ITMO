@@ -82,7 +82,7 @@ _Тогда_ $f$ --- измерима
 #+begin_proof org
 $f$ --- измерима на $E'$  \\
 $E'(f < a)$ --- открыто в $E'$ \\
-\[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в} E \]
+\[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в } E \]
 \[ E(f < a) = E'(f < a) \cup e(f < a) \]
 #+end_proof
 #+begin_examp org
@@ -209,7 +209,7 @@ _Тогда_ $f_n \xRightarrow[\mu]{} f$
 #+NAME: Теорема Лебега о сходимости почти везде и сходимости по мере_док
 #+begin_proof org
 Переопределим $f_n, f$ на множестве меры 0, чтобы сходимость была всюду
-_Частный случай_: $\forall x$ последовательность $f_n(x)$ монотонно убывает к 0(т.е. $f < 0$)
+_Частный случай_: $\forall x$ последовательность $f_n(x)$ монотонно убывает к 0(т.е. $f \equiv 0$)
 \[ \left.\begin{array}{cc}X(|f_n| \ge \varepsilon) = X(f_n \ge \varepsilon) \supset X(f_{n + 1} \ge \varepsilon) \\ \bigcap X(f_n \ge \varepsilon) = \emptyset \end{array}\right\} \Rightarrow \text{Теорема о непрерывность меры сверху}\]
 _Общий случай_: $f_n \to f$
 \[ \varphi_n(x) = \sup_{k \ge n}|f_k(x) - f(x)| \]

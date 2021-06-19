@@ -28,10 +28,10 @@
 #+begin_theorem org
 \-
 1. \(f\) --- равномерно непрерывна. \\
-   _Тогда_ \(\Vert f_n - f \Vert_\infty \xrightarrow[h \to 0]{} 0\), \\
+   _Тогда_ \(\Vert f_h - f \Vert_\infty \xrightarrow[h \to 0]{} 0\), \\
    т.е. \(\sup_x |f(x + h) - f(x)| \to 0\)
 2. <<nepr_11_2>>\(f \in L^p(\R^m),\ 1 \le p < +\infty\) \\
-   _Тогда_ \(\Vert f_h - f_p \Vert \xrightarrow[h \to 0]{} 0\)
+   _Тогда_ \(\Vert f_h - f\Vert_p  \xrightarrow[h \to 0]{} 0\)
 3. \(f \in \tilde{C}[0, T]\) \\
    _Тогда_ \(\Vert f_h - f \Vert_\infty \xrightarrow[h \to 0]{} 0\)
 4. <<nepr_11_4>>\(1 \le p < +\infty,\ f \in L^p[0, T]\) \\

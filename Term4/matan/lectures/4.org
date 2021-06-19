@@ -29,7 +29,7 @@ _Тогда_ $\int_{E_n} f \to 0$
 Утвержение: $\forall \varepsilon\ \exists n_\varepsilon\quad \int_{X_{n_\varepsilon}}|f| < \frac{\varepsilon}{2}$ ---
 это свойство непрерывности сверху меры $A \mapsto \int_A |F| d\mu$ \\
 Пусть $\delta:=\frac{\varepsilon}{2n_\varepsilon}$, тода при $\mu E < \delta$
-\[ \left|\int_E f\right| \le\int_{E_nX_{n_\varepsilon}}|f| + \int_{E_nX_{n_\varepsilon}}^C \le \int_{X_{n_\varepsilon}} |f| + \int_{E_nX_{n_\varepsilon}} n_\varepsilon < \frac{\varepsilon}{2} + \mu E\cdot n_\varepsilon \le \varepsilon \]
+\[ \left|\int_E f\right| \le \int_E |f| \le \int_{E_n \cap X_{n_\varepsilon}}|f| + \int_{E_n \cap X_{n_\varepsilon}^C} |f| \le \int_{X_{n_\varepsilon}} |f| + \int_{E_n \cap X_{n_\varepsilon}} n_\varepsilon < \frac{\varepsilon}{2} + \mu E\cdot n_\varepsilon \le \varepsilon \]
 #+end_proof
 Правда ли что:
 \[ f_n \xRightarrow[\mu]{} f\quad \forall \varepsilon > 0\ \mu X(|f_n - f| > \varepsilon) \to 0\]
@@ -57,7 +57,7 @@ _Тогда_ $f_n, f$ --- суммируемые и $\int_X |f_n - f|d\mu\xright
 $f_n$ --- суммируема в силу \ref{lebega_1}, $f$ --- суммируема по следствию т. Рисса: $|f| \le g$ почти везде \\
 'тем более' = $\left|\int_X f_n - \int_X f \right| \le \int_X |f_n - f| \to 0$
 1. \label{lebega_2} $\mu X < + \infty$ фиксируем $\varepsilon\ X_n = X(|f_n - f| > \varepsilon)$ \\
-   $f_n \to f$, т.е. $\mu X_n \to 0$
+   $f_n \Rightarrow f$, т.е. $\mu X_n \to 0$
    \[ |f_n - f| \le |f_n| + |f| \le 2g \]
    \[ \int_X|f_n - f| = \int_{X_n}+\int_{X_n^C} \le \int_{X_n} 2g + \int_{X_n^C} \varepsilon d\mu < \varepsilon + \varepsilon \mu X\]
    По следствию т. об абсолютной непрерывности: $\int_{X_n} 2g \xrightarrow[n \to + \infty]{} 0$
@@ -173,7 +173,7 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 \-
 - $\omega: X\to\overline{\R}$ --- измерима(на $X$ относительно $\A$)
 - $\omega \ge 0$
-\[ \forall B \in \B\ \mu(B) = \int_{\Phi^{-1}(B)}\omega(x)d\mu(x) \]
+\[ \forall B \in \B\ \nu(B) = \int_{\Phi^{-1}(B)}\omega(x)d\mu(x) \]
 --- *взвешенный образ меры* $\mu$ при отображении $\Phi$, $\omega$ --- *вес*
 #+end_definition
 #+NAME: Теорема о вычислении интеграла по взвешенному образу меры
@@ -186,7 +186,7 @@ _Тогда_ \[ \int_X \underline{\lim}f_n \le \underline{\lim}\int_X f_n \]
 - $\omega \ge 0$ --- измерима на $X$
 _Тогда_ $\forall f$ --- измеримые на $Y$ относительно $\B$, $f \ge 0$ \\
 $f\circ \Phi$ --- измеримая на $X$ относительно $\A$ и
-\[ \int_Y f(y) d\nu(y) = \int_X f(\Phi(x))\cdot\omega(x)\d\mu(x) \label{weight_1}\addtag \]
+\[ \int_Y f(y) d\nu(y) = \int_X f(\Phi(x))\cdot\omega(x)\,d\mu(x) \label{weight_1}\addtag \]
 То же верно для суммируемых $f$
 #+end_theorem
 #+NAME: Теорема о вычислении интеграла по взвешенному образу меры_док

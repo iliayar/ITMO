@@ -54,7 +54,7 @@ _Тогда_ \[\int\limits_a^b f(x)\,dx = \int\limits_{[a, b]} f\,d\lambda_1\]
 - \(f: X \times Y \to \overline{\R}, f \ge 0\) --- измерима относительно \(A\otimes B\)
 _Тогда_
 1. при  почти всех \(x\) \(f_x\) --- измеримая на \(Y\) \color{blue}\(f^y\) --- измерима на \(X\) почти везде\color{black}
-2. \(x \mapsto \varphi(x)=\int\limits_Y f_x d\nu = \int\limits_Y f(x, y) = d\nu(y)\) --- измеримая* на \(X\) \\
+2. \(x \mapsto \varphi(x)=\int\limits_Y f_x d\nu = \int\limits_Y f(x, y) d\nu(y)\) --- измеримая* на \(X\) \\
    \color{blue}\(y \mapsto \psi(y) = \int\limits_X f^y d\mu\) --- измеримая* на \(Y\)\color{black}
 3. \(\int\limits_{X \times Y} f\,dm = \int\limits_X \varphi d\mu = \int\limits_X\left(\int\limits_Y f(x, y) d\nu(y)\right)d\mu(x)\) \\
    \color{blue}\(= \int\limits_Y \psi d\nu = \int\limits_Y\left(\int\limits_X f(x, y) d\mu(x)\right)d\nu(y)\)
@@ -95,7 +95,7 @@ _Тогда_ \[ \int\limits_C f dm = \int\limits_{f_1(C)}\left(\int_{C_x} f(x, y
 - \(f\) --- суммируема на \(X \times Y\) относительно \(m\)
 _Тогда_
 1. \(f_x\) --- суммируема на \(Y\) при почти всех \(x\)
-2. \(x \mapsto \varphi(x) = \int_Y fx\,d\nu = \int_Y f(x, y)\,d\nu(y)\) --- суммируема на \(Y\)
+2. \(x \mapsto \varphi(x) = \int_Y f_x\,d\nu = \int_Y f(x, y)\,d\nu(y)\) --- суммируема на \(Y\)
 3. \(\int\limits_{X \times Y} f\,dm = \int\limits_X \varphi\,d\mu = \int_X \left(\int_Y f(x, y) d\nu(y)\right) d\mu(x)\)
 #+end_theorem
 #+begin_proof org
@@ -171,10 +171,11 @@ _Тогда_ \[ B(s, t) = \frac{\Gamma(s) \Gamma(t)}{\Gamma(s + t)} \quad \Gamma
 \-
 - \(M\) --- простое гладкое двумерное многообразие в \(\R^3\)
 - \(\varphi\) --- параметризация
-- \(f: M \to \overline{R}\) --- суммируема по мере \(S\)
+- \(f: M \to \overline{\R}\) --- суммируема по мере \(s\)
 Тогда \[ \iint\limits_M f\,ds = \iint\limits_M f(x, y, z)\,ds \]
 называется *интегралом I рода от \(f\) по многообразию \(M\)*
 #+end_definition
+#+NAME: Поверхностный интеграл первого рода_прим
 #+begin_remark org
 По теореме об интегрировании по взвешенному образу меры
 \[ \iint\limits_M f\,ds = \iint\limits_G f(\varphi(u, v)) |\varphi'_v \times \varphi'_v|\,du\,dv \]
