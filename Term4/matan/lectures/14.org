@@ -15,6 +15,10 @@
 \(\delta_0:\ \mu\{0\} = 1 \quad \mu(\R \setminus \{0\}) = 0\)
 \[ \mu E = \int_E g\,dx \]
 #+end_examp
+#+NAME: Аппроксимативная единица_обозн
+#+begin_symb org
+\([-\pi, \pi] \setminus [-\delta, \delta] = E_\delta\)
+#+end_symb
 #+NAME: Аппроксимативная единица
 #+begin_definition org
 *Аппроксимативная единица*
@@ -24,7 +28,7 @@
 - *АЕ1* :: \(\forall h \in D\), \(K_h \in L^1[-\pi, \pi]\), \(\int_{-\pi}^\pi K_h = 1\)
 - *АЕ2* :: \(L_1\) --- нормы функций \(K_h\) ограничены в совокупности
    \[ \exists M\ \forall h\ \int_{[-\pi, \pi]} |K_h| \le M \]
-- *АЕ3* :: \(\forall \delta \in (0, \pi) \quad \int_{E\delta} |K_h|\,dx \xrightarrow[h \to h_0]{} 0\)
+- *АЕ3* :: \(\forall \delta \in (0, \pi)\) \[ \int_{E_\delta} |K_h|\,dx \xrightarrow[h \to h_0]{} 0 \]
 #+end_definition
 #+begin_remark org
 \(K_h \ge 0\ \forall h\) \\
