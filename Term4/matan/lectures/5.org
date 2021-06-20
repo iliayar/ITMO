@@ -85,7 +85,7 @@ _Тогда_ \(f = g\) почти везде
 #+end_lemma
 #+NAME: Лемма о единственности плотности_док
 #+begin_proof org
-\(g := f - g\) \\
+\(h := f - g\) \\
 Дано \(\forall A \int_A h = 0\) \\
 Доказать \(h = 0\) почти везде \\
 - \(A_{+} := X(h \ge 0)\)
@@ -158,18 +158,18 @@ _Тогда_ \(\forall A \in \M^m, A \in O\)
 1) Проверяем второе неравенство \ref{5_3_neq} для случая когда \(A\) --- кубическая ячейка. \(A \subset \overline{A} \subset O\). От противного:
    \[ \lambda Q \cdot \sup_Q J_\Phi < \nu(Q) \]
    Возьмем \(C > \sup_Q J_\Phi:\ C \cdot \lambda Q < \nu(Q)\). Запускаем процесс половинного деления: \\
-   Режем \(Q\) на \(2^m\) более мелких кубических ячеек. Выберем "мелкую" ячейку \(Q_1 \subset Q:\ C\cdot \lambda Q_1 < \nu Q_1\). Опять делим на \(2^m\) частей, берем \(Q_2:\ \C\cdot\lambda Q_2 < \nu Q_2\) и так далее
+   Режем \(Q\) на \(2^m\) более мелких кубических ячеек. Выберем "мелкую" ячейку \(Q_1 \subset Q:\ C\cdot \lambda Q_1 < \nu Q_1\). Опять делим на \(2^m\) частей, берем \(Q_2:\ C\cdot\lambda Q_2 < \nu Q_2\) и так далее
    \[ Q_1 \supset Q_2 \supset \dots\quad \forall n C\cdot \lambda Q_n < \nu Q_n \addtag\label{5_4_kubi}\]
-   \[ a \in \bigcap \overline{Q_i}\quad c > \sup_Q J_\Phi = \sup_{\overline{Q}} J_\Phi,\text{ в частности } c > |\det\Phi'(a)| \]
+   \[ a \in \bigcap \overline{Q_i}\quad c > \sup_Q J_\Phi = \sup_{\overline{Q}} J_\Phi,\text{ в частности } C > |\det\Phi'(a)| \]
    Получаем противоречие с леммой: с скол угодно малой окрестности \(a\) имеются кубы \(\overline{Q_n}\), где выполняется \ref{5_4_kubi}. *Противоречие*
 2) Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
    Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
    \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
 3) По [[Теорема о преобразовании меры при диффеоморфизме_лем][лемме]] второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
-   \[ O = \bigsqcup Q_j\text{ --- куба } Q_j \subset \overline{Q_j} \subset O \]
-   \[ A = \bigsqcup \underbrace{A \cup Q_j}_{A_j}\quad A\subset G\text{ --- открытое} \]
-   \[ J A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
-   Аналогично \ref{5_5_neq} получаем \(\nu A \le \sup_A f\cdot \lambda A\)
+   \[ O = \bigsqcup Q_j\text{ --- кубы } Q_j \subset \overline{Q_j} \subset O \]
+   \[ A = \bigsqcup \underbrace{A \cap Q_j}_{A_j}\quad A_j\subset G\text{ --- открытое} \]
+   \[ \nu A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
+Аналогично \ref{5_5_neq} получаем \(\nu A \le \sup_A f\cdot \lambda A\)
 #+end_proof
 #+NAME: Теорема о гладкой замене переменной в интеграле Лебега
 #+begin_theorem org

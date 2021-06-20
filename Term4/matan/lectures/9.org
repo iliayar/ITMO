@@ -50,7 +50,7 @@ _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\parti
 - \(\partial \Omega\) --- кусочно гладкая кривая
 - \(\partial \Omega^+\) --- ориентированная кривая с согласованной ориентацией.
 - \((P, Q, R)\) --- гладкое векторное поле в окрестности \(\Omega\)
-_Тогда_ \[ \int_{\parial \Omega^+} P\,dx + Q\,dy + R\,dz = \iint_\Omega \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right)\,dy\,dz + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right)\,dz\,dx + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)\,dx\,dy \]
+_Тогда_ \[ \int_{\partial \Omega^+} P\,dx + Q\,dy + R\,dz = \iint_\Omega \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}\right)\,dy\,dz + \left(\frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}\right)\,dz\,dx + \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)\,dx\,dy \]
 #+end_theorem
 #+NAME: Формула Стокса_док
 #+begin_proof org
@@ -116,7 +116,7 @@ _Тогда_ \(f_n \xrightarrow[L^s]{} f\)
 - \(f_n \in L^p(X, \mu)\)
 _Тогда_
 1. \(f \in L^p\), \(f_n \to f\) в \(L^p\) \(\implies\ f_n \xRightarrow[\mu]{} f\)
-2. \(f \xRightarrow[\mu]{} f\) либо \(f_n \to f\), \(|f_n| \le g\), \(g \in L^p\) \\
+2. \(f_n \xRightarrow[\mu]{} f\) (либо \(f_n \to f\) почти везде), \(|f_n| \le g\), \(g \in L^p\) \\
    Тогда \(f \in L^p\) и \(f_n \to f\) в \(L^p\)
 #+end_theorem
 #+NAME: Теорема о сходимости в \(L_p\) и по мере_док
@@ -147,7 +147,7 @@ _Тогда_
 #+NAME: Полнота \(L^p\)_док
 #+begin_proof org
 \(f_n\) --- фундаментальная
-\[ \varepsilon = \frac{1}{2}\ \exists N_1\ \forall n_1, k > N\quad \Vert f_{n_1} - f_k \Vert_p < \frac{1}{2} \]
+\[ \varepsilon = \frac{1}{2}\ \exists N_1\ \forall n_1, k > N_1\quad \Vert f_{n_1} - f_k \Vert_p < \frac{1}{2} \]
 Возьмем один такой \(n_1\) и зафиксируем:
 \[ \varepsilon = \frac{1}{4}\ \exists N_2 > n_1\ \forall n_2, k > N_2\quad \Vert f_{n_2} - f_k \Vert_p < \frac{1}{4} \]
 Повторим это действие. Получим последовательность \((n_k)\):

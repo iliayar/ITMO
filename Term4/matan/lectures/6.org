@@ -147,41 +147,41 @@ _Тогда_:
 - \(C_x=\)кольцо
 \[ \lambda(C_x) = \pi(R^2 - x^2) \]
 \[ \lambda(C_x) = \pi R^2 - \pi x^2 \]
-\[ \nu(\frac{1}{2}\text{шара}) = \nu(\text{цилиндр}-\text{конус}) = \pi R^2 - \frac{1}{3} \pi R^2 = \frac{2}{3} \pi R^ \]
+\[ \nu(\frac{1}{2}\text{шара}) = \nu(\text{цилиндр}\setminus\text{конус}) = \pi R^2 - \frac{1}{3} \pi R^2 = \frac{2}{3} \pi R^3 \]
 #+end_examp
 #+NAME: Принцип Кавальери_док
 #+begin_proof org
 \(\mathcal{D}\) --- система множеств, для которых выполнено 1. - 3. 
 1. \(C = A\times B \Rightarrow C \in \mathcal{D}\)
    1. \( C_x = \left[\begin{matrix} \emptyset & x \not\in A \\ B & x \in A\end{matrix}\right. \)
-   2. \(x \mapsto \nu(x)\) --- это функция \(\nu B \cdot \X_A\)
+   2. \(x \mapsto \nu(C_x)\) --- это функция \(\nu B \cdot \X_A\)
    3. \(\int \nu(C_x) d\mu = \int\limits_X \nu B \cdot \X_A d\mu = \nu B \cdot \mu A = mC\)
-2. \(E_i \in D\), dis \Rightarrow \(\bigsqcup E_i \in D\) \\
-   \(E_i \in D \Rightarrow (E_i)_X\) --- измеримое почти везде \(\Rightarrow\) при почти всех \(x\) все \((E_i)_X\) -- измеримое \\
-   1. Тогда при этих \(x\ E_X = \bigsqcup(E_i)_X \in \B\)
-   2. \(\nu E_X = \sum \underbrace{\nu(E_i)_X}_\text{измеримая функция}\) \Rightarrow функция \(x \mapsto \nu E_X\) измеримая\(\footnotemark[\value{footnote}]\)
-   3. \[ \int\limits_X \nu E_X d\mu = \sum_i \int\limits_X \nu(E_i)_X = \sum_i mE_i = mE \]
+2. \(E_i \in D\) --- дизъюнктны \Rightarrow \(\bigsqcup E_i \in D\) \\
+   \(E_i \in D \Rightarrow (E_i)_x\) --- измеримое почти везде \(\Rightarrow\) при почти всех \(x\) все \((E_i)_x\) -- измеримые \\
+   1. Тогда при этих \(x\ E_x = \bigsqcup(E_i)_x \in \B\)
+   2. \(\nu E_x = \sum \underbrace{\nu(E_i)_x}_\text{измеримая функция}\) \Rightarrow функция \(x \mapsto \nu E_x\) измеримая\(\footnotemark[\value{footnote}]\)
+   3. \[ \int\limits_X \nu E_x d\mu = \sum_i \int\limits_X \nu(E_i)_x = \sum_i mE_i = mE \]
 3. \(E_i \in \mathcal{D},\ E_1 \supset E_2 \supset \dots,\ E = \bigcap\limits_iE_i,\ \mu E_i < + \infty \) Тогда \(E \in \mathcal{D}\)
-   \[ \int\limits_X \nu(E_i)_X d\mu = mE_i < +\infty \Rightarrow \nu(E_i)_X\text{ --- конечная при почти всех }x \]
-   1. \(\forall x\) верно \((E_1)_X \supset (E_2)_X \supset \dots ,\ E_X = \bigcap (E_i)_X\). Тогда \(E_X\) --- измеримое при почти всех \(x\) и \(\lim\limits_{i \to + \infty} \nu(E_i)_X = \nu E_X\) при почти всех \(x\)
-   2. Таким образом \(x \mapsto \nu E_X\) --- измеримая\(\footnotemark[\value{footnote}]\)
-   3. \[ \int\limits_X \nu E_X d\mu = \lim \int \nu(E_i)_X d\mu = \lim mE_i = mE \]
-      Первое равенство по теореме Лебега о предельном переходе под знаком интеграла: \(|\nu (E_i)_X| \le \nu (E_1)_X\) --- из\(\footnotemark[\value{footnote}]\)
+   \[ \int\limits_X \nu(E_i)_x d\mu = mE_i < +\infty \Rightarrow \nu(E_i)_x\text{ --- конечная при почти всех }x \]
+   1. \(\forall x\) верно \((E_1)_x \supset (E_2)_x \supset \dots ,\ E_x = \bigcap (E_i)_x\). Тогда \(E_x\) --- измеримое при почти всех \(x\) и \(\lim\limits_{i \to + \infty} \nu(E_i)_x = \nu E_x\) при почти всех \(x\)
+   2. Таким образом \(x \mapsto \nu E_x\) --- измеримая\(\footnotemark[\value{footnote}]\)
+   3. \[ \int\limits_X \nu E_x d\mu = \lim \int \nu(E_i)_x d\mu = \lim mE_i = mE \]
+      Первое равенство по теореме Лебега о предельном переходе под знаком интеграла: \(|\nu (E_i)_x| \le \nu (E_1)_x\) --- из\(\footnotemark[\value{footnote}]\)
 Итог: \(A_{ij} \in \mathcal{P} = \A \times \B\), то \(\bigcap\bigcup A_{ij} \in \mathcal{D}\)
 4. [@4] \(mE = 0 \Rightarrow E \in \mathcal{D}\)
    \[ mE = \inf\left\{\sum m_0 P_k | E \subset \bigcup P_k,\ P_k \in \mathcal{P}\right\} \]
    --- теорема о лебеговском продолжении. \\
    \exists множества \(H\) вида \(\bigcap\limits_l\bigcup\limits_k P_{kl}\) (т.е. \(H \in \mathcal{D}\)) \\
    \(E \subset H, mH = mE = 0\)
-   \[ 0 = mH = \int\limits_X \nu H_x d\mu \Rightarrow \nu H_X \sim 0\text{ (\(=0\) при почти всех \(x\))} \]
-   \(E_X \subset H_x, \nu\) --- полная \Rightarrow
-   1. \(E_X\) --- измерима при почти всех \(x\)
-   2. \(\nu E_X = 0\) почти везде
-   3. \(\int \nu E_X d\mu = 0 = m E\)
+   \[ 0 = mH = \int\limits_X \nu H_x d\mu \Rightarrow \nu H_x \sim 0\text{ (\(=0\) при почти всех \(x\))} \]
+   \(E_x \subset H_x, \nu\) --- полная \Rightarrow
+   1. \(E_x\) --- измерима при почти всех \(x\)
+   2. \(\nu E_x = 0\) почти везде
+   3. \(\int \nu E_x d\mu = 0 = m E\)
 5. \(C\) --- \(m\)-измеримо, \(mC < + \infty\) тогда \(C \in \mathcal{D}\) \\
    \(C = H \setminus e\), где \(H\) --- вида \(\bigcap\limits_l\bigcup\limits_k P_{kl},\ me = 0,\ mC = mH\)
-   1. \(C_x = H_x \setminus e_X\) --- измерима при почти всех \(x\), т.к. \(\nu\) --- полная
-   2. \(\nu e_X = 0\) при почти всех \(x\) \Rightarrow \(\nu C_x = \nu H_x - \nu e_X = \nu H_X\) \Rightarrow измерима
+   1. \(C_x = H_x \setminus e_x\) --- измерима при почти всех \(x\), т.к. \(\nu\) --- полная
+   2. \(\nu e_x = 0\) при почти всех \(x\) \Rightarrow \(\nu C_x = \nu H_x - \nu e_x = \nu H_x\) \Rightarrow измерима
    3. \(\int\limits_X \nu C_x d\mu = \int\limits_X \nu H_x d\mu = mH = mC\)
 6. \(C\) --- произвольное измеримое множество в \(X \times Y\) \Rightarrow \(C \in \mathcal{D}\) \\
    \[ X = \bigsqcup X_k,\ \mu X_k < + \infty,\ Y = \bigsqcup Y_j,\ \nu Y_j < + \infty \]
