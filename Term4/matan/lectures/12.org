@@ -19,7 +19,7 @@
 - \(x \in \H\)
 _Тогда_
 1. ряд Фурье вектора \(x\) сходится в \(\H\)
-2. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k + z \quad z \perp e,\ \forall k \]
+2. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k + z \quad z \perp e_k,\ \forall k \]
 3. \[ x = \sum_{k = 1}^{+\infty} c_k(x)e_k \Leftrightarrow \sum |c_k(x)|^2 \norm{e_k}^2 = \norm{x}^2 \]
 #+end_theorem
 #+NAME: Теорема Рисса -- Фишера о сумме ряда Фурье_док
@@ -61,7 +61,7 @@ _Тогда_
 #+NAME: Теорема о характеристике базиса
 #+ATTR_LATEX: :options [о характеристике базиса]
 #+begin_theorem org
-\(e_k\) --- ОС в \(\H\). _Тогда_ эквивалентны
+\(\{e_k\}\) --- ОС в \(\H\). _Тогда_ эквивалентны
 1. \(\{e_k\}\) --- базис
 2. \(\forall x, y\) --- выполняется обобщенное уравнение замкнутости \\
    \[ \pair{x, y} = \sum c_k(x)\overline{c_k(y)} \cdot \norm{e_k}^2 \]

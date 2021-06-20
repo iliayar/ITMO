@@ -123,7 +123,7 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 \[ F \leftrightarrow F_0 \quad G \leftrightarrow (F_1)^C \quad F_0 \subset \underbrace{U(F_0)}_{G_0} \subset \underbrace{\overline{U(F_0)}}_{\overline{G_0}} \subset \underbrace{F_1^C}_{G_1} \]
 Строим \(G_\frac{1}{2}\): \[ \overline{G_0} \subset \underbrace{U(\overline{G_0})}_{G_\frac{1}{2}} \subset \underbrace{\overline{U(\overline{G_0})}}_{\overline{G_\frac{1}{2}}} \subset G_1 \]
 Строим \(G_\frac{1}{4}\), \(G_\frac{3}{4}\): \[ \overline{G_\frac{1}{2}} \subset \underbrace{U(\overline{G_\frac{1}{2}})}_{G_\frac{3}{4}} \subset \overline{U(\overline{G_\frac{1}{2}})} \subset G_1 \]
-Таким образом для любого двоично рационального числа \(\alpha \in [0, 1]\) задется множество \(G_\alpha\)
+Таким образом для любого двоично рационального числа \(\alpha \in [0, 1]\) найдется множество \(G_\alpha\)
 \[ f(x) \coloneqq \inf \{\alpha\text{ --- двоично рациональное} \big| x \in G_\alpha\}\]
 Проверим что: \(f\) --- непрерывно \Leftrightarrow \(f^{-1}(a, b)\) --- всегда открыто. Достаточно проверить:
 1. \(\forall b\ f^{-1}(-\infty, b)\) --- открыто
@@ -132,10 +132,10 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 1. \[f^{-1}(-\infty, b) = \bigcup_{\substack{q < b \\ q\text{ --- дв. рац.}}} G_q\text{ --- открыто}\]
    - \((\supset)\) :: Очевидно: При \(x \in G_q\ f(x) \le q - b\)
    - \((\subset)\) :: \(f(x) = b_0 < b\) Возьмем \(q: b_0 < q < b\). Тогда \(x \in G_q\)
-2. \(f^{-1}(-\infty, a] = \bigsqcap_{q > a} G_q = \bigcap_{q > a}\overline{G_q}\) --- замкнуто
+2. \(f^{-1}(-\infty, a] = \bigcap_{q > a} G_q = \bigcap_{q > a}\overline{G_q}\) --- замкнуто
    - \((\supset)\) :: Тривиально
    - \((\subset)\) :: \(q, r\) --- двоично рациональные
-     \[ \bigsqcap_{\substack{q > a \\ \text{всех}}} G_q \supset \bigcap_{\substack{r > a \\ \text{некоторых}}} \overline{G_r} \supset \bigcap_{\substack{r > a \\ \text{всех}}} \overline{G_r} \]
+     \[ \bigcap_{\substack{q > a \\ \text{всех}}} G_q \supset \bigcap_{\substack{r > a \\ \text{некоторых}}} \overline{G_r} \supset \bigcap_{\substack{r > a \\ \text{всех}}} \overline{G_r} \]
 #+end_proof
 #+NAME: Плотность в \(L^p\) непрерывных финитных функций
 #+begin_theorem org
