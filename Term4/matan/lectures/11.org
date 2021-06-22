@@ -144,10 +144,10 @@ _Тогда_ \(\sum x_k\) --- сходится \Leftrightarrow \(\sum \Vert x_k 
 #+end_property
 #+NAME: Теорема о свойствах сходимости в гильбертовом пространстве_3_док
 #+begin_proof org
-\(S_n = \sum_{k = 1}^N x_k\)
-\[ \Vert S_N \Vert^2 = \pair{\sum{k = 1}^N x_k, \sum{j = 1}^N x_j} = \sum_{k, j} \pair{x_k, x_j} = \sum_{k = 1}^N \pair{x_k, x_k} = \sum_{k = 1}^N \norm{x_k}^2\]
-- \(\Rightarrow\) :: \(C_N\) --- фундаментальная \(\implies\) \(S_N\) --- фундаментальная в \(H\)
-- \(\Leftarrow\) :: \(S_N\) --- сходится в \(\H\) 
+\(S_N = \sum_{k = 1}^N x_k\)
+\[ \Vert S_N \Vert^2 = \pair{\sum_{k = 1}^N x_k, \sum_{j = 1}^N x_j} = \sum_{k, j} \pair{x_k, x_j} = \sum_{k = 1}^N \pair{x_k, x_k} = \sum_{k = 1}^N \norm{x_k}^2\]
++ \(\Rightarrow\) :: \(S_N\) --- фундаментальная \(\implies\) \(S_N\) --- фундаментальная в \(\mathcal{H}\)
++ \(\Leftarrow\) :: \(S_N\) --- сходится в \(\H\) 
 #+end_proof
 #+NAME: Ортогональная система (семейство) векторов
 #+begin_definition org
@@ -194,8 +194,8 @@ _Тогда_
 #+begin_proof org
 \-
 1. \(\sum_{k = 1}^N \alpha_k e_k = 0\) \\
-   \(\alpha_n \norm{e_k}^2 = 0 \implies \alpha_n = 0\)
-2. \[\pair{x, e_k} = 2 \sum\pair{c_je_j, e_k} = c_k \cdot \norm{e_k}^2 \]
+   \(\alpha_n \norm{e_n}^2 = 0 \implies \alpha_n = 0\)
+2. \[\pair{x, e_k} = \sum\pair{c_je_j, e_k} = c_k \cdot \norm{e_k}^2 \]
 3. \[ \pair{z, e_k} = \pair{x, e_k} - \pair{c_k e_k, e_k} = 0 \]
 #+end_proof
 #+NAME: Коэффициенты Фурье

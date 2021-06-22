@@ -32,7 +32,7 @@ _Тогда_ \[ \iint_D \frac{\partial Q}{\partial x} - \frac{\partial P}{\parti
 Левая часть:
 \[ - \int_a^b dx \int_{\varphi_1(x)}^{\varphi_3(x)} \frac{\partial P}{\partial y} dy = - \int_a^b P(x, \varphi_3(x)) - P(x, \varphi_1(x)) \,dx \]
 Правая часть:
-\[ \int_{\gamma_1} + \underbrace{\int_{\gamma_2}}_0 + \int_{\gamma_3} + \underbrace{\int{\gamma_4}}_0 =  \]
+\[ \int_{\gamma_1} + \underbrace{\int_{\gamma_2}}_0 + \int_{\gamma_3} + \underbrace{\int_{\gamma_4}}_0 =  \]
 \[ = \int_a^b P(x, \varphi_1(x))\,dx - \int_a^b P(x, \varphi_3(x))\, dx \]
 #+end_proof
 #+begin_remark org
@@ -67,11 +67,11 @@ _Тогда_ \[ \int_{\partial \Omega^+} P\,dx + Q\,dy + R\,dz = \iint_\Omega \l
 \[ \int_{\partial \Omega^+} P\,dx = \int_{L^+} P\cdot (\frac{\partial x}{\partial u}\,du + \frac{\partial x}{\partial v}\,dv) \addtag\label{9_2} \]
 \color{blue}
 Параметризируем: \(\gamma: [a, b] \to \R^2\), \(\gamma = (u(t), v(t))\) --- параметризируем \(L^+\)
-\[ \int_{\partial \Omega^+} P\,dx = \int_a^b P(\frac{\partial dx}{\partial u}u' + \frac{\partial x}{\partial v}v')dt \addtag\label{9_1}\]
+\[ \int_{\partial \Omega^+} P\,dx = \int_a^b P(\frac{\partial x}{\partial u}u' + \frac{\partial x}{\partial v}v')dt \addtag\label{9_1}\]
 \(\Phi \circ \gamma\) --- парметризируем \(\partial \Omega^+\), \((\Phi \circ \gamma)' = \Phi' \cdot \gamma'\)
 \[ \ref{9_1} = \int_a^b P\cdot\frac{\partial x}{\partial u}\,du + P \cdot \frac{\partial x}{\partial v}\,dv \]
 \color{black}
-\[ \ref{9_2} = \iint_G \frac{\partial}{\partial u}\left(P\frac{\partial x}{\partial b}\right) - \frac{\partial}{\partial v} \left(P \frac{\partial x}{\partial u}\right)\,du\,dv = \]
+\[ \ref{9_2} = \iint_G \frac{\partial}{\partial u}\left(P\frac{\partial x}{\partial v}\right) - \frac{\partial}{\partial v} \left(P \frac{\partial x}{\partial u}\right)\,du\,dv = \]
 \[ = \iint_G (P'_x\cdot x'_u + P'_y\cdot y'_u + P'_z\cdot z'_u)x'_v + p\cdot x''_{uv} - (P'_x\cdot x'_v + P'_y\cdot y'_v + P'_z\cdot z'_v)x'_u - P\cdot x''_{uv} \,du\,dv = \]
 \[ = \iint_G \frac{\partial P}{\partial z} (z'_ux'_v - z'_vx'_u) - \frac{\partial P}{\partial y}(x'_uy'_v - x'_vy'_u) = \iint_G \frac{\partial P}{\partial z}\,dz\,dx - \frac{\partial P}{\partial x}\,dx\,dy\]
 #+end_proof
@@ -155,7 +155,7 @@ _Тогда_
 Рассмотрим ряд:
 \[S(x) = \sum_k |f_{n_{k + 1}}(x) - f_{n_k}(x) |\quad S(x) \in [0, +\infty]\]
 \(S_N\) --- частичные суммы ряда \(S\)
-\[ \Vert S_N \Vert_p \le \sum_{k = 1}^N \Vert f_{n_{k + 1}} - f_{n_k} \Vert_p \< 1 \]
+\[ \Vert S_N \Vert_p \le \sum_{k = 1}^N \Vert f_{n_{k + 1}} - f_{n_k} \Vert_p < 1 \]
 , т.е. \(\int_X S_N^p < 1\), по теореме Фату: \(\int_X S^p\,d\mu < 1\), т.е. \(S^p\) --- суммируема \implies \(S\) --- почти везде конечна 
 \[ f(x) = f_{n_1}(x) + \sum_{k = 1}^{+\infty} (f_{n_{k + 1}}(x) - f_{n_k}(x)) \]
 --- его частичные суммы --- это \(f_{n_{N + 1}}(x)\), т.е. схоимость этого ряда почти везде означает, что \(f_{n_k} \to f\) почти везде. Проверим, что \(\Vert f_n - f \Vert_p \to 0\)

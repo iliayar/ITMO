@@ -82,7 +82,7 @@ _Тогда_ $f$ --- измерима
 #+begin_proof org
 $f$ --- измерима на $E'$  \\
 $E'(f < a)$ --- открыто в $E'$ \\
-\[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_n \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в } E \]
+\[ \left.\begin{array}{c} e(f < a) \subset e & \lambda_m \text{ --- полная}\end{array}\right\} \Rightarrow e(f < a)\text{ --- измерима в } E \]
 \[ E(f < a) = E'(f < a) \cup e(f < a) \]
 #+end_proof
 #+begin_examp org

@@ -145,7 +145,7 @@ _Тогда_ \[ \int_E |fg| d\mu \le \left(\int_E |f|^p\right)^{\frac{1}{p}} \le
 - \(E \subset X\) --- измеримое
 \[ \mathcal{L}^p(E, \mu) := \left\{f: \text{ почти везде }E \to \R(\C) \Big| f\text{ --- измеримая}, \int_E |f|^p\,d\mu < +\infty\right\} \]
 --- это линейное пространство (по неравенству Минковского) \\
-\(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = h\text{ почти везде}\). \(\mathcal{L}^p/_N = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
+\(f, g \in \mathcal{L}^p(E, \mu): f \sim g\quad f = g\text{ почти везде}\)(\(f - g = 0\) почти везде). \(\mathcal{L}^p/_\sim = L^p(E, \mu)\) --- линейной пространство. Задаем норму \(\Vert f \Vert_{L^p(E, \mu)} = \left(\int_E |f|^p\right)^{\frac{1}{p}}\)
 #+end_definition
 #+end_property
 #+NAME: Существенный супремум

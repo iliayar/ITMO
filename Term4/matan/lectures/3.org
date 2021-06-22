@@ -89,16 +89,21 @@ $(X, \A, \mu)$ $E\subset X$ --- измеримое, $g, f$ --- измеримы�
    - $(\Leftarrow)$ :: следует из cвойства \ref{prop_3_1}. $f^+, f^- \le |f|$
    - $(\Rightarrow)\label{remark_3_1_proof}$ :: позже
 4. \label{prop_3_4} $\int_E(-f) = -\int_E f,\ \forall c \in \R\ \int_E c f = c\int_E f$ \\
+   #+begin_proof org
+   \-
    1. $(-f)^+ = f^-\ (-f)^- = f^+$
    2. можно считать $c > 0$ для $f \ge 0$ --- тривиально
+   #+end_proof
 5. $\exists \int_E f d\mu$ \\
    Тогда $|\int_E f d\mu| \le \int_E |f| d\mu$
    #+begin_proof org
-   $-|f| \le f \le |f|$. По свойствам \ref{prop_3_3} и \ref{prop_3_4}
+   $-|f| \le f \le |f|$. По свойствам \ref{prop_3_1} и \ref{prop_3_4}
    #+end_proof
 6. $\mu E \le +\infty,\ a\le f\le b$ \\
    Тогда $a\mu E \le \int_E f \le b \mu E$
-   $\color{gray} a\chi_E \le f \le b\chi_E$
+   #+begin_proof org
+   $a\chi_E \le f \le b\chi_E$, тривиально
+   #+end_proof
    #+begin_corollary org
    $f$ --- измерима на $E$, $f$ --- ограничена на $E$, $\mu E < + \infty$ \\
    Тогда $f$ --- суммируемая на $E$
@@ -110,12 +115,14 @@ $(X, \A, \mu)$ $E\subset X$ --- измеримое, $g, f$ --- измеримы�
    2. $f = f^+ - f^-$
    #+end_proof
 #+end_remark
+#+NAME: Счетная аддитивность интеграла (по множеству)_лем
 #+begin_lemma org
 \label{lemma_3_1}
 \[ A = \bigsqcup_{i = 1}^{ + \infty} A_i \]
 --- измеримые, $g$ --- ступенчатая, $g \ge 0$ \\
 _Тогда_ \[ \int_A g d\mu = \sum_{i = 1}^{ + \infty}\int_{A_i}g d\mu \]
 #+end_lemma
+#+NAME: Счетная аддитивность интеграла (по множеству)_лем_док
 #+begin_proof org
 \[ \int_A g d\mu = \sum_\text{кон.} \alpha_k \mu(E_k \cap A) = \sum_k\sum_i \underbrace{\alpha_k\mu(E_k \cap A_i)}_{\ge 0} = \sum_i \sum_k \dots = \sum_i\int_{A_i} gd\mu \]
 #+end_proof
@@ -130,18 +137,17 @@ _Тогда_ $\int_A fd\mu = \sum_{i = 1}^{ + \infty} \int_{A_i} f d\mu$
 #+NAME: Счетная аддитивность интеграла (по множеству)_док
 #+begin_proof org
 \-
-- $(\le)$ :: ступенчатая $g:\ 0 \le g \le f\ \int_a g = \sum\int_{A_i} g d\mu \le \sum \int_{A_i} f$ --- по \hyperref[lemma_3_1]{Лемме}
+- $(\le)$ :: ступенчатая $g:\ 0 \le g \le f\ \int_A g = \sum\int_{A_i} g d\mu \le \sum \int_{A_i} f$ --- по [[Счетная аддитивность интеграла (по множеству)_лем][Лемме]]
 - $(\ge)$ ::
   1. $A = A_1 \cup A_2$ \\
-     $0 \le g_1 \le f\chi_{A_1}\ 0 \le g_2 \le f\chi_A_2}$ \\
+     $0 \le g_1 \le f\chi_{A_1}\ 0 \le g_2 \le f\chi_A_2}$, \(g_1, g_2\) --- ступенчатые \\
      \[ g_1 = \sum \alpha_k \chi_{E_k}\ g_2 = \sum \beta_k \chi_{E_k} \]
      #+ATTR_LATEX: :scale 0.3
      [[file:3_2.png]]
      Считаем что $E_k$ -- совместное разбиение
      \[ 0 \le g_1 + g_2 \le f \chi_A \]
      \[ \int_{A_1} g_1 + \int_{A_2} g_2 =  \int_A g_1 + g_2 \le \int_A f \]
-     Перейдем к супремуму
-     \[ \int_{A_1} f + \int_{A_2} g_2 \le \int_A f \]
+     Перейдем к супремуму интегралов \(g_1, g_2\)
      \[ \int_{A_1} f + \int_{A_2} f \le \int_A f \]
   2. $\forall n \in \N$ --- индукция по $n$
   3. \[ A = \bigsqcup_{i = 1}^n A_i \sqcup B_n \], где \[ B_n = \bigsqcup_{i > n} A_i \]
@@ -187,15 +193,15 @@ _Тогда_ $f$ --- измерима на $X$.
 \-
 - $(\le)$ :: очевидно. $f_n \le f$ почти везде $\int f_n \le \int f$
   \[ \int_X f_n = \int_{X\setminus e}f_n + \int_e f_n = \int_{X\setminus e} f_n \le \int_{X \setminus e} f \le \int_X f \]
-- $(\ge)$ :: Достаточно: $\forall g$ --- ступенчатая $0 \le g \le f$
+- $(\ge)$ :: Достаточно $\forall g$ --- ступенчатая $0 \le g \le f$
   \[ \lim \int_X f_n \ge \int_X g \]
-  Достаточно: $\forall c \in (0, 1)$
+  Достаточно $\forall c \in (0, 1)$
   \[ \lim \int_X f_n \ge c \int_X g \]
   \[ E_n := X(f_n \le c g) \quad \dots \subset E_n \subset E_{n + 1} \subset \dots \]
-  $\bigcup E = X$ т.к. $c < 1$
-  \[ \int_x f_n \ge \int_{E_n} f_n \ge c \int_{E_n} g \]
-  Тогда $\lim \int_X f_n \ge c \lim \int_{E_n} g = c\int_X g$ \\
-  Последнее равентсво справедливо в силу непрерывности мнизу меры $\nu: E \mapsto \int_E g$
+  $\bigcup E_n = X$ т.к. $c < 1$
+  \[ \int_X f_n \ge \int_{E_n} f_n \ge c \int_{E_n} g \]
+  Тогда $\lim \int_X f_n \ge c \cdot \lim \int_{E_n} g = c\int_X g$ \\
+  Последнее равентсво справедливо в силу непрерывности снизу меры $\nu: E \mapsto \int_E g$
 #+end_proof
 
 #+NAME: линейной интеграла_сумма
@@ -265,7 +271,7 @@ _Тогда_ ряд $\sum u_n(x)$ --- абсолютно сходится при
 #+begin_proof org
 $S(x) := \sum |u_n(x)| \ge 0$ --- измеримая
 \[ \int_E S(x) = \sum \int_E |u_n| < + \infty \]
-\Rightarrow $S$ --- сумиируема \Rightarrow $S$ почти везде конечена
+\Rightarrow $S$ --- суммируема \Rightarrow $S$ почти везде конечна
 #+end_proof
 #+begin_examp org
 $x_n \in \R$ --- произведение последовательности; $\sum a_n$ --- абсолютно сходится \\

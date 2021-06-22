@@ -119,7 +119,7 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 #+end_lemma
 #+NAME: Лемма Урысона_док
 #+begin_proof org
-Перефразируем нормальность: Если \(\underset{\text{замк.}}{F} \subset \underset{\text{октр.}}{G}\), то \(\exists U(F)\) --- открытое: \[F \subset U(F) \subset \overline{U(F)} \subset G\].
+Перефразируем нормальность: Если \(\underset{\text{замк.}}{F} \subset \underset{\text{октр.}}{G}\), то \(\exists U(F)\) --- открытое: \[F \subset U(F) \subset \overline{U(F)} \subset G\]
 \[ F \leftrightarrow F_0 \quad G \leftrightarrow (F_1)^C \quad F_0 \subset \underbrace{U(F_0)}_{G_0} \subset \underbrace{\overline{U(F_0)}}_{\overline{G_0}} \subset \underbrace{F_1^C}_{G_1} \]
 Строим \(G_\frac{1}{2}\): \[ \overline{G_0} \subset \underbrace{U(\overline{G_0})}_{G_\frac{1}{2}} \subset \underbrace{\overline{U(\overline{G_0})}}_{\overline{G_\frac{1}{2}}} \subset G_1 \]
 Строим \(G_\frac{1}{4}\), \(G_\frac{3}{4}\): \[ \overline{G_\frac{1}{2}} \subset \underbrace{U(\overline{G_\frac{1}{2}})}_{G_\frac{3}{4}} \subset \overline{U(\overline{G_\frac{1}{2}})} \subset G_1 \]
@@ -127,7 +127,7 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 \[ f(x) \coloneqq \inf \{\alpha\text{ --- двоично рациональное} \big| x \in G_\alpha\}\]
 Проверим что: \(f\) --- непрерывно \Leftrightarrow \(f^{-1}(a, b)\) --- всегда открыто. Достаточно проверить:
 1. \(\forall b\ f^{-1}(-\infty, b)\) --- открыто
-2. \(\forall a\ f^{-1}(-\infty, a)\) --- замкнуто
+2. \(\forall a\ f^{-1}(-\infty, a]\) --- замкнуто
 Покажем это:
 1. \[f^{-1}(-\infty, b) = \bigcup_{\substack{q < b \\ q\text{ --- дв. рац.}}} G_q\text{ --- открыто}\]
    - \((\supset)\) :: Очевидно: При \(x \in G_q\ f(x) \le q - b\)
@@ -142,7 +142,7 @@ _Тогда_ \(\exists f: X \to \R\) --- непрерывная, \(0 \le f \le 1
 \-
 - \((\R^m, \M, \lambda_\M)\)
 - \(E \subset \R^m\) --- измеримое
-_Тогда_ в \(L^p(E, \lambda_\M)\), \(1 \le p < +\infty\) множество непрерывных финитных функция плотно
+_Тогда_ в \(L^p(E, \lambda_\M)\), \(1 \le p < +\infty\) множество непрерывных финитных функций плотно
 #+end_theorem
 #+begin_remark org
 \(f\) --- финитная в \(\R^m\) = \(\exists\) шар \(B\ f = 0\) вне \(B\). \(f\) --- непрерывная финитная на \(E\) = \(\exists g \in C_0(\R^m)\ f = g\big|_E\)
@@ -155,7 +155,7 @@ _Тогда_ в \(L^p(E, \lambda_\M)\), \(1 \le p < +\infty\) множество
 Подберем \(f_k\): \(\norm{f_k - \X_{A_k}} < \frac{\varepsilon}{\sum |a_i| \cdot 2}\)
 \[ \norm{h - f}_p \le \norm{h - g} + \norm{g - f} < \frac{\varepsilon}{2} + \sum |a_k| \norm{\X_{a_k} - f_k} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon \]
 \[\forall \varepsilon > 0\ \exists \underset{\text{замкн.}}{F} \subset A \subset \underset{\text{откр.}}{G} \quad \lambda_\M(G \setminus F) < \varepsilon\]
-По лемме Урысона \(\exists f: \R^m \to R\) --- непрерывная: \(f\Big|_F \equiv 1\), \(f\Big|_{G^C} \equiv 0\)
+По лемме Урысона \(\exists f: \R^m \to \R\) --- непрерывная: \(f\Big|_F \equiv 1\), \(f\Big|_{G^C} \equiv 0\)
 \[ \norm{f - \X_A}^p_p = \int_{\R^m} |f - \X_A|^p \,d\lambda_\M = \int_{G \setminus F} |f - \X_A|^p \le 1 \cdot \lambda_\M(G \setminus F) = \varepsilon \]
 #+end_proof
 #+begin_remark org

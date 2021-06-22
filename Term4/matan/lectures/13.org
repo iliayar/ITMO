@@ -4,11 +4,14 @@
 * Суммируемость ряда Фурье
 #+NAME: Ядро Дирихле
 #+begin_definition org
-\[ D_n(t) = \frac{1}{\pi} \left(\frac{1}{2} + \sum_{k = 1}^n \cos kt\right) \]
---- *ядро Дирихле* (ядро в смысле kernel) \\
-\color{blue}Ядро \(K(x, y)\)
-\[ f \mapsto \int_E f(t) K(x, y)\,dt \]
---- линейный оператор
+\-
+1. \[ D_n(t) = \frac{1}{\pi} \left(\frac{1}{2} + \sum_{k = 1}^n \cos kt\right) \]
+   --- *ядро Дирихле* (ядро в смысле kernel) \\
+   \color{blue}Ядро \(K(x, y)\)
+   \[ f \mapsto \int_E f(t) K(x, y)\,dt \]
+   --- линейный оператор\color{black}
+2. \[ \Phi_n(t) = \frac{1}{n + 1}\sum_{k = 0}^n D_k(t) \]
+   --- *ядро Фейера*
 #+end_definition
 #+begin_lemma org
 \-
@@ -49,9 +52,10 @@
 _Тогда_ Ряды Фурье \(f\) и \(g\) ведут себя одинаково в точке \(x_0\):
 \[ S_n(f, x_0) - S_n(g, x_0) \xrightarrow[n \to +\infty]{} 0 \]
 #+end_theorem
+#+NAME: Принцип локализации Римана_переф
 #+begin_remark org
 Переформулировка:
-- \(h \coloneqq f - g \in L^1(-\pi, \pi)\)
+- \(h \coloneqq f - g \in L^1[-\pi, \pi]\)
 - \(h \equiv 0\) на \(x_0 - \delta, x_0 + \delta\)
 _Тогда_ \(S_n(h, x_0) \to 0\)
 #+end_remark
@@ -59,7 +63,7 @@ _Тогда_ \(S_n(h, x_0) \to 0\)
 #+begin_proof org
 \[ S_n(h, x_0) = \frac{1}{2\pi}\int_{-\pi}^\pi h(x_0 + t)(\ctg \frac{t}{2}\sin nt + \cos nt) \,dt = b_n(h_1) + a_n(h_2)\]
 , где
-\[ h_1(t) = \frac{1}{2}h(x_0 + t) \cdot \ctg \frac{t}{2} \quad h_2(t) = \frac{1}{2}f(x_0 + t) \]
+\[ h_1(t) = \frac{1}{2}h(x_0 + t) \cdot \ctg \frac{t}{2} \quad h_2(t) = \frac{1}{2}h(x_0 + t) \]
 Это рассуждение верно если \(h_1, h_2 \in L^1[-\pi, \pi]\)
 - Для \(h_2\) --- очевидно
 - Для \(h_1\): \(h_1 \equiv 0\) при \(t \in (-\delta, \delta)\)
@@ -86,7 +90,7 @@ _Тогда_ ряд Фурье \(f\) сходится к \(S\) в точке \(x
 #+end_theorem
 #+NAME: Признак Дини_док
 #+begin_proof org
-\[ \varphi(t) \coloneqq f(x_0 + t) - 2S + f(x_0 - t) \]
+\[ \varphi(t) \coloneqq f(x_0 + t) - 2S + f(x_0 - t) \quad \varphi(t) \in L^1 \]
 \[ S_n(f, x_0) - S = \int_{-\pi}^\pi (f(x_0 + t) -S)D_n(t)\,dt = \int_0^\pi + \int_{-\pi}^0 \dots =  \]
 \[ = \int_0^\pi \varphi(t) D_n(t) = \frac{1}{\pi} \int_0^\pi \frac{1}{2}\varphi(t) \cdot \left(\ctg \frac{t}{2}\sin nt + \cos nt\right) = b_n(h_1) + a_n(h_2) \]
 , где
@@ -121,7 +125,7 @@ _Тогда_ ряд Фурье \(f\) в точке \(x_0\) сходится к \
 #+end_corollary
 #+NAME: следствие 1 дини_док
 #+begin_proof org
-\[ \frac{\varphi(t)}{t} = \frac{f(x_0 + t) - f(x_0 + 0) + f(x_0 - t) - f(x_0 -0)}{t} \xrightarrow[t \to + 0] \alpha_+ - \alpha_-  \]
+\[ \frac{\varphi(t)}{t} = \frac{f(x_0 + t) - f(x_0 + 0) + f(x_0 - t) - f(x_0 -0)}{t} \xrightarrow[t \to + 0]{} \alpha_+ - \alpha_-  \]
 , т.е. \(\frac{\varphi(t)}{t}\) --- ограничена вблизи \(0\) на \([0, \pi] \implies\) по замечанию 1, интеграл \ref{13_dini}
 #+end_proof
 #+NAME: следствие 2 дини
@@ -166,7 +170,7 @@ _Тогда_ \(S_n(f, x_0) \to f(x_0)\)
    \[ \iint_{[-\pi, \pi]^2} |g(x, t)| = \int_{-\pi}^\pi \,dt |k(t)| \int_{-\pi}^\pi |f(x - t)|\,dx = \norm{f}_1\cdot \norm{k}_1 \]
    Тогда по теореме Фубини для интеграла:
    \[ \int_{-\pi}^\pi\,dx = \int_{-\pi}^\pi f(x - t)k(t)\,dt \]
-   --- при почти всех \(x \in [-\pi, \pi]\) этот интеграл сходится и задает по \(x\) функцию из \(L^1(-\pi, \pi]\), т.е. \(f*k\) определен при почти всех \(x\), \(\in L^1[-\pi, \pi]\)
+   --- при почти всех \(x \in [-\pi, \pi]\) этот интеграл существует(и конечен?) и задает по \(x\) функцию из \(L^1(-\pi, \pi]\), т.е. \(f*k\) определен при почти всех \(x\), \(\in L^1[-\pi, \pi]\)
 #+end_property
 #+NAME: Свойства свертки_1
 #+begin_property org
@@ -178,12 +182,12 @@ _Тогда_ \(S_n(f, x_0) \to f(x_0)\)
 #+end_proof
 #+NAME: Свойства свертки_2
 #+begin_property org
-\(C_n(f* k) = 2\pi \cdot C_n(f)\cdot C_n(k)\)
+\(c_n(f* k) = 2\pi \cdot c_n(f)\cdot c_n(k)\)
 #+end_property
 #+NAME: Свойства свертки_2_док
 #+begin_proof org
-\[ 2\pi C_n(f * k) = \int_{-\pi}^\pi \int_{-\pi}^\pi f(x - t)k(t)\cdot e^{-inx} \,dt\,dx = \]
-\[ = \int_{-\pi}^\pi k(t) e^{-int}\int_{-\pi}^\pi f(x - t)e^{-in(x - t)}\,dx\,dt = 2\pi C_n(f)\cdot 2\pi C_n(k) \]
+\[ 2\pi c_n(f * k) = \int_{-\pi}^\pi \int_{-\pi}^\pi f(x - t)k(t)\cdot e^{-inx} \,dt\,dx = \]
+\[ = \int_{-\pi}^\pi k(t) e^{-int}\int_{-\pi}^\pi f(x - t)e^{-in(x - t)}\,dx\,dt = 2\pi c_n(f)\cdot 2\pi c_n(k) \]
 #+end_proof
 #+NAME: Свойства свертки_3
 #+begin_property org
