@@ -1,7 +1,8 @@
 #+TITLE: README
 #+SETUPFILE: level-0.org
 
-My stuff from ITMO University. All conspects hosted [[https://iliayar.ru/public-notes/conspects/README.html][here]]
+My stuff from ITMO University. \\
+All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://iliayar.ru/public-notes/conspects/README.html][published here]]
 
 * Year 2
 ** Term 4
