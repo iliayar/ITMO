@@ -18,3 +18,5 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/14.pdf][Lecture 14]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/15.pdf][Lecture 15]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/16.pdf][Lecture 16]]
+* Labs
+[[https://github.com/iliayar/MethOpt][Repo with all labs]]
