@@ -28,8 +28,8 @@ _Тогда_
 1. Ряд Фурье --- ортогональный ряд. Сходимость ряда Фурье \(\Leftrightarrow\) сходимость
    \[ \sum |c_k(x)|^2 \norm{e_k}^2 \]
    Это выполняется по неравенству Бесселя
-2. \(z = x - \sum_{l = 1}^{+\infty} c_k(x)e_k\)
-   \[ \pair{z, e_k} = \pair{x, e_k} - \sum c_k(x)\pair{e_k, e_n} = \pair{x, e_n} - c_n(x)\norm{e_n}^2 = 0 \]
+2. \(z = x - \sum_{k = 1}^{+\infty} c_k(x)e_k\)
+   \[ \pair{z, e_n} = \pair{x, e_n} - \sum c_k(x)\pair{e_k, e_n} = \pair{x, e_n} - c_n(x)\norm{e_n}^2 = 0 \]
 3. 
    - \((\Rightarrow)\) :: Теорема 1.3?
    - \((\Leftarrow)\) :: из п.2    \(\norm{x}^2 = \norm{\sum c_k(x)e_k} + \norm{z}^2 \implies \sum |c_k(x)|^2\norm{e_k}^2 + \norm{z}^2\) \\
@@ -67,7 +67,7 @@ _Тогда_
    \[ \pair{x, y} = \sum c_k(x)\overline{c_k(y)} \cdot \norm{e_k}^2 \]
 3. \(\{e_k\}\) --- замкнута
 4. \(\{e_k\}\) --- полная
-5. \(\mathop{\rm Lin}(e_1, e_2, \dots)\) --- полная в \(\H\), т.е. \(\mathop{\rm Cl}\mathop{\rm Lin}(e_1, e_2, \dots) = \H\)
+5. \(\mathop{\rm Lin}(e_1, e_2, \dots)\) --- плотна в \(\H\), т.е. \(\mathop{\rm Cl}\mathop{\rm Lin}(e_1, e_2, \dots) = \H\)
 #+end_theorem
 #+NAME: Теорема о характеристике базиса_док
 #+begin_proof org
@@ -114,8 +114,8 @@ _Тогда_
 #+NAME: Лемма о вычислении коэффициентов тригонометрического ряда_док
 #+begin_proof org
 Докажем для \(a_k\). Пусть \(n \ge k\)
-\[ \int_{-\pi}^\pi S_n(t) \cos kt \,dt = 0 + \int_{-\pi}^\pi \a_k \cos^2 kt\,dt = \pi a_k \]
-При \(k = 0: \int_{\pi}^\pi \frac{a_0}{2} \cdot 1 = \pi a_0\)
+\[ \int_{-\pi}^\pi S_n(t) \cos kt \,dt = 0 + \int_{-\pi}^\pi a_k \cos^2 kt\,dt = \pi a_k \]
+При \(k = 0: \int_{-\pi}^\pi \frac{a_0}{2} \cdot 1 = \pi a_0\)
 \[ \left|\pi a_k - \int_{-\pi}^\pi f(t) \cos kt\,dt\right| = \left|\int_{-\pi}^\pi (S_n(t) - f(t)) \cos kt\,dt\right| \le \int_{-\pi}^\pi |S_n(t) - f(t)|\,dt = \norm{S_n - f}_1 \to 0\]
 #+end_proof
 #+NAME: Коэффициенты Фурье функции
@@ -196,12 +196,12 @@ t = \tau + \frac{\pi}{\lambda}
 #+NAME: Три следствия об оценке коэффициентов Фурье_1
 #+begin_corollary org
 Пусть \[\omega(f, h) = \sup_{\substack{x, y \in E \\ |x - y| \le h}} |f(x) - f(y)|\] --- модуль непрерывности
-Если \(f \in \tilde{c}[-\pi, \pi]\), то \(|a_k(f)|, |b_k(f)|, |2c_k(f)| \le \omega  \left(f, \frac{\pi}{k}\right)\)
+Если \(f \in \tilde{C}[-\pi, \pi]\), то \(|a_k(f)|, |b_k(f)|, |2c_k(f)| \le \omega  \left(f, \frac{\pi}{k}\right)\)
 #+end_corollary
 #+NAME: Три следствия об оценке коэффициентов Фурье_1_док
 #+begin_proof org
 \[ |2c_{-k}(f)| = \left| \frac{1}{\pi} \int_{-\pi}^\pi f(t) e^{ikt} \,dt\right| \le \frac{1}{2\pi} \cdot\int_{-\pi}^\pi \left|f(t) - f \left(t + \frac{\pi}{k}\right) \right|  \,dt \le \]
-\[ \le 2\pi \int_{-\pi}^\pi \omega \left(f, \frac{\pi}{k}\right) \,dt = \omega \left(f, \frac{\pi}{k}\right) \]
+\[ \le \frac{1}{2\pi} \int_{-\pi}^\pi \omega \left(f, \frac{\pi}{k}\right) \,dt = \omega \left(f, \frac{\pi}{k}\right) \]
 #+end_proof
 #+NAME: Три следствия об оценке коэффициентов Фурье_2
 #+begin_corollary org
@@ -214,19 +214,26 @@ t = \tau + \frac{\pi}{\lambda}
 #+end_corollary
 #+NAME: Три следствия об оценке коэффициентов Фурье_2_док
 #+begin_proof org
-\(f \in \tilde{c}[-\pi, \pi]\), тогда при \(k \neq 0\)
+\(f \in \mathop{\rm Lip}_M\alpha \implies \omega(f, h) \le Mh^\alpha\).
+#+end_proof
+#+begin_remark org
+\(f\) --- дифференцируема, \(f' \le M\), тогда \(f \in \mathop{\rm Lip}_M 1\)
+#+end_remark
+#+NAME: Три следствия об оценке коэффициентов Фурье_3
+#+begin_corollary org
+\-
+1. \(f \in \tilde{C}^{(r)}[-\pi, \pi]\) \\
+   _Тогда_ \(|a_k(f)|, |b_k(f)|, |c_k(f)| \le \frac{\const}{|k|^r}\)
+2. \(f \in \tilde{C}^{(r)}\), \(f^{(r)} \in \mathop{\rm Lip}_M\alpha,\ 0 < \alpha \le 1\) \\
+   _Тогда_ \(|a_k(f)|, |b_k(f)|, |2c_k(f)| \le \frac{M\pi^\alpha}{|k|^{r + \alpha}}\)
+#+end_corollary
+#+NAME: Три следствия об оценке коэффициентов Фурье_3_док
+#+begin_proof org
+Проведем эксперимент, после которого доказательство станет очевидным \\
+\(f \in \tilde{C}[-\pi, \pi]\), тогда при \(k \neq 0\)
 \[ a_k(f') = k b_k (f) \]
 \[ b_k(f') = -ka_k(f) \]
 \[ c_k(f') = ik c_k(f) \]
 --- интегрирование по частям
 \[ c_k(f') = \frac{1}{2\pi} \int_{-\pi}^\pi f'(t) e^{-ikt}\,dt =\frac{1}{2\pi} \left(f(t)e^{-ikt} \bigg|_{-\pi}^\pi + \int_{-\pi}^\pi f(t) \cdot ik \cdot e^{ikt}\,dt \right) \]
 #+end_proof
-#+NAME: Три следствия об оценке коэффициентов Фурье_3
-#+begin_corollary org
-\-
-1. \(f \in \tilde{c}^{(r)}[-\pi, \pi]\) \\
-   _Тогда_ \(|a_k(f)|, |b_k(f)|, |c_k(f)| \le \frac{\const}{|k|^2}\)
-2. \(f \in \tilde{c}^{(r)}\), \(f^{(r)} \in \mathop{\rm Lip}_m\alpha,\ 0 < \alpha \le 1\) \\
-   _Тогда_ \(|a_k(f)|, |b_k(f)|, |rc_k(f)| \le \frac{M\pi^\alpha}{|k|^{r + \alpha}}\)
-
-#+end_corollary

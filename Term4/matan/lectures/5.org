@@ -52,7 +52,7 @@ _Тогда_ \(\omega\) --- плотность \(\nu\) отнсительно \(
 - \((\Rightarrow)\) :: очевидно
 - \((\Leftarrow)\) :: Не умаляя общности \(\omega > 0: e = X(\omega = 0)\) \\
   \(\nu(e) = \int_e \omega d\mu = 0\) \\
-  Для случая когда \(A \cup e = \emptyset\) все только лучше \\
+  Для случая когда \(A \cap e = \emptyset\) все только лучше \\
   Фиксируем \(q \in (0, 1)\) \\
   \(A_j = A(q^j \le \omega < q^{j - 1}), j \in \mathbb{Z}\) \\
   #+begin_center latex
@@ -72,7 +72,7 @@ _Тогда_ \(\omega\) --- плотность \(\nu\) отнсительно \(
   Тогда
   \[ q \cdot \int_A \omega d\mu \le q \cdot \sum \int_{A_j} \le \sum q^j \mu A_j \le \sum \nu A_j \le \frac{1}{q} \sum q^j \mu A_j \le \frac{1}{q} \sum \int_{A_j} = \frac{1}{q} \int_A \omega d\mu \ \]
   то есть:
-  \[ q \int_A \omega d\mi \le \nu A \le \frac{1}{q} \int_A \omega d\mu \]
+  \[ q \int_A \omega\, d\mu \le \nu A \le \frac{1}{q} \int_A \omega\, d\mu \]
   и \(q \to 1 - 0\)
 #+end_proof
 #+NAME: Лемма о единственности плотности
@@ -122,7 +122,7 @@ _Тогда_ \(\exists \delta > 0\ \forall\) куба \(Q \subset B(a, \delta),\
 \(L := \Phi'(a)\) --- обратимо \\
 \[ \Phi(x) = \Phi(a) + L\cdot(x - a) + o(x - a)\quad x \to a \]
 \[ \underbrace{a + L^{-1}(\Phi(x) - \Phi(a))}_{\Psi(x)} = x + o(x - a) \]
-\[ \forall \varepsilon > 0 \exists \text{ шар} B_\varepsilon(a)\ \forall x \in B_\varepsilon(A)\ |\Psi(x) - x| < \frac{\varepsilon}{\sqrt{m}} |x - a| \]
+\[ \forall \varepsilon > 0 \exists \text{ шар} B_\varepsilon(a)\ \forall x \in B_\varepsilon(a)\ |\Psi(x) - x| < \frac{\varepsilon}{\sqrt{m}} |x - a| \]
 Пусть \(Q \subset B_\varepsilon(a) a \in Q \) --- куб со стороной \(h\). При \(x \in Q:\ |x - a| \le \sqrt{m}h\)
 \[ |\Psi(x) - x| \le \frac{\varepsilon}{\sqrt{m}}|x - a| \le \varepsilon h \]
 Тогда \(\Psi(Q) \subset\) Куб со стороной \((1 + 2\varepsilon)h\): при \(x, y \in Q\)
@@ -160,21 +160,21 @@ _Тогда_ \(\forall A \in \M^m, A \in O\)
    Возьмем \(C > \sup_Q J_\Phi:\ C \cdot \lambda Q < \nu(Q)\). Запускаем процесс половинного деления: \\
    Режем \(Q\) на \(2^m\) более мелких кубических ячеек. Выберем "мелкую" ячейку \(Q_1 \subset Q:\ C\cdot \lambda Q_1 < \nu Q_1\). Опять делим на \(2^m\) частей, берем \(Q_2:\ C\cdot\lambda Q_2 < \nu Q_2\) и так далее
    \[ Q_1 \supset Q_2 \supset \dots\quad \forall n C\cdot \lambda Q_n < \nu Q_n \addtag\label{5_4_kubi}\]
-   \[ a \in \bigcap \overline{Q_i}\quad c > \sup_Q J_\Phi = \sup_{\overline{Q}} J_\Phi,\text{ в частности } C > |\det\Phi'(a)| \]
-   Получаем противоречие с леммой: с скол угодно малой окрестности \(a\) имеются кубы \(\overline{Q_n}\), где выполняется \ref{5_4_kubi}. *Противоречие*
+   \[ a \in \bigcap \overline{Q_i}\quad C > \sup_Q J_\Phi = \sup_{\overline{Q}} J_\Phi,\text{ в частности } C > |\det\Phi'(a)| \]
+   Получаем противоречие с леммой: в сколь угодно малой окрестности \(a\) имеются кубы \(\overline{Q_n}\), где выполняется \ref{5_4_kubi}. *Противоречие*
 2) Проверим второе неравенство \ref{5_3_neq} для открытых множеств \(A \subset O\) \\
    Это очевидно \(A = \bigsqcup Q_j\), \(Q_j\) --- кубическая ячейка, \(Q_j \subset \overline{Q_j} \subset A\)
    \[ \nu A = \sum \lambda Q_j \le \sum \mu Q_j \sup_{Q_j} J_\Phi \le \sup_A J_\Phi \sum \mu Q_j = \sup_A J_\Phi\cdot \lambda A \addtag\label{5_5_neq}\]
 3) По [[Теорема о преобразовании меры при диффеоморфизме_лем][лемме]] второе неравенство \ref{5_3_neq} выполнено для всех измеримых \(A\)
    \[ O = \bigsqcup Q_j\text{ --- кубы } Q_j \subset \overline{Q_j} \subset O \]
    \[ A = \bigsqcup \underbrace{A \cap Q_j}_{A_j}\quad A_j\subset G\text{ --- открытое} \]
-   \[ \nu A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \int_G(\sup J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
+   \[ \nu A_j \le \nu G \le \sup_G J_\Phi \cdot \lambda G \Rightarrow \nu A_j \le \inf_{\substack{A_j \subset G \\ G\text{ --- откр.}}}(\sup_G J_\Phi \cdot \lambda G) = \sup_{A_j} f \cdot \lambda A_j\]
 Аналогично \ref{5_5_neq} получаем \(\nu A \le \sup_A f\cdot \lambda A\)
 #+end_proof
 #+NAME: Теорема о гладкой замене переменной в интеграле Лебега
 #+begin_theorem org
 \-
-- \(\Phi: O \subset \R^m \to \R^m\) --- дифференцируемое
+- \(\Phi: O \subset \R^m \to \R^m\) --- диффеоморфизм
 _Тогда_ \(\forall f\) --- измеримых, \(\ge 0\), заданных на \(O' = \Phi(O)\)
 \[ \int_{O'}f(y) d\lambda = \int_O f(\Phi(x)) \cdot J_\Phi \cdot d\lambda \]
 , где \(J_\Phi(x) = |\det \Phi'(x)|\). То же верно для суммируемых функций \(f\)
@@ -191,7 +191,7 @@ _Тогда_ \(\forall f\) --- измеримых, \(\ge 0\), заданных �
 - \(\nu\) --- взвешенный образ \(\mu\) с весом \(\omega\): \[\mu(B) = \int_{\Phi^{-1}(B)} \omega d\mu\]
 Тогда \[ \int_B f d\nu = \int_{\Phi^{-1}(B)}f(\Phi(x)) \omega(x) d\mu \]
 В нашем случае
-- \(X = Y - \R^m\)
+- \(X = Y = \R^m\)
 - \( \A = \B = \M^m\)
 - \(\Phi\) --- диффеоморфизм
 - \(\mu = \lambda\)

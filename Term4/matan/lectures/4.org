@@ -9,12 +9,12 @@
 #+end_export
 
 #+NAME: Абсолютная непрерывность интеграла
-#+ATTR_LATEX: :options [об абсолютной непрерывности ингтерала]
+#+ATTR_LATEX: :options [об абсолютной непрерывности интеграла]
 #+begin_theorem org
 \-
 - $(X, \A, \mu)$
 - $f: X \to \overline{\R}$ --- суммируема
-_Тогда_ $\forall \varepsilon > 0\ \exists \delta > 0\ \forall E$ --- измеримым, $\mu E < \delta\quad |\int_E f| < \varepsilon$
+_Тогда_ $\forall \varepsilon > 0\ \exists \delta > 0\ \forall E$ --- измеримое, $\mu E < \delta\quad |\int_E f| < \varepsilon$
 #+end_theorem
 #+NAME: Абсолютная непрерывность интеграла_след
 #+begin_corollary org
@@ -25,9 +25,9 @@ _Тогда_ $\int_{E_n} f \to 0$
 #+end_corollary
 #+NAME: Абсолютная непрерывность интеграла_док
 #+begin_proof org
-Возьмем множества $X_m := X(|f| \ge n)$, очевидно что $X_n \supset X_{n + 1} \supset \dots$, а также $\mu(\bigcap X_n) = 0$ \\
+Возьмем множества $X_n := X(|f| \ge n)$, очевидно что $X_n \supset X_{n + 1} \supset \dots$, а также $\mu(\bigcap X_n) = 0$ \\
 Утвержение: $\forall \varepsilon\ \exists n_\varepsilon\quad \int_{X_{n_\varepsilon}}|f| < \frac{\varepsilon}{2}$ ---
-это свойство непрерывности сверху меры $A \mapsto \int_A |F| d\mu$ \\
+это свойство непрерывности сверху меры $A \mapsto \int_A |f| d\mu$ \\
 Пусть $\delta:=\frac{\varepsilon}{2n_\varepsilon}$, тода при $\mu E < \delta$
 \[ \left|\int_E f\right| \le \int_E |f| \le \int_{E_n \cap X_{n_\varepsilon}}|f| + \int_{E_n \cap X_{n_\varepsilon}^C} |f| \le \int_{X_{n_\varepsilon}} |f| + \int_{E_n \cap X_{n_\varepsilon}} n_\varepsilon < \frac{\varepsilon}{2} + \mu E\cdot n_\varepsilon \le \varepsilon \]
 #+end_proof
@@ -89,9 +89,9 @@ _Тогда_ $f_n, f$ --- суммируемые и $\int_X |f_n - f|d\mu\xright
 #+begin_proof org
 \[ h_n := \sup(|f_n - f|,\ |f_{n + 1} - f|,\ \dots) \]
 - $0 \le h_n \le 2g$
-- $h_n$ --- монотонна убывает
+- $h_n$ --- монотонно убывает
 - $\lim h_n = \overline{\lim}|f_n - f| = 0$ почти везде
-$2h - h_n \ge 0$ --- эта последовательность возрастает, $2g - h_n \to 2g$ почти везде
+$2g - h_n \ge 0$ --- эта последовательность возрастает, $2g - h_n \to 2g$ почти везде
 \[ \int_X 2g - h_n \to \int_X 2g \Rightarrow \int_X h_n \to 0 \]
 \[ \int_X|f_n -f| \le \int_X h_n \to 0 \]
 #+end_proof

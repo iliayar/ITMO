@@ -51,7 +51,7 @@
 #+begin_theorem org
 \(K_h\) --- а.е.
 1. \(f \in \tilde{C}[-\pi, \pi] \implies f * K_h \xrightrightarrows[h \to h_0]{ [ -\pi , \pi ] } f\)
-2. \(g \in L^1[-\pi, \pi] \implies \Vert f*K_h - f \Vert_1 \xrightarrow[h \to h_0]{} 0\)
+2. \(f \in L^1[-\pi, \pi] \implies \Vert f*K_h - f \Vert_1 \xrightarrow[h \to h_0]{} 0\)
 3. \(K_h\) --- усиленная а.е. \(f \in L^1[-\pi, \pi]\), \(f\) --- непрерывная в x \\
    _Тогда_
    - \(f*K_h\) --- непрерывна в \(x\)
@@ -60,12 +60,13 @@
 #+NAME: Теорема о свойствах аппроксимативной единицы_док
 #+begin_proof org
 \[ f*K_h(x) - f(x) = \int_{-\pi}^\pi (f(x - t) - f(x))K_h\,dt \]
+\(M\) --- из АЕ2
 1. \(\varepsilon > 0\), \(f\) --- равномерно непрерывна
    \[ \exists \delta > 0\ \forall t, |t| < \delta\ \forall x |f(x - t) - f(x)| < \frac{\varepsilon}{2M} \]
    \[ |f*K_h(x) - f(x)| \le \int_{-\pi}^\pi |f(x - t) - f(x)| |K_h(t)| \,dt = \int_{-\delta}^\delta + \int_{E_\delta}  = I_1 + I_2 \color{gray} < \varepsilon \]
    \[ I_1 \le \frac{\varepsilon}{2M}\cdot \int_{-\delta}^\delta |K_h| \le \frac{\varepsilon}{2M} \cdot \int_{-\pi}^\pi |K_h| \le \frac{\varepsilon}{2} \]
    \[ I_2 \le 2 \cdot \norm{f}_\infty \cdot \int_{E_\delta}|K_h| \xrightarrow[h \to h_0]{} 0 \xRightarrow[\text{АЕ3}]{} \exists V(h_0)\ \forall h \in V(h_0)\ I_2 \le \frac{\varepsilon}{2}\]
-3. [@3] \(f \in L^1\), \(h_h \in L^\infty\) \(\implies\) \(f*K_h\) --- непрерывна \\
+3. [@3] \(f \in L^1\), \(K_h \in L^\infty\) \(\implies\) \(f*K_h\) --- непрерывна \\
   Для данного \(x\) проверим утверждение \(\varepsilon > 0;\ I_1 + I_2 < \varepsilon;\ \exists V(h_0)\ \forall h\in V(h_0)\) \\
   \(f\) --- непрерывна в \(x\)
   \[ \forall \varepsilon > 0\ \exists \delta > 0\ \forall t,\ |t| < \delta\quad |f(x - t) - f(x)| < \frac{\varepsilon}{2M} \]
@@ -96,9 +97,9 @@ _Тогда_
 #+NAME: Метод суммирования средними арифметическими
 #+begin_definition org
 \[ \sum a_n \quad S_n \coloneqq \sum_{k = 0}^n a_k \]
-\[ \delta_n \coloneqq \frac{1}{n + 1} (S_0 + S_1 + \dots + S_n) \]
+\[ \sigma_n \coloneqq \frac{1}{n + 1} (S_0 + S_1 + \dots + S_n) \]
 \[ \sum a_n \xlongequal[\text{сред. арифм.}]{} S \]
-, если \(\delta_n \to S\)
+, если \(\sigma_n \to S\)
 #+end_definition
 #+NAME: Теорема о перманентности метода средних арифметических
 #+begin_theorem org
@@ -107,7 +108,7 @@ _Тогда_
 #+NAME: Теорема о перманентности метода средних арифметических_док
 #+begin_proof org
 \(\forall \varepsilon > 0\ \exists N,\ \forall n > N,\ |S_n - S| < \frac{\varepsilon}{2}\)
-\[ |\sigma_n - S| - \left|\frac{1}{n + 1}\sum_{k = 0}^n (S_k - S)\right| \le \frac{1}{n + 1}\sum |S_k - S| = \]
+\[ |\sigma_n - S| = \left|\frac{1}{n + 1}\sum_{k = 0}^n (S_k - S)\right| \le \frac{1}{n + 1}\sum |S_k - S| = \]
 \[ = \frac{\sum_{k = 0}^{N_1}|S_k - S|}{n + 1} + \frac{\sum_{k = N_1 + 1}^n |S_k - S|}{n + 1} \]
 \(\exists N\ \forall n > N\) эта дробь \(< \frac{\varepsilon}{2}\)
 #+end_proof
@@ -129,7 +130,7 @@ _Тогда_
 1. \(f \in \tilde{C}[-\pi, \pi]\) \\
    _Тогда_ \(\sigma_n(f) \xrightrightarrows{[-\pi, \pi]} f\)
 2. \(f \in L^p[-\pi, \pi] \implies \norm{\sigma_n(f) - f}_p \to 0\)
-3. \(f \in L^1\), \(f\) --- непрерывна в \(x\) \(\implies\) \(\sigma_n (f, x) \xrightarrow[x \to +\infty]{} f(x)\)
+3. \(f \in L^1\), \(f\) --- непрерывна в \(x\) \(\implies\) \(\sigma_n (f, x) \xrightarrow[n \to +\infty]{} f(x)\)
 #+end_theorem
 #+NAME: Теорема Фейера_док
 #+begin_proof org
@@ -195,6 +196,7 @@ _Тогда_ \(f = 0\) почти везде \\
 3. \[ \int_{-\pi}^\pi fg = \pi \left(\frac{a_0(f)a_0(h)}{2} + \sum_{k = 1}^{+\infty}a_k(f)a_k(g) + b_k(f)b_k(g)\right) \]
 4. \[ \int_{-\pi}^\pi f^2 = \pi \left(\frac{a_0(f)^2}{2} + \sum a_k(f)^2 + b_k(f)^2\right) \]
 #+end_corollary
+#+NAME: интегрирование ряда Фурье_лем
 #+begin_lemma org
 \(D_n(t) = \frac{1}{2\pi}\cdot \frac{\sin \left(n + \frac{1}{2}\right)t}{\sin \frac{t}{2}}\) --- ядро Дирихле \\
 _Тогда_ \(\forall x \in [-2\pi, 2\pi]\)
@@ -218,10 +220,13 @@ _Тогда_ \(\forall a, b \in \R\)
 Достаточно доказать: \(-\pi \le a < b \le \pi\), \(\chi = \chi_{[a, b]}\)
 \[ \sum_{k = -n}^n c_k(f)\int_a^b e^{ikx}\,dx = \sum \frac{1}{2\pi}\int_{-\pi}^\pi f(t) e^{-ikt}\,dt\cdot 2\pi c_{-k}(\chi) = \]
 \[ = \int_{-\pi}^\pi f(t)\cdot S_n(\chi, t) \,dt \to \int_{-\pi}^\pi f\cdot \chi = \int_a^b f \]
-\[ S_n(\chi, t) \xrightarrow[n \to +\infty] \chi(t) \]
+\[ S_n(\chi, t) \xrightarrow[n \to +\infty]{} \chi(t) \]
 при \(t \in [-\pi, \pi],\ t \neq a, b\) по признаку Дини
 \[ S_n(\chi, t) = \int \chi \cdot D_n = \int_a^b D_n(x - t) = \int_0^{b - t} D_n(x)\,dx - \int_0^{a - t} D_n(x) \]
-по лемме \(|S_n(x, t)| \le \)
+по лемме \(|S_n(x, t)| \le 4\). Таким образом
+\[ f\cdot S_n \to f \cdot \chi \text{ --- почти везде} \]
+\[ |f\cdot S_n| \le \underbrace{4 \cdot |f|}_{\text{сумм.}} \]
+Работает условие теоремы Лебега.
 #+end_proof
 #+NAME: Лемма о слабой сходимости сумм Фурье
 #+ATTR_LATEX: :options [о `слабой` сходимости рядов Фурье]
@@ -241,5 +246,4 @@ _Тогда_ \(\forall a, b \in \R\)
    \[ = \sum_{k = -n}^n c_k(f * \underline{u})e^{ikx}\big|_{x = 0} \to f*\underline{u} \big|_{x = 0} = \]
     --- по признаку Дини
     \[ = f* \underline{u} (0) = \int_{-\pi}^\pi f(-t)u(-t)\,dt = \int_{-\pi}^\pi f(t)u(t)\,dt \]
-
 #+end_proof

@@ -79,10 +79,10 @@
    проинтегрируем по \(y\) по мере \(\nu\):
    \[ \X_A(x) \nu B = \sum \X_A(x)\cdot \nu B_k \]
    Интегрируем по \(x\):
-   \[ \mu A \cdot \nu B - \sum \mu A_k \cdot \nu B_k  \]
+   \[ \mu A \cdot \nu B = \sum \mu A_k \cdot \nu B_k  \]
 2. Очев. \(\mu\) --- \(\sigma\)-конечная \Rightarrow \(X = \bigcup X_k\), \(\mu X_k\) --- конечная
-   \(nu\) --- \(\sigma\)-конечная \Rightarrow \(Y = \bigcup Y_n\), \(\nu Y_k\) --- конечная
-   \[ X \times Y = \bigcup X_k \timesy Y_n\quad m_0 \mu X_k \nu Y_n\text{ --- конечная} \]
+   \(\nu\) --- \(\sigma\)-конечная \Rightarrow \(Y = \bigcup Y_n\), \(\nu Y_k\) --- конечная
+   \[ X \times Y = \bigcup X_k \times Y_n\quad m_0(X_k \times Y_n) = \mu X_k \nu Y_n\text{ --- конечная} \]
    \Rightarrow \(m_0\) --- \(\sigma\)-конечная мера
 #+end_proof
 #+NAME: Произведение мер
@@ -156,8 +156,8 @@ _Тогда_:
    1. \( C_x = \left[\begin{matrix} \emptyset & x \not\in A \\ B & x \in A\end{matrix}\right. \)
    2. \(x \mapsto \nu(C_x)\) --- это функция \(\nu B \cdot \X_A\)
    3. \(\int \nu(C_x) d\mu = \int\limits_X \nu B \cdot \X_A d\mu = \nu B \cdot \mu A = mC\)
-2. \(E_i \in D\) --- дизъюнктны \Rightarrow \(\bigsqcup E_i \in D\) \\
-   \(E_i \in D \Rightarrow (E_i)_x\) --- измеримое почти везде \(\Rightarrow\) при почти всех \(x\) все \((E_i)_x\) -- измеримые \\
+2. \(E_i \in \mathcal{D}\) --- дизъюнктны \Rightarrow \(\bigsqcup E_i \in \mathcal{D}\) \\
+   \(E_i \in \mathcal{D} \Rightarrow (E_i)_x\) --- измеримое почти везде \(\Rightarrow\) при почти всех \(x\) все \((E_i)_x\) -- измеримые \\
    1. Тогда при этих \(x\ E_x = \bigsqcup(E_i)_x \in \B\)
    2. \(\nu E_x = \sum \underbrace{\nu(E_i)_x}_\text{измеримая функция}\) \Rightarrow функция \(x \mapsto \nu E_x\) измеримая\(\footnotemark[\value{footnote}]\)
    3. \[ \int\limits_X \nu E_x d\mu = \sum_i \int\limits_X \nu(E_i)_x = \sum_i mE_i = mE \]
