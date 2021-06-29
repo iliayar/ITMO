@@ -29,14 +29,14 @@
 \[ f(x) = \sum^n_{i = 1}\sum^n_{j = 1}a_{ij}x_ix_j + \sum^n_{j = 1}b_j x_j + c \addtag\label{7_1_quad} \]
 Называется *квадратичной функией \(n\) перменных*
 #+end_definition
-Положим \(a_{ij} = a_{ij} + a_{ji}\)\({\color{red}??}\) \Rightarrow симметрия. матрица \(A\)
+Положим \(a_{ij} = a_{ij} + a_{ji}\) \Rightarrow симметрия. матрица \(A\)
 \[ f(x) = \frac{1}{2}(Ax, x) + (b, x) + c \]
 , где \(b = (b_1, \dots b_n)^T \in E_n\) --- вектор коэффицентов, \(x = (x_1, \dots, x_n)^T\). \(x, y\) --- скалярное произведение
 Свойства квадратичных функций:
 1. \(\nabla f(x) = Ax + b\)
    \[ \diff{f}{x_k} = \diff{}{x_k}\left(\frac{1}{2}\sum^n_{i = 1}\sum^n_{j = 1}a_{ij}x_ix_j + \sum^n_{j = 1}b_j x_j + c\right) = \]
    \[ \frac{1}{2}\sum^n_{i = 1}(a_{ik} + a_{ki})x_i + b_k = \sum^n_{i = 1} a_{ki}x_i + b_k \]
-2. \(H(x) = A\), где \(H(x)\) --- Гессиан\(\color{red}???\) 
+2. \(H(x) = A\), где \(H(x)\) --- Гессиан
    \[ \diff{^2 f}{x_l \partial x_k} = \diff{}{x_k}\left(\diff{f}{x_k}\right) = \diff{}{x_l}\left(\sum^n_{i = 1} a_{ki} x_i + b_k\right) \]
 3. Квадратичная функция \(f(x)\) с положительно определенной матрицей \(A\) сильно выпукла
    \[ A = \begin{vmatrix} \lambda_1 & 0 & \dots & 0 \\ 0 & \lambda_2 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \lambda_n \end{vmatrix} \]

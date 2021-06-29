@@ -40,30 +40,86 @@
 \[ \Vert a \Vert = \maxx_j \Vert a_j \Vert \]
 Результат Уилкинсона
 \[ x^*: (A + E) x^* = b \], где элементы \(E\) имеют уровень ошибок  округления
-\todo
+\[ b - Ax^* = Ex^* \]
+\[ \norm{b - Ax^*} = \norm{Ex^*} \le \norm{E}\cdot \norm{x^*} \]
+\[ \frac{\norm{b - Ax^*}}{\norm{A} \cdot \norm{x^*}} \le C \cdot \varepsilon_{\text{маш.}} \]
+Если \(A\) не вырождена то: \(x - x^* = A^{-1} \cdot (b - Ax^*)\)
+\[ \norm{x - x^*} \le \norm{A^{-1}}\cdot \norm{E} \cdot \norm{x^*} \]
+\[ \frac{\norm{x - x^*}}{\norm{x^*}} \le C \cdot \norm{A} \cdot \norm{A^{-1}} \cdot \varepsilon_{\text{маш.}} \]
 \[ \cond(A) = \Vert A \Vert \cdot \Vert A^{-1} \Vert \]
-\[ \frac{\Vert x - x^* \Vert}{\Vert x^* \Vert} \le c \cdot \cond(A)\cdot \varepsilon_{??} \]
+\[ \norm{A^{-1}} = \frac{1}{m} \quad \frac{\Vert x - x^* \Vert}{\Vert x^* \Vert} \le C \cdot \cond(A)\cdot \varepsilon_{\text{маш.}} \]
 - \(a_j\) --- столбцы \(A\)
 - \(\tilde{a}_j\) --- столбцы \(A^{-1}\)
 \[ \cond(A) = \max_j \Vert a_j \Vert \cdot \max_j \Vert \tilde{a}_j \Vert \]
 ** Оценивание числа обусловленности
-\[ \cond(A) = \max \frac{\max\frac{\Vert A x \Vert}{\Vert x \Vert}}{\min\frac{\Vert A^{-1} \Vert}{\Vert x \Vert}} \]
-\[ \cond(A) = \Vert A \Vert \cdot \Vet A^{-1} \Vert \]
+\[ \cond(A) = \frac{\max\frac{\Vert A x \Vert}{\Vert x \Vert}}{\min\frac{\Vert Ax \Vert}{\Vert x \Vert}} \]
+\[ \cond(A) = \Vert A \Vert \cdot \Vert A^{-1} \Vert \]
 1-норма:
 - \(a_j\) --- столбец
 \[ \Vert A \Vert = \max_j \Vert a_j \Vert \]
-\todo
+\[ \norm{A^{-1}} = \frac{1}{\min_x \frac{\norm{Ax}}{\norm{x}}} = \max_x \frac{\norm{x}}{\norm{Ax}} = \max_y \frac{\norm{A^{-1}y}}{\norm{y}} \]
+\[ y \coloneqq Ax \quad Az = y \]
+\[ \frac{\norm{z}}{\norm{y}} = \underbrace{\frac{\norm{A^{-1}y}}{\norm{y}}}_{\text{оценка }\norm{A^{-1}}} \]
+Цель --- подобрать \(y\). \( A^Ty = c \), где \(c\) --- вектор с компонентами \(\pm 1\)
+#+begin_examp org
+\[ A = \begin{pmatrix} 9.7 & 6.6 \\ 4.1 & 2.8 \end{pmatrix} = \underbrace{\begin{pmatrix} 1 & 0 \\ 0.4227 & 1 \end{pmatrix}}_L \cdot \underbrace{\begin{pmatrix}
+  9.7000 & 6.6000 \\ 0 & 0.0103
+\end{pmatrix}}_U \]
+\(y: A^Ty = c \implies U^T(L^Ty) = c\) \\
+\(c_1 = 1; c_2 = ?\)
+\[ (L^Ty)_1 = \frac{c_1}{U_{11}} = \frac{1}{9.7} = 0.1031 \]
+\[ (L^Ty)_2 = \frac{c_2 - U_{21}(L^Ty)_1}{U_{22}} = \frac{\pm 1 - 6.6 \cdot 0.10031}{0.0103} \]
+\((L^Ty)_2\) большее, если \(c_2 = -1\), значит
+\[ (L^Ty) = (0.1031, -163)^T \quad y = (-163,  69)^T \]
+\[ Az = y \implies z = (12690, -18640)^T \]
+\[ \norm{A^{-1}} \approx \frac{\norm{z}}{\norm{y}} = \frac{|12690| + |-18640|}{|-163| + |69|} = \frac{31330}{232} = 135.04 \]
+\[ \norm{A} = 13.8 \quad \cond(A) \approx 13.8 \cdot 135.04 = 1863.6 \]
+#+end_examp
 * Дополнительно о градиентных методах
 \(\{x_k\}\): \(x^k = x^{k - 1} + \alpha_k u^k\quad k \in \N\) \\
 \(u^k \in E_n\). \((\nabla f(x), u) < 0\) --- условие спуска \\
 Как находить \(\alpha_k\)
 \[ f(x^{k - 1} + \alpha_k u^k) \le (1 - \lambda_k)f(x^{k - 1}) + \lambda_k \min_{\alpha \in E}f(x^{k - 1}+ \alpha u^k)\quad \lambda_k \in [0, 1] \]
-\[ f(x^{k - 1} + \alpha_k u^k) \le f(x^{k - 1}) \] --- если это выполнено, то \(\{x^k\}\) --- релаксационная
-\todo
+\[ f(x^{k - 1} + \alpha_k u^k) \le f(x^{k - 1}) \addtag\label{13_1_1} \] --- если это выполнено, то \(\{x^k\}\) --- релаксационная
+\(\lambda_k = 0\), тогда \ref{13_1_1}, если же \(\lambda_k = 1\), то для нахождения \(\alpha_k^*\) решаем задачу одномерной оптимизации. Для случая \(\lambda_k \in (0, 1)\):
+\[ f(x^{k - 1}) - f(x^k) \ge \lambda_k(f(x^{k - 1}) - f(x^{k - 1} + \alpha_k^*u_k)) \]
+\[ \omega(x) = -\nabla f(x) \]
 ** Градиентный спуск
-\todo
+\[ x^k = x^{k - 1} + \beta_k \underbrace{\frac{\omega^k}{|\omega^k|}}_{u^k} \]
+\[ \beta_k = \underbrace{\alpha}_\const |\omega^k| \]
+\[ x^k = x^{k - 1} + \alpha \omega^k \]
+В окрестности точки \(\tilde{x}\), может быть \(f(x^k) > f(x^{k - 1})\)
+#+NAME: лол, теорема
 #+begin_theorem org
-Пусть \(f(x)\) ограничена снизу и дифференцируема в \(E_n\), а ее градиент удовлетворяет условию Липница, т.е. \(\forall x, y \in E_n\)
+Пусть \(f(x)\) ограничена снизу и дифференцируема в \(E_n\), а ее градиент удовлетворяет условию Липшица, т.е. \(\forall x, y \in E_n\)
 \[ |\nabla f(x) - \nabla f(y)| \le L | x - y | \]
-\todo
+\(L > 0\) --- константа. _Тогда_ \(\{x^k\}\), определяемое рекурентным соотношением
+\[ x^k = x^{k - 1} + \alpha \omega^k \]
+с \(\alpha \in (0, \frac{2}{L})\) является релаксационной. При этом справедлива оценка
+\[ f(x^k) \le f(x^{k - 1}) - \alpha \left(1 - \frac{\alpha L}{2}\right) \cdot |\nabla f(x^{k - 1})|^2 \]
+и \(|\nabla f(x^k)| \to 0\), при \(k \to + \infty \)
 #+end_theorem
+Если \(f(x)\) удовлетворяет [[лол, теорема][теореме]], то при \(\alpha = \frac{1}{L}\), \(\{x^k\}\) --- релаксационная последовательность и не происходит ``проскакивания`` стационарной точки
+\[ \norm{\omega^k} = \norm{\nabla f(x^{k - 1})} \le L |x^{k - 1} - \tilde{x}| \]
+\(\tilde{x}\) --- стационарная точка \(\implies \nabla f(\tilde{x}) = 0\) \\
+При \(\alpha \le \frac{1}{L}\)
+\[ |x^k - x^{k - 1}| = \alpha |\omega^k| \le |x^{k - 1} - \tilde{x}| \]
+Пусть \(f(x)\) ограничена снизу, а \(\{x^k\}\), при \(\gamma_0 > 0\):
+\[ f(x^{k - 1}) - f(x^k) \ge \gamma_0 |\omega^k|^2 \quad k = \overline{1, m} \addtag\label{13_1_2}\]
+\[ f(x^0) - f(x^m) \ge \gamma_0 \sum_{k = 1}^m |\nabla f(x^{k - 1})|^2 \]
+\[ \sum_{k = 1}^{\infty} |\nabla f(x^{k - 1})|^2 \]
+--- знакоположительный ряд, т.е. \(\nabla f(x^{k}) \xrightarrow[k \to \infty]{} 0\)
+** Модификация
+\[ x^k = x^{k - 1} + \alpha_k\omega^k \quad k \in \N \]
+\(\alpha_k > 0\)
+\[ \varphi_k(\alpha) = f(x^{k - 1} + \alpha \omega^k) \]
+\[ \varphi_k'(0) = (\nabla f(x), \omega^k) = -|\omega^k|^2 < 0 \]
+\(\varphi_k\) --- убывает в окрестности \(\alpha = 0\) до \(\tilde{\alpha}_k\). \(\alpha_k = \alpha^*_k\) --- исчерпывающий спуск. Если \(f(x)\) удовлетворяет [[лол, теорема][теореме]], то \(\{x^k\}\) по исчерпывающему спуску удовлетворяет условиям \ref{13_1_2}:
+\[ \varphi'_k(\alpha) = (\nabla f(x^{k - 1} + \alpha \omega^k), \omega^k) \]
+\[ x^k = x^{k - 1} + \alpha_k^*\omega^k \]
+\[ (\omega^{k + 1}, \omega^k) = (-\nabla f(x^k), \omega^k) = -\varphi'_k(\alpha^*_k) = 0 \]
+\[ \norm{\omega^k}^2 = (\omega^k, \omega^k - \omega^{k + 1}) \le |\omega^k| \cdot |\omega^k - \omega^{k + 1}| =  \]
+\[ = |\omega^k| \cdot |\nabla f(x^{k - 1}) - \nabla f(x^k)| \le L |\omega^k| \cdot |x^{k - 1} - x^k| = L \cdot \alpha^*_k |\omega^k|^2 \]
+\(\alpha^*_k \ge \frac{1}{L} \):
+\[ f(x^{k - 1}) - f(x^k) \ge f(x^{k - 1}) - f(\tilde{x}^k) \ge \frac{1}{2L}|\omega^k|^2 \]
+\[ \tilde{x}^k = x^{k - 1} + \underbrace{\frac{1}{L}}_\alpha\omega^k \]
