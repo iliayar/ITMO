@@ -2,7 +2,8 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/all_lectures.pdf][All lectures]]
+[[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/all_lectures.pdf][All lectures]] \\
+[[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/questions.pdf][Questions]] and [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/exam.pdf][Exam]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/1-2.pdf][Lecture 1, 2]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/3.pdf][Lecture 3]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/metopt/lectures/4.pdf][Lecture 4]]
