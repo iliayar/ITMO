@@ -1,6 +1,5 @@
-#+LATEX_CLASS: general
 #+TITLE: Лекция 12
-#+AUTHOR: Ilya Yaroshevskiy
+#+SETUPFILE: setup.org
 
 * Прямые методы решения СЛАУ
 Виды разложения матрицы \(A\):
@@ -116,11 +115,12 @@ x_2
 #+end_examp
 
 ** Векторные нормы
-1. 2-норма (евклидова) \todo
+1. 2-норма (евклидова)
+   \[ \norm{x}_2 = \left(\sum_{i = 1}^n |x_i|^2 \right)^{\frac{1}{2}} \]
 2. 1-норма (манхэтенское расстояние)
    \[ \Vert x \Vert_1 = \sum_{i = 1}^n |x_i| \]
 3. \max-норма (\infty-норма)
-   \[ \Vert x \Vert_\infty = \todo \]
+   \[ \Vert x \Vert_\infty = \max_i |x_i| \]
 \[ \Vert x \Vert > 0\text{, если } x\neq0\ \Vert 0 \Vert = 0 \]
 \[ \Vert cx \Vert = |c|\cdot\Vert x \Vert \ \forall c \]
 \[ \Vert x + y \Vert \le \Vert x \Vert + \Vert y \Vert \]
