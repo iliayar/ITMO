@@ -36,6 +36,9 @@ annotateExprs' n prev (e:es) =
   of
     Left err -> ([], Just err)
     Right Nothing -> ([], Just $ NotProved n)
+    -- Right Nothing ->
+    --   let (aes, err) = annotateExprs' (n + 1) (M.insertWith min e n prev) es
+    --   in (((AnnotatedExpr e $ ExistsRule 0 0)) : aes, err)
     Right (Just ae) ->
       let (aes, err) = annotateExprs' (n + 1) (M.insertWith min e n prev) es
       in (ae : aes, err)
@@ -142,26 +145,26 @@ checkAxiom n e =
     applyAxiom e (n, ax) = if ax e then Just n else Nothing
 
 axiom1 (Impl (ExprPred (PredEq (TermVar a) (TermVar b))) (ExprPred (PredEq (Succ (TermVar a')) (Succ (TermVar b'))))) =
-  a == a' && b == b'
+  a == a' && b == b' && a == Var "a" && b == Var "b"
 axiom1 _ = False
 axiom2 (Impl (ExprPred (PredEq (TermVar a) (TermVar b))) (Impl (ExprPred (PredEq (TermVar a') (TermVar c))) (ExprPred (PredEq (TermVar b') (TermVar c'))))) =
-  a == a' && b == b' && c == c'
+  a == a' && b == b' && c == c' && a == Var "a" && b == Var "b" && c == Var "c"
 axiom2 _ = False
 axiom3 (Impl (ExprPred (PredEq (Succ (TermVar a)) (Succ (TermVar b)))) (ExprPred (PredEq (TermVar a') (TermVar b')))) =
-  a == a' && b == b'
+  a == a' && b == b' && a == Var "a" && b == Var "b"
 axiom3 _ = False
-axiom4 (Not (ExprPred (PredEq (Succ (TermVar a)) Zero))) = True
+axiom4 (Not (ExprPred (PredEq (Succ (TermVar (Var "a"))) Zero))) = True
 axiom4 _ = False
 axiom5 (ExprPred (PredEq (Plus (TermVar a) (Succ (TermVar b))) (Succ (Plus (TermVar a') (TermVar b'))))) =
-  a == a' && b == b'
+  a == a' && b == b' && a == Var "a" && b == Var "b"
 axiom5 _ = False
 axiom6 (ExprPred (PredEq (Plus (TermVar a) Zero) (TermVar a'))) =
-  a == a'
+  a == a' && a == Var "a"
 axiom6 _ = False
-axiom7 (ExprPred (PredEq (Times (TermVar a) Zero) Zero)) = True
+axiom7 (ExprPred (PredEq (Times (TermVar (Var "a")) Zero) Zero)) = True
 axiom7 _ = False
 axiom8 (ExprPred (PredEq (Times (TermVar a) (Succ (TermVar b))) (Plus (Times (TermVar a') (TermVar b')) (TermVar a'')))) =
-  a == a' && a' == a'' && b == b'
+  a == a' && a' == a'' && b == b' && a == Var "a" && b == Var "b"
 axiom8 _ = False
 
 checkRules :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
@@ -186,8 +189,8 @@ checkModusPonens n es e =
     check' _ _ _ _ = Nothing
 
 checkExistsRule :: Int -> Map Expr Int -> Expr -> Either AnnotationError (Maybe AnnotatedExpr)
-checkExistsRule n es e@(Impl (Exists x phi) psi) =
-  case M.lookup (Impl phi psi) es of
+checkExistsRule n es e@(Impl (Exists x psi) phi) =
+  case M.lookup (Impl psi phi) es of
     Just k -> if hasFree x phi
               then Right $ Just (AnnotatedExpr e $ ExistsRule n k)
               else Left $ NonFreeExists n x

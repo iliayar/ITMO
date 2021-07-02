@@ -27,8 +27,8 @@ instance Show Annotation where
   show (AxiomScheme n k) = "[" ++ show n ++ ". Ax. sch. " ++ show k ++ "]"
   show (ArithmeticAxiom n k) = "[" ++ show n ++ ". Ax. " ++ show k ++ "]"
   show (ModusPonens n k l) = "[" ++ show n ++ ". M.P. " ++ show k ++ ", " ++ show l ++ "]"
-  show (ForallRule n k) = "[" ++ show n ++ ". ?-intro " ++ show k ++ "]"
-  show (ExistsRule n k) = "[" ++ show n ++ ". @-intro " ++ show k ++ "]"
+  show (ForallRule n k) = "[" ++ show n ++ ". @-intro " ++ show k ++ "]"
+  show (ExistsRule n k) = "[" ++ show n ++ ". ?-intro " ++ show k ++ "]"
 
 instance Show AxiomNumber where
   show (Number n) = show n
