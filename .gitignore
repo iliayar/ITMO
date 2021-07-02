@@ -27,6 +27,7 @@
 _minted*
 *.out
 *.toc
+/**/svg-inkscape
 
 # Idea files
 **/.idea/
