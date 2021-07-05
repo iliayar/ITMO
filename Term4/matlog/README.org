@@ -23,3 +23,6 @@
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/2.pdf][3.4.b]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/4.4.b.pdf][4.4.b]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/matlog/hws/8.pdf][Some of 9]]
+* Labs
+[[file:labs/contest-mathlog-2021-ru.pdf][Statements]] \\
+[[file:labs/][Solutions]]
