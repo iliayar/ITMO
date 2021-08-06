@@ -58,6 +58,8 @@ target
 /**/.ipynb_checkpoints
 /**/ltximg
 /**/obipy-resources
+/**/*.tex~
+/**/*.synctex*
 /build/
 
 # Pdfs
