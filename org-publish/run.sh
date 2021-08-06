@@ -1,5 +1,5 @@
 docker run \
-    -it \
+    -i \
     --rm \
     -v "${WORKSPACE}:/publish/input" \
     -v "/var/www/mainsite/public/public-notes/conspects:/publish/output" \
