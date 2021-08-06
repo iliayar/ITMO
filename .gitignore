@@ -23,7 +23,6 @@
 *.fdb_latexmk
 *.aux
 *.xdv
-*.el
 _minted*
 *.out
 *.toc
