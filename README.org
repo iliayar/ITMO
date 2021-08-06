@@ -1,7 +1,8 @@
 #+TITLE: README
 #+SETUPFILE: level-0.org
 
-[[http://iliayar.ru:8080/buildStatus/icon?job=ITMO]] \\
+[[http://iliayar.ru:8080/buildStatus/icon.svg?job=ITMO&subject=Org%20Publishing]]
+-----
 My stuff from ITMO University. \\
 All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://iliayar.ru/public-notes/conspects/README.html][published here]]
 
