@@ -1,0 +1,176 @@
+ \usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=orange,
+     citecolor=black,      
+     urlcolor=cyan,
+     }
+
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{automata, arrows}
+
+\newcommand\addtag{\refstepcounter{equation}\tag{\theequation}}
+\newcommand{\eqrefoffset}[1]{\addtocounter{equation}{-#1}(\arabic{equation}\addtocounter{equation}{#1})}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\rank}{\mathop{\rm rank}\nolimits}
+\newcommand{\const}{\var{const}}
+\newcommand{\grad}{\mathop{\rm grad}\nolimits}
+\newcommand{\custombracket}[3]{\left#1 #3 \right#2}
+\newcommand{\custombracketsame}[2]{\custombracket{#1}{#1}{#2}}
+\newcommand{\pair}[1]{\custombracket{\langle}{\rangle}{#1}}
+\newcommand{\eval}[1]{\custombracket{\llbracket}{\rrbracket}{#1}}
+
+\newcommand{\todo}{{\color{red}\fbox{\text{Доделать}}}}
+\newcommand{\fixme}{{\color{red}\fbox{\text{Исправить}}}}
+
+\newcounter{propertycnt}
+\setcounter{propertycnt}{1}
+\newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
+
+\theoremstyle{plain}
+\newtheorem{propertyinner}{Свойство}
+\newenvironment{property}{
+  \renewcommand\thepropertyinner{\arabic{propertycnt}}
+  \propertyinner
+}{\endpropertyinner\stepcounter{propertycnt}}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{lemma}{Лемма}
+\newtheorem*{statement}{Утверждение}
+\newtheorem{manuallemmainner}{Лемма}
+\newenvironment{manuallemma}[1]{%
+  \renewcommand\themanuallemmainner{#1}%
+  \manuallemmainner
+}{\endmanuallemmainner}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Примечание}
+\newtheorem*{solution}{Решение}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem*{examp}{Пример}
+\newtheorem*{observation}{Наблюдение}
+
+\theoremstyle{definition}
+\newtheorem{task}{Задача}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem*{definition}{Определение}
+\newtheorem*{symb}{Обозначение}
+\newtheorem{manualtheoreminner}{Теорема}
+\newenvironment{manualtheorem}[1]{%
+  \renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}{\endmanualtheoreminner}
+
+\newtheoremstyle{colon}%
+{}
+{}
+{}%bodyfont
+{}%indent
+{\bfseries}%headfont
+{:}%head punctuation
+{ }%space after head
+{}
+\theoremstyle{colon}
+\newtheorem*{answer}{Ответ}
+
+\captionsetup{justification=centering,margin=2cm}
+\newenvironment{colored}[1]{\color{#1}}{}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\makeatletter
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{%
+    \mathpalette\@relrelbar\relrelbarsep
+  }%
+}
+\newcommand*{\@relrelbar}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$\hss}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+\providecommand*{\rightrightarrowsfill@}{%
+  \arrowfill@\relrelbar\relrelbar\rightrightarrows
+}
+\providecommand*{\leftleftarrowsfill@}{%
+  \arrowfill@\leftleftarrows\relrelbar\relrelbar
+}
+\providecommand*{\xrightrightarrows}[2][]{%
+  \ext@arrow 0359\rightrightarrowsfill@{#1}{#2}%
+}
+\providecommand*{\xleftleftarrows}[2][]{%
+  \ext@arrow 3095\leftleftarrowsfill@{#1}{#2}%
+}
+\makeatother
+
+\newenvironment{rualgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{russian}%
+     \floatname{algorithm}{Алгоритм}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{если}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{тогда}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{иначе}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{конец}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{для}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{до}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{делать}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{пока}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{до тех пор пока}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{повторять}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{не}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{и}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{или}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Ввод}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Вывод}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{Вернуть}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{истинна}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{ложь}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
+
+\newenvironment{enalgo}[1][]
+  {\begin{algorithm}[#1]
+     \selectlanguage{english,russian}%
+     \floatname{algorithm}{Program}%
+     \renewcommand{\algorithmicif}{{\color{red}\textbf{if}}}%
+     \renewcommand{\algorithmicthen}{{\color{red}\textbf{then}}}%
+     \renewcommand{\algorithmicelse}{{\color{red}\textbf{else}}}%
+     \renewcommand{\algorithmicend}{{\color{red}\textbf{end}}}%
+     \renewcommand{\algorithmicfor}{{\color{red}\textbf{for}}}%
+     \renewcommand{\algorithmicto}{{\color{red}\textbf{to}}}%
+     \renewcommand{\algorithmicdo}{{\color{red}\textbf{do}}}%
+     \renewcommand{\algorithmicwhile}{{\color{red}\textbf{while}}}%
+     \renewcommand{\algorithmicrepeat}{{\color{red}\textbf{repeat}}}%
+     \renewcommand{\algorithmicuntil}{{\color{red}\textbf{until}}}%
+     \renewcommand{\algorithmicloop}{{\color{red}\textbf{loop}}}%
+     \renewcommand{\algorithmicnot}{{\color{blue}\textbf{not}}}%
+     \renewcommand{\algorithmicand}{{\color{blue}\textbf{and}}}%
+     \renewcommand{\algorithmicor}{{\color{blue}\textbf{or}}}%
+     \renewcommand{\algorithmicrequire}{{\color{blue}\textbf{Input}}}%
+     \renewcommand{\algorithmicensure}{{\color{blue}\textbf{Output}}}%
+     \renewcommand{\algorithmicreturn}{{\color{red}\textbf{return}}}%
+     \renewcommand{\algorithmicrtrue}{{\color{blue}\textbf{true}}}%
+     \renewcommand{\algorithmicrfalse}{{\color{blue}\textbf{false}}}%
+     % Set other language requirements
+  }
+  {\end{algorithm}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thetitle}
+\fancyfoot[L]{ITMO y2019}
+\fancyfoot[C]{Page \thepage \hspace{1pt} of \pageref*{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
