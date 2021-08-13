@@ -64,3 +64,6 @@ target
 # Pdfs
 /**/*.pdf
 /**/*.tex
+
+# Jenkins
+!Jenkinsfile
