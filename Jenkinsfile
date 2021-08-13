@@ -52,7 +52,7 @@ pipeline {
 		}
 	    }
 	}
-	stage("Publishing") {
+	stage("Publishing Conspects") {
 	    steps {
 		script {
 		    sh "docker build org-publish/ -t org-publish"
