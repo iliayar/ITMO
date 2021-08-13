@@ -65,9 +65,9 @@ pipeline {
 	always {
 	    script {
 		if (currentBuild.result == "SUCCESS") {
-		    setBuildStatus("Org Publish", "succeed", "SUCCESS")
+		    setBuildStatus("Building Conspects", "succeed", "SUCCESS")
 		} else {
-		    setBuildStatus("Org Publish", "failed", "FAILURE")
+		    setBuildStatus("Building Conspects", "failed", "FAILURE")
 		}
 	    }
 	}
