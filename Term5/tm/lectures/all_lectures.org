@@ -1,0 +1,6 @@
+#+TITLE: Лекции по Методам Трансляции 5 семестр
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: lectures
+
+* Лекция 1
+#+INCLUDE: "1.org" :lines "4-"

@@ -1,0 +1,6 @@
+#+TITLE: Translation Methods
+#+SETUPFILE: ../../level-subj.org
+
+* Lectures
+[[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/all_lectures.pdf][All lectures]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/1.pdf][Lecture 1]]
