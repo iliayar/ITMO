@@ -1,0 +1,124 @@
+#+setupfile: setup.org
+#+date: 2 сентября
+#+title: Лекция 1
+
+* Введение
+1. Лексический анализ \\
+   Разбиение входа на *токены* (лексемы)
+2. \label{token_1_2}Синтаксический разбор (Parsing) \\
+   По токенам и синтаксису языка получаем *дерево разбора*
+3. \label{token_1_3}Компиляция \\
+   По дереву разбора и семантике языка получаем *результат*
+
+#+begin_examp org
+\-
+- Токены: \(\cdot, +, (, ), n(\text{число})\)
+- Грамматика
+  \[ E \to n\ |\ (E)\ |\ E + E\ |\ E \cdot E \]
+
+Она неоднозначна:
+\begin{center}
+  \begin{tikzpicture}
+    \node{\(2 + 2 \cdot 2\)}
+    child {node {E}
+      child {node {\(n\)}}}
+    child {node {\(+\)}}
+    child {node {E}
+      child {node {E}
+        child {node {\(n\)}}}
+      child {node {\(\cdot\)}}
+      child {node {E}
+        child {node {\(n\)}}}};
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}
+    \node{\(2 + 2 \cdot 2\)}
+    child {node {E}
+      child {node {E}
+        child {node {\(n\)}}}
+      child {node {\(+\)}}
+      child {node {E}
+        child {node {\(n\)}}}}
+    child {node {\(\cdot\)}}
+    child {node {E}
+      child {node {\(n\)}}};
+  \end{tikzpicture}
+\end{center}
+
+Починим грамматику так, чтобы она была однозначна
+\begin{center}
+\begin{array}{rll}
+  E & \to & T \\
+  \color{red}E & \color{red}\to & \color{red}T + E \substack{\text{ --- Будет верно только для правовссоциативных}} \\
+  \color{green}E & \color{green}\to & \color{green}E + T \\
+  \color{green}E & \color{green}\to & \color{green}E - T \\
+  T & \to & F \\
+  T & \to & T \cdot F \\
+  F & \to & n \\
+  F & \to & (E)
+\end{array}
+\end{center}
+
+Часто удобно объединить шаги \ref{token_1_2} и \ref{token_1_3}. В этом
+примере можно сразу вычислять значение выражения обходя построение
+дерева разбора.
+#+end_examp
+
+#+begin_definition org
+*Синтаксически управляемая трансляция* --- \todo
+#+end_definition
+
+* Нисходящий анализ
+#+begin_remark org
+*КСГ* --- способ задания КС языка
+- Алфавит \(\Sigma\) --- множество токенов
+- Нетерминалы \(N\)
+- Стартовый нетерминал \(S \in N\)
+- Правила \( P \subset N \times (N \cup \Sigma)^* \)
+  \begin{symb}
+  \(\pair{A, \alpha} \in P\) --- \(A \to \alpha\)
+  \end{symb}
+  \begin{symb}\-
+    \begin{itemize}
+    \item \(\alpha \in (\sigma \cup N)^*\)
+    \item \(\alpha = \alpha_1 A \alpha_2\)
+    \item \(\beta = \alpha_1 \xi \alpha_2\)
+    \item \(A \to \xi \in P\)
+    \end{itemize}
+    \(\alpha \Rightarrow \beta\) --- из \(\alpha\) выводится \(\beta\) за один шаг
+  \end{symb}
+- \(L(\Gamma) = \{x \big| S \Rightarrow^* x\} \quad x \in \Sigma^*\)
+- Однозначная КСГ --- для слова из языка единственное дерево разбора.
+#+end_remark
+
+#+begin_definition org
+\(\Gamma \in LL(1)\), если \\
+- \(S \Rightarrow^* xA\alpha \Rightarrow x\xi\alpha \Rightarrow^* xcy\)
+- \(S \Rightarrow^* xA\beta \Rightarrow x\eta\beta \Rightarrow^* xcz\)
+\(c \in \Sigma\) или (\(c,y,z = \varepsilon\)) \\
+_Тогда_ \(\xi = \eta\)
+#+end_definition
+
+#+begin_definition org
+\(\Gamma \in LL(k)\), если \\
+- \(S \Rightarrow^* xA\alpha \Rightarrow x\xi\alpha \Rightarrow^* xcy\)
+- \(S \Rightarrow^* xA\beta \Rightarrow x\eta\beta \Rightarrow^* xcz\)
+\(c \in \Sigma^k\) или (\(c \in \Sigma^{<k}\ y,z = \varepsilon\)) \\
+_Тогда_ \(\xi = \eta\)
+#+end_definition
+
+#+begin_definition org
+\-
+- \(FIRST: (N \cup \Sigma)^* \to 2^{\Sigma \cup \{\varepsilon\}}\)
+  \[ FIRST(\alpha) \xlongequal{def} \{c \big| \alpha \Rightarrow^* c\beta\} \cup \{\varepsilon \big| \alpha \Rightarrow^* \varepsilon\} \]
+- \(FOLLOW: N \to 2^{\Sigma \cup \{\$\}}\)
+  \[ FOLLOW(a) \xlongequal{def} \{c \big| S \Rightarrow^* a A c \beta\} \cup \{\$ \big| S \Rightarrow^* a A\} \]
+#+end_definition
+
+#+begin_theorem org
+\(\Gamma \in LL(1) \Leftrightarrow \forall A \to \alpha,\ A \to \beta\) \\
+1. \(FIRST(\alpha) \cap FIRST(\beta) = \varnothing\)
+2. \(\varepsilon \in FIRST(\alpha) \Rightarrow FIRST(\beta) \cap FOLLOW(A) = \varnothing\)
+#+end_theorem
