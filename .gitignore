@@ -1,3 +1,4 @@
+
 # Files without extensions
 *
 !/**/
@@ -67,3 +68,6 @@ target
 
 # Jenkins
 !Jenkinsfile
+
+# Cache
+.direnv
