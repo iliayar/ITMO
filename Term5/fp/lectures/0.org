@@ -1,0 +1,149 @@
+#+setupfile: setup.org
+#+date: 3 сентября
+#+title: Лекция 0
+
+* Лямбда Исчисление
+#+begin_definition org
+Пусть \(X, Y\) --- непустые множества. Отношение \(R \subseteq X \times Y\) --- *функциональное* отношение если \todo
+#+end_definition
+
+#+begin_definition org
+Пусть \(Var = \{x_0, x_1, x_2\}\) --- счетное множество
+переменных. Множество *предтермов* производится следующей грамматикой:
+\[ M, N \coloneqq x\ \big|\ (\lambda x. M)\ \big|\ (MN) \]
+#+end_definition
+
+#+begin_remark org
+Хотим отождествлять функции вообще говоря одинаковых, но различных
+графически(имена переменных).
+
+Пусть \alpha-конверсия --- переименование связанных переменных. Введем
+отношение \alpha-эквивалентности --- рефлексивное, транзитивное,
+симметричное замыкание \alpha-конверсии, которое отождествляет такие
+функции.
+#+end_remark
+
+#+begin_definition org
+*Лямбда терм* --- предтерм с точностью до \alpha-эквивалентности
+#+end_definition
+
+
+#+begin_definition org
+Лямбда трем \(M\) *\beta-редуцируется* к \(N\), если есть способ
+переписать его по следующим правилам:
+- \((\lambda x. M)N \to_\beta M[x \coloneqq N]\)
+- \(\frac{M_1 \to_\beta M_2}{M_1N \to_\beta M_2N}\)
+- \(\frac{M_1 \to_\beta M_2}{NM_1 \to_\beta NM_2}\)
+#+end_definition
+
+#+begin_remark org
+Терм \((\lambda x. M)N\) называется редуцируемым.
+#+end_remark
+
+
+#+begin_definition org
+Терм называется *слабо нормализуемым*, если существует путь который
+заканчивается(приходим к терму который не редуцируется). *Сильно
+нормализуемым*, если любой путь заканчивается.
+#+end_definition
+
+#+begin_examp org
+\[ \(\lambda xy. x\)(\lambda z. z)((\lambda x. xx)(\lambda x. xx)) \]
+Можем проредуцировать его двумя способами:
+1.
+   \begin{align*}
+     & (\lambda xy. x)(\lambda z. z)((\lambda x. xx)(\lambda x. xx)) \to_\beta \\
+     & (\lambda y. [x \coloneqq (\lambda z. z)]((\lambda x. xx)(\lambda x. xx))) \to_\beta \\
+     & (\lambda y. \lambda z. z)((\lambda x. xx)(\lambda x. xx)) \to_\beta \\
+     & (\lambda z. z)[y \coloneqq (\lambda x. xx)(\lambda x. xx)] \to_\beta \\
+     & \lambda z. z
+   \end{align*}
+2.
+   \begin{align*}
+     & (\lambda xy. x)(\lambda z. z)((\lambda x. xx)(\lambda x. xx)) \to_\beta \\
+     & (\lambda xy. x)(\lambda z. z)(xx)[x \coloneqq [\lambda x. xx]] \to_\beta \\
+     & (\lambda xy. x)(\lambda z. z)((\lambda x. xx)(\lambda x. xx)) \to_\beta \\
+     & \dots
+   \end{align*}
+#+end_examp
+
+#+begin_remark org
+Два способа редуцировать:
+- \((\lambda x_1 \dots x_n. M)N_1 \dots N_n\) --- *аппликативный* порядок. Сначала редуцируем \((N_i)_{i \in \{1, \dots, n\}}\)
+- \((\lambda x_1 \dots x_n. M)N_1 \dots N_n\) --- *нормальный* порядок. Сначала редуцируем \((\lambda x_1 \dots x_n. M)N_1\), и т.д.
+#+end_remark
+
+
+#+begin_theorem org
+Пусть \(M\) --- терм, такой что есть нормальная форма \(M'\) \\
+_Тогда_ \(M\) может быть редуцирован к \(M'\) с помощью нормального
+порядка редукции.
+#+end_theorem
+
+** Типы
+#+begin_remark org
+Система типов --- синтаксический формализм который позволяет
+доказывать наличие поведенческий особенностей программы.
+#+end_remark
+
+#+begin_definition org
+*Просто типизированное лямбда-исчисление*
+- \(\frac{}{\Gamma, x : A \vdash x : A}\) --- аксиома
+- \(\frac{\Gamma, x : A \vdassh M : B}{\Gamma \vdassh \lambda x. M : A \to B}\)
+- \(\frac{\Gamma \vdash M : A \to B \quad \Gamma \vdash N : A}{\Gamma \vdash MN : B}\)
+#+end_definition
+
+#+begin_remark org
+\(x : A\) --- \(x\) принадлежит типу \(A\).
+#+end_remark
+#+begin_remark org
+\(\Gamma\) --- конечный набор утверждений, которые говорят что какая-то
+переменная имеет какой-то тип.
+#+end_remark
+#+begin_remark org
+\(\Gamma \vdash N : A\) --- С использованием переменных из \(\Gamma\) можем
+построить терм \(N\) имеющий тип \(A\).
+#+end_remark
+
+
+
+#+begin_remark org
+В типизированном лямбда-исчислении функция типа \(A \to B\) --- функция
+высшего порядка, если \(A : C \to D\)
+#+end_remark
+
+#+begin_examp org
+#+begin_src haskell
+changeTwiceBy :: (Int -> Int) -> Int -> Int
+changeTwiceBy operation value = operation (operation value)
+#+end_src
+#+begin_src haskell
+changeTwiceBy :: (String -> String) -> String -> String
+changeTwiceBy operation value = operation (operation value)
+#+end_src
+Можем написать одну функцию для абстрактного типа ~a~:
+#+begin_src haskell
+changeTwiceBy :: (a -> a) -> a -> a
+changeTwiceBy operation value = operation (operation value)
+#+end_src
+#+end_examp
+
+** Система F
+#+begin_remark org
+Версия Curry:
+\[ \frac{\Gamma \vdash M : A}{\Gamma \vdash M : \vorall p. A} \quad p \not\in rng(\Gamma) \]
+\[ \frac{\Gamma \vdash M : \forall p. A}{\Gamma \vdassh M : A[p \coloneqq B]} \]
+#+end_remark
+#+begin_remark org
+Версия Church: \fixme
+\[ \frac{\Gamma, p \vdash M : A}{\Gamma \vdash \forall p. M : \forall p. A} \]
+\[ \frac{\Gamma \vdaash \forall p. A}{\Gamma \vdash M[B] : A[p \coloneqq B]}\]
+#+end_remark
+
+#+begin_remark org
+Система типов Хиндли-Миллера
+\[ \frac{\Gamma \vdash M : A}{\Gamma \vdash M : \forall \vec{p}. A} \quad \vec{p} \not\in rng(\Gamma) \]
+\[ \frac{\Gamma \vdash M : \forall p. A}{\Gamma \vdash M : A[p \coloneqq B]} \]
+\[ \frac{\Gamma, x : A \vdash M : B}{\Gamma \dash \lambda x. M : A \to B} \]
+, где \(A\) --- свободная от кванторов.
+#+end_remark
