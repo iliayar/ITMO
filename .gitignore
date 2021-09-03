@@ -67,3 +67,6 @@ target
 
 # Jenkins
 !Jenkinsfile
+
+# Cache
+.direnv
