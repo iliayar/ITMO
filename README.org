@@ -9,6 +9,7 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://iliaya
 * Year 3
 ** Term 5
 *** [[file:Term5/tm/README.org][Translation Methods]]
+*** [[file:Term5/fp/README.org][Functional Programming]]
 * Year 2
 ** Term 4
 *** [[file:Term4/matan/README.org][Mathematical analysis]]
