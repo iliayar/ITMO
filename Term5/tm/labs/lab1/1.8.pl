@@ -2,6 +2,5 @@ use warnings;
 use strict;
 
 while(<>) {
-    # FIXME
-    print if /\b\(.*\)\b/
+    print if /\W\((\w+\W*)+\)\W/
 }

@@ -2,5 +2,5 @@ use warnings;
 use strict;
 
 while(<>) {
-    print if /\b(\w+)\g1\b/
+    print if /^(0|(1(01*0)*1))*$/
 }
