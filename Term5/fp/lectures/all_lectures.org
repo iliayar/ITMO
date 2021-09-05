@@ -1,0 +1,6 @@
+#+TITLE: Лекции по Функциональному Програмированию 5 семестр
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: lectures
+
+* Лекция 0
+#+INCLUDE: "0.org" :lines "4-"
