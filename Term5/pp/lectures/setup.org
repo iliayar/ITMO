@@ -1,0 +1,2 @@
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_CLASS: general

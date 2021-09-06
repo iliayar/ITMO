@@ -1,0 +1,6 @@
+#+TITLE: Parallel Programming
+#+SETUPFILE: ../../level-subj.org
+
+* Lectures
+[[https://iliayar.ru/public-notes/conspects/Term5/pp/lectures/all_lectures.pdf][All lectures]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/pp/lectures/1.pdf][Lecture 1]]
