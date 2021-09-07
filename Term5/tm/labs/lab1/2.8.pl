@@ -2,6 +2,6 @@ use warnings;
 use strict;
 
 while(<>) {
-    s/([0-9]+)0/\1/g;
+    s/\b([1-9][0-9]*)0\b/\1/g;
     print;
 }

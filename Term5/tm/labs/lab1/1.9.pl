@@ -2,5 +2,5 @@ use warnings;
 use strict;
 
 while(<>) {
-    print if /^\S.*\S$/
+    print if /^(\S(.*\S)?)?$/
 }
