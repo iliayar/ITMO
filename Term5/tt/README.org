@@ -1,0 +1,6 @@
+#+TITLE: Type Theory
+#+SETUPFILE: ../../level-subj.org
+
+* Lectures
+[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/all_lectures.pdf][All lectures]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/0.pdf][Lecture 0]]
