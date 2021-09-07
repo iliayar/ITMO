@@ -1,0 +1,103 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 0
+#+date: 7 сентября
+
+* \lambda-исчисление
+#+begin_definition org
+- \(\lambda x. A\) --- абстракция
+- \((A B)\) --- применение (аппликация)
+- \(x\) --- переменная (атом)
+#+end_definition
+
+#+begin_remark org
+\(\lambda\) съедает все.
+#+end_remark
+
+#+begin_examp org
+\[ \lambda x. \color{blue}(\color{black} \lambda y. \color{blue}(\color{black}P\color{blue})\color{black}\color{blue})\color{black} \]
+#+end_examp
+
+#+begin_definition org
+\-
+1. \(T \coloneqq \lambda x. \lambda y. x\) --- истинна
+2. \(F \coloneqq \lambda x. \lambda y. y\) --- ложь
+3. \(\mathop{Not} \coloneqq \lambda p. p\ F\ P\)
+   \begin{examp}
+   \begin{align*}
+     \mathop{Not} F & \to_\beta \\
+     ((\lambda x. \lambda y. y)\ F)\ P & \to_\beta \\
+     (\lambda y. y)\ T & \to_\beta \\
+     T
+   \end{align*}
+   \end{examp}
+4. \(\mathop{And} \coloneqq \lambda a. (\lambda b. ((a\ b)\ F))\)
+#+end_definition
+
+#+begin_definition org
+*Черчевский нумерал* --- способ кодировать числа:
+- \(\overline{0} \coloneqq \lambda f. \lambda x. x\)
+- \(\overline{1} \coloneqq \lambda f. \lambda x. f\ x\)
+- \(\overline{3} \coloneqq \lambda f. \lambda x. f\ (f\ (f\ x))\)
+- \(\overline{n + 1} \coloneqq \lambda f. \lambda x. f\ (\overline{n}\ f\ x)\)
+- \((+1) \coloneqq \lambda n. \lambda f. \lambda x. n\ f\ (f\ x)\)
+- \((+) \coloneqq \lambda a. \lambda b. b\ (+1)\ a\)
+- \((\cdot) \coloneqq \lambda a. \lambda b. a\ ((+)\ b)\ \overline{0}\)
+#+end_definition
+
+#+begin_definition org
+\[ \pair{a, b} \xRightarrow{*} \pair{b, b + 1} \]
+\[ \pair{0, 0} \xRightarrow{*} \pair{0, 1} \xRightarrow{*} \pair{1, 2} \xRightarrow{*} \pair{2, 3} \]
+- \(\mathop{Pair} \coloneqq \lambda a. \lambda b. \underbrace{(\lambda p. p\ a\ b)}_{\pair{a, b}}\)
+#+end_definition
+
+** Типы
+#+begin_definition org
+\(M \vdash A : \tau\)
+- \(M\) --- контекст(функции с типами)
+#+end_definition
+
+#+begin_examp org
+\((+): \mathop{int} \to \mathop{int} \to \mathop{int}\)
+#+end_examp
+
+
+\beginproperties
+#+begin_property org
+\(\to_\beta\) --- сохраняет значения
+#+end_property
+#+begin_property org
+- \(Y \coloneqq \lambda f.(\lambda x.f\ (x\ x)) (\lambda x.f\ (x\ x))\) --- \(Y\)-комбинатор
+- \(\Omega \coloneqq (\lambda x. x\ x)\ (\lambda x. x\ x)\) --- \(\Omega\)-комбинатор
+#+end_property
+
+#+begin_remark org
+Решим уравнение \(f(A) = A\) --- неопдвижная точка. \(Y\)-комбинатор
+принимает функцию и взвращает неподвижную точку.
+#+end_remark
+
+#+begin_remark org
+_Требуется_:
+- \((\supset)\) --- импликация + аксиомы
+Докажем, что доказуемо любое утверждение.
+\[ Y (\lambda b. A \supset b) =_\beta A \supset Y(\lambda b. A \supset b) \]
+#+end_remark
+
+#+begin_examp org
+Чем интересен \(Y\) --- он позволяет делать рекурсию. Предположим хотим посчитать факториал.
+\[ \mathop{Fact}:\ n! = \begin{cases} 1 &, n = 0 \\ n\cdot(n-1)! & n > 0 \end{cases} \]
+\[ \mathop{Fact} = \lambda n. \mathop{If}\ (\mathop{IsZero}\ n)\ \overline{1}\ (\mathop{Fact}\ (n-1)) \cdot n \]
+- \(\mathop{If} x\ a\ b =_\beta x\ a\ b\)
+- \(\mathop{IsZero}\) --- ДЗ
+\[  Y\ (\lambda f. \lambda n. \mathop{If}\ (\mathop{IsZero}\ n)\ \overline{1}\ (f\ (n-1)) \cdot n) \]
+\todo
+#+end_examp
+
+#+begin_examp org
+\[ Y (\lambda f. \lambda x. f\ (mathop{Not}\ x)) \]
+\(Y\) --- находит решение даже самых странных уравнений. Запретим (Введем типы).
+#+end_examp
+
+#+begin_definition org
+Правила добропорядочных выражений:
+1. \[ \frac{}{\Gamma, x : \alpha \vdash x : \alpha} \]
+#+end_definition
