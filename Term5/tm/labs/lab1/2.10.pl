@@ -2,6 +2,6 @@ use warnings;
 use strict;
 
 while(<>) {
-    s/(a[^a]*a){3}/bad/g;
+    s/(aa|a([^a]|a(?!a))*a){2}(aa|a([^a])*a)/bad/g;
     print;
 }

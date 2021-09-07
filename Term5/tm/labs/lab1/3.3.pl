@@ -5,8 +5,8 @@ local $/;
 my $input = <STDIN>;
 my @links = ();
 
-while($input =~ /<a\s*href="([a-zA-Z0-9]+:\/\/)?([.a-zA-Z0-9]*)((:\d+)*)?[^"]*"\s*>/g) {
-    push @links, $2;
+while($input =~ /<a.*href\s*=\s*"(([a-zA-Z0-9+.-]+:)?\/\/)?((\w+)(:\w+)?@)?([.a-zA-Z0-9-]+\.[a-zA-Z0-9]+)(:\d+)?[^"]*".*>/g) {
+    push @links, $6;
 }
 
 my @unique = ();
