@@ -1,0 +1,15 @@
+#+setupfile: setup.org
+#+TITLE: ДЗ 1
+#+date: 14 сентября
+
+* 1
+** a
+\[ \lambda z. \lambda x. a b c \lambda y. d e f \]
+\[ \Downarrow \]
+\[ \lambda z. (\lambda x. (((a b) c) (\lambda y. ((d e) f)))) \]
+** b
+\[ (\lambda f. ((\lambda x. (f (f (x (\lambda z. (z s)))))) z)) \]
+\[ \Downarrow \]
+\[ \lambda f. (\lambda x. f (f (x \lambda z. z s))) z \]
+
+
