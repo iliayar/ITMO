@@ -2,6 +2,9 @@
 #+TITLE: ДЗ 1
 #+date: 14 сентября
 
+#+LATEX_HEADER_EXTRA: \newcommand{\Not}{\mathop{Not}}
+#+LATEX_HEADER_EXTRA: \newcommand{\And}{\mathop{And}}
+
 * 1
 ** a
 \[ \lambda z. \lambda x. a b c \lambda y. d e f \]
@@ -12,4 +15,41 @@
 \[ \Downarrow \]
 \[ \lambda f. (\lambda x. f (f (x \lambda z. z s))) z \]
 
+* 2
+** a
+\begin{align*}
+  T\ F & \to_\beta \\
+  (\lambda a. \lambda b. a) (\lambda a. \lambda b. b) & \to_\beta \\
+  (\lambda b. \lambda a. \lambda c. c)
+\end{align*}
+** b
+\begin{align*}
+  (T\ \Not\ (\lambda t. t))\ F & \to_\beta \\
+  ((\lambda a. \lambda b. a)\ (\lambda x. x\ F\ T) (\lambda t. t))\ (\lambda a. \lambda b. b) & \to_\beta \\
+  ((\lambda b. \lambda x. x\ F\ T)\ (\lambda t. t))\ (\lambda a. \lambda b. b) & \to_\beta \\
+  (\lambda x. x\ F\ T) (\lambda a. \lambda b. b) & \to_\beta \\
+  (\lambda a. \lambda b. b)\ F\ T & \to_\beta \\
+  T & \to_\beta \\
+  \lambda a. \lambda b. a
+\end{align*}
+** c
+\begin{align*}
+  \And\ (\And\ F\ F)\ T & \to_\beta \\
+  (\lambda x. \lambda y. x\ y\ F)\ (\And\ F\ F)\ T & \to_\beta \\
+  (\And\ F\ F)\ T\ F & \to_\beta \\
+  ((\lambda x. \lambda y. x\ y\ F)\ F\ F)\ T\ F & \to_\beta \\
+  (F\ F\ F)\ T\ F & \to_\beta \\
+  ((\lambda a. \lambda b. b)\ F\ F)\ T\ F & \to_\beta \\
+  F\ T\ F & \to_\beta \\
+  (\lambda a. \lambda b. b)\ T\ F & \to_\beta \\
+  F & \to_\beta \\
+  \lambda a. \lambda b. b
+\end{align*}
+* 3
+** a
+\[ \mathop{Or} = \lambda x. \lambda y. x T y \]
+** b
+\[ (`) = \lambda x. \lambda y. \Not (\And\ x\ y) \]
+** c
+\[ \mathop{Xor} = \lambda x. \lambda y.  \]
 
