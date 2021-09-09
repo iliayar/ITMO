@@ -1,2 +1,4 @@
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_CLASS: general
+#+LATEX_HEADER_EXTRA: \newcommand{\FIRST}{\mathop{\rm FIRST}}
+#+LATEX_HEADER_EXTRA: \newcommand{\FOLLOW}{\mathop{\rm FOLLOW}}
