@@ -1,0 +1,9 @@
+T = \a. \b. a;
+F = \a. \b. b;
+MkPair = \a. \b. (\x. x a b);
+PrL = \p. p T;
+PrR = \p. p F;
+
+Minus1 = \n. \f. \x. PrL (n (\p. (PrR p) (MkPair (f (PrL p)) T) (MkPair (PrL p) T)) (MkPair x F));
+Minus = \a. \b. b Minus1 a
+
