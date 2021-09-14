@@ -156,3 +156,22 @@
 \end{align*}
 Это ленивое вычисление
 #+end_examp
+
+* Про Y-комбинатор
+\[ Y\ f =_\beta f\ (Y\ f) =_\beta f\ (f\ (Y\ f)) =_\beta \dots =_\beta f^{(n)}\ (Y\ f) \]
+\[ Y\ \overbrace{(\lambda f. \lambda x.  x)}^{\varphi} =_\beta \varphi\ (Y\ \varphi) \]
+
+#+begin_task org
+Дз 8.g
+#+end_task
+#+begin_solution org
+\[ (Y \lambda f. \lambda a. \lambda b. \lambda n. (\mathop{IsZero}\ n) a (f\ b\ (a + b)\ (n - 1)))\ 1\ 1 \]
+#+begin_src haskell
+fib a b n =
+  if n = 0 then a
+  else fib b (a + b) (n - 1)
+#+end_src
+#+end_solution
+
+
+
