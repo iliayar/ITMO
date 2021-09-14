@@ -1,3 +1,4 @@
+K = \a. \x. a;
 T = \a. \b. a;
 F = \a. \b. b;
 MkPair = \a. \b. (\x. x a b);
@@ -5,5 +6,7 @@ PrL = \p. p T;
 PrR = \p. p F;
 
 Minus1 = \n. \f. \x. PrL (n (\p. (PrR p) (MkPair (f (PrL p)) T) (MkPair (PrL p) T)) (MkPair x F));
-Minus = \a. \b. b Minus1 a
+Minus = \a. \b. b Minus1 a;
 
+IsZero = \n. n (K F) T;
+Fib = (Y \f. \a. \b. \n. (IsZero n) a (f b (a + b) (n - 1))) 1 1;
