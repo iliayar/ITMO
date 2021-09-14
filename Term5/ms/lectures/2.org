@@ -2,19 +2,155 @@
 #+TITLE: Лекция 2
 #+date: 13 сентября
 
-\todo
+\[ \X = (\X_1, \dots, \X_n) \]
 
-#+begin_theorem org
-Не существует эффективной оценки в классе всех возможных оценок
-#+end_theorem
+#+begin_definition org
+*Статистикой* называется измеримая функция:
+\[ \Theta^* = \Theta^* (\X_1, \dots, \X_n) \]
+#+end_definition
 
-#+begin_theorem org
-В классе не смещенных оценок существует эффективная оценка
-#+end_theorem
+#+begin_remark org
+Пусть требуется найти оценку параметра \(\Theta\) случайную величины \(\X\) по данной выборке. Оценку будет считать с помощьью некоторой статистики:
+\[ \Theta^* = \Theta^* (\X_1, \dots, \X_n) \]
+#+end_remark
+
+* Свойства статистических оценок
+
+1. _Состоятельность_
+   #+begin_definition org
+   Статистика \(\Theta^*\) называется *состоятельной оценкой* параметра \(\Theta\), если
+   \[ \Theta^* \xrightarrow{p} \Theta\text{ при } n \to \infty \]
+   #+end_definition
+2. _Несмещенность_
+   #+begin_definition org
+   Статистика \(\Theta^*\) называется несмещенной оценкой параметра \(\Theta\), если
+   \[ E\Theta^* = \Theta \]
+   #+end_definition
+
+   #+begin_remark org
+   С равной вероятностью можем ошибиться как в меньшую так и в большую
+   сторону. Нет систематической ошибки.
+   #+end_remark
+
+   #+begin_definition org
+   Статистика \(\Theta^*\) называется *асимптотически несмещенной*, если
+   \[ \E\Theta^* \xrightarrow{}[n \to \infty] \Theta \]
+   #+end_definition
+3. _Эффективность_
+   #+begin_definition org
+   Оценка \(\Theta_1^*\) *не хуже* \(\Theta_2^*\), если
+   \[ E(\Theta_1^* - \Theta) \le E(\Theta_2^* - \Theta) \]
+   или оценки несмещенные
+   \[ D\Theta_1^* \le D\Theta_2^* \]
+   #+end_definition
+
+   #+begin_definition org
+   Оценка \(\Theta^*\) называется *эффективной* если она не хуже всех
+   остальных оценок.
+   #+end_definition
+
+   #+begin_theorem org
+   Не существует эффективной оценки в классе всех возможных оценок
+   #+end_theorem
+   
+   #+begin_theorem org
+   В классе не смещенных оценок существует эффективная оценка
+   #+end_theorem
 
 * Точечные оценки моментов
 #+begin_definition org
-*Выборочным средним* \(X_c\) называется величина равная среднему арифметическому данных
+*Выборочным средним* \(\overline{\X_c }\) называется величина равная среднему арифметическому данных
+\[ \overline{\X_c} = \frac{1}{n} \sum_{i = 1}^n \X_i \]
 #+end_definition
 
+#+begin_definition org
+*Выборочная дисперсией* \(D_c\) называется величина
+\[ D_c = \frac{1}{n} \sum_{i = 1}^n (\X_1 - \X_c)^2 \]
+#+end_definition
+
+#+begin_definition org
+*Исправленной выборочной дисперсией* \(S^2\) называется величина
+\[ S^2 = \frac{n}{n - 1}D_c \]
+#+end_definition
+
+#+begin_definition org
+*Выборочным средним квадратическим отклонением* \(\sigma_c\) называется велиична:
+\[ \sigma_c = \sqrt{D_c} \]
+#+end_definition
+
+#+begin_definition org
+*Исправленным выборочным средним квадратическим отклонением* называется величина:
+\[ S = \sqrt{S^2} \]
+#+end_definition
+
+#+begin_definition org
+*Выборочным \(k\)-ым моментом* называется величина
+\[ \overline{\X^k} = \frac{1}{n} \sum_{i = 1}^n \X_i^k \]
+#+end_definition
+
+#+begin_definition org
+*Модой* \(M_0^*\) называется величина с наибольшей частотой
+#+end_definition
+
+#+begin_definition org
+*Медианой* \(\mathop{Me}^*\) вариационного ряда называется значение варианты в середине
+ ряда. Если число четное, то берем среднее от средних.
+#+end_definition
+
+#+begin_theorem org
+\(\overline{\X_c}\) является несмещенной состоятельной оценкой для
+математического ожидания
+1. \(E\overline{\X_c} = E\X = a\) --- несмещенность
+2. \(\overline{\X_c} \xrightarrow{p}[n \to \infty] E\X = a\)
+#+end_theorem
+#+begin_proof org
 \todo
+#+end_proof
+
+#+begin_theorem org
+\(\overline{\X^k}\) является несмещенной состоятельной оценкой для теоретического \(k\)-го момента
+1. \(E\overline{\X^k} = E\X^k = m_k\) --- несмещенность
+2. \(\overline{\X^k} \xrightarrow{p} E \X^K = m_k\) --- состоятельность
+#+end_theorem
+
+#+begin_theorem org
+\(D_c\) и \(S^2\) являются состоятельными оценками для дисперсии
+1. \(D_c\) --- смещенная оценка
+2. \(S^2\) --- несмещенная оценка
+#+end_theorem
+#+begin_proof 
+\todo
+#+end_proof
+
+#+begin_remark org
+Пусть имеется выборка \((\X_1, \dots, \X_n)\) неизвестного распределения,
+знаем тип распределения. Пусть этот тип определяется \(k\)
+неизвестными параметрами. Теоретическое распределение задает теоретический \(k\)-тый момент. /Например, если распределение непрерывное, то оно задается плотность/:
+\[ f(\X, \Theta_1, \dots, \Theta_k) \text{ и } m_k = \int^\infty_{-\infty} \X^k f(\X, \Theta_1, \dots, \Theta_k) d\X = f_k(\Theta_1, \dots, \Theta_k)\]
+Метод моментов состоит в следующем: вычисляем выборочные моменты и подставляем их в уравнение вместо теоретичских. В результате получаем систему уравнений:
+\begin{center}
+\begin{cases}
+\overline{\X} = f_1(\Theta_1, \dots, \Theta_k) \\
+\overline{\X}^2 = f_2(\Theta_1, \dots, \Theta_k) \\
+\vdots \\
+\overline{\X}^k = f_k(\Theta_1, \dots, \Theta_k) \\
+\end{cases}
+\end{center}
+Решив эту систему получим оценки параметров \(\Theta_1, \dots, \Theta_k\). При этом
+как правило получаем оценки состоятельные но смещенные
+#+end_remark
+
+#+begin_examp org
+Пусть случайная величина \(\X \in U(a, b)\), \(a < b\). Обработав стат. данные получили оценки:
+\[ \overline{\X} = 2.25 \quad \overline{X}^2 = 6.75 \]
+#+end_examp
+#+begin_solution org
+\[ f(x) = \begin{cases} 0 &, x < a \\ \frac{1}{b - a} & , a \le x \le b \\ 0 & , x > b \end{cases} \]
+\[ E\X = \int_a^b \X f(\X) d\X = \dots = \frac{a + b}{2} \]
+\[ E\X^2 = \int_a^b \X^2 \frac{1}{b - a}d\X = \dots = \frac{a^2 + ab + b^2}{3} \]
+\[ \begin{cases} 2.25 = \frac{a + b}{2} \\ 6.75 = \frac{a^2 + ab + b^2}{3} \end{cases}
+\Leftrightarrow \dots \Leftrightarrow \begin{cases} b = 4.5 \\ a = 0 \end{cases} \]
+
+#+end_solution
+
+
