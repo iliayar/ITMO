@@ -1,0 +1,36 @@
+#+setupfile: setup.org
+#+TITLE: Практика 2
+#+date: 15 сентября
+
+| \(X_i\) | \(X_1\) | \(X_2\) | \(\dots\) | \(X_n\) |
+|---------+---------+---------+-------+---------|
+| \(m_i\) | \(m_1\) | \(m_2\) | \(\dots\) | \(m_n\) |
+
+\[ \overline{X} = \frac{1}{n} \sum_{i = 1}^k X_im_i \]
+\[ D_c = \fraac{1}{n} \sum_{i - 1}^k (X_i - \overline {X}) m_i \]
+\[ \overline{X^k} = \frac{1}{n} \sum_{i = 1}^k X_i^k m_i \]
+
+* Точные зарактеристика по исходным данным ~Excel~
+- \(\overline{X} = \) ~AVERAGE~
+
+* Метод моментов
+#+begin_task org
+Из теории известно что случайная величина имеет показательное
+распределение. По стат. данным нашли \(\overline{X} = 2.54\). Найти
+функцию распределения, будет ли эта оценка смещенной, если да то в
+какую сторону.
+#+end_task
+#+begin_solution org
+\[ E\X = \frac{1}{\alpha} \]
+\[ \alpha^* = \frac{1}{\overline{X}} \]
+\(\overline{X}\) --- несмещенная оценка, т.е. \(E\overline{X} = E\X\)
+\[ E\alpha^* = E\fraac{1}{\overline{X}} \ge \fraac{1}{E\overline{X}} = \frac{1}{EX} = \alpha \]
+#+end_solution
+
+#+begin_task org
+Случайная величина имеет \(\Gamma_{\alpha, \lambda}\). \(\overline{X} = 5.4\),
+\(\overline{X^2} = 32.25\). Найти оценки параметров \(\alpha, \lambda\).
+\[ \begin{cases} E\X = \frac{\lambda}{\alpha} \\ D\X = \frac{\lambda}{\alpha^2} \end{cases} \]
+\[ \alpha^* = \frac{\overline{X}}{\overline{X^2} - \overline{X}^2} = \frac{5.4}{32.25 - 5.4^2} \approx 1.7476 \]
+\[ \lambda^* = \overline{X} \cdot \alpha^* = 5.4 * 1.7476 = 9.4369 \]
+#+end_task

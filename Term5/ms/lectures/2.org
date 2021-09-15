@@ -34,7 +34,7 @@
 
    #+begin_definition org
    Статистика \(\Theta^*\) называется *асимптотически несмещенной*, если
-   \[ \E\Theta^* \xrightarrow{}[n \to \infty] \Theta \]
+   \[ \E\Theta^* \xrightarrow[n \to \infty]{} \Theta \]
    #+end_definition
 3. _Эффективность_
    #+begin_definition org
