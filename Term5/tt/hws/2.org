@@ -1,0 +1,5 @@
+#+setupfile: setup.org
+#+TITLE: ДЗ 2
+#+date: 21 сентября
+
+
