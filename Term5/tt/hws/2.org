@@ -2,4 +2,12 @@
 #+TITLE: ДЗ 2
 #+date: 21 сентября
 
-
+* 7
+** a
+\[ \mathop{Length} = Y\ \lambda f. \lambda l. \mathop{Case}\ I\ ( \lambda p. \mathop{Add1}\ (f\ (\mathop{PrR}\ p)))\ l \]
+** b
+\[ \mathop{\rm NList} = (Y\ \lambda f. \lambda i. \lambda n. \mathop{\rm If}\ ( \mathop{\rm IsZero}\ ( \mathop{\rm Minus}\ n\ i))\ \mathop{\rm Nil}\ ( \mathop{\rm Cons}\ i\ (f\ ( \mathop{\rm Add1}\ i)\ n)))\ 0 \]
+** c
+\[ \mathop{\rm Reverse} = (Y\ \lambda f. \lambda h. \lambda r. \mathop{\rm Case}\ (K\ h)\ ( \lambda p. f\ ( \mathop{\rm Cons}\ ( \mathop{\rm PrL}\ p)\ h)\ ( \mathop{\rm PrR}\ p))\ r)\ \mathop{\rm Nil} \]
+** d
+\[ \mathop{\rm Map} = T \lambda f. \lambda g. \lambda l. \mathop{\rm Case}\ (K\ \mathop{\rm Nil})\ ( \lambda p. \mathop{\rm Cons}\ (g\ ( \mathop{\rm PrL}\ p))\ (f\ g\ ( \mathop{\rm PrR}\ p)))\ l \]
