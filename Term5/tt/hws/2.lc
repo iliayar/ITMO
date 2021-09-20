@@ -1,6 +1,7 @@
 Add1 = \n. \f. \x. f (n f x);
 I = \x. x;
 K = \x. \y. x;
+S = \x. \y. \z. x z (y z);
 
 T = \a. \b. a;
 F = \a. \b. b;
@@ -28,6 +29,8 @@ Tail = Case (K F) PrR;
 Ith = Y \f. \i. \l. Case (K F) (\p. If (IsZero i) (PrL p) (f (Minus1 i) (PrR p))) l;
 
 TestList = Cons 1 (Cons 2 (Cons 3 Nil));
+
+Pow = \a. \b. b a;
 
 Length = Y \f. \l. Case I (\p. Add1 (f (PrR p))) l;
 NList = (Y \f. \i. \n. If (IsZero (Minus n i)) Nil (Cons i (f (Add1 i) n))) 0;

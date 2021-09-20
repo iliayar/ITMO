@@ -1,0 +1,6 @@
+S = \x. \y. \z. x z (y z);
+K = \x. \y. x;
+I = \x. x;
+
+F = K I;
+SK1 = S (K I);
