@@ -4,4 +4,4 @@
 * Lectures
 [[https://iliayar.ru/public-notes/conspects/Term5/fp/lectures/all_lectures.pdf][All lectures]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/fp/lectures/0.pdf][Lecture 0]]
-- [[https://slides.com/fp-ctd/lecture-1/fullscreen#/1/0/2][Lecture 1]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/fp/lectures/4.pdf][Lecture 4]]
