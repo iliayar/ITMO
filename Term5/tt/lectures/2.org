@@ -1,0 +1,110 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 3
+#+date: 21 сентября
+
+* Просто типизированное \lambda-исчисление
+\[ \Phi_A =_\beta A \supset \Phi_A \]
+\[ Y\ (\lambda f. \lambda a. a \supset f\ a) \]
+\[ (A \supset (A \supset B)) \supset (A \supset B) \quad\text{\color{gray}(Из ИВ)} \]
+
+#+begin_remark org
+Если \(X =_\beta Y\), то \(X \supset Y\)
+#+end_remark
+
+#+begin_examp org
+Парадокс
+\begin{array}{lll}
+  1. & \Phi_A \supset \Phi_A &  \\
+  2. & \Phi_A \supset (\Phi_A \supset A) & \\
+  3. & \Phi_A \supset (\Phi_A \supset A) \supset (\Phi_A \supset A) & \\
+  4. & \Phi_A \supset A  & \\
+  5. & (\Phi_A \supset A) \supset \Phi_A &  \\
+  6. & \Phi_A &
+\end{array}
+#+end_examp
+
+#+begin_definition org
+*Типовые переменные*:
+- \(\alpha, \beta, \gamma\) --- атомарные
+- \(\tau, \sigma\) --- составные
+*Тип*: \(\tau ::= (\tau \to \tau)\ |\ \alpha\) \\
+_Следует_:
+- 2 традиции:
+  1. Исчисление по Черчу
+  2. Исчисление по Карри
+#+end_definition
+** Исчисление по Карри
+#+begin_definition org
+\-
+- \(\Gamma \vdash A: \tau\) (\(\Gamma \vdassh A^\tau\)), где \(\Gamma\) --- \(\{x_1: \tau_1,\ x_2:\tau_2, \dots\}\)
+- правила:
+  1. \[ \frac{}{\Gamma, x_1: \tau_1 \vdash x_1:\tau_1} \quad x_1 \not\in Fv(\Gamma) \quad \text{(Ax.)} \]
+  2. \[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B: \sigma}{\Gamma \vdash A\ B : \tau} \]
+  3. \[ \frac{\Gamma, x: \tau \vdassh A : \sigma}{\Gamma \vdash \lambda x. A : \tau \to \sigma} \]
+#+end_definition
+
+#+begin_examp org
+\[ \lambda f. \lambda x. f\ (f\ x) : (\alpha \to \alpha) \to \alpha \to \alpha \]
+- \(x: \alpha\)
+- \(f: \alpha \to \alpha\)
+_Доказательство_:
+\[ \frac{\displaystyle\frac{\displaystyle \frac{\displaystyle \frac{}{f: \alpha \to \alpha \vdash f: \alpha \to \alpha} \quad \frac{\displaystyle \frac{}{\Gamma \vdash f: \alpha \to \alpha} \quad \frac{}{\Gamma \vdash x : \alpha}}{\Gamma \vdash f\ x : \alpha}}{f: \alpha \to \alpha, x: \alpha \vdash f\ f(f\ x) : \alpha}}{f: \alpha \to \alpha \vdash \lambda x. f\ (f\ x) : \alpha \to \alpha}}{\vdash \lambda f. \lambda x.\ f\ (f\ x) : (\alpha \to \alpha) \to \alpha \to \alpha} \]
+#+end_examp
+#+begin_examp org
+\[ \Omega = (\lambda x. x\ x)\ (\lambdax.x\ x) \]
+Применимо только правило 2. Не имеет типа
+#+end_examp
+#+begin_theorem org
+Если \(\Gamma \vdash A:\tau\), то любое подвыражение имеет тип
+#+end_theorem
+#+begin_proof org
+Рассмотрим случай: если выражение типизируется, значит используется одно из правил:
+1. \(\Gamma \vdash A:\tau\) используется 1 правило \(\frac{}{\Gamma, a:\tau \vdash a:\tau}\)
+_Переход_: \\
+пусть любое выражение короче \(n\) символов обладает
+свойством. Покажем что этим свойством обладает выражение \(A\) длины
+\\
+\todo
+#+end_proof
+#+ATTR_LATEX: :options [Subject reduction]
+#+begin_theorem org
+\(\Gamma \vdash A: \sigma\) и \(A \twoheadrightarrow_\beta B\) \\
+_Тогда_ \(\Gamma \vdash B: \sigma\)
+#+end_theorem
+#+begin_proof org
+\(A \to_\beta B\)
+случаи:
+1. \(\lambda x. A \to \lambda x. B\)
+2. \(A\ B \to A'\ B'\)
+3. \((\lambda x. A)\ B \to A[x \coloneqq B]\)
+#+end_proof
+
+#+ATTR_LATEX: :options [Черча-Россера]
+#+begin_theorem org
+Если \(\Gamma \vdaash M:\sigma\) и:
+- существуют \(N, P:\)
+  \[ M \twoheadrightarrow_\beta N \quad \Gamma \vdash N : \sigma \]
+  \[ M \twoheadrightarrow_\beta P \quad \Gamma \vdash P : \sigma \]
+_Тогда_ найдется такой \(S\), что \(\Gamma \vdash S :\sigma\) и \(N \twoheadrightarrow_\beta S\) и \(P \twoheadrightarrow_\beta S\)
+#+end_theorem
+** Исчисление по черчу
+#+begin_definition org
+\(\Gamma \vdash_4 A : \tau\)
+Язык:
+- \(x\) --- переменная
+- \(A\ B\) --- аппликация
+- \(\lambda x^\tau. P\) --- абстракция
+#+end_definition
+#+begin_theorem org
+Если конекст \(\Gamma\) и выражение \(P\) типизируется, то \(\Gamma \vdash_4 P: \sigma\)
+#+end_theorem
+#+begin_examp org
+\[\vdash_C \lambda x. x : \alpha \to \alpha (\beta \to \beta)\]
+\[ \vdash_4 \lambda x. x : \sigma \to \sigma \]
+#+end_examp
+
+#+begin_examp org
+\[ \lambda f. \lambda x. f\ (f\ x) : \substack{(\alpha \to \alpha) \to (\alpha \to \alpha) \\ (\beta \to \beta) \to (\beta \to \beta)} \]
+\[ \lambda f^{\alpha \to \alpha}. \lambda x.^\alpha. f\ (f\ x) : (\alpha \to \alpha) \to (\alpha \to \alpha) \]
+
+#+end_examp
