@@ -1,0 +1,100 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 3
+#+date: 16 сентября
+
+
+* Хвостовая рекурсия
+#+begin_examp org
+\-
+\begin{center}
+\begin{array}
+  A \to A \alpha \\
+  A \to \beta
+\end{array}
+\end{center}
+\[ \Downarrow \]
+\begin{center}
+\begin{array}
+  A \to \beta A' \\
+  A' \to \alpha A' \\
+  A' \to \varepsilon
+\end{array}
+\end{center}
+#+ATTR_LATEX: :options escapeinside=@@
+#+begin_src python
+def A():
+    res = Node(A)
+    switch(token):
+        case FIRST1(@\(\beta_1\)@):
+            # $\vdots$
+        case FIRST1(@\(\beta_2\)@):
+            # $\vdots$
+        # $\vdots$
+        cur = Node(A)
+        res.add(cur)
+        while token @\(\in\)@ FIRST1(@\(\alpha_i\)@):
+            switch(token):
+                cur.add(@\(\dots\)@)
+                # $\vdots$
+#+end_src
+#+end_examp
+
+* Управляющая таблица
+\(\Gamma\) --- \(LL(1)\) \\
+\todo
+#+begin_examp org
+\-
+\begin{center}
+  \begin{array}{ll}
+    (1) & E \to E' \\
+    (2) & E' \to +TE' \\
+    (3) & E' \to \varepsilon \\
+    (4) & T \to FT' \\
+    (5) & T' \to \cdot F T' \\
+    (6) & T' \to \varepsilon \\
+    (7) & F \to n \\
+    (8) & F \to (E)
+  \end{array}
+\end{center}
+| /      | <        | <            |
+|        | FIRST    | FOLLOW       |
+|--------+----------+--------------|
+| \(E\)  | \((,n\)  | \(), \$\)    |
+| \(E'\) | \(+,\varepsilon\)  | \(), \$\)    |
+| \(T\)  | \((, n\) | \(+,),\$\)   |
+| \(T'\) | \(\cdot, \varepsilon\) | \(_, ), \$\) |
+| \(F\)  | \((,n\)  | \(\cdot,+,),\$\) |
+
+
+|        | \(n\) | \(+\) | \(\cdot\) | \((\) | \()\) | \(\$\) |
+| \(E\)  |     1 |       |       |     1 |       |        |
+| \(E'\) |       |     2 |       |       |     3 |      3 |
+| \(T\)  |     4 |       |     4 |       |       |        |
+| \(T'\) |       |     6 |     5 |       |     6 |      6 |
+| \(F\)  |     7 |       |       |     8 |       |        |
+
+#+begin_src python
+def E() -> int:
+    res = T()
+    while token == '+':
+        nextToken()
+        res += T()
+    return res
+#+end_src
+#+begin_src python
+ def E() -> int:
+     res = T()
+     res = E_(res)
+     return res
+def E_(acc: int) -> int:
+    if token == '+':
+        nextToken()
+        t = T()
+        acc += t
+        res = E_(acc)
+    elif token == ')' or token == '$':
+        res = acc
+    return res
+#+end_src
+
+#+end_examp
