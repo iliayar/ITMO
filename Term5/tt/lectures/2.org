@@ -13,12 +13,14 @@
 
 #+begin_examp org
 Парадокс
-\begin{align*}
- (A \supset (A \supset \Phi_A)) & \supset (A \supset \Phi_A) \\
- (A \supset \Phi_A) & \supset (A \supset (A \supset \Phi_A) \quad\color{gray} (\beta\text{ экв.}) \\
- (A \supset \Phi_A) & \supset \Phi_A \\
- & \fixme
-\end{align*}
+\begin{array}{lll}
+  1. & \Phi_A \supset \Phi_A &  \\
+  2. & \Phi_A \supset (\Phi_A \supset A) & \\
+  3. & \Phi_A \supset (\Phi_A \supset A) \supset (\Phi_A \supset A) & \\
+  4. & \Phi_A \supset A  & \\
+  5. & (\Phi_A \supset A) \supset \Phi_A &  \\
+  6. & \Phi_A &
+\end{array}
 #+end_examp
 
 #+begin_definition org
