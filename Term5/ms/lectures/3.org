@@ -1,0 +1,109 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 3
+#+date: 20 сентября
+
+* Метод масимального правдоподобия
+Состоит в том, чтобы подобрать параметр таким образом, чтобы
+вероятность получения данной выборки была наибольшая. Если
+распределение дискретное, то вероятность выборки
+\[P_\theta(\X_1 = x_1, \X_2 = x_2, \dots, \X_n = x_n) = P_\theta(\X_1 = x_1)P_\theta(\X_2 = x_2)\dots P_\theta(\X_n = x_n)\]
+#+begin_definition org
+*Функцией правдоподобия* \(L(\overline{X}, \theta)\) называется функция
+\[ P_\theta(\X_1 = x_1)\dots P_\theta(\X_n = x_n)\text{ --- в случае дискретного распределения} \]
+\[ f_\theta(x_1)\dots f_\theta(x_n) = \prod_{i = 1}^n f_\theta(x_n) \text{ --- в сулчае абсолютно непрерывного распределения} \]
+#+end_definition
+#+begin_definition org
+*Логарифмической функцией правдоподобия* \(M(\overline{X})\) называется функция
+\[ \ln L(\overline{X}) \]
+#+end_definition
+
+#+begin_remark org
+Так как логарифм -- возрастающая функция, то экстремумы этих функций
+совпадают.
+#+end_remark
+
+#+begin_definition org
+*Оценкой максимального правдоподобия* \(\hat{\Theta}\) называется значение \(\Theta\)
+ при котором функция правдоподобия достигает наибольшего значения при
+ фиксированных значениях выборки \(x_i\)
+#+end_definition
+#+begin_examp org
+Пусть \(\X_1, \dots, \X_n\) --- выборка неизвестного распределения
+Пуассона с параметром \(\lambda\).
+\[ P(\X = x_i) = \frac{\lambda^{x_i}}{x_i!}\cdot e^{-\lambda} \]
+\[ L(\overline{X}) = \prod_{i = 1}^n \frac{\lambda^{x_i}}{x_i!} \cdot e^{-\lambda} = \]
+\[ \frac{n \cdot \overline{X}}{\lambda} - n = 0 \implies \lambda = \overline{X} \]
+\[ \hat{\Theta} = \overline{X} \]
+#+end_examp
+#+begin_examp org
+\(f_{a,\sigma^2} = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x - a)^2}{\sigma^2}}\)
+\[ a = \overline{X} \quad \sigma^2 = D_c \]
+#+end_examp
+#+begin_examp org
+Пусть \(\X_1, \dots, \X_n\) --- выборка равномерного распределения
+вида. \(X \in U(0, \Theta)\), \(\Theta > 0\). Найти оценки \(\Theta\) методами
+моментов и максимального правдоподобия и сравнить их.
+\[ EX = \frac{a + b}{2} = \frac{\Theta}{2} \implies \hat{\Theta} = 2 \overline{X} \]
+\[ f_\Theta(x) = \begin{cases} 0 & x < 0 \\ \frac{1}{\Theta} & 0 \le x \le \Theta \\ 0 & x > \Theta \end{cases} \]
+\[ L(\overline{X}, \Theta) = \prod_{i = 1}^n f_\Theta(x) = \begin{cases} 0 & \Theta < \max(x_i) = \X_m \\ \frac{1}{\Theta^n} & \text{иначе} \end{cases} \]
+Ясно, что функция \(L(\overline{X} ,\Theta)\) достигает наибольшего значения при \(\Theta = \X_m\)
+#+end_examp
+
+\todo
+
+#+begin_remark org
+ОМП часто эффективны, но могут быть смещенные.
+#+end_remark
+
+* Неравенство Раво-Крамера
+
+Пусть известно что случайная величина \(\X \in F_\Theta\) --- семейство
+распределений с параметром \(\Theta\)
+#+begin_definition org
+*Носителем* семейства распределений \(F_\Theta\) называется множество \(C \in \R\) такое что \(\forall \Theta:\ P(\X \in C) = 1\)
+#+end_definition
+#+begin_symb org
+\[ f_\Theta(x) = \begin{cases} f_\Theta(x) & \text{плотность, если распределение абсолютно непрерывное} \\ P_\Theta(\X = x) & \text{если распределние дискретное} \]
+#+end_symb
+#+begin_definition org
+*Информацией Фишера* называется величина
+\[ I(\Theta) = E(f_\Theta\cdot \ln f_\Theta(x))' \]
+при условии если она существует.
+#+end_definition
+
+#+begin_definition org
+Семейство распределений \(F_\Theta\) называется *регулярным*, если:
+1. Существует носитель \(C\) семейства \(F_\Theta\) такой, что \(\forall x \in C\) функция \(\ln f_\Theta(x)\) --- непрерывно дифференцируема по \(\Theta\)
+2. Информация Фишера \(I(\Theta)\) существует и непрерывна по \(\Theta\)
+#+end_definition
+
+#+ATTR_LATEX: :options [Неравенство Раво-Крамера]
+#+begin_theorem org
+Пусть \((\X_1, \dots, \X_n)\) --- выборка объема \(n\) из регулярного
+семейства распределений \(F_\Theta\), \(\Theta^* = \Theta^*(\X_1, \dots, \X_n)\) ---
+несмещенная оценка параметра \(\Theta\), дисперсия которой ограничена на
+любом компакте в области \(\Theta\). _Тогда_
+\[D\Theta^* \ge \frac{1}{n I(\Theta)} \]
+#+end_theorem
+
+#+begin_examp org
+Пусть \((\X_1, \dots, \X_n)\) --- \(\X \in N(a, \sigma^2),\ a \in \R, \sigma^2 >
+0\). Проверим эффективность оценки \(a^* = \overline{X}\).
+\[ f(x) = \frac{\sigma \sqrt{2\pi}}e^{-\frac{(x - a)^2}{\sigma^2}} \]
+Возьмем \(C = (-\infty, +\infty)\).
+\[ \ln f(x) = \ln \sigma - \frac{1}{2}\ln - \frac{(x - a)^2}{\sigma^@} \]
+\[ \frac{\partial}{\partial a} \ln f(x) = \frac{x - a}{\sigma} \]
+--- непрерывна по \(a\), \(\forall a \in \R\).
+\[ I(a) = E(\frac{\partial}{\partial a}\ln f(x))' = \frac{1}{\sigma^2} \]
+--- непрерывна по \(a\)
+\[ Da^* = D\overline{X} = \frac{1}{a} D\X = \frac{\sigma^2}{a} \]
+\[ Da^* = \frac{\sigma^2}{a} = \frac{1}{n I(a)} = \frac{1}{n \cdot \frac{1}{\sigma^2}} = \frac{\sigma^2}{a} \]
+\(\implies a^* = \overline{X}\)
+#+end_examp
+
+#+begin_remark org
+Исправленная дисперсия \(S^2\) также является эффективной оценкой для \(\sigma^2\). \\
+BLUE - оценки
+\[ \THeta^* = \alpha_1 X_1 + \alpha_2 X_2 + \dots + \alpha_n X_n \]
+
+#+end_remark

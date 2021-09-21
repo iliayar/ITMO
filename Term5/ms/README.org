@@ -5,5 +5,6 @@
 [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/all_lectures.pdf][All lectures]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/1.pdf][Lecture 1]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/2.pdf][Lecture 2]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/3.pdf][Lecture 3]]
 * Practice
 - [[https://iliayar.ru/public-notes/conspects/Term5/ms/practice/2.pdf][Practice 2]]
