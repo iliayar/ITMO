@@ -67,7 +67,7 @@
 #+end_symb
 #+begin_definition org
 *Информацией Фишера* называется величина
-\[ I(\Theta) = E(f_\Theta\cdot \ln f_\Theta(x))' \]
+\[ I(\Theta) = E(\frac{\partial}{\partial \Theta} \ln f_\Theta(x))^2 \]
 при условии если она существует.
 #+end_definition
 
@@ -91,7 +91,7 @@
 0\). Проверим эффективность оценки \(a^* = \overline{X}\).
 \[ f(x) = \frac{\sigma \sqrt{2\pi}}e^{-\frac{(x - a)^2}{\sigma^2}} \]
 Возьмем \(C = (-\infty, +\infty)\).
-\[ \ln f(x) = \ln \sigma - \frac{1}{2}\ln - \frac{(x - a)^2}{\sigma^@} \]
+\[ \ln f(x) = \ln \sigma - \frac{1}{2}\ln - \frac{(x - a)^2}{\sigma^2} \]
 \[ \frac{\partial}{\partial a} \ln f(x) = \frac{x - a}{\sigma} \]
 --- непрерывна по \(a\), \(\forall a \in \R\).
 \[ I(a) = E(\frac{\partial}{\partial a}\ln f(x))' = \frac{1}{\sigma^2} \]
@@ -104,6 +104,6 @@
 #+begin_remark org
 Исправленная дисперсия \(S^2\) также является эффективной оценкой для \(\sigma^2\). \\
 BLUE - оценки
-\[ \THeta^* = \alpha_1 X_1 + \alpha_2 X_2 + \dots + \alpha_n X_n \]
+\[ \Theta^* = \alpha_1 X_1 + \alpha_2 X_2 + \dots + \alpha_n X_n \]
 
 #+end_remark
