@@ -1,0 +1,8 @@
+#+TITLE: Практики по Математической Статистике 5 семестр
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: lectures
+
+* Практика 2
+#+INCLUDE: "2.org" :lines "4-"
+* Практика 3
+#+INCLUDE: "3.org" :lines "4-"
