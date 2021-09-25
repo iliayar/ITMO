@@ -1,0 +1,59 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1631561581,
+        "narHash": "sha256-3VQMV5zvxaVLvqqUrNz3iJelLw30mIVSfZmAaauM3dA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7e5bf3925f6fbdfaf50a2a7ca0be2879c4261d19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "jupyterlab_vim_src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1563251856,
+        "narHash": "sha256-6y24giYMfprvfCBo5MBHLJJR7CqZRtm+9OMFOtbAFmA=",
+        "owner": "jwkvam",
+        "repo": "jupyterlab-vim",
+        "rev": "d3ef1ed7aaebfda8cb7582cbd54ef730c4815640",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jwkvam",
+        "repo": "jupyterlab-vim",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1623393771,
+        "narHash": "sha256-UMqgWzS0IEqsosffjL0P621dixn5ncE9unNylpUB9Zs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a5d03577f0161c8a6e713b928ca44d9b3feb2c37",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "rev": "a5d03577f0161c8a6e713b928ca44d9b3feb2c37",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "jupyterlab_vim_src": "jupyterlab_vim_src",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
