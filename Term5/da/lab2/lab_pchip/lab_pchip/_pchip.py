@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple, Union
 
-def pchip(xs: List[float], ys: List[float]):
+def my_interpolate(xs: List[float], ys: List[float]):
     xs = np.array(xs)
     ys = np.array(ys)
     
@@ -30,14 +30,19 @@ def pchip(xs: List[float], ys: List[float]):
     koefs[3] = ys[:-1]
         
     def eval(x: float):
-        i = len(xs[xs < x])
+        point = xs[xs < x].shape[0]
         rank = koefs.shape[0] - 1
         
-        if i == koefs.shape[1]:
-            i = koefs.shape[1] - 1
-        if i != 0:
-            i -= 1
+        if point == xs.shape[0]:
+            interval = koefs.shape[1] - 1
+            point = xs.shape[0] - 1
+        elif point == 0:
+            point = 0
+            interval = 0
+        else:
+            point -= 1
+            interval = point
         
-        return koefs[:, i] @ (x - xs[i])**(rank - np.arange(rank + 1))
+        return koefs[:, interval] @ (x - xs[point])**(rank - np.arange(rank + 1))
     
     return eval
