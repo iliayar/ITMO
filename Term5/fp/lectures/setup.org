@@ -1,3 +1,4 @@
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_CLASS: general
 #+LATEX_HEADER_EXTRA: \newcommand{\hsOp}[1]{\mathop{\,\color{violet}\texttt{#1}}\,}
+#+LATEX_HEADER_EXTRA: \newcommand{\hsFu}[1]{\mathop{\texttt{#1}}}
