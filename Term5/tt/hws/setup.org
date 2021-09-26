@@ -1,2 +1,3 @@
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_CLASS: general
+#+LATEX_HEADER_EXTRA: \newcommand{\pNode}[2]{\frac{\displaystyle #2}{\displaystyle #1}}
