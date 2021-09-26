@@ -1,0 +1,37 @@
+#+setupfile: setup.org
+#+TITLE: ДЗ 3
+#+date: 28 сентября
+
+* 2
+** a
+\[ \pNode{ \vdash \lambda f. \lambda b. \lambda a. f\ a\ b : (\alpha \to \beta \to \gamma) \to (\alpha \to \beta \to \gamma) }{\pNode{f : (\alpha \to \beta \to \gamma) \vdash \lambda b. \lambda a. f\ a\ b : \alpha \to (\beta \to \gamma)}{\pNode{f : (\alpha \to \beta \to \gamma), a: \alpha \vdash \lambda a. f\ a\ b : \beta \to \gamma}{\pNode{\Gamma \vdash f\ a\ b : \gamma}{ \pNode{\Gamma \vdash f\ a : \beta \to \gamma}{\pNode{\Gamma \vdash f : \alpha \to \beta \to \gamma}{} \quad \pNode{\Gamma \vdash a: \alpha}{}}\quad \pNode{\Gamma \vdash b : \beta}{} }}}} \]
+где \(\Gamma = f : \alpha \to \beta \to \gamma, a: \alpha, b: \beta\)
+
+#+begin_src haskell
+task :: (a -> b -> c) -> (b -> a -> c)
+task f b a = f a b
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+
+** b
+\[ \pNode{\vdash \lambda f. \lambda a. f\ a\ a : (\alpha \to \alpha \to \beta) \to (\alpha \to \beta)}{\pNode{f: \alpha \to \alpha \to \beta \vdash \lambda a. f\ a\ a : \alpha \to \beta}{\pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash f\ a\ a : \beta}{\pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash f\ a: \alpha \to \beta}{\pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash f : \alpha \to \alpha \to \beta}{}\quad \pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash a:\alpha}{}}\quad \pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash a:\alpha}{}}}} \]
+
+#+begin_src haskell
+task :: (a -> a -> b) -> (a -> b)
+task f a = f a a
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+
+* 5
+
+
