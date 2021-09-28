@@ -1,0 +1,65 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 3
+#+date: 28 сентября
+
+#+begin_remark org
+Зачем \(\lambda_\to\)?
+1. Логические выражения \(\supset\)
+2. Запрещенные выражения
+   - \(Y\) --- явно нехорошо
+   - \(\Phi_A =_\beta \Phi_A \supset A\)
+Добавим очевидные аксиомы
+- \(A =_\beta B\), то \(\vdash A \supset B\) и \(\vdash B \supset A\)
+- \((A \supset A \supset B) \supset (A \supset B)\)
+- \(A, A \supset B\), то \(B\)
+Тогда при любом \(A\), \(\vdash A\)
+#+end_remark
+
+#+begin_remark org
+\[ \Phi_A \equiv Y\ (\lambda x. x \supset A) \]
+#+end_remark
+
+* Изоморфизм Карри-Ховарда
+\[ \frac{}{\Gamma, x: \tau \vdash x : \tau} \quad \frac{}{\Gamma, \tau \vdash \tau} \]
+\[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B : \sigma}{\Gamma \vdash A\ B : \tau} \quad \frac{\Gamma \vdash \sigma \to \tau \quad \Gamma \vdash \sigma}{\Gamma \vdash \tau} \]
+\[ \frac{\Gamma, x : \sigma \vdash A : \tau}{\Gamma \vdash \lambda x. A : \sigma \to \tau} \quad \frac{\Gamma, \sigma \vdash \tau}{\Gamma \vdash \sigma \to \tau} \]
+Если \(\Gamma \vdash A : \tau\), то
+- \(A\) --- эквиваленто доказательству \(\tau\)
+- \(\tau\) --- выражения в ИИВ
+- Обитаемость типа --- доказуемость \(\tau\)
+- Тип \(\lambda\)-абстракции --- импилкация
+- \dots
+#+begin_symb org
+\(|\Gamma|\) --- оставляем только типы
+#+end_symb
+#+ATTR_LATEX: :options [об изоморфизме Карри-Ховарда]
+#+begin_theorem org
+\-
+- \(\Gamma \vdash_{\lambda_\to} A : \tau\), то \(|\Gamma| \vdash_\to \tau\)
+- Если \(\Delta \vdash_\to \tau\), то найдутся \(\Gamma, A\): \(|\Gamma| = \Delta\), \(\Gamma \vdash A : \tau\)
+#+end_theorem
+#+begin_remark org
+Выше было выписан только импликационный фрагмент ИИВ: \(I_\to, E_\to, Ax\)
+#+end_remark
+#+begin_symb org
+\(\Gamma \vdash_\to \tau\)
+#+end_symb
+#+begin_theorem org
+Импликациооныйй фрагмент ИИВ (И. Ф. ИИВ) замкнут относительно
+доказуемости. Если \(\Gamma \vdash \tau\) и \(\tau\) содержит только \(\alpha, \to\), то
+\(\Gamma \vdash_\to \tau\). И если \(\Gamma \vdash_\to \tau\), то \(\Gamma \vdash \tau\)
+#+end_theorem
+#+begin_proof org
+\(\Gamma^*\) -- множество формул, замкнутых по доказуемости, т.е. \(\tau \in \Gamma^*\) т.и т.т.к \(\Gamma^* \vdash \tau\)
+\todo
+#+end_proof
+#+begin_remark org
+\(? \vdassh ? : ?\). Три задачи
+1. Обитаемость типа: \(\Gamma \vdash ? : \tau\) \\
+   По изоморфизму К-Х и теореме эквивалентно \(\Gamma \vdash \tau\)
+2. Вывод типа(реконструкция): \(\Gamma \vdash A : ?\)
+3. Проверка типов: \(\Gamma \vdash A : \tau\) \\
+   Вывод типа и проверка что одно и то же
+4. Выразимы только расширенные полиномы
+1 --- полнота; 2,3 --- разрешимость
+#+end_remark
