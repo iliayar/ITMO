@@ -2,11 +2,11 @@
 #+SETUPFILE: setup.org
 #+LATEX_CLASS: lectures
 
-* Лекция 0
-#+INCLUDE: "0.org" :lines "4-"
 * Лекция 1
 #+INCLUDE: "1.org" :lines "4-"
 * Лекция 2
 #+INCLUDE: "2.org" :lines "4-"
 * Лекция 3
 #+INCLUDE: "3.org" :lines "4-"
+* Лекция 4
+#+INCLUDE: "4.org" :lines "4-"

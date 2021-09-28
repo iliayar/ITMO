@@ -1,177 +1,103 @@
 #+setupfile: setup.org
-#+TITLE: Лекция 2
-#+date: 14 сентября
+#+TITLE: Лекция 0
+#+date: 7 сентября
 
+* \lambda-исчисление
 #+begin_definition org
-*Пред \lambda-терм*:
-1. x --- переменная
-2. \((L\ L)\) --- аппликация
-3. \((\lambda x. L)\) --- абстракция
+- \(\lambda x. A\) --- абстракция
+- \((A B)\) --- применение (аппликация)
+- \(x\) --- переменная (атом)
 #+end_definition
 
-#+begin_remark
-\-
-1. \(\lambda a. a\)
-2. \(\lambda b. b\)
-Хотим чтоб не отличались
+#+begin_remark org
+\(\lambda\) съедает все.
 #+end_remark
 
-
-#+begin_definition org
-*\alpha-эквивалентность. \(A =_\alpha B\)
-1. \(A \equiv x,\ B \equiv x\) --- одна и та же переменная
-2. \(A \equiv P\ Q,\ B \equiv R\ S \quad P =_\alpha R,\ Q =_\alpha S\)
-3. \(A \equiv \lambda x. P,\ B \equiv \lambda y. Q\). Существует \(t\) --- новая переменная, что \(P[x \coloneqq t] =_\alpha Q[y \coloneqq t]\)
-#+end_definition
-
-#+begin_definition org
-\-
-- свободные вхождения
-- свобода для подстановки \\
-  \(A[x \coloneqq B]\). Никакое свободное вхождение переменных в \(B\),
-  не станет связным после подстановки
-- замена свободных вхождений \(A[x \coloneqq B]\)
-#+end_definition
-
 #+begin_examp org
-\[ (\lambda x. \lambda y. x) \xlongequal{?}_\alpha (\lambda y. \lambda x. y) \quad \text{Правило 3} \]
-\[(\lambda y. x)[x \coloneqq t] =_\alpha (\lambda x. y)[y \coloneqq t] \quad \text{Правило 3} \]
-\[ t[y \coloneqq S] =_\alpha t[x \coloneqq S] \quad \text{Правило 1} \]
+\[ \lambda x. \color{blue}(\color{black} \lambda y. \color{blue}(\color{black}P\color{blue})\color{black}\color{blue})\color{black} \]
 #+end_examp
 
 #+begin_definition org
-*\lambda-трем*. \(\Lambda/_{=_\alpha}\) --- множество \lambda-термов
+\-
+1. \(T \coloneqq \lambda x. \lambda y. x\) --- истинна
+2. \(F \coloneqq \lambda x. \lambda y. y\) --- ложь
+3. \(\mathop{Not} \coloneqq \lambda p. p\ F\ P\)
+   \begin{examp}
+   \begin{align*}
+     \mathop{Not} F & \to_\beta \\
+     ((\lambda x. \lambda y. y)\ F)\ P & \to_\beta \\
+     (\lambda y. y)\ T & \to_\beta \\
+     T
+   \end{align*}
+   \end{examp}
+4. \(\mathop{And} \coloneqq \lambda a. (\lambda b. ((a\ b)\ F))\)
 #+end_definition
 
 #+begin_definition org
-*\beta-редекс*. Выражение вида \((\lambda x. A)\ B\)
+*Черчевский нумерал* --- способ кодировать числа:
+- \(\overline{0} \coloneqq \lambda f. \lambda x. x\)
+- \(\overline{1} \coloneqq \lambda f. \lambda x. f\ x\)
+- \(\overline{3} \coloneqq \lambda f. \lambda x. f\ (f\ (f\ x))\)
+- \(\overline{n + 1} \coloneqq \lambda f. \lambda x. f\ (\overline{n}\ f\ x)\)
+- \((+1) \coloneqq \lambda n. \lambda f. \lambda x. n\ f\ (f\ x)\)
+- \((+) \coloneqq \lambda a. \lambda b. b\ (+1)\ a\)
+- \((\cdot) \coloneqq \lambda a. \lambda b. a\ ((+)\ b)\ \overline{0}\)
 #+end_definition
 
 #+begin_definition org
-Выражения \(A\) и \(B\) находятся в отношении *\beta-редукции*: \(A \to_\beta B\), если
-1. \(A \equiv P\ Q,\ B \equiv R\ S\) и одно из
-   - \(P \to_\beta R\) и \(Q =_\alpha S\)
-   - \(P =_\alpha R\) и \(Q \to_\beta S\)
-2. \(A \equiv \lambda x. P,\ B \equiv \lambda x. Q\) и \(P \to_\beta Q\)
-3. \(A \equiv (\lambda x. P)\ Q,\ B \equiv P[x \coloneqq Q]\) \\
-   \(Q\) свободно для подстановки. Ценой переименования связных переменных можно подставить любое выражение.
+\[ \pair{a, b} \xRightarrow{*} \pair{b, b + 1} \]
+\[ \pair{0, 0} \xRightarrow{*} \pair{0, 1} \xRightarrow{*} \pair{1, 2} \xRightarrow{*} \pair{2, 3} \]
+- \(\mathop{Pair} \coloneqq \lambda a. \lambda b. \underbrace{(\lambda p. p\ a\ b)}_{\pair{a, b}}\)
+#+end_definition
+
+** Типы
+#+begin_definition org
+\(M \vdash A : \tau\)
+- \(M\) --- контекст(функции с типами)
 #+end_definition
 
 #+begin_examp org
-Комбинатор \(I\) (Identity)
-\[ I = \lambda x. x \]
+\((+): \mathop{int} \to \mathop{int} \to \mathop{int}\)
+#+end_examp
 
-\[ (I\ I)\ (I\ I) \]
+
+\beginproperties
+#+begin_property org
+\(\to_\beta\) --- сохраняет значения
+#+end_property
+#+begin_property org
+- \(Y \coloneqq \lambda f.(\lambda x.f\ (x\ x)) (\lambda x.f\ (x\ x))\) --- \(Y\)-комбинатор
+- \(\Omega \coloneqq (\lambda x. x\ x)\ (\lambda x. x\ x)\) --- \(\Omega\)-комбинатор
+#+end_property
+
+#+begin_remark org
+Решим уравнение \(f(A) = A\) --- неподвижная точка. \(Y\)-комбинатор
+принимает функцию и возвращает неподвижную точку.
+#+end_remark
+
+#+begin_remark org
+_Требуется_:
+- \((\supset)\) --- импликация + аксиомы
+Докажем, что доказуемо любое утверждение.
+\[ Y (\lambda b. A \supset b) =_\beta A \supset Y(\lambda b. A \supset b) \]
+#+end_remark
+
+#+begin_examp org
+Чем интересен \(Y\) --- он позволяет делать рекурсию. Предположим хотим посчитать факториал.
+\[ \mathop{Fact}:\ n! = \begin{cases} 1 &, n = 0 \\ n\cdot(n-1)! & n > 0 \end{cases} \]
+\[ \mathop{Fact} = \lambda n. \mathop{If}\ (\mathop{IsZero}\ n)\ \overline{1}\ (\mathop{Fact}\ (n-1)) \cdot n \]
+- \(\mathop{If} x\ a\ b =_\beta x\ a\ b\)
+- \(\mathop{IsZero}\) --- ДЗ
+\[  Y\ (\lambda f. \lambda n. \mathop{If}\ (\mathop{IsZero}\ n)\ \overline{1}\ (f\ (n-1)) \cdot n) \]
 \todo
 #+end_examp
 
 #+begin_examp org
-\-
-- \(I = \lambda x. x\)
-- \(K = \lambda x. \lambda y. x\) --- Константа
-- \(\Omega = \omega\ \omega\), где \(\omega = \lambda x. x\ x\)
-\begin{align*}
-  k\ I\ \Omega & = \\
-  ((\lambda x. \lambda y. x)\ I)\ \Omega & \to_\beta \\
-  (\lambda y. I)\ \Omega & \to_\beta
-  I
-\end{align*}
+\[ Y (\lambda f. \lambda x. f\ (mathop{Not}\ x)) \]
+\(Y\) --- находит решение даже самых странных уравнений. Запретим (Введем типы).
 #+end_examp
 
 #+begin_definition org
-Будем говорить что отношение \(R\) обладает *ромбовидным* свойством,
-если для любых \(a, b, c\)
-1. \(aRb,\ aRc\)
-2. \(b \neq c\)
-Существует \(d\): \(bRd,\ cRd\)
+Правила добропорядочных выражений:
+1. \[ \frac{}{\Gamma, x : \alpha \vdash x : \alpha} \]
 #+end_definition
-
-#+begin_remark org
-Не выполняется на натуральных числах
-#+end_remark
-
-#+begin_definition org
-*\beta-редуциремость* \((\twoheadrightarrow_\beta)\) --- рефлексивное, транзитивное замыкание \((\to_\beta)\)
-#+end_definition
-
-#+ATTR_LATEX: :options [Черча-Россера]
-#+begin_theorem org
-\beta-редуцируемость обладает ромбовидным свойством
-#+end_theorem
-
-#+begin_definition org
-*Параллельная \beta-редукция* \((\rightrightarrows_\beta)\) это \((\to_\beta) +\)правило:
-- 0. :: \(A =_\alpha B\)
-- 1. :: \(A \equiv P\ Q,\ B \equiv R\ S\) и \(P \rightrightarrows_\beta R\) и \(Q \rightrightarrows_\beta S\)
-- 2,3. :: аналогично \((\to_\beta)\)
-#+end_definition
-
-#+begin_lemma org
-\((\rightrightarrows_\beta)\) --- обладает ромбовидными свойством
-#+end_lemma
-
-#+begin_lemma org
-Если \(R\) --- обладает ромбовидным свойством, то \(R^*\) (транзитивное, рефлексивное замыкание) --- обладает ромбовидным свойством
-#+end_lemma
-
-#+begin_lemma org
-\((\rightrightarrows_\beta) \subseteq (\twoheadrightarrow_\beta)\)
-#+end_lemma
-
-#+ATTR_LATEX: :options [Доказательство Теоремы]
-#+begin_proof org
-\-
-1. \((\rightrightarrows_\beta)^* \subseteq (\twoheadrightarrow_\beta)\) --- из леммы
-2. \((\twoheadrightarrow_\beta) \subseteq (\rightrightarrows_\beta)^*\)
-3. Раз \((\rightrightarrows_\beta)^*\) обладает ромбовидным свойством, то и \((\twoheadrightarrow_\beta)\) обладает ромбовидным свойством
-#+end_proof
-
-#+begin_corollary org
-У \lambda-выражения существует не более 1 нормальной формы
-#+end_corollary
-
-#+begin_proof org
-Пусть \(A\) имеет две нормальные формы:
-- \(A \twoheadrightarrow_\beta B\)
-- \(A \twoheadrightarrow_\beta C\)
-и \(B \neq_\beta C\). Тогда есть D: \(B \twoheadrightarrow_\beta D\) и \(C \twoheadrightarrow_\beta D\). _Противоречие_
-#+end_proof
-
-#+begin_definition org
-Нормальный порядок редукции --- редуцируем самый левый редекс
-#+end_definition
-
-#+begin_theorem org
-Если нормальная форма существует, она может быть получена нормальным
-порядком редукции.
-#+end_theorem
-
-#+begin_examp org
-Перепишем =if (a > b) then X else Y= в \lambda-выражение:
-\[ (((a > b)\ X)\ Y) \]
-\begin{align*}
-  (((T)\ X)\ Y) & \to_\beta \\
-  (\lambda b. X)\ Y & \to_\beta \\
-  X
-\end{align*}
-Это ленивое вычисление
-#+end_examp
-
-* Про Y-комбинатор
-\[ Y\ f =_\beta f\ (Y\ f) =_\beta f\ (f\ (Y\ f)) =_\beta \dots =_\beta f^{(n)}\ (Y\ f) \]
-\[ Y\ \overbrace{(\lambda f. \lambda x.  x)}^{\varphi} =_\beta \varphi\ (Y\ \varphi) \]
-
-#+begin_task org
-Дз 8.g
-#+end_task
-#+begin_solution org
-\[ (Y \lambda f. \lambda a. \lambda b. \lambda n. (\mathop{IsZero}\ n) a (f\ b\ (a + b)\ (n - 1)))\ 1\ 1 \]
-#+begin_src haskell
-fib a b n =
-  if n = 0 then a
-  else fib b (a + b) (n - 1)
-#+end_src
-#+end_solution
-
-
-
