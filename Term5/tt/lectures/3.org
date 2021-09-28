@@ -1,65 +1,110 @@
 #+setupfile: setup.org
 #+TITLE: Лекция 3
-#+date: 28 сентября
+#+date: 21 сентября
+
+* Просто типизированное \lambda-исчисление
+\[ \Phi_A =_\beta A \supset \Phi_A \]
+\[ Y\ (\lambda f. \lambda a. a \supset f\ a) \]
+\[ (A \supset (A \supset B)) \supset (A \supset B) \quad\text{\color{gray}(Из ИВ)} \]
 
 #+begin_remark org
-Зачем \(\lambda_\to\)?
-1. Логические выражения \(\supset\)
-2. Запрещенные выражения
-   - \(Y\) --- явно нехорошо
-   - \(\Phi_A =_\beta \Phi_A \supset A\)
-Добавим очевидные аксиомы
-- \(A =_\beta B\), то \(\vdash A \supset B\) и \(\vdash B \supset A\)
-- \((A \supset A \supset B) \supset (A \supset B)\)
-- \(A, A \supset B\), то \(B\)
-Тогда при любом \(A\), \(\vdash A\)
+Если \(X =_\beta Y\), то \(X \supset Y\)
 #+end_remark
 
-#+begin_remark org
-\[ \Phi_A \equiv Y\ (\lambda x. x \supset A) \]
-#+end_remark
+#+begin_examp org
+Парадокс
+\begin{array}{lll}
+  1. & \Phi_A \supset \Phi_A &  \\
+  2. & \Phi_A \supset (\Phi_A \supset A) & \\
+  3. & \Phi_A \supset (\Phi_A \supset A) \supset (\Phi_A \supset A) & \\
+  4. & \Phi_A \supset A  & \\
+  5. & (\Phi_A \supset A) \supset \Phi_A &  \\
+  6. & \Phi_A &
+\end{array}
+#+end_examp
 
-* Изоморфизм Карри-Ховарда
-\[ \frac{}{\Gamma, x: \tau \vdash x : \tau} \quad \frac{}{\Gamma, \tau \vdash \tau} \]
-\[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B : \sigma}{\Gamma \vdash A\ B : \tau} \quad \frac{\Gamma \vdash \sigma \to \tau \quad \Gamma \vdash \sigma}{\Gamma \vdash \tau} \]
-\[ \frac{\Gamma, x : \sigma \vdash A : \tau}{\Gamma \vdash \lambda x. A : \sigma \to \tau} \quad \frac{\Gamma, \sigma \vdash \tau}{\Gamma \vdash \sigma \to \tau} \]
-Если \(\Gamma \vdash A : \tau\), то
-- \(A\) --- эквиваленто доказательству \(\tau\)
-- \(\tau\) --- выражения в ИИВ
-- Обитаемость типа --- доказуемость \(\tau\)
-- Тип \(\lambda\)-абстракции --- импилкация
-- \dots
-#+begin_symb org
-\(|\Gamma|\) --- оставляем только типы
-#+end_symb
-#+ATTR_LATEX: :options [об изоморфизме Карри-Ховарда]
-#+begin_theorem org
+#+begin_definition org
+*Типовые переменные*:
+- \(\alpha, \beta, \gamma\) --- атомарные
+- \(\tau, \sigma\) --- составные
+*Тип*: \(\tau ::= (\tau \to \tau)\ |\ \alpha\) \\
+_Следует_:
+- 2 традиции:
+  1. Исчисление по Черчу
+  2. Исчисление по Карри
+#+end_definition
+** Исчисление по Карри
+#+begin_definition org
 \-
-- \(\Gamma \vdash_{\lambda_\to} A : \tau\), то \(|\Gamma| \vdash_\to \tau\)
-- Если \(\Delta \vdash_\to \tau\), то найдутся \(\Gamma, A\): \(|\Gamma| = \Delta\), \(\Gamma \vdash A : \tau\)
-#+end_theorem
-#+begin_remark org
-Выше было выписан только импликационный фрагмент ИИВ: \(I_\to, E_\to, Ax\)
-#+end_remark
-#+begin_symb org
-\(\Gamma \vdash_\to \tau\)
-#+end_symb
+- \(\Gamma \vdash A: \tau\) (\(\Gamma \vdassh A^\tau\)), где \(\Gamma\) --- \(\{x_1: \tau_1,\ x_2:\tau_2, \dots\}\)
+- правила:
+  1. \[ \frac{}{\Gamma, x_1: \tau_1 \vdash x_1:\tau_1} \quad x_1 \not\in Fv(\Gamma) \quad \text{(Ax.)} \]
+  2. \[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B: \sigma}{\Gamma \vdash A\ B : \tau} \]
+  3. \[ \frac{\Gamma, x: \tau \vdassh A : \sigma}{\Gamma \vdash \lambda x. A : \tau \to \sigma} \]
+#+end_definition
+
+#+begin_examp org
+\[ \lambda f. \lambda x. f\ (f\ x) : (\alpha \to \alpha) \to \alpha \to \alpha \]
+- \(x: \alpha\)
+- \(f: \alpha \to \alpha\)
+_Доказательство_:
+\[ \frac{\displaystyle\frac{\displaystyle \frac{\displaystyle \frac{}{f: \alpha \to \alpha \vdash f: \alpha \to \alpha} \quad \frac{\displaystyle \frac{}{\Gamma \vdash f: \alpha \to \alpha} \quad \frac{}{\Gamma \vdash x : \alpha}}{\Gamma \vdash f\ x : \alpha}}{f: \alpha \to \alpha, x: \alpha \vdash f\ f(f\ x) : \alpha}}{f: \alpha \to \alpha \vdash \lambda x. f\ (f\ x) : \alpha \to \alpha}}{\vdash \lambda f. \lambda x.\ f\ (f\ x) : (\alpha \to \alpha) \to \alpha \to \alpha} \]
+#+end_examp
+#+begin_examp org
+\[ \Omega = (\lambda x. x\ x)\ (\lambdax.x\ x) \]
+Применимо только правило 2. Не имеет типа
+#+end_examp
 #+begin_theorem org
-Импликациооныйй фрагмент ИИВ (И. Ф. ИИВ) замкнут относительно
-доказуемости. Если \(\Gamma \vdash \tau\) и \(\tau\) содержит только \(\alpha, \to\), то
-\(\Gamma \vdash_\to \tau\). И если \(\Gamma \vdash_\to \tau\), то \(\Gamma \vdash \tau\)
+Если \(\Gamma \vdash A:\tau\), то любое подвыражение имеет тип
 #+end_theorem
 #+begin_proof org
-\(\Gamma^*\) -- множество формул, замкнутых по доказуемости, т.е. \(\tau \in \Gamma^*\) т.и т.т.к \(\Gamma^* \vdash \tau\)
+Рассмотрим случай: если выражение типизируется, значит используется одно из правил:
+1. \(\Gamma \vdash A:\tau\) используется 1 правило \(\frac{}{\Gamma, a:\tau \vdash a:\tau}\)
+_Переход_: \\
+пусть любое выражение короче \(n\) символов обладает
+свойством. Покажем что этим свойством обладает выражение \(A\) длины
+\\
 \todo
 #+end_proof
-#+begin_remark org
-\(? \vdassh ? : ?\). Три задачи
-1. Обитаемость типа: \(\Gamma \vdash ? : \tau\) \\
-   По изоморфизму К-Х и теореме эквивалентно \(\Gamma \vdash \tau\)
-2. Вывод типа(реконструкция): \(\Gamma \vdash A : ?\)
-3. Проверка типов: \(\Gamma \vdash A : \tau\) \\
-   Вывод типа и проверка что одно и то же
-4. Выразимы только расширенные полиномы
-1 --- полнота; 2,3 --- разрешимость
-#+end_remark
+#+ATTR_LATEX: :options [Subject reduction]
+#+begin_theorem org
+\(\Gamma \vdash A: \sigma\) и \(A \twoheadrightarrow_\beta B\) \\
+_Тогда_ \(\Gamma \vdash B: \sigma\)
+#+end_theorem
+#+begin_proof org
+\(A \to_\beta B\)
+случаи:
+1. \(\lambda x. A \to \lambda x. B\)
+2. \(A\ B \to A'\ B'\)
+3. \((\lambda x. A)\ B \to A[x \coloneqq B]\)
+#+end_proof
+
+#+ATTR_LATEX: :options [Черча-Россера]
+#+begin_theorem org
+Если \(\Gamma \vdaash M:\sigma\) и:
+- существуют \(N, P:\)
+  \[ M \twoheadrightarrow_\beta N \quad \Gamma \vdash N : \sigma \]
+  \[ M \twoheadrightarrow_\beta P \quad \Gamma \vdash P : \sigma \]
+_Тогда_ найдется такой \(S\), что \(\Gamma \vdash S :\sigma\) и \(N \twoheadrightarrow_\beta S\) и \(P \twoheadrightarrow_\beta S\)
+#+end_theorem
+** Исчисление по черчу
+#+begin_definition org
+\(\Gamma \vdash_4 A : \tau\)
+Язык:
+- \(x\) --- переменная
+- \(A\ B\) --- аппликация
+- \(\lambda x^\tau. P\) --- абстракция
+#+end_definition
+#+begin_theorem org
+Если конекст \(\Gamma\) и выражение \(P\) типизируется, то \(\Gamma \vdash_4 P: \sigma\)
+#+end_theorem
+#+begin_examp org
+\[\vdash_C \lambda x. x : \alpha \to \alpha (\beta \to \beta)\]
+\[ \vdash_4 \lambda x. x : \sigma \to \sigma \]
+#+end_examp
+
+#+begin_examp org
+\[ \lambda f. \lambda x. f\ (f\ x) : \substack{(\alpha \to \alpha) \to (\alpha \to \alpha) \\ (\beta \to \beta) \to (\beta \to \beta)} \]
+\[ \lambda f^{\alpha \to \alpha}. \lambda x.^\alpha. f\ (f\ x) : (\alpha \to \alpha) \to (\alpha \to \alpha) \]
+
+#+end_examp
