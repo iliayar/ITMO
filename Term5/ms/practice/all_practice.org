@@ -6,3 +6,5 @@
 #+INCLUDE: "2.org" :lines "4-"
 * Практика 3
 #+INCLUDE: "3.org" :lines "4-"
+* Практика 4
+#+INCLUDE: "4.org" :lines "4-"
