@@ -80,24 +80,21 @@ main = do
 
 , где \(\Gamma = p:\alpha\&\beta, c:(\alpha\to\perp)\lor(\beta \to \perp) \)
 ** c
-*** i
+*** 
 \[ a \& (\beta \lor \gamma) \to (\alpha \& \beta) \lor (\alpha \& \gamma) \]
 \[ \lambda p. \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\pi_l\ p, c}) \]
 
-*** ii
+*** 
 #+begin_src haskell
 task :: (a, Either b c) -> Either (a, b) (a, c)
 task (a, Left b) = Left (a, b)
 task (a, Right c) = Right (a, c)
-
-main = do
-  putStrLn "works!"
 #+end_src
 
 #+RESULTS:
 : works!
-*** iii
-\[ \pNode{\vdash \lambda p. \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\\pi_l\ p, c}) : a \& (\beta \lor \gamma) \to (a\&\beta) \lor (a \& \gamma)}
+*** 
+\[ \pNode{\vdash \lambda p. \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\pi_l\ p, c}) : a \& (\beta \lor \gamma) \to (a\&\beta) \lor (a \& \gamma)}
   {\pNode{p: a\&(\beta \lor \gamma) \vdash \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\pi_l\ p, c}): (a\&\beta) \lor (a \&\gamma)}
    {\pNode{p : \alpha \& (\beta \lor \gamma) \vdash \pi_r\ p : \beta \lor \gamma }
      {\pNode{p : \alpha \& (\beta \lor \gamma) \vdash p : \alpha \& (\beta \lor \gamma)}
