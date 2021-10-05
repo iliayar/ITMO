@@ -140,3 +140,17 @@ _Разрешение системы_: унификация
 - \(id: \alpha \to \alpha\). \(id \equiv \Lambda \alpha. \lambda x^\alpha. x\), \(id\ (Int)\ 5\)
 #+end_examp
 
+* Практика
+** ДЗ 3.6
+\[ A^{\eta \to \eta \to \eta}\ M^\eta\ N^\eta\ f^{\alpha \to \alpha}\ a: \alpha : \alpha \]
+- \( \vdash x : \eta, \alpha \to \alpha, \alpha \)
+- \(P\ Q\) ?
+- \(( \lambda x^\tau. P^\pi)^{\tau \to \pi}\ A^\tau : \pi\), \(\pi \equiv \alpha\)
+  Гиганский тип выражения \(A\) окажется в переменной \(x\) в \(P\)
+** Черчевский нумералы в F
+\[ \Lambda \alpha. \lambda f^{\alpha \to \alpha} . \lambda x^\alpha. f\dots f(x) : \eta : \forall \alpha. (\alpha \to \alpha) \to \alpha \to \alpha \]
+\[ (+) = \Lambda \alpha. \lambda a^\eta. \lambda b^\eta. \lambda f^{\alpha \to \alpha}. \lambda x^\alpha. (a\ \alpha)\ f\ ((b\ \alpha)\ f\ x)  \]
+** Правила
+\[ \frac{\Gamma \vdash A : \varphi}{\Gamma \vdash \Lambda \alpha. A : \forall \alpha. \varphi} \]
+\[ \frac{\Gamma \vdash A : \forall \alpha. \varphi}{\Gamma \vdash A\ \pi : \varphi[\alpha \coloneqq \pi]} \]
+
