@@ -1,0 +1,72 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 6
+#+date: 12 октября
+
+* Абстрактные типы данных
+ООП = АТД + наследование \\
+#+begin_remark org
+\[ \exists \alpha. \underbrace{\varphi}_{\text{интерфейс}} \]
+#+end_remark
+
+#+begin_examp org
+Стэк:
+\[ \texttt{push}: \alpha \to \alpha\ \texttt{stack} \rightarrow \alpha\ \texttt{stack} \]
+\[ \texttt{pop}: \alpha\ \texttt{stack} \rightarrow (\alpha \cdot \alpha\ \texttt{stack}) \]
+\[ \texttt{empty}: \alpha\ \texttt{stack} \]
+\[ \exists \alpha. (\eta \to \alpha \to \alpha) \& (\alpha \to \alpha \& \eta) \& \alpha \]
+#+end_examp
+
+#+begin_definition org
+\[ \frac{\Gamma \vdash \varphi[x \coloneqq \Theta]}{\Gamma \vdash \exists x. \varphi} \]
+\[ \frac{\Gamma, \psi \vdash \varphi \quad \Gamma \vdash \exists x. \psi}{\Gamma \vdash \varphi]} \quad x \not\in FV(\Gamma) \]
+\[ \frac{\Gamma \vdash M: \delta[\alpha \coloneqq \tau]}{\Gamma \vdash \text{pack}\ \tau,M\ \text{to}\ \exists \alpha.\delta : \exists \alpha.\delta} \]
+\[ \frac{\Gamma, x : \delta \vdash M : \rho \quad \Gamma \vdash S:\exists \alpha.\sigma}{\Gamma \vdash \text{abstype}\ s\ \text{with}\ x:\delta\ \text{is}\ S\ \text{in}\ M:\rho} \quad x \not\in FV(\Gamma) \]
+#+end_definition
+
+#+begin_examp org
+\[ \delta \equiv (\eta \to \alpha \to \alpha) \& (\alpha \to (\eta \& \alpha)) \& \alpha \]
+
+abs type \tau with \(x:\delta\)
+- is
+  \[ P = \text{pack}\ \tau,(\text{push}, \text{pop}, \text{empty}) \]
+
+- in
+  \[ \pi_l\ (x_2\ (x_1\ (5\ x_3))) \]
+#+end_examp
+
+#+begin_export latex
+\newcommand{\bool}{\text{bool}}
+#+end_export
+
+#+begin_examp org
+\[ \texttt{set}: \bool \rightarrow \alpha \]
+\[ \texttt{is_true}: \alpha \rightarrow \bool \]
+\[ \delta \equiv (\bool \rightarrow \alpha) \& (\alpha \rightarrow \bool) \]
+\(\label{6_ex_bool}\) pack \(\bool, \underbrace{( \lambda x^\beta. x, \lambda x^\alpha. x)}_\xi\) to \(\exists \alpha. \delta\)
+\[ \xi = (\bool \rightarrow \bool) \& (\bool -> \bool) \]
+\[ \Gamma \vdash \underbrace{ \delta[\alpha \coloneqq \bool] }_\xi \]
+abstype \(\bool\) with \(x:\delta\)
+- is (\(\ref{6_ex_bool}\))
+- in
+  \[ x_2\ (x_1\ \text{true}) \twoheadrightarrow_\beta \text{true} \]
+#+end_examp
+
+#+begin_remark org
+compute \(\approx \lambda x^\delta. x_2\ (x_1\ \text{true})\)
+\[ \text{case}\ E^{\alpha \lor \beta}\ A^{\alpha \rightarrow \beta}\ B^{\beta \rightarrow \rho}\]
+Передадим типовой параметр в compute:
+\[ \text{compute} = \Lambda \alpha. \lambda x^{(\bool \rightarrow \alpha)\&(\alpha \rightarrow \bool)}. x_2\ (x_1\ \text{true}) \]
+#+end_remark
+
+#+begin_remark org
+pack \(\tau, M\) to \(\exists \alpha. \delta \equiv \Lambda \beta. \lambda x^{\forall \alpha (\alpha \rightarrow \beta)}. x\ \tau\ M\) \\
+abstype \tau with \(x:\delta\) is \(M\) in \(N:\rho = M\)
+#+end_remark
+\todo
+* Система F
+#+begin_theorem org
+Система F сильно нормализуема
+#+end_theorem
+#+begin_theorem org
+Система F неразрешима
+#+end_theorem
