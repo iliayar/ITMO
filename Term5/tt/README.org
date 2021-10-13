@@ -8,3 +8,4 @@
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/3.pdf][Lecture 3]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/4.pdf][Lecture 4]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/5.pdf][Lecture 5]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/6.pdf][Lecture 6]]

@@ -1,0 +1,67 @@
+#+setupfile: setup.org
+#+TITLE: Практика 6
+#+date: 13 октября
+
+#+begin_task org
+\[ n = 50 \quad \overline{X} = 74.1 \quad S = 39.01 \quad \alpha = 0.05 \]
+- \(а = 75\)
+\[ K = \sqrt{n}\frac{\overline{x} - a_0}{S} \in T_{n - 1} \]
+#+end_task
+#+begin_solution org
+\[ \texttt{T.INV.2T}(\alpha, n - 1) = 2.01 \]
+#+end_solution
+
+#+begin_task org
+В точке \((0; 1)\) находится источник который посылает лучи равномерно
+во все стороныю. \(\xi\) --- точка пересечения луча с осью \(Ox\). Найти
+функцию распределения \(F_\xi(x)\) и плотность \(f_\xi(x)\).
+#+end_task
+#+begin_solution org
+\[ F_\xi(0) = 0.5 \]
+\[ F_\xi(x) = P(\xi < x) = P(\xi < 0) + P(0 < \xi < x) = 0.5 + \frac{1}{\pi} \arctg x \]
+\[ f_\xi(x) = \frac{1}{\pi(1 + x^2)}\]
+Это *распределение Коши*
+\[ E\xi = \int_{-\infty}^{\infty} \frac{x}{\pi(1 + x^2)}\,dx = \frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{d(1 + x^2)}{1 + x^2} = \frac{1}{2\pi}\ln(1 + x^2) \big|_{-\infty}^{\infty} \]
+--- не сущесвует
+#+end_solution
+#+begin_remark org
+Сдвинем точку по оси \(x\):
+\[ f_\xi(x) = \frac{1}{\pi(1 + (x - \Theta)^2)} \]
+- Среднее выборочное \(\overline{X}\) - не работает в качестве оценки
+- Из соображений симметрии \(\Theta = Me \xi\), где
+  \[ Me^* = \begin{cases} X_{k + 1} & n = 2k + 1 \\ \frac{X_k + X_{k + 1}}{2} & n = 2k \end{cases} \]
+#+end_remark
+#+begin_theorem org
+Если \(f(Me) \neq 0\), то \(Me^* \xrightarrow{p}[] Me \) сходится со скоростью \(\frac{1}{\sqrt{n}}\)
+#+end_theorem
+
+#+begin_task org
+\-
+- \(n\) призывников
+- \(p = 0.01\) --- вероятность болезни
+- Группы по \(k\) человек, при чем \(\frac{n}{k}\) --- целое
+Найти число среднее число анализов
+#+end_task
+
+#+begin_solution org
+\-
+\(z_j\) --- число анализов в \(j\)-той группе
+\[ E_{z_j} = 1\cdot(1 -p)^k + (k + 1)\cdot(1 - (1 - p)^k) = k + 1 - k (1- p)^k \]
+\[ E(\sum z_j) = \frac{n}{k} ((k + 1) - k(1 - p)^k) = n \left(1 + \frac{1}{k} - (1 - p)^k\right) \quad k \in [1; n]  \]
+при \(p \to 0\): \((1 - p)^k \sim 1 - pk\)
+\[ f(k) = n \left(1 + \frac{1}{k}\right - 1 + pk) = \frac{n}{k} + npk \]
+\[ f'(k) = n \left(-\frac{1}{k^2} + p\right) \]
+_Ответ_: \(k = \frac{1}{\sqrt{0.01}} = 10\)
+#+end_solution
+
+* Усеченное среднее
+\[ (X_1, \dots, X_n) \]
+Выкинем \(k\) крайних значений из упорядоченного
+вариационного ряда
+\[ (X_{k + 1}, \dots, X_{n - k}) \]
+Усеченное среднее
+\[ \frac{\sum_{k + 1}^{n + k} X_i}{n - 2k} \]
+* Среднее Уолша
+\[ (X_1, \dots, X_n) \]
+Составим новую выборку: \(\frac{X_i + X_j}{2}\). Новый объем выборки \(\frac{n(n - 1)}{2}\) \\
+*Среднее Уолша* --- медиана этой выборки
