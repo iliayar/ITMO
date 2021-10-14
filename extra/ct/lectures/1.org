@@ -1,7 +1,7 @@
 #+setupfile: setup.org
 #+TITLE: Lecture 1
-#+date: October 13
-
+#+date: October 14
+#+LATEX: \selectlanguage{english}
 
 * Set Theory
 We are not going to use CF axiom?. Just have a *sack of dots*.
@@ -43,7 +43,7 @@ How many functions are there
 
 Back to sets:
 #+begin_examp org
-- \(\text{Bool} = \{\text{True}, \text{False}\}\)
+\(\text{Bool} = \{\text{True}, \text{False}\}\)
 #+end_examp
 
 ** Composition of functions
@@ -58,6 +58,7 @@ Composition is /associative/.
 
 ** Identity functions
 #+begin_remark org
+\-
 - \(id_A \circ f = f\)
 - \(f \circ id_B = f\)
 #+end_remark
@@ -89,10 +90,10 @@ subject to 2 constraints:
 2. for any 3 morphism \(f_3 \circ (f_2 \circ f_1) = (f_3 \circ f_2) \circ f_1\)
 #+end_remark
 #+begin_examp org
-\[ Ob\ C_\text{bad} = \{ \smiley \} \]
-\[ C_\text{bad}(\smiley, \smiley) = \N \]
-\[ \id_\smiley = 0 \]
-\[  \smiley \xrightarrow{m} \smiley \xrightarrow{n} \smiley  \quad m + n \]
+\[ Ob\ C_\text{bad} = \{ \varepsilon \} \]
+\[ C_\text{bad}(\varepsilon, \varepsilon) = \N \]
+\[ id_\varepsilon = 0 \]
+\[  \varepsilon \xrightarrow{m} \varepsilon \xrightarrow{n} \varepsilon  \quad m + n \]
 It's /monoid/
 #+end_examp
 #+begin_examp org
