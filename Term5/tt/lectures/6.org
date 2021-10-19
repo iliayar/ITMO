@@ -43,7 +43,7 @@ abs type \tau with \(x:\delta\)
 \[ \texttt{isTrue}: \alpha \rightarrow \bool \]
 \[ \delta \equiv (\bool \rightarrow \alpha) \& (\alpha \rightarrow \bool) \]
 \(\label{6_ex_bool}\) pack \(\bool, \underbrace{( \lambda x^\beta. x, \lambda x^\alpha. x)}_\xi\) to \(\exists \alpha. \delta\)
-\[ \xi = (\bool \rightarrow \bool) \& (\bool -> \bool) \]
+\[ \xi = (\bool \rightarrow \bool) \& (\bool \rightarrow \bool) \]
 \[ \Gamma \vdash \underbrace{ \delta[\alpha \coloneqq \bool] }_\xi \]
 abstype \(\bool\) with \(x:\delta\)
 - is (\(\ref{6_ex_bool}\))
