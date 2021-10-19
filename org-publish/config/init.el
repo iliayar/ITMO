@@ -8,6 +8,9 @@
 
 (org-reload)
 
+(setq org-html-inline-image-rules ' (("file" . #1="\\(?:\\.\\(?:gif\\|\\(?:jpe?\\|pn\\|sv\\)g\\)\\)")
+				     ("http" . #1#)
+				     ("https" . #1#)))
 (setq org-html-htmlize-output-type 'css)
 (setq org-html-htmlize-font-prefix "org-")
 
