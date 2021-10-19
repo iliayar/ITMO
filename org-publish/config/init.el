@@ -4,8 +4,12 @@
 
 (require 'org)
 (require 'ox-latex)
+(require 'htmlize)
 
 (org-reload)
+
+(setq org-html-htmlize-output-type 'css)
+(setq org-html-htmlize-font-prefix "org-")
 
 (defun org-publish-command () (org-publish-project "conspects"))
 
