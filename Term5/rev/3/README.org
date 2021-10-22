@@ -1,0 +1,440 @@
+#+title: Week 3
+
+* Basic
+key:
+#+begin_src 
+ABCDEFGHIJKLMNOPQRSTUVWXYZ234567
+#+end_src
+
+#+begin_src python :results output
+ans = 'IYYTIR27GE2V6QSBKNCV6T2GL5AU4WIK'
+key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+
+res = []
+for c in ans:
+    res.append(key.find(c))
+print(res)
+#+end_src
+
+#+RESULTS:
+: [8, 24, 24, 19, 8, 17, 26, 31, 6, 4, 26, 21, 30, 16, 18, 1, 10, 13, 2, 21, 30, 19, 26, 6, 11, 29, 0, 20, 28, 22, 8, 10]
+
+#+begin_src 
+01234567890123456789
+XXXXXXXXXXXXXXXXXXXX
+#+end_src
+
+- 01000110
+- 0011000Y
+- 
+#+begin_src 
+0123456789ABCDEF
+010001100011000Y
+#+end_src
+
+#+begin_src python :results output
+ans = 'IYYTIR27GE2V6QSBKNCV6T2GL5AU4WIK'
+key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+ansIds = [key.find(c) for c in ans]
+
+def solve():
+    inpLength = 20
+    outLength = 320
+    outputId = 0
+    curKeyId = 0
+    inputId = 1
+    i = 8
+    uwu = ''
+    while outputId < outLength and (i > 0 or inputId < inpLength):
+        if i <= 4:
+            if inputId >= inpLength:
+                curKeyId <<= 5 - i
+                i = 5
+            else:
+                oldInputId = inputId
+                inputId += 1
+                a = curKeyId >> 8
+                if oldInputId != 1:
+                    uwu += chr(a)
+                curKeyId <<= 8
+                curKeyId &= 0xFFFF
+                i += 8
+        oldOutputId = outputId
+        outputId += 1
+        curKeyId |= (ansIds[oldOutputId] << (i - 5))
+        i -= 5
+    uwu += chr((curKeyId >> 8) & 0xFFFF)
+    print(uwu)
+
+solve()
+#+end_src
+
+#+RESULTS:
+: F14G_15_BASE_OF_ANY
+
+* adooha
+#+begin_src python :results output
+print(','.join(map(str, range(50)))) 
+#+end_src
+
+#+RESULTS:
+: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49
+
+#+begin_src 
+{ "123456789"
+, "CBF43926"
+, "INByV5qSKB3Cr03y3I7J"
+, "0698525B"
+, "sTNf34DGdqP0yNDy6OoQ"
+, "BD7FA6E5"
+, "WkCe0SdK7c6Ip4QLugcp"
+, "BB6E2E9D"
+, "aZunZdPL93fARg6QH6Wv"
+, "1CAE4738"
+, "bpfHJ0zrxjV3Jf42lKIs"
+, "F6986BDA"
+, "nFrukjqzbOp7aTEC43z0"
+, "5CE57091"
+, "jnSAbLutXfbP6jFWoDeP"
+, "7424F3F8"
+, "rmBEMgQEsFRMn9ZmOUCU"
+, "060F3DCD"
+, "dXHXv6jW2nEY2sUbydlV"
+, "29F4AA7C"
+, "zwMe1BZOf7m0LtiPqoIT"
+, "FDB10CE9"
+, "Y2mWMVmg0f1xTsEkJdyN"
+, "09FEB49A"
+, "Wm6CW7sMFiwzmHw2M8jX"
+, "28DEB110"
+, "72rMtCHCb0OEiLX29g7u"
+, "64BC67CC"
+, "nufOMpIjrKbzPlfKIdaH"
+, "3A121D14"
+, "UZETiRhSHmuW9AqewUpF"
+, "5CB09F9F"
+, "mPv97LjnQyfpadvdlfT1"
+, "10B30CED"
+, "3iw2nqbJxcTaUpVc7Pcr"
+, "72E3F041"
+, "DyNhcaPhrGU5AP0bxelU"
+, "6382203A"
+, "VLLRX20lDvHlnWRZoCPr"
+, "3CB5570F"
+, "8ABoQRMrxzWCVVkeCqjj"
+, "18736753"
+, "PQ1g928hZva4y2Bz9jKP"
+, "580931E7"
+, "u7qKDwKr1nzp9OlQn1k7"
+, "E72E8219"
+, "6sK5UV6CbuY05bSRMYDp"
+, "AF5D411C"
+, "5JxmuAjMIC2rHRH9Vz5Q"
+, "CC4BF478"
+, "ftxn19VoKXb1FAtqc7lq"
+, "1AE5F074"
+, "ZRxnd33O5L0tELG95ckq"
+, "FA929D6B"
+, "MKmuLtJfPRAcKljyqZQc"
+, "07FF479D"
+, "DnvFYDAkbCh1Bi0ZPl67"
+, "1EE90516"
+, "EjOLx6JysuKv6H6Ad5q9"
+, "2A242992"
+, "FVOflh708Im0u7rQ382f"
+, "C1AF8F61"
+, "EId9l96ZE7f3MEb95Lqa"
+, "EF2A968C"
+, "CHa6N7nkwOFTnkJBzoQu"
+, "1DCABB35"
+, "stOMomJLxwSif1UKl49B"
+, "76A0CE46"
+, "88NLayQ6iXpu2ldQw4DU"
+, "B9BF0A45"
+, "7KX0GR05X59eZ8I5N50q"
+, "534A6893"
+, "1IjDObg2uXpHCxL0VaIf"
+, "D171293C"
+, "TmAsYZx27UtZYWULwmw3"
+, "A2672F97"
+, "TRf3C3mdEJjXkiQcUefS"
+, "78AB4784"
+, "CV7nXcXlRxv0TL4MKGhZ"
+, "ADD8416D"
+, "DIzQRzLovtrSDxotBQqk"
+, "366D6EEF"
+, "MsnvgyyNuFSsoIG88GWx"
+, "FF88D119"
+, "ZoEuWJEzCOboD5om4tML"
+, "7318D1F0"
+, "MweEIx0UNHRzaZWwd1ay"
+, "F90CF4E6"
+, "Dj53q82wblbM13RpBwEw"
+, "BE03D81C"
+, "gl5jDYGBfHSDmAZgx9N0"
+, "9F9F0316"
+, "1r6pMaezN3vIM3Xx3g80"
+, "AFE06ADC"
+, "gQJaZ5vGoLN5Ml4PWFsm"
+, "A09DDE18"
+, "F3GyR3lBC3HrjGGk7Sm6"
+, "1A7FFE8C"
+, "Mi5ZURtzabIw5ffSGHyP"
+, "EF452CEB"
+, "MnzZblTTqL6FkOgRAUcJ"
+, "CCDB0995"
+, "OPOmdglncY9kDIDCEboW"
+, "6523E715"
+, "6pdOfXq69Asfc9fHwB3j"
+, "209321C4"
+, "qhbU2EthlUsvV6QvQFh3"
+, "235653F6"
+, "ngACf3aytfEYdGAd6ZvD"
+, "206A99A0"
+, "y7b0yp2Ryem9Ron36dY2"
+, "9C1259B9"
+, "2wDarBw96dnrEIMMm3iB"
+, "E7B46105"
+, "jnDJaiGwQ5o6taxuPpub"
+, "2858F63D"
+, "SMgDSCWXoyjBAMBnKl9P"
+, "29D46C3F"
+, "nO6mWwgqDmMDlyNljL2p"
+, "E4CA39B0"
+, "AaFMIZr0aXX63QB1vMRL"
+, "1964D7ED"
+, "wOj9h1stqLqKaYWUb3z0"
+, "4B01A888"
+, "HmS3iueeSlvxYnBw5SVX"
+, "62A01C0D"
+, "AdnCs8pj9Srl94vfflzG"
+, "49AFFC7D"
+, "XTgjGhv0bBIALXnr1QRM"
+, "11CC30B5"
+, "KA3yUpd6FG2glzwGyaEL"
+, "62A29936"
+, "glAYk2TQxlSZJId4uW4Y"
+, "86057F10"
+, "yjMdcdjfqcrTmRxWg0AE"
+, "1BBD6208"
+, "ovvtCBnOjGZ4BpKQic0n"
+, "AA74C633"
+, "zPKS8BIcudR1f3yV6Ddb"
+, "29D0FA2E"
+, "OqngHpL5EwoF1WhFsiEx"
+, "EDC4ABC6"
+, "8kA2bHLd9zhmWCh7mmDZ"
+, "BE949E83"
+, "Ls4yqqc5aVxZPuX0x6fe"
+, "6009C018"
+, "8Er2DPP0EPicOquV1h63"
+, "9883BC12"
+, "l5THEMUGK6vDJk5ly2t8"
+, "4FE872CC"
+, "Y7QuD13EmqdzHLBIZTOA"
+, "AD809112"
+, "ufE0UtYFd0eJnO7ETWXZ"
+, "851F2916"
+, "2hp441U4E7YGMzmEnuln"
+, "6271E10B"
+, "wsahlt7GMCN3c5KIscfV"
+, "DE35BB14"
+, "kDvJUaXtpdmi9efnG9Fy"
+, "BA8A8A4F"
+, "iEBCe5d3ygoHkDW9HRyy"
+, "6AF94455"
+, "BivEFH2Z1jcaccF0ShuQ"
+, "8D65EB5D"
+, "sYdBLMtZiy5O6nGoGvJy"
+, "EBC2477B"
+, "5qDyFclC9P01lcb5Um0X"
+, "FAE79A1A"
+, "ZxuTCLsmg88azZ86wX5G"
+, "A311D8AD"
+, "TRM2al8UZRq80tYwZB7K"
+, "FF3541D1"
+, "ze649Otz7VfSmjABYZXk"
+, "6F753A3F"
+, "w0Hsv7wICcxvrcLsjqEq"
+, "59B39E7D"
+, "KM8AxR5AAnNt53fbSMf2"
+, "2B3090F7"
+, "3YLgiAO8Wo3mCS0BcA6E"
+, "13013455"
+, "vBHuCBZX6bTYs7CizcYp"
+, "0657AA6B"
+, "jvrav2abEzdo3cRuHUMf"
+, "F0873544"
+, "FY1aIehT1dhqh3YxyaYI"
+, "AB6C469A"
+, "CFIPhWQgvdC8033Ilq9a"
+, "CB202085"
+, "hbSDB0p6gKnCpIp6wtbr"
+, "66DFAA6D"
+, "Xnzoa4rUJvNEuUfpnKC0"
+, "2831F9F9"
+, "iMSrX1ckykooOIJoS68K"
+, "73323FA1"
+, "aA68qEjrD2BRyL5kVirM"
+, "C27AF852"
+, "qIrtvgy2EbDVluvRbbBw"
+, "2208F881"
+, "IS23Bb1WiRoiziKApWuh"
+, "63DE2515" }
+#+end_src
+
+* huffpuff
+#+begin_src 
+YYYYAAAAHHHHHHOOOONOOOOTTTTTTFFFFLLLLAAAAGGGGGGGISSSSHEEERRREEEEEEEGUUUUUYYY 
+#+end_src
+
+#+begin_src python :results output
+
+def decode_huffman(freq, text):
+    d = {}
+    for k in freq:
+        # d[bin(freq[k])[2:]] = k
+        d[freq[k]] = k
+    cur = ''
+    res = ''
+    for c in text:
+        cur += c
+        if cur in d:
+            res += d[cur]
+            cur = ''
+    return res
+
+# r = decode_huffman({ "A": '110', "E": '010', "F": '111', "G": "111", "H": "0000", "I": "11010", "L": "1010", "N": "11011", "O": "100", "R": "1100", "S": "1011", "T": "010", "U": "0011", "Y": "0001" }, "0001000100010001110110110110000000000000000000000000100100100100011011100100100100001000100010001000100010011101110111011110101010101010101101101101101111111111111111111110110101011101110111011000001001001001100011000110001001001001001001001011100110011001100110011000100010001")
+r = decode_huffman({ "C": '100010', "I": '000000', "L": '100011', "P": '100000', "R": '100001', "S": '100110', "T": '000001', "_": '001', "a": '0111', "c": '11110', "d": '00001', "e": '0001', "f": '100111', "g": '01000', "h": '100100', "i": '0101', "k": '100101', "m": '11111', "n": '0110', "o": '110', "p": '111010', "r": '1010', "s": '1011', "t": '01001', "u": '111011', "y": '11100' },
+'0000000011000110101100101000100100000111000110011001001111011000011110000110001011011111111010101000011011101101011100110001000001100100000111010101110000110011111010100010000101110100101110011000001010110111100001101110110101011001000001011101100000100100000011111011101000000100110000100011111011001000011001010100101011100110')
+
+print(r)
+#+end_src
+
+#+RESULTS:
+: I_Like_To_Study_Compression_Theory_for_data_Processing_and_Image_Recognition
+
+* Narkoman
+#+begin_src sh
+export TASK_PORT=15b3
+#+end_src
+
+* ron
+* recurse
+#+begin_src python :results output
+enc = [0x73, 0x8F, 0x51, 0x7A, 0x63, 0x99, 0x6A, 0x7F, 0xCF, 0x77, 0x76, 0x64, 0x20, 0x9B, 0x5F, 0x90, 0x30, 0x8A, 0x4E, 0x83, 0x20, 0x94, 0x22, 0x76, 0x8B, 0x68, 0x4B, 0x74, 0x6C, 0x00]
+
+def decFoo1(b):
+    return b
+
+def decFoo2(b):
+    return (b ^ 0xff)
+
+def decFoo3(b):
+    return (b + 17) % 256
+
+def decFoo4(b):
+    return (b - 23 + 256) % 256
+
+v4 = [None]*29
+
+v4[0] = decFoo1;
+v4[1] = decFoo2;
+v4[2] = decFoo3;
+v4[3] = decFoo4;
+v4[4] = decFoo3;
+v4[5] = decFoo2;
+v4[6] = decFoo3;
+v4[7] = decFoo4;
+v4[8] = decFoo2;
+v4[9] = decFoo1;
+v4[10] = decFoo4;
+v4[11] = decFoo1;
+v4[12] = decFoo3;
+v4[13] = decFoo2;
+v4[14] = decFoo1;
+v4[15] = decFoo4;
+v4[16] = decFoo1;
+v4[17] = decFoo2;
+v4[18] = decFoo3;
+v4[19] = decFoo4;
+v4[20] = decFoo3;
+v4[21] = decFoo2;
+v4[22] = decFoo3;
+v4[23] = decFoo4;
+v4[24] = decFoo2;
+v4[25] = decFoo1;
+v4[26] = decFoo4;
+v4[27] = decFoo1;
+v4[28] = decFoo3;
+
+
+res = ''
+for i in range(29):
+    res += chr(v4[i](enc[i]))
+
+print(res)
+#+end_src
+
+#+RESULTS:
+: spbctf{h0w_d1d_y0u_l1k3_th4t}
+
+* uzzi
+* Randser
+* const
+#+begin_src python :results output
+flag = list("Flag{This_is_definetly_a_flag}")
+
+v1 = flag[5];
+flag[5] = flag[14];
+flag[14] = v1;
+v2 = flag[20];
+flag[20] = flag[21];
+flag[21] = flag[7];
+flag[7] = v2;
+v3 = flag[19];
+flag[19] = flag[20];
+result = v3;
+flag[20] = v3;
+
+print(''.join(flag))
+#+end_src
+
+#+RESULTS:
+: Flag{ehls_is_dTfineyti_a_flag}
+
+* Einarr
+gcd(49, 2023) == 7
+
+
+#+begin_src 
+Heally_tricky  
+relaly_tricky  
+#+end_src
+
+* Venkata
+#+begin_src 
+0123456
+^//_99^  
+#+end_src
+
+* hanne
+#+begin_src python :results output
+def f(x):
+    return (5 * x * x % 256 - 34 * x + 24) % 256
+
+for i in range(256):
+    if f(i) == 0:
+        print(i)
+#+end_src
+
+#+RESULTS:
+: 6
+: 52
+: 134
+: 180
+
+* jerred
+#+begin_src 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  
+#+end_src
