@@ -1,4 +1,4 @@
-#+setupfile: setup.or
+#+setupfile: setup.org
 #+TITLE: Лекция 8
 #+date: 25 октября
 
