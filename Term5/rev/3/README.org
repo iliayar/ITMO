@@ -318,8 +318,8 @@ print(r)
 #+begin_src sh
 export TASK_PORT=15b3
 #+end_src
-
 * ron
+Copy functions and change input to encrypted text and print
 * recurse
 #+begin_src python :results output
 enc = [0x73, 0x8F, 0x51, 0x7A, 0x63, 0x99, 0x6A, 0x7F, 0xCF, 0x77, 0x76, 0x64, 0x20, 0x9B, 0x5F, 0x90, 0x30, 0x8A, 0x4E, 0x83, 0x20, 0x94, 0x22, 0x76, 0x8B, 0x68, 0x4B, 0x74, 0x6C, 0x00]
@@ -380,7 +380,9 @@ print(res)
 : spbctf{h0w_d1d_y0u_l1k3_th4t}
 
 * uzzi
+Just find the same random number
 * Randser
+Just copy =check= function and generate input
 * const
 #+begin_src python :results output
 flag = list("Flag{This_is_definetly_a_flag}")
