@@ -1,0 +1,103 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 8
+#+date: 26 октября
+#+LATEX_HEADER_EXTRA: \newcommand{\F}{\mathcal{F}}
+
+
+* \(\lambda\)-куб
+Обобщенные типовые системы
+\[ \F = x\ |\ \F\ \F\ |\ \lambda x:\F. \F\ |\ \Pi x:\F.\F\ |\ c \]
+\[ c = *\ |\ \square\]
+
+#+begin_symb org
+Обозначим за \(s\) множество \((*, \square)\)
+#+end_symb
+#+begin_symb org
+\(x : y : z \implies x : y\) и \(y : z\)
+#+end_symb
+
+#+begin_definition org
+\-
+- Аксиома
+  \[ \frac{}{ \vdash * : \square} \]
+- Начальное правило
+  \[ \frac{\Gamma \vdash A : s}{\Gamma , x : A \vdash x: A} \quad x \not \in FV(\Gamma) \]
+- Применение
+  \[ \frac{\Gamma \vdash \varphi : (\Pi x: A. B): s \quad \Gamma \vdash a : A}{\Gamma \vdash (\varphi a) : (B[x \coloneqq A])} \]
+- Conversion (преобразование)
+  \[ \frac{\Gamma \vdash A: B \quad \Gamma \vdash B': s \quad B =_\beta B'}{\Gamma \vdash A : B'} \]
+- Ослабление
+  \[ \frac{\Gamma \vdash B: C \quad \Gamma \vdash A: s}{\Gamma ,x: A \vdash B: C} \quad x \not\in FV(\Gamma) \]
+#+end_definition
+
+#+ATTR_LATEX: 
+#+begin_examp org
+\-
+#+begin_src pascal
+array[a..b] of int
+#+end_src
+=array[a..b] of= --- функция на типах. Ее род: \(* \to *\). Применяя ее к =int= получим =int[a..b]=.
+#+end_examp
+#+begin_remark org
+\[ \underset{\substack{\text{знач.} \\ value}}{7} : \underset{\substack{\text{тип} \\ type}}{int} : \underset{\substack{\text{род} \\ kind}}{*} : \underset{\substack{\text{сорт} \\ sort}}{\square} \]
+#+end_remark
+#+NAME: параметризация_8
+#+begin_definition org
+\(S \subseteq C \times C\) --- параметризует т.с. \((S_1, S_2) \in S\)
+- \(\Pi\)-правило
+  \[ \frac{\Gamma \vdash A:s_1 \quad \Gamma, x: A \vdash B: s_2}{\Gamma \vdash (\Pi x : A. B) : s_2} \]
+- \(\lambda\)-правило
+  \[ \frac{\Gamma \vdash A: s_1 \quad \Gamma, x: A \vdash b: B \quad \Gamma, x:A \vdash B:s_2}{\Gamma \vdash (\lambda x : A. b) : (\Pi x: A. B)} \]
+#+end_definition
+
+#+begin_definition org
+/Сокращение/: \(\varphi \to \pi\) заменим на \(\Pi x: \varphi. \pi\) если \(x \not \in FV(\pi)\)
+#+end_definition
+
+#+begin_remark org
+Пусть \(x \not \in FV(B)\)
+\[ \frac{\Gamma \vdash A : * \quad \Gamma , x:A \vdash b: B \quad \Gamma \vdash B:*}{\Gamma \vdash (\lambda x:A.b): A \to B} \]
+#+end_remark
+
+#+begin_remark org
+\-
+#+begin_src c
+printf("%d", "a") // нельзя
+#+end_src
+\(\texttt{printf}: (x: \texttt{string}) \to F(x)\), пишем так: \(\Pi x: \texttt{string}. F(x)\)
+#+end_remark
+
+Рассмотрим \(S\) из [[параметризация_8][определения]]: \todo
+- \((*, *)\), получим \(\lambda_\to\) \\
+  /Характерные представители/: \(\lambda x. x\)
+- \((*, *), \(\square, *)\), получим \(\lambda_2, F\) \\
+  /Характерные представители/: \(\Lambda \alpha. \lambda x: \alpha. x\)
+  #+begin_remark org
+  \(\Lambda \alpha. b \approx \lambda \alpha: *. b\)
+  #+end_remark
+- \((*, *), (\square, *), (\square, \square)\) это \(\lambda \omega\)
+- \((\square, \square), (*, *)\) это \(\lambda \omega\) слабая \\
+  /Характерные представители/: =int[]=
+
+#+begin_examp org
+\-
+#+begin_src c++
+template <int n, int m>
+class matrix {
+	// -- snip --
+};
+#+end_src
+\[ = \lambda n^{\texttt{int}}. \lambda m%{\texttt{int}}. (\texttt{pack}\ _, _) : \]
+\[ \Pi n^{\texttt{int}}. \Pi m^{\texttt{int}}.  \exists \alpha. \alpha \& \alpha : \square\]
+#+end_examp
+#+begin_examp org
+\-
+#+begin_src haskell
+data List a = Nil | Const a (List a) 
+#+end_src
+- =List=: \(* \to * : \square\)
+- =Nil=: \((a: * ) \to \texttt{List}_a \equiv \Pi a^*. \texttt{List}_a : \square\)
+- =Cons=: \((a : * ) \to (h : a : * ) \to (t : \texttt{List}_a : * ) \to (\texttt{List}_a : * ) : \square\)
+\[ \frac{\displaystyle \frac{}{\vdash * : \square} \quad \frac{\displaystyle \frac{}{\vdash * : \square} \quad \frac{}{\vdash * : \square} }{* : \square \vdash * : \square}}{\vdash \underset{\color{gray}\Pi x^*. * : \square}{* \to * : \square}} \]
+#+end_examp
+
