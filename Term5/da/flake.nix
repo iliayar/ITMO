@@ -34,6 +34,7 @@
           });
           pythonEnv = pkgs.python39.withPackages (pypkgs: with pypkgs; [
             jupyterlabWithExtensions
+            statsmodels
             # jupyterlab
             # jupyterlab_vim
             pandas
