@@ -1,0 +1,63 @@
+digraph parse_tree {
+ratio = fill;
+node [style=filled];
+n1 [label="DECLARATION"]
+n2 [label="void"]
+n1 -> n2
+n3 [label="f"]
+n1 -> n3
+n4 [label="("]
+n1 -> n4
+n5 [label="ARGS"]
+n6 [label="ARG"]
+n7 [label="int"]
+n6 -> n7
+n8 [label="POINTER"]
+n9 [label="*"]
+n8 -> n9
+n10 [label="POINTER"]
+n8 -> n10
+n6 -> n8
+n11 [label="a"]
+n6 -> n11
+n5 -> n6
+n12 [label="ARGS_REST"]
+n13 [label=","]
+n12 -> n13
+n14 [label="ARG"]
+n15 [label="float"]
+n14 -> n15
+n16 [label="POINTER"]
+n17 [label="*"]
+n16 -> n17
+n18 [label="POINTER"]
+n19 [label="*"]
+n18 -> n19
+n20 [label="POINTER"]
+n18 -> n20
+n16 -> n18
+n14 -> n16
+n21 [label="b"]
+n14 -> n21
+n12 -> n14
+n22 [label="ARGS_REST"]
+n23 [label=","]
+n22 -> n23
+n24 [label="ARG"]
+n25 [label="double"]
+n24 -> n25
+n26 [label="POINTER"]
+n24 -> n26
+n27 [label="c"]
+n24 -> n27
+n22 -> n24
+n28 [label="ARGS_REST"]
+n22 -> n28
+n12 -> n22
+n5 -> n12
+n1 -> n5
+n29 [label=")"]
+n1 -> n29
+n30 [label=";"]
+n1 -> n30
+}
