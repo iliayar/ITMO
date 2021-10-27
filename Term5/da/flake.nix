@@ -38,6 +38,7 @@
             # jupyterlab
             # jupyterlab_vim
             pandas
+            tqdm
             matplotlib
             numpy
             scikit-learn
