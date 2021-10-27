@@ -3,12 +3,6 @@
 %debug 
 %defines 
 %define api.namespace {Calc}
-/**
- * bison 3.3.2 change
- * %define parser_class_name to this, updated
- * should work for previous bison versions as 
- * well. -jcb 24 Jan 2020
- */
 %define api.parser.class {CalcParser}
 
 %code requires{
@@ -16,15 +10,6 @@
       class CalcDriver;
       class CalcScanner;
    }
-
-// The following definitions is missing when %locations isn't used
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
-#  else
-#   define YY_NULLPTR 0
-#  endif
-# endif
 
 }
 
@@ -35,12 +20,10 @@
    #include <iostream>
    #include <cstdlib>
    #include <fstream>
-
-/* include for all driver functions */
    #include "calc_driver.hpp"
 
-#undef yylex
-#define yylex scanner.yylex
+   #undef yylex
+   #define yylex scanner.yylex
 }
 
 %define api.value.type variant
@@ -73,7 +56,7 @@ statements : END | statement statements;
 
 statement 
     : IDENT ASSIGN expr SEMICOLON { driver.set_variable($1, $3); }
-    | expr SEMICOLON { std::cout << $1 << std::endl; }
+    | expr SEMICOLON { driver.print_result($1); }
     ;
 
 expr
