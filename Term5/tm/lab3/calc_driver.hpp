@@ -27,6 +27,7 @@ private:
 
   std::map<std::string, int> m_variables;
 
+  const std::string red = "\033[1;31m";
   const std::string green = "\033[1;32m";
   const std::string blue = "\033[1;36m";
   const std::string norm = "\033[0m";

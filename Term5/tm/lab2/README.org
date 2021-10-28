@@ -48,3 +48,17 @@ POINTER    -> EPS
 | ARG         | IDENTIFIER     | ',' ')'    |
 | POINTER     | EPS '*'        | IDENTIFIER |
 
+** Доп
+Возвращаемый тип указатель
+
+Грамматика:
+#+begin_example
+DECLRATION -> IDENTIFIER POINTER IDENTIFIER ( ARGS ) ;
+ARGS       -> ARG ARGS_REST
+ARGS       -> EPS
+ARGS_REST  -> , ARG ARGS_REST
+ARGS_REST  -> EPS
+ARG        -> IDENTIFIER POINTER IDENTIFIER
+POINTER    -> * POINTER
+POINTER    -> EPS
+#+end_example

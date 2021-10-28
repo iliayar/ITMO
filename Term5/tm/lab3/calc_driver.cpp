@@ -4,8 +4,7 @@
 #include "calc_driver.hpp"
 #include "calc_parser.tab.hh"
 
-Calc::CalcDriver::~CalcDriver() {
-}
+Calc::CalcDriver::~CalcDriver() {}
 
 void Calc::CalcDriver::parse(std::string const &filename) {
   std::ifstream in_file(filename);
@@ -38,10 +37,14 @@ int Calc::CalcDriver::get_variable(std::string const &ident) {
 }
 
 void Calc::CalcDriver::set_variable(std::string const &ident, int value) {
+  if (m_variables.find(ident) != m_variables.end()) {
+    std::cerr << red << "Can only assign once: " << ident << norm << std::endl;
+    return;
+  }
   m_variables[ident] = value;
   std::cout << green << ident << " = " << value << norm << std::endl;
 }
 
 void Calc::CalcDriver::print_result(int val) {
-    std::cout << blue << val << norm << std::endl;
+  std::cout << blue << val << norm << std::endl;
 }
