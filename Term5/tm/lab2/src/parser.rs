@@ -68,6 +68,8 @@ impl Parser {
 		// IDENTIFIER
 		self.tkn().next_token();
 
+		let pointer = self.POINTER();
+
 		// IDENTIFIER
 		let name = self.tkn().cur_token();
 		assert!(matches!(name, Token::IDENTIFIER(_)));
@@ -93,6 +95,7 @@ impl Parser {
 
 		Tree::new(NodeValue::NonTerminal("DECLARATION".to_owned()), vec![
 		    Tree::node(NodeValue::Terminal(t)),
+		    pointer,
 		    Tree::node(NodeValue::Terminal(name)),
 		    Tree::node(NodeValue::Terminal(Token::LPAREN)),
 		    args,
@@ -319,15 +322,20 @@ mod tests {
 
     // Test for public interface
 
-    fn fun_with_args(t: String, name: String, args: Vec<Tree>) -> Tree {
+    fn fun_with_args_ret_pointers(t: String, name: String, args: Vec<Tree>, pointers: usize) -> Tree {
 	Tree::new(NodeValue::NonTerminal("DECLARATION".to_owned()), vec![
 	    Tree::node(NodeValue::Terminal(Token::IDENTIFIER(t))),
+	    pointers_tree(pointers),
 	    Tree::node(NodeValue::Terminal(Token::IDENTIFIER(name))),
 	    Tree::node(NodeValue::Terminal(Token::LPAREN)),
 	    args_tree(args),
 	    Tree::node(NodeValue::Terminal(Token::RPAREN)),
 	    Tree::node(NodeValue::Terminal(Token::SEMICOLON)),
 	])
+    }
+
+    fn fun_with_args(t: String, name: String, args: Vec<Tree>) -> Tree {
+	fun_with_args_ret_pointers(t, name, args, 0)
     }
 
     fn parse_tree(string: String) -> Tree {
@@ -338,6 +346,11 @@ mod tests {
     #[test]
     fn empty_args() {
 	assert_eq!(parse_tree("void fn();".to_owned()), fun_with_args("void".to_owned(), "fn".to_owned(), vec![]))
+    }
+
+    #[test]
+    fn empty_args_ret_pointers() {
+	assert_eq!(parse_tree("void** fn();".to_owned()), fun_with_args_ret_pointers("void".to_owned(), "fn".to_owned(), vec![], 2))
     }
 
     #[test]
@@ -361,6 +374,14 @@ mod tests {
 	    arg("int".to_owned(), 1, "a".to_owned()),
 	    arg("float".to_owned(), 2, "b".to_owned()),
 	]))
+    }
+
+    #[test]
+    fn multi_pointer_args_fun_ret_pointers() {
+	assert_eq!(parse_tree("void* fn(int* a, float * *b);".to_owned()), fun_with_args_ret_pointers("void".to_owned(), "fn".to_owned(), vec![
+	    arg("int".to_owned(), 1, "a".to_owned()),
+	    arg("float".to_owned(), 2, "b".to_owned()),
+	], 1))
     }
 
     // Tests for invalid declaration
