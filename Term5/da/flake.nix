@@ -27,16 +27,11 @@
               cp -r $src $out/share/jupyter/lab/extensions/jupyterlab_vim
             '';
           };
-          jupyterlabWithExtensions = pkgs.python39Packages.jupyterlab.overrideAttrs (old: {
-            buildInputs = old.propagatedBuildInputs ++ [ 
-              jupyterlab_vim
-            ];
-          });
           pythonEnv = pkgs.python39.withPackages (pypkgs: with pypkgs; [
-            jupyterlabWithExtensions
             statsmodels
-            # jupyterlab
-            # jupyterlab_vim
+            jupyterlab
+            jupyterlab_vim
+            seaborn
             pandas
             tqdm
             matplotlib

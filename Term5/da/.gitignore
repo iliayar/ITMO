@@ -1,4 +1,4 @@
 venv
-*.csv
+.lab.appdir
 *.egg-info
 dist
