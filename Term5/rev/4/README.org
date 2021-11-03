@@ -1,6 +1,8 @@
 #+title: Week 3
 
 * Cube
+*32*
+
 #+begin_src python :results output
 enc = [102, 109, 99, 100, 125, 70, 81, 96, 66, 76, 70, 111,
        79, 120, 61, 57, 39, 88, 120, 124, 110, 120, 113, 70,
@@ -53,6 +55,8 @@ print(res)
 : flag_is_flag
 
 * Head of State
+*64*
+
 #+begin_src python :results output
 
 class Edge:
@@ -191,11 +195,16 @@ dfs(1337, '')
 : hojyfgeufvoljemjrztzmxwqnl
 
 * rev_1_2
+*64*
+
 [[file:~/Envs/Reverse/week4/rev_1_2/splo.py][splo]]
 * rev_0_2
-[[file:~/Envs/Reverse/week4/rev_0_2/splo.py][splo]]
+*64*
 
+[[file:~/Envs/Reverse/week4/rev_0_2/splo.py][splo]]
 * UMS
+*32*
+
 #+begin_src text
 Welcome to User Management System!
 Maximum number of users supported: 10
@@ -264,8 +273,9 @@ Access granted! Entering the flag vault
 
 flag: W00t_UMS_h4s_b33n_PWND
 #+end_src
-
 * List
+*32*
+
 #+begin_src python :results output
 d = ['f',
      'x',
@@ -327,6 +337,8 @@ print(res[::-1])
 : flag_is_structs_are_cool
 
 * what
+*64*
+
 #+begin_src python :results output
 print(bytes.fromhex(hex(1633837924)[2:])[::-1])
 #+end_src
@@ -337,6 +349,8 @@ print(bytes.fromhex(hex(1633837924)[2:])[::-1])
 flag_cafe_0129837465dcba
 
 * MadhuFarai
+*PE*
+
 #+begin_src python :results output
 ps = [ (4, 4),
        (4, 4),
@@ -363,12 +377,16 @@ print(res)
 : -17564
 
 * Hitrugan
+*64*
+
 [[/home/iliayar/Repos/ITMO/Term5/rev/4/hitrugan2021-10-30-123309_581x325_scrot.png]]
 
 
 [[file:~/Envs/Reverse/week4/Hitrugan/sol.c][sol.c]]
 
 * structurize
+*64*
+
 pass: sOmEeL33TpAss -> SOMEEL33TPASS
 login: SeCrEtUsEr
 
@@ -378,6 +396,8 @@ structurize master* λ echo -n SOMEEL33TPASS | md5sum
 #+end_src
 
 * JCOm
+*PE*
+
 | a1 | res |
 |----+-----|
 |  1 |   1 |
@@ -391,6 +411,8 @@ structurize master* λ echo -n SOMEEL33TPASS | md5sum
 =43=
 
 * Shmalidator
+*64*
+
 #+begin_src python :results output
 def dec(n):
     return bytes.fromhex(hex(n)[2:])[::-1]
@@ -400,6 +422,8 @@ print(res)
 
 #+RESULTS:
 : b'345YP4CKA1G0'
+* Callmebaby
+*64*
 
 #+begin_src python :results output
 d = [ 6, 0x0, 0x68, 0x6, 0x2, 0x68, 0x4, 0x3, 0x2, 0x7E, 0x7E, 0x7E, 0x4E, 0x0 ]
@@ -412,8 +436,9 @@ print(res)
 #+RESULTS:
 : 17_15_345IIIy
 
-
 * 0xF20B
+*32*
+
 #+begin_src python :results output
 s2 = [0]*28
 for (i, c) in enumerate(']B'):
@@ -448,6 +473,8 @@ print(res)
 : wh47_th3_H3LL_is_FR0BN1CATE*
 
 * JoeFain
+*PE*
+
 #+begin_src python :results output
 def f1(Re, Im):
     return Re * Re - Im * Im - 1 + -5 * Re - 6 * Im
