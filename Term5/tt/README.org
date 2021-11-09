@@ -11,3 +11,4 @@
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/6.pdf][Lecture 6]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/7.pdf][Lecture 7]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/8.pdf][Lecture 8]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/10.pdf][Lecture 10]]
