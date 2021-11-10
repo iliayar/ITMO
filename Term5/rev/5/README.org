@@ -312,7 +312,7 @@ puts("Wrong!"Wrong!
 #+end_src
 
 * MC7
-[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc2021-11-06-020958_869x594_scrot.png]]kkkkk
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc2021-11-06-020958_869x594_scrot.png]]
 
 * MC6
 [[/home/iliayar/Repos/ITMO/Term5/rev/5/mc62021-11-06-022732_680x578_scrot.png]]
