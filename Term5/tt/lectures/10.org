@@ -4,7 +4,7 @@
 
 * Равенство
 \(a \xlongequal[]{A} b\), если сущесвует путь \(a \leadsto b\). \\
-\(I\) --- интервальный тип \([\text{left}; \text\right]\) \\
+\(I\) --- интервальный тип \([\text{left}; \text{right}]\) \\
 Сущесвует непрерывная функция \(f: I \to A\)
 - \(f\ \text{left} =_\beta a\)
 - \(f\ \text{right} =_\beta b\)
