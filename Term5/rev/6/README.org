@@ -1,0 +1,494 @@
+#+TITLE: Week 6
+
+* CPUID
+#+begin_src 
+rbx        rdx        rcx
+0x756e6547 0x49656e69 0x6c65746e GenuineIntel
+0x68747541 0x69746e65 0x444d4163 AuthenticAMD
+#+end_src
+
+On first ~cpuid~ call (maybe on second works too)
+
+AuthenticAMD
+#+begin_src 
+set $rbx=0x68747541
+set $rdx=0x69746e65
+set $rcx=0x444d4163
+#+end_src
+
+* mutcher
+** C
+1. a
+   #+begin_src C
+   return strcmp(strA, strB)
+   #+end_src
+2. e
+   #+begin_src C
+   strncpy(strA, strB, length)
+   #+end_src
+3. d
+   #+begin_src C
+   strcat(strA, strB)
+   #+end_src
+4. b
+   #+begin_src C
+   return strlen(strA)
+   #+end_src
+5. c
+   #+begin_src C
+   strcpy(strA, strB)
+   #+end_src
+
+Ans: 1-a, 2-e, 3-d, 4-b, 5-c
+** Asm
+- a
+  #+begin_src asm
+        mov esi, offset strA
+        mov edi, offset strB
+        mov ecx, length
+next:
+        mov al, byte ptr [esi]
+        sub al, byte ptr [edi]
+        test al, al
+        jnz finish
+        cmp byte ptr [esi], 0
+        je finish
+        inc esi
+        inc edi
+        jmp next
+finish:
+        movsx eax, al
+        ret
+  #+end_src
+- b
+  #+begin_src asm
+	mov esi, offset strA
+	mov edi, offset strB
+	mov ecx, length
+next:
+	mov al, byte ptr [esi]
+	cmp al, 0
+	je finish
+	inc esi
+	jmp next
+finish:
+	sub esi, offset strA
+	mov eax, esi
+	ret
+  #+end_src
+- c
+  #+begin_src asm
+	mov esi, offset strA
+	mov edi, offset strB
+	mov ecx, length
+next:
+	mov al, byte ptr [edi]
+	mov byte ptr [esi], al
+	cmp al, 0
+	je finish
+	inc esi
+	inc edi
+	jmp next
+finish:
+	ret
+  #+end_src
+- d
+  #+begin_src asm
+	mov esi, offset strA
+	mov edi, offset strB
+	mov ecx, length
+next:
+	mov al, byte ptr [esi]
+	cmp al, 0
+	je finish
+	inc esi
+	jmp next
+finish:
+next2:
+	mov al, byte ptr [edi]
+	mov byte ptr [esi], al
+	cmp al, 0
+	je finish2
+	inc esi
+	inc edi
+	jmp next2
+finish2:
+	ret
+  #+end_src
+- e
+  #+begin_src asm
+	mov esi, offset strA
+	mov edi, offset strB
+	mov ecx, length
+next:
+	test ecx, ecx
+	jz finish
+	mov al, byte ptr [edi]
+	mov byte ptr [esi], al
+	cmp al, 0
+	je finish
+	inc esi
+	inc edi
+	dec ecx
+	jmp next
+finish:
+	ret
+  #+end_src
+
+* Peta awesome
+#+begin_src asm
+	mov eax, 12345
+	mov ecx, 11
+again:
+	lea ebx, [ecx * 8 + 0xf00b42]
+	xor eax, ebx
+	mov edx, ecx
+	and edx, 1
+	test edx, edx
+	jz lbl
+	rol eax, cl
+	jmp jumpout
+lbl:
+	rol eax, 17
+jumpout:
+	dec ecx
+	test ecx, ecx
+	jnz again
+	and eax, 0x55555555
+#+end_src
+
+#+begin_src python :results output
+def rol(x, n, bits=32):
+    return (0xffffffff & (x << n)) | ((x & (0xffffffff << (bits - n))) >> (bits - n))
+a = 12345
+c = 11
+while True:
+    a ^= (c * 8 + 0xf00b42)
+    if c % 2 == 0:
+        a = rol(a, 17)
+    else:
+        a = rol(a, c) # c < 0xff
+    c -= 1
+    if c == 0:
+        break
+a = a & 0x55555555
+print(a)
+#+end_src
+
+#+RESULTS:
+: 1078268933
+
+** Cheating
+~f.asm~:
+#+begin_src asm
+	BITS 64
+	global f
+	section .text
+f:
+	mov eax, 12345
+	mov ecx, 11
+again:
+	lea ebx, [ecx * 8 + 0xf00b42]
+	xor eax, ebx
+	mov edx, ecx
+	and edx, 1
+	test edx, edx
+	jz lbl
+	rol eax, cl
+	jmp jumpout
+lbl:
+	rol eax, 17
+jumpout:
+	dec ecx
+	test ecx, ecx
+	jnz again
+	and eax, 0x55555555
+	ret
+#+end_src
+~sol.c~:
+#+begin_src c
+#include <stdio.h>
+
+int f();
+
+int main() {
+    printf("%d\n", f());
+}
+#+end_src
+[[./2021-11-12-003341_407x72_scrot.png]]
+
+* motcher
+#+begin_src asm
+numA dd 4.0
+numB dd 8.0
+numC dd 3.14
+result dd 0.0
+#+end_src
+** C
+1. b
+   #+begin_src c
+result = 2 * numC * numB + numA
+   #+end_src
+2. a
+   #+begin_src c
+result = numA + numC * numB * numB
+   #+end_src
+3. c
+   #+begin_src c
+result = (numB + numA) / numC
+   #+end_src
+4. e
+   #+begin_src c
+result = sin(numB + numA) * 2 * numC
+   #+end_src
+5. d
+   #+begin_src c
+result = sin(numC) * (numB + numA)
+   #+end_src
+
+1-b, 2-a, 3-c, 4-e, 5-d
+
+** Asm
+- a
+  #+begin_src asm
+fld offset numC
+fld offset numB
+fld offset numB
+fmulp
+fmulp
+fadd offset numA
+fstp result
+  #+end_src
+  #+begin_src 
+C B B 
+C (B * B)
+(C * (B * B)) + A
+  #+end_src
+- b
+  #+begin_src asm
+fld offset numC
+fld offset numB
+fld offset numB
+faddp
+fmulp
+fadd offset numA
+fstp result
+  #+end_src
+  #+begin_src 
+C B B
+C (B + B)
+(C * (B + B))
+(C * (B + B)) + A
+  #+end_src
+- c
+  #+begin_src asm
+fld offset numC
+fld offset numB
+fadd offset numA
+fxch
+fdivp
+fstp result
+  #+end_src
+  #+begin_src 
+C B
+C (B + A)
+(B + A) C
+(B + A) / C
+  #+end_src
+- d
+  #+begin_src asm
+fld offset numC
+fld offset numB
+fadd offset numA
+fxch
+fsin
+fmulp
+fstp result
+  #+end_src
+  #+begin_src 
+C B
+C (B + A)
+(B + A) C
+(B + A) sin(C)
+(B + A) * sin(C)
+  #+end_src
+- e
+  #+begin_src asm
+fld offset numC
+fld offset numB
+fadd offset numA
+fsin
+fxch
+fadd offset numC
+fmulp
+fstp result 
+  #+end_src
+  #+begin_src 
+C B
+C (B + A)
+C sin(B + A)
+sin(B + A) C
+sin(B + A) (C + C)
+sin(B + A) * (C + C)
+  #+end_src
+
+* subs
+#+begin_src asm
+	BITS 32
+
+	global _start
+
+
+	section .data
+
+	tet db 106, 112, 101, 107, 127, 119, 121, 102, 119, 120, 109, 120, 121, 120, 109, 115, 114, 99, 109, 119, 99, 114, 115, 120, 99, 120, 108, 105, 99, 119, 115, 112, 121, 120, 109, 115, 114, 129
+	nd db "all ok!\n"
+
+	section .bss
+	pass resb 1024
+
+	section .text
+_start:
+	mov eax, 3
+	mov ebx, 0
+	mov ecx, pass
+	mov edx, 256
+	int 80h ; read 256 chars from stdin to pass
+	
+	mov edi, 38
+	mov ebx, tet
+	mov edx, pass
+ff:
+	mov cl, 4 ; cl = 0b100
+	not cl ; cl = 0b11111011
+	inc cl ; cl = 0b11111100
+	mov al, [ebx] ; al = *tet
+	add al, cl ; al += cl
+	push ebx
+	mov bl, [edx] ; bl = *pass
+	cmp al, bl
+	jnz fail ; if (al != bl) fail()
+	pop ebx
+
+	inc ebx ; tet++
+	inc edx ; pas++
+	dec edi ; edi--
+	test edi,edi
+	jnz ff ; if (edi == 0) break
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, nd
+	mov edx, 7
+	int 80h ; write "all ok!\n"
+	jmp ext
+
+fail:
+	pop ebx
+ext:
+	mov eax, 1
+	xor ebx, ebx
+	int 80h ; exit 0
+#+end_src
+
+#+begin_src python :results output
+tet = [106, 112, 101, 107, 127, 119, 121, 102, 119, 120, 109, 120, 121, 120, 109, 115, 114, 99, 109, 119, 99, 114, 115, 120, 99, 120, 108, 105, 99, 119, 115, 112, 121, 120, 109, 115, 114, 129] 
+tet = [(c + 0b11111100) % 256 for c in tet]
+print(''.join(map(chr, tet)))
+#+end_src
+
+#+RESULTS:
+: flag{substitution_is_not_the_solution}
+
+* chain
+#+begin_src asm
+	BITS 32
+
+	global _start
+
+	section .data
+	dat db 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|' 
+	flg db "All ok!",0xa
+	size equ 19
+
+	section .bss
+	passw resb 256
+
+	section .text
+_start:
+	mov eax, 3
+	mov ebx, 0
+	mov ecx, passw
+	mov edx, 256
+	int 80h ; read(stdin, passw, 256)
+	mov ebp, 0
+	mov edi, dat
+lop:
+	mov al, '|' ; 0x7c
+	mov esi, edi
+	repne scasb ; search '|' in dat
+	mov edx, edi ; *edx == '|'
+	sub edx, esi ; distance to first '|'
+	mov ecx, passw
+	add ecx, ebp
+	mov al, [ecx]
+	cmp al, dl
+	jnz fail
+	inc ebp
+	cmp ebp, size
+	jnz lop
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, flg
+	mov edx, 8
+	int 80h
+	jmp ex
+fail:
+ex:
+	mov eax, 1
+	xor ebx, ebx
+	int 80h
+#+end_src
+
+#+begin_src python :results output
+dat = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|'
+
+print(''.join(chr(len(s) + 1) for s in dat.split('|'))[:-1])
+#+end_src
+
+#+RESULTS:
+: flag{this_w@s_easy}
+
+* Deadbeef
+
+[[./2021-11-12-012302_328x307_scrot.png]]
+#+begin_src python :results output
+def rol(x, n, bits=32):
+    return (0xffffffff & (x << n)) | ((x & (0xffffffff << (bits - n))) >> (bits - n))
+def ror(x, n, bits=32):
+    return (0xffffffff & (x >> n)) | ((x & (0xffffffff >> (bits - n))) << (bits - n))
+# 0x395547a2
+def test(inp):
+    d = inp ^ 0xcafebabe
+    d = ror(d, 7)
+    d ^= 0xdeadbeef
+    d = rol(d, 0x15)
+    d ^= 0x13373389
+    d ^= inp
+    return d
+# print(hex(test(0x41414141)))
+for b1 in range(0x20, 0x7d + 1):
+    for b2 in range(0x20, 0x7d + 1):
+        for b3 in range(0x20, 0x7d + 1):
+            for b4 in range(0x20, 0x7d + 1):
+                inp = b1 | (b2 << 1 * 8) | (b3 << 2 * 8) | (b4 << 3 * 8)
+                if test(inp) == 0x395547a2:
+                    print(chr(b1), chr(b2), chr(b3), chr(b4))
+                    break
+# for inp in range(2**32):
+#     if test(inp) == 0x395547a2:
+#         print(inp)
+#         break
+#+end_src
+
+#+RESULTS:
+: y A h I
