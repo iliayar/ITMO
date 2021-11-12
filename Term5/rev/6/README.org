@@ -492,3 +492,492 @@ for b1 in range(0x20, 0x7d + 1):
 
 #+RESULTS:
 : y A h I
+
+* giga awesome
+#+begin_src asm
+	mov ebx, 32767
+	rdtsc
+	xchg ebx, eax
+	xor eax, ebx
+	xor eax, edx
+	shl edx, 1
+	imul eax, 2
+	lea ecx, [ebx + ebx]
+	xor eax, 77731337
+	xor eax, ecx
+	xor ah, 77
+	xor ax, 31337
+	xor eax, edx
+#+end_src
+#+begin_src python
+# b = 32767
+# d, a = rdtsc()
+a = 32767 # b, a = a, b
+# a ^= b
+# a ^= d
+# d <<= 1
+a <<= 1 # a *= 2
+# b <<= 1 # c = 2 * b
+a ^= 77731337
+# a ^= b
+a ^= (77 << 8)
+a ^= 31337
+# a ^= d
+return a
+#+end_src
+
+#+RESULTS:
+: 77782686
+
+* C-ASM
+1-1, 2-3, 3-4, 4-2, 5-5
+* ASM0
+#+begin_src asm
+	global _start
+
+	section .text
+_start:
+	xor eax, eax
+	xor ebx, ebx
+	xor ecx, ecx
+	xor edx, edx
+Metka0:
+	add eax, 10
+	add ebx, 20
+	sub ebx, eax
+	cmp eax, ebx
+	jl Metka5
+	jge Metka4
+Metka1:
+	add ecx, ecx
+	add ecx, ecx
+	sub edx, ecx
+	cmp edx, eax
+	jz finish
+	jmp Metka2
+Metka2:
+	xor ecx, edx
+	add edx, edx
+	sub edx, ecx
+	jmp Metka0
+Metka3:
+	xor edx, ecx
+	xor edx, eax
+	cmp edx, eax
+	jne Metka1
+	jg Metka2
+	jl finish
+Metka4:
+	mov edx, 50
+	mov ecx, 10
+	cmp eax, edx
+	jg Metka5
+	jmp Metka3
+Metka5:
+	mov edx, 10
+	mov ecx, 50
+	jmp Metka0
+finish:
+#+end_src
+
+#+begin_src python
+a = 0 
+b = 0
+c = 0
+d = 0
+while True: # Metka 0
+    a += 10
+    b += 20
+    b -= a
+    if a < b: # Metka 5
+        d = 10
+        c = 50
+    else: # Metka 4
+        d = 50
+        c = 10
+        if a > d: # Metka 5
+            d = 10
+            c = 50
+        else: # Metka 3
+            d ^= c
+            d ^= a
+            if d != a: # Metka 1
+                c += c
+                c += c
+                d -= c
+                if d == a:
+                    break
+                else: # Metka 2
+                    c ^= d
+                    d += d
+                    d -= c
+            elif d > a: # Metka 2
+                c ^= d
+                d += d
+                d -= c
+            else:
+                break
+return d
+#+end_src
+
+#+RESULTS:
+: 10
+
+* matcher
+** C
+1. c
+   #+begin_src 
+int num = 4 * 7 + 3 * 2;
+   #+end_src
+2. e
+   #+begin_src 
+int num = 4 + 7 - 3 * 8;
+   #+end_src
+3. d
+   #+begin_src 
+char num = 4 * 7 - 3 * 8;
+   #+end_src
+4. b
+   #+begin_src 
+int num = 4 * 7 - 3 * 8;
+   #+end_src
+5. a
+   #+begin_src 
+int num = 4 * 7 + 3 * 8;
+   #+end_src
+1-c, 2-e, 3-d, 4-b, 5-a
+** Asm
+- a
+  #+begin_src asm
+mov rax, offset num
+mov rbx, 4
+imul rbx, 7
+mov dword ptr [rax], ebx
+mov rbx, 3
+lea rbx, [rbx * 8]
+add dword ptr [rax], ebx
+  #+end_src
+- b
+  #+begin_src asm
+mov rax, offset num
+mov rbx, 4
+imul rbx, 7
+mov dword ptr [rax], ebx
+mov rbx, 3
+lea rbx, [rbx * 8]
+sub dword ptr [rax], ebx
+  #+end_src
+- c
+  #+begin_src asm
+mov rax, offset num
+mov rbx, 4
+imul rbx, 7
+mov dword ptr [rax], ebx
+mov rbx, 3
+lea rbx, [rbx + rbx]
+add dword ptr [rax], ebx
+  #+end_src
+- d
+  #+begin_src asm
+mov rax, offset num
+mov rbx, 4
+imul rbx, 7
+mov byte ptr [rax], bl
+mov rbx, 3
+lea rbx, [rbx * 8]
+sub byte ptr [rax], bl
+     #+end_src
+- e
+  #+begin_src asm
+mov rax, offset num
+mov dword ptr [rax], 4
+add dword ptr [rax], 7
+mov rbx, 3
+lea rbx, [rbx * 8]
+sub dword ptr [rax], ebx       
+  #+end_src
+
+* mega awesome
+#+begin_src asm
+mov rax, 0x93f3ffc2fbc7a1ce
+mov rbx, 6368891006275312830
+imul eax, ebx
+xchg al, ah
+mov ebx, ebx
+lea ebx, [ebx + eax * 2]
+mov ecx, eax
+ror ebx, cl
+xor bx, ax
+and ebx, 0xffffff
+mov rax, rbx
+#+end_src
+
+#+begin_src python :results output
+def rol(x, n, bits=32):
+    return (0xffffffff & (x << n)) | ((x & (0xffffffff << (bits - n))) >> (bits - n))
+def ror(x, n, bits=32):
+    return (0xffffffff & (x >> n)) | ((x & (0xffffffff >> (bits - n))) << (bits - n))
+
+# mov rax, 0x93f3ffc2fbc7a1ce
+# mov rbx, 6368891006275312830
+# imul eax, ebx
+a = 0x93f3ffc2fbc7a1ce
+b = 6368891006275312830
+a = ((a & 0xffffffff) * (b & 0xffffffff)) & 0xffffffff
+print(hex(a))
+
+# xchg al, ah
+al = a & 0xff
+ah = (a & 0xff00) >> 8
+a = (a & 0xffff0000) | (al << 8) | (ah)
+print(hex(a))
+
+# mov ebx, ebx
+b = b & 0xffffffff
+
+# lea ebx, [ebx + eax * 2]
+b = (b + a * 2) & 0xffffffff
+print(hex(b))
+
+# mov ecx, eax
+# ror ebx, cl
+b = ror(b, a & 0xff)
+
+# xor bx, ax
+b = (b & 0xffff0000) | ((b & 0xffff) ^ (a & 0xffff))
+
+# and ebx, 0xffffff
+b = b & 0xffffff
+
+# mov rax, rbx
+print("Ans: ", b)
+#+end_src
+
+#+RESULTS:
+: 0x6d601ee4
+: 0x6d60e41e
+: 0x34fa24fa
+: Ans:  15235062
+
+* super awesome
+#+begin_src asm
+mov eax, 0x11223344
+mov ebx, 3344556677
+push eax
+not eax
+xor eax, ebx
+mov bl, al
+push ebx
+shr ebx, 16
+xor ebx, eax
+pop eax
+shr eax, 8
+add eax, ebx
+pop ebx
+sub eax, ebx
+#+end_src
+
+#+begin_src python
+# mov eax, 0x11223344
+a = 0x11223344
+
+# mov ebx, 3344556677
+b = 3344556677
+
+# push eax
+sa = a
+
+# not eax
+a = a ^ 0xffffffff
+
+# xor eax, ebx
+a ^= b
+
+# mov bl, al
+b = (b & 0xffffff00) | (a & 0xff)
+
+# push ebx
+sb = b
+
+# shr ebx, 16
+b = (b >> 16)
+
+# xor ebx, eax
+b ^= a
+
+# pop eax
+a = sb
+
+# shr eax, 8
+a = (a >> 8) 
+
+# add eax, ebx
+a += b
+
+# pop ebx
+b = sa
+
+# sub eax, ebx
+a -= b
+
+return a & 0xffff
+#+end_src
+
+#+RESULTS:
+: 4101
+* xorist
+[[./2021-11-12-171044_914x177_scrot.png]]
+#+begin_src python
+d = [ 0x3033e1b0,
+      0x6b3cb8bd,
+      0x3861e4b2,
+      0x6c67b9e1,
+      0x6a3db5e1,
+      0x6d36b1b6,
+      0x3832e4e1 ]
+a = 0x8048085
+d = [c ^ a for c in d]
+return ''.join((chr((c & 0xff) >> 0 * 8) + chr((c & 0xff00) >> 8) + chr((c & 0xff0000) >> 2 * 8) + chr((c & 0xff000000) >> 3 * 8)) for c in d) + '6680'
+#+end_src
+
+#+RESULTS:
+: 5a78888c7de0d9cdd59b312edd606680
+
+
+* ASM3
+#+begin_src asm
+	BITS 32
+	global _start
+
+	section .text
+_start:
+	mov eax, 10
+
+	mov ebx, eax
+
+	mul eax
+	mov esi, 10
+	mul esi
+	mov ecx, eax
+
+	mov eax, ebx
+	mov esi, 7
+	mul esi
+	add ecx, eax
+
+	add ecx, 37
+#+end_src
+
+#+begin_src python
+a = 10
+b = a
+
+a *= a
+s = 10
+a *= s
+c = a
+
+a = b
+s = 7
+a *= s
+c += a
+c += 37
+return c
+#+end_src
+
+#+RESULTS:
+: 1107
+
+* ASM2
+#+begin_src asm
+	mov [0xAABBCCCD], 0xDEADBEEF
+	mov [0xAABBCCD1], 0xCAFEBABE
+	mov [0xAABBCCD5], 0x12345678
+	mov [0xAABBCCD9], 0x9ABCDEF0
+
+	lea edi, [0xAABBCCDD]
+	lea esi, [0xAABBCCD9]
+	xor ebx, ebx
+l1:
+	mov eax, DWORD [esi]
+	mov [edi], eax
+	sub esi, 0x4
+	sub edi, 0x4
+	add ebx, 0x4
+	cmp ebx, 0x10
+	jl l1
+
+#+end_src
+
+#+begin_src python :results output
+mem = {
+    0xAABBCCCD: 0xDEADBEEF,
+    0xAABBCCD1: 0xCAFEBABE,
+    0xAABBCCD5: 0x12345678,
+    0xAABBCCD9: 0x9ABCDEF0
+}
+
+
+
+di = 0xAABBCCDD
+si = 0xAABBCCD9
+b = 0
+while True:
+    a = mem[si]
+    mem[di] = a
+    si -= 4
+    di -= 4
+    b += 4
+    if b >= 16:
+        break
+print(mem[0xAABBCCD5])
+#+end_src
+
+#+RESULTS:
+: 3405691582
+
+* awesome
+#+begin_src asm
+mov eax, 1337
+mov ebx, 31337
+add eax, ebx
+mov ecx, eax
+imul ebx, ecx
+xor eax, ebx
+#+end_src
+
+#+begin_src python
+a = 1337
+b = 31337
+a += b
+c = a
+b *= c
+a ^= b
+return a
+#+end_src
+
+#+RESULTS:
+: 1023931088
+* ASM1
+#+begin_src asm
+xor edx, edx
+mov eax, 100
+mov ebx, 30
+div ebx
+mov eax, edx
+mul edx
+#+end_src
+#+begin_src python
+d = 0
+a = 100
+b = 30
+d, a = a % b, a // b
+a = d
+a *= d
+return a
+#+end_src
+
+#+RESULTS:
+: 100
+
+
