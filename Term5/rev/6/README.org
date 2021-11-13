@@ -843,7 +843,6 @@ return ''.join((chr((c & 0xff) >> 0 * 8) + chr((c & 0xff00) >> 8) + chr((c & 0xf
 #+RESULTS:
 : 5a78888c7de0d9cdd59b312edd606680
 
-
 * ASM3
 #+begin_src asm
 	BITS 32
