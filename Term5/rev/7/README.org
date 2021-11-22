@@ -68,7 +68,6 @@ sub_401560("8.8.8.8", 4343i64, &unk_408088);
 
 Write ip somewhere else in ~.data~
  
-
 * rsay
 Change exponent to ~1~
 * trialver
