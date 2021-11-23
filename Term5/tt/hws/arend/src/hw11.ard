@@ -1,4 +1,4 @@
 \import Order.Lattice
 
-\class ImplicativeLattice (A : \Set)
+\class ImplicativeLattice (A : \Set) \extends DistributiveLattice
   | \infixr 7 --> : A -> A -> A
