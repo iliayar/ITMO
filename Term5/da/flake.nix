@@ -3,8 +3,8 @@
   
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
-    nixpkgs.url = "nixpkgs/a5d03577f0161c8a6e713b928ca44d9b3feb2c37";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
+    # nixpkgs.url = "nixpkgs/a5d03577f0161c8a6e713b928ca44d9b3feb2c37";
     jupyterlab_vim_src = {
       url = "github:jwkvam/jupyterlab-vim";
       flake = false;
@@ -27,10 +27,12 @@
               cp -r $src $out/share/jupyter/lab/extensions/jupyterlab_vim
             '';
           };
-          pythonEnv = pkgs.python39.withPackages (pypkgs: with pypkgs; [
+          pythonEnv = pkgs.python38.withPackages (pypkgs: with pypkgs; [
             statsmodels
             jupyterlab
-            jupyterlab_vim
+            # jupyterlab_vim
+            numba
+            umap-learn
             seaborn
             pandas
             tqdm
