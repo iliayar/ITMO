@@ -1,0 +1,16 @@
+\import Order.LinearOrder
+\import Relation.Equivalence
+
+--\data AltZ
+--  (R : Nat -> Nat -> \Type)
+--  | altZ Nat Nat
+--  | eq (p q : Nat) (r : R p q)
+
+\data AltZ
+  | Z (p q : Nat)
+
+\data simZ (p q : AltZ) : \Type \elim p, q
+  | Z 0 0, Z 0 0 => idp
+  | Z (suc a) (suc b), Z 0 0 =>
+
+\func AltZ= => Quotient (\lam (p q : AltZ) => p = q)
