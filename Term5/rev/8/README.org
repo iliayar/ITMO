@@ -45,3 +45,24 @@
 cc1d-bc5c-b3c5-f9e8
 
 [[file:~/Envs/Reverse/week8/cheat/sol.py]]
+
+* Hasher 1
+~SPBCTF-EXPLOR-ECOOL1-ANGRFE-ATURE1-LETSNE~
+
+Guest first letter, get 3 letter using ~sol1~. Use ~sol2~
+
+[[file:~/Envs/Reverse/week8/Hasher 1/sol2.py]]
+[[file:~/Envs/Reverse/week8/Hasher 1/sol1.py]]
+* Hasher 2
+~SPBCTF-Y0U4RE-4M4ZON-HOWY0U-SOLVE3-ITB34T~
+
+Guest first letter, get 3 letter using ~sol1~. Use ~sol2~
+
+[[file:~/Envs/Reverse/week8/Hasher 2/sol2.py]]
+[[file:~/Envs/Reverse/week8/Hasher 2/sol1.py]]
+
+* Desruction Set
+[[file:~/Envs/Reverse/week8/Destruction Set/sol.py]]
+
+* SMS Server
+[[file:~/Envs/Reverse/week8/SMS Server/sol.py]]
