@@ -80,8 +80,6 @@ print(m[x1], m[x2], m[x3])
 : sat
 : 3 0 -1
 
-
-
 * The Reshuffler
 #+begin_src python :results output
 s = 'bpoctifh_t{tmkh_smowsllsfoe_smia_amsart_h\'i?ti_in}'
