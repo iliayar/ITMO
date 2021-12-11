@@ -1,2 +1,9 @@
 
-pub struct Gramma {}
+pub struct Parser {}
+
+
+impl Parser {
+    pub fn new() -> Parser {
+	Parser {}
+    }
+}

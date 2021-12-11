@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::File;
-use gramma::parse;
-use lib::parser::*;
+use gramma::{parse, Gramma};
 
 fn main() {
     let mut args = env::args();
