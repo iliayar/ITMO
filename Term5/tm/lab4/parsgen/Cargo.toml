@@ -9,4 +9,3 @@ edition = "2018"
 
 [dependencies]
 gramma = { path = "../gramma" }
-lib = { path = "../lib" }
