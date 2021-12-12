@@ -1,9 +1,10 @@
 use clap::{Arg, App};
 use std::process::Command;
 
+mod codegen;
 mod gen;
-mod ctrl_table;
 mod utils;
+mod lalr;
 
 fn main() {
     let matches = App::new("parsgen")
@@ -38,7 +39,7 @@ fn main() {
 	    .status()
 	    .expect("Failed to create crate");
     }
-    gen::Generator::new(lex_file, gramma_file, &out_file, res_mod).gen();
+    codegen::Generator::new(lex_file, gramma_file, &out_file, res_mod).gen();
     Command::new("rustfmt")
 	.args([&out_file])
 	.status()
