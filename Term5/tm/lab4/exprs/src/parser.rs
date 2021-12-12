@@ -3,8 +3,8 @@ use parslib::*;
 
 #[derive(Debug)]
 pub enum Token {
-    PLUS,
     MULT,
+    PLUS,
     LPAREN,
     RPAREN,
     NUM(String),
