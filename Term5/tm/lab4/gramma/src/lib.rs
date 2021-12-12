@@ -1,21 +1,22 @@
 #![allow(non_snake_case)]
 
 // =============== Common Part BEGIN ================ 
-#[derive(Clone, Copy)]
+#[derive(Clone,Hash,PartialEq,Eq)]
 pub struct NonTerminal {
-    pub ident: &'static str,
+    pub ident: String,
 }
 
 impl NonTerminal {
-    pub fn new(ident: &'static str) -> Self { Self { ident } }
+    pub fn new(ident: String) -> Self { Self { ident } }
 }
 
+#[derive(Clone,Hash,PartialEq,Eq)]
 pub struct Terminal {
-    pub ident: &'static str,
+    pub ident: String,
 }
 
 impl Terminal {
-    pub fn new(ident: &'static str) -> Self { Self { ident } }
+    pub fn new(ident: String) -> Self { Self { ident } }
 }
 
 pub enum RightElem {
@@ -33,11 +34,12 @@ impl Rule {
 }
 
 pub struct Token {
-    pub decl: &'static str,
+    pub term: Terminal,
+    pub args: Option<String>,
 }
 
 impl Token {
-    pub fn new(decl: &'static str) -> Self { Self { decl } }
+    pub fn new(term: Terminal, args: Option<String>) -> Self { Self { term, args } }
 }
 
 pub struct Gramma {
@@ -57,47 +59,49 @@ pub fn parse(_filename: &str) -> Gramma {
 
     // let mut parser = Parser::new();
     // return parser.parse(tokens);
-    let E = NonTerminal::new("E");
-    let T = NonTerminal::new("T");
-    let F = NonTerminal::new("F");
-    let PLUS = Terminal::new("PLUS");
-    let MULT = Terminal::new("MULT");
-    let LPAREN = Terminal::new("LPAREN");
-    let RPAREN = Terminal::new("RPAREN");
-    let NUM = Terminal::new("NUM");
+    let E = NonTerminal::new("E".to_string());
+    let T = NonTerminal::new("T".to_string());
+    let F = NonTerminal::new("F".to_string());
+    let PLUS = Terminal::new("PLUS".to_string());
+    let MULT = Terminal::new("MULT".to_string());
+    let LPAREN = Terminal::new("LPAREN".to_string());
+    let RPAREN = Terminal::new("RPAREN".to_string());
+    let NUM = Terminal::new("NUM".to_string());
+    let END = Terminal::new("END".to_string());
     Gramma::new(
 	vec![
-	    Token::new("PLUS"),
-	    Token::new("MULT"),
-	    Token::new("LPAREN"),
-	    Token::new("RPAREN"),
-	    Token::new("NUM(String)"),
+	    Token::new(PLUS.clone(), None),
+	    Token::new(MULT.clone(), None),
+	    Token::new(LPAREN.clone(), None),
+	    Token::new(RPAREN.clone(), None),
+	    Token::new(NUM.clone(), Some("String".to_string())),
+	    Token::new(END.clone(), None),
 	],
 	vec![
 	    Rule::new(
-		E,
-		vec![RightElem::NonTerm(E), RightElem::Term(PLUS), RightElem::NonTerm(T)],
+		E.clone(),
+		vec![RightElem::NonTerm(E.clone()), RightElem::Term(PLUS), RightElem::NonTerm(T.clone())],
 	    ),
 	    Rule::new(
-		E,
-		vec![RightElem::NonTerm(T)]
+		E.clone(),
+		vec![RightElem::NonTerm(T.clone())]
 	    ),
 	    Rule::new(
-		T,
-		vec![RightElem::NonTerm(T), RightElem::Term(MULT), RightElem::NonTerm(F)],
+		T.clone(),
+		vec![RightElem::NonTerm(T.clone()), RightElem::Term(MULT), RightElem::NonTerm(F.clone())],
 	    ),
 	    Rule::new(
-		T,
-		vec![RightElem::NonTerm(F)]
+		T.clone(),
+		vec![RightElem::NonTerm(F.clone())]
 	    ),
 	    Rule::new(
-		F,
+		F.clone(),
 		vec![RightElem::Term(NUM)]
 	    ),
 	    Rule::new(
-		F,
-		vec![RightElem::Term(LPAREN), RightElem::NonTerm(E), RightElem::Term(RPAREN)]
+		F.clone(),
+		vec![RightElem::Term(LPAREN), RightElem::NonTerm(E.clone()), RightElem::Term(RPAREN)]
 	    ),
-	], E)
+	], E.clone())
 }
 // =============== Generated END ==================== 

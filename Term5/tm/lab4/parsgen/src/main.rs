@@ -2,6 +2,8 @@ use clap::{Arg, App};
 use std::process::Command;
 
 mod gen;
+mod ctrl_table;
+mod utils;
 
 fn main() {
     let matches = App::new("parsgen")

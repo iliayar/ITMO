@@ -3,6 +3,7 @@ use regex::Regex;
 pub struct Lexer<T>
 {
     lexems: Vec<Lexem<T>>,
+    end: T,
 }
 
 #[derive(Debug)]
@@ -13,9 +14,10 @@ pub enum LexerError
 
 impl<T> Lexer<T>
 {
-    pub fn new() -> Lexer<T> {
+    pub fn new(end: T) -> Lexer<T> {
 	Lexer {
 	    lexems: Vec::<Lexem<T>>::new(),
+	    end,
 	}
     }
 
@@ -48,6 +50,7 @@ impl<T> Lexer<T>
 	    return Err(LexerError::InvalidToken(pos + 1));
 	}
 
+	res.push(self.end);
 	return Ok(res);
     }
 }
