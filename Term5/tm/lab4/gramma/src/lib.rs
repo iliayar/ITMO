@@ -1,50 +1,103 @@
-use lib::parser::*;
-use lib::lexer::*;
-use lib::*;
+#![allow(non_snake_case)]
 
-#[derive(Debug)]
-enum Test {
-    A,
-    B,
-    C(String),
-    D(String, i32),
-    WS,
+// =============== Common Part BEGIN ================ 
+#[derive(Clone, Copy)]
+pub struct NonTerminal {
+    pub ident: &'static str,
+}
+
+impl NonTerminal {
+    pub fn new(ident: &'static str) -> Self { Self { ident } }
+}
+
+pub struct Terminal {
+    pub ident: &'static str,
+}
+
+impl Terminal {
+    pub fn new(ident: &'static str) -> Self { Self { ident } }
+}
+
+pub enum RightElem {
+    NonTerm(NonTerminal),
+    Term(Terminal),
+}
+
+pub struct Rule {
+    pub nonterm: NonTerminal,
+    pub right: Vec<RightElem>,
+}
+
+impl Rule {
+    pub fn new(nonterm: NonTerminal, right: Vec<RightElem>) -> Self { Self { nonterm, right } }
+}
+
+pub struct Token {
+    pub decl: &'static str,
+}
+
+impl Token {
+    pub fn new(decl: &'static str) -> Self { Self { decl } }
 }
 
 pub struct Gramma {
-
+    pub tokens: Vec<Token>,
+    pub rules: Vec<Rule>,
+    pub start: NonTerminal,
 }
 
-pub fn parse(_inp: &dyn std::io::Read) -> Gramma {
-
-    let mut lexems = Lexer::new();
-    lexems.add(r"A", |_| Test::A);
-    lexems.add(r"B", |_| Test::B);
-    lexems.add(r"C", |s| Test::C(s));
-    lexems.add(r"D1", |s| Test::D(s, 1));
-    lexems.add(r"D2", |s| Test::D(s, 2));
-    lexems.add(r"\s+", |_| Test::WS);
-
-    let input = "AB
-
-
-
-
-
-
-D1D2
-CD3A
-BC D1";
-    let tokens = match lexems.lex(input) {
-	Ok(res) => res,
-	Err(lex_err) => {
-	    prety_print_lex_error("stdin", input, lex_err);
-	    panic!("Failed to lex file");
-	},
-    };
-
-
-    let mut parser = Parser::new();
-
-    todo!();
+impl Gramma {
+    pub fn new(tokens: Vec<Token>, rules: Vec<Rule>, start: NonTerminal) -> Self { Self { tokens, rules, start } }
 }
+// =============== Common Part END ================== 
+
+// =============== Generated BEGIN ================== 
+pub fn parse(_filename: &str) -> Gramma {
+
+
+    // let mut parser = Parser::new();
+    // return parser.parse(tokens);
+    let E = NonTerminal::new("E");
+    let T = NonTerminal::new("T");
+    let F = NonTerminal::new("F");
+    let PLUS = Terminal::new("PLUS");
+    let MULT = Terminal::new("MULT");
+    let LPAREN = Terminal::new("LPAREN");
+    let RPAREN = Terminal::new("RPAREN");
+    let NUM = Terminal::new("NUM");
+    Gramma::new(
+	vec![
+	    Token::new("PLUS"),
+	    Token::new("MULT"),
+	    Token::new("LPAREN"),
+	    Token::new("RPAREN"),
+	    Token::new("NUM(String)"),
+	],
+	vec![
+	    Rule::new(
+		E,
+		vec![RightElem::NonTerm(E), RightElem::Term(PLUS), RightElem::NonTerm(T)],
+	    ),
+	    Rule::new(
+		E,
+		vec![RightElem::NonTerm(T)]
+	    ),
+	    Rule::new(
+		T,
+		vec![RightElem::NonTerm(T), RightElem::Term(MULT), RightElem::NonTerm(F)],
+	    ),
+	    Rule::new(
+		T,
+		vec![RightElem::NonTerm(F)]
+	    ),
+	    Rule::new(
+		F,
+		vec![RightElem::Term(NUM)]
+	    ),
+	    Rule::new(
+		F,
+		vec![RightElem::Term(LPAREN), RightElem::NonTerm(E), RightElem::Term(RPAREN)]
+	    ),
+	], E)
+}
+// =============== Generated END ==================== 
