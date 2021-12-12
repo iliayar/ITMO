@@ -1,14 +1,22 @@
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::Write;
 
-use gramma;
+use gramma::{self, NonTerminal, Terminal};
 use lex;
 
+
+#[allow(non_snake_case)]
 pub struct Generator {
     // res_mod: String,
-    out: std::fs::File,
-    gramma: gramma::Gramma,
-    lex: lex::Lex,
+    pub out: std::fs::File,
+    pub gramma: gramma::Gramma,
+    pub lex: lex::Lex,
+
+    pub terms: HashSet<Terminal>,
+    pub nonterms: HashSet<NonTerminal>,
+    pub eps_rule: HashSet<NonTerminal>,
+    pub FIRST: HashMap<NonTerminal, HashSet<Terminal>>,
 }
 
 impl Generator {
@@ -20,12 +28,19 @@ impl Generator {
 	let gramma = gramma::parse(gramma_file);
 	let lex = lex::parse(lex_file);
 
-	Generator {
+	let mut gen = Generator {
 	    // res_mod,
 	    out,
 	    gramma,
 	    lex,
-	}
+
+	    terms: HashSet::new(),
+	    nonterms: HashSet::new(),
+	    eps_rule: HashSet::new(),
+	    FIRST: HashMap::new(),
+	};
+	gen.generate_ctrl_table();
+	return gen;
     }
 
     pub fn gen(&mut self) {
@@ -42,17 +57,21 @@ use parslib::*;
     }
 
     fn gen_token_definition(&mut self) {
-	let mut tokens: String = String::new();
-	for token in self.gramma.tokens.iter() {
-	    tokens.push_str(&format!("{},", token.decl));
-	    tokens.push('\n');
-	}
 	write!(self.out, "
 #[derive(Debug)]
 pub enum Token {{
-    {}
+        ").ok();
+	for token in self.gramma.tokens.iter() {
+	    write!(self.out, "{}", token.term.ident).ok();
+	    if let Some(args) = &token.args {
+		writeln!(self.out, "({}),", args).ok();
+	    } else {
+		writeln!(self.out, ",").ok();
+	    }
+	}
+	write!(self.out, "
 }}
-        ", tokens).ok();
+        ").ok();
     }
 
     fn gen_parse_fun(&mut self) {
@@ -66,14 +85,13 @@ pub fn parse(input: &str) {{
     }
 
     fn gen_parse_fun_lex(&mut self) {
-	let mut tokens = String::new();
+	write!(self.out, "
+let mut lexems = lexer::Lexer::new({});
+", self.lex.end).ok();
 	for token in self.lex.tokens.iter() {
-	    tokens.push_str(&format!("lexems.add(r\"{}\", |s| {});", token.regex, token.expr));
-	    tokens.push('\n');
+	    writeln!(self.out, "lexems.add(r\"{}\", |s| {});", token.regex, token.expr).ok();
 	}
 	write!(self.out, "
-let mut lexems = lexer::Lexer::new();
-{}
 let tokens = match lexems.lex(input) {{
 	Ok(res) => res,
 	Err(lex_err) => {{
@@ -83,7 +101,7 @@ let tokens = match lexems.lex(input) {{
 }};
 
 println!(\"{{:?}}\", tokens);
-", tokens).ok();
+").ok();
     }
 }
 

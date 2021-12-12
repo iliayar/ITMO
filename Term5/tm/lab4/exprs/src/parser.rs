@@ -8,10 +8,11 @@ pub enum Token {
     LPAREN,
     RPAREN,
     NUM(String),
+    END,
 }
 
 pub fn parse(input: &str) {
-    let mut lexems = lexer::Lexer::new();
+    let mut lexems = lexer::Lexer::new(Token::END);
     lexems.add(r"\+", |s| Some(Token::PLUS));
     lexems.add(r"\*", |s| Some(Token::MULT));
     lexems.add(r"\(", |s| Some(Token::LPAREN));

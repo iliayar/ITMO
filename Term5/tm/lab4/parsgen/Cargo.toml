@@ -11,3 +11,6 @@ edition = "2018"
 gramma = { path = "../gramma" }
 lex = { path = "../lex" }
 clap = "*"
+
+# DEBUG
+termion = "*"

@@ -2,20 +2,21 @@
 
 // =============== Common Part BEGIN ================ 
 pub struct Token {
-    pub regex: &'static str,
-    pub expr: &'static str,
+    pub regex: String,
+    pub expr: String,
 }
 
 impl Token {
-    pub fn new(regex: &'static str, expr: &'static str) -> Self { Self { regex, expr } }
+    pub fn new(regex: String, expr: String) -> Self { Self { regex, expr } }
 }
 
 pub struct Lex {
     pub tokens: Vec<Token>,
+    pub end: String,
 }
 
 impl Lex {
-    pub fn new(tokens: Vec<Token>) -> Self { Self { tokens } }
+    pub fn new(tokens: Vec<Token>, end: String) -> Self { Self { tokens, end } }
 }
 // =============== Common Part END ================== 
 
@@ -23,13 +24,14 @@ impl Lex {
 pub fn parse(_filename: &str) -> Lex {
     Lex::new(
 	vec![
-	    Token::new(r"\+", "Some(Token::PLUS)"),
-	    Token::new(r"\*", "Some(Token::MULT)"),
-	    Token::new(r"\(", "Some(Token::LPAREN)"),
-	    Token::new(r"\)", "Some(Token::RPAREN)"),
-	    Token::new(r"[0-9]+", "Some(Token::NUM(s.parse().unwrap()))"),
-	    Token::new(r"\s+", "None"),
-	]
+	    Token::new(r"\+".to_string(), "Some(Token::PLUS)".to_string()),
+	    Token::new(r"\*".to_string(), "Some(Token::MULT)".to_string()),
+	    Token::new(r"\(".to_string(), "Some(Token::LPAREN)".to_string()),
+	    Token::new(r"\)".to_string(), "Some(Token::RPAREN)".to_string()),
+	    Token::new(r"[0-9]+".to_string(), "Some(Token::NUM(s.parse().unwrap()))".to_string()),
+	    Token::new(r"\s+".to_string(), "None".to_string()),
+	],
+	"Token::END".to_string(),
     )
 }
 // =============== Generated END ==================== 
