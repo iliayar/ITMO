@@ -10,6 +10,11 @@
 [workspace]
 members = [
 	"parsgen",
-	"lib",
+	"parslib",
 	"gramma",
+	"lex",
+]
+
+exclude = [
+	"exprs",
 ]

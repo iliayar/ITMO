@@ -1,7 +1,5 @@
 use regex::Regex;
 
-type F<T> = dyn Fn(String) -> T;
-
 pub struct Lexer<T>
 {
     lexems: Vec<Lexem<T>>,
@@ -21,7 +19,7 @@ impl<T> Lexer<T>
 	}
     }
 
-    pub fn add<S: AsRef<str>, Fun: Fn(String) -> T + 'static>(&mut self, regex: S, token: Fun) {
+    pub fn add<S: AsRef<str>, Fun: Fn(String) -> Option<T> + 'static>(&mut self, regex: S, token: Fun) {
 	if let Ok(regex) = Regex::new(regex.as_ref()) {
 	    self.lexems.push(Lexem::new(regex, token));
 	} else {
@@ -41,7 +39,9 @@ impl<T> Lexer<T>
 		    assert!(pos_delta > 0, "Empty match");
 		    input = ninput;
 		    pos += pos_delta;
-		    res.push(token);
+		    if let Some(token) = token {
+			res.push(token);
+		    }
 		    continue 'input_read;
 		}
 	    }
@@ -54,18 +54,18 @@ impl<T> Lexer<T>
 
 pub struct Lexem<T> {
     regex: Regex,
-    token: Box<F<T>>,
+    token: Box<dyn Fn(String) -> Option<T>>,
 }
 
 impl<T> Lexem<T> {
-    pub fn new<Fun: Fn(String) -> T + 'static>(regex: Regex, token: Fun) -> Lexem<T> {
+    pub fn new<Fun: Fn(String) -> Option<T> + 'static>(regex: Regex, token: Fun) -> Lexem<T> {
 	Lexem {
 	    regex,
 	    token: Box::new(token),
 	}
     }
 
-    pub fn mtch<'a>(&self, input: &'a str) -> Option<(&'a str, T)> {
+    pub fn mtch<'a>(&self, input: &'a str) -> Option<(&'a str, Option<T>)> {
 	if let Some(mtch) = self.regex.find(input) {
 	    if mtch.start() == 0 {
 		Some((
