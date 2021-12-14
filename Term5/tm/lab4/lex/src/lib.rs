@@ -23,17 +23,17 @@ impl Lex {
 // =============== Generated BEGIN ================== 
 pub fn parse(_filename: &str) -> Lex {
     // Simple expression
-    // Lex::new(
-    // 	vec![
-    // 	    Token::new(r"\+".to_string(), "Some(Token::PLUS)".to_string()),
-    // 	    Token::new(r"\*".to_string(), "Some(Token::MULT)".to_string()),
-    // 	    Token::new(r"\(".to_string(), "Some(Token::LPAREN)".to_string()),
-    // 	    Token::new(r"\)".to_string(), "Some(Token::RPAREN)".to_string()),
-    // 	    Token::new(r"[0-9]+".to_string(), "Some(Token::NUM(s.parse().unwrap()))".to_string()),
-    // 	    Token::new(r"\s+".to_string(), "None".to_string()),
-    // 	],
-    // 	"Token::END".to_string(),
-    // )
+    Lex::new(
+	vec![
+	    Token::new(r"\+".to_string(), "Some(Token::PLUS)".to_string()),
+	    Token::new(r"\*".to_string(), "Some(Token::MULT)".to_string()),
+	    Token::new(r"\(".to_string(), "Some(Token::LPAREN)".to_string()),
+	    Token::new(r"\)".to_string(), "Some(Token::RPAREN)".to_string()),
+	    Token::new(r"[0-9]+".to_string(), "Some(Token::NUM(s.parse().unwrap()))".to_string()),
+	    Token::new(r"\s+".to_string(), "None".to_string()),
+	],
+	"Token::END".to_string(),
+    )
 
     // C Function delcaration
     // Lex::new(
@@ -50,17 +50,19 @@ pub fn parse(_filename: &str) -> Lex {
     // )
 
     // Expression with conflicts
-    Lex::new(
-	vec![
-	    Token::new(r"\+".to_string(), "Some(Token::PLUS)".to_string()),
-	    Token::new(r"\*".to_string(), "Some(Token::MULT)".to_string()),
-	    Token::new(r"\(".to_string(), "Some(Token::LPAREN)".to_string()),
-	    Token::new(r"\)".to_string(), "Some(Token::RPAREN)".to_string()),
-	    Token::new(r"[0-9]+".to_string(), "Some(Token::NUM(s.parse().unwrap()))".to_string()),
-	    Token::new(r"\s+".to_string(), "None".to_string()),
-	],
-	"Token::END".to_string(),
-    )
+    // Lex::new(
+    // 	vec![
+    // 	    Token::new(r"\+".to_string(), "Some(Token::PLUS)".to_string()),
+    // 	    Token::new(r"\*".to_string(), "Some(Token::MULT)".to_string()),
+    // 	    Token::new(r"-".to_string(), "Some(Token::MINUS)".to_string()),
+    // 	    Token::new(r"/".to_string(), "Some(Token::DIV)".to_string()),
+    // 	    Token::new(r"\(".to_string(), "Some(Token::LPAREN)".to_string()),
+    // 	    Token::new(r"\)".to_string(), "Some(Token::RPAREN)".to_string()),
+    // 	    Token::new(r"[0-9]+".to_string(), "Some(Token::NUM(s.parse().unwrap()))".to_string()),
+    // 	    Token::new(r"\s+".to_string(), "None".to_string()),
+    // 	],
+    // 	"Token::END".to_string(),
+    // )
 }
 // =============== Generated END ==================== 
 

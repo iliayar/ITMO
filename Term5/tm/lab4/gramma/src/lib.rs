@@ -71,50 +71,50 @@ pub fn parse(_filename: &str) -> Gramma {
     // return parser.parse(tokens);
 
     // Simple expressions
-    // let E = NonTerminal::new("E".to_string());
-    // let T = NonTerminal::new("T".to_string());
-    // let F = NonTerminal::new("F".to_string());
-    // let PLUS = Terminal::new("PLUS".to_string());
-    // let MULT = Terminal::new("MULT".to_string());
-    // let LPAREN = Terminal::new("LPAREN".to_string());
-    // let RPAREN = Terminal::new("RPAREN".to_string());
-    // let NUM = Terminal::new("NUM".to_string());
-    // let END = Terminal::new("END".to_string());
-    // Gramma::new(
-    // 	vec![
-    // 	    Token::new(PLUS.clone(), None),
-    // 	    Token::new(MULT.clone(), None),
-    // 	    Token::new(LPAREN.clone(), None),
-    // 	    Token::new(RPAREN.clone(), None),
-    // 	    Token::new(NUM.clone(), Some("String".to_string())),
-    // 	    Token::new(END.clone(), None),
-    // 	],
-    // 	vec![
-    // 	    Rule::new(
-    // 		E.clone(),
-    // 		vec![RightElem::NonTerm(E.clone()), RightElem::Term(PLUS), RightElem::NonTerm(T.clone())],
-    // 	    ),
-    // 	    Rule::new(
-    // 		E.clone(),
-    // 		vec![RightElem::NonTerm(T.clone())]
-    // 	    ),
-    // 	    Rule::new(
-    // 		T.clone(),
-    // 		vec![RightElem::NonTerm(T.clone()), RightElem::Term(MULT), RightElem::NonTerm(F.clone())],
-    // 	    ),
-    // 	    Rule::new(
-    // 		T.clone(),
-    // 		vec![RightElem::NonTerm(F.clone())]
-    // 	    ),
-    // 	    Rule::new(
-    // 		F.clone(),
-    // 		vec![RightElem::Term(NUM)]
-    // 	    ),
-    // 	    Rule::new(
-    // 		F.clone(),
-    // 		vec![RightElem::Term(LPAREN), RightElem::NonTerm(E.clone()), RightElem::Term(RPAREN)]
-    // 	    ),
-    // 	], E.clone(), END.clone(), vec![])
+    let E = NonTerminal::new("E".to_string());
+    let T = NonTerminal::new("T".to_string());
+    let F = NonTerminal::new("F".to_string());
+    let PLUS = Terminal::new("PLUS".to_string());
+    let MULT = Terminal::new("MULT".to_string());
+    let LPAREN = Terminal::new("LPAREN".to_string());
+    let RPAREN = Terminal::new("RPAREN".to_string());
+    let NUM = Terminal::new("NUM".to_string());
+    let END = Terminal::new("END".to_string());
+    Gramma::new(
+	vec![
+	    Token::new(PLUS.clone(), None),
+	    Token::new(MULT.clone(), None),
+	    Token::new(LPAREN.clone(), None),
+	    Token::new(RPAREN.clone(), None),
+	    Token::new(NUM.clone(), Some("String".to_string())),
+	    Token::new(END.clone(), None),
+	],
+	vec![
+	    Rule::new(
+		E.clone(),
+		vec![RightElem::NonTerm(E.clone()), RightElem::Term(PLUS), RightElem::NonTerm(T.clone())],
+	    ),
+	    Rule::new(
+		E.clone(),
+		vec![RightElem::NonTerm(T.clone())]
+	    ),
+	    Rule::new(
+		T.clone(),
+		vec![RightElem::NonTerm(T.clone()), RightElem::Term(MULT), RightElem::NonTerm(F.clone())],
+	    ),
+	    Rule::new(
+		T.clone(),
+		vec![RightElem::NonTerm(F.clone())]
+	    ),
+	    Rule::new(
+		F.clone(),
+		vec![RightElem::Term(NUM)]
+	    ),
+	    Rule::new(
+		F.clone(),
+		vec![RightElem::Term(LPAREN), RightElem::NonTerm(E.clone()), RightElem::Term(RPAREN)]
+	    ),
+	], E.clone(), END.clone(), vec![])
 
     // C Function delcaration
     // let LPAREN = Terminal::new("LPAREN".to_string());
@@ -182,44 +182,58 @@ pub fn parse(_filename: &str) -> Gramma {
     // 	], DECLARATION.clone(), END.clone(), vec![])
 
     // Expressions with conflicts
-    let E = NonTerminal::new("E".to_string());
-    let PLUS = Terminal::new("PLUS".to_string());
-    let MULT = Terminal::new("MULT".to_string());
-    let LPAREN = Terminal::new("LPAREN".to_string());
-    let RPAREN = Terminal::new("RPAREN".to_string());
-    let NUM = Terminal::new("NUM".to_string());
-    let END = Terminal::new("END".to_string());
-    Gramma::new(
-	vec![
-	    Token::new(MULT.clone(), None),
-	    Token::new(PLUS.clone(), None),
-	    Token::new(LPAREN.clone(), None),
-	    Token::new(RPAREN.clone(), None),
-	    Token::new(NUM.clone(), Some("String".to_string())),
-	    Token::new(END.clone(), None),
-	],
-	vec![
-	    Rule::new(
-		E.clone(),
-		vec![RightElem::NonTerm(E.clone()), RightElem::Term(PLUS.clone()), RightElem::NonTerm(E.clone())],
-	    ),
-	    Rule::new(
-		E.clone(),
-		vec![RightElem::NonTerm(E.clone()), RightElem::Term(MULT.clone()), RightElem::NonTerm(E.clone())],
-	    ),
-	    Rule::new(
-		E.clone(),
-		vec![RightElem::Term(LPAREN.clone()), RightElem::NonTerm(E.clone()), RightElem::Term(RPAREN.clone())],
-	    ),
-	    Rule::new(
-		E.clone(),
-		vec![RightElem::Term(NUM)]
-	    ),
-	], E.clone(), END.clone(),
-	vec![
-	    (PLUS.clone(), Assoc::Left, 1),
-	    (MULT.clone(), Assoc::Right, 0),
-	])
+    // let E = NonTerminal::new("E".to_string());
+    // let PLUS = Terminal::new("PLUS".to_string());
+    // let MULT = Terminal::new("MULT".to_string());
+    // let MINUS = Terminal::new("MINUS".to_string());
+    // let DIV = Terminal::new("DIV".to_string());
+    // let LPAREN = Terminal::new("LPAREN".to_string());
+    // let RPAREN = Terminal::new("RPAREN".to_string());
+    // let NUM = Terminal::new("NUM".to_string());
+    // let END = Terminal::new("END".to_string());
+    // Gramma::new(
+    // 	vec![
+    // 	    Token::new(MULT.clone(), None),
+    // 	    Token::new(PLUS.clone(), None),
+    // 	    Token::new(MINUS.clone(), None),
+    // 	    Token::new(DIV.clone(), None),
+    // 	    Token::new(LPAREN.clone(), None),
+    // 	    Token::new(RPAREN.clone(), None),
+    // 	    Token::new(NUM.clone(), Some("String".to_string())),
+    // 	    Token::new(END.clone(), None),
+    // 	],
+    // 	vec![
+    // 	    Rule::new(
+    // 		E.clone(),
+    // 		vec![RightElem::NonTerm(E.clone()), RightElem::Term(PLUS.clone()), RightElem::NonTerm(E.clone())],
+    // 	    ),
+    // 	    Rule::new(
+    // 		E.clone(),
+    // 		vec![RightElem::NonTerm(E.clone()), RightElem::Term(MULT.clone()), RightElem::NonTerm(E.clone())],
+    // 	    ),
+    // 	    Rule::new(
+    // 		E.clone(),
+    // 		vec![RightElem::NonTerm(E.clone()), RightElem::Term(MINUS.clone()), RightElem::NonTerm(E.clone())],
+    // 	    ),
+    // 	    Rule::new(
+    // 		E.clone(),
+    // 		vec![RightElem::NonTerm(E.clone()), RightElem::Term(DIV.clone()), RightElem::NonTerm(E.clone())],
+    // 	    ),
+    // 	    Rule::new(
+    // 		E.clone(),
+    // 		vec![RightElem::Term(LPAREN.clone()), RightElem::NonTerm(E.clone()), RightElem::Term(RPAREN.clone())],
+    // 	    ),
+    // 	    Rule::new(
+    // 		E.clone(),
+    // 		vec![RightElem::Term(NUM)]
+    // 	    ),
+    // 	], E.clone(), END.clone(),
+    // 	vec![
+    // 	    (PLUS.clone(), Assoc::Left, 1),
+    // 	    (MINUS.clone(), Assoc::Left, 1),
+    // 	    (MULT.clone(), Assoc::Left, 0),
+    // 	    (DIV.clone(), Assoc::Left, 0),
+    // 	])
 
 }
 // =============== Generated END ==================== 

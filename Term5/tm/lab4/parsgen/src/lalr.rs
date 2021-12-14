@@ -3,7 +3,7 @@ use std::{collections::{HashSet, HashMap}, iter::FromIterator, hash::Hash, panic
 use gramma::{Rule, Terminal, NonTerminal, Gramma, RightElem, Assoc};
 use termion::*;
 
-use crate::{codegen::Generator, gen::{print_right_elem, print_rule}, utils::perror};
+use crate::{codegen::Generator, gen::{print_right_elem, print_rule}, utils::{perror, pwarning}};
 
 #[derive(Clone,Debug)]
 pub enum Action {
@@ -244,14 +244,15 @@ impl StateMachine {
 			    if let Some(act) = &action {
 				if let Err(msg) = act.check_conflic(&nact) {
 				    if msg == "shift-reduce coflict" {
-					if let Some((assoc, _prior)) = find_resolv(gen, t) {
-					    naction = Some(choose_shift_reduce(assoc, &nact, &act));
-					} else {
-					    perror(format!("{} for terminal {}", msg, t.ident));
-					    panic!("Cannot resolv conflict. Consider adding assoc derictive");
+					naction = choose_shift_reduce(gen, t, &nact, &act);
+					if naction.is_none() {
+					    pwarning(
+						format!(
+						    "Cannot resolv shift reduce conflict for nonterminal {}\nConsider specify priority and assocativity",
+						    t.ident));
 					}
 				    } else {
-					perror(format!("{}", msg));
+					perror(msg);
 					panic!("conflict");
 				    }
 				}
@@ -336,16 +337,47 @@ impl StateMachine {
 
 }
 
-fn choose_shift_reduce(assoc: Assoc, act1: &Action, act2: &Action) -> Action {
+fn choose_shift_reduce(gen: &Generator, t: &Terminal, act1: &Action, act2: &Action) -> Option<Action> {
     let (shift, reduce) = if let &Action::Shift(_) = act1 {
 	(act1, act2)
     } else {
 	(act2, act1)
     };
-    match assoc {
-	Assoc::Left => reduce.clone(),
-	Assoc::Right => shift.clone(),
+    let mut res: Option<Action> = None;
+    if let Some((assoc, prior)) = find_resolv(gen, t) {
+	if let Action::Reduce(rule) = reduce {
+	    if let Some(pr) = find_min_prior(gen, rule) {
+		if pr > prior {
+		    res = Some(shift.clone());
+		}
+	    }
+	}
+	if res.is_none() {
+	    res = match assoc {
+		Assoc::Left => Some(reduce.clone()),
+		Assoc::Right => Some(shift.clone()),
+	    }
+	}
     }
+
+    return res;
+}
+
+fn find_min_prior(gen: &Generator, rule: &Rule) -> Option<usize> {
+    let mut res: Option<usize> = None;
+
+    for r in rule.right.iter() {
+	if let RightElem::Term(t) = r {
+	    if let Some((_, prior)) = find_resolv(gen, &t) {
+		if let Some(pr) = res {
+		    res = Some(pr.max(prior));
+		} else {
+		    res = Some(prior);
+		}
+	    }
+	}
+    }
+    return res;
 }
 
 fn find_resolv(gen: &Generator, t: &Terminal) -> Option<(Assoc, usize)> {
