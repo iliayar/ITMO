@@ -44,6 +44,7 @@
             # (pytorch.override { cudaSupport = true; })
             pytorch-bin
             torchvision-bin
+            pycuda
             tensorflow-tensorboard
           ]);
         in
@@ -52,6 +53,7 @@
               buildInputs = with pkgs; [
                 pythonEnv
                 nodejs
+                cudatoolkit
               ];
             };
           }
