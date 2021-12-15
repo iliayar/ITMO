@@ -17,13 +17,14 @@ end
 b = 20
 
 function gradient_descent(objs::Vector{Object}, init::Vector{Float64}, loss::Loss)::Vector{Float64}
-    X, y = split_objects(objs)
+    # X, y = split_objects(objs)
 
     w = init
-    w_grad = loss.grad(x)
+    w_grad = loss.grad(w)
 
-    while norm(x_grad) >= eps() do
-        
-	
+    while norm(w_grad) >= eps() do
+        X, y = sample(objs, b) |> split_objects
+	for i in 1:size(X)[1]
+        end
     end
 end
