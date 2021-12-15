@@ -1,35 +1,46 @@
 use std::fmt::Debug;
 use termion::*;
 
+use crate::{lexer, prety_print_error_range};
+
 pub trait TokenStream<T> {
     fn lookahead(&self) -> &T;
     fn pop(&mut self) -> T;
     fn init(&mut self);
+    fn error_top(&self, filename: &str, input: &str, msg: &str);
 }
 
 pub trait TokenStreamDebug<T> {
     fn print(&self);
 }
 
-impl<T: Debug> TokenStreamDebug<T> for Vec<T> {
+impl<T: Debug> TokenStreamDebug<T> for Vec<lexer::Token<T>> {
     fn print(&self) {
 	for t in self.iter().rev() {
-	    print!(" {}{:?}{}", color::Fg(color::Red), t, style::Reset);
+	    print!(" {}{:?}{}", color::Fg(color::Red), t.token, style::Reset);
 	}
     }
 }
 
-impl<T> TokenStream<T> for Vec<T> {
+impl<T> TokenStream<T> for Vec<lexer::Token<T>> {
     fn lookahead(&self) -> &T {
-        self.last().expect("Token stack is empty")
+        &self.last().expect("Token stack is empty").token
     }
 
     fn pop(&mut self) -> T {
-	self.pop().expect("Token stack is empty")
+	self.pop().expect("Token stack is empty").token
     }
 
     fn init(&mut self) {
 	self.reverse();
+    }
+
+    fn error_top(&self, filename: &str, input: &str, msg: &str) {
+	if let Some(token) = self.last() {
+	    prety_print_error_range(filename, input, token.pos.0, Some(token.pos.1), msg)
+	} else {
+	    panic!("Stack is empty. Cannot report location")
+	}
     }
 }
 
@@ -67,6 +78,11 @@ impl<T, NT, TS: TokenStream<T>> Parser<T, NT, TS> {
 	    return state;
 	};
 	panic!("No state on the stack");
+    }
+
+    pub fn panic_location(&self, filename: &str, input: &str, msg: &str) {
+	self.token_stack.error_top(filename, input, msg);
+	panic!("{}", msg);
     }
 
     pub fn accepted(&self) -> bool {

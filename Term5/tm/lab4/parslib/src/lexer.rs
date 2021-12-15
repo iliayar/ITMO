@@ -1,5 +1,14 @@
 use regex::Regex;
 
+pub struct Token<T> {
+    pub token: T,
+    pub pos: (usize, usize),
+}
+
+impl<T> Token<T> {
+    pub fn new(token: T, pos: (usize, usize)) -> Self { Self { token, pos } }
+}
+
 pub struct Lexer<T>
 {
     lexems: Vec<Lexem<T>>,
@@ -29,9 +38,9 @@ impl<T> Lexer<T>
 	}
     }
 
-    pub fn lex<S: AsRef<str>>(self, input: S) -> Result<Vec<T>, LexerError> {
+    pub fn lex<S: AsRef<str>>(self, input: S) -> Result<Vec<Token<T>>, LexerError> {
 	let mut input: &str = input.as_ref();
-	let mut res: Vec<T> = Vec::new();
+	let mut res: Vec<Token<T>> = Vec::new();
 	let mut pos: usize = 0;
 
 	'input_read: while input.len() > 0 {
@@ -40,17 +49,17 @@ impl<T> Lexer<T>
 		    let pos_delta = input.len() - ninput.len();
 		    assert!(pos_delta > 0, "Empty match");
 		    input = ninput;
-		    pos += pos_delta;
 		    if let Some(token) = token {
-			res.push(token);
+			res.push(Token::new(token, (pos, pos + pos_delta)));
 		    }
+		    pos += pos_delta;
 		    continue 'input_read;
 		}
 	    }
 	    return Err(LexerError::InvalidToken(pos + 1));
 	}
 
-	res.push(self.end);
+	res.push(Token::new(self.end, (pos, pos)));
 	return Ok(res);
     }
 }
