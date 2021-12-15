@@ -63,6 +63,20 @@ impl<T, NT, TS: TokenStream<T>> Parser<T, NT, TS> {
 	}
 	res.reverse();
 	self.stack.push(fun(res));
-	todo!("How will be better?");
+    }
+
+    pub fn goto<F>(&mut self, fun: F)
+    where F: Fn(usize, &NT) -> usize {
+	if let StackElement::NonTerminal(nt) = self.stack.pop()
+	    .expect("No elements on the stack") {
+		let st = self.pop_state();
+		let nst = fun(st, &nt);
+		self.push_state(st);
+		self.stack.push(StackElement::NonTerminal(nt));
+		self.push_state(nst);
+	    } else {
+		panic!("Cannot goto because to of the the stack is not non terminal");
+
+	    }
     }
 }
