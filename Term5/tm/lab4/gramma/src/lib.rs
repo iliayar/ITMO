@@ -1,5 +1,7 @@
 #![allow(non_snake_case)]
 
+use std::{collections::HashMap, iter::FromIterator, hash::Hash};
+
 // =============== Common Part BEGIN ================ 
 #[derive(Clone,Hash,PartialEq,Eq,Debug)]
 pub struct NonTerminal {
@@ -35,15 +37,6 @@ impl Rule {
     pub fn new(nonterm: NonTerminal, right: Vec<RightElem>) -> Self { Self { nonterm, right } }
 }
 
-pub struct Token {
-    pub term: Terminal,
-    pub args: Option<String>,
-}
-
-impl Token {
-    pub fn new(term: Terminal, args: Option<String>) -> Self { Self { term, args } }
-}
-
 #[derive(Clone, Copy)]
 pub enum Assoc {
     Left,
@@ -51,16 +44,19 @@ pub enum Assoc {
 }
 
 pub struct Gramma {
-    pub tokens: Vec<Token>,
+    pub tokens: Vec<Terminal>,
     pub rules: Vec<Rule>,
     pub start: NonTerminal,
     pub end: Terminal,
-    pub resolvs: Vec<(Terminal, Assoc, usize)>
+    pub resolvs: Vec<(Terminal, Assoc, usize)>,
+    pub term_type: HashMap<Terminal, String>,
+    pub nonterm_type: HashMap<NonTerminal, String>,
 }
 
 impl Gramma {
-    pub fn new(tokens: Vec<Token>, rules: Vec<Rule>, start: NonTerminal, end: Terminal, resolvs: Vec<(Terminal, Assoc, usize)>) -> Self { Self { tokens, rules, start, end, resolvs } }
+    pub fn new(tokens: Vec<Terminal>, rules: Vec<Rule>, start: NonTerminal, end: Terminal, resolvs: Vec<(Terminal, Assoc, usize)>, term_type: HashMap<Terminal, String>, nonterm_type: HashMap<NonTerminal, String>) -> Self { Self { tokens, rules, start, end, resolvs, term_type, nonterm_type } }
 }
+
 // =============== Common Part END ================== 
 
 // =============== Generated BEGIN ================== 
@@ -82,12 +78,12 @@ pub fn parse(_filename: &str) -> Gramma {
     let END = Terminal::new("END".to_string());
     Gramma::new(
 	vec![
-	    Token::new(PLUS.clone(), None),
-	    Token::new(MULT.clone(), None),
-	    Token::new(LPAREN.clone(), None),
-	    Token::new(RPAREN.clone(), None),
-	    Token::new(NUM.clone(), Some("String".to_string())),
-	    Token::new(END.clone(), None),
+	    PLUS.clone(),
+	    MULT.clone(),
+	    LPAREN.clone(),
+	    RPAREN.clone(),
+	    NUM.clone(),
+	    END.clone(),
 	],
 	vec![
 	    Rule::new(
@@ -108,13 +104,17 @@ pub fn parse(_filename: &str) -> Gramma {
 	    ),
 	    Rule::new(
 		F.clone(),
-		vec![RightElem::Term(NUM)]
+		vec![RightElem::Term(NUM.clone())]
 	    ),
 	    Rule::new(
 		F.clone(),
 		vec![RightElem::Term(LPAREN), RightElem::NonTerm(E.clone()), RightElem::Term(RPAREN)]
 	    ),
-	], E.clone(), END.clone(), vec![])
+	], E.clone(), END.clone(), vec![],
+	HashMap::from_iter(vec![
+	    (NUM.clone(), "usize".to_string()),
+	].into_iter()),
+	HashMap::from_iter(vec![].into_iter()))
 
     // C Function delcaration
     // let LPAREN = Terminal::new("LPAREN".to_string());
