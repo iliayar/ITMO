@@ -20,9 +20,9 @@ pub enum Token {
 #[derive(Debug)]
 pub enum NonTerm {
     E(usize),
-    S,
     T(usize),
     F(usize),
+    S,
 }
 
 pub fn parse(input: &str) {
@@ -44,91 +44,91 @@ pub fn parse(input: &str) {
         }
     };
 
-    let mut parser =
-        parser::Parser::<Token, NonTerm, Vec<Token>>::new(tokens, |state, nt| match state {
-            0 => match nt {
-                NonTerm::T(_) => Some(2),
-                NonTerm::F(_) => Some(3),
-                NonTerm::E(_) => Some(1),
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            1 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            2 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            3 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            4 => match nt {
-                NonTerm::F(_) => Some(3),
-                NonTerm::E(_) => Some(8),
-                NonTerm::T(_) => Some(2),
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            5 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            6 => match nt {
-                NonTerm::T(_) => Some(9),
-                NonTerm::F(_) => Some(3),
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            7 => match nt {
-                NonTerm::F(_) => Some(10),
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            8 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            9 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            10 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
-            11 => match nt {
-                NonTerm::S => None,
-                _ => unreachable!(),
-            },
-
+    let mut parser = parser::Parser::new(tokens, |state, nt| match state {
+        0 => match nt {
+            NonTerm::E(_) => Some(1),
+            NonTerm::F(_) => Some(3),
+            NonTerm::T(_) => Some(2),
+            NonTerm::S => None,
             _ => unreachable!(),
-        });
+        },
+
+        1 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        2 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        3 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        4 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        5 => match nt {
+            NonTerm::E(_) => Some(8),
+            NonTerm::T(_) => Some(2),
+            NonTerm::F(_) => Some(3),
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        6 => match nt {
+            NonTerm::T(_) => Some(9),
+            NonTerm::F(_) => Some(3),
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        7 => match nt {
+            NonTerm::F(_) => Some(10),
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        8 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        9 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        10 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        11 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        _ => unreachable!(),
+    });
 
     while !parser.accepted() {
         parser::print_parser_state(&parser);
         match parser.state() {
             0 => match parser.lookahead() {
-                Token::NUM(_) => parser.shift(5),
-                Token::LPAREN => parser.shift(4),
+                Token::LPAREN => parser.shift(5),
+                Token::NUM(_) => parser.shift(4),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             1 => match parser.lookahead() {
+                Token::PLUS => parser.shift(6),
                 Token::END => parser.reduce(1, |right| {
                     let mut right = right;
 
@@ -139,13 +139,12 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::PLUS => parser.shift(6),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             2 => match parser.lookahead() {
-                Token::RPAREN => parser.reduce(1, |right| {
+                Token::END => parser.reduce(1, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::NonTerminal(NonTerm::T(arg0)) =
@@ -155,7 +154,8 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::END => parser.reduce(1, |right| {
+                Token::MULT => parser.shift(7),
+                Token::RPAREN => parser.reduce(1, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::NonTerminal(NonTerm::T(arg0)) =
@@ -175,22 +175,11 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::MULT => parser.shift(7),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             3 => match parser.lookahead() {
-                Token::MULT => parser.reduce(1, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::F(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        return NonTerm::T(arg0);
-                    }
-                    unreachable!();
-                }),
                 Token::END => parser.reduce(1, |right| {
                     let mut right = right;
 
@@ -201,7 +190,7 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::PLUS => parser.reduce(1, |right| {
+                Token::MULT => parser.reduce(1, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::NonTerminal(NonTerm::F(arg0)) =
@@ -221,18 +210,21 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
+                Token::PLUS => parser.reduce(1, |right| {
+                    let mut right = right;
 
-                _ => unreachable!(),
+                    if let parser::StackElement::NonTerminal(NonTerm::F(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        return NonTerm::T(arg0);
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             4 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(4),
-                Token::NUM(_) => parser.shift(5),
-
-                _ => unreachable!(),
-            },
-
-            5 => match parser.lookahead() {
                 Token::PLUS => parser.reduce(1, |right| {
                     let mut right = right;
 
@@ -278,31 +270,54 @@ pub fn parse(input: &str) {
                     unreachable!();
                 }),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            5 => match parser.lookahead() {
+                Token::LPAREN => parser.shift(5),
+                Token::NUM(_) => parser.shift(4),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             6 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(4),
-                Token::NUM(_) => parser.shift(5),
+                Token::NUM(_) => parser.shift(4),
+                Token::LPAREN => parser.shift(5),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             7 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(4),
-                Token::NUM(_) => parser.shift(5),
+                Token::LPAREN => parser.shift(5),
+                Token::NUM(_) => parser.shift(4),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             8 => match parser.lookahead() {
-                Token::RPAREN => parser.shift(11),
                 Token::PLUS => parser.shift(6),
+                Token::RPAREN => parser.shift(11),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             9 => match parser.lookahead() {
+                Token::END => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::E(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::T(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                return NonTerm::E(arg0 + arg2);
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
                 Token::PLUS => parser.reduce(3, |right| {
                     let mut right = right;
 
@@ -336,28 +351,12 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
 
-                    if let parser::StackElement::NonTerminal(NonTerm::E(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::T(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                return NonTerm::E(arg0 + arg2);
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             10 => match parser.lookahead() {
-                Token::MULT => parser.reduce(3, |right| {
+                Token::END => parser.reduce(3, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::NonTerminal(NonTerm::T(arg0)) =
@@ -373,7 +372,7 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::RPAREN => parser.reduce(3, |right| {
+                Token::MULT => parser.reduce(3, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::NonTerminal(NonTerm::T(arg0)) =
@@ -405,7 +404,7 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::END => parser.reduce(3, |right| {
+                Token::RPAREN => parser.reduce(3, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::NonTerminal(NonTerm::T(arg0)) =
@@ -422,28 +421,10 @@ pub fn parse(input: &str) {
                     unreachable!();
                 }),
 
-                _ => unreachable!(),
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             11 => match parser.lookahead() {
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::E(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                {
-                                    i += 0;
-                                    return NonTerm::F(arg1);
-                                }
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
                 Token::MULT => parser.reduce(3, |right| {
                     let mut right = right;
 
@@ -462,7 +443,7 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
-                Token::RPAREN => parser.reduce(3, |right| {
+                Token::END => parser.reduce(3, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
@@ -498,11 +479,29 @@ pub fn parse(input: &str) {
                     }
                     unreachable!();
                 }),
+                Token::RPAREN => parser.reduce(3, |right| {
+                    let mut right = right;
 
-                _ => unreachable!(),
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::E(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                {
+                                    i += 0;
+                                    return NonTerm::F(arg1);
+                                }
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
-            _ => panic!("Ooops..."),
+            _ => parser.panic_location("<filename>", input, "Unexpected token"),
         }
     }
 

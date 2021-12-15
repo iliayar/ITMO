@@ -134,7 +134,7 @@ let tokens = match lexems.lex(input) {{
     fn gen_parse_loop(&mut self) {
 	let state_machine = self.state_machine.take().unwrap();
 	write!(self.out, "
-let mut parser = parser::Parser::<Token, NonTerm, Vec<Token>>::new(tokens, |state, nt| {{
+let mut parser = parser::Parser::new(tokens, |state, nt| {{
     match state {{
 ").ok();
 	for (state, state_id) in state_machine.states.iter().zip(0..) {
@@ -176,12 +176,12 @@ while !parser.accepted() {{
 		};
 	    }
 	    write!(self.out, "
-    _ => unreachable!()
+    _ => parser.panic_location(\"<filename>\", input, \"Unexpected token\")
 }},
 ").ok();
 	}
 	write!(self.out, "
-        _ => panic!(\"Ooops...\")
+        _ => parser.panic_location(\"<filename>\", input, \"Unexpected token\")
     }}
 }}
 ").ok();
@@ -190,6 +190,7 @@ while !parser.accepted() {{
     fn gen_reduce(&mut self, rule: &Rule) {
 	writeln!(self.out, "parser.reduce({}, |right| {{
 let mut right = right;
+
 ", rule.right.len()).ok();
 	for (r, i) in rule.right.iter().zip(0..) {
 	    match r {
