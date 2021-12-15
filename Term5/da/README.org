@@ -1,0 +1,9 @@
+#+title: Data Analysis
+
+* Labs
+- [[file:lab1/][Lab 1]]
+- [[file:lab2/][Lab 2]]
+- [[file:lab3/][Lab 3]]
+- [[file:lab4/][Lab 4]]
+- [[file:lab5/][Lab 5]]
+- [[file:lab6/][Lab 6]]
