@@ -91,14 +91,13 @@ impl<T, NT, TS: TokenStream<T>> Parser<T, NT, TS> {
     }
 
     pub fn reduce<RF>(&mut self, len: usize, fun: RF)
-    where RF: Fn(Vec<StackElement<T, NT>>) -> NT
+    where RF: FnOnce(Vec<StackElement<T, NT>>) -> NT
     {
 	let mut res = Vec::new();
 	for _ in 0..len {
 	    self.pop_state();
 	    res.push(self.stack.pop().expect("Lack off elements to reduce"));
 	}
-	res.reverse();
 	let state = self.pop_state();
 	let nt = fun(res);
 	let nstate = (self.goto)(state, &nt);

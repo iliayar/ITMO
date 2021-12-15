@@ -5,7 +5,9 @@ use std::io::Write;
 use gramma::{self, NonTerminal, Terminal, Rule, RightElem};
 use lex;
 
+use crate::gen::print_rule;
 use crate::lalr::{StateMachine, Action};
+use crate::utils::perror;
 
 
 #[allow(non_snake_case)]
@@ -58,7 +60,7 @@ impl Generator {
 
     fn gen_header(&mut self) {
 	write!(self.out, "
-#![allow(non_snake_case, unused_variables, dead_code, unreachable_patterns)]
+#![allow(non_snake_case, unused_variables, dead_code, unreachable_patterns, unreachable_code)]
 use parslib::*;
 	").ok();
     }
@@ -101,11 +103,13 @@ pub enum Token {{
     fn gen_parse_fun(&mut self) {
 	write!(self.out, "
 pub fn parse(input: &str) {{
-").ok();
+{}
+", self.gramma.init_code).ok();
 	self.gen_parse_fun_lex();
 	write!(self.out, "
+{}
 }}
-").ok();
+", self.gramma.fin_code).ok();
     }
 
     fn gen_parse_fun_lex(&mut self) {
@@ -123,8 +127,6 @@ let tokens = match lexems.lex(input) {{
 	    panic!(\"Failed to lex file\");
 	}},
 }};
-
-println!(\"{{:?}}\", tokens);
 ").ok();
 	self.gen_parse_loop();
     }
@@ -186,24 +188,25 @@ while !parser.accepted() {{
     }
 
     fn gen_reduce(&mut self, rule: &Rule) {
-	writeln!(self.out, "parser.reduce({}, |right| {{", rule.right.len()).ok();
+	writeln!(self.out, "parser.reduce({}, |right| {{
+let mut right = right;
+", rule.right.len()).ok();
 	for (r, i) in rule.right.iter().zip(0..) {
 	    match r {
 		RightElem::NonTerm(nt) => {
 		    write!(self.out, "
-if let parser::StackElement::NonTerminal(NonTerm::{}{}) = right[{}] {{
-", nt.ident, self.get_nonterm_arg(nt, format!("arg{}", i)), i).ok();
+if let parser::StackElement::NonTerminal(NonTerm::{}{}) = right.pop().unwrap() {{
+", nt.ident, self.get_nonterm_arg(nt, format!("arg{}", i))).ok();
 		},
 		RightElem::Term(t) => {
 		    write!(self.out, "
-if let parser::StackElement::Token(Token::{}{}) = right[{}] {{
-", t.ident, self.get_term_arg(t, format!("arg{}", i)), i).ok();
+if let parser::StackElement::Token(Token::{}{}) = right.pop().unwrap() {{
+", t.ident, self.get_term_arg(t, format!("arg{}", i))).ok();
 		},
 	    }
 	}
-	writeln!(self.out, "return NonTerm::{}{};",
-		 rule.nonterm.ident,
-		 self.get_nonterm_arg(&rule.nonterm, "todo!()")).ok();
+	let ident = format!("NonTerm::{}", &rule.nonterm.ident);
+	writeln!(self.out, "{}", self.prepare_user_code(ident, rule)).ok();
 	for _ in 0..rule.right.len() {
 	    writeln!(self.out, "}}").ok();
 	}
@@ -227,8 +230,31 @@ if let parser::StackElement::Token(Token::{}{}) = right[{}] {{
 	}
     }
 
+
     // fn gen_parser(&mut self) {
     // 	write!(self.out, "let mut parser").ok();
     // }
+
+    fn prepare_user_code(&self, ident: String, rule: &Rule) -> String {
+	let nt = &rule.nonterm;
+	let n = rule.right.len();
+	if let Some(args) = self.gramma.nonterm_type.get(nt) {
+	    if !args.is_empty() {
+		if let Some(code) = self.gramma.nonterm_eval.get(rule) {
+		    let mut code = code.replace("$$", &ident);
+		    for i in 1..n+1 {
+			code = code.replace(&format!("${}", i), &format!("arg{}", i - 1));
+		    }
+		    return format!("{}", code);
+		} else {
+		    perror(format!("No evaluation provided for rule:"));
+		    print_rule(rule);
+		    println!();
+		    panic!();
+		}
+	    }
+	}
+	return format!("return {};", ident);
+    }
 }
 
