@@ -17,4 +17,5 @@ members = [
 
 exclude = [
 	"exprs",
+	"exprs-manual",
 ]

@@ -29,7 +29,7 @@ impl Generator {
 
 	// Calculate set of terminals
 	for t in self.gramma.tokens.iter() {
-	    self.terms.insert(t.term.clone());
+	    self.terms.insert(t.clone());
 	}
 
 	// Init FIRST and FOLLOW
