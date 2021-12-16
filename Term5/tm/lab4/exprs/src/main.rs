@@ -1,7 +1,7 @@
 mod parser;
 fn main() {
     parser::parse("
-1 + 2 * 42 + (54 + 1337 + 1488 - 3)
+1 + 2 - 3 * 4 / 2
 ")
 
 //     parser::parse("
