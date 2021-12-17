@@ -4,10 +4,9 @@ use std::io::Write;
 
 use gramma::{self, NonTerminal, Terminal, Rule, RightElem};
 use lex;
+// use ngramma::lib::lexer;
 
-use crate::gen::print_rule;
 use crate::lalr::{StateMachine, Action};
-use crate::utils::perror;
 
 
 #[allow(non_snake_case)]
@@ -17,11 +16,8 @@ pub struct Generator {
     pub gramma: gramma::Gramma,
     pub lex: lex::Lex,
 
-    pub terms: HashSet<Terminal>,
-    pub nonterms: HashSet<NonTerminal>,
     pub eps_rule: HashSet<NonTerminal>,
     pub FIRST: HashMap<NonTerminal, HashSet<Terminal>>,
-    pub FOLLOW: HashMap<NonTerminal, HashSet<Terminal>>,
     pub state_machine: Option<StateMachine>,
 }
 
@@ -31,8 +27,10 @@ impl Generator {
 	let out = File::create(out_file).expect(&format!("{}: Cannot open output file", out_file));
 	// let res_mod = res_mod.to_string();
 
+	let lex_input = std::fs::read_to_string(lex_file).unwrap();
+
 	let gramma = gramma::parse(gramma_file);
-	let lex = lex::parse(lex_file);
+	let lex = lex::parse(&lex_input);
 
 	let mut gen = Generator {
 	    // res_mod,
@@ -40,11 +38,8 @@ impl Generator {
 	    gramma,
 	    lex,
 
-	    terms: HashSet::new(),
-	    nonterms: HashSet::new(),
 	    eps_rule: HashSet::new(),
 	    FIRST: HashMap::new(),
-	    FOLLOW: HashMap::new(),
 	    state_machine: None,
 	};
 	gen.generate_ctrl_table();
@@ -60,9 +55,11 @@ impl Generator {
 
     fn gen_header(&mut self) {
 	write!(self.out, "
-#![allow(non_snake_case, unused_variables, dead_code, unreachable_patterns, unreachable_code)]
+#![allow(non_snake_case, unused_variables, dead_code, unreachable_patterns, unreachable_code, non_camel_case_types, unused_mut)]
 use parslib::*;
-	").ok();
+
+{}
+	", self.gramma.header).ok();
     }
 
     fn gen_nonterm_definition(&mut self) {
@@ -70,7 +67,7 @@ use parslib::*;
 #[derive(Debug)]
 pub enum NonTerm {{
         ").ok();
-	for nt in self.nonterms.iter() {
+	for nt in self.gramma.nonterms.iter() {
 	    write!(self.out, "{}", nt.ident).ok();
 	    if let Some(args) = &self.gramma.nonterm_type.get(nt) {
 		writeln!(self.out, "({}),", args).ok();
@@ -88,7 +85,7 @@ pub enum NonTerm {{
 #[derive(Debug)]
 pub enum Token {{
         ").ok();
-	for t in self.gramma.tokens.iter() {
+	for t in self.gramma.terms.iter() {
 	    write!(self.out, "{}", t.ident).ok();
 	    if let Some(arg) = &self.gramma.term_type.get(t) {
 		writeln!(self.out, "({})", arg).ok();
@@ -102,9 +99,9 @@ pub enum Token {{
 
     fn gen_parse_fun(&mut self) {
 	write!(self.out, "
-pub fn parse(input: &str) {{
+pub fn parse(input: &str) -> {} {{
 {}
-", self.gramma.init_code).ok();
+", self.gramma.return_type, self.gramma.init_code).ok();
 	self.gen_parse_fun_lex();
 	write!(self.out, "
 {}
@@ -117,7 +114,7 @@ pub fn parse(input: &str) {{
 let mut lexems = lexer::Lexer::new({});
 ", self.lex.end).ok();
 	for token in self.lex.tokens.iter() {
-	    writeln!(self.out, "lexems.add(r\"{}\", |s| {});", token.regex, token.expr).ok();
+	    writeln!(self.out, "lexems.add({}, |s| {});", token.regex, token.expr).ok();
 	}
 	write!(self.out, "
 let tokens = match lexems.lex(input) {{
@@ -193,11 +190,12 @@ let mut right = right;
 
 ", rule.right.len()).ok();
 	for (r, i) in rule.right.iter().zip(0..) {
+	    let arg_name = format!("arg{}", i);
 	    match r {
 		RightElem::NonTerm(nt) => {
 		    write!(self.out, "
 if let parser::StackElement::NonTerminal(NonTerm::{}{}) = right.pop().unwrap() {{
-", nt.ident, self.get_nonterm_arg(nt, format!("arg{}", i))).ok();
+", nt.ident, self.get_nonterm_arg(nt, arg_name)).ok();
 		},
 		RightElem::Term(t) => {
 		    write!(self.out, "
@@ -206,8 +204,29 @@ if let parser::StackElement::Token(Token::{}{}) = right.pop().unwrap() {{
 		},
 	    }
 	}
+	for (r, i) in rule.right.iter().zip(0..) {
+	    let arg_name = format!("arg{}", i);
+	    match r {
+		RightElem::NonTerm(nt) => {
+		    if let Some(_) = self.gramma.nonterm_type.get(nt) {
+			writeln!(self.out, "let mut {} = {};", arg_name, arg_name).ok();
+		    } else {
+			writeln!(self.out, "let mut {} = ();", arg_name).ok();
+		    }
+		},
+		RightElem::Term(t) => {
+		    if let Some(_) = self.gramma.term_type.get(t) {
+			writeln!(self.out, "let mut {} = {};", arg_name, arg_name).ok();
+		    } else {
+			writeln!(self.out, "let mut {} = ();", arg_name).ok();
+		    }
+		},
+	    }
+	}
 	let ident = format!("NonTerm::{}", &rule.nonterm.ident);
-	writeln!(self.out, "{}", self.prepare_user_code(ident, rule)).ok();
+	writeln!(self.out, "{}", self.prepare_user_code(&ident, rule)).ok();
+	let arg = format!("todo!(\"Implement for rule: {}\")", rule_to_string(rule));
+	writeln!(self.out, "return {}{};", ident, self.get_nonterm_arg(&rule.nonterm, arg)).ok();
 	for _ in 0..rule.right.len() {
 	    writeln!(self.out, "}}").ok();
 	}
@@ -236,26 +255,29 @@ if let parser::StackElement::Token(Token::{}{}) = right.pop().unwrap() {{
     // 	write!(self.out, "let mut parser").ok();
     // }
 
-    fn prepare_user_code(&self, ident: String, rule: &Rule) -> String {
-	let nt = &rule.nonterm;
+    fn prepare_user_code(&self, ident: &str, rule: &Rule) -> String {
 	let n = rule.right.len();
-	if let Some(args) = self.gramma.nonterm_type.get(nt) {
-	    if !args.is_empty() {
-		if let Some(code) = self.gramma.nonterm_eval.get(rule) {
-		    let mut code = code.replace("$$", &ident);
-		    for i in 1..n+1 {
-			code = code.replace(&format!("${}", i), &format!("arg{}", i - 1));
-		    }
-		    return format!("{}", code);
-		} else {
-		    perror(format!("No evaluation provided for rule:"));
-		    print_rule(rule);
-		    println!();
-		    panic!();
-		}
+	if let Some(code) = self.gramma.nonterm_eval.get(rule) {
+	    let mut code = code.replace("$$", &ident);
+	    for i in 1..n+1 {
+		code = code.replace(&format!("${}", i), &format!("arg{}", i - 1));
 	    }
+	    return format!("{}", code);
+	} else {
+	    return String::new();
 	}
-	return format!("return {};", ident);
     }
 }
 
+
+fn rule_to_string(rule: &Rule) -> String {
+    let mut acc = String::new();
+    for r in rule.right.iter() {
+	acc.push(' ');
+	match r {
+	    RightElem::NonTerm(nt) => acc.push_str(&nt.ident),
+	    RightElem::Term(t) => acc.push_str(&t.ident),
+	}
+    }
+    return format!("{} ->{}", rule.nonterm.ident, &acc);
+}

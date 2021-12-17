@@ -16,6 +16,5 @@ members = [
 ]
 
 exclude = [
-	"exprs",
-	"exprs-manual",
+	"ngramma",
 ]
