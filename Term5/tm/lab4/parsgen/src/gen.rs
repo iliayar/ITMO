@@ -1,5 +1,4 @@
 use std::collections::{HashSet, HashMap};
-use std::panic;
 
 use gramma::{Rule, RightElem, NonTerminal, Gramma, Terminal};
 use termion::*;
@@ -7,7 +6,6 @@ use termion::*;
 use crate::lalr::{StateMachine, print_state_machine};
 
 use super::codegen::Generator;
-use super::utils;
 
 impl Generator {
 
@@ -16,48 +14,15 @@ impl Generator {
 	self.calc_util();
 	self.calc_eps();
 	self.calc_first();
-	self.calc_follow();
 	self.state_machine = Some(StateMachine::new(&self));
 	self.print_debug();
     }
 
     fn calc_util(&mut self) {
-	// Calculate set of non terminals
-	for rule in self.gramma.rules.iter() {
-	    self.nonterms.insert(rule.nonterm.clone());
-	}
-
-	// Calculate set of terminals
-	for t in self.gramma.tokens.iter() {
-	    self.terms.insert(t.clone());
-	}
-
 	// Init FIRST and FOLLOW
-	for t in self.nonterms.iter() {
+	for t in self.gramma.nonterms.iter() {
 	    self.FIRST.insert(t.clone(), HashSet::new());
-	    self.FOLLOW.insert(t.clone(), HashSet::new());
 	}
-
-	// Check if there is non terminals without rules in right hands
-	for rule in self.gramma.rules.iter() {
-	    for r in rule.right.iter() {
-		match &r {
-		    &RightElem::NonTerm(t) => {
-			if !self.nonterms.contains(&t) {
-			    utils::perror(format!("Unkown non terminal {}", t.ident));
-			    panic!("unknown non terminal");
-			}
-		    },
-		    &RightElem::Term(t) => {
-			if !self.terms.contains(&t) {
-			    utils::perror(format!("Unkown terminal {}", t.ident));
-			    panic!("unknown terminal");
-			}
-		    }
-		}
-	    }
-	}
-
     }
 
     pub fn has_eps(&self, t: &NonTerminal) -> bool {
@@ -106,53 +71,12 @@ impl Generator {
 	return res;
     }
 
-    pub fn right_has_eps<TS: AsRef<[RightElem]>>(&self, s: TS) -> bool {
-	let mut has_eps = true;
-	for r in s.as_ref().iter() {
-	    if let &RightElem::NonTerm(nt) = &r {
-		if self.has_eps(&nt) {
-		    continue;
-		}
-	    }
-	    has_eps = false;
-	    break;
-	}
-	return has_eps;
-    }
-
     fn calc_first(&mut self) {
 	loop {
 	    let mut changed = false;
 	    for rule in self.gramma.rules.iter() {
 		for t in self.first(&rule.right) {
 		    changed = changed || self.FIRST.get_mut(&rule.nonterm).unwrap().insert(t);
-		}
-	    }
-	    if !changed {
-		break;
-	    }
-	}
-    }
-
-    fn calc_follow(&mut self) {
-	loop {
-	    let mut changed = false;
-	    for rule in self.gramma.rules.iter() {
-		for i in 0..rule.right.len() {
-		    match &rule.right[i] {
-			RightElem::Term(_) => {
-			    continue;
-			},
-			RightElem::NonTerm(nt) => {
-			    let mut first = self.first(&rule.right[(i+1)..]);
-			    if self.right_has_eps(&rule.right[(i+1)..]) {
-				first = first.union(&self.FOLLOW[&rule.nonterm]).cloned().collect();
-			    }
-			    for t in first {
-				changed = changed || self.FOLLOW.get_mut(nt).unwrap().insert(t);
-			    }
-			},
-		    }
 		}
 	    }
 	    if !changed {
@@ -175,6 +99,7 @@ impl Generator {
 
 	let start = &self.gramma.start;
 	self.gramma.rules.push(Rule::new(nstart.clone(), vec![RightElem::NonTerm(start.clone())]));
+	self.gramma.nonterms.insert(nstart.clone());
 	self.gramma.start = nstart;
     }
 
@@ -182,27 +107,15 @@ impl Generator {
 	println!("======================== INFO ==============================");
 	print_gramma(&self.gramma);
 	println!("------------------------------------------------------------");
-	print_eps(&self.nonterms, &self.eps_rule);
+	print_eps(&self.gramma.nonterms, &self.eps_rule);
 	println!("------------------------ FIRST -----------------------------");
 	print_first(&self.FIRST);
-	println!("------------------------ FOLLOW ----------------------------");
-	print_follow(&self.FOLLOW);
 	println!("------------------------------------------------------------");
 	println!("===================== STATE MACHINE ========================");
 	print_state_machine(self.state_machine.as_ref().unwrap());
 	println!("------------------------------------------------------------");
     }
 
-}
-
-fn print_follow(follow: &HashMap<NonTerminal, HashSet<Terminal>>) {
-    for (nt, t) in follow.iter() {
-	print!("{}{}{}:", color::Fg(color::LightBlue), nt.ident, style::Reset);
-	for t in t.iter() {
-	    print!(" {}{}{}", color::Fg(color::LightGreen), t.ident, style::Reset);
-	}
-	println!("");
-    }
 }
 
 fn print_first(first: &HashMap<NonTerminal, HashSet<Terminal>>) {

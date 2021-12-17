@@ -44,7 +44,7 @@ pub fn prety_print_error_range(filename: &str, input: &str, begin: usize, end: O
 	eprintln!("{}{}{}{}{} {}{}",
 		  prefix_str(""), color::Fg(color::Red), style::Bold,
 		  repeat_str(' ', begin - 1),
-		  repeat_str('^', end - begin + 1),
+		  repeat_str('^', end + 1 - begin),
 		  msg, style::Reset);
     };
 

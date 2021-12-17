@@ -35,7 +35,7 @@ fn main() {
     let out_file = format!("{}/src/{}.rs", res_crate, res_mod);
     if matches.is_present("create-crate") {
 	Command::new("cargo")
-	    .args(["new", /* "--lib",*/ res_crate])
+	    .args(["new",  "--lib", res_crate])
 	    .status()
 	    .expect("Failed to create crate");
     }

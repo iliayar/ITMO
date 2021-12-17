@@ -125,42 +125,42 @@ impl State {
 
     // Make closure
     fn init(&mut self, gen: &Generator) {
-	loop {
-	    let mut changed = false;
+	let mut changed_items: Vec<usize> = Vec::new();
+	for i in 0..self.items.len() {
+	    changed_items.push(i);
+	}
 
-	    let mut i = 0usize;
-	    while i < self.items.len() {
-		let item = self.items[i].clone();
-		let las = item.get_la(gen);
-		if item.dot >= item.rule.right.len() {
-		    i += 1;
-		    continue;
-		}
-		if let RightElem::NonTerm(nt) = &item.rule.right[item.dot] {
-		    for rule in find_rules(nt, &gen.gramma).into_iter() {
-			let item = Item::new(rule, 0, las.clone());
-			if let Some(i) = self.item_to_id.get(&item) {
-			    for la in item.la.into_iter() {
-				changed = changed || self.items[*i].la.insert(la);
-			    }
-			} else {
-			    changed = true;
-			    self.add(item);
+	while !changed_items.is_empty() {
+	    let i = changed_items.pop().unwrap();
+	    let item = self.items[i].clone();
+	    let las = item.get_la(gen);
+	    if item.dot >= item.rule.right.len() {
+		continue;
+	    }
+	    if let RightElem::NonTerm(nt) = &item.rule.right[item.dot] {
+		for rule in find_rules(nt, &gen.gramma).into_iter() {
+		    let item = Item::new(rule, 0, las.clone());
+		    if let Some(id) = self.item_to_id.get(&item) {
+			let mut cur_changed = false;
+			for la in item.la.into_iter() {
+			    cur_changed = cur_changed || self.items[*id].la.insert(la);
 			}
+			if cur_changed {
+			    changed_items.push(*id);
+			}
+		    } else {
+			changed_items.push(self.add(item));
 		    }
 		}
-		i += 1;
-	    }
-
-	    if !changed {
-		break;
 	    }
 	}
     }
 
-    pub fn add(&mut self, item: Item) {
+    pub fn add(&mut self, item: Item) -> usize {
+	let res = self.items.len();
 	self.item_to_id.insert(item.clone(), self.items.len());
 	self.items.push(item);
+	return res;
     }
 }
 
@@ -189,133 +189,130 @@ impl StateMachine {
 
     pub fn init(&mut self, gen: &Generator) {
 
-	loop {
-	    let mut changed = false;
+	let mut changed_state: Vec<usize> = Vec::new();
+	changed_state.push(0);
 
-	    let mut i = 0usize;
-	    while i < self.states.len() {
-		let state = self.states[i].clone();
-		for nt in gen.nonterms.iter() {
-		    let mut items = find_items(&RightElem::NonTerm(nt.clone()), &state);
-		    if items.is_empty() {
-			continue;
-		    }
-		    for item in items.iter_mut() {
-			item.dot += 1;
-		    }
-		    let nstate = State::new(items, gen);
+	while !changed_state.is_empty() {
+	    let i = changed_state.pop().unwrap();
+	    let state = self.states[i].clone();
+	    for nt in gen.gramma.nonterms.iter() {
+		let mut items = find_items(&RightElem::NonTerm(nt.clone()), &state);
+		if items.is_empty() {
+		    continue;
+		}
+		for item in items.iter_mut() {
+		    item.dot += 1;
+		}
+		let nstate = State::new(items, gen);
 
-		    #[allow(unused_assignments)]
-		    let mut id = 0usize;
-		    if let Some(pid) = self.find_state(&nstate) {
-			if let Some(to) = state.nonterm_trans.get(&nt) {
-			    assert!(to == &pid, "Conflict transition by non terminal");
+		#[allow(unused_assignments)]
+		let mut id = 0usize;
+		if let Some(pid) = self.find_state(&nstate) {
+		    if let Some(to) = state.nonterm_trans.get(&nt) {
+			assert!(to == &pid, "Conflict transition by non terminal");
+		    }
+		    id = pid;
+
+		    for item in nstate.items.iter() {
+			let iid = self.states[id].item_to_id[&item];
+			let mut cur_changed = false;
+			for la in item.la.iter() {
+			    cur_changed = cur_changed || self.states[id].items[iid].la.insert(la.clone());
 			}
-			id = pid;
-
-			for item in nstate.items.iter() {
-			    let iid = self.states[id].item_to_id[&item];
-			    for la in item.la.iter() {
-				changed = changed || self.states[id].items[iid].la.insert(la.clone());
+			if cur_changed {
+			    changed_state.push(id);
+			}
+		    }
+		} else {
+		    id = self.add(nstate);
+		    changed_state.push(id);
+		}
+		self.states[i].nonterm_trans.insert(nt.clone(), id);
+	    }
+	    for t in gen.gramma.terms.iter() {
+		// Check conflicts
+		let mut action: Option<Action> = None;
+		for item in state.items.iter() {
+		    let mut naction: Option<Action> = None;
+		    if item.dot >= item.rule.right.len() && item.la.contains(&t) {
+			naction = Some(Action::Reduce(item.rule.clone()));
+		    } else if item.dot < item.rule.right.len() {
+			if let RightElem::Term(rt) = &item.rule.right[item.dot] {
+			    if rt == t {
+				naction = Some(Action::Shift(0));
 			    }
 			}
-		    } else {
-			id = self.add(nstate);
-			changed = true;
 		    }
-		    self.states[i].nonterm_trans.insert(nt.clone(), id);
+		    if let Some(nact) = &naction {
+			if let Some(act) = &action {
+			    if let Err(msg) = act.check_conflic(&nact) {
+				if msg == "shift-reduce coflict" {
+				    naction = choose_shift_reduce(gen, t, &nact, &act);
+				    if naction.is_none() {
+					pwarning(
+					    format!(
+						"Cannot resolv shift reduce conflict for nonterminal {}\nConsider specify priority and assocativity",
+						t.ident));
+				    }
+				} else {
+				    perror(msg);
+				    panic!("conflict");
+				}
+			    }
+			}
+			action = naction;
+		    }
 		}
 
-		for t in gen.terms.iter() {
-		    // Check conflicts
-		    let mut action: Option<Action> = None;
-		    for item in state.items.iter() {
-			let mut naction: Option<Action> = None;
-			if item.dot >= item.rule.right.len() && item.la.contains(&t) {
-			    naction = Some(Action::Reduce(item.rule.clone()));
-			} else if item.dot < item.rule.right.len() {
-			    if let RightElem::Term(rt) = &item.rule.right[item.dot] {
-				if rt == t {
-				    naction = Some(Action::Shift(0));
+		// Update transitions
+		if let Some(action) = action {
+		    match &action {
+			Action::Reduce(_) => {
+			    if let Some(act) = self.states[i].term_trans.get(&t) {
+				if let Err(msg) = action.check_conflic(act) {
+				    perror(format!("{}", msg));
+				    panic!("conflic");
 				}
+			    } else {
+				self.states[i].term_trans.insert(t.clone(), action);
 			    }
-			}
-			if let Some(nact) = &naction {
-			    if let Some(act) = &action {
-				if let Err(msg) = act.check_conflic(&nact) {
-				    if msg == "shift-reduce coflict" {
-					naction = choose_shift_reduce(gen, t, &nact, &act);
-					if naction.is_none() {
-					    pwarning(
-						format!(
-						    "Cannot resolv shift reduce conflict for nonterminal {}\nConsider specify priority and assocativity",
-						    t.ident));
-					}
-				    } else {
-					perror(msg);
-					panic!("conflict");
-				    }
-				}
+			},
+			&Action::Shift(_) => {
+			    let mut items = find_items(&RightElem::Term(t.clone()), &state);
+			    for item in items.iter_mut() {
+				item.dot += 1;
 			    }
-			    action = naction;
-			}
-		    }
+			    let nstate = State::new(items, gen);
 
-		    // Update transitions
-		    if let Some(action) = action {
-			match &action {
-			    Action::Reduce(_) => {
-				if let Some(act) = self.states[i].term_trans.get(&t) {
-				    if let Err(msg) = action.check_conflic(act) {
+			    #[allow(unused_assignments)]
+			    let mut id = 0usize;
+			    if let Some(pid) = self.find_state(&nstate) {
+				if let Some(act) = state.term_trans.get(&t) {
+				    if let Err(msg) = Action::Shift(pid).check_conflic(act) {
 					perror(format!("{}", msg));
 					panic!("conflic");
 				    }
-				} else {
-				    changed = true;
-				    self.states[i].term_trans.insert(t.clone(), action);
 				}
-			    },
-			    &Action::Shift(_) => {
-				let mut items = find_items(&RightElem::Term(t.clone()), &state);
-				for item in items.iter_mut() {
-				    item.dot += 1;
-				}
-				let nstate = State::new(items, gen);
+				id = pid;
 
-				#[allow(unused_assignments)]
-				let mut id = 0usize;
-				if let Some(pid) = self.find_state(&nstate) {
-				    if let Some(act) = state.term_trans.get(&t) {
-					if let Err(msg) = Action::Shift(pid).check_conflic(act) {
-					    perror(format!("{}", msg));
-					    panic!("conflic");
-					}
+				for item in nstate.items.iter() {
+				    let iid = self.states[id].item_to_id[&item];
+				    let mut cur_changed = false;
+				    for la in item.la.iter() {
+					cur_changed = cur_changed || self.states[id].items[iid].la.insert(la.clone());
 				    }
-				    id = pid;
-
-				    for item in nstate.items.iter() {
-					let iid = self.states[id].item_to_id[&item];
-					for la in item.la.iter() {
-					    changed = changed || self.states[id].items[iid].la.insert(la.clone());
-					}
+				    if cur_changed {
+					changed_state.push(id);
 				    }
-				} else {
-				    id = self.add(nstate);
-				    changed = true;
 				}
-				self.states[i].term_trans.insert(t.clone(), Action::Shift(id));
-
-
-
+			    } else {
+				id = self.add(nstate);
+				changed_state.push(id);
 			    }
+			    self.states[i].term_trans.insert(t.clone(), Action::Shift(id));
 			}
 		    }
 		}
-		i += 1;
-	    }
-
-	    if !changed {
-		break;
 	    }
 	}
     }
@@ -349,8 +346,12 @@ fn choose_shift_reduce(gen: &Generator, t: &Terminal, act1: &Action, act2: &Acti
 	    if let Some(pr) = find_min_prior(gen, rule) {
 		if pr > prior {
 		    res = Some(shift.clone());
+		} else if let Some(pr) = find_max_prior(gen, rule) {
+		    if pr < prior {
+			res = Some(reduce.clone());
+		    }
 		}
-	    }
+	    } 
 	}
 	if res.is_none() {
 	    res = match assoc {
@@ -371,6 +372,23 @@ fn find_min_prior(gen: &Generator, rule: &Rule) -> Option<usize> {
 	    if let Some((_, prior)) = find_resolv(gen, &t) {
 		if let Some(pr) = res {
 		    res = Some(pr.max(prior));
+		} else {
+		    res = Some(prior);
+		}
+	    }
+	}
+    }
+    return res;
+}
+
+fn find_max_prior(gen: &Generator, rule: &Rule) -> Option<usize> {
+    let mut res: Option<usize> = None;
+
+    for r in rule.right.iter() {
+	if let RightElem::Term(t) = r {
+	    if let Some((_, prior)) = find_resolv(gen, &t) {
+		if let Some(pr) = res {
+		    res = Some(pr.min(prior));
 		} else {
 		    res = Some(prior);
 		}
