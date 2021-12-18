@@ -1,6 +1,6 @@
 
 pub mod lexer {
-    #[derive(Debug)]
+    #[derive(Debug,Clone)]
     pub struct Token {
 	pub regex: String,
 	pub expr: String,
@@ -29,20 +29,50 @@ pub mod lexer {
 	    }
 	}
 
-	pub fn add_token(&mut self, t: Token) -> &mut LexBuilder {
-	    self.tokens.push(t);
+	pub fn add_token(&mut self, t: String, code: String) -> &mut LexBuilder {
+	    self.tokens.push(Token::new(t, code));
 	    return self;
 	}
 
-	pub fn end(&mut self, s: String) -> &mut LexBuilder {
+	pub fn add_token_regex(&mut self, t: String, code: String) -> &mut LexBuilder {
+	    let t = t.replace("\\/", "/");
+	    let t = t.replace("\\", "\\\\");
+	    let t = t.replace("\"", "\\\"");
+	    self.tokens.push(Token::new(format!("\"{}\"", t), code));
+	    return self;
+	}
+
+	pub fn add_token_keyword(&mut self, t: String, code: String) -> &mut LexBuilder {
+	    let mut newt = String::new();
+	    for c in t.chars() {
+		if "+*|(){}[].".contains(c) {
+		    newt.push_str("\\\\");
+		}
+		newt.push(c);
+	    }
+	    newt = newt[1..newt.len()-1].to_string();
+	    let token = Token::new(format!("\"{}\"", newt), code);
+	    self.tokens.push(token);
+	    return self;
+	}
+
+	fn end(&mut self, s: String) -> &mut LexBuilder {
 	    self.end = Some(s);
+	    return self;
+	}
+
+	pub fn prop(&mut self, key: String, arg: String) -> &mut Self {
+	    match key.as_ref() {
+		"%end" => { self.end(arg.trim_matches('"').to_string()); }
+		_ => { panic!("Invalid property: {}", key); }
+	    };
 	    return self;
 	}
 
 	pub fn build(self) -> Lex {
 	    Lex {
 		tokens: self.tokens,
-		end: self.end.unwrap(),
+		end: self.end.expect("Provide end token"),
 	    }
 	}
     }
@@ -127,6 +157,7 @@ pub mod gramma {
 	pub fin_code: Option<String>,
 	pub cur_prior: usize,
 	pub debug: bool,
+	pub aliases: HashMap<String, String>
     }
 
     impl GrammaBuilder {
@@ -148,7 +179,16 @@ pub mod gramma {
 		fin_code: None,
 		cur_prior: 0,
 		debug: false,
+		aliases: HashMap::new(),
 	    }
+	}
+
+	pub fn add_alias(&mut self, s: String, to: String) {
+	    self.aliases.insert(s, to);
+	}
+
+	pub fn get_alias(&self, s: String) -> String {
+	    return self.aliases.get(&s).expect(&format!("Unknown alias {}", s)).to_string();
 	}
 
 	pub fn nonterm(&mut self, nt: String) -> &mut Self {
@@ -267,7 +307,6 @@ pub mod gramma {
 	    match prop.as_ref() {
 		"%token" => {
 		    match args.len() {
-			0 => panic!("Not enough arguments for %token"),
 			1 => {
 			    self.term(args[0].clone());
 			},
@@ -280,7 +319,7 @@ pub mod gramma {
 				self.term_type(args[1].clone(), args[0].clone());
 			    }
 			},
-			_ => panic!("Too many arguments for %token")
+			_ => panic!("Wring number of arguments for %token")
 		    }
 		},
 		"%left" => {
@@ -297,12 +336,10 @@ pub mod gramma {
 		},
 		"%type" => {
 		    match args.len() {
-			0 => panic!("Not enough arguments for %type"),
-			1 => panic!("Not enough arguments for %type"),
 			2 => {
 			    self.nonterm_type(args[1].clone(), args[0].clone());
 			},
-			_ => panic!("Too many arguments for %type")
+			_ => panic!("Wrong number of arguments for %type")
 		    }
 		},
 		"%returns" => {
@@ -310,6 +347,14 @@ pub mod gramma {
 		},
 		"%debug" => {
 		    self.debug = true;
+		},
+		"%alias" => {
+		    match args.len() {
+			2 =>  {
+			    self.add_alias(args[0].to_string(), args[1].to_string());
+			},
+			_ => panic!("Wrong number of arguments for %type")
+		    }
 		},
 		_ => panic!("Unknown property {}", prop)
 	    }

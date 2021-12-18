@@ -1,5 +1,6 @@
 mod parslib;
 mod parser;
+mod drawer;
 
 #[derive(Debug,PartialEq,Clone)]
 pub enum Token {
@@ -37,5 +38,5 @@ impl Tree {
 fn main() {
     let res = parser::parse("void f (int *a, float ** b, double c);");
 
-    println!("{:?}", res);
+    drawer::draw_tree(&res, "graphs/gen.dot");
 }

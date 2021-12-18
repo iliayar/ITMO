@@ -81,7 +81,8 @@ dependencies = [
 name = "gramma"
 version = "0.1.0"
 dependencies = [
- "parslib",
+ "fancy-regex",
+ "termion",
 ]
 
 [[package]]

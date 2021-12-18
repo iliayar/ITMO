@@ -1,3 +1,4 @@
+
 use fancy_regex::Regex;
 
 pub struct Token<T> {

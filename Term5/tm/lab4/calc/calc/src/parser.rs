@@ -11,20 +11,20 @@ use super::parslib::*;
 
 #[derive(Debug)]
 pub enum Token {
-    MULT,
-    LPAREN,
+    PLUS,
+    RPAREN,
     END,
     MINUS,
-    NUM(i64),
-    PLUS,
+    LPAREN,
     DIV,
-    RPAREN,
+    NUM(i64),
+    MULT,
 }
 
 #[derive(Debug)]
 pub enum NonTerm {
-    S,
     inp,
+    S,
     expr(i64),
 }
 
@@ -51,8 +51,8 @@ pub fn parse(input: &str) -> i64 {
 
     let mut parser = parser::Parser::new(tokens, |state, nt| match state {
         0 => match nt {
-            NonTerm::inp => Some(1),
             NonTerm::expr(_) => Some(2),
+            NonTerm::inp => Some(1),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -68,7 +68,7 @@ pub fn parse(input: &str) -> i64 {
         },
 
         3 => match nt {
-            NonTerm::expr(_) => Some(7),
+            NonTerm::expr(_) => Some(16),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -90,30 +90,30 @@ pub fn parse(input: &str) -> i64 {
         },
 
         7 => match nt {
-            NonTerm::S => None,
-            _ => unreachable!(),
-        },
-
-        8 => match nt {
-            NonTerm::expr(_) => Some(16),
-            NonTerm::S => None,
-            _ => unreachable!(),
-        },
-
-        9 => match nt {
             NonTerm::expr(_) => Some(15),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
-        10 => match nt {
+        8 => match nt {
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        9 => match nt {
             NonTerm::expr(_) => Some(14),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
-        11 => match nt {
+        10 => match nt {
             NonTerm::expr(_) => Some(13),
+            NonTerm::S => None,
+            _ => unreachable!(),
+        },
+
+        11 => match nt {
+            NonTerm::expr(_) => Some(12),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -147,13 +147,11 @@ pub fn parse(input: &str) -> i64 {
     });
 
     while !parser.accepted() {
-        parser::print_parser_state(&parser);
-
         match parser.state() {
             0 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(3),
+                Token::LPAREN => parser.shift(4),
+                Token::MINUS => parser.shift(3),
                 Token::NUM(_) => parser.shift(5),
-                Token::MINUS => parser.shift(4),
 
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
@@ -174,10 +172,8 @@ pub fn parse(input: &str) -> i64 {
             },
 
             2 => match parser.lookahead() {
-                Token::PLUS => parser.shift(10),
-                Token::MULT => parser.shift(8),
-                Token::DIV => parser.shift(11),
-                Token::MINUS => parser.shift(9),
+                Token::DIV => parser.shift(10),
+                Token::PLUS => parser.shift(7),
                 Token::END => parser.reduce(1, |right| {
                     let mut right = right;
 
@@ -192,40 +188,30 @@ pub fn parse(input: &str) -> i64 {
                     }
                     unreachable!();
                 }),
+                Token::MULT => parser.shift(11),
+                Token::MINUS => parser.shift(9),
 
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             3 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(3),
+                Token::LPAREN => parser.shift(4),
+                Token::MINUS => parser.shift(3),
                 Token::NUM(_) => parser.shift(5),
-                Token::MINUS => parser.shift(4),
 
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             4 => match parser.lookahead() {
-                Token::MINUS => parser.shift(4),
-                Token::LPAREN => parser.shift(3),
+                Token::MINUS => parser.shift(3),
+                Token::LPAREN => parser.shift(4),
                 Token::NUM(_) => parser.shift(5),
 
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
             5 => match parser.lookahead() {
-                Token::MULT => parser.reduce(1, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::NUM(arg0)) = right.pop().unwrap() {
-                        let mut arg0 = arg0;
-                        {
-                            return NonTerm::expr(arg0);
-                        }
-                        return NonTerm::expr(todo!("Implement for rule: expr -> NUM"));
-                    }
-                    unreachable!();
-                }),
-                Token::END => parser.reduce(1, |right| {
+                Token::PLUS => parser.reduce(1, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::NUM(arg0)) = right.pop().unwrap() {
@@ -249,7 +235,7 @@ pub fn parse(input: &str) -> i64 {
                     }
                     unreachable!();
                 }),
-                Token::PLUS => parser.reduce(1, |right| {
+                Token::DIV => parser.reduce(1, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::NUM(arg0)) = right.pop().unwrap() {
@@ -261,7 +247,19 @@ pub fn parse(input: &str) -> i64 {
                     }
                     unreachable!();
                 }),
-                Token::DIV => parser.reduce(1, |right| {
+                Token::MULT => parser.reduce(1, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::NUM(arg0)) = right.pop().unwrap() {
+                        let mut arg0 = arg0;
+                        {
+                            return NonTerm::expr(arg0);
+                        }
+                        return NonTerm::expr(todo!("Implement for rule: expr -> NUM"));
+                    }
+                    unreachable!();
+                }),
+                Token::END => parser.reduce(1, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::NUM(arg0)) = right.pop().unwrap() {
@@ -290,6 +288,729 @@ pub fn parse(input: &str) -> i64 {
             },
 
             6 => match parser.lookahead() {
+                Token::PLUS => parser.shift(7),
+                Token::MINUS => parser.shift(9),
+                Token::RPAREN => parser.shift(8),
+                Token::DIV => parser.shift(10),
+                Token::MULT => parser.shift(11),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            7 => match parser.lookahead() {
+                Token::LPAREN => parser.shift(4),
+                Token::MINUS => parser.shift(3),
+                Token::NUM(_) => parser.shift(5),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            8 => match parser.lookahead() {
+                Token::DIV => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                let mut arg0 = ();
+                                let mut arg1 = arg1;
+                                let mut arg2 = ();
+                                {
+                                    return NonTerm::expr(arg1);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> LPAREN expr RPAREN"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::RPAREN => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                let mut arg0 = ();
+                                let mut arg1 = arg1;
+                                let mut arg2 = ();
+                                {
+                                    return NonTerm::expr(arg1);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> LPAREN expr RPAREN"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::PLUS => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                let mut arg0 = ();
+                                let mut arg1 = arg1;
+                                let mut arg2 = ();
+                                {
+                                    return NonTerm::expr(arg1);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> LPAREN expr RPAREN"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MINUS => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                let mut arg0 = ();
+                                let mut arg1 = arg1;
+                                let mut arg2 = ();
+                                {
+                                    return NonTerm::expr(arg1);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> LPAREN expr RPAREN"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::END => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                let mut arg0 = ();
+                                let mut arg1 = arg1;
+                                let mut arg2 = ();
+                                {
+                                    return NonTerm::expr(arg1);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> LPAREN expr RPAREN"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MULT => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
+                            {
+                                let mut arg0 = ();
+                                let mut arg1 = arg1;
+                                let mut arg2 = ();
+                                {
+                                    return NonTerm::expr(arg1);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> LPAREN expr RPAREN"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            9 => match parser.lookahead() {
+                Token::LPAREN => parser.shift(4),
+                Token::NUM(_) => parser.shift(5),
+                Token::MINUS => parser.shift(3),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            10 => match parser.lookahead() {
+                Token::NUM(_) => parser.shift(5),
+                Token::MINUS => parser.shift(3),
+                Token::LPAREN => parser.shift(4),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            11 => match parser.lookahead() {
+                Token::MINUS => parser.shift(3),
+                Token::LPAREN => parser.shift(4),
+                Token::NUM(_) => parser.shift(5),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            12 => match parser.lookahead() {
+                Token::END => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 * arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MULT expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::PLUS => parser.shift(7),
+                Token::MINUS => parser.shift(9),
+                Token::MULT => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 * arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MULT expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::RPAREN => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 * arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MULT expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::DIV => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 * arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MULT expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            13 => match parser.lookahead() {
+                Token::PLUS => parser.shift(7),
+                Token::END => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 / arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr DIV expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MULT => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 / arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr DIV expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MINUS => parser.shift(9),
+                Token::RPAREN => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 / arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr DIV expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::DIV => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 / arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr DIV expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            14 => match parser.lookahead() {
+                Token::MINUS => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 - arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MINUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::END => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 - arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MINUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::RPAREN => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 - arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MINUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::PLUS => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 - arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MINUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::DIV => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 - arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MINUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MULT => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 - arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr MINUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            15 => match parser.lookahead() {
+                Token::PLUS => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 + arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr PLUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::RPAREN => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 + arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr PLUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::DIV => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 + arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr PLUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::END => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 + arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr PLUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MULT => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 + arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr PLUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::MINUS => parser.reduce(3, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
+                        right.pop().unwrap()
+                    {
+                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
+                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
+                                right.pop().unwrap()
+                            {
+                                let mut arg0 = arg0;
+                                let mut arg1 = ();
+                                let mut arg2 = arg2;
+                                {
+                                    return NonTerm::expr(arg0 + arg2);
+                                }
+                                return NonTerm::expr(todo!(
+                                    "Implement for rule: expr -> expr PLUS expr"
+                                ));
+                            }
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            16 => match parser.lookahead() {
+                Token::MINUS => parser.reduce(2, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            let mut arg0 = ();
+                            let mut arg1 = arg1;
+                            {
+                                return NonTerm::expr(-arg1);
+                            }
+                            return NonTerm::expr(todo!("Implement for rule: expr -> MINUS expr"));
+                        }
+                    }
+                    unreachable!();
+                }),
+                Token::PLUS => parser.reduce(2, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
+                            right.pop().unwrap()
+                        {
+                            let mut arg0 = ();
+                            let mut arg1 = arg1;
+                            {
+                                return NonTerm::expr(-arg1);
+                            }
+                            return NonTerm::expr(todo!("Implement for rule: expr -> MINUS expr"));
+                        }
+                    }
+                    unreachable!();
+                }),
                 Token::MULT => parser.reduce(2, |right| {
                     let mut right = right;
 
@@ -324,40 +1045,6 @@ pub fn parse(input: &str) -> i64 {
                     }
                     unreachable!();
                 }),
-                Token::END => parser.reduce(2, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            let mut arg0 = ();
-                            let mut arg1 = arg1;
-                            {
-                                return NonTerm::expr(-arg1);
-                            }
-                            return NonTerm::expr(todo!("Implement for rule: expr -> MINUS expr"));
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::PLUS => parser.reduce(2, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            let mut arg0 = ();
-                            let mut arg1 = arg1;
-                            {
-                                return NonTerm::expr(-arg1);
-                            }
-                            return NonTerm::expr(todo!("Implement for rule: expr -> MINUS expr"));
-                        }
-                    }
-                    unreachable!();
-                }),
                 Token::RPAREN => parser.reduce(2, |right| {
                     let mut right = right;
 
@@ -375,7 +1062,7 @@ pub fn parse(input: &str) -> i64 {
                     }
                     unreachable!();
                 }),
-                Token::MINUS => parser.reduce(2, |right| {
+                Token::END => parser.reduce(2, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
@@ -388,695 +1075,6 @@ pub fn parse(input: &str) -> i64 {
                                 return NonTerm::expr(-arg1);
                             }
                             return NonTerm::expr(todo!("Implement for rule: expr -> MINUS expr"));
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            7 => match parser.lookahead() {
-                Token::DIV => parser.shift(11),
-                Token::PLUS => parser.shift(10),
-                Token::MULT => parser.shift(8),
-                Token::MINUS => parser.shift(9),
-                Token::RPAREN => parser.shift(12),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            8 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(3),
-                Token::MINUS => parser.shift(4),
-                Token::NUM(_) => parser.shift(5),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            9 => match parser.lookahead() {
-                Token::LPAREN => parser.shift(3),
-                Token::NUM(_) => parser.shift(5),
-                Token::MINUS => parser.shift(4),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            10 => match parser.lookahead() {
-                Token::MINUS => parser.shift(4),
-                Token::NUM(_) => parser.shift(5),
-                Token::LPAREN => parser.shift(3),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            11 => match parser.lookahead() {
-                Token::NUM(_) => parser.shift(5),
-                Token::LPAREN => parser.shift(3),
-                Token::MINUS => parser.shift(4),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            12 => match parser.lookahead() {
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                let mut arg0 = ();
-                                let mut arg1 = arg1;
-                                let mut arg2 = ();
-                                {
-                                    return NonTerm::expr(arg1);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> LPAREN expr RPAREN"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MINUS => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                let mut arg0 = ();
-                                let mut arg1 = arg1;
-                                let mut arg2 = ();
-                                {
-                                    return NonTerm::expr(arg1);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> LPAREN expr RPAREN"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MULT => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                let mut arg0 = ();
-                                let mut arg1 = arg1;
-                                let mut arg2 = ();
-                                {
-                                    return NonTerm::expr(arg1);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> LPAREN expr RPAREN"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::RPAREN => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                let mut arg0 = ();
-                                let mut arg1 = arg1;
-                                let mut arg2 = ();
-                                {
-                                    return NonTerm::expr(arg1);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> LPAREN expr RPAREN"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::PLUS => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                let mut arg0 = ();
-                                let mut arg1 = arg1;
-                                let mut arg2 = ();
-                                {
-                                    return NonTerm::expr(arg1);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> LPAREN expr RPAREN"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::DIV => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::Token(Token::LPAREN) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::expr(arg1)) =
-                            right.pop().unwrap()
-                        {
-                            if let parser::StackElement::Token(Token::RPAREN) = right.pop().unwrap()
-                            {
-                                let mut arg0 = ();
-                                let mut arg1 = arg1;
-                                let mut arg2 = ();
-                                {
-                                    return NonTerm::expr(arg1);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> LPAREN expr RPAREN"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            13 => match parser.lookahead() {
-                Token::PLUS => parser.shift(10),
-                Token::DIV => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 / arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr DIV expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MINUS => parser.shift(9),
-                Token::RPAREN => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 / arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr DIV expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 / arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr DIV expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MULT => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::DIV) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 / arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr DIV expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            14 => match parser.lookahead() {
-                Token::RPAREN => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 + arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr PLUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MULT => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 + arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr PLUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::DIV => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 + arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr PLUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 + arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr PLUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::PLUS => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 + arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr PLUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MINUS => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::PLUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 + arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr PLUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            15 => match parser.lookahead() {
-                Token::RPAREN => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 - arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MINUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 - arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MINUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::PLUS => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 - arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MINUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MULT => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 - arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MINUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::DIV => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 - arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MINUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MINUS => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MINUS) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 - arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MINUS expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            16 => match parser.lookahead() {
-                Token::DIV => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 * arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MULT expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MULT => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 * arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MULT expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::MINUS => parser.shift(9),
-                Token::PLUS => parser.shift(10),
-                Token::END => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 * arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MULT expr"
-                                ));
-                            }
-                        }
-                    }
-                    unreachable!();
-                }),
-                Token::RPAREN => parser.reduce(3, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::expr(arg0)) =
-                        right.pop().unwrap()
-                    {
-                        if let parser::StackElement::Token(Token::MULT) = right.pop().unwrap() {
-                            if let parser::StackElement::NonTerminal(NonTerm::expr(arg2)) =
-                                right.pop().unwrap()
-                            {
-                                let mut arg0 = arg0;
-                                let mut arg1 = ();
-                                let mut arg2 = arg2;
-                                {
-                                    return NonTerm::expr(arg0 * arg2);
-                                }
-                                return NonTerm::expr(todo!(
-                                    "Implement for rule: expr -> expr MULT expr"
-                                ));
-                            }
                         }
                     }
                     unreachable!();
