@@ -139,17 +139,17 @@ impl State {
 	    }
 	    if let RightElem::NonTerm(nt) = &item.rule.right[item.dot] {
 		for rule in find_rules(nt, &gen.gramma).into_iter() {
-		    let item = Item::new(rule, 0, las.clone());
-		    if let Some(id) = self.item_to_id.get(&item) {
+		    let nitem = Item::new(rule, 0, las.clone());
+		    if let Some(id) = self.item_to_id.get(&nitem) {
 			let mut cur_changed = false;
-			for la in item.la.into_iter() {
-			    cur_changed = cur_changed || self.items[*id].la.insert(la);
+			for la in nitem.la.into_iter() {
+			    cur_changed = self.items[*id].la.insert(la) || cur_changed;
 			}
 			if cur_changed {
 			    changed_items.push(*id);
 			}
 		    } else {
-			changed_items.push(self.add(item));
+			changed_items.push(self.add(nitem));
 		    }
 		}
 	    }
@@ -217,7 +217,7 @@ impl StateMachine {
 			let iid = self.states[id].item_to_id[&item];
 			let mut cur_changed = false;
 			for la in item.la.iter() {
-			    cur_changed = cur_changed || self.states[id].items[iid].la.insert(la.clone());
+			    cur_changed = self.states[id].items[iid].la.insert(la.clone()) || cur_changed;
 			}
 			if cur_changed {
 			    changed_state.push(id);
@@ -299,7 +299,7 @@ impl StateMachine {
 				    let iid = self.states[id].item_to_id[&item];
 				    let mut cur_changed = false;
 				    for la in item.la.iter() {
-					cur_changed = cur_changed || self.states[id].items[iid].la.insert(la.clone());
+					cur_changed = self.states[id].items[iid].la.insert(la.clone()) || cur_changed;
 				    }
 				    if cur_changed {
 					changed_state.push(id);
