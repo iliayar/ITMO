@@ -5,11 +5,13 @@ mod driver;
 fn main() {
     let gramma = gramma::parse(r#"
 
-%option "asdads"
-%option "123" "567"
-%header %{
+%{
    println!("XUY");
 %}
+
+%token END "0"
+
+%returns "()"
 
 %%
 
