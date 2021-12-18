@@ -51,8 +51,6 @@ pub mod lexer {
 pub mod gramma {
     use std::{collections::{HashMap, HashSet}, panic};
 
-    use crate::gramma::NonTerm;
-
     #[derive(Clone,Hash,PartialEq,Eq,Debug)]
     pub struct NonTerminal {
 	pub ident: String,

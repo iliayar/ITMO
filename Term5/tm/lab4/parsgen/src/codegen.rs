@@ -2,8 +2,9 @@ use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::Write;
 
-use gramma::{self, NonTerminal, Terminal, Rule, RightElem};
-use lex;
+// use gramma::gramma::{self, NonTerminal, Terminal, Rule, RightElem};
+// use gramma::lex;
+use ::gramma::*;
 // use ngramma::lib::lexer;
 
 use crate::lalr::{StateMachine, Action};
@@ -13,8 +14,8 @@ use crate::lalr::{StateMachine, Action};
 pub struct Generator {
     // res_mod: String,
     pub out: std::fs::File,
-    pub gramma: gramma::Gramma,
-    pub lex: lex::Lex,
+    pub gramma: Gramma,
+    pub lex: Lex,
 
     pub eps_rule: HashSet<NonTerminal>,
     pub FIRST: HashMap<NonTerminal, HashSet<Terminal>>,
@@ -28,8 +29,9 @@ impl Generator {
 	// let res_mod = res_mod.to_string();
 
 	let lex_input = std::fs::read_to_string(lex_file).unwrap();
+	let gramma_input = std::fs::read_to_string(gramma_file).unwrap();
 
-	let gramma = gramma::parse(gramma_file);
+	let gramma = gramma::parse(&gramma_input);
 	let lex = lex::parse(&lex_input);
 
 	let mut gen = Generator {
