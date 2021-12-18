@@ -1,20 +1,27 @@
 mod lexer;
+mod gramma;
 mod driver;
 
 fn main() {
-    let lex = lexer::parse(r#"
+    let gramma = gramma::parse(r#"
 
-%end "asdads"
+%option "asdads"
+%option "123" "567"
+%header %{
+   println!("XUY");
+%}
 
 %%
 
-"\s+" { return format!("{}", 123); }
 
-"[a-zA-Z_][a-zA-Z0-9_]+" {}
+asd : aboba abiba
+    | xuy
+    | this is code %{ return XUY; %}
+    ;
 
 %%
 
 "#);
 
-    println!("{:?}", lex);
+    println!("{:?}", gramma);
 }

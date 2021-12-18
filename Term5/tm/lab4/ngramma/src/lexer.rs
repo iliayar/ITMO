@@ -13,34 +13,31 @@ use super::driver;
 
 #[derive(Debug)]
 pub enum Token {
+    END,
+    SECTION_SPLIT,
+    PROP(String),
     CODE(String),
     LITERAL(String),
-    END,
-    PROP(String),
-    SECTION_SPLIT,
 }
 
 #[derive(Debug)]
 pub enum NonTerm {
+    SECTION2,
+    SECTION3,
+    PROPS,
+    PROP,
+    TERM,
+    S,
     TERMS,
     DOC,
-    PROP,
-    S,
-    SECTION3,
-    TERM,
-    PROPS,
     SECTION1,
-    SECTION2,
 }
 
 pub fn parse(input: &str) -> driver::lexer::Lex {
     let mut builder = driver::lexer::LexBuilder::new();
 
     let mut lexems = lexer::Lexer::new(Token::END);
-    lexems.add("\\s", |s| {
-        println!("Whitespace!");
-        None
-    });
+    lexems.add("\\s", |s| None);
     lexems.add("%%\\n", |s| Some(Token::SECTION_SPLIT));
     lexems.add("\"([^\"\\\\]|\\\\[\\s\\S])*\"", |s| Some(Token::LITERAL(s)));
     lexems.add("\\{([^\\{\\}\\\\]|\\\\[\\s\\S])*(\\{([^\\{\\}\\\\]|\\\\[\\s\\S])*\\}|([^\\{\\}\\\\]|\\\\[\\s\\S])*)*\\}", |s| { Some(Token::CODE(s)) });
@@ -56,10 +53,10 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
 
     let mut parser = parser::Parser::new(tokens, |state, nt| match state {
         0 => match nt {
-            NonTerm::PROP => Some(2),
-            NonTerm::DOC => Some(1),
-            NonTerm::PROPS => Some(3),
+            NonTerm::DOC => Some(3),
+            NonTerm::PROPS => Some(1),
             NonTerm::SECTION1 => Some(4),
+            NonTerm::PROP => Some(2),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -97,9 +94,9 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
         },
 
         7 => match nt {
-            NonTerm::TERMS => Some(8),
+            NonTerm::SECTION2 => Some(8),
             NonTerm::TERM => Some(9),
-            NonTerm::SECTION2 => Some(10),
+            NonTerm::TERMS => Some(10),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -110,8 +107,8 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
         },
 
         9 => match nt {
-            NonTerm::TERMS => Some(15),
             NonTerm::TERM => Some(9),
+            NonTerm::TERMS => Some(13),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -132,12 +129,12 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
         },
 
         13 => match nt {
-            NonTerm::SECTION3 => Some(14),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
         14 => match nt {
+            NonTerm::SECTION3 => Some(15),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -171,13 +168,14 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             1 => match parser.lookahead() {
-                Token::END => parser.reduce(1, |right| {
+                Token::SECTION_SPLIT => parser.reduce(1, |right| {
                     let mut right = right;
 
-                    if let parser::StackElement::NonTerminal(NonTerm::DOC) = right.pop().unwrap() {
+                    if let parser::StackElement::NonTerminal(NonTerm::PROPS) = right.pop().unwrap()
+                    {
                         let mut arg0 = ();
 
-                        return NonTerm::S;
+                        return NonTerm::SECTION1;
                     }
                     unreachable!();
                 }),
@@ -198,14 +196,13 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             3 => match parser.lookahead() {
-                Token::SECTION_SPLIT => parser.reduce(1, |right| {
+                Token::END => parser.reduce(1, |right| {
                     let mut right = right;
 
-                    if let parser::StackElement::NonTerminal(NonTerm::PROPS) = right.pop().unwrap()
-                    {
+                    if let parser::StackElement::NonTerminal(NonTerm::DOC) = right.pop().unwrap() {
                         let mut arg0 = ();
 
-                        return NonTerm::SECTION1;
+                        return NonTerm::S;
                     }
                     unreachable!();
                 }),
@@ -226,7 +223,7 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             6 => match parser.lookahead() {
-                Token::SECTION_SPLIT => parser.reduce(2, |right| {
+                Token::PROP(_) => parser.reduce(2, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::PROP(arg0)) = right.pop().unwrap() {
@@ -252,7 +249,7 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
                     }
                     unreachable!();
                 }),
-                Token::PROP(_) => parser.reduce(2, |right| {
+                Token::SECTION_SPLIT => parser.reduce(2, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::PROP(arg0)) = right.pop().unwrap() {
@@ -295,17 +292,7 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             8 => match parser.lookahead() {
-                Token::SECTION_SPLIT => parser.reduce(1, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::TERMS) = right.pop().unwrap()
-                    {
-                        let mut arg0 = ();
-
-                        return NonTerm::SECTION2;
-                    }
-                    unreachable!();
-                }),
+                Token::SECTION_SPLIT => parser.shift(14),
 
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
@@ -323,7 +310,17 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             10 => match parser.lookahead() {
-                Token::SECTION_SPLIT => parser.shift(13),
+                Token::SECTION_SPLIT => parser.reduce(1, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::TERMS) = right.pop().unwrap()
+                    {
+                        let mut arg0 = ();
+
+                        return NonTerm::SECTION2;
+                    }
+                    unreachable!();
+                }),
 
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
@@ -335,7 +332,7 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             12 => match parser.lookahead() {
-                Token::LITERAL(_) => parser.reduce(2, |right| {
+                Token::SECTION_SPLIT => parser.reduce(2, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::LITERAL(arg0)) = right.pop().unwrap()
@@ -354,7 +351,7 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
                     }
                     unreachable!();
                 }),
-                Token::SECTION_SPLIT => parser.reduce(2, |right| {
+                Token::LITERAL(_) => parser.reduce(2, |right| {
                     let mut right = right;
 
                     if let parser::StackElement::Token(Token::LITERAL(arg0)) = right.pop().unwrap()
@@ -378,6 +375,26 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
             },
 
             13 => match parser.lookahead() {
+                Token::SECTION_SPLIT => parser.reduce(2, |right| {
+                    let mut right = right;
+
+                    if let parser::StackElement::NonTerminal(NonTerm::TERM) = right.pop().unwrap() {
+                        if let parser::StackElement::NonTerminal(NonTerm::TERMS) =
+                            right.pop().unwrap()
+                        {
+                            let mut arg0 = ();
+                            let mut arg1 = ();
+
+                            return NonTerm::TERMS;
+                        }
+                    }
+                    unreachable!();
+                }),
+
+                _ => parser.panic_location("<filename>", input, "Unexpected token"),
+            },
+
+            14 => match parser.lookahead() {
                 Token::END => parser.reduce(0, |right| {
                     let mut right = right;
 
@@ -388,7 +405,7 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
                 _ => parser.panic_location("<filename>", input, "Unexpected token"),
             },
 
-            14 => match parser.lookahead() {
+            15 => match parser.lookahead() {
                 Token::END => parser.reduce(5, |right| {
                     let mut right = right;
 
@@ -417,26 +434,6 @@ pub fn parse(input: &str) -> driver::lexer::Lex {
                                     }
                                 }
                             }
-                        }
-                    }
-                    unreachable!();
-                }),
-
-                _ => parser.panic_location("<filename>", input, "Unexpected token"),
-            },
-
-            15 => match parser.lookahead() {
-                Token::SECTION_SPLIT => parser.reduce(2, |right| {
-                    let mut right = right;
-
-                    if let parser::StackElement::NonTerminal(NonTerm::TERM) = right.pop().unwrap() {
-                        if let parser::StackElement::NonTerminal(NonTerm::TERMS) =
-                            right.pop().unwrap()
-                        {
-                            let mut arg0 = ();
-                            let mut arg1 = ();
-
-                            return NonTerm::TERMS;
                         }
                     }
                     unreachable!();

@@ -1,4 +1,4 @@
-use regex::Regex;
+use fancy_regex::Regex;
 
 pub struct Token<T> {
     pub token: T,
@@ -78,7 +78,7 @@ impl<T> Lexem<T> {
     }
 
     pub fn mtch<'a>(&self, input: &'a str) -> Option<(&'a str, Option<T>)> {
-	if let Some(mtch) = self.regex.find(input) {
+	if let Ok(Some(mtch)) = self.regex.find(input) {
 	    if mtch.start() == 0 {
 		Some((
 		    &input[mtch.end()..],
