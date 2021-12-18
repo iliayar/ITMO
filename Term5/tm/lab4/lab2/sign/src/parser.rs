@@ -13,24 +13,24 @@ use super::{NodeValue, Tree};
 
 #[derive(Debug)]
 pub enum Token {
-    RPAREN,
+    END,
     SEMICOLON,
+    ASTERISK,
+    COMMA,
+    RPAREN,
     LPAREN,
     IDENTIFIER(String),
-    COMMA,
-    END,
-    ASTERISK,
 }
 
 #[derive(Debug)]
 pub enum NonTerm {
+    args(Tree),
+    args_rest(Tree),
     arg(Tree),
     pointer(Tree),
-    args(Tree),
     S,
     inp,
     declaration(Tree),
-    args_rest(Tree),
 }
 
 pub fn parse(input: &str) -> Tree {
@@ -99,19 +99,19 @@ pub fn parse(input: &str) -> Tree {
         },
 
         8 => match nt {
-            NonTerm::arg(_) => Some(9),
-            NonTerm::args(_) => Some(10),
+            NonTerm::arg(_) => Some(10),
+            NonTerm::args(_) => Some(9),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
         9 => match nt {
-            NonTerm::args_rest(_) => Some(16),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
         10 => match nt {
+            NonTerm::args_rest(_) => Some(14),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -138,23 +138,23 @@ pub fn parse(input: &str) -> Tree {
         },
 
         15 => match nt {
+            NonTerm::arg(_) => Some(16),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
         16 => match nt {
+            NonTerm::args_rest(_) => Some(17),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
         17 => match nt {
-            NonTerm::arg(_) => Some(18),
             NonTerm::S => None,
             _ => unreachable!(),
         },
 
         18 => match nt {
-            NonTerm::args_rest(_) => Some(19),
             NonTerm::S => None,
             _ => unreachable!(),
         },
@@ -168,8 +168,6 @@ pub fn parse(input: &str) -> Tree {
     });
 
     while !parser.accepted() {
-        parser::print_parser_state(&parser);
-
         match parser.state() {
 
 0 => match parser.lookahead() {
@@ -217,7 +215,7 @@ Token::IDENTIFIER(_) => parser.reduce(0, |right| {
 let mut right = right;
 
 
-{ return NonTerm::pointer(Tree::node(NodeValue::NonTerminal("ASTERISL".to_string()))); }
+{ return NonTerm::pointer(Tree::node(NodeValue::NonTerminal("ASTERISK".to_string()))); }
 return NonTerm::pointer(todo!("Implement for rule: pointer ->"));
 unreachable!();
 }),
@@ -238,7 +236,7 @@ Token::IDENTIFIER(_) => parser.reduce(0, |right| {
 let mut right = right;
 
 
-{ return NonTerm::pointer(Tree::node(NodeValue::NonTerminal("ASTERISL".to_string()))); }
+{ return NonTerm::pointer(Tree::node(NodeValue::NonTerminal("ASTERISK".to_string()))); }
 return NonTerm::pointer(todo!("Implement for rule: pointer ->"));
 unreachable!();
 }),
@@ -291,7 +289,13 @@ Token::IDENTIFIER(_) => parser.shift(11),
 },
 
 9 => match parser.lookahead() {
-Token::COMMA => parser.shift(17),
+Token::RPAREN => parser.shift(18),
+
+    _ => parser.panic_location("<filename>", input, "Unexpected token")
+},
+
+10 => match parser.lookahead() {
+Token::COMMA => parser.shift(15),
 Token::RPAREN => parser.reduce(0, |right| {
 let mut right = right;
 
@@ -304,19 +308,13 @@ unreachable!();
     _ => parser.panic_location("<filename>", input, "Unexpected token")
 },
 
-10 => match parser.lookahead() {
-Token::RPAREN => parser.shift(14),
-
-    _ => parser.panic_location("<filename>", input, "Unexpected token")
-},
-
 11 => match parser.lookahead() {
 Token::ASTERISK => parser.shift(5),
 Token::IDENTIFIER(_) => parser.reduce(0, |right| {
 let mut right = right;
 
 
-{ return NonTerm::pointer(Tree::node(NodeValue::NonTerminal("ASTERISL".to_string()))); }
+{ return NonTerm::pointer(Tree::node(NodeValue::NonTerminal("ASTERISK".to_string()))); }
 return NonTerm::pointer(todo!("Implement for rule: pointer ->"));
 unreachable!();
 }),
@@ -388,12 +386,86 @@ unreachable!();
 },
 
 14 => match parser.lookahead() {
-Token::SEMICOLON => parser.shift(15),
+Token::RPAREN => parser.reduce(2, |right| {
+let mut right = right;
+
+
+
+if let parser::StackElement::NonTerminal(NonTerm::arg(arg0)) = right.pop().unwrap() {
+
+if let parser::StackElement::NonTerminal(NonTerm::args_rest(arg1)) = right.pop().unwrap() {
+let mut arg0 = arg0;
+let mut arg1 = arg1;
+{
+         return NonTerm::args(Tree::new(NodeValue::NonTerminal("ARGS".to_string()), vec![ arg0, arg1 ]));
+     }
+return NonTerm::args(todo!("Implement for rule: args -> arg args_rest"));
+}
+}
+unreachable!();
+}),
 
     _ => parser.panic_location("<filename>", input, "Unexpected token")
 },
 
 15 => match parser.lookahead() {
+Token::IDENTIFIER(_) => parser.shift(11),
+
+    _ => parser.panic_location("<filename>", input, "Unexpected token")
+},
+
+16 => match parser.lookahead() {
+Token::RPAREN => parser.reduce(0, |right| {
+let mut right = right;
+
+
+{ return NonTerm::args_rest(Tree::node(NodeValue::NonTerminal("ARGS_REST".to_string()))); }
+return NonTerm::args_rest(todo!("Implement for rule: args_rest ->"));
+unreachable!();
+}),
+Token::COMMA => parser.shift(15),
+
+    _ => parser.panic_location("<filename>", input, "Unexpected token")
+},
+
+17 => match parser.lookahead() {
+Token::RPAREN => parser.reduce(3, |right| {
+let mut right = right;
+
+
+
+if let parser::StackElement::Token(Token::COMMA) = right.pop().unwrap() {
+
+if let parser::StackElement::NonTerminal(NonTerm::arg(arg1)) = right.pop().unwrap() {
+
+if let parser::StackElement::NonTerminal(NonTerm::args_rest(arg2)) = right.pop().unwrap() {
+let mut arg0 = ();
+let mut arg1 = arg1;
+let mut arg2 = arg2;
+{
+              return NonTerm::args_rest(Tree::new(NodeValue::NonTerminal("ARGS_REST".to_string()), vec![
+                                  Tree::node(NodeValue::Terminal(super::Token::COMMA)),
+				  arg1,
+				  arg2,
+                                  ]));
+          }
+return NonTerm::args_rest(todo!("Implement for rule: args_rest -> COMMA arg args_rest"));
+}
+}
+}
+unreachable!();
+}),
+
+    _ => parser.panic_location("<filename>", input, "Unexpected token")
+},
+
+18 => match parser.lookahead() {
+Token::SEMICOLON => parser.shift(19),
+
+    _ => parser.panic_location("<filename>", input, "Unexpected token")
+},
+
+19 => match parser.lookahead() {
 Token::END => parser.reduce(7, |right| {
 let mut right = right;
 
@@ -435,80 +507,6 @@ return NonTerm::declaration(todo!("Implement for rule: declaration -> IDENTIFIER
 }
 }
 }
-}
-}
-}
-unreachable!();
-}),
-
-    _ => parser.panic_location("<filename>", input, "Unexpected token")
-},
-
-16 => match parser.lookahead() {
-Token::RPAREN => parser.reduce(2, |right| {
-let mut right = right;
-
-
-
-if let parser::StackElement::NonTerminal(NonTerm::arg(arg0)) = right.pop().unwrap() {
-
-if let parser::StackElement::NonTerminal(NonTerm::args_rest(arg1)) = right.pop().unwrap() {
-let mut arg0 = arg0;
-let mut arg1 = arg1;
-{
-         return NonTerm::args(Tree::new(NodeValue::NonTerminal("ARGS".to_string()), vec![ arg0, arg1 ]));
-     }
-return NonTerm::args(todo!("Implement for rule: args -> arg args_rest"));
-}
-}
-unreachable!();
-}),
-
-    _ => parser.panic_location("<filename>", input, "Unexpected token")
-},
-
-17 => match parser.lookahead() {
-Token::IDENTIFIER(_) => parser.shift(11),
-
-    _ => parser.panic_location("<filename>", input, "Unexpected token")
-},
-
-18 => match parser.lookahead() {
-Token::RPAREN => parser.reduce(0, |right| {
-let mut right = right;
-
-
-{ return NonTerm::args_rest(Tree::node(NodeValue::NonTerminal("ARGS_REST".to_string()))); }
-return NonTerm::args_rest(todo!("Implement for rule: args_rest ->"));
-unreachable!();
-}),
-Token::COMMA => parser.shift(17),
-
-    _ => parser.panic_location("<filename>", input, "Unexpected token")
-},
-
-19 => match parser.lookahead() {
-Token::RPAREN => parser.reduce(3, |right| {
-let mut right = right;
-
-
-
-if let parser::StackElement::Token(Token::COMMA) = right.pop().unwrap() {
-
-if let parser::StackElement::NonTerminal(NonTerm::arg(arg1)) = right.pop().unwrap() {
-
-if let parser::StackElement::NonTerminal(NonTerm::args_rest(arg2)) = right.pop().unwrap() {
-let mut arg0 = ();
-let mut arg1 = arg1;
-let mut arg2 = arg2;
-{
-              return NonTerm::args_rest(Tree::new(NodeValue::NonTerminal("ARGS_REST".to_string()), vec![
-                                  Tree::node(NodeValue::Terminal(super::Token::COMMA)),
-				  arg1,
-				  arg2,
-                                  ]));
-          }
-return NonTerm::args_rest(todo!("Implement for rule: args_rest -> COMMA arg args_rest"));
 }
 }
 }

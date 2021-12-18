@@ -1,6 +1,4 @@
 
-%debug
-
 %token END "0"
 %token PLUS
 %token MINUS
@@ -9,6 +7,13 @@
 %token LPAREN
 %token RPAREN
 %token "i64" NUM
+
+%alias '/' DIV
+%alias '*' MULT
+%alias '-' MINUS
+%alias '+' PLUS
+%alias '(' LPAREN
+%alias ')' RPAREN
 
 %returns "i64"
 
@@ -23,15 +28,15 @@
 let mut res = 0i64;
 %}
 
-inp : expr { res = $1; };
+inp : expr {{ res = $1; }};
 
-expr : expr PLUS expr { return $$($1 + $3); }
-     | expr MINUS expr { return $$($1 - $3); }
-     | expr MULT expr { return $$($1 * $3); }
-     | expr DIV expr { return $$($1 / $3); }
-     | MINUS expr { return $$(- $2); }
-     | LPAREN expr RPAREN { return $$($2); }
-     | NUM { return $$($1); }
+expr : expr '+' expr {{ return $$($1 + $3); }}
+     | expr '-' expr {{ return $$($1 - $3); }}
+     | expr '*' expr {{ return $$($1 * $3); }}
+     | expr '/' expr {{ return $$($1 / $3); }}
+     | '-' expr {{ return $$(- $2); }}
+     | '(' expr ')' {{ return $$($2); }}
+     | NUM {{ return $$($1); }}
      ;
 
 %%

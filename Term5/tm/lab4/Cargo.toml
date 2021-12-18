@@ -17,4 +17,5 @@ members = [
 exclude = [
 	"calc/calc",
 	"lab2/sign",
+	"ngramma",
 ]

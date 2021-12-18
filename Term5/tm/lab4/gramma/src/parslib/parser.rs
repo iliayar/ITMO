@@ -1,7 +1,8 @@
+
 use std::fmt::Debug;
 use termion::*;
 
-use crate::{lexer, prety_print_error_range};
+use super::{lexer, prety_print_error_range};
 
 pub trait TokenStream<T> {
     fn lookahead(&self) -> &T;

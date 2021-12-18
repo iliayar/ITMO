@@ -16,7 +16,7 @@
 
 "%[a-zA-Z0_-]+" { Some(Token::PROP(s)) }
 
-"[a-zA-Z_-]+" { Some(Token::IDENT(s)) }
+"[a-zA-Z_]+" { Some(Token::IDENT(s)) }
 
 "\\|" { Some(Token::RULE_DIV) }
 
