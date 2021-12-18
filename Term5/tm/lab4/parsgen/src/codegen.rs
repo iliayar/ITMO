@@ -58,7 +58,7 @@ impl Generator {
     fn gen_header(&mut self) {
 	write!(self.out, "
 #![allow(non_snake_case, unused_variables, dead_code, unreachable_patterns, unreachable_code, non_camel_case_types, unused_mut)]
-use parslib::*;
+use super::parslib::*;
 
 {}
 	", self.gramma.header).ok();
@@ -156,7 +156,13 @@ let mut parser = parser::Parser::new(tokens, |state, nt| {{
 ").ok();
 	write!(self.out, "
 while !parser.accepted() {{
+").ok();
+	if self.gramma.debug {
+	    write!(self.out, "
     parser::print_parser_state(&parser);
+").ok();
+	}
+	write!(self.out, "
     match parser.state() {{
 ").ok();
 	for (state, state_id) in state_machine.states.iter().zip(0..) {

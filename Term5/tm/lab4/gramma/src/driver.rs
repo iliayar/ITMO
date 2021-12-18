@@ -106,6 +106,7 @@ pub mod gramma {
 	pub return_type: String,
 	pub init_code: String,
 	pub fin_code: String,
+	pub debug: bool,
     }
 
 
@@ -125,6 +126,7 @@ pub mod gramma {
 	pub init_code: Option<String>,
 	pub fin_code: Option<String>,
 	pub cur_prior: usize,
+	pub debug: bool,
     }
 
     impl GrammaBuilder {
@@ -144,7 +146,8 @@ pub mod gramma {
 		return_type: None,
 		init_code: None,
 		fin_code: None,
-		cur_prior: 0
+		cur_prior: 0,
+		debug: false,
 	    }
 	}
 
@@ -261,7 +264,6 @@ pub mod gramma {
 	}
 
 	pub fn add_prop(&mut self, prop: String, args: Vec<String>) -> &mut Self {
-	    println!("Prop {:?}, Args: {:?}", prop, args);
 	    match prop.as_ref() {
 		"%token" => {
 		    match args.len() {
@@ -272,7 +274,7 @@ pub mod gramma {
 			2 => {
 			    if args[1] == "0" {
 				self.term(args[0].clone());
-				self.end(args[1].clone());
+				self.end(args[0].clone());
 			    } else {
 				self.term(args[1].clone());
 				self.term_type(args[1].clone(), args[0].clone());
@@ -306,6 +308,9 @@ pub mod gramma {
 		"%returns" => {
 		    self.return_type(args[0].clone());
 		},
+		"%debug" => {
+		    self.debug = true;
+		},
 		_ => panic!("Unknown property {}", prop)
 	    }
 	    return self;
@@ -326,6 +331,7 @@ pub mod gramma {
 		return_type: self.return_type.expect("Provide return type"),
 		init_code: self.init_code.unwrap_or("".to_string()),
 		fin_code: self.fin_code.unwrap_or("".to_string()),
+		debug: self.debug,
 	    }
 	}
     }

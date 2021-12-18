@@ -12,9 +12,9 @@ members = [
 	"parsgen",
 	"parslib",
 	"gramma",
-	"lex",
 ]
 
 exclude = [
-	"ngramma",
+	"calc/calc",
+	"lab2/sign",
 ]
