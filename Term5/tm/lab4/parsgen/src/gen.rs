@@ -15,7 +15,9 @@ impl Generator {
 	self.calc_eps();
 	self.calc_first();
 	self.state_machine = Some(StateMachine::new(&self));
-	self.print_debug();
+	if self.gramma.debug {
+	    self.print_debug();
+	}
     }
 
     fn calc_util(&mut self) {
@@ -60,6 +62,9 @@ impl Generator {
 		    break;
 		},
 		&RightElem::NonTerm(nt) => {
+		    if self.FIRST.get(&nt).is_none() {
+			panic!("Unknown non temrinal {}", nt.ident);
+		    }
 		    res = res.union(&self.FIRST[nt]).cloned().collect();
 		    if !self.has_eps(nt) {
 			break;

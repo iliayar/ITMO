@@ -275,7 +275,7 @@ pub fn parse(input: &str) -> driver::gramma::Gramma {
     });
 
     while !parser.accepted() {
-        parser::print_parser_state(&parser);
+        // parser::print_parser_state(&parser);
         match parser.state() {
 
 0 => match parser.lookahead() {
