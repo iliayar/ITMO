@@ -37,12 +37,12 @@ use super::driver;
 let mut driver = driver::CalcDriver::new();
 %}
 
-input : statement input
+input : statement ';' input
       |
       ;
 
-statement : expr ';' {{ driver.eval($1); }}
-	  | IDENT '=' expr ';' {{ driver.set($1, $3); }}
+statement : expr {{ driver.eval($1); }}
+	  | IDENT '=' expr {{ driver.set($1, $3); }}
 	  ;
 
 expr : expr '+' expr {{ return $$($1 + $3); }}

@@ -28,11 +28,8 @@ impl Generator {
 	let out = File::create(out_file).expect(&format!("{}: Cannot open output file", out_file));
 	// let res_mod = res_mod.to_string();
 
-	let lex_input = std::fs::read_to_string(lex_file).unwrap();
-	let gramma_input = std::fs::read_to_string(gramma_file).unwrap();
-
-	let gramma = gramma::parse(&gramma_input);
-	let lex = lex::parse(&lex_input);
+	let gramma = gramma::parse_file(&gramma_file);
+	let lex = lexer::parse_file(&lex_file);
 
 	let mut gen = Generator {
 	    // res_mod,
@@ -52,6 +49,7 @@ impl Generator {
 	self.gen_header();
 	self.gen_token_definition();
 	self.gen_nonterm_definition();
+	self.gen_lex_funs();
 	self.gen_parse_fun();
     }
 
@@ -59,7 +57,7 @@ impl Generator {
 	write!(self.out, "
 #![allow(non_snake_case, unused_variables, dead_code, unreachable_patterns, unreachable_code, non_camel_case_types, unused_mut)]
 use super::parslib::*;
-
+use std::io::BufRead;
 {}
 	", self.gramma.header).ok();
     }
@@ -99,35 +97,63 @@ pub enum Token {{
         ").ok();
     }
 
-    fn gen_parse_fun(&mut self) {
+    fn gen_lex_funs(&mut self) {
 	write!(self.out, "
-pub fn parse(input: &str) -> {} {{
-{}
-", self.gramma.return_type, self.gramma.init_code).ok();
-	self.gen_parse_fun_lex();
-	write!(self.out, "
-{}
-}}
-", self.gramma.fin_code).ok();
-    }
-
-    fn gen_parse_fun_lex(&mut self) {
-	write!(self.out, "
+pub fn get_lexems() -> lexer::Lexer<Token> {{
 let mut lexems = lexer::Lexer::new({});
 ", self.lex.end).ok();
 	for token in self.lex.tokens.iter() {
 	    writeln!(self.out, "lexems.add({}, |s| {});", token.regex, token.expr).ok();
 	}
 	write!(self.out, "
-let tokens = match lexems.lex(input) {{
-	Ok(res) => res,
-	Err(lex_err) => {{
-	    prety_print_lex_error(\"stdin\", input, lex_err);
-	    panic!(\"Failed to lex file\");
-	}},
-}};
+return lexems;
+}}
 ").ok();
+	write!(self.out, r#"
+pub fn parse_stream<R: BufRead>(filename: &str, stream: &mut R) -> {} {{
+    let lexems = get_lexems();
+
+    let tokens = lexems.lex_stream(stream, |lex_err, input| {{
+	prety_print_lex_error(filename, &input, lex_err);
+	panic!("Failed to lex file");
+    }});
+
+    return parse_token_stream(filename, tokens);
+}}
+"#, self.gramma.return_type).ok();
+	write!(self.out, r#"
+pub fn parse(filename: &str, input: &str) -> {} {{
+    let lexems = get_lexems();
+
+    let tokens = lexems.lex(input);
+
+    if let Err(lex_err) = tokens {{
+	prety_print_lex_error(filename, &input, lex_err);
+	panic!("Failed to lex file");
+    }} else {{
+	return parse_token_stream(filename, tokens.unwrap());
+    }}
+}}
+"#, self.gramma.return_type).ok();
+	write!(self.out, r#"
+pub fn parse_file(filename: &str) -> {} {{
+    let input = std::fs::read_to_string(filename).expect("Failed to read file");
+
+    return parse(filename, &input);
+}}
+"#, self.gramma.return_type).ok();
+    }
+
+    fn gen_parse_fun(&mut self) {
+	write!(self.out, "
+fn parse_token_stream<TS: parser::TokenStream<Token>>(filename: &str, tokens: TS) -> {} {{
+{}
+", self.gramma.return_type, self.gramma.init_code).ok();
 	self.gen_parse_loop();
+	write!(self.out, "
+{}
+}}
+", self.gramma.fin_code).ok();
     }
 
     fn gen_parse_loop(&mut self) {
@@ -181,12 +207,12 @@ while !parser.accepted() {{
 		};
 	    }
 	    write!(self.out, "
-    _ => parser.panic_location(\"<filename>\", input, \"Unexpected token\")
+    _ => parser.panic_location(filename, \"Unexpected token\")
 }},
 ").ok();
 	}
 	write!(self.out, "
-        _ => parser.panic_location(\"<filename>\", input, \"Unexpected token\")
+        _ => parser.panic_location(filename, \"Unexpected token\")
     }}
 }}
 ").ok();

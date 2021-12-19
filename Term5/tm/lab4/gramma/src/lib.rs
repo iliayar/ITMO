@@ -1,4 +1,4 @@
-pub mod lex;
+pub mod lexer;
 pub mod gramma;
 mod driver;
 mod parslib;

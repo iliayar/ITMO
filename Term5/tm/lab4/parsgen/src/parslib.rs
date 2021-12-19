@@ -13,6 +13,9 @@ mod util;
 pub use util::*;
 "#).ok();
     fs::write(format!("{}/src/parslib/lexer.rs", path), r#"
+
+use std::{io::BufRead, collections::VecDeque};
+
 use fancy_regex::Regex;
 
 pub struct Token<T> {
@@ -36,6 +39,57 @@ pub enum LexerError
     InvalidToken(usize),
 }
 
+pub struct StreamLexer<'a, R: BufRead, T, FE: Fn(LexerError, String) -> ()> {
+    source: &'a mut R,
+    lexems: Vec<Lexem<T>>,
+    end: Option<T>,
+    pub buf: VecDeque<Token<T>>,
+    pos: usize,
+    onerror: FE,
+    pub all_input: Option<String>,
+}
+
+impl<'a, R: BufRead, T, FE: Fn(LexerError, String) -> ()> StreamLexer<'a, R, T, FE> {
+
+    pub fn fill(&mut self) {
+	if self.buf.len() > 0 || self.end.is_none() {
+	    return;
+	}
+
+	let mut input = String::new();
+	let res =  self.source.read_line(&mut input);
+
+	if let Ok(n) = res {
+	    if n == 0 {
+		self.buf.push_back(Token::new(self.end.take().unwrap(), (self.pos, self.pos)));
+		return;
+	    }
+	} else if let Err(e) = res {
+	    panic!("Failed to read input: {}", e);
+	}
+
+	self.all_input.as_mut().unwrap().push_str(&input);
+
+	let mut input: &str = input.as_ref();
+
+	'input_read: while input.len() > 0 {
+	    for lexem in self.lexems.iter() {
+		if let Some((ninput, token)) = lexem.mtch(input) {
+		    let pos_delta = input.len() - ninput.len();
+		    assert!(pos_delta > 0, "Empty match");
+		    input = ninput;
+		    if let Some(token) = token {
+			self.buf.push_back(Token::new(token, (self.pos, self.pos + pos_delta)));
+		    }
+		    self.pos += pos_delta;
+		    continue 'input_read;
+		}
+	    }
+	    (self.onerror)(LexerError::InvalidToken(self.pos + 1), self.all_input.take().unwrap());
+	}
+    }
+}
+
 impl<T> Lexer<T>
 {
     pub fn new(end: T) -> Lexer<T> {
@@ -53,8 +107,20 @@ impl<T> Lexer<T>
 	}
     }
 
-    pub fn lex<S: AsRef<str>>(self, input: S) -> Result<Vec<Token<T>>, LexerError> {
-	let mut input: &str = input.as_ref();
+    pub fn lex_stream<'a, R: BufRead, FE: Fn(LexerError, String) -> ()>(self, source: &'a mut R, onerror: FE) -> StreamLexer<'a, R, T, FE> {
+	StreamLexer {
+	    source,
+	    lexems: self.lexems,
+	    end: Some(self.end),
+	    buf: VecDeque::new(),
+	    pos: 0,
+	    onerror,
+	    all_input: Some(String::new()),
+	}
+    }
+
+    pub fn lex<S: AsRef<str>>(self, sinput: S) -> Result<(Vec<Token<T>>, S), LexerError> {
+	let mut input: &str = sinput.as_ref();
 	let mut res: Vec<Token<T>> = Vec::new();
 	let mut pos: usize = 0;
 
@@ -75,7 +141,7 @@ impl<T> Lexer<T>
 	}
 
 	res.push(Token::new(self.end, (pos, pos)));
-	return Ok(res);
+	return Ok((res, sinput));
     }
 }
 
@@ -110,16 +176,17 @@ impl<T> Lexem<T> {
 "#).ok();
 
     fs::write(format!("{}/src/parslib/parser.rs", path), r#"
-use std::fmt::Debug;
+
+use std::{fmt::Debug, io::BufRead};
 use termion::*;
 
-use super::{lexer, prety_print_error_range};
+use super::{lexer::{self, StreamLexer, LexerError}, prety_print_error_range};
 
 pub trait TokenStream<T> {
-    fn lookahead(&self) -> &T;
+    fn lookahead(&mut self) -> &T;
     fn pop(&mut self) -> T;
     fn init(&mut self);
-    fn error_top(&self, filename: &str, input: &str, msg: &str);
+    fn error_top(&mut self, filename: &str, msg: &str);
 }
 
 pub trait TokenStreamDebug<T> {
@@ -134,22 +201,46 @@ impl<T: Debug> TokenStreamDebug<T> for Vec<lexer::Token<T>> {
     }
 }
 
-impl<T> TokenStream<T> for Vec<lexer::Token<T>> {
-    fn lookahead(&self) -> &T {
-        &self.last().expect("Token stack is empty").token
+impl<T, S: AsRef<str>> TokenStream<T> for (Vec<lexer::Token<T>>, S) {
+    fn lookahead(&mut self) -> &T {
+        &self.0.last().expect("Token stack is empty").token
     }
 
     fn pop(&mut self) -> T {
-	self.pop().expect("Token stack is empty").token
+	self.0.pop().expect("Token stack is empty").token
     }
 
     fn init(&mut self) {
-	self.reverse();
+	self.0.reverse();
     }
 
-    fn error_top(&self, filename: &str, input: &str, msg: &str) {
-	if let Some(token) = self.last() {
-	    prety_print_error_range(filename, input, token.pos.0, Some(token.pos.1), msg)
+    fn error_top(&mut self, filename: &str, msg: &str) {
+	if let Some(token) = self.0.last() {
+	    prety_print_error_range(filename, self.1.as_ref(), token.pos.0, Some(token.pos.1), msg)
+	} else {
+	    panic!("Stack is empty. Cannot report location")
+	}
+    }
+}
+
+impl<'a, R: BufRead, T, FE: Fn(LexerError, String) -> ()> TokenStream<T> for StreamLexer<'a, R, T, FE> {
+    fn lookahead(&mut self) -> &T {
+        self.fill();
+	return &self.buf.front().expect("Token stack is empty").token;
+    }
+
+    fn pop(&mut self) -> T {
+        self.fill();
+	return self.buf.pop_front().expect("Token stack is empty").token;
+    }
+
+    fn init(&mut self) {
+        self.fill();
+    }
+
+    fn error_top(&mut self, filename: &str, msg: &str) {
+	if let Some(token) = self.buf.front() {
+	    prety_print_error_range(filename, self.all_input.as_ref().unwrap(), token.pos.0, Some(token.pos.1), msg)
 	} else {
 	    panic!("Stack is empty. Cannot report location")
 	}
@@ -192,8 +283,8 @@ impl<T, NT, TS: TokenStream<T>> Parser<T, NT, TS> {
 	panic!("No state on the stack");
     }
 
-    pub fn panic_location(&self, filename: &str, input: &str, msg: &str) {
-	self.token_stack.error_top(filename, input, msg);
+    pub fn panic_location(&mut self, filename: &str, msg: &str) {
+	self.token_stack.error_top(filename, msg);
 	panic!("{}", msg);
     }
 
@@ -209,7 +300,7 @@ impl<T, NT, TS: TokenStream<T>> Parser<T, NT, TS> {
 	panic!("Top of the stack is not state. Invariant broken");
     }
 
-    pub fn lookahead(&self) -> &T {
+    pub fn lookahead(&mut self) -> &T {
 	self.token_stack.lookahead()
     }
 
