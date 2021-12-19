@@ -344,10 +344,10 @@ fn choose_shift_reduce(gen: &Generator, t: &Terminal, act1: &Action, act2: &Acti
     if let Some((assoc, prior)) = find_resolv(gen, t) {
 	if let Action::Reduce(rule) = reduce {
 	    if let Some(pr) = find_min_prior(gen, rule) {
-		if pr > prior {
+		if pr < prior {
 		    res = Some(shift.clone());
 		} else if let Some(pr) = find_max_prior(gen, rule) {
-		    if pr < prior {
+		    if pr > prior {
 			res = Some(reduce.clone());
 		    }
 		}

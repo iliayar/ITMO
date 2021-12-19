@@ -74,7 +74,7 @@ pointer : ASTERISK pointer {{ return $$(Tree::new(NodeValue::NonTerminal("POINTE
 					    Tree::node(NodeValue::Terminal(super::Token::ASTERISK)),
 					    $2,
                                        ]))}}
-	| {{ return $$(Tree::node(NodeValue::NonTerminal("ASTERISK".to_string()))); }}
+	| {{ return $$(Tree::node(NodeValue::NonTerminal("POINTER".to_string()))); }}
         ;
 
 %%

@@ -36,7 +36,7 @@ impl Tree {
 
 
 fn main() {
-    let res = parser::parse("void f (int *a, float ** b, double c);");
+    let res = parser::parse("<string>", "void f (int *a, float ** b, double c);");
 
     drawer::draw_tree(&res, "graphs/gen.dot");
 }
