@@ -10,12 +10,12 @@
 [workspace]
 members = [
 	"parsgen",
-	"parslib",
 	"gramma",
 ]
 
 exclude = [
 	"calc/calc",
 	"lab2/sign",
+	"lab3/calc",
 	"ngramma",
 ]
