@@ -6,6 +6,6 @@ fn main() {
 // 1 + 2 - 3 - 4 * 5 / ( 1 + 2 * 3 )
 // ");
 
-    let res = parser::parse_stream("<stdin>", &mut std::io::stdin().lock());
-    println!("{}", res);
+    parser::parse_stream("<stdin>", &mut std::io::stdin().lock());
+    // println!("{}", res);
 }
