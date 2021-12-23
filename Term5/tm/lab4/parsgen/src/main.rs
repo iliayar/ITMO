@@ -1,7 +1,6 @@
 use clap::{Arg, App};
 use std::{process::Command, fs::OpenOptions};
-use termion::*;
-use std::io::Write;
+use termion::*; use std::io::Write;
 
 mod codegen;
 mod gen;

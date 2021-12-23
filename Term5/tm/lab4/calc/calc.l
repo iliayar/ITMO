@@ -7,6 +7,8 @@
 
 /[0-9]+/ {{ Some(Token::NUM(s.parse().unwrap())) }}
 
+';' {{ Some(Token::SEMICOLON) }}
+'!' {{ Some(Token::FACTORIAL) }}
 '+' {{ Some(Token::PLUS) }}
 '-' {{ Some(Token::MINUS) }}
 '*' {{ Some(Token::MULT) }}
