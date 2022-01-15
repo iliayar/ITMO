@@ -1,0 +1,551 @@
+#+PUBNOTE:html
+#+title: Заметки к экзамену
+
+* Лекция 7
+#+begin_src haskell
+class Applicative m => Monad m where
+  return :: a -> m a                -- return
+  (>>=) :: m a -> (a -> m b) -> m b -- bind
+#+end_src
+
+Для `Maybe`:
+#+begin_src haskell
+instance Monad Maybe where
+  return = Just
+
+  Nothing >>= _ = Nothing
+  Just a >>= f = f a
+#+end_src
+
+
+Пример для `Identity`
+#+begin_src haskell
+newtype Identity a = Identity { runIdentity :: a } 
+#+end_src
+Инстанс монады тривиальный
+
+
+Пример для `Either`
+#+begin_src haskell
+instance Monad (Either e)  where
+  --snip--
+#+end_src
+*NB*: Здесь тип `e` фиксированый для одного монадического вычисления
+
+Композиция функция для монад:
+#+begin_src haskell
+(<=<)  :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
+(>=>)  :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
+#+end_src
+
+- `m >>= (f >=> g) ≡ m >>= f >>= g`
+- `m >>= (f <=< g) ≡ m >>= g >>= f`
+- Ассоциативность
+
+Пример монады `[]`
+#+begin_src haskell
+instance Monad [] where
+  return x = [x]
+
+  l >>= f = concat (map f l)
+#+end_src
+
+
+#+begin_src haskell
+(>>)  :: Monad m => m a -> m b -> mb
+m >> k = m >>= \_ -> k
+#+end_src
+
+Пример
+#+begin_src haskell
+ghci> [True, False]  >> [1, 2, 3]
+[1, 2, 3, 1, 2, 3]
+#+end_src
+
+
+
+`guard` для списка
+#+begin_src haskell
+guard :: Bool -> [()]
+guard True  = [()]
+guard False = []
+#+end_src
+
+Полиморфная сигнатура
+#+begin_src 
+guard :: (Alternative f) => Bool -> f ()
+#+end_src
+
+Бесполезный пример
+#+begin_src haskell
+ghci> [True, False, True]  >> [1, 2]
+[1, 2, 1, 2, 1, 2]
+ghci> [True, False, True] >>= \b -> guard b >> [1, 2]
+[1, 2, 1, 2]
+#+end_src
+
+
+#+begin_src 
+join :: Monad m => m (m a) -> m a
+#+end_src
+
+Нельзя написать валидный инстанс монады 😭
+#+begin_src haskell
+data BarBaz a = Bar a | Baz a a 
+#+end_src
+
+
+#+begin_src haskell
+liftM :: Monad m => (a -> b) -> m a -> m b
+#+end_src
+
+Альтернитвные булевские опрераторы
+#+begin_src haskell
+(||^), (&&^) :: m Bool -> m Bool -> m Bool
+#+end_src
+
+
+Законы монад
+1. `return a >>= f  ≡ f a`
+1. `m >>= return    ≡ m`
+1. `(m >>= f) >>= g ≡ m >>= (\x -> f x >>= g)`
+
+Можем попробовать доказать законы руками
+* Лекция 8
+** Writer
+#+begin_src haskell
+newtype Wrtier w a = Writer { runWriter :: (a, w) }  -- a is value, w is log
+
+instance Monoid w => Moand (Writer w) where
+  return a = Writer (a, mempty)
+
+  Writer (a, oldLog) >>= f = let Wrtier (b, newLog) = f a
+                             in Writer (b, oldLog <> newLog)
+#+end_src
+
+
+Вспомогательные функции
+#+begin_src haskell
+tell       :: w -> Writer w ()
+execWriter :: Writer w a -> w
+writer     :: (a, w) -> Writer w a
+#+end_src
+
+- Есть инстанс монады для пары, который работает как `Writer`
+- `Writer` не эффективный, кушает много памяти
+
+** Reader
+
+#+begin_src haskell
+newtype Reader e a = Reader { runReader :: e -> a } -- e is environment
+
+instance Monad (Reader e) where
+  return a = Reader $ \_ -> a
+
+  m >>= f = Reader $ \r -> runReader (f $ runReader m r) r
+#+end_src
+
+Вспомогательные функции
+#+begin_src haskell
+ask   :: Reader e e
+asks  :: (e -> a) -> Reader e a
+local :: (e -> b) -> Reader b a -> Reader e a
+#+end_src
+
+
+*Note*: Typed holes — `foo x = _x`
+
+** State
+
+#+begin_src haskell
+newtype State s a = State { runState :: s -> (a, s) } 
+
+instance Monad (State s) where
+  return a = State $ \s -> (a, s)
+
+  oldState >>= f = State $ \s -> let (a, newState) = runState oldState s
+                                 in runState (f a) newState
+#+end_src
+
+
+Пример для стека
+#+begin_src haskell
+type Stack = [Int]
+
+pop :: State Stack Int
+pop = State $ \(x:xs) -> (x, xs)
+
+push :: Int -> State Stack ()
+push x = State $ \xs -> ((), x:xs)
+#+end_src
+
+Полезные функции
+#+begin_src haskell
+get       :: State s s
+put       :: s -> State s ()
+modify    :: (s -> s) -> State s ()
+gets      :: (s -> a) -> State s a
+withState :: (s -> s) -> State s a -> State s a
+evalState :: State s a -> s -> a
+execState :: State s a -> s -> s
+#+end_src
+
+
+
+Полезные функции для монадов
+#+begin_src haskell
+replicateM :: Moad m => Int -> m a -> m [a] 
+
+forM_ :: (Monad m, Foldable t) => t a -> (a -> m b) -> m ()
+#+end_src
+
+
+** Cont
+#+begin_src haskell
+addCPS :: Int -> Int -> ((Int -> r) -> r)
+addCPS x y = \k -> k (x + y)
+#+end_src
+
+#+begin_src haskell
+newtype Cont r a = Cont { runCont :: (a -> r) -> r } 
+#+end_src
+
+* Лекция 9
+
+Почему не можем получит ввод с помощью функций
+#+begin_src haskell
+getChar :: Char 
+get2Char :: [Char]
+get4Char :: [Char]
+#+end_src
+
+Исопльзуем что-то вроде
+#+begin_src haskell
+getChar :: RealWorld -> (Char, RealWorld) 
+get2Char :: ReadWorld -> ([Char], RealWorld)
+get4Char :: ReadWorld -> ([Char], RealWorld)
+#+end_src
+
+
+`do` нотация
+
+Полезные функции
+#+begin_src 
+sequence_ :: [IO a] -> IO ()
+#+end_src
+
+`return` не то чем кажется
+
+Ленивость с файлами
+
+FFI, `IORef`, `IOArray`, `IOException`, `unsafePerformIO`
+
+`OverloadedStrings`
+
+`Text`, `ByteString` используют `unsafe` операции, по использовать их безопасно
+
+* Лекция 10
+#+begin_src haskell
+newtype Parser a = Parser { runP :: String -> Maybe (a, String) } 
+#+end_src
+
+
+Делаем простые парсеры, комбинируя их получаем более сложные
+
+#+begin_src haskell
+ok :: Parser ()
+ok = Parser $ \s -> Just ((), s)
+
+isnot :: Parser a -> Parser ()
+isnot parser = Parser $ \s ->
+  case runP parser s of
+    Just _  -> Nothing
+    Nothing -> Just ((), s)
+
+eof :: Parser ()
+eof = Parser $ \s ->
+  case s of
+    [] -> Just ((), "")
+    _  -> Nothing
+
+
+satisfy :: (Char -> Bool) -> Parser Char
+satisfy p = Parser $ \s ->
+  case s of
+    [] -> Nothing
+    (x:xs) -> if p x then Just (x, xs) else Nothing
+
+notok :: Parser ()
+notok = isnot ok
+
+char :: Char -> Parser Hcar
+char c = satisfy (== c)
+
+--snip--
+
+instance Functor Parser where
+  fmap f (Parser parser) = Parser (fmap (first f) . parser)
+
+insatnce Applicative Parser where
+  pure a = Parser $ \s -> Just (s, s)
+
+  Parser pf <*> Parser pa = Praser $ \s ->
+    case pf s of
+      Nothing -> Nothing
+      Just (f, t) -> case pa t of
+        Nothing -> Nothing
+        Just (a, r) -> Just (f a, r)
+
+
+instance Monad Parser where
+  return = pure
+
+  p >>= f = Parser $ \s ->
+    case runP p s of
+      Nothing -> Nothing
+      Just (a, t) -> runP (f a) t
+
+instance Aternative Parser
+  --snip--
+#+end_src
+
+* Лекция 11
+*** Unit testing — `HSpec`
+Может сам искать тесты в модулях с префиксом `spec`?
+
+- `shouldSatisfy` проверяет по предикату
+- `shouldBe` проверяет на равенство
+
+#+begin_src haskell
+hspecTestTree :: IO TestTree
+hspecTestTree = testSpec "Simple parser" spec_Parser
+
+spec_Parser :: Spec
+spec_Parser = do
+  describe "eof works" $ do
+    it "eof no empty input" $
+      runP eof "" `shouldSatisfy` isJust
+    it "eof no non-empty input" $
+      runP eof "x" `shouldSatisfy` isNothing
+  describe "char works" $ do
+    it "char parses character" $
+      runP (char 'a') "abc" `shouldBe` Just ('x', "bc")
+#+end_src
+
+*** Property-based — `Hedgehog`
+/Пример/: `∀ xs. reverse (reverse xs) ≡ xs`
+
+#+begin_src haskell
+genIntList :: Gen [Int]
+genIntList =
+  let listLength = Range.linear 0 10000
+  in Gen.List listLength Gen.enumBounded
+
+prop_reverse :: Property
+prop_reverse = property $
+  forAll genIntList >>= \xs ->
+  List.reverse (List.reverse xs) === xs
+#+end_src
+
+Shrinking — уменьшение размера теста до читабельного вида, который повторяет поведение
+
+Проверка обратных
+#+begin_src 
+read        . show      ≡ id
+decode      . encode    ≡ id
+deserialize . serialize ≡ id
+#+end_src
+
+Проверка законов моноидов и пр..
+#+begin_src 
+(a <> b) <> c ≡ a <> (b <> c)
+a <> mempty   ≡ a
+mempty <> a   ≡ a
+#+end_src
+
+* Лекция 12
+Можем композировать функторы, аппликативы, и т.д.
+#+begin_src haskell
+newtype Compose f g a = Compose { getCompose :: f (g a) }
+
+instance (Functor f, Functor g) => Functor (Compose f g)
+instance (Foldable f, Foldable g) => Foldable (Compose f g)
+instance (Applicative f, Applicative g) => Applicative (Compose f g)
+--snip--
+#+end_src
+*Но не монад*
+
+Для `Maybe`
+#+begin_src haskell
+newtype MaybeIO = MaybeIO { runMaybeIO :: IO (Maybe a) }
+
+instance Monad MaybeIO where
+  return x = MaybeIO (return (Just x))
+  MaybeIO action >>= f = MaybeIO $ do
+    result <- action
+    case result of
+      Nothing -> return Nothing
+      Just x -> runMaybeIO (f x)
+#+end_src
+
+Проблема
+#+begin_src haskell
+result <- runMaybeIO $ do
+  c1 <- MaybeIO $ tryConnect "host1"
+  print "Hello"
+  c2 <- MaybeIO $ tryConnect "host2"
+#+end_src
+
+`print` возвращает не `Maybe`
+
+#+begin_src haskell
+transformIO2MaybeIO :: IO a -> MaybeIO a
+transformIO2MaybeIO action = MaybeIO $ do
+  result <- action
+  return (Just result)
+#+end_src
+
+Первый трансформер
+#+begin_src haskell
+newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) } 
+
+type MaybeIO = MaybeT IO
+
+instance Monad m => Monad (MaybeT m) where
+  return x = MaybeT (return (Just x))
+  MaybeT action >>= f = MaybeT $ do
+    result <- action
+    case result of
+      Nothing -> return Nothing
+      Just x -> runMaybeT (f x)
+
+transformIO2MaybeT :: Functor m => m a -> MaybeT m a
+transformIO2MaybeT action = MaybeT . fmap Just
+#+end_src
+
+
+Класс трансформеров
+#+begin_src haskell
+class MonadTrans t where
+  lift :: Monad m => m a -> t m a
+#+end_src
+- `lift . return ≡ return`
+- `lift (m >>= f) ≡ lift m >>= (lift . f)`
+
+
+Пример для `Reader`
+#+begin_src haskell
+newtype ReaderT r m a = Reader T { runReaderT :: r -> m a }
+
+type Reader r a = ReaderT r Identity a
+type LoggerIO a = ReaderT LoggerName IO a
+#+end_src
+
+инстанс монады для `ReaderT` почти такой же как и для `Reader`
+
+*NB* Таблица трансофрмеров
+| *Base Monad* | *Transormer* | *Original Type*   | *Combined Type*       |
+|------------+------------+-----------------+---------------------|
+| `Maybe`    | `MaybeT`   | `Maybe a`       | `m (Maybe a)`       |
+| `Either`   | `EitherT`  | `Either a b`    | `m (Either a b)`    |
+| `Writer`   | `WriterT`  | `(a, w)`        | `m (a, w)`          |
+| `Reader`   | `ReaderT`  | `r -> a`        | `r -> m a`          |
+| `State`    | `StateT`   | `s -> (a, s)`   | `s -> m (a, s)`     |
+| `Cont`     | `ContT`    | `(a -> r) -> r` | `(a -> m r) -> m r` |
+
+`IO` не может быть трансформером
+
+
+*Проблема*: Если трансформеров много, то придется писать много `lift`
+
+Все выше в пакете `transformers`. Пакет `mtl` решает эту проблему
+
+#+begin_src haskell
+class Monad m => MonadReader r m | m -> r where
+  ask :: m r
+  --snip--
+
+instance Monad m => MonadReader r (ReaderT r m) where
+  --snip--
+
+instance Monad m => MonadReader r (StateT s m) where
+  ask = lift ask
+  --snip--
+#+end_src
+
+
+
+#+begin_src haskell
+class Monad m => MonadThrow m where
+  throwM : Exception e => e -> m a
+
+class MonadThrow m => MonadCatch m where
+  catch :: Exception e => m a -> (e -> m a) -> m a
+#+end_src
+
+`ThrowError` – когда надо сломать все
+
+Можем испольовать `deriving` и `mtl`
+#+begin_src haskell
+newtype M a = M(ReaderT Environment (StateT MyState IO) a)
+  deriving (Functor, Applicative, Monad, MonadIO, MonadState MyState, MonadReader Environment)
+#+end_src
+
+- Заворачивать `IO` только в `ReaderT`
+- Использовать конкретную монаду, если конечно не пишите либу
+
+* Лекция 13
+[[http://slides.com/fp-ctd/lecture-10#/][Слайды]]
+
+Конкатенация списков за O(1)
+#+begin_src haskell
+newtype DList a = DL { unDL :: [a] -> [a] }
+
+fromList :: [a] -> DList a
+fromList l = DL (l++)
+
+toList :: DList a -> [a]
+toList (DL lf) = lf []
+
+append :: DList a -> DList a -> DList a
+(DL f) `append` (DL g) = DL $ \xs -> f (g xs) -- append = mappend = <>
+#+end_src
+
+Откладываем операции конкатенации, до тех пор. пока нам не понадобится
+результат, который вычислится за длину списка, благодаря правильному
+порядку аргументов `++`
+
+
+Игрушечная реализация `seq` — форсит вычисление первого аргумента до WHNF
+#+begin_src haskell
+seq :: a -> b -> b
+_|_ `seq` _ = _|_
+_   `seq` b = b
+#+end_src
+
+
+- `foldl`, `foldr` медленные
+- `foldl'` — строгая версия, использует `seq`
+
+`deepseq` как `seq`, но вычисляет до нормальной формы. Чтобы компилятор
+знал, как вычислять вашу структуру до нормальной формы, нужно
+заинстансировать `NFData`
+#+begin_src haskell
+class NFData a where
+  rnf :: a -> ()
+  rnf a = a `seq` ()
+
+instance NFData a => NFData (Maybe a) where
+  rnf Nothing = ()
+  rnf (Just x) = rnf x
+
+instance NFData a => NFData [a] where
+  rnf [] = ()
+  rnf (x:xs) = rnf x `seq` rnf xs
+
+
+deepseq :: NFData a => a -> b -> b
+a `deepseq` b = rnf a `seq` b
+#+end_src
+
+`-XBangPatterns` — можно ставить `!` перед паттерном чтобы вычислить его до WHNF
