@@ -8,7 +8,7 @@ class Applicative m => Monad m where
   (>>=) :: m a -> (a -> m b) -> m b -- bind
 #+end_src
 
-Для `Maybe`:
+Для ~Maybe~:
 #+begin_src haskell
 instance Monad Maybe where
   return = Just
@@ -18,19 +18,19 @@ instance Monad Maybe where
 #+end_src
 
 
-Пример для `Identity`
+Пример для ~Identity~
 #+begin_src haskell
 newtype Identity a = Identity { runIdentity :: a } 
 #+end_src
 Инстанс монады тривиальный
 
 
-Пример для `Either`
+Пример для ~Either~
 #+begin_src haskell
 instance Monad (Either e)  where
   --snip--
 #+end_src
-*NB*: Здесь тип `e` фиксированый для одного монадического вычисления
+*NB*: Здесь тип ~e~ фиксированый для одного монадического вычисления
 
 Композиция функция для монад:
 #+begin_src haskell
@@ -38,11 +38,11 @@ instance Monad (Either e)  where
 (>=>)  :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
 #+end_src
 
-- `m >>= (f >=> g) ≡ m >>= f >>= g`
-- `m >>= (f <=< g) ≡ m >>= g >>= f`
+- ~m >>= (f >=> g) ≡ m >>= f >>= g~
+- ~m >>= (f <=< g) ≡ m >>= g >>= f~
 - Ассоциативность
 
-Пример монады `[]`
+Пример монады ~[]~
 #+begin_src haskell
 instance Monad [] where
   return x = [x]
@@ -64,7 +64,7 @@ ghci> [True, False]  >> [1, 2, 3]
 
 
 
-`guard` для списка
+~guard~ для списка
 #+begin_src haskell
 guard :: Bool -> [()]
 guard True  = [()]
@@ -106,9 +106,9 @@ liftM :: Monad m => (a -> b) -> m a -> m b
 
 
 Законы монад
-1. `return a >>= f  ≡ f a`
-1. `m >>= return    ≡ m`
-1. `(m >>= f) >>= g ≡ m >>= (\x -> f x >>= g)`
+1. ~return a >>= f  ≡ f a~
+1. ~m >>= return    ≡ m~
+1. ~(m >>= f) >>= g ≡ m >>= (\x -> f x >>= g)~
 
 Можем попробовать доказать законы руками
 * Лекция 8
@@ -131,8 +131,8 @@ execWriter :: Writer w a -> w
 writer     :: (a, w) -> Writer w a
 #+end_src
 
-- Есть инстанс монады для пары, который работает как `Writer`
-- `Writer` не эффективный, кушает много памяти
+- Есть инстанс монады для пары, который работает как ~Writer~
+- ~Writer~ не эффективный, кушает много памяти
 
 ** Reader
 
@@ -153,7 +153,7 @@ local :: (e -> b) -> Reader b a -> Reader e a
 #+end_src
 
 
-*Note*: Typed holes — `foo x = _x`
+*Note*: Typed holes — ~foo x = _x~
 
 ** State
 
@@ -199,7 +199,6 @@ replicateM :: Moad m => Int -> m a -> m [a]
 forM_ :: (Monad m, Foldable t) => t a -> (a -> m b) -> m ()
 #+end_src
 
-
 ** Cont
 #+begin_src haskell
 addCPS :: Int -> Int -> ((Int -> r) -> r)
@@ -227,22 +226,22 @@ get4Char :: ReadWorld -> ([Char], RealWorld)
 #+end_src
 
 
-`do` нотация
+~do~ нотация
 
 Полезные функции
 #+begin_src 
 sequence_ :: [IO a] -> IO ()
 #+end_src
 
-`return` не то чем кажется
+~return~ не то чем кажется
 
 Ленивость с файлами
 
-FFI, `IORef`, `IOArray`, `IOException`, `unsafePerformIO`
+FFI, ~IORef~, ~IOArray~, ~IOException~, ~unsafePerformIO~
 
-`OverloadedStrings`
+~OverloadedStrings~
 
-`Text`, `ByteString` используют `unsafe` операции, по использовать их безопасно
+~Text~, ~ByteString~ используют ~unsafe~ операции, по использовать их безопасно
 
 * Лекция 10
 #+begin_src haskell
@@ -310,11 +309,11 @@ instance Aternative Parser
 #+end_src
 
 * Лекция 11
-*** Unit testing — `HSpec`
-Может сам искать тесты в модулях с префиксом `spec`?
+*** Unit testing — ~HSpec~
+Может сам искать тесты в модулях с префиксом ~spec~?
 
-- `shouldSatisfy` проверяет по предикату
-- `shouldBe` проверяет на равенство
+- ~shouldSatisfy~ проверяет по предикату
+- ~shouldBe~ проверяет на равенство
 
 #+begin_src haskell
 hspecTestTree :: IO TestTree
@@ -332,8 +331,8 @@ spec_Parser = do
       runP (char 'a') "abc" `shouldBe` Just ('x', "bc")
 #+end_src
 
-*** Property-based — `Hedgehog`
-/Пример/: `∀ xs. reverse (reverse xs) ≡ xs`
+*** Property-based — ~Hedgehog~
+/Пример/: ~∀ xs. reverse (reverse xs) ≡ xs~
 
 #+begin_src haskell
 genIntList :: Gen [Int]
@@ -375,7 +374,7 @@ instance (Applicative f, Applicative g) => Applicative (Compose f g)
 #+end_src
 *Но не монад*
 
-Для `Maybe`
+Для ~Maybe~
 #+begin_src haskell
 newtype MaybeIO = MaybeIO { runMaybeIO :: IO (Maybe a) }
 
@@ -396,7 +395,7 @@ result <- runMaybeIO $ do
   c2 <- MaybeIO $ tryConnect "host2"
 #+end_src
 
-`print` возвращает не `Maybe`
+~print~ возвращает не ~Maybe~
 
 #+begin_src haskell
 transformIO2MaybeIO :: IO a -> MaybeIO a
@@ -429,11 +428,11 @@ transformIO2MaybeT action = MaybeT . fmap Just
 class MonadTrans t where
   lift :: Monad m => m a -> t m a
 #+end_src
-- `lift . return ≡ return`
-- `lift (m >>= f) ≡ lift m >>= (lift . f)`
+- ~lift . return ≡ return~
+- ~lift (m >>= f) ≡ lift m >>= (lift . f)~
 
 
-Пример для `Reader`
+Пример для ~Reader~
 #+begin_src haskell
 newtype ReaderT r m a = Reader T { runReaderT :: r -> m a }
 
@@ -441,24 +440,24 @@ type Reader r a = ReaderT r Identity a
 type LoggerIO a = ReaderT LoggerName IO a
 #+end_src
 
-инстанс монады для `ReaderT` почти такой же как и для `Reader`
+инстанс монады для ~ReaderT~ почти такой же как и для ~Reader~
 
 *NB* Таблица трансофрмеров
 | *Base Monad* | *Transormer* | *Original Type*   | *Combined Type*       |
 |------------+------------+-----------------+---------------------|
-| `Maybe`    | `MaybeT`   | `Maybe a`       | `m (Maybe a)`       |
-| `Either`   | `EitherT`  | `Either a b`    | `m (Either a b)`    |
-| `Writer`   | `WriterT`  | `(a, w)`        | `m (a, w)`          |
-| `Reader`   | `ReaderT`  | `r -> a`        | `r -> m a`          |
-| `State`    | `StateT`   | `s -> (a, s)`   | `s -> m (a, s)`     |
-| `Cont`     | `ContT`    | `(a -> r) -> r` | `(a -> m r) -> m r` |
+| ~Maybe~    | ~MaybeT~   | ~Maybe a~       | ~m (Maybe a)~       |
+| ~Either~   | ~EitherT~  | ~Either a b~    | ~m (Either a b)~    |
+| ~Writer~   | ~WriterT~  | ~(a, w)~        | ~m (a, w)~          |
+| ~Reader~   | ~ReaderT~  | ~r -> a~        | ~r -> m a~          |
+| ~State~    | ~StateT~   | ~s -> (a, s)~   | ~s -> m (a, s)~     |
+| ~Cont~     | ~ContT~    | ~(a -> r) -> r~ | ~(a -> m r) -> m r~ |
 
-`IO` не может быть трансформером
+~IO~ не может быть трансформером
 
 
-*Проблема*: Если трансформеров много, то придется писать много `lift`
+*Проблема*: Если трансформеров много, то придется писать много ~lift~
 
-Все выше в пакете `transformers`. Пакет `mtl` решает эту проблему
+Все выше в пакете ~transformers~. Пакет ~mtl~ решает эту проблему
 
 #+begin_src haskell
 class Monad m => MonadReader r m | m -> r where
@@ -483,15 +482,15 @@ class MonadThrow m => MonadCatch m where
   catch :: Exception e => m a -> (e -> m a) -> m a
 #+end_src
 
-`ThrowError` – когда надо сломать все
+~ThrowError~ – когда надо сломать все
 
-Можем испольовать `deriving` и `mtl`
+Можем испольовать ~deriving~ и ~mtl~
 #+begin_src haskell
 newtype M a = M(ReaderT Environment (StateT MyState IO) a)
   deriving (Functor, Applicative, Monad, MonadIO, MonadState MyState, MonadReader Environment)
 #+end_src
 
-- Заворачивать `IO` только в `ReaderT`
+- Заворачивать ~IO~ только в ~ReaderT~
 - Использовать конкретную монаду, если конечно не пишите либу
 
 * Лекция 13
@@ -513,10 +512,10 @@ append :: DList a -> DList a -> DList a
 
 Откладываем операции конкатенации, до тех пор. пока нам не понадобится
 результат, который вычислится за длину списка, благодаря правильному
-порядку аргументов `++`
+порядку аргументов ~++~
 
 
-Игрушечная реализация `seq` — форсит вычисление первого аргумента до WHNF
+Игрушечная реализация ~seq~ — форсит вычисление первого аргумента до WHNF
 #+begin_src haskell
 seq :: a -> b -> b
 _|_ `seq` _ = _|_
@@ -524,12 +523,12 @@ _   `seq` b = b
 #+end_src
 
 
-- `foldl`, `foldr` медленные
-- `foldl'` — строгая версия, использует `seq`
+- ~foldl~, ~foldr~ медленные
+- ~foldl'~ — строгая версия, использует ~seq~
 
-`deepseq` как `seq`, но вычисляет до нормальной формы. Чтобы компилятор
+~deepseq~ как ~seq~, но вычисляет до нормальной формы. Чтобы компилятор
 знал, как вычислять вашу структуру до нормальной формы, нужно
-заинстансировать `NFData`
+заинстансировать ~NFData~
 #+begin_src haskell
 class NFData a where
   rnf :: a -> ()
@@ -548,4 +547,4 @@ deepseq :: NFData a => a -> b -> b
 a `deepseq` b = rnf a `seq` b
 #+end_src
 
-`-XBangPatterns` — можно ставить `!` перед паттерном чтобы вычислить его до WHNF
+~-XBangPatterns~ — можно ставить ~!~ перед паттерном чтобы вычислить его до WHNF
