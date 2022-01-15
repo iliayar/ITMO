@@ -549,3 +549,5 @@ a `deepseq` b = rnf a `seq` b
 #+end_src
 
 ~-XBangPatterns~ — можно ставить ~!~ перед паттерном чтобы вычислить его до WHNF
+
+*Незакончено*
