@@ -5,6 +5,7 @@
 (require 'org)
 (require 'ox-latex)
 (require 'htmlize)
+(require 'haskell-mode)
 
 (org-reload)
 
@@ -104,7 +105,7 @@
 	((elem (org-element-context)))
       (if (and (eq 'keyword (org-element-type elem))
 	       (string-equal "PUBNOTE" (org-element-property :key elem)))
-	  (cond ((string-equal "manual" (org-element-property :value elem))
+	  (cond ((string-equal "ignore" (org-element-property :value elem))
 		 (princ (concat filename " manually published")))
 		((string-equal "html" (org-element-property :value elem))
 		 (org-html-publish-to-html plist filename pub-dir)))
