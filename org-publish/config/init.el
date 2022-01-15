@@ -101,12 +101,14 @@
   (with-temp-buffer 
     (insert-file-contents filename)
     (let
-      ((elem (org-element-context)))
+	((elem (org-element-context)))
       (if (and (eq 'keyword (org-element-type elem))
-               (string-equal "MANUAL" (org-element-property :key elem))
-               (read (org-element-property :value elem)))
-        (princ (concat filename " manually published"))
-        (funcall backend plist filename pub-dir)))))
+	       (string-equal "PUBNOTE" (org-element-property :key elem)))
+	  (cond ((string-equal "manual" (org-element-property :value elem))
+		 (princ (concat filename " manually published")))
+		((string-equal "html" (org-element-property :value elem))
+		 (org-html-publish-to-html plist filename pub-dir)))
+	(funcall backend plist filename pub-dir)))))
 
 (defun my/org-html-publish-to-html (plist filename pub-dir)
   (my/org-publish 'org-html-publish-to-html plist filename pub-dir))
