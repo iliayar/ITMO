@@ -1,4 +1,5 @@
 #+PUBNOTE:html
+#+SETUPFILE: ../../level-subj.org
 #+title: Заметки к экзамену
 
 * Лекция 7
