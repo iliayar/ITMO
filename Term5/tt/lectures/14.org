@@ -20,11 +20,13 @@
 - \(K = \lambda x y. x\)
 - \(W = \lambda x y. x\ y\ y\)
 Ослабление:
-\begin{matrix}
+\begin{center}
+\begin{array}{ll}
   \alpha & \\
-  \alpha \to \beta \to \alpha & (\text(Схема 1)) \\
+  \alpha \to \beta \to \alpha & (\text{Схема 1}) \\
   \beta \to \alpha & (\text{M.P.})
-\end{matrix}
+\end{array}
+\end{center}
 Заметим что:
 - Обмен --- \(B\)
 - Сжатие --- \(W\)
@@ -51,7 +53,7 @@
 #+begin_definition org
 *Линейная логика*
 Связки:
-\[ \alpha \coloneq x\ |\ \alpha \multimap \beta\ |\ \alpha \otimes \beta\ |\ \alpha \oplus \beta\ |\ !\alpha \]
+\[ \alpha \coloneqq x\ |\ \alpha \multimap \beta\ |\ \alpha \otimes \beta\ |\ \alpha \oplus \beta\ |\ !\alpha \]
 Контексты:
 \[ \frac{}{\underset{\text{линейные}}{\pair{A}} \vdash \dots} \quad \frac{}{\underset{\text{обычные}}{[B]} \vdash \dots} \]
 #+end_definition
@@ -81,7 +83,7 @@
 #+end_remark
 #+begin_definition org
 \(\lambda\)-исчисление
-\[ e \coloneq x^{\odot}\ |\ x^\otimes\ |\ \lambda x. e\ |\ e\ e \]
+\[ e \coloneqq x^{\odot}\ |\ x^\otimes\ |\ \lambda x. e\ |\ e\ e \]
 \(\tau_k\) --- тип
 - \(C_k\)
 - \(\tau_{k' \rightarrow k} \tau_{k'}\)
@@ -93,7 +95,7 @@
 #+begin_definition org
 \[ \frac{}{\Gamma, x:t^u \vdash x^\odot : t^u |_{x : u}} \text{Var}\odot \]
 \[ \frac{}{\Gamma, x:t^\times \vdash x^\otimes : t^\times |_{x : \times}} \text{Var}\odot \]
-\[ \frac{\Gamma, x: a \vdash e : b |\text{fv} \quad \text{fv}' = {\color{red}?}_\times \text{fv}{\Gamma \vdash \lambda x. e:a \xrightarrow{\lor\text{fv'}} b |_{\text{fv'}}} \]
+\[ \frac{\Gamma, x: a \vdash e : b |\text{fv} \quad \text{fv}' = {\color{red}?}_\times \text{fv}}{\Gamma \vdash \lambda x. e:a \xrightarrow{\lor\text{fv'}} b |_{\text{fv'}}} \]
 \[ \frac{\Gamma \vdash e_1 : a \xrightarrow{u} b |_{\text{fv}_1} \quad \Gamma \vdash e_2 : a |_{\text{fv}_2}}{\Gamma \vdash e_1\ e_2 : b |_{\text{fv}_1 \cup \text{fv}_2}} \]
 #+end_definition
 
