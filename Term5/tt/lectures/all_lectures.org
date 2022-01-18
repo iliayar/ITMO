@@ -18,5 +18,17 @@
 #+INCLUDE: "7.org" :lines "4-"
 * Лекция 8
 #+INCLUDE: "8.org" :lines "4-"
+* Лекция 9
+#+INCLUDE: "9.org" :lines "4-"
 * Лекция 10
 #+INCLUDE: "10.org" :lines "4-"
+* Лекция 11
+#+INCLUDE: "11.org" :lines "4-"
+* Лекция 12
+#+INCLUDE: "12.org" :lines "4-"
+* Лекция 13
+#+INCLUDE: "13.org" :lines "4-"
+* Лекция 14
+#+INCLUDE: "14.org" :lines "4-"
+* Лекция 15
+#+INCLUDE: "15.org" :lines "4-"

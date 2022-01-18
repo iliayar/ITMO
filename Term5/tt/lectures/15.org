@@ -1,0 +1,77 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 15
+#+date: 21 декабря
+
+* Подтипы
+#+begin_remark org
+Классификация:
+- Полиморфизм
+  - Параметрический
+    - Параметричекий полифморфизм как Х-М, F \\
+      \(\forall x. x \rightarrow x\)
+    - Перегрузка Ad-Hoc \\
+      #+begin_src python
+print("a")
+print(7)
+      #+end_src
+  - Наследственный
+    - ООП
+    - Приведение
+#+end_remark
+#+begin_definition org
+\(F <: G\) (\(F\) подтип \(G\)):
+- \(f: F\), \(g: G\)
+- \(f\) годится везде, где годится \(g\)
+#+end_definition
+#+begin_remark org
+\(F <: G\)
+- \(T = F \rightarrow H\)
+- \(S = G \rightarrow H\)
+тогда \(S <: T\)
+- \(T' = H \rightarrow F\)
+- \(S' = H \rightarrow G\)
+тогда \(T' <: S'\)
+#+end_remark
+#+begin_definition org
+*Вариантность*
+- Ковариантность: a \prec_F b, f(a) \prec_G f(b)
+- Контрвариантность: a \prec_F b, g(a) \succ_H g(b)
+#+end_definition
+#+begin_examp org
+Рассмотрим списки \(A \prec B\):
+- ~set~ --- ковариантен, \(B[] \prec A[]\)
+- ~get~ --- контрвариантен,\(A[] \prec B[]\)
+Списко инвариантен
+#+end_examp
+#+begin_definition org
+\(A[x] = x \rightarrow H\), \(A : * \rightarrow *\)
+#+end_definition
+
+#+begin_definition org
+\(F_{<:}\)
+1. \(\frac{}{S <: S}\) --- рефлексивность
+2. \(\frac{}{S <: \text{Top}}\), где Top --- константа(тип)
+3. \(\frac{S <: U \quad U <: T}{S <: T}\) --- тразитивность
+4. \(\frac{T_1 <: S_1 \quad S_2 <: T_2}{S_1 \rightarrow S_2 <: T_1 \rightarrow T_2}\)
+5. \(\frac{\Gamma \vdash t : S \quad S <: T}{\Gamma \vdash t : T}\)
+#+end_definition
+Хотим делать ограничения на кванторы \(\forall x. x \rightarrow x\)
+\[ \frac{}{\Gamma \vdash \text{Top} : *} \]
+\[ \frac{X <: T, \Gamma \vdash T : K}{X <: T, \Gamma \vdash X : K} \]
+\[ \frac{\Gamma, X <: T_1 \vdash T_2 : *}{\Gamma \vdash \forall x <: T_1. T_2 : *} \]
+\[ \frac{\Gamma \vdash S : *}{\Gamma \vdash S <: \text{Top}} \]
+#+begin_remark org
+Есть 2 варианта исчисления:
+- Ядерное (проще работать)
+  \[ \frac{\Gamma \vdash U_1 : K_1 \quad \Gamma, X <: U_1 \vdash S_2 <: T_2}{\Gamma \vdash \forall x <: U_1. S_2 <: \forall x <: U_1. T_2} \]
+- Полное
+  \[ \frac{\Gamma \vdash U_2 <: U_1 \quad \Gamma, X <: U_1 \vdash S_2 <: T_2}{\Gamma \vdash \forall x <: U_1. S_2 <: \forall x <: U_2. T_2} \]
+#+end_remark
+#+begin_remark org
+Соберем ООП:
+- \((<:)\)
+- \(\exists\) (экзистенциальные типы)
+- ~B = A + {x : S}~ \(<:\) ~A = { ... }~
+  \[ \frac{}{\{l_i : T_{i=\overline{1\dots n + k}}\} <: \{l_i : T_{i = \overline{i\dots n}}\}} \]
+#+end_remark
+

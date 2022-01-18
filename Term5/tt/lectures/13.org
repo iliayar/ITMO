@@ -1,0 +1,64 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 13
+#+date: 7 декабря
+
+* Теорема Диаконеску
+#+begin_theorem org
+ИИП + ZF + Аксиома выбора \(\implies\) Исключенное третье \\
+Рассмотрим P. \(B = \{0, 1\}\)
+\[ U = \{x \in B| x = o \lor P\} \]
+\[ V = \{x \in B | x = 1 \lor P\} \]
+Можем заметить что и \(U\) и \(V\) непустые
+#+end_theorem
+#+begin_definition org
+*Аксиома выбора*. \(S\) --- семейство непустых множеств, то есть \(f : S
+ \rightarrow \bigcup S\), что \(f(x) \in x\). В частности, есть \(f: \{u, v\} \rightarrow
+ B\), что \(f(v) \in u\) и \(f(v) \in V\)
+#+end_definition
+#+begin_remark org
+\(f(u) \xlongequals[?]{} f(v)\)
+- да ::
+  \[ f(u) = 0 \implies f(v) = 0 \implies p \]
+  \[ f(U) = 1 \implies p \]
+- нет ::
+  \[ f(u) \neq f(v) \]
+  \[ u \neq v \rightarrow \lnot p \]
+  Пусть \(p\) истно, тогда \(u = v\), но \(u \neq v\)
+#+end_remark
+
+** Аксиома выбора (попытка 1)
+- ~A B : \Set~, ~A~ --- индексы (\(S\)), ~B~ --- множества (\(\bigcup S\))
+- ~Q : A -> B -> \Prop~ --- отношение быть подмножеством: ~Q a b~ --- \(b\) принадлжеит \(a\)
+#+begin_src text
+\func Choice (A B : \Set)  (Q : A -> B -> \Prop) (not_empty : \Pi (x : A) -> \Sigma (y : B) (Q x y)):
+  \Sigma (f : \Pi (x : A) -> B) (\Pi (x : a) -> Q x (f x)) =>
+    (\lam (x : A) => not_empty x.1, \lam (x : A) => not_empty x.2)
+#+end_src
+Произошла перестановка кванторов
+#+begin_definition org
+*Сетоид* --- \(S/_\approx\), \(\approx\) --- отношение эквивалентности
+#+begin_src text
+<S, E, E-trans, E-refl, E-sym>
+E : S -> S -> \Prop
+#+end_src
+#+end_definition
+*Проблема*: ~not_empty~ слишком сильный
+** ~Logic.Classical~
+1. Переформулируем аксиому выбора
+  - ~A : \Set~
+  - ~B : \Set~
+  - \(\underbrace{\Pi x: A. |Bx|}_p \rightarrow |\Pi x A. Bx|\)
+  Пусть \(y : A\) и \(p\ y = \text{Empty}\)
+  - Т.е. \(Bx\) не пусто для всех \(x:A\)
+  - Это чистое существование
+2. LEM
+   #+begin_src text
+\lem (p : \Prop) : Dec p =>
+  \case (f (in~ true)).1 \as x,
+        (f (in~ false)).1 \as y \with {
+    true, true => {?} -- yes
+    false, false => {?} -- yes
+    true, false => {?} -- no
+    false, true => {?} -- no
+  }
+   #+end_src
