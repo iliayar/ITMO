@@ -20,6 +20,8 @@
 #+end_remark
 
 * Изоморфизм Карри-Ховарда
+#+NAME: Изоморфизм Карри-Ховарда
+#+begin_definition org
 \[ \frac{}{\Gamma, x: \tau \vdash x : \tau} \quad \frac{}{\Gamma, \tau \vdash \tau} \]
 \[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B : \sigma}{\Gamma \vdash A\ B : \tau} \quad \frac{\Gamma \vdash \sigma \to \tau \quad \Gamma \vdash \sigma}{\Gamma \vdash \tau} \]
 \[ \frac{\Gamma, x : \sigma \vdash A : \tau}{\Gamma \vdash \lambda x. A : \sigma \to \tau} \quad \frac{\Gamma, \sigma \vdash \tau}{\Gamma \vdash \sigma \to \tau} \]
@@ -29,6 +31,7 @@
 - Обитаемость типа --- доказуемость \(\tau\)
 - Тип \(\lambda\)-абстракции --- импилкация
 - \dots
+#+end_definition
 #+begin_symb org
 \(|\Gamma|\) --- оставляем только типы
 #+end_symb
@@ -38,16 +41,19 @@
 - \(\Gamma \vdash_{\lambda_\to} A : \tau\), то \(|\Gamma| \vdash_\to \tau\)
 - Если \(\Delta \vdash_\to \tau\), то найдутся \(\Gamma, A\): \(|\Gamma| = \Delta\), \(\Gamma \vdash A : \tau\)
 #+end_theorem
-#+begin_remark org
-Выше было выписан только импликационный фрагмент ИИВ: \(I_\to, E_\to, Ax\)
-#+end_remark
+#+NAME: Импликационный фрагмент ИИВ
+#+begin_definition org
+*Импликационный фрагмент ИИВ* --- оставляем правила \(I_\to, E_\to, Ax\)
+#+end_definition
+#+NAME: Теорема о замкнутости И.Ф. относительно доказуемости_symb
 #+begin_symb org
-\(\Gamma \vdash_\to \tau\)
+\(\Gamma \vdash_\to \tau\) --- доказуемость в И.Ф. ИИВ
 #+end_symb
+#+NAME: Теорема о замкнутости И.Ф. относительно доказуемости
 #+begin_theorem org
-Импликациооныйй фрагмент ИИВ (И. Ф. ИИВ) замкнут относительно
-доказуемости. Если \(\Gamma \vdash \tau\) и \(\tau\) содержит только \(\alpha, \to\), то
-\(\Gamma \vdash_\to \tau\). И если \(\Gamma \vdash_\to \tau\), то \(\Gamma \vdash \tau\)
+Импликационный фрагмент ИИВ замкнут относительно доказуемости. Если
+\(\Gamma \vdash \tau\) и \(\tau\) содержит только \(\alpha, \to\), то \(\Gamma \vdash_\to
+\tau\). И если \(\Gamma \vdash_\to \tau\), то \(\Gamma \vdash \tau\)
 #+end_theorem
 #+begin_proof org
 \(\Gamma^*\) -- множество формул, замкнутых по доказуемости, т.е. \(\tau \in \Gamma^*\) т.и т.т.к \(\Gamma^* \vdash \tau\)

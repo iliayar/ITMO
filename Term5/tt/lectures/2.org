@@ -64,9 +64,42 @@
 Комбинатор \(I\) (Identity)
 \[ I = \lambda x. x \]
 
-\[ (I\ I)\ (I\ I) \]
-\todo
+\begin{center}
+\begin{tikzpicture}
+  \node (A) at (0, 0) {\((I\ I)\ (I\ I)\)};
+  \node (B) at (-1, -1) {\(I\ (I\ I)\)};
+  \node (C) at (1, -1) {\((I\ I)\ I\)};
+  \node (D) at (1, -2) {\(I\ I\)};
+  \node (E) at (-1, -2) {\(I\ I\)};
+  \node (F) at (0, -3) {\(I\)};
+
+  \path[->] (A) edge (B);
+  \path[->] (A) edge (C);
+  \path[->] (B) edge (E);
+  \path[->] (C) edge (D);
+  \path[->] (D) edge (F);
+  \path[->] (E) edge (F);
+\end{tikzpicture}
+\end{center}
 #+end_examp
+
+#+begin_remark org
+\[ I = \lambda x. x \quad K = \lambda x. \lambda y. x \quad \Omega = \omega\ \omega \quad \omega = \lambda x. x\ x \]
+\begin{center}
+\begin{tikzpicture}
+  \node (A) at (0, 0) {\(KI\Omega\)};
+  \node (B) at (0, -1) {\(((\lambda x. \lambda y. x)\ I)\ \Omega\)};
+  \node (C) at (0, -2) {\((\lambda y. I)\ \Omega\)};
+  \node (D) at (0, -3) {\(I\)};
+
+  \path[->] (A) edge (B);
+  \path[->] (B) edge (C);
+  \path[->] (C) edge (D);
+  \path[->] (B) edge[loop right] (B);
+\end{tikzpicture}
+\end{center}
+#+end_remark
+
 
 #+begin_examp org
 \-
@@ -81,6 +114,7 @@
 \end{align*}
 #+end_examp
 
+#+NAME: Теорема Чёрча-Россера_romb
 #+begin_definition org
 Будем говорить что отношение \(R\) обладает *ромбовидным* свойством,
 если для любых \(a, b, c\)
@@ -93,15 +127,18 @@
 Не выполняется на натуральных числах
 #+end_remark
 
+#+NAME: Теорема Чёрча-Россера_def
 #+begin_definition org
 *\beta-редуциремость* \((\twoheadrightarrow_\beta)\) --- рефлексивное, транзитивное замыкание \((\to_\beta)\)
 #+end_definition
 
+#+NAME: Теорема Чёрча-Россера
 #+ATTR_LATEX: :options [Черча-Россера]
 #+begin_theorem org
 \beta-редуцируемость обладает ромбовидным свойством
 #+end_theorem
 
+#+NAME: Параллельная бета-редукция
 #+begin_definition org
 *Параллельная \beta-редукция* \((\rightrightarrows_\beta)\) это \((\to_\beta) +\)правило:
 - 0. :: \(A =_\alpha B\)
@@ -140,10 +177,17 @@
 и \(B \neq_\beta C\). Тогда есть D: \(B \twoheadrightarrow_\beta D\) и \(C \twoheadrightarrow_\beta D\). _Противоречие_
 #+end_proof
 
+#+NAME: Нормальный порядок редукций
 #+begin_definition org
-Нормальный порядок редукции --- редуцируем самый левый редекс
+*Нормальный порядок редукции* --- редукция самого левого \(\beta\)-редекса
 #+end_definition
 
+#+NAME: Аппликативный порядок редукций
+#+begin_definition org
+*Аппликативный порядок редукции* --- редукция самого левого \(\beta\)-редекса из самых вложенных
+#+end_definition
+
+#+NAME: Теорема о выразительной силе просто типизированного лямбда-исчисления (формулировка)
 #+begin_theorem org
 Если нормальная форма существует, она может быть получена нормальным
 порядком редукции.
