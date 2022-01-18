@@ -2,7 +2,8 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/all_lectures.pdf][All lectures]]
+[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/all_lectures.pdf][All lectures]] \\
+[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/questions.pdf][Questions for zachet]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/1.pdf][Lecture 1]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/2.pdf][Lecture 2]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/3.pdf][Lecture 3]]

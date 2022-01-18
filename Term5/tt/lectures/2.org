@@ -2,13 +2,15 @@
 #+TITLE: Лекция 2
 #+date: 14 сентября
 
+#+NAME: Бестиповое лямбда-исчисление
 #+begin_definition org
 *Пред \lambda-терм*:
-1. x --- переменная
-2. \((L\ L)\) --- аппликация
-3. \((\lambda x. L)\) --- абстракция
+1. \(x\) --- переменная
+2. \(L\ L\) --- аппликация
+3. \(\lambda x. L\) --- абстракция
 #+end_definition
 
+#+NAME: Бестиповое лямбда-исчисление_remark
 #+begin_remark
 \-
 1. \(\lambda a. a\)
@@ -16,9 +18,9 @@
 Хотим чтоб не отличались
 #+end_remark
 
-
+#+NAME: Общие определения альфа-эквивалентность
 #+begin_definition org
-*\alpha-эквивалентность. \(A =_\alpha B\)
+\(\alpha\)-эквивалентность. \(A =_\alpha B\)
 1. \(A \equiv x,\ B \equiv x\) --- одна и та же переменная
 2. \(A \equiv P\ Q,\ B \equiv R\ S \quad P =_\alpha R,\ Q =_\alpha S\)
 3. \(A \equiv \lambda x. P,\ B \equiv \lambda y. Q\). Существует \(t\) --- новая переменная, что \(P[x \coloneqq t] =_\alpha Q[y \coloneqq t]\)
@@ -47,6 +49,7 @@
 *\beta-редекс*. Выражение вида \((\lambda x. A)\ B\)
 #+end_definition
 
+#+NAME: Общие определения бета-редукция
 #+begin_definition org
 Выражения \(A\) и \(B\) находятся в отношении *\beta-редукции*: \(A \to_\beta B\), если
 1. \(A \equiv P\ Q,\ B \equiv R\ S\) и одно из
