@@ -1,7 +1,15 @@
 #+PUBNOTE:html
 #+SETUPFILE: ../../level-subj.org
 #+title: Заметки к экзамену
+#+OPTIONS: num:nil
 
+* DRIFTED Лекция 0
+* DRIFTED Лекция 1
+* DRIFTED Лекция 2
+* DRIFTED Лекция 3
+* DRIFTED Лекция 4
+* DRIFTED Лекция 5
+* DRIFTED Лекция 6
 * Лекция 7
 #+begin_src haskell
 class Applicative m => Monad m where
@@ -1362,7 +1370,7 @@ instance Functor f => Monad (Free f) where
   Free m >>= f = Free ((>>= f) <$> m)
 #+end_src
 
-* Лекция 23
+* DRIFTED Лекция 23
 #+begin_src haskell
 class Functor w => Comonad w where
   extract :: w a -> a
