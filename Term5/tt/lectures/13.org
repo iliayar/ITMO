@@ -16,7 +16,7 @@
  B\), что \(f(v) \in u\) и \(f(v) \in V\)
 #+end_definition
 #+begin_remark org
-\(f(u) \xlongequals[?]{} f(v)\)
+\(f(u) \xlongequal{?} f(v)\)
 - да ::
   \[ f(u) = 0 \implies f(v) = 0 \implies p \]
   \[ f(U) = 1 \implies p \]
