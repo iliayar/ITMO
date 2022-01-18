@@ -1,0 +1,85 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 9
+#+date: 9 ноября
+
+* Равенство
+\(a \xlongequal[]{A} b\), если сущесвует путь \(a \leadsto b\). \\
+\(I\) --- интервальный тип \([\text{left}; \text{right}]\) \\
+Сущесвует непрерывная функция \(f: I \to A\)
+- \(f\ \text{left} =_\beta a\)
+- \(f\ \text{right} =_\beta b\)
+#+begin_src 
+\data Path
+    path. (f: I -> A) : f left = f right
+#+end_src
+* Элиминаторы
+#+begin_examp org
+для \(v: \texttt{case}\ (f: L \to \Theta)\ (g: R \to \Theta)\ (v: L \lor R)\ :\ \Theta\) \\
+для \(I:\ \texttt{coe}\)
+#+begin_src 
+\func coe (P : U -> \Type)
+        (a : P left)
+        (i : I) : P i \elim
+    | left => a
+#+end_src
+- \(P\) --- предикат
+- \(i\) --- конец интервал
+#+end_examp
+
+** transport
+#+begin_src 
+\func transport {A : \Type}  (B : A -> \Type) {a a' : A} (p : a=a') (b : B a) : a'
+    => coe (\lam i => B (p @ i)) b right
+#+end_src
+#+begin_remark org
+/Что здесь написано/:
+- Есть тип в котором мы живем \(A\)
+- Нечто что нам выдаст утверждение \(B\)
+- ~p: a=a'~
+  - ~p @ left~ --- ~a~
+  - ~p @ right~ --- ~a~'
+- Лямбда идет в первый аргумент ~coe~, получаем путь из ~B a~ в ~B a'~
+- У нас есть ~B a~, попросим конец пути ~B a'~
+#+end_remark
+
+
+#+begin_src
+\func inv (A : \Type) {a a' : A} (p : a = a') : a=a'
+    => transport (\lam x => x=a) p (idp {A} {a})
+#+end_src
+#+begin_remark org
+/Что здесь написано/:
+- Есть тип \(A\) и \(a = a'\), значит верно \(a' = a\)
+#+end_remark
+
+
+#+begin_remark org
+Константный путь, соединяет \(a\) с \(a\)
+#+begin_src 
+\func idp {A : \Type} {a : A} : a=a => path (\lam _ => a)
+#+end_src
+#+end_remark
+
+** Контруэнтность
+#+begin_src 
+\func pmap (A B : \Type) (f : A -> B) (a a' : A) {p : a=a'} : f a = f a'
+    => transport (\lam x => f a = f x) p idp
+#+end_src
+** Неравенство
+\(0 \neq 1\)
+#+begin_src 
+\data Nat
+    | zero
+    | suc (k : Nat)  
+#+end_src
+
+Докажем что \(\texttt{zero} \neq \texttt{suc zero}\)
+- ~Not (zero = suc zero)~
+- ~Not (A : \Type) : A -> Empty~
+#+begin_src 
+\func proof_ne (a : Nat) : \Type \elim a
+    | zero => 0 = 0
+    | succ x => Empty
+\func zne (x : 0 = 1) : Empty => transport proof_ne {0} {1} x idp
+#+end_src
+

@@ -1,0 +1,100 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 14
+#+date: 14 декабря
+
+* Линейные типы
+
+#+begin_definition org
+*Структурные правила*:
+- Обмен
+  \[ \frac{\Gamma, \Delta \vdash A}{\Delta, \Gamma \vdash A}  \]
+- Сжатие
+  \[ \frac{\Gamma, A, A \vdash B}{\Gamma, A \vdash B} \]
+- Ослабление
+  \[ \frac{\Gamma \vdash B}{\Gamma, A \vdash B} \]
+#+end_definition
+#+begin_remark org
+Вспомним комбинаторы:
+- \(B = \lambda x y z. x\ z\ y\)
+- \(C = \lambda x y z. x\ (y\ z)\)
+- \(K = \lambda x y. x\)
+- \(W = \lambda x y. x\ y\ y\)
+Ослабление:
+\begin{matrix}
+  \alpha & \\
+  \alpha \to \beta \to \alpha & (\text(Схема 1)) \\
+  \beta \to \alpha & (\text{M.P.})
+\end{matrix}
+Заметим что:
+- Обмен --- \(B\)
+- Сжатие --- \(W\)
+- Ослабление --- \(K\)
+#+end_remark
+Хотим потсроить теорию без сжатия и ослабления:
+- \(B, C\) --- линейная
+- \(B, C, K\) --- афинная
+#+begin_definition org
+*Правила для конъюнкции*
+\[ \frac{\Gamma \vdash A \quad \Delta \vdash B}{\Gamma, \Delta \vdash A \times B} \]
+\[ \frac{\Gamma \vdash A \times B \quad \Delta, A, B \vdash C}{\Gamma, \Delta \vdash C} \]
+#+end_definition
+#+begin_examp org
+\[ \frac{\displaystyle \frac{\displaystyle \frac{\displaystyle \frac{}{A \vdash A} \quad \frac{\displaystyle \frac{}{A \rightarrow B \vdash A \rightarrow B} \quad \frac{}{A \vdash A}}{A \rightarrow B, A \vdash B}}{A, A \rightarrow B, A \vdash A \times B}}{A \rightarrow B, A, A \vdash A \times B}}{A \rightarrow B, A \vdash A \times B} \]
+#+end_examp
+#+begin_remark org
+Классические правила
+\[ \frac{\Gamma \vdash A \quad \Gamma \vdash B}{\Gamma \vdash A \times B} \]
+\[ \frac{\Gamma \vdash A \times B}{\Gamma \vdash A} \]
+\[ \frac{\Gamma \vdash A \times B}{\Gamma \vdash B} \]
+#+end_remark
+** Линейная логика
+#+begin_definition org
+*Линейная логика*
+Связки:
+\[ \alpha \coloneq x\ |\ \alpha \multimap \beta\ |\ \alpha \otimes \beta\ |\ \alpha \oplus \beta\ |\ !\alpha \]
+Контексты:
+\[ \frac{}{\underset{\text{линейные}}{\pair{A}} \vdash \dots} \quad \frac{}{\underset{\text{обычные}}{[B]} \vdash \dots} \]
+#+end_definition
+#+begin_definition org
+\[ \frac{\Gamma, \pair{A} \vdash B}{\Gamma \vdash A \multimap B} \quad \frac{\Gamma \vdash A \multimap B \quad \Delta \vdash A}{\Gamma, \Delta \vdash B} \]
+#+end_definition
+#+begin_definition org
+\[ \frac{\Gamma \vdash A \quad \Delta \vdash B}{\Gamma, \Delta \vdash A \otimes B} \quad \frac{\Gamma \vdash A \otimes B \quad \Delta, \pair{A}, \pair{B} \vdash C}{\Gamma, \Delta \vdash C} \]
+\[ \frac{\Gamma \vdash A \quad \Gamma \vdash B}{\Gamma \vdash A \& B} \quad \frac{\Gamma \vdash A \& B}{\Gamma \vdash A} \quad \frac{\Gamma \vdash A \& B}{\Gamma \vdash B} \]
+#+end_definition
+#+begin_definition org
+\[ \frac{\Gamma, [A], [A] \vdash B}{\Gamma, [A] \vdash B} \quad \frac{}{\pair{A} \vdash A} \quad \frac{}{[A] \vdash A} \]
+\[ \frac{[\Gamma] \vdash A}{[\Gamma] \vdash !A} \quad \frac{\Gamma \vdash !A \quad \Delta, [A] \vdash B}{\Gamma, \Delta \vdash B} \]
+#+end_definition
+Соответствие с ИИВ
+| \(A \rightarrow B\) | \(!A \multimap B\) |             |
+| \(A \times B\) | \(A \& B\)         | \(!A \otimes !B\) |
+| \(A + B\) | \(!A \oplus !B\)        |             |
+** Уникальные типы
+#+begin_remark org
+Универсумы:
+- \(\mathcal{T}\) --- базовых типов (~int~, ~bool~ и т.п.)
+- \(U\) --- уникальность
+  - \(\cdot, \times\) --- уникальный, не уникальный
+  - \(\land, \lor, \lnot\) на U
+- \(\mathop{Attr}: \mathcal{T} -> U -> *\)
+#+end_remark
+#+begin_definition org
+\(\lambda\)-исчисление
+\[ e \coloneq x^{\odot}\ |\ x^\otimes\ |\ \lambda x. e\ |\ e\ e \]
+\(\tau_k\) --- тип
+- \(C_k\)
+- \(\tau_{k' \rightarrow k} \tau_{k'}\)
+#+end_definition
+#+begin_examp org
+\[ \mathop{dup}\ ::\ t^\times \rightarrow (t^\times, t^\times)^u \]
+\[ \mathop{dup}\ x = (x^\otimes, x^\otimes) \]
+#+end_examp
+#+begin_definition org
+\[ \frac{}{\Gamma, x:t^u \vdash x^\odot : t^u |_{x : u}} \text{Var}\odot \]
+\[ \frac{}{\Gamma, x:t^\times \vdash x^\otimes : t^\times |_{x : \times}} \text{Var}\odot \]
+\[ \frac{\Gamma, x: a \vdash e : b |\text{fv} \quad \text{fv}' = {\color{red}?}_\times \text{fv}{\Gamma \vdash \lambda x. e:a \xrightarrow{\lor\text{fv'}} b |_{\text{fv'}}} \]
+\[ \frac{\Gamma \vdash e_1 : a \xrightarrow{u} b |_{\text{fv}_1} \quad \Gamma \vdash e_2 : a |_{\text{fv}_2}}{\Gamma \vdash e_1\ e_2 : b |_{\text{fv}_1 \cup \text{fv}_2}} \]
+#+end_definition
+
+
