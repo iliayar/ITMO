@@ -34,6 +34,7 @@
 4. \(\mathop{And} \coloneqq \lambda a. (\lambda b. ((a\ b)\ F))\)
 #+end_definition
 
+#+NAME: Чёрчевские нумералы
 #+begin_definition org
 *Черчевский нумерал* --- способ кодировать числа:
 - \(\overline{0} \coloneqq \lambda f. \lambda x. x\)
