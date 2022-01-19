@@ -11,14 +11,14 @@
 Хотим доказать: \(5 \le 12\), тогда зависимая пара: ~(5, idp) : \Sigma (x : Nat) (5 + x = 12)~
 #+end_examp
 Сделаем GADT для неравенства
-#+begin_src text
+#+begin_src tex
 \data less-or-equal (a b : Nat)  \with
   | zero, _ => base
   | suc a', suc b' => next (p : less-or-equal a' b')
 #+end_src
 Хотим написать фнукцию, которая будем перестраивать ~less-or-equal~ в
 тип с квантором существования (зависимая пара)
-#+begin_src text
+#+begin_src tex
 \func f1 {a b : Nat}  {p1 : less-or-equal a b} : less-or-equal'
   \elim a, b, p1
     | 0, b, base => (b, idp)
@@ -28,7 +28,7 @@
 где ~less-or-equal'~ --- \(\exists x. a + x = b\)
 Аренд умеет сам делать 1-2 перехода ао определению, например ~suc (x + a) = suc b~ \(=\) ~x + suc a = suc b~
 
-#+begin_src text
+#+begin_src tex
 \func f2 {a b : Nat} (p1 : less-or-equal' a b) : less-or-equal a b
   | {0}, _ => base
   -- по идее это absurd (transport fs p ()), но здесь арнед с сотоянии сам найти противоречие
@@ -36,7 +36,7 @@
   | {suc a}, {suc b}, (x, p) => next (f2 {a} {b} (x, pmap minus1 p))
 #+end_src
 
-#+begin_src text
+#+begin_src tex
 \func plus-assoc {a b c : Nat}  : (a + b) + c = a + (b + c) \elim c
   | 0 => idp
   | suc c =>
@@ -53,7 +53,7 @@
 - \(x + e = x\)
 - \(x + x^{-1} = e\)
 - \(x^{-1} + x = e\)
-#+begin_src text
+#+begin_src tex
 \class Preorder R
  --snip--
 

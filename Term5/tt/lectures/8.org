@@ -3,11 +3,13 @@
 #+date: 26 октября
 #+LATEX_HEADER_EXTRA: \newcommand{\F}{\mathcal{F}}
 
-
 * \(\lambda\)-куб
+#+NAME: Обобщённые типовые системы
+#+begin_definition org
 Обобщенные типовые системы
 \[ \F = x\ |\ \F\ \F\ |\ \lambda x:\F. \F\ |\ \Pi x:\F.\F\ |\ c \]
 \[ c = *\ |\ \square\]
+#+end_definition
 
 #+begin_symb org
 Обозначим за \(s\) множество \((*, \square)\)
@@ -38,16 +40,66 @@ array[a..b] of int
 #+end_src
 =array[a..b] of= --- функция на типах. Ее род: \(* \to *\). Применяя ее к =int= получим =int[a..b]=.
 #+end_examp
+#+NAME: Типы, рода, сорта
 #+begin_remark org
 \[ \underset{\substack{\text{знач.} \\ value}}{7} : \underset{\substack{\text{тип} \\ type}}{int} : \underset{\substack{\text{род} \\ kind}}{*} : \underset{\substack{\text{сорт} \\ sort}}{\square} \]
 #+end_remark
-#+NAME: параметризация_8
+#+NAME: Лямбда-куб
 #+begin_definition org
 \(S \subseteq C \times C\) --- параметризует т.с. \((S_1, S_2) \in S\)
 - \(\Pi\)-правило
   \[ \frac{\Gamma \vdash A:s_1 \quad \Gamma, x: A \vdash B: s_2}{\Gamma \vdash (\Pi x : A. B) : s_2} \]
 - \(\lambda\)-правило
   \[ \frac{\Gamma \vdash A: s_1 \quad \Gamma, x: A \vdash b: B \quad \Gamma, x:A \vdash B:s_2}{\Gamma \vdash (\lambda x : A. b) : (\Pi x: A. B)} \]
+\begin{center}
+\begin{tikzpicture}
+\draw (-3, -3, 3) -- (-3, 3, 3);
+\draw (-3, 3, 3) -- (3, 3, 3);
+\draw (3, 3, 3) -- (3, -3, 3);
+\draw (3, -3, 3) -- (-3, -3, 3);
+
+\draw[dashed] (-3, -3, 3) -- (-3, -3, -3);
+\draw[dashed] (-3, -3, -3) -- (-3, 3, -3);
+\draw (-3, 3, -3) -- (-3, 3, 3);
+
+\draw (3, -3, 3) -- (3, -3, -3);
+\draw (3, -3, -3) -- (3, 3, -3);
+\draw (3, 3, -3) -- (3, 3, 3);
+
+\draw[dashed] (-3, -3, -3) -- (-3, 3, -3);
+\draw (-3, 3, -3) -- (3, 3, -3);
+\draw[dashed] (3, 3, -3) -- (3, -3, -3);
+\draw[dashed] (3, -3, -3) -- (-3, -3, -3);
+
+\draw[fill=black] (-3, -3, 3) circle[radius=2pt];
+\node[above left] at (-3, -3, 3) {\(\lambda_\to\)};
+\node[below left] at (-3, -3, 3) {\(( *, * )\)};
+\node[below right] at (-3, -3, 3) {\(\color{blue}\lambda x. x\)};
+
+\draw[fill=black] (-3, 3, 3) circle[radius=2pt];
+\node[above left] at (-3, 3, 3) {\(\lambda_2, F\)};
+\node[below left] at (-3, 3, 3) {\(\substack{( *, * ) \\ ( \square, * )}\)};
+\node[below right] at (-3, 3, 3) {\(\color{blue}\Lambda \alpha. \lambda x^\alpha. x\)};
+
+\draw[fill=black] (-3, -3, -3) circle[radius=2pt];
+\node[above right] at (-3, -3, -3) {\(\lambda\omega\)};
+\node[below right] at (-3, -3, -3) {\(\substack{( \square, \square ) \\ ( *, * )}\)};
+\node[left] at (-3, -3, -3) {\(\color{blue}\texttt{Int[]}\)};
+
+\draw[fill=black] (-3, 3, -3) circle[radius=2pt];
+\node[above] at (-3, 3, -3) {\(\lambda\omega\)};
+\node[below right] at (-3, 3, -3) {\(\substack{( *, * ) \\ ( \square, * ) \\ ( \square, \square )}\)};
+
+\draw[fill=black] (3, 3, -3) circle[radius=2pt];
+\node[above right] at (3, 3, -3) {\(\lambda C\)};
+\node[below right] at (3, 3, -3) {\(\substack{\text{Исчисление конструкций} \\ \color{blue} \text{Arend, Coq, C++}}\)};
+
+\draw[fill=black] (3, -3, 3) circle[radius=2pt];
+\node[below left] at (3, -3, 3) {\(\substack{( *, * ) \\ ( *, \square )}\)};
+\node[below right] at (3, -3, 3) {\(\color{blue}\texttt{int[n]}\)};
+
+\end{tikzpicture}
+\end{center}
 #+end_definition
 
 #+begin_definition org
@@ -66,18 +118,6 @@ printf("%d", "a") // нельзя
 #+end_src
 \(\texttt{printf}: (x: \texttt{string}) \to F(x)\), пишем так: \(\Pi x: \texttt{string}. F(x)\)
 #+end_remark
-
-Рассмотрим \(S\) из [[параметризация_8][определения]]: \todo
-- \((*, *)\), получим \(\lambda_\to\) \\
-  /Характерные представители/: \(\lambda x. x\)
-- \((*, *), \(\square, *)\), получим \(\lambda_2, F\) \\
-  /Характерные представители/: \(\Lambda \alpha. \lambda x: \alpha. x\)
-  #+begin_remark org
-  \(\Lambda \alpha. b \approx \lambda \alpha: *. b\)
-  #+end_remark
-- \((*, *), (\square, *), (\square, \square)\) это \(\lambda \omega\)
-- \((\square, \square), (*, *)\) это \(\lambda \omega\) слабая \\
-  /Характерные представители/: =int[]=
 
 #+begin_examp org
 \-

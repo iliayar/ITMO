@@ -24,76 +24,79 @@ _Положим_:
 \[ S(f\ a\ (g\ b)) = f\ (g\ c)\ (g\ b) \]
 #+end_examp
 ** Эквивалентность уравнений и систем
-- \(E_1\)
-  \begin{center}
-  \begin{array}{l}
+#+begin_definition org
+Две системы:
+\(E_1:\)
+  \begin{cases}
   T_1 = P_1 \\
   \vdots \\
   T_n = P_n
-  \end{array}
-  \end{center}
-- \(E_2\)
-  \begin{center}
-  \begin{array}{l}
+  \end{array},
+\(E_2: \)
+  \begin{cases}
   T_1' = P_1' \\
   \vdots \\
   T_n' = P_n'
   \end{array}
-  \end{center}
-Если любое решение системы \(E_1\) подходит к \(E_2\) и наоборот
+называются *эквивалентными*, если любое решение системы \(E_1\) подходит к \(E_2\) и наоборот
+#+end_definition
 #+begin_statement org
 Для системы \(\begin{cases}T_1 = P_1 \\ \vdots \\ T_n =
-p_n\end{cases}\) существует эквивалентные уравнения
+p_n\end{cases}\) существует эквивалентное уравнение
 #+end_statement
 #+begin_proof org
 Выберем \(k\) --- новый ф.с. \(n\)-местный интервал
 \[ T_1\ \dots\ T_n = h\ P_1\ \dots\ P_n \]
 #+end_proof
+#+NAME: Наиболее общее решение задачи унификации_def1
 #+begin_definition org
 Определим порядок на подстановках: \(S \le T\), если \(S\) --- частный
 случай \(T\): существует подстановка \(U\), что \(S = U \circ T\)
 #+end_definition
+#+NAME: Наиболее общее решение задачи унификации_def2
 #+begin_definition org
-\[ U \circ T: (U \circ T)(P) = U(T(P)) \]
+\(U \circ T\): \[ (U \circ T)(P) = U(T(P)) \]
 #+end_definition
+#+NAME: Наиболее общее решение задачи унификации
 #+begin_definition org
-Наиболее общим решением \(T = P\) назовем подстановку \(S\), что для
+*Наиболее общим решением* \(T = P\) назовем подстановку \(S\), что для
 любой \(S_1\): \(S_1(T) \equiv S_1(P)\) выполнено \(S_1 \le S\) и \(S(T) =
 S(P)\)
 #+end_definition
-
 #+begin_theorem org
 У уравнения в алгебраических термах \(T = P\) всегда есть наиболее
 общее решение, если есть хоть какое-то
 #+end_theorem
-
 #+begin_definition org
-Несовместные система: система с уравнением вида:
+*Несовместные система* --- система с уравнением вида:
 \[ f\ T_1\dots T_n = g\ P_1 \dots P_n \]
-, где \(f \equiv g\)
-_либо_ ``occurs check``\fixme
+, где \(f \equiv g\) либо \(x = \dots\ x\ \dots\).
 #+end_definition
+#+begin_remark org
+В Haskell и OCamll --- \(\text{<<occurs check>>}\)
+#+end_remark
 #+begin_definition org
-Система в разрешенной форме
-\[ \begin{cases} a_1 = T_1 \\ \vdots \\ a_n = T_n \end{cases} \]
-где
+Система в *разрешенной форме*
+\( \begin{cases} a_1 = T_1 \\ \vdots \\ a_n = T_n \end{cases} \)
+, где
 1. все \(a\) различны
 2. \(T_i\) не содержит \(a_j\)
 #+end_definition
 ** Алгоритм унификации
 Рассмотрим систему
-\[ \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = P_n \end{cases} \]
-Применение одного из следующих шагов
+\( \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = P_n \end{cases} \):
 1. \(x = x\) --- отбрасываем
 2. \(T = x\), где \(T \not\equiv x\) \( \implies x = T \)
 3. \[ \begin{cases} x = P \\ \vdots \\ T_2 = P_2 \\ \vdots \\ T_n = P_n \end{cases} \implies \begin{cases} T_2[x \coloneqq P] = P_2[x \coloneqq P] \\ \vdots \\ T_n[X \coloneqq P] = P_n[x \coloneqq P] \\ \vdots \\ x = P \end{cases}\]
 4. \(f\ T_1\ \dots\ T_4 = f\ P_1\ \dots\ P_n \implies\)
-   \[ \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = Pn \end{cases}\]
+   \( \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = Pn \end{cases}\)
 #+begin_theorem org
 Применяя шаги алгоритма унификации, за конечное время можно получить
 систему либо в разрешенной форме, либо несовместной
 #+end_theorem
 ** Вывод типов в \(\lambda_\to\)
+#+NAME: Алгоритм нахождения типа в просто типизированном лямбда-исчислении
+#+begin_remark org
 \((\to)\) --- двуместный функциональный символ \\
 Индукция по структуре \(\lambda\)-выражения
 1. \(x\) --- введем тип \(\alpha_x\). \\
@@ -106,6 +109,7 @@ _либо_ ``occurs check``\fixme
    Система: \(E_A\) \\
    Тип: \(\alpha_x \to \tau_A\)
 _Разрешение системы_: унификация
+#+end_remark
 #+begin_examp org
 \[ \overbrace{\lambda x. \underbrace{x}_A}^B \]
 - \(E_A = \varnothing\), \(\tau_A = \alpha_x\)
@@ -129,7 +133,12 @@ _Разрешение системы_: унификация
 #+end_theorem
 * Исчисление предикатов 2 порядка
 Хотим писать \(\forall p. p \lor \lnot p\)
-- \(\Phi_\Pi ::= p | \Phi_\Pi \lor \Phi_\Pi | \Phi_\Pi \& \Phi_\Pi | \Phi_\Pi \to \Phi_\Pi | \forall p. \Phi_\Pi | \exists p. \Phi_\Pi | \perp\)
+#+NAME: Логика второго порядка
+#+begin_definition org
+*Логика \(2\) порядка*
+\[\Phi_\Pi ::= p\ |\ \Phi_\Pi \lor \Phi_\Pi\ |\ \Phi_\Pi \& \Phi_\Pi\ |\ \Phi_\Pi \to \Phi_\Pi\ |\ \forall p. \Phi_\Pi\ |\ \exists p. \Phi_\Pi\ |\ \perp\]
+#+end_definition
+#+NAME: Выразимость связок через импликацию и квантор всеобщности в интуиционистской логике 2-го порядка (конъюнкция, дизъюнкция, ложь, отрицание, квантор существования)
 #+begin_statement org
 Можно выразить:
 - \(a\&b ::= \forall p. (a \to b \to p) \to p\)
@@ -137,9 +146,10 @@ _Разрешение системы_: унификация
 - \(\perp ::= \forall p. p\)
 - \(\exists p. A ::= \forall x. (\forall p. A \to x) \to x\)
 #+end_statement
+#+NAME: Система \(F\)
 #+begin_definition org
 \(L_2\) -- лямбда исчисление 2 порядка (Система F)
-\[ L_2 ::= x | \lambda x^\alpha. A | P\ Q  | \color{red} \Lambda \alpha. A| P\ \tau \]
+\[ L_2 ::= x\ |\ \lambda x^\alpha. A\ |\ P\ Q\ |\ \color{red} \Lambda \alpha. A\ |\ P\ \tau \]
 #+end_definition
 #+begin_examp org
 \-

@@ -3,11 +3,11 @@
 #+date: 19 октября
 
 * Типовая система Хиндли-Милнера
+#+NAME: Ранг типа
 #+begin_definition org
-*Ранг типа*. Пусть \(\sigma\) --- тип без кванторов
-\[ R \subseteq \text{тип} \times \N \]
+*Ранг типа*. Пусть \(\sigma\) --- тип без кванторов. \( R \subseteq \text{тип} \times \N \):
 1. \(R(\sigma, 0)\)
-2. Если \(R(\tau, k)\), то \(R(\forall \overline{\alpha}, \tau, \max(k, 1))\)
+2. Если \(R(\tau, k)\), то \(R(\forall \overline{\alpha}. \tau, \max(k, 1))\)
 3. Если \(R(\tau_0, k)\) и \(R(\tau_1, k + 1)\), то \(R(\tau_0 \to \tau_1, k + 1)\)
 #+end_definition
 #+begin_examp org
@@ -25,12 +25,14 @@
 \[ R((\forall \alpha. \alpha) \to \beta, 2) \]
 #+end_examp
 
+#+NAME: Типовая система Хиндли-Милнера
 #+begin_definition org
 *Типовая система Хиндли-Милнера*: \\
 Рассмотрим \(\lambda\)-исчисление второго порядка по Карри. Типы:
 1. типы(без кванторов) \(\tau = \alpha | (\tau \to \tau)\)
 2. типовые схемы \(\sigma = \forall \alpha. \sigma | \tau\)
 #+end_definition
+#+NAME: Частный случай типа
 #+begin_definition org
 Отношение *``Быть частным случаем``* (специализация)
 \begin{center}
@@ -40,14 +42,15 @@
  & (\alpha \to \beta) \to (\texttt{stirng} \to \texttt{int}) &
 \end{tikzcd}
 \end{center}
-\(\sigma_1 \sqsubseteq \sigma_2\), если
-\[ \sigma_1 \equiv \forall \alpha_1. \dots \forall \alpha_n. \tau_1 \]
-\[ \sigma_2 \equiv \forall \beta_1. \dots \forall \beta_k. \tau_1[\alpha_1 \coloneqq \Theta_1, \dots, \alpha_n \coloneqq \Theta_n] \]
+\(\sigma_1 \sqsubseteq \sigma_2\) (\(\sigma_2\) --- чатсный случай \(\sigma_1\)), если:
+- \( \sigma_1 \equiv \forall \alpha_1. \dots \forall \alpha_n. \tau_1 \)
+- \( \sigma_2 \equiv \forall \beta_1. \dots \forall \beta_k. \tau_1[\alpha_1 \coloneqq \Theta_1, \dots, \alpha_n \coloneqq \Theta_n] \)
 Новые переменные \(\beta_1, \dots, \beta_n\) не входит свободно в \(\sigma_1\).
 #+end_definition
 #+begin_examp org
 \[ \forall \alpha. \alpha \to \alpha \sqsubseteq \forall \beta. (\beta \to \beta) \to (\beta \to \beta) \]
 #+end_examp
+#+NAME: Типовая система Хиндли-Милнера_axioms
 #+begin_definition org
 \[ \frac{}{\Gamma, x: \sigma \vdash x: \sigma} \quad x \not\in FV(\Gamma) \]
 \[ \frac{\Gamma \vdash A: \tau \to \tau' \quad \Gamma \vdash B: \tau}{\Gamma \vdash A\ B: \tau'} \]
@@ -65,12 +68,14 @@
 1. \(\texttt{let}\ I = \lambda x. x\ \texttt{in}\ (I\ 1, I\ ``a``)\), где \(I: \forall \alpha. \alpha\to\alpha\)
 2. \(( \lambda i. (i\ 1, i\ ``a``))\ ( \lambda x. x)\)
 #+end_examp
-* Алгоритм \(\omega\)
+* Алгоритм \(W\)
 #+begin_statement org
 Система типов ХМ *разрешима*
 #+end_statement
+#+NAME: Алгоритм W
+#+begin_definition org
 Хотим решить \(? \vdash A : ?\), при чем найти наиболее общий тип. \(\mathcal{V}\) --- вызов алгоритма унификации \\
-\(W(\Gamma, E) \Rightarrow (\tau, S)\)
+\[W(\Gamma, E) \Rightarrow (\tau, S)\]
 1. \(E \equiv x\), \(x \in \Gamma\) \(x: \sigma_x\) \\
    Новые переменные \(\beta_1, \dots, \beta_n\), \(\sigma_x = \forall \alpha_1. \dots \alpha_n. \tau\)
    \[ (\forall \beta_1. \dots \forall \beta_n. \tau, \varnothing) \]
@@ -87,7 +92,8 @@
    \[ W(\Gamma, E) = (\tau_Q, S_2 \circ S_1 \]
    \[ W(\Gamma, P) = (\tau_P, S_1) \]
    \[ W(S_1 \Gamma \cup \{x: \forall. \tau_f\}, Q) = (\tau_Q, S_2) \]
-   , где \(\forall.\tau_f\) по всем не из \(S_1 \Gamma\)
+   , где \(\forall.\tau_f\) по всем свободным перменным не из \(S_1 \Gamma\)
+#+end_definition
 #+begin_examp org
 \[ \texttt{let}\ I = \lambda x. x\ \texttt{in}\ (I\ 1, I\ ``a``) \]
 Применяя \(\ref{7_alg_4}\) пункт алгоритма:
@@ -97,13 +103,19 @@
 * Апгрейд
 Добавим:
 1. Правило для \(Y\):
-   \[ Y: \forall \alpha. (\alpha \to \alpha) \to \alpha \]
+#+NAME: Типизация *Y*-комбинатора
+   #+begin_definition org
+   \( Y: \forall \alpha. (\alpha \to \alpha) \to \alpha \)
+   #+end_definition
 2. Введем \(\mu\)-оператор:
    \[ \mu\ \texttt{IntList}: (\texttt{int} \& \texttt{IntList}) \lor \texttt{Nil} \]
+#+NAME: \(\mu\)-оператор
    #+begin_definition org
-   \(\mu\ \eta, \tau\) --- тип, решающий уравнение \(\eta = \tau\)
+   \(\mu\ \eta. \tau\) --- тип, решающий уравнение \(\eta = \tau\)
    #+end_definition
+#+NAME: Экви- и изорекурсивные типы, ~roll~ и ~unroll~
    #+begin_remark org
+   \-
    - Экви-рекурсивные --- \(\mu'\) --- существует как тип(Java)
    - Изо-рекурсивные: \(\tau(\eta)\), \(\mu \eta. \tau(\eta)\)
      - Roll: \(\tau(\eta) \to \eta\)

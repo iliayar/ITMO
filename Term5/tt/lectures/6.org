@@ -4,10 +4,12 @@
 
 * Абстрактные типы данных
 ООП = АТД + наследование \\
+#+NAME: Экзистенциальные типы
 #+begin_remark org
-\[ \exists \alpha. \underbrace{\varphi}_{\text{интерфейс}} \]
+\( \exists \alpha. \underbrace{\varphi}_{\text{интерфейс}} \)
 #+end_remark
 
+#+NAME: Экзистенциальные типы_stack
 #+begin_examp org
 Стэк:
 \[ \texttt{push}: \alpha \to \alpha\ \texttt{stack} \rightarrow \alpha\ \texttt{stack} \]
@@ -25,13 +27,9 @@
 
 #+begin_examp org
 \[ \delta \equiv (\eta \to \alpha \to \alpha) \& (\alpha \to (\eta \& \alpha)) \& \alpha \]
-
-abs type \tau with \(x:\delta\)
-- is
-  \[ P = \text{pack}\ \tau,(\text{push}, \text{pop}, \text{empty}) \]
-
-- in
-  \[ \pi_l\ (x_2\ (x_1\ (5\ x_3))) \]
+*abstype* \tau *with* \(x:\delta\) \\
+*is* \( P = \text{pack}\ \tau,(\text{push}, \text{pop}, \text{empty}) \) \\
+*in* \( \pi_l\ (x_2\ (x_1\ (5\ x_3))) \)
 #+end_examp
 
 #+begin_export latex
@@ -42,13 +40,11 @@ abs type \tau with \(x:\delta\)
 \[ \texttt{set}: \bool \rightarrow \alpha \]
 \[ \texttt{isTrue}: \alpha \rightarrow \bool \]
 \[ \delta \equiv (\bool \rightarrow \alpha) \& (\alpha \rightarrow \bool) \]
-\(\label{6_ex_bool}\) pack \(\bool, \underbrace{( \lambda x^\beta. x, \lambda x^\alpha. x)}_\xi\) to \(\exists \alpha. \delta\)
 \[ \xi = (\bool \rightarrow \bool) \& (\bool \rightarrow \bool) \]
 \[ \Gamma \vdash \underbrace{ \delta[\alpha \coloneqq \bool] }_\xi \]
-abstype \(\bool\) with \(x:\delta\)
-- is (\(\ref{6_ex_bool}\))
-- in
-  \[ x_2\ (x_1\ \text{true}) \twoheadrightarrow_\beta \text{true} \]
+*abstype* \(\bool\) *with* \(x:\delta\) \\
+*is* (*pack* \(\bool, \underbrace{( \lambda x^\beta. x, \lambda x^\alpha. x)}_\xi\) *to* \(\exists \alpha. \delta\)) \\
+*in* \( x_2\ (x_1\ \text{true}) \twoheadrightarrow_\beta \text{true} \)
 #+end_examp
 
 #+begin_remark org
