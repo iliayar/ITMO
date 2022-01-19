@@ -40,14 +40,54 @@
 #+include: "4.org::Теорема о замкнутости И.Ф. относительно доказуемости_symb"
 #+include: "4.org::Теорема о замкнутости И.Ф. относительно доказуемости"
 * TODO Комбинаторы, базис SKI, его аналог в логике
+#+include: "2.org::Комбинаторы_I"
+#+include: "2.org::Комбинаторы_I_K_Omega"
+#+include: "2.org::Комбинаторы_I_K_Omega_2"
+#+begin_definition org
+\-
+- \(S \coloneqq \lambda x. \lambda y. \lambda z. x\ z\ (y\ z)\)
+- \(K \coloneqq \lambda x. \lambda y. x\)
+- \(I \coloneqq \lambda x. x\)
+#+end_definition
+#+begin_theorem org
+Для любого комбинатора \(X\) можно найти выражение \(P\) (состоящее
+только из скобок, пробелов и комбинаторов \(S\) и \(K\)), что \(X =_\beta
+P\)
+#+end_theorem
 * Просто типизированное лямбда-исчисление
 #+include: "3.org::Просто типизированное лямбда-исчисление"
 * Исчисление по Чёрчу и по Карри
 #+include: "3.org::Исчисление по Карри"
 #+include: "3.org::Исчисление по Чёрчу"
+#+begin_remark org
+Отличие только в том, что в исчисление по Черчу типовые аннотации
+обязательны, это позволяет доказать следующую теорему.
+#+end_remark
+#+include: "3.org::Исчисление по Чёрчу и по Карри_theorem_church"
+#+include: "3.org::Исчисление по Чёрчу и по Карри_theorem_church_examp_2"
+#+include: "3.org::Исчисление по Чёрчу и по Карри_theorem_church_examp"
 * Изоморфизм Карри-Ховарда
 #+include: "4.org::Изоморфизм Карри-Ховарда"
-* TODO Конъюнкция, дизъюнкция, ложь и соответствующие им конструкции в лямбда-исчислении
+* Конъюнкция, дизъюнкция, ложь и соответствующие им конструкции в лямбда-исчислении
+#+begin_definition org
+Введем тип \(\perp\):
+\[ \frac{\Gamma \vdash A : \perp}{\Gamma \vdash A : \tau} \]
+И остальные конструкции и правила для них:
+- \(\varphi \& \psi\)
+  - \(\mathop{mkPair} \coloneqq \lambda x. \lambda y. \lambda f. f\ x\ y\), тогда \(\pair{x, y} = \mathop{mkPair}\ x\ y\)
+  - \(\pi_1 \coloneqq \p. p\ (\lambda a. \lambda b. a)\)
+  - \(\pi_2 \coloneqq \p. p\ (\lambda a. \lambda b. b)\)
+  \[ \frac{\Gamma \vdash A : \varphi \quad \Gamma \vdash B : \psi}{\Gamma \vdash \pair{A, B} : \varphi \& \psi} \quad
+  \frac{\Gamma \vdash \pair{A, B} : \varphi \& \psi}{\Gamma \vdash \pi_1\ \pair{A, B} : \varphi} \quad
+  \frac{\Gamma \vdash \pair{A, B} : \varphi \& \psi}{\Gamma \vdash \pi_2\ \pair{A, B} : \psi} \]
+- \(\varphi \lor \psi\)
+  - \(\mathop{in}_1 \coloneqq \lambda x. \lambda f. \lambda g. f\ x\)
+  - \(\mathop{in}_2 \coloneqq \lambda x. \lambda f. \lambda g. g\ x\)
+  - \(\mathop{case} \coloneqq \lambda a. \lambda f. \lambda g. a\ f\ g\)
+  \[ \frac{\Gamma \vdash A : \varphi}{\Gamma \vdash \mathop{in}_1\ A : \varphi \lor \psi} \quad
+  \frac{\Gamma \vdash A : \psi}{\Gamma \vdash \mathop{in}_2\ A : \varphi \lor \psi} \quad
+  \frac{\Gamma \vdash L : \varphi \lor \psi \quad \Gamma \vdash f : \varphi \rightarrow \tau \quad \Gamma \vdash g : \psi \rightarrow \tau}{\Gamma \vdash \mathop{case}\ L\ f\ g : \tau}\]
+#+end_definition
 * Чёрчевские нумералы
 #+include: "1.org::Чёрчевские нумералы"
 * Теорема о выразительной силе просто типизированного лямбда-исчисления (формулировка)
@@ -55,8 +95,11 @@
 * Алгебраические термы
 #+include: "5.org::Алгебраические термы"
 #+include: "5.org::Алгебраические термы_examp"
-* TODO Задача унификации в алгебраических термах
+#+include: "5.org::Подстановка переменных"
+* Задача унификации в алгебраических термах
+См [[Алгебраические термы][Алгебраические термы]] и [[Алгоритм унификации][Алгоритм унификации]].
 * Алгоритм унификации
+#+include: "5.org::Несовместная система"
 #+include: "5.org::Алгоритм унификации"
 * Наиболее общее решение задачи унификации
 #+include: "5.org::Наиболее общее решение задачи унификации_def2"

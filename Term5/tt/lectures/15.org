@@ -36,8 +36,8 @@ print(7)
 #+NAME: Ко- и контравариантность.
 #+begin_definition org
 *Вариантность*
-- Ковариантность: a \prec_F b, f(a) \prec_G f(b)
-- Контрвариантность: a \prec_F b, g(a) \succ_H g(b)
+- Ковариантность: \(a \prec_F b\), \(f(a) \prec_G f(b)\)
+- Контрвариантность: \(a \prec_F b\), \(g(a) \succ_H g(b)\)
 #+end_definition
 #+begin_examp org
 Рассмотрим списки \(A \prec B\):

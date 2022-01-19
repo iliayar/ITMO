@@ -13,9 +13,12 @@
 #+end_examp
 
 ** Подстановка переменных
+#+begin_definition org
+*Подстановка*:
 - \(S_0: V \to T\) --- тождественно почти всюду (кроме конечного количества)
-- \(T_1 = T_2\) --- уравнение \\
+- \(T_1 = T_2\) --- *уравнение* \\
   /Решение/: таккая подстановка \(S\), что \(S(T_1) \equiv S(T_2)\)
+#+end_definition
 #+begin_examp org
 \[ f\ a\ (a\ b) = f\ (g\ c)\ b \]
 _Положим_:
@@ -67,10 +70,11 @@ S(P)\)
 У уравнения в алгебраических термах \(T = P\) всегда есть наиболее
 общее решение, если есть хоть какое-то
 #+end_theorem
+#+NAME: Несовместная система
 #+begin_definition org
 *Несовместные система* --- система с уравнением вида:
 \[ f\ T_1\dots T_n = g\ P_1 \dots P_n \]
-, где \(f \equiv g\) либо \(x = \dots\ x\ \dots\).
+, где \(f \ne g\) либо \(x = \dots\ x\ \dots\).
 #+end_definition
 #+begin_remark org
 В Haskell и OCamll --- \(\text{<<occurs check>>}\)
@@ -87,7 +91,7 @@ S(P)\)
 \( \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = P_n \end{cases} \):
 1. \(x = x\) --- отбрасываем
 2. \(T = x\), где \(T \not\equiv x\) \( \implies x = T \)
-3. \[ \begin{cases} x = P \\ \vdots \\ T_2 = P_2 \\ \vdots \\ T_n = P_n \end{cases} \implies \begin{cases} T_2[x \coloneqq P] = P_2[x \coloneqq P] \\ \vdots \\ T_n[X \coloneqq P] = P_n[x \coloneqq P] \\ \vdots \\ x = P \end{cases}\]
+3. \[ \begin{cases} x = P \\ \vdots \\ T_2 = P_2 \\ \vdots \\ T_n = P_n \end{cases} \implies \begin{cases} T_2[x \coloneqq P] = P_2[x \coloneqq P] \\ \vdots \\ T_n[x \coloneqq P] = P_n[x \coloneqq P] \\ \vdots \\ x = P \end{cases}\]
 4. \(f\ T_1\ \dots\ T_4 = f\ P_1\ \dots\ P_n \implies\)
    \( \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = Pn \end{cases}\)
 #+begin_theorem org
