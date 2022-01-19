@@ -110,16 +110,17 @@ _Тогда_ найдется такой \(S\), что \(\Gamma \vdash S :\sigma
 - \(A\ B\) --- аппликация
 - \(\lambda x^\tau. P\) --- абстракция
 #+end_definition
+#+NAME: Исчисление по Чёрчу и по Карри_theorem_church
 #+begin_theorem org
 Если конекст \(\Gamma\) и выражение \(P\) типизируется, то \(\Gamma \vdash_{\text{Ч}} P: \sigma\)
 #+end_theorem
+#+NAME: Исчисление по Чёрчу и по Карри_theorem_church_examp_2
 #+begin_examp org
-\[\vdash_C \lambda x. x : \alpha \to \alpha (\beta \to \beta)\]
+\[\vdash_C \lambda x. x : \alpha \to \alpha \rightarrow (\beta \to \beta)\]
 \[ \vdash_{\text{Ч}} \lambda x. x : \sigma \to \sigma \]
 #+end_examp
-
+#+NAME: Исчисление по Чёрчу и по Карри_theorem_church_examp
 #+begin_examp org
 \[ \lambda f. \lambda x. f\ (f\ x) : \substack{(\alpha \to \alpha) \to (\alpha \to \alpha) \\ (\beta \to \beta) \to (\beta \to \beta)} \]
 \[ \lambda f^{\alpha \to \alpha}. \lambda x.^\alpha. f\ (f\ x) : (\alpha \to \alpha) \to (\alpha \to \alpha) \]
-
 #+end_examp

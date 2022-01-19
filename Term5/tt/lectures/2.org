@@ -60,10 +60,11 @@
    \(Q\) свободно для подстановки. Ценой переименования связных переменных можно подставить любое выражение.
 #+end_definition
 
+#+NAME: Комбинаторы_I
 #+begin_examp org
-Комбинатор \(I\) (Identity)
+Комбинатор \(I\) (Identity). Доказательство того, что (\(\to_\beta\)) не
+обладает ромбовидным свойством:
 \[ I = \lambda x. x \]
-
 \begin{center}
 \begin{tikzpicture}
   \node (A) at (0, 0) {\((I\ I)\ (I\ I)\)};
@@ -83,6 +84,7 @@
 \end{center}
 #+end_examp
 
+#+NAME: Комбинаторы_I_K_Omega
 #+begin_remark org
 \[ I = \lambda x. x \quad K = \lambda x. \lambda y. x \quad \Omega = \omega\ \omega \quad \omega = \lambda x. x\ x \]
 \begin{center}
@@ -101,6 +103,7 @@
 #+end_remark
 
 
+#+NAME: Комбинаторы_I_K_Omega_2
 #+begin_examp org
 \-
 - \(I = \lambda x. x\)
