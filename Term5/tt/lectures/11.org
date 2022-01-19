@@ -3,13 +3,15 @@
 #+date: 23 ноября
 
 * Язык
+#+NAME: Каков тип типа: необходимость увеличения выразительной силы языка
+#+begin_remark org
 Мы находимся где-то в \(\lambda C\)
 #+begin_src tex
-\func id (x : \Type)  : \Type = x
+\func id (x : \Type) : \Type = x
 #+end_src
 К какой части \(\lambda\)-куба относится ~id: * -> *~
 #+begin_src tex
-\fund idid => ud ud --- нельзя 
+\fund idid => id id --- нельзя 
 #+end_src
 Но такое мы можем написать:
 #+begin_src tex
@@ -17,6 +19,8 @@
 \func idid2 => id2 (\Type -> \Type) (id2 \Type)
 #+end_src
 Получается что ~\Type -> \Type : \Type~
+#+end_remark
+
 #+begin_src tex
 \func Church => (x : \Type)  -> (x -> x) -> (x -> x)
 \func add (m n : Church) => m Church inc n

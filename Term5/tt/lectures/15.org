@@ -3,21 +3,22 @@
 #+date: 21 декабря
 
 * Подтипы
+#+NAME: Полиморфизм (параметрический и наследственный)
 #+begin_remark org
-Классификация:
-- Полиморфизм
-  - Параметрический
-    - Параметричекий полифморфизм как Х-М, F \\
-      \(\forall x. x \rightarrow x\)
-    - Перегрузка Ad-Hoc \\
-      #+begin_src python
+Полиморфизм:
+- Параметрический
+  - Параметричекий полифморфизм как Х-М, F \\
+    \(\forall x. x \rightarrow x\)
+  - Перегрузка Ad-Hoc \\
+    #+begin_src python
 print("a")
 print(7)
-      #+end_src
-  - Наследственный
-    - ООП
-    - Приведение
+    #+end_src
+- Наследственный
+  - ООП
+  - Приведение
 #+end_remark
+#+NAME: Отношение подтипизации
 #+begin_definition org
 \(F <: G\) (\(F\) подтип \(G\)):
 - \(f: F\), \(g: G\)
@@ -32,6 +33,7 @@ print(7)
 - \(S' = H \rightarrow G\)
 тогда \(T' <: S'\)
 #+end_remark
+#+NAME: Ко- и контравариантность.
 #+begin_definition org
 *Вариантность*
 - Ковариантность: a \prec_F b, f(a) \prec_G f(b)
@@ -47,6 +49,7 @@ print(7)
 \(A[x] = x \rightarrow H\), \(A : * \rightarrow *\)
 #+end_definition
 
+#+NAME: Система \(F_{<:}\)
 #+begin_definition org
 \(F_{<:}\)
 1. \(\frac{}{S <: S}\) --- рефлексивность
@@ -60,6 +63,7 @@ print(7)
 \[ \frac{X <: T, \Gamma \vdash T : K}{X <: T, \Gamma \vdash X : K} \]
 \[ \frac{\Gamma, X <: T_1 \vdash T_2 : *}{\Gamma \vdash \forall x <: T_1. T_2 : *} \]
 \[ \frac{\Gamma \vdash S : *}{\Gamma \vdash S <: \text{Top}} \]
+#+NAME: Ядерное и полное правила
 #+begin_remark org
 Есть 2 варианта исчисления:
 - Ядерное (проще работать)

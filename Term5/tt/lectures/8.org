@@ -111,6 +111,7 @@ array[a..b] of int
 \[ \frac{\Gamma \vdash A : * \quad \Gamma , x:A \vdash b: B \quad \Gamma \vdash B:*}{\Gamma \vdash (\lambda x:A.b): A \to B} \]
 #+end_remark
 
+#+NAME: Функция ~printf~
 #+begin_remark org
 \-
 #+begin_src c

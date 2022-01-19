@@ -13,6 +13,7 @@
 - Ослабление
   \[ \frac{\Gamma \vdash B}{\Gamma, A \vdash B} \]
 #+end_definition
+#+NAME: Комбинаторный базис \(BCKW\)
 #+begin_remark org
 Вспомним комбинаторы:
 - \(B = \lambda x y z. x\ z\ y\)
@@ -50,6 +51,7 @@
 \[ \frac{\Gamma \vdash A \times B}{\Gamma \vdash B} \]
 #+end_remark
 ** Линейная логика
+#+NAME: Линейная логика
 #+begin_definition org
 *Линейная логика*
 Связки:
