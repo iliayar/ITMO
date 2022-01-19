@@ -6,14 +6,16 @@
 #+begin_remark org
 Топология: \(\Omega \subseteq \mathcal{P}(X)\)
 - \(\mathcal{P}(X)\) ~: X -> *~
-- \(x \in \mathcal{P}(X)\) ~x : X -> *~
+- \(x \in \mathcal{P}(X)\), ~x : X -> *~
 Топология: ~(X -> *) -> *~
 #+end_remark
 #+begin_remark org
-| 1 | Типы (утверждения) | \(*\)         |
-| 2 | Рода               | \(* -> *\)    |
-| 3 | Сорта              | \(\square\)   |
-| 4 |                    | \(\triangle\) |
+\-
+| 0: | Все значения (\(\lambda\)-терм) |               |
+| 1: | Типы (утверждения)        | \(*\)         |
+| 2: | Рода                      | \(* \rightarrow *\)     |
+| 3: | Сорта                     | \(\square\)   |
+| 4: |                           | \(\triangle\) |
 #+end_remark
 Обобщение \(\lambda\)-куба
 #+begin_remark org
@@ -21,14 +23,14 @@
 - \(*, \square, \triangle\)
 - Правила: \((*, *),(\square, \square), (\square, *)\).
 Если добавим \((\triangle, * )\), все останется хорошо, что там живет:
-\(\Pi x^\square.\text{значения}\), это будет *Ситема U*. Если добавим \((\triangle,
-\square)\), получим неконсистентность, это будет *Система U*
+\(\Pi x^\square.\text{значения}\), это будет *Ситема \(U^-\)*. Если добавим \((\triangle,
+\square)\), получим неконсистентность, это будет *Система \(U\)*
 #+end_remark
 #+begin_remark org
-Топология: \(\mathcal{P}(X)\) --- тип всех функций \(X -> *\)
-\[ \underbrace{\underbrace{X -> *}_\square -> *}_\square \]
+Топология: \(\mathcal{P}(X)\) --- тип всех функций \(X \rightarrow *\)
+\[ \underbrace{\underbrace{X \rightarrow *}_\square \rightarrow *}_\square \]
 \[ \forall \alpha^\tau. \varphi(\alpha) = A(\underset{ * }{\tau}, \underset{\square}{\varphi})^\square \]
-\[ S\ :\ A(T) \approx (\tau -> *) -> * \]
+\[ S\ :\ A(T) \approx (\tau \rightarrow *) \rightarrow * \]
 #+end_remark
 #+begin_remark org
 В системе U можем написать что-то вроде Y-комбинатора --- \(F \equiv
@@ -45,20 +47,21 @@
   #+end_definition
   \(S\) --- множество всех ординалов, Тогда оно \(\in S\)?
 2. Фундированное множество \(X\) --- множество, где нет бесконечной цепочки \(\in\)
-   \[ \underbrace{x \ni x_1 \ni x_2 \ni \dots \ni x_n}_{\text{конечное }n} \]
+   \[ \underbrace{X \ni x_1 \ni x_2 \ni \dots \ni x_n}_{\text{конечное }n} \]
    Множество всех фундированных множеств --- фундированное
 3. Множество всех множеств
-   \[\sigma : X -> \rho X\]
-   \[\tau : \rho X -> X\]
-   - \(\sigma x\) --- \(\{a | a \in x\}\) --- начальный отрезок до \(X\)
+   \[\sigma : X \rightarrow \mathcal{P} X\]
+   \[\tau : \mathcal{P} X \rightarrow X\]
+   - \(\sigma X\) --- \(\{a | a \in X\}\) --- начальный отрезок до \(X\)
    - \(\tau X\) --- ординал, соответствующий \(X\)
-   \[ \sigma \tau Z = \{\tau\sigma\alpha | \alpha \in X\}\]
+   \[ \sigma \tau X = \{\tau\sigma\alpha | \alpha \in X\}\]
    \[ \sigma \tau X = \{\beta | \beta < \tau X\} = \{\beta | \beta = \tau \sigma \alpha\text{ для } \alpha \in Z\} \]
+#+NAME: Парадоксальные универсумы
    #+begin_definition org
    *Парадоксальный универсум*
-   - \(\sigma : U -> \rho U\)
-   - \(\tau : \rho U -> U\)
-   Если для всех \(x \in \rho U\)
+   - \(\sigma : U \rightarrow \mathcal{P} U\)
+   - \(\tau : \mathcal{P} U \rightarrow U\)
+   Если для всех \(x \in \mathcal{P} U\)
    \[ \sigma \tau Z = \{\tau \sigma x | x \in X\} \]
    #+end_definition
 #+begin_definition org
@@ -87,9 +90,9 @@
 #+end_statement
 #+begin_remark org
 Как это выразить в U?
-- \(\rho X\) ~: X -> *~
+- \(\mathcal{P} X\) ~: X -> *~
 - \(U\) ~:~ \(\square\)
-- \(\sigma\) ~:~ \(U -> \rho U\)
-- \(\tau\) ~:~ \(\rho U -> U\)
-- \(o\) : \(\forall S^{\rho U}. \sigma (\tau(x)) = \lambda u^U. \exists x^U. (S x) \& u = \tau (\sigma(x))\)
+- \(\sigma\) ~:~ \(U \rightarrow \mathcal{P} U\)
+- \(\tau\) ~:~ \(\mathcal{P} U \rightarrow U\)
+- \(o\) : \(\forall S^{\mathcal{P} U}. \sigma (\tau(x)) = \lambda u^U. \exists x^U. (S x) \& u = \tau (\sigma(x))\)
 #+end_remark
