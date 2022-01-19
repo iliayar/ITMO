@@ -116,7 +116,7 @@ _Тогда_ найдется такой \(S\), что \(\Gamma \vdash S :\sigma
 #+end_theorem
 #+NAME: Исчисление по Чёрчу и по Карри_theorem_church_examp_2
 #+begin_examp org
-\[\vdash_C \lambda x. x : \alpha \to \alpha \rightarrow (\beta \to \beta)\]
+\[\vdash_C \lambda x. x : \substack{\alpha \rightarrow \alpha \\ \beta \rightarrow \beta}\]
 \[ \vdash_{\text{Ч}} \lambda x. x : \sigma \to \sigma \]
 #+end_examp
 #+NAME: Исчисление по Чёрчу и по Карри_theorem_church_examp

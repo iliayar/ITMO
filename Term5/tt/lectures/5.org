@@ -107,12 +107,12 @@ S(P)\)
    Система: \(\varnothing\) \\
    Тип: \(\alpha_x\)
 1. \(A\ B\) --- рекурсивный вызов, \(\pair{E_A, \tau_A}, \pair{E_B, \tau_B}\) \\
-   Система: \(E_A, E_B, \tau_B \to \beta = \tau_A\) \\
+   Система: \(E_A \cup E_B \cup \{\tau_B \to \beta = \tau_A\}\) \\
    Тип: \(\beta\)
 1. \( \lambda x. A\) --- рекурсивный вызов \(\pair{E_A, \tau_A}\) \\
    Система: \(E_A\) \\
    Тип: \(\alpha_x \to \tau_A\)
-_Разрешение системы_: унификация
+_Разрешение системы_: унификация (перепишем \(\alpha \rightarrow \beta\) как \(\alpha\ \beta\))
 #+end_remark
 #+begin_examp org
 \[ \overbrace{\lambda x. \underbrace{x}_A}^B \]
@@ -145,10 +145,10 @@ _Разрешение системы_: унификация
 #+NAME: Выразимость связок через импликацию и квантор всеобщности в интуиционистской логике 2-го порядка (конъюнкция, дизъюнкция, ложь, отрицание, квантор существования)
 #+begin_statement org
 Можно выразить:
-- \(a\&b ::= \forall p. (a \to b \to p) \to p\)
-- \(a\lor b ::= \forall p. (a \to p) \to (b \to p) \to p\)
-- \(\perp ::= \forall p. p\)
-- \(\exists p. A ::= \forall x. (\forall p. A \to x) \to x\)
+- \(a\&b \coloneqq \forall p. (a \to b \to p) \to p\)
+- \(a\lor b \coloneqq \forall p. (a \to p) \to (b \to p) \to p\)
+- \(\perp \coloneqq \forall p. p\)
+- \(\exists p. A \coloneqq \forall x. (\forall p. A \to x) \to x\), (\(\exists p. A \equiv \lnot \forall p. \lnot A\))
 #+end_statement
 #+NAME: Система \(F\)
 #+begin_definition org

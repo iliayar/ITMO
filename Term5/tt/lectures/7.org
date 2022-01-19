@@ -39,10 +39,10 @@
 \begin{tikzcd}
 \tau \arrow{r} \arrow{dr} \arrow{ddr} & \texttt{string} &  \\
  & \alpha \to \beta  \arrow{r} & \texttt{string} \to \texttt{int} \\
- & (\alpha \to \beta) \to (\texttt{stirng} \to \texttt{int}) &
+ & (\alpha \to \beta) \to (\texttt{string} \to \texttt{int}) &
 \end{tikzcd}
 \end{center}
-\(\sigma_1 \sqsubseteq \sigma_2\) (\(\sigma_2\) --- чатсный случай \(\sigma_1\)), если:
+\(\sigma_1 \sqsubseteq \sigma_2\) (\(\sigma_2\) --- частный случай \(\sigma_1\)), если:
 - \( \sigma_1 \equiv \forall \alpha_1. \dots \forall \alpha_n. \tau_1 \)
 - \( \sigma_2 \equiv \forall \beta_1. \dots \forall \beta_k. \tau_1[\alpha_1 \coloneqq \Theta_1, \dots, \alpha_n \coloneqq \Theta_n] \)
 Новые переменные \(\beta_1, \dots, \beta_n\) не входит свободно в \(\sigma_1\).
@@ -76,23 +76,22 @@
 #+begin_definition org
 Хотим решить \(? \vdash A : ?\), при чем найти наиболее общий тип. \(\mathcal{V}\) --- вызов алгоритма унификации \\
 \[W(\Gamma, E) \Rightarrow (\tau, S)\]
-1. \(E \equiv x\), \(x \in \Gamma\) \(x: \sigma_x\) \\
+1. \(E \equiv x\), \(x \in \Gamma\), \(x: \sigma_x\) \\
    Новые переменные \(\beta_1, \dots, \beta_n\), \(\sigma_x = \forall \alpha_1. \dots \alpha_n. \tau\)
    \[ (\forall \beta_1. \dots \forall \beta_n. \tau, \varnothing) \]
 2. \(E \equiv \lambda x. P\)
    \[W(\Gamma,E) = (S_1(\gamma \to \tau_P), S_1)\]
-   \[ W(\Gamma \cup \{X:\gamma\}, P) = (\tau_P, S_1) \]
-
+   \[ W(\Gamma \cup \{x:\gamma\}, P) = (\tau_P, S_1) \]
 3. \(E \equiv P\ Q\)
-   \[ W(\Gamma, P\ Q) = (S_3\ \gamma, S_3 \circ S_2 \circ S_1) \]
+   \[ W(\Gamma, E) = (S_3\gamma, S_3 \circ S_2 \circ S_1) \]
    \[ W(\Gamma, P) = (\tau_P, S_1) \]
-   \[ W(S_1\ \Gamma, Q) = (\tau_Q, S_2) \]
-   \[ \mathcal{V}(S_2\ \tau_p, \tau_Q \to \gamma) = S_3 \]
-4. \(E \equiv \texttt{let}\ x = P\ \texttt{in}\ Q\),  \(\label{7_alg_4}\)
-   \[ W(\Gamma, E) = (\tau_Q, S_2 \circ S_1 \]
+   \[ W(S_1\Gamma, Q) = (\tau_Q, S_2) \]
+   \[ \mathcal{V}(S_2\tau_P, \tau_Q \to \gamma) = S_3 \]
+4. \(E \equiv \texttt{let}\ x = P\ \texttt{in}\ Q\)\(\label{7_alg_4}\)
+   \[ W(\Gamma, E) = (\tau_Q, S_2 \circ S_1) \]
    \[ W(\Gamma, P) = (\tau_P, S_1) \]
    \[ W(S_1 \Gamma \cup \{x: \forall. \tau_f\}, Q) = (\tau_Q, S_2) \]
-   , где \(\forall.\tau_f\) по всем свободным перменным не из \(S_1 \Gamma\)
+   , где \(\forall.\tau_f\) --- кванторы по всем свободным перменным из \(\tau_f\)
 #+end_definition
 #+begin_examp org
 \[ \texttt{let}\ I = \lambda x. x\ \texttt{in}\ (I\ 1, I\ ``a``) \]
@@ -101,24 +100,42 @@
 #+end_examp
 
 * Апгрейд
-Добавим:
-1. Правило для \(Y\):
+Добавим правило для \(Y\):
 #+NAME: Типизация *Y*-комбинатора
-   #+begin_definition org
-   \( Y: \forall \alpha. (\alpha \to \alpha) \to \alpha \)
-   #+end_definition
-2. Введем \(\mu\)-оператор:
-   \[ \mu\ \texttt{IntList}: (\texttt{int} \& \texttt{IntList}) \lor \texttt{Nil} \]
-#+NAME: \(\mu\)-оператор
-   #+begin_definition org
-   \(\mu\ \eta. \tau\) --- тип, решающий уравнение \(\eta = \tau\)
-   #+end_definition
-#+NAME: Экви- и изорекурсивные типы, ~roll~ и ~unroll~
-   #+begin_remark org
-   \-
-   - Экви-рекурсивные --- \(\mu'\) --- существует как тип(Java)
-   - Изо-рекурсивные: \(\tau(\eta)\), \(\mu \eta. \tau(\eta)\)
-     - Roll: \(\tau(\eta) \to \eta\)
-     - Unroll: \(\eta \to \tau(\eta)\)
-   #+end_remark
-Эта типовая система противоречива
+#+begin_definition org
+\( Y: \forall \alpha. (\alpha \to \alpha) \to \alpha \)
+#+end_definition
+#+NAME: Экви- и изорекурсивные типы, \(\mu\)-оператор, ~roll~ и ~unroll~
+#+begin_remark org
+\-
+#+begin_src haskell
+data IntList = Nil | Cons Int IntList 
+#+end_src
+Есть два способа разрешения рекурсивных типов:
+1. *Эквирекурсивный*: \\
+   Введем оператор аналогичный \(Y\)-комбинатору, только на типах:
+   \(\mu\alpha.f(\alpha) = f(\mu\alpha.f(\alpha))\) \\
+   /Пример/: выведем тип \(\lambda x. x\ x\): \\
+   Пусть \(\tau = \mu \alpha. \alpha \rightarrow \beta\). Если мы раскроем \(\tau\) один раз, то
+   получим \(\tau = \tau \rightarrow \beta\). Если раскроем еще раз, то получим \(\tau = (\tau \rightarrow
+   \beta) \rightarrow \beta\).
+   \[ \frac{\displaystyle \frac{\displaystyle \frac{\displaystyle \frac{}{x:\tau \vdash x:\tau}}{x : \tau \vdash x : \tau \rightarrow \beta} \quad \frac{}{x : \tau \vdash x : \tau}}{x:\tau \vdash x\ x : \beta}}{\vdash \lambda x. x\ x : \tau \rightarrow \beta} \]
+   Также можем доказать \(Y \equiv \lambda f. (\lambda x.f\ (x\ x))\ (\lambda x. f\ (x\ x))\).
+2. *Изорекурсивный*: \\
+   Будем считать, что \(\mu\alpha.f(\alpha)\) изоморфно \(\f(\mu\alpha.f(\alpha))\). Такой подход используется в ~C~:
+   #+begin_src c
+struct list {
+  list* x;
+  int a;
+};
+   #+end_src
+   Можем использовать так: ~x->x->x->a~. Заметим, что мы использовали
+   разыменование: \(\texttt{*}:\texttt list*} \rightarrow \texttt{list}\). В
+   изорекурсивных типах введены специальные операции для работы с
+   этими типами:
+   - \(\text{roll} : \texttt{list*} \rightarrow \texttt{list}\)
+   - \(\text{unroll} : \texttt{list} \rightarrow \texttt{list*}\)
+   В более общем виде (введение в типовую систему):
+   - \(\text{roll} : f(\alpha) \rightarrow \alpha\)
+   - \(\text{unroll} : \alpha \rightarrow f(\alpha)\)
+#+end_remark

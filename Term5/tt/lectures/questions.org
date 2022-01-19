@@ -39,7 +39,7 @@
 * Теорема о замкнутости И.Ф. относительно доказуемости
 #+include: "4.org::Теорема о замкнутости И.Ф. относительно доказуемости_symb"
 #+include: "4.org::Теорема о замкнутости И.Ф. относительно доказуемости"
-* TODO Комбинаторы, базис SKI, его аналог в логике
+* Комбинаторы, базис SKI, его аналог в логике
 #+include: "2.org::Комбинаторы_I"
 #+include: "2.org::Комбинаторы_I_K_Omega"
 #+include: "2.org::Комбинаторы_I_K_Omega_2"
@@ -49,11 +49,14 @@
 - \(K \coloneqq \lambda x. \lambda y. x\)
 - \(I \coloneqq \lambda x. x\)
 #+end_definition
-#+begin_theorem org
-Для любого комбинатора \(X\) можно найти выражение \(P\) (состоящее
-только из скобок, пробелов и комбинаторов \(S\) и \(K\)), что \(X =_\beta
-P\)
-#+end_theorem
+#+begin_statement org
+Любое \(\lambda\)-выражение без свободных перменных можно записать с помощью комбинаторов \(S\) и \(K\), где:
+- \(S = \lambda x. \lambda y. \lambda z. (x\ z)\ (y\ z) : (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow (\alpha \rightarrow \beta) \rightarrow \alpha \rightarrow \gamma\)
+- \(K = \lambda x. \lambda y. x : \alpha \rightarrow \beta \rightarrow \alpha\)
+#+end_statement
+#+begin_statement org
+Комбинаторы \(S\) и \(K\) являются аксиомами ИИВ
+#+end_statement
 * Просто типизированное лямбда-исчисление
 #+include: "3.org::Просто типизированное лямбда-исчисление"
 * Исчисление по Чёрчу и по Карри
@@ -75,8 +78,8 @@ P\)
 И остальные конструкции и правила для них:
 - \(\varphi \& \psi\)
   - \(\mathop{mkPair} \coloneqq \lambda x. \lambda y. \lambda f. f\ x\ y\), тогда \(\pair{x, y} = \mathop{mkPair}\ x\ y\)
-  - \(\pi_1 \coloneqq \p. p\ (\lambda a. \lambda b. a)\)
-  - \(\pi_2 \coloneqq \p. p\ (\lambda a. \lambda b. b)\)
+  - \(\pi_1 \coloneqq \lambda p. p\ (\lambda a. \lambda b. a)\)
+  - \(\pi_2 \coloneqq \lambda p. p\ (\lambda a. \lambda b. b)\)
   \[ \frac{\Gamma \vdash A : \varphi \quad \Gamma \vdash B : \psi}{\Gamma \vdash \pair{A, B} : \varphi \& \psi} \quad
   \frac{\Gamma \vdash \pair{A, B} : \varphi \& \psi}{\Gamma \vdash \pi_1\ \pair{A, B} : \varphi} \quad
   \frac{\Gamma \vdash \pair{A, B} : \varphi \& \psi}{\Gamma \vdash \pi_2\ \pair{A, B} : \psi} \]
@@ -118,11 +121,14 @@ P\)
 * Система \(F\)
 #+include: "5.org::Система \(F\)"
 * TODO Изоморфизм Карри-Ховарда для системы \(F\): квантор всеобщности, упорядоченные пары, алгебраические типы
+Может [[Конъюнкция, дизъюнкция, ложь и соответствующие им конструкции в лямбда-исчислении][это]]?
 * Экзистенциальные типы
 #+include: "6.org::Экзистенциальные типы"
 #+include: "6.org::Экзистенциальные типы_stack"
-* TODO Конструкции ~pack~ и ~abstype~
+* Конструкции ~pack~ и ~abstype~
+#+include: "6.org::Конструкции ~pack~ и ~abstype~"
 * TODO Абстрактные типы данных
+#+include: "6.org::Абстрактные типы данных"
 * Ранг типа
 #+include: "7.org::Ранг типа"
 * Частный случай типа
@@ -136,8 +142,7 @@ P\)
 * Типизация *Y*-комбинатора
 #+include: "7.org::Типизация *Y*-комбинатора"
 * Экви- и изорекурсивные типы, \(\mu\)-оператор, ~roll~ и ~unroll~
-#+include: "7.org::\(\mu\)-оператор"
-#+include: "7.org::Экви- и изорекурсивные типы, ~roll~ и ~unroll~"
+#+include: "7.org::Экви- и изорекурсивные типы, \(\mu\)-оператор, ~roll~ и ~unroll~"
 * TODO Примеры конструкций и операторов в языках программирования
 * Обобщённые типовые системы
 #+include: "8.org::Обобщённые типовые системы"

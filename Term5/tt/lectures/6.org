@@ -18,18 +18,20 @@
 \[ \exists \alpha. (\eta \to \alpha \to \alpha) \& (\alpha \to \alpha \& \eta) \& \alpha \]
 #+end_examp
 
+#+NAME: Абстрактные типы данных
 #+begin_definition org
 \[ \frac{\Gamma \vdash \varphi[x \coloneqq \Theta]}{\Gamma \vdash \exists x. \varphi} \]
 \[ \frac{\Gamma, \psi \vdash \varphi \quad \Gamma \vdash \exists x. \psi}{\Gamma \vdash \varphi} \quad x \not\in FV(\Gamma) \]
-\[ \frac{\Gamma \vdash M: \delta[\alpha \coloneqq \tau]}{\Gamma \vdash \text{pack}\ \tau,M\ \text{to}\ \exists \alpha.\delta : \exists \alpha.\delta} \]
-\[ \frac{\Gamma, x : \delta \vdash M : \rho \quad \Gamma \vdash S:\exists \alpha.\sigma}{\Gamma \vdash \text{abstype}\ s\ \text{with}\ x:\delta\ \text{is}\ S\ \text{in}\ M:\rho} \quad x \not\in FV(\Gamma) \]
+\[ \frac{\Gamma \vdash M: \delta[\alpha \coloneqq \tau]}{\Gamma \vdash \textbf{pack}\ \tau,M\ \textbf{to}\ \exists \alpha.\delta : \exists \alpha.\delta} \]
+\[ \frac{\Gamma, x : \delta \vdash M : \rho \quad \Gamma \vdash S:\exists \alpha.\delta}{\Gamma \vdash \textbf{abstype}\ \alpha\ \textbf{with}\ x:\delta\ \textbf{is}\ S\ \textbf{in}\ M:\rho} \quad x \not\in FV(\Gamma) \]
 #+end_definition
 
 #+begin_examp org
-\[ \delta \equiv (\eta \to \alpha \to \alpha) \& (\alpha \to (\eta \& \alpha)) \& \alpha \]
+\[ \delta \equiv \underbrace{(\eta \to \alpha \to \alpha)}_{\text{push}} \& \underbrace{(\alpha \to (\eta \& \alpha))}_{\text{pop}} \& \underbrace{\alpha}_{\text{empty}} \]
 *abstype* \tau *with* \(x:\delta\) \\
-*is* \( P = \text{pack}\ \tau,(\text{push}, \text{pop}, \text{empty}) \) \\
-*in* \( \pi_l\ (x_2\ (x_1\ (5\ x_3))) \)
+*is* (\(\textbf{pack}\ \tau,(\text{push}, \text{pop}, \text{empty})\ \textbf{to}\ \exists \alpha. \delta\)) \\
+*in* \( \pi_l\ (x_2\ (x_1\ 5\ x_3)) \) \\
+Где, например, \(\tau = [\eta\ \text{List}]\), \(\text{push} = \texttt{cons}\), \(\text{pop} = \lambda\texttt{(x:xs)} \rightarrow \texttt{(x, xs)}\), \(\text{empty} = \texttt{[]}\)
 #+end_examp
 
 #+begin_export latex
@@ -43,7 +45,7 @@
 \[ \xi = (\bool \rightarrow \bool) \& (\bool \rightarrow \bool) \]
 \[ \Gamma \vdash \underbrace{ \delta[\alpha \coloneqq \bool] }_\xi \]
 *abstype* \(\bool\) *with* \(x:\delta\) \\
-*is* (*pack* \(\bool, \underbrace{( \lambda x^\beta. x, \lambda x^\alpha. x)}_\xi\) *to* \(\exists \alpha. \delta\)) \\
+*is* (*pack* \(\bool, \underbrace{( \lambda x^\bool. x, \lambda x^\alpha. x)}_\xi\) *to* \(\exists \alpha. \delta\)) \\
 *in* \( x_2\ (x_1\ \text{true}) \twoheadrightarrow_\beta \text{true} \)
 #+end_examp
 
@@ -54,11 +56,11 @@ compute \(\approx \lambda x^\delta. x_2\ (x_1\ \text{true})\)
 \[ \text{compute} = \Lambda \alpha. \lambda x^{(\bool \rightarrow \alpha)\&(\alpha \rightarrow \bool)}. x_2\ (x_1\ \text{true}) \]
 #+end_remark
 
+#+NAME: Конструкции ~pack~ и ~abstype~
 #+begin_remark org
-pack \(\tau, M\) to \(\exists \alpha. \delta \equiv \Lambda \beta. \lambda x^{\forall \alpha (\alpha \rightarrow \beta)}. x\ \tau\ M\) \\
-abstype \tau with \(x:\delta\) is \(M\) in \(N:\rho = M\)
+\[ \textbf{pack}\ \tau, M\ \textbf{to}\ \exists \alpha. \sigma \equiv \Lambda \beta. \lambda x^{\forall \alpha. \sigma \rightarrow \beta}.x\ \tau\ M\]
+\[ \textbf{abstype}\ \tau\ \textbf{with}\ x : \sigma\ \textbf{is}\ M\ \textbf{in}\ N : \rho \equiv M\ \rho\ (\Lambda \tau. \lambda x^\sigma. N) \]
 #+end_remark
-\todo
 * Система F
 #+begin_theorem org
 Система F сильно нормализуема
