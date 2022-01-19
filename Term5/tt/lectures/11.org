@@ -4,20 +4,20 @@
 
 * Язык
 Мы находимся где-то в \(\lambda C\)
-#+begin_src text
+#+begin_src tex
 \func id (x : \Type)  : \Type = x
 #+end_src
 К какой части \(\lambda\)-куба относится ~id: * -> *~
-#+begin_src text
+#+begin_src tex
 \fund idid => ud ud --- нельзя 
 #+end_src
 Но такое мы можем написать:
-#+begin_src text
+#+begin_src tex
 \fund id2 (x : \Type) : (x -> x) => \lam a => a
 \func idid2 => id2 (\Type -> \Type) (id2 \Type)
 #+end_src
 Получается что ~\Type -> \Type : \Type~
-#+begin_src text
+#+begin_src tex
 \func Church => (x : \Type)  -> (x -> x) -> (x -> x)
 \func add (m n : Church) => m Church inc n
 #+end_src
@@ -32,7 +32,7 @@
 - ~\Type (k + 1)~ --- все, включая ~\Type k~
 #+begin_examp org
 Черч на типах
-#+begin_src text
+#+begin_src tex
 \func Church => \Pi (x : \Type) -> (x -> x) -> (x -> x)
 \func inc (n : Church) => \lam t f x => n t f (f x)
 \func add (m : Church \levels (\suc\lp)\lh)
@@ -79,13 +79,13 @@ Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ 
 #+end_definition
 #+begin_remark org
 Можем объявлять равенство между некоторыми вещами
-#+begin_src text
+#+begin_src tex
 \data Int'
   | pos' Nat
   | neg' Nat
 #+end_src
 *Проблема*: есть два \(0\). Можно сделать так
-#+begin_src text
+#+begin_src tex
 \data Int
   | pos Nat
   | neg (n : Nat) \elim n {
@@ -93,7 +93,7 @@ Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ 
   }
 #+end_src
 Можем писать, говоря что все элементы дататайпа равны между собой
-#+begin_src text
+#+begin_src tex
 \truncated \data Quotient
   (A : \Type) (R : A -> A -> \Type) : \Set
   | inR A

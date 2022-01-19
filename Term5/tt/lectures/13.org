@@ -29,7 +29,7 @@
 ** Аксиома выбора (попытка 1)
 - ~A B : \Set~, ~A~ --- индексы (\(S\)), ~B~ --- множества (\(\bigcup S\))
 - ~Q : A -> B -> \Prop~ --- отношение быть подмножеством: ~Q a b~ --- \(b\) принадлжеит \(a\)
-#+begin_src text
+#+begin_src tex
 \func Choice (A B : \Set)  (Q : A -> B -> \Prop) (not_empty : \Pi (x : A) -> \Sigma (y : B) (Q x y)):
   \Sigma (f : \Pi (x : A) -> B) (\Pi (x : a) -> Q x (f x)) =>
     (\lam (x : A) => not_empty x.1, \lam (x : A) => not_empty x.2)
@@ -37,7 +37,7 @@
 Произошла перестановка кванторов
 #+begin_definition org
 *Сетоид* --- \(S/_\approx\), \(\approx\) --- отношение эквивалентности
-#+begin_src text
+#+begin_src tex
 <S, E, E-trans, E-refl, E-sym>
 E : S -> S -> \Prop
 #+end_src
@@ -52,7 +52,7 @@ E : S -> S -> \Prop
   - Т.е. \(Bx\) не пусто для всех \(x:A\)
   - Это чистое существование
 2. LEM
-   #+begin_src text
+   #+begin_src tex
 \lem (p : \Prop) : Dec p =>
   \case (f (in~ true)).1 \as x,
         (f (in~ false)).1 \as y \with {
