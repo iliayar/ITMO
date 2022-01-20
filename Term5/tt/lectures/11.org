@@ -30,10 +30,15 @@
 Как это фиксить: ~\Type : \Type~ невозможно (парадокс Жирара)
 #+end_remark
 ** Предикативность
+#+NAME: предикативный уровни
+#+begin_definition org
+\-
 - ~\Type n~
 - ~\Type 0~ --- базовые типы
 - ~\Type 1~ --- все, включая ~\Type 0~
 - ~\Type (k + 1)~ --- все, включая ~\Type k~
+#+end_definition
+
 #+begin_examp org
 Черч на типах
 #+begin_src tex
@@ -54,6 +59,7 @@ Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ 
 ~\Prop~ --- вселенная пропозиций ``чистых утверждений``
 #+end_remark
 
+#+NAME: пропы
 #+begin_definition org
 ~X : \Type~ --- ~\Prop~, если все элементы \(x\) равны
 #+end_definition
@@ -69,17 +75,28 @@ Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ 
 #+begin_examp org
 \(\exists x. \varphi(x)\) --- не prop
 #+end_examp
+#+NAME: множества
 #+begin_definition org
 ~\Set~ --- тип, в котором равентсво --- ~\Prop~
 #+end_definition
+#+NAME: множества_remark
 #+begin_remark org
 Гомотопический уровень типа --- \(+1\) от уровня равенств на нем
 #+end_remark
+#+NAME: Импредикативность
 #+begin_definition org
-Пропозициональное урезание \(\Vert x \Vert\) ~: \Prop~
+*Импредикативность* --- нет различий по пропозициональным уровням
+#+end_definition
+#+NAME: Импредикативность_remark_prop
+#+begin_remark org
+Все ~\Prop~ импредикативны
+#+end_remark
+#+NAME: Пропозициональное обрезание
+#+begin_definition org
+*Пропозициональное обрезание* \(\Vert x \Vert\) ~: \Prop~
 - \(\Vert\) ~Either a b~ \(\Vert\) ~=> a || b~
 - \(\Vert\) ~\Sigma (x : N) (T(x))~ \(\Vert\) --- \(\exists x^N\ T(x)\)
-В аренде есть ~TruncP : \Type -> \Prop~, ~inP~
+В аренде это ~TruncP : \Type -> \Prop~, ~inP~
 #+end_definition
 #+begin_remark org
 Можем объявлять равенство между некоторыми вещами
