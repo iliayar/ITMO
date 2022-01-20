@@ -11,13 +11,16 @@
 \[ c = *\ |\ \square\]
 #+end_definition
 
+#+NAME: Обобщённые типовые системы_symb1
 #+begin_symb org
 Обозначим за \(s\) множество \((*, \square)\)
 #+end_symb
+#+NAME: Обобщённые типовые системы_symb2
 #+begin_symb org
 \(x : y : z \implies x : y\) и \(y : z\)
 #+end_symb
 
+#+NAME: Обобщённые типовые системы_axioms
 #+begin_definition org
 \-
 - Аксиома
@@ -25,11 +28,11 @@
 - Начальное правило
   \[ \frac{\Gamma \vdash A : s}{\Gamma , x : A \vdash x: A} \quad x \not \in FV(\Gamma) \]
 - Применение
-  \[ \frac{\Gamma \vdash \varphi : (\Pi x: A. B): s \quad \Gamma \vdash a : A}{\Gamma \vdash (\varphi a) : (B[x \coloneqq A])} \]
+  \[ \frac{\Gamma \vdash \varphi : (\Pi x: A. B): s \quad \Gamma \vdash a : A}{\Gamma \vdash (\varphi\ a) : (B[x \coloneqq A])} \]
 - Conversion (преобразование)
   \[ \frac{\Gamma \vdash A: B \quad \Gamma \vdash B': s \quad B =_\beta B'}{\Gamma \vdash A : B'} \]
 - Ослабление
-  \[ \frac{\Gamma \vdash B: C \quad \Gamma \vdash A: s}{\Gamma ,x: A \vdash B: C} \quad x \not\in FV(\Gamma) \]
+  \[ \frac{\Gamma \vdash B: C \quad \Gamma \vdash A: s}{\Gamma, x: A \vdash B: C} \quad x \not\in FV(\Gamma) \]
 #+end_definition
 
 #+ATTR_LATEX: 

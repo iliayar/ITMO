@@ -26,6 +26,7 @@
 \[ \frac{\Gamma, x : \delta \vdash M : \rho \quad \Gamma \vdash S:\exists \alpha.\delta}{\Gamma \vdash \textbf{abstype}\ \alpha\ \textbf{with}\ x:\delta\ \textbf{is}\ S\ \textbf{in}\ M:\rho} \quad x \not\in FV(\Gamma) \]
 #+end_definition
 
+#+NAME: Конструкции ~pack~ и ~abstype~_examp1
 #+begin_examp org
 \[ \delta \equiv \underbrace{(\eta \to \alpha \to \alpha)}_{\text{push}} \& \underbrace{(\alpha \to (\eta \& \alpha))}_{\text{pop}} \& \underbrace{\alpha}_{\text{empty}} \]
 *abstype* \tau *with* \(x:\delta\) \\
@@ -34,11 +35,11 @@
 Где, например, \(\tau = [\eta\ \text{List}]\), \(\text{push} = \texttt{cons}\), \(\text{pop} = \lambda\texttt{(x:xs)} \rightarrow \texttt{(x, xs)}\), \(\text{empty} = \texttt{[]}\)
 #+end_examp
 
+#+NAME: Конструкции ~pack~ и ~abstype~_examp2
+#+begin_examp org
 #+begin_export latex
 \newcommand{\bool}{\text{bool}}
 #+end_export
-
-#+begin_examp org
 \[ \texttt{set}: \bool \rightarrow \alpha \]
 \[ \texttt{isTrue}: \alpha \rightarrow \bool \]
 \[ \delta \equiv (\bool \rightarrow \alpha) \& (\alpha \rightarrow \bool) \]
