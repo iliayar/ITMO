@@ -35,7 +35,9 @@
 - ~A B : \Set~, ~A~ --- индексы (\(S\)), ~B~ --- множества (\(\bigcup S\))
 - ~Q : A -> B -> \Prop~ --- отношение быть подмножеством: ~Q a b~ --- \(b\) принадлжеит \(a\)
 #+begin_src tex
-\func Choice (A B : \Set)  (Q : A -> B -> \Prop) (not_empty : \Pi (x : A) -> \Sigma (y : B) (Q x y)):
+\func Choice (A B : \Set)
+             (Q : A -> B -> \Prop)
+             (not_empty : \Pi (x : A) -> \Sigma (y : B) (Q x y)) :
   \Sigma (f : \Pi (x : A) -> B) (\Pi (x : a) -> Q x (f x)) =>
     (\lam (x : A) => not_empty x.1, \lam (x : A) => not_empty x.2)
 #+end_src

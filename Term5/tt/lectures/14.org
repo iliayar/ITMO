@@ -4,6 +4,7 @@
 
 * Линейные типы
 
+#+NAME: Линейная логика_rules
 #+begin_definition org
 *Структурные правила*:
 - Обмен
@@ -75,6 +76,7 @@
 | \(A \times B\) | \(A \& B\)         | \(!A \otimes !B\) |
 | \(A + B\) | \(!A \oplus !B\)        |             |
 ** Уникальные типы
+#+NAME: Уникальные типы_universes
 #+begin_remark org
 Универсумы:
 - \(\mathcal{T}\) --- базовых типов (~int~, ~bool~ и т.п.)
@@ -83,6 +85,7 @@
   - \(\land, \lor, \lnot\) на U
 - \(\mathop{Attr}: \mathcal{T} -> U -> *\)
 #+end_remark
+#+NAME: Уникальные типы
 #+begin_definition org
 \(\lambda\)-исчисление
 \[ e \coloneqq x^{\odot}\ |\ x^\otimes\ |\ \lambda x. e\ |\ e\ e \]
@@ -90,10 +93,12 @@
 - \(C_k\)
 - \(\tau_{k' \rightarrow k} \tau_{k'}\)
 #+end_definition
+#+NAME: Уникальные типы_examp
 #+begin_examp org
 \[ \mathop{dup}\ ::\ t^\times \rightarrow (t^\times, t^\times)^u \]
 \[ \mathop{dup}\ x = (x^\otimes, x^\otimes) \]
 #+end_examp
+#+NAME: Уникальные типы_rules
 #+begin_definition org
 \[ \frac{}{\Gamma, x:t^u \vdash x^\odot : t^u |_{x : u}} \text{Var}\odot \]
 \[ \frac{}{\Gamma, x:t^\times \vdash x^\otimes : t^\times |_{x : \times}} \text{Var}\odot \]
