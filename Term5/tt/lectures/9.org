@@ -24,7 +24,7 @@
 #+begin_definition org
 Элиминатор для равенства (или для интервального типа \(I\)):
 #+begin_src tex
-\func coe (P : U -> \Type) (a : P left) (i : I) : P i \elim
+\func coe (P : I -> \Type) (a : P left) (i : I) : P i \elim i
     | left => a
 #+end_src
 Это не настоящее определение, внутри происходит магия

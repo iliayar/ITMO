@@ -9,7 +9,7 @@
 - Параметрический
   - Параметричекий полифморфизм как Х-М, F \\
     \(\forall x. x \rightarrow x\)
-  - Перегрузка Ad-Hoc \\
+  - Перегрузка Ad-Hoc
     #+begin_src python
 print("a")
 print(7)
