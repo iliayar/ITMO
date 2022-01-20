@@ -153,7 +153,7 @@ _Разрешение системы_: унификация (перепишем 
 #+NAME: Система \(F\)
 #+begin_definition org
 \(L_2\) -- лямбда исчисление 2 порядка (Система F)
-\[ L_2 ::= x\ |\ \lambda x^\alpha. A\ |\ P\ Q\ |\ \color{red} \Lambda \alpha. A\ |\ P\ \tau \]
+\[ L_2 ::= x\ |\ \lambda x^\alpha. A\ |\ P\ Q\ |\ \color{green} \Lambda \alpha. A\ \color{black}|\ \color{green}P\ \tau \]
 #+end_definition
 #+begin_examp org
 \-

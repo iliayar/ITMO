@@ -64,14 +64,14 @@ right~.
 #+begin_remark org
 Константный путь, соединяет \(a\) с \(a\)
 #+begin_src  tex
-\func idp {A : \Type} {a : A} : a=a => path (\lam _ => a)
+\func idp {A : \Type} {a : A} : a = a => path (\lam _ => a)
 #+end_src
 #+end_remark
 
 ** Контруэнтность
 #+NAME: Стандартные функции: ~pmap~
 #+begin_src tex
-\func pmap (A B : \Type) (f : A -> B) (a a' : A) {p : a=a'} : f a = f a'
+\func pmap (A B : \Type) (f : A -> B) (a a' : A) {p : a = a'} : f a = f a'
     => transport (\lam x => f a = f x) p idp
 #+end_src
 ** Неравенство
