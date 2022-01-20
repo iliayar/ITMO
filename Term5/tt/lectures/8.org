@@ -49,7 +49,7 @@ array[a..b] of int
 #+end_remark
 #+NAME: Лямбда-куб
 #+begin_definition org
-\(S \subseteq C \times C\) --- параметризует т.с. \((S_1, S_2) \in S\)
+\(S \subseteq C \times C\) --- параметризует т.с. \((s_1, s_2) \in S\)
 - \(\Pi\)-правило
   \[ \frac{\Gamma \vdash A:s_1 \quad \Gamma, x: A \vdash B: s_2}{\Gamma \vdash (\Pi x : A. B) : s_2} \]
 - \(\lambda\)-правило
