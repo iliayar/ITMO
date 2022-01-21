@@ -22,9 +22,10 @@
 \(\lambda\)HOL:
 - \(*, \square, \triangle\)
 - Правила: \((*, *),(\square, \square), (\square, *)\).
-Если добавим \((\triangle, * )\), все останется хорошо, что там живет:
-\(\Pi x^\square.\text{значения}\), это будет *Ситема \(U^-\)*. Если добавим \((\triangle,
-\square)\), получим неконсистентность, это будет *Система \(U\)*
+Если добавим \((\triangle, * )\), все останется хорошо. Там живет: \(\Pi
+x^\square.\text{значения}\). Если добавим \((\triangle, \square)\),
+получим неконсистентность, это будет *Система \(U\)*. Без
+\((\triangle, * )\) это будет *Ситема \(U^-\)*.
 #+end_remark
 #+begin_remark org
 Топология: \(\mathcal{P}(X)\) --- тип всех функций \(X \rightarrow *\)
@@ -65,7 +66,7 @@
    \[ \sigma \tau Z = \{\tau \sigma x | x \in X\} \]
    #+end_definition
 #+begin_definition org
-\(y = \sigma x\), то \(y < x\)
+\(y \in \sigma x\), то \(y < x\)
 #+end_definition
 #+begin_remark org
 \(\tau \sigma y < \tau \sigma x\)
@@ -74,7 +75,7 @@
 \(X\) --- *индуктивен*, если каждый \(x: y < x\), то \(y \in X\), тогда \(x \in X\)
 #+end_defintiion
 #+begin_remark org
-Трансфинитная индукция -- если утверждение истнинно для всех ординалов
+Трансфинитная индукция --- если утверждение истнинно для всех ординалов
 меньше \(x\) \(\implies\) истинно для ординалов \(x\), то оно истинно
 везде
 #+end_remark

@@ -45,7 +45,7 @@
 \(\sigma_1 \sqsubseteq \sigma_2\) (\(\sigma_2\) --- частный случай \(\sigma_1\)), если:
 - \( \sigma_1 \equiv \forall \alpha_1. \dots \forall \alpha_n. \tau_1 \)
 - \( \sigma_2 \equiv \forall \beta_1. \dots \forall \beta_k. \tau_1[\alpha_1 \coloneqq \Theta_1, \dots, \alpha_n \coloneqq \Theta_n] \)
-Новые переменные \(\beta_1, \dots, \beta_n\) не входит свободно в \(\sigma_1\).
+Новые переменные \(\beta_1, \dots, \beta_n\) не входят свободно в \(\sigma_1\).
 #+end_definition
 #+begin_examp org
 \[ \forall \alpha. \alpha \to \alpha \sqsubseteq \forall \beta. (\beta \to \beta) \to (\beta \to \beta) \]
