@@ -50,6 +50,7 @@
 <S, E, E-trans, E-refl, E-sym>
 E : S -> S -> \Prop
 #+end_src
+Здесь \(E\) --- соответсвующее отношение равенства
 #+end_definition
 *Проблема*: ~not_empty~ слишком сильный
 ** ~Logic.Classical~
