@@ -119,10 +119,16 @@
 * TODO Простая модель для логики второго порядка
 * Система \(F\)
 #+include: "5.org::Система \(F\)"
+#+include: "5.org::Система \(F\)_rules"
 * TODO Изоморфизм Карри-Ховарда для системы \(F\): квантор всеобщности, упорядоченные пары, алгебраические типы
 Может [[Конъюнкция, дизъюнкция, ложь и соответствующие им конструкции в лямбда-исчислении][это]]?
 * Экзистенциальные типы
 #+include: "6.org::Экзистенциальные типы"
+#+begin_remark org
+Правила?
+\[ \frac{\Gamma \vdash \varphi[\alpha \coloneqq \theta]}{\Gamma \vdash \exists \alpha. \varphi} \]
+\[ \frac{\Gamma \vdash \exists \alpha. \varphi \quad \Gamma, \varphi \vdash \psi}{\Gamma \vdash \psi} \]
+#+end_remark
 #+include: "6.org::Экзистенциальные типы_stack"
 * Конструкции ~pack~ и ~abstype~
 #+include: "6.org::Конструкции ~pack~ и ~abstype~"

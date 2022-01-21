@@ -95,7 +95,8 @@ array[a..b] of int
 
 \draw[fill=black] (3, 3, -3) circle[radius=2pt];
 \node[above right] at (3, 3, -3) {\(\lambda C\)};
-\node[below right] at (3, 3, -3) {\(\substack{\text{Исчисление конструкций} \\ \color{blue} \text{Arend, Coq, C++}}\)};
+\node[below right] at (3, 3, -3) {\(\substack{( *, * ) \\ ( *, \square ) \\ ( \square , * ) \\ ( \square , \square )}\)};
+\node[above left] at (3, 3, -3) {\(\substack{\text{Исчисление конструкций} \\ \color{blue} \text{Arend, Coq, C++}}\)};
 
 \draw[fill=black] (3, -3, 3) circle[radius=2pt];
 \node[below left] at (3, -3, 3) {\(\substack{( *, * ) \\ ( *, \square )}\)};

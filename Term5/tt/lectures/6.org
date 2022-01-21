@@ -5,9 +5,9 @@
 * Абстрактные типы данных
 ООП = АТД + наследование \\
 #+NAME: Экзистенциальные типы
-#+begin_remark org
+#+begin_definition org
 \( \exists \alpha. \underbrace{\varphi}_{\text{интерфейс}} \)
-#+end_remark
+#+end_definition
 
 #+NAME: Экзистенциальные типы_stack
 #+begin_examp org
