@@ -52,7 +52,6 @@
 \[ \frac{\Gamma \vdash A \times B}{\Gamma \vdash B} \]
 #+end_remark
 ** Линейная логика
-#+NAME: Линейная логика
 #+begin_definition org
 *Линейная логика*
 Связки:
@@ -62,12 +61,8 @@
 #+end_definition
 #+begin_definition org
 \[ \frac{\Gamma, \pair{A} \vdash B}{\Gamma \vdash A \multimap B} \quad \frac{\Gamma \vdash A \multimap B \quad \Delta \vdash A}{\Gamma, \Delta \vdash B} \]
-#+end_definition
-#+begin_definition org
 \[ \frac{\Gamma \vdash A \quad \Delta \vdash B}{\Gamma, \Delta \vdash A \otimes B} \quad \frac{\Gamma \vdash A \otimes B \quad \Delta, \pair{A}, \pair{B} \vdash C}{\Gamma, \Delta \vdash C} \]
 \[ \frac{\Gamma \vdash A \quad \Gamma \vdash B}{\Gamma \vdash A \& B} \quad \frac{\Gamma \vdash A \& B}{\Gamma \vdash A} \quad \frac{\Gamma \vdash A \& B}{\Gamma \vdash B} \]
-#+end_definition
-#+begin_definition org
 \[ \frac{\Gamma, [A], [A] \vdash B}{\Gamma, [A] \vdash B} \quad \frac{}{\pair{A} \vdash A} \quad \frac{}{[A] \vdash A} \]
 \[ \frac{[\Gamma] \vdash A}{[\Gamma] \vdash !A} \quad \frac{\Gamma \vdash !A \quad \Delta, [A] \vdash B}{\Gamma, \Delta \vdash B} \]
 #+end_definition
