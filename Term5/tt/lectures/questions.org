@@ -76,19 +76,19 @@
 \[ \frac{\Gamma \vdash A : \perp}{\Gamma \vdash A : \tau} \]
 И остальные конструкции и правила для них:
 - \(\varphi \& \psi\)
-  - \(\mathop{mkPair} \coloneqq \lambda x. \lambda y. \lambda f. f\ x\ y\), тогда \(\pair{x, y} = \mathop{mkPair}\ x\ y\)
+  - \(\mathrm{mkPair} \coloneqq \lambda x. \lambda y. \lambda f. f\ x\ y\), тогда \(\pair{x, y} = \mathrm{mkPair}\ x\ y\)
   - \(\pi_1 \coloneqq \lambda p. p\ (\lambda a. \lambda b. a)\)
   - \(\pi_2 \coloneqq \lambda p. p\ (\lambda a. \lambda b. b)\)
   \[ \frac{\Gamma \vdash A : \varphi \quad \Gamma \vdash B : \psi}{\Gamma \vdash \pair{A, B} : \varphi \& \psi} \quad
   \frac{\Gamma \vdash \pair{A, B} : \varphi \& \psi}{\Gamma \vdash \pi_1\ \pair{A, B} : \varphi} \quad
   \frac{\Gamma \vdash \pair{A, B} : \varphi \& \psi}{\Gamma \vdash \pi_2\ \pair{A, B} : \psi} \]
 - \(\varphi \lor \psi\)
-  - \(\mathop{in}_1 \coloneqq \lambda x. \lambda f. \lambda g. f\ x\)
-  - \(\mathop{in}_2 \coloneqq \lambda x. \lambda f. \lambda g. g\ x\)
-  - \(\mathop{case} \coloneqq \lambda a. \lambda f. \lambda g. a\ f\ g\)
-  \[ \frac{\Gamma \vdash A : \varphi}{\Gamma \vdash \mathop{in}_1\ A : \varphi \lor \psi} \quad
-  \frac{\Gamma \vdash A : \psi}{\Gamma \vdash \mathop{in}_2\ A : \varphi \lor \psi} \quad
-  \frac{\Gamma \vdash L : \varphi \lor \psi \quad \Gamma \vdash f : \varphi \rightarrow \tau \quad \Gamma \vdash g : \psi \rightarrow \tau}{\Gamma \vdash \mathop{case}\ L\ f\ g : \tau}\]
+  - \(\mathrm{in}_L \coloneqq \lambda x. \lambda f. \lambda g. f\ x\)
+  - \(\mathrm{in}_R \coloneqq \lambda x. \lambda f. \lambda g. g\ x\)
+  - \(\mathrm{case} \coloneqq \lambda a. \lambda f. \lambda g. a\ f\ g\)
+  \[ \frac{\Gamma \vdash A : \varphi}{\Gamma \vdash \mathrm{in}_L\ A : \varphi \lor \psi} \quad
+  \frac{\Gamma \vdash A : \psi}{\Gamma \vdash \mathrm{in}_R\ A : \varphi \lor \psi} \quad
+  \frac{\Gamma \vdash L : \varphi \lor \psi \quad \Gamma \vdash f : \varphi \rightarrow \tau \quad \Gamma \vdash g : \psi \rightarrow \tau}{\Gamma \vdash \mathrm{case}\ L\ f\ g : \tau}\]
 #+end_definition
 * Чёрчевские нумералы
 #+include: "1.org::Чёрчевские нумералы"
@@ -101,7 +101,8 @@
 #+include: "5.org::Алгебраические термы_examp"
 #+include: "5.org::Подстановка переменных"
 * Задача унификации в алгебраических термах
-См [[Алгебраические термы][Алгебраические термы]] и [[Алгоритм унификации][Алгоритм унификации]].
+Задача приведение системы уравнений в алгебраических термах в
+разрешенному или несовместному виду.
 * Алгоритм унификации
 #+include: "5.org::Несовместная система"
 #+include: "5.org::Алгоритм унификации"
@@ -113,7 +114,13 @@
 #+include: "4.org::Задачи проверки типа, реконструкции (вывода) типа, обитаемости типа в просто типизированном лямбда-исчислении"
 * Алгоритм нахождения типа в просто типизированном лямбда-исчислении
 #+include: "5.org::Алгоритм нахождения типа в просто типизированном лямбда-исчислении"
-* TODO Наиболее общий тип, наиболее общая пара
+* Наиболее общий тип, наиболее общая пара
+#+begin_definition org
+Пусть \(\alpha\) и \(\beta\) --- два типа в \(\lambda_\to\). Тогда \(\alpha\) --- *частный случай* \(\beta\), если существует подстановка \(U\), что \(U(\beta) = \alpha\).
+#+end_definition
+#+begin_definition org
+\(\tau\) --- *наиболее общий тип* в некотором семействе типов \(T\), если \(\forall x \in T\), \(x\) --- частный случай \(\tau\).
+#+end_definition
 * Логика второго порядка
 #+include: "5.org::Логика второго порядка"
 * Выразимость связок через импликацию и квантор всеобщности в интуиционистской логике 2-го порядка (конъюнкция, дизъюнкция, ложь, отрицание, квантор существования)

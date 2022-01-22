@@ -3,11 +3,12 @@
 #+date: 30 ноября
 
 * Парадокс Жирара
+\(\lambda\)-куб не такой вырахительный как хотелось бы
 #+begin_remark org
 Топология: \(\Omega \subseteq \mathcal{P}(X)\)
-- \(\mathcal{P}(X)\) ~: X -> *~
+- \(\mathcal{P}(X)\) --- множество всех функций типа ~X -> *~
 - \(x \in \mathcal{P}(X)\), ~x : X -> *~
-Топология: ~(X -> *) -> *~
+Топология: ~(X -> *) -> *~ --- про подмножество говорим, подходит ли оно
 #+end_remark
 #+begin_remark org
 \-
@@ -17,31 +18,36 @@
 | 3: | Сорта                     | \(\square\)   |
 | 4: |                           | \(\triangle\) |
 #+end_remark
-Обобщение \(\lambda\)-куба
+** Обобщение \(\lambda\)-куба
 #+begin_remark org
 \(\lambda\)HOL:
 - \(*, \square, \triangle\)
 - Правила: \((*, *),(\square, \square), (\square, *)\).
 Если добавим \((\triangle, * )\), все останется хорошо. Там живет: \(\Pi
 x^\square.\text{значения}\). Если добавим \((\triangle, \square)\),
-получим неконсистентность, это будет *Система \(U\)*. Без
-\((\triangle, * )\) это будет *Ситема \(U^-\)*.
+получим неконсистентность.
+\[ \overbrace{\underbrace{( * , * )\ (\square, \square)\ (\square, * )\ (\triangle, \square)}_{\textbf{Система }U^-}\ (\triangle, * )}^{\textbf{Система }U} \]
+И \(U\) и \(U^-\) неконсистентны.
 #+end_remark
 #+begin_remark org
-Топология: \(\mathcal{P}(X)\) --- тип всех функций \(X \rightarrow *\)
+\(\mathcal{P}(X)\) --- тип всех функций \(X \rightarrow *\), тогда топология:
 \[ \underbrace{\underbrace{X \rightarrow *}_\square \rightarrow *}_\square \]
+Заметим, что это на самом деле квантор всеобщности:
 \[ \forall \alpha^\tau. \varphi(\alpha) = A(\underset{ * }{\tau}, \underset{\square}{\varphi})^\square \]
-\[ S\ :\ A(T) \approx (\tau \rightarrow *) \rightarrow * \]
+\[ S\ :\ A(\tau) \approx \overbrace{(\tau \rightarrow *)}^\varphi \rightarrow * \]
+\(\varphi\) --- обобщенная функция отображающая значения типа в утверждение,
+квантор всеобщности --- штука, которая отображает такую фукнцию в
+утверждение: истина эта функция или ложна.
 #+end_remark
 #+begin_remark org
 В системе U можем написать что-то вроде Y-комбинатора --- \(F \equiv
 \lambda\)-выражение, которое не заканчивается, но \(\vdash F : \varphi\), \(\varphi\) -
 любой. Значит любой тип обитаем
 #+end_remark
-** Парадок Бурали-Форте
+* Парадок Бурали-Форте
 1. 
   #+begin_statement org
-  Не существует максиамльного ординала (множества всех ординало)
+  Не существует максиамльного ординала (множества всех ординалов)
   #+end_statement
   #+begin_definition org
   Ординал --- транзитивное, вполне упорядоченное множество
