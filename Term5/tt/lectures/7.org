@@ -130,7 +130,7 @@ struct list {
 };
    #+end_src
    Можем использовать так: ~x->x->x->a~. Заметим, что мы неявно использовали
-   разыменование: \(\texttt{*}:\texttt list*} \rightarrow \texttt{list}\). В
+   разыменование: \(\texttt{*}:\texttt{list*} \rightarrow \texttt{list}\). В
    изорекурсивных типах введены специальные операции для работы с
    этими типами:
    - \(\text{roll} : \texttt{list*} \rightarrow \texttt{list}\)
