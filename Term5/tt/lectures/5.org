@@ -9,7 +9,7 @@
 #+end_definition
 #+NAME: Алгебраические термы_examp
 #+begin_examp org
-\[ f\ (f_2\ a\ b)\ c \]
+\[ f_1\ (f_2\ a\ b)\ c \]
 #+end_examp
 
 ** Подстановка переменных
@@ -20,11 +20,11 @@
   /Решение/: такая подстановка \(S\), что \(S(T_1) \equiv S(T_2)\)
 #+end_definition
 #+begin_examp org
-\[ f\ a\ (a\ b) = f\ (g\ c)\ b \]
+\[ f\ a\ (g\ c) = f\ (g\ d)\ b \]
 _Положим_:
- - \(S_0(a) = g\ c\)
- - \(S_0(a) = g\ b\)
-\[ S(f\ a\ (g\ b)) = f\ (g\ c)\ (g\ b) \]
+ - \(S_0(a) = g\ d\)
+ - \(S_0(b) = g\ c\)
+\[ S_0(f\ a\ (g\ c)) = f\ (g\ d)\ (g\ c) = S_0(f\ (g\ d)\ b) \]
 #+end_examp
 ** Эквивалентность уравнений и систем
 #+begin_definition org
@@ -112,7 +112,7 @@ S(P)\)
 1. \( \lambda x. A\) --- рекурсивный вызов \(\pair{E_A, \tau_A}\) \\
    Система: \(E_A\) \\
    Тип: \(\alpha_x \to \tau_A\)
-_Разрешение системы_: унификация (перепишем \(\alpha \rightarrow \beta\) как \(\alpha\ \beta\))
+_Разрешение системы_: унификация (перепишем \(\alpha \rightarrow \beta\) в алгебраических термах --- \(\to\ \alpha\ \beta\))
 #+end_remark
 #+begin_examp org
 \[ \overbrace{\lambda x. \underbrace{x}_A}^B \]

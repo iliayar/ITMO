@@ -11,11 +11,11 @@
 #+end_src
 К какой части \(\lambda\)-куба относится ~id: * -> *~
 #+begin_src tex
-\fund idid => id id --- нельзя 
+\func idid => id id --- нельзя 
 #+end_src
 Но такое мы можем написать:
 #+begin_src tex
-\fund id2 (x : \Type) : (x -> x) => \lam a => a
+\func id2 (x : \Type) : (x -> x) => \lam a => a
 \func idid2 => id2 (\Type -> \Type) (id2 \Type)
 #+end_src
 Получается что ~\Type -> \Type : \Type~
@@ -98,7 +98,6 @@ Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ 
 - \(\Vert\) ~\Sigma (x : N) (T(x))~ \(\Vert\) --- \(\exists x^N\ T(x)\)
 В аренде это ~TruncP : \Type -> \Prop~, ~inP~
 #+end_definition
-#+begin_remark org
 Можем объявлять равенство между некоторыми вещами
 #+begin_src tex
 \data Int'
@@ -113,6 +112,8 @@ Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ 
     | 0 => pos 0
   }
 #+end_src
+#+NAME: Фактор-множества в Аренде
+#+begin_remark org
 Можем писать, говоря что все элементы дататайпа равны между собой
 #+begin_src tex
 \truncated \data Quotient

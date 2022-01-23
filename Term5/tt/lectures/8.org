@@ -85,7 +85,7 @@ array[a..b] of int
 \node[below right] at (-3, 3, 3) {\(\color{blue}\Lambda \alpha. \lambda x^\alpha. x\)};
 
 \draw[fill=black] (-3, -3, -3) circle[radius=2pt];
-\node[above right] at (-3, -3, -3) {\(\lambda\omega\)};
+\node[above right] at (-3, -3, -3) {\(\lambda\underline{\omega}\)};
 \node[below right] at (-3, -3, -3) {\(\substack{( \square, \square ) \\ ( *, * )}\)};
 \node[left] at (-3, -3, -3) {\(\color{blue}\texttt{Int[]}\)};
 
