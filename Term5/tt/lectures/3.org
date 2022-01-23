@@ -28,7 +28,7 @@
 \begin{array}{lll}
   1) & \vdash \Phi_\alpha \supset \Phi_\alpha \supset \alpha & {\color{blue}\vdash \Phi_\alpha =_\beta \Phi_\alpha \supset \alpha} \\
   2) & \vdash (\Phi_\alpha \supset \Phi_\alpha \supset \alpha) \supset (\Phi_\alpha \supset \alpha) & {\color{blue}\vdash (A \supset (A \supset B)) \supset (A \supset B)} \\
-  3) & \vdash \Phi_\alpha \supset \alpha & {\color{blue}\text{MP }1,2} \\
+  3) & \vdash \Phi_\alpha \supset \alpha & {\color{blue}\text{MP }2,1} \\
   4) & \vdash (\Phi_\alpha \supset \alpha) \supset \Phi_\alpha & {\color{blue}\vdash \Phi_\alpha \supset \alpha =_\beta \Phi_\alpha} \\
   5) & \vdash \Phi_\alpha & {\color{blue}\text{MP }4, 3} \\
   6) & \vdash \alpha & {\color{blue}\text{MP }3, 5}
