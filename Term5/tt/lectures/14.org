@@ -17,10 +17,10 @@
 #+NAME: Комбинаторный базис \(BCKW\)
 #+begin_remark org
 Вспомним комбинаторы:
-- \(B = \lambda x y z. x\ z\ y\)
-- \(C = \lambda x y z. x\ (y\ z)\)
-- \(K = \lambda x y. x\)
-- \(W = \lambda x y. x\ y\ y\)
+- \(B = \lambda x. \lambda y. \lambda z. x\ z\ y\)
+- \(C = \lambda x. \lambda y. \lambda z. x\ (y\ z)\)
+- \(K = \lambda x. \lambda y. x\)
+- \(W = \lambda x. \lambda y. x\ y\ y\)
 Ослабление:
 \begin{center}
 \begin{array}{ll}

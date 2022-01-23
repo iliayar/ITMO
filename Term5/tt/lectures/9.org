@@ -40,7 +40,7 @@ right~.
 ** transport
 #+NAME: Стандартные функции: ~transport~
 #+begin_src tex
-\func transport {A : \Type}  (B : A -> \Type) {a a' : A} (p : a=a') (b : B a) : a'
+\func transport {A : \Type}  (B : A -> \Type) {a a' : A} (p : a=a') (b : B a) : B a'
     => coe (\lam i => B (p @ i)) b right
 #+end_src
 #+NAME: Стандартные функции: ~transport~_explanation
