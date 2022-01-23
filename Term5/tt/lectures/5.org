@@ -73,8 +73,8 @@ S(P)\)
 #+NAME: Несовместная система
 #+begin_definition org
 *Несовместные система* --- система с уравнением вида:
-\[ f\ T_1\dots T_n = g\ P_1 \dots P_n \]
-, где \(f \ne g\) либо \(x = \dots\ x\ \dots\).
+\[ f\ T_1\dots T_k = g\ P_1 \dots P_n \]
+, где \(k \neq n\), либо \(f \ne g\) либо \(x = \dots\ x\ \dots\).
 #+end_definition
 #+begin_remark org
 В Haskell и OCamll --- \(\text{<<occurs check>>}\)
@@ -148,7 +148,7 @@ _Разрешение системы_: унификация (перепишем 
 - \(a\&b \coloneqq \forall p. (a \to b \to p) \to p\)
 - \(a\lor b \coloneqq \forall p. (a \to p) \to (b \to p) \to p\)
 - \(\perp \coloneqq \forall p. p\)
-- \(\exists p. A \coloneqq \forall x. (\forall p. A \to x) \to x\), (\(\exists p. A \equiv \lnot \forall p. \lnot A\))
+- \(\exists p. A \coloneqq \forall x. (\forall p. A \to x) \to x\), (\(\exists p. A \approx \lnot \forall p. \lnot A\))
 #+end_statement
 #+NAME: Система \(F\)
 #+begin_definition org
