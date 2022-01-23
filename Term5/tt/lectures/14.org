@@ -83,22 +83,22 @@
 #+NAME: Уникальные типы
 #+begin_definition org
 \(\lambda\)-исчисление
-\[ e \coloneqq x^{\odot}\ |\ x^\otimes\ |\ \lambda x. e\ |\ e\ e \]
-\(\tau_k\) --- тип
-- \(C_k\)
-- \(\tau_{k' \rightarrow k} \tau_{k'}\)
+\[ e \coloneqq x^{\odot}\ |\ x^\otimes\ |\ \lambda x. e\ |\ e\ e\ |\ \tau_k\ |\ C_k\ |\ \tau_{(k' \to k)}\ \tau_{k'} \]
 #+end_definition
 #+NAME: Уникальные типы_examp
 #+begin_examp org
-\[ \mathop{dup}\ ::\ t^\times \rightarrow (t^\times, t^\times)^u \]
+\[ \mathop{dup}\ ::\ (t^\times \rightarrow (t^\times, t^\times))^u \]
 \[ \mathop{dup}\ x = (x^\otimes, x^\otimes) \]
 #+end_examp
 #+NAME: Уникальные типы_rules
 #+begin_definition org
-\[ \frac{}{\Gamma, x:t^u \vdash x^\odot : t^u |_{x : u}} \text{Var}\odot \]
-\[ \frac{}{\Gamma, x:t^\times \vdash x^\otimes : t^\times |_{x : \times}} \text{Var}\odot \]
-\[ \frac{\Gamma, x: a \vdash e : b |\text{fv} \quad \text{fv}' = {\color{red}?}_\times \text{fv}}{\Gamma \vdash \lambda x. e:a \xrightarrow{\lor\text{fv'}} b |_{\text{fv'}}} \]
-\[ \frac{\Gamma \vdash e_1 : a \xrightarrow{u} b |_{\text{fv}_1} \quad \Gamma \vdash e_2 : a |_{\text{fv}_2}}{\Gamma \vdash e_1\ e_2 : b |_{\text{fv}_1 \cup \text{fv}_2}} \]
+- Введеление перменных
+  \[ \frac{}{\Gamma, x:t^u \vdash x^\odot : t^u |_{x : u}} \text{Var}^\odot \]
+  \[ \frac{}{\Gamma, x:t^\times \vdash x^\otimes : t^\times |_{x : \times}} \text{Var}^\otimes \]
+- Абстракция
+  \[ \frac{\Gamma, x: a \vdash e : b |\text{fv} \quad \text{fv}' = {\color{red}?}_\times \text{fv}}{\Gamma \vdash \lambda x. e:a \xrightarrow{\lor\text{fv'}} b |_{\text{fv'}}} \]
+- Аппликация
+  \[ \frac{\Gamma \vdash e_1 : a \xrightarrow{u} b |_{\text{fv}_1} \quad \Gamma \vdash e_2 : a |_{\text{fv}_2}}{\Gamma \vdash e_1\ e_2 : b |_{\text{fv}_1 \cup \text{fv}_2}} \]
 #+end_definition
 
 
