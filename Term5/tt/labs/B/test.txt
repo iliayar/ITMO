@@ -1,0 +1,1 @@
+|- (\t. t) \x. \y. x (\z. z) y x : forall t. forall a. (a -> b -> c) -> d -> e -> f [rule #1]
