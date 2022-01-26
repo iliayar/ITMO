@@ -1,11 +1,13 @@
-{-# LANGUAGE StandaloneDeriving #-}
 module Proof where
 
 import Control.Monad.State
 import Data.List (intercalate)
+import qualified Data.Map as M
 
 newtype Var = Var String
+  deriving (Eq, Ord)
 newtype TypeVar = TypeVar String
+  deriving (Eq, Ord)
 newtype Rule = Rule Int
 
 instance Show TypeVar where
@@ -33,27 +35,22 @@ data Statement = Statement Context TypedExpression Rule
 instance Show Statement where
   show (Statement ctx expr rule) = show ctx ++ " |- " ++ show expr ++ " " ++ show rule
 
-newtype Context = Context [ContextVar]
+newtype Context = Context (M.Map Var Type)
+  deriving (Eq)
 
 instance Show Context where
-  show (Context l) = show l
+  show (Context m) = intercalate ", " $ map (\(v, t) -> show v ++ " : " ++ show t) $ M.toList m
 
-infix 6 :::
+infix 3 :::
 
-data ContextVar = (:::) Var Type
-
-instance Show ContextVar where
-  show (v ::: t) = show v ++ " : " ++ show t
-
-infix 6 ::::
-
-data TypedExpression = (::::) Expression Type
+data TypedExpression = (:::) Expression Type
 
 instance Show TypedExpression where
-  show (e :::: t) = show e ++ " : " ++ show t
+  show (e ::: t) = show e ++ " : " ++ show t
 
 data Type = TypeMonoType MonoType
           | TypeForall TypeVar Type
+          deriving (Eq)
 
 instance Show Type where
   show (TypeMonoType mt) = show mt
@@ -63,6 +60,7 @@ infixr 6 :->:
 
 data MonoType = MonoTypeVar TypeVar
               | (:->:) MonoType MonoType
+          deriving (Eq)
 
 instance Show MonoType where
   show (MonoTypeVar v) = show v
@@ -76,6 +74,7 @@ data Expression = (:\:) Var Expression
                 | ExpressionLetIn Var Expression Expression
                 | (:@:) Expression Expression
                 | ExpressionVar Var
+                  deriving (Eq)
 
 instance Show Expression where
   show (v :\: e) = paren $ "λ" ++ show v ++ ". " ++ show e

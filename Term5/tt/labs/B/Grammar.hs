@@ -2,6 +2,7 @@
 module Grammar where
 import Tokens
 import Proof
+import qualified Data.Map as M
 import qualified Data.Array as Happy_Data_Array
 import qualified Data.Bits as Bits
 import Control.Applicative(Applicative(..))
@@ -325,7 +326,7 @@ happyReduction_7 (HappyAbsSyn11  happy_var_3)
 	_
 	(HappyAbsSyn13  happy_var_1)
 	 =  HappyAbsSyn8
-		 (happy_var_1 :::: happy_var_3
+		 (happy_var_1 ::: happy_var_3
 	)
 happyReduction_7 _ _ _  = notHappyAtAll 
 
@@ -338,7 +339,7 @@ happyReduction_8 _  = notHappyAtAll
 
 happyReduce_9 = happySpecReduce_0  10 happyReduction_9
 happyReduction_9  =  HappyAbsSyn10
-		 ([]
+		 (M.empty
 	)
 
 happyReduce_10 = happySpecReduce_3  10 happyReduction_10
@@ -346,7 +347,7 @@ happyReduction_10 (HappyAbsSyn11  happy_var_3)
 	_
 	(HappyTerminal (TokenVar happy_var_1))
 	 =  HappyAbsSyn10
-		 ([Var happy_var_1 ::: happy_var_3]
+		 (M.singleton (Var happy_var_1) happy_var_3
 	)
 happyReduction_10 _ _ _  = notHappyAtAll 
 
@@ -358,7 +359,7 @@ happyReduction_11 ((HappyAbsSyn10  happy_var_5) `HappyStk`
 	(HappyTerminal (TokenVar happy_var_1)) `HappyStk`
 	happyRest)
 	 = HappyAbsSyn10
-		 (Var happy_var_1 ::: happy_var_3 : happy_var_5
+		 (M.insert (Var happy_var_1) happy_var_3 happy_var_5
 	) `HappyStk` happyRest
 
 happyReduce_12 = happySpecReduce_3  11 happyReduction_12

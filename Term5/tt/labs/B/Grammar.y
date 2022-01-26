@@ -2,6 +2,7 @@
 module Grammar where
 import Tokens
 import Proof
+import qualified Data.Map as M
 }
 
 %name parseFile
@@ -25,7 +26,7 @@ import Proof
   '('    { TokenLParen }
   ')'    { TokenRParen }
 
-%right '.'
+%left in
 %right '->'
 
 %%
@@ -40,13 +41,13 @@ Indent : {- empty -} { 0 }
 
 Line : Indent Context '|-' TypedExpression rule { ($1, Statement $2 $4 (Rule $5)) }
 
-TypedExpression : Expression ':' Type { $1 :::: $3 }
+TypedExpression : Expression ':' Type { $1 ::: $3 }
 
 Context : ContextPrime { Context $1 }
 
-ContextPrime : {- empty -} { [] }
-	     | var ':' Type { [Var $1 ::: $3] }
-	     | var ':' Type ',' ContextPrime { Var $1 ::: $3 : $5 }
+ContextPrime : {- empty -} { M.empty }
+	     | var ':' Type { M.singleton (Var $1) $3 }
+	     | var ':' Type ',' ContextPrime { M.insert (Var $1) $3 $5 }
 
 Type : '(' Type ')' { $2 }
      | Monotype { TypeMonoType $1 }
