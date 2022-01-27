@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wall #-}
 module ProofChecker where
 
 import Proof
@@ -87,14 +88,14 @@ check' (Tree (Statement ctx (e0 :@: e1 ::: (TypeMonoType t1)) (Rule 2))
   all check' concl && e0 == e0' && e1' == e1 && t1 == t1' && t == t' && ctx1 == ctx && ctx2 == ctx
 check' (Tree (Statement ctx (x :\: e ::: (TypeMonoType (t :->: t1))) (Rule 3))
        concl@[ Tree (Statement ctx1 (e' ::: (TypeMonoType t1')) _) _]) =
-  all check' concl && t1' == t1 && e' == e && ctxInsert x (TypeMonoType t) ctx == ctx1
+  all check' concl && t1' == t1 && e' == e && not (ctxMember x ctx) && ctxInsert x (TypeMonoType t) ctx == ctx1
 check' (Tree (Statement ctx (ExpressionLetIn x e0 e1 ::: (TypeMonoType t)) (Rule 4))
        concl@[ Tree (Statement ctx1 (e0' ::: sigma) _) _
              , Tree (Statement ctx2 (e1' ::: (TypeMonoType t')) _) _]) =
-  all check' concl && e0' == e0 && e1' == e1 && t' == t && ctxInsert x sigma ctx == ctx2 && ctx == ctx1
+  all check' concl && e0' == e0 && e1' == e1 && t' == t && not (ctxMember x ctx) && ctxInsert x sigma ctx == ctx2 && ctx == ctx1
 check' (Tree (Statement ctx (e ::: sigma) (Rule 5))
        concl@[ Tree (Statement ctx1 (e' ::: sigma') _) _]) =
-  all check' concl && e == e' && checkSubtype sigma' sigma
+  all check' concl && e == e' && checkSubtype sigma' sigma && ctx == ctx1
 check' (Tree (Statement ctx (e ::: (TypeForall alpha sigma)) (Rule 6))
        concl@[ Tree (Statement ctx1 (e' ::: sigma') _) _]) =
   all check' concl && not (Set.member alpha $ ctxFindTypeFree ctx) && e' == e && sigma' == sigma && ctx1 == ctx
