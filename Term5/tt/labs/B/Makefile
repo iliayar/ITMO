@@ -4,11 +4,11 @@ tasknum=B
 
 all: Main
 
-run: Main
+run:
 	./Main
 
 Main: parser Main.hs
-	ghc Main.hs -O5 -o Main
+	ghc Main.hs
 
 parser: Tokens.hs Grammar.hs
 
