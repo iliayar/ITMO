@@ -5,7 +5,7 @@ tasknum=B
 all: Main
 
 run: Main
-	@./Main
+	./Main
 
 Main: parser Main.hs
 	ghc Main.hs -O5 -o Main

@@ -4,9 +4,13 @@ import Proof
 import qualified Data.Map as M
 import Control.Monad.State
 import qualified Data.Set as S
+import Data.Maybe (isJust)
 
 ctxLookup :: Var -> Context -> Maybe Type
 ctxLookup v (Context m) = M.lookup v m
+
+ctxMember :: Var -> Context -> Bool
+ctxMember v (Context m) = M.member v m
 
 ctxInsert :: Var -> Type -> Context -> Context
 ctxInsert v t (Context m) = Context $ M.insert v t m
@@ -37,7 +41,8 @@ checkSubtype t1 t2 =
   let
     (as, mt1) = trunkSchema t1
     (bs, mt2) = trunkSchema t2
-  in checkSubst mt1 mt2 && 0 == S.size (S.intersection (findTypeFree t1) bs)
+    (substOk, subst) = checkSubst mt1 mt2
+  in substOk && all (\v -> S.member v as) (M.keysSet subst) && 0 == S.size (S.intersection (findTypeFree t1) bs)
 
 trunkSchema :: Type -> (S.Set TypeVar, MonoType)
 trunkSchema (TypeMonoType t) = (S.empty, t)
@@ -45,8 +50,8 @@ trunkSchema (TypeForall v t) =
   let (s, mt) = trunkSchema t
   in (S.insert v s, mt)
 
-checkSubst :: MonoType -> MonoType -> Bool
-checkSubst t1 t2 = evalState (checkSubst' t1 t2) M.empty
+checkSubst :: MonoType -> MonoType -> (Bool, M.Map TypeVar MonoType)
+checkSubst t1 t2 = runState (checkSubst' t1 t2) M.empty
   where
     checkSubst' :: MonoType -> MonoType -> State (M.Map TypeVar MonoType) Bool
     checkSubst' (le1 :->: le2) (re1 :->: re2) = do
@@ -60,5 +65,6 @@ checkSubst t1 t2 = evalState (checkSubst' t1 t2) M.empty
           | e' == e -> pure True
           | otherwise -> pure False
         Nothing -> do
-          modify $ M.insert v e
+          if (MonoTypeVar v) == e then pure () else modify $ M.insert v e
           pure True
+    checkSubst' _ _ = pure False
