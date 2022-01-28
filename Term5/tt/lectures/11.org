@@ -1,0 +1,134 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 11
+#+date: 23 ноября
+
+* Язык
+#+NAME: Каков тип типа: необходимость увеличения выразительной силы языка
+#+begin_remark org
+Мы находимся где-то в \(\lambda C\)
+#+begin_src tex
+\func id (x : \Type) : \Type = x
+#+end_src
+К какой части \(\lambda\)-куба относится ~id: * -> *~
+#+begin_src tex
+\func idid => id id --- нельзя 
+#+end_src
+Но такое мы можем написать:
+#+begin_src tex
+\func id2 (x : \Type) : (x -> x) => \lam a => a
+\func idid2 => id2 (\Type -> \Type) (id2 \Type)
+#+end_src
+Получается что ~\Type -> \Type : \Type~
+#+end_remark
+
+#+begin_src tex
+\func Church => (x : \Type)  -> (x -> x) -> (x -> x)
+\func add (m n : Church) => m Church inc n
+#+end_src
+Здесь ожидаем, что ~inc : Church -> Church~
+#+begin_remark org
+Как это фиксить: ~\Type : \Type~ невозможно (парадокс Жирара)
+#+end_remark
+** Предикативность
+#+NAME: предикативный уровни
+#+begin_definition org
+\-
+- ~\Type n~
+- ~\Type 0~ --- базовые типы
+- ~\Type 1~ --- все, включая ~\Type 0~
+- ~\Type (k + 1)~ --- все, включая ~\Type k~
+#+end_definition
+
+#+begin_examp org
+Черч на типах
+#+begin_src tex
+\func Church => \Pi (x : \Type) -> (x -> x) -> (x -> x)
+\func inc (n : Church) => \lam t f x => n t f (f x)
+\func add (m : Church \levels (\suc\lp)\lh)
+          (n : Church \levels \lp \lh) : Church \levels \lp \lh
+	  => m Church inc m
+#+end_src
+В ~add~ нужно применить ~Church~ к другим ~Church~. ~\lp~ --- внутренняя
+перменная, которая хранит текущий уровень предикативности. Мы говорим
+что первый аргумент имеет уровень предикативности на один больше,
+второй аргуент и результат имеют один уровень предикативности. Тогда ~m
+Church~ будет иметь тип ~(Church -> Church) -> (C -> C~), ~Church~ который
+внутри имеет уровень предикативности на один меньше
+#+end_examp
+#+begin_remark org
+~\Prop~ --- вселенная пропозиций ``чистых утверждений``
+#+end_remark
+
+#+NAME: пропы
+#+begin_definition org
+~X : \Type~ --- ~\Prop~, если все элементы \(x\) равны
+#+end_definition
+#+begin_examp org
+Доказательство ~Nat~ --- prop
+#+end_examp
+#+begin_examp org
+~a : \Prop~, ~b : \Prop~, то ~(a, b) : \Prop~
+#+end_examp
+#+begin_examp org
+~Either a b~ --- не prop, ~inLeft a~ \(\neq\) ~inRight b~
+#+end_examp
+#+begin_examp org
+\(\exists x. \varphi(x)\) --- не prop
+#+end_examp
+#+NAME: множества
+#+begin_definition org
+~\Set~ --- тип, в котором равентсво --- ~\Prop~
+#+end_definition
+#+NAME: множества_remark
+#+begin_remark org
+Гомотопический уровень типа --- \(+1\) от уровня равенств на нем
+#+end_remark
+#+NAME: Импредикативность
+#+begin_definition org
+*Импредикативность* --- нет различий по пропозициональным уровням
+#+end_definition
+#+NAME: Импредикативность_remark_prop
+#+begin_remark org
+Все ~\Prop~ импредикативны
+#+end_remark
+#+NAME: Пропозициональное обрезание
+#+begin_definition org
+*Пропозициональное обрезание* \(\Vert x \Vert\) ~: \Prop~
+- \(\Vert\) ~Either a b~ \(\Vert\) ~=> a || b~
+- \(\Vert\) ~\Sigma (x : N) (T(x))~ \(\Vert\) --- \(\exists x^N\ T(x)\)
+В аренде это ~TruncP : \Type -> \Prop~, ~inP~
+#+end_definition
+Можем объявлять равенство между некоторыми вещами
+#+begin_src tex
+\data Int'
+  | pos' Nat
+  | neg' Nat
+#+end_src
+*Проблема*: есть два \(0\). Можно сделать так
+#+begin_src tex
+\data Int
+  | pos Nat
+  | neg (n : Nat) \elim n {
+    | 0 => pos 0
+  }
+#+end_src
+#+NAME: Фактор-множества в Аренде
+#+begin_remark org
+Можем писать, говоря что все элементы дататайпа равны между собой
+#+begin_src tex
+\truncated \data Quotient
+  (A : \Type) (R : A -> A -> \Type) : \Set
+  | inR A
+  | eq (a a' : A) (r : R a a') (i : I)
+    \elim i {
+      | left => inR a
+      | right => inR a'
+    }
+#+end_src
+Положили ~A~ в коробочку и рядом положили равенство
+#+end_remark
+#+begin_remark org
+\-
+- ~Set~ деклалирует единственность равенства
+- Prop деклалирует единственность элементов
+#+end_remark

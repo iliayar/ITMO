@@ -1,0 +1,94 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 9
+#+date: 9 ноября
+
+* Равенство
+#+NAME: Равенство как путь в топологическом пространстве
+#+begin_definition org
+\(a\), \(b\) из типа \(A\), тогда \(a \xlongequal[]{A} b\) (равны в
+типе \(A\)), если сущесвует путь \(a \leadsto b\).
+- \(I\) --- интервальный тип \([\texttt{left}; \texttt{right}]\)
+- Сущесвует непрерывная функция \(f: I \to A\)
+  - \(f\ \texttt{left} =_\beta a\)
+  - \(f\ \texttt{right} =_\beta b\)
+#+begin_src tex
+\data Path
+    | path (f: I -> A) : f left = f right
+#+end_src
+#+end_definition
+* Элиминаторы
+#+begin_examp org
+Элиминатор для дизъюнкции: \(\texttt{case}\ (f: L \to \Theta)\ (g: R \to \Theta)\ (v: L \lor R)\ :\ \Theta\) \\
+#+end_examp
+#+NAME: Интервальный тип, магия и ~coe~_coe_definition
+#+begin_definition org
+Элиминатор для равенства (или для интервального типа \(I\)):
+#+begin_src tex
+\func coe (P : I -> \Type) (a : P left) (i : I) : P i \elim i
+    | left => a
+#+end_src
+Это не настоящее определение, внутри происходит магия
+#+end_definition
+#+NAME: Интервальный тип, магия и ~coe~_explanation
+#+begin_remark org
+Что здесь написано: матчимся только по ~left~. Все объекты вдоль пути
+равны, значит наверное можем всегда выдавать левую часть. Если ~a : P
+left~ (\(a\) выполнено в \(P\ \textt{left}\)) и ~a = a'~, тогда ~a' : P
+right~.
+#+end_remark
+
+** transport
+#+NAME: Стандартные функции: ~transport~
+#+begin_src tex
+\func transport {A : \Type}  (B : A -> \Type) {a a' : A} (p : a=a') (b : B a) : B a'
+    => coe (\lam i => B (p @ i)) b right
+#+end_src
+#+NAME: Стандартные функции: ~transport~_explanation
+#+begin_remark org
+/Что здесь написано/:
+- Есть тип в котором мы живем \(A\)
+- Нечто что нам выдаст утверждение \(B\)
+- ~p: a=a'~
+  - ~p @ left~ --- ~a~
+  - ~p @ right~ --- ~a~'
+- Лямбда идет в первый аргумент ~coe~, получаем путь из ~B a~ в ~B a'~
+- У нас есть ~B a~, попросим конец пути ~B a'~
+#+end_remark
+
+#+NAME: Стандартные функции: ~transport~_examp
+#+begin_src tex
+\func inv (A : \Type) {a a' : A} (p : a = a') : a' = a
+    => transport (\lam x => x=a) p (idp {A} {a})
+#+end_src
+
+#+begin_remark org
+Константный путь, соединяет \(a\) с \(a\)
+#+begin_src  tex
+\func idp {A : \Type} {a : A} : a = a => path (\lam _ => a)
+#+end_src
+#+end_remark
+
+** Контруэнтность
+#+NAME: Стандартные функции: ~pmap~
+#+begin_src tex
+\func pmap (A B : \Type) (f : A -> B) (a a' : A) {p : a = a'} : f a = f a'
+    => transport (\lam x => f a = f x) p idp
+#+end_src
+** Неравенство
+\(0 \neq 1\)
+#+begin_src tex
+\data Nat
+    | zero
+    | suc (k : Nat)  
+#+end_src
+
+Докажем что \(\texttt{zero} \neq \texttt{suc zero}\)
+- ~Not (zero = suc zero)~
+- ~Not (A : \Type) : A -> Empty~
+#+begin_src tex
+\func proof_ne (a : Nat) : \Type \elim a
+    | zero => 0 = 0
+    | succ x => Empty
+\func zne (x : 0 = 1) : Empty => transport proof_ne {0} {1} x idp
+#+end_src
+

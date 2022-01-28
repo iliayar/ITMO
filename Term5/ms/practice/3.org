@@ -1,0 +1,55 @@
+#+setupfile: setup.org
+#+TITLE: Практика 3
+#+date: 22 сентября
+
+#+begin_task org
+Известно что случайная величина имеет распределение Бернулли(\(\X \in
+B_p\)). Найти оценка параметра \(p\) методом максимального
+правдоподобия.
+#+end_task
+#+begin_solution org
+\[ L(\vec{X}, \Theta) = \prod_{i = 1}^n (1 - p)^{n - n \overline{X}} \cdot p^{n\overline{X}} \]
+\[ \ln L(\vec{X}, \Theta) = (n - n\overline{X}) \cdot \ln (1 - p) + n\overline{X} \cdot \ln p  = \]
+\[ \frac{\partial \ln L(\vec{X}, \Theta)}{\partial p} = \frac{n - n \overline{X}}{1 - p} + \frac{n}{p} = 0 \implies  \]
+\[ \implies p = \overline{X} \]
+#+end_solution
+
+#+begin_task org
+\(\X \in E_\alpha\)
+1. \(E_\alpha\) --- регулярное семейство
+2. Найти \(I(\alpha)\)
+#+end_task
+#+begin_solution org
+\[ f_\alpha(x) = \begin{cases} 0 & x < 0 \\ \alpha e^{-\alpha x} & x > 0 \end{cases} \]
+Носитель \(C = (0; \infty)\)
+\[ \frac{\partial}{\partial \alpha} \ln f_\alpha(x) = \frac{\partial}{\partial \alpha} (\ln \alpha - \alpha x) = \frac{1}{\alpha} - x \]
+--- непрерывно при \(\forall \alpha\)
+\[ I(\alpha) = E(\frac{\partial}{\partial \alpha} \ln f_\alpha(X))^2 = E(\frac{1}{\alpha} - X)^2 = E(X - EX)^2 = DX = \frac{1}{\alpha^2} \]
+--- информация Фишера
+#+end_solution
+
+#+begin_remark org
+\[ \frac{1}{n \pm \alpha} = \frac{\alpha^2}{n} \]
+#+end_remark
+
+#+begin_remark org
+Можем взять вместо параметра \(\alpha\) параметр \(\frac{1}{\alpha}\). Тогда оценка будет несмещенной.
+\[ f_\alpha(x) = \begin{cases} 0 & x < 0 \\ \frac{e^{-\frac{x}{\alpha}}}{\alpha} & x > 0 \end{cases} \]
+Носитель \(C = (0; \infty)\)
+\[ \frac{\partial}{\partial \alpha} \ln f_\alpha(x) = \frac{x}{\alpha^2} - \frac{1}{\alpha} \]
+--- непрерывно при \(\forall \alpha\)
+\[ I(\alpha) = E(\frac{X}{\alpha^2} - \frac{1}{\alpha})^2 = \frac{1}{\alpha^4} E(X - \alpha)^2 = \frac{1}{\alpha^4} E(X - EX)^2 = \frac{1}{\alpha^4} DX = \frac{1}{\alpha^2}  \]
+\[ \alpha^* = \overline{X} \quad D\alpha^* = D \overline{X} = \fraac{\alpha^2}{n} \]
+\(\alpha^* = \overline{X}\) --- эффективная оценка
+#+end_remark
+
+#+begin_task org
+\(\X \in U(0, \Theta)\)
+\[ \Theta = 2\overline{X}  \quad \tilde{\Theta} = \frac{n + 1}{n}\overline{X}\]
+#+end_task
+#+begin_solution org
+\(C = (0; \infty)\)
+\[ I(\Theta) = E(\frac{\partial}{\partial \Theta} \ln f_\Theta(X)) = E(-\frac{1}{\Theta})^2 = \frac{1}{\Theta^2} \]
+\[ D\Theta^* = \fraac{\Theta^2}{3n} \quad D\tilde{\Theta} = \frac{\Theta^2}{n(n + 2)} \]
+Нарушено неравенство Раво-Крамера, т.к семейство не регулярное
+#+end_solution

@@ -1,0 +1,47 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 4
+#+date: 17 сентября
+
+* Semigroup
+#+begin_src haskell
+ class Semigroup m where
+   (<>):: m -> m -> m
+#+end_src
+
+Ассоциатвиный закон для ~Semigroup~:
+1. \((x \hsOp{<>} y) \hsOp{<>} z \equiv x \hsOp{<>} (y \hsOp{<>} z)\)
+
+#+begin_examp org
+\-
+#+begin_src haskell
+ instance Semigroup [a] where
+   (<>) = (++)
+#+end_src
+#+end_examp
+
+
+* Monoid
+#+begin_src haskell
+ class Semigroup m => Monoid m where
+   mempty :: m
+#+end_src
+
+~Identity~ Закон для ~Monoid~:
+1. \(x \hsOp{<>} \mathop{\rm mempty} \equiv x\)
+2. \(\mathop{\rm mempty} \hsOp{<>} x \equiv x\)
+
+
+* Foldable
+#+begin_src haskell
+ class Foldable t where
+   {-# MINIMAL foldMap | foldr #-}
+
+   fold    :: Monoid m => t m -> m
+   foldMap :: Monoid m => (a -> m) -> t a -> m
+   foldr   :: (a -> b -> b) -> b -> t a -> b
+#+end_src
+
+#+begin_remark org
+~length~ определен через ~Foldable~
+#+end_remark
+
