@@ -1,0 +1,179 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 5
+#+date: 5 октября
+
+* Алгебраические термы
+#+NAME: Алгебраические термы
+#+begin_definition org
+\[ T ::= a | (f\ T_1\dots T_n) \]
+#+end_definition
+#+NAME: Алгебраические термы_examp
+#+begin_examp org
+\[ f_1\ (f_2\ a\ b)\ c \]
+#+end_examp
+
+** Подстановка переменных
+#+begin_definition org
+*Подстановка*:
+- \(S_0: V \to T\) --- тождественно почти всюду (кроме конечного количества)
+- \(T_1 = T_2\) --- *уравнение* \\
+  /Решение/: такая подстановка \(S\), что \(S(T_1) \equiv S(T_2)\)
+#+end_definition
+#+begin_examp org
+\[ f\ a\ (g\ c) = f\ (g\ d)\ b \]
+_Положим_:
+ - \(S_0(a) = g\ d\)
+ - \(S_0(b) = g\ c\)
+\[ S_0(f\ a\ (g\ c)) = f\ (g\ d)\ (g\ c) = S_0(f\ (g\ d)\ b) \]
+#+end_examp
+** Эквивалентность уравнений и систем
+#+begin_definition org
+Две системы:
+\(E_1:\)
+  \begin{cases}
+  T_1 = P_1 \\
+  \vdots \\
+  T_n = P_n
+  \end{array},
+\(E_2: \)
+  \begin{cases}
+  T_1' = P_1' \\
+  \vdots \\
+  T_n' = P_n'
+  \end{array}
+называются *эквивалентными*, если любое решение системы \(E_1\) подходит к \(E_2\) и наоборот
+#+end_definition
+#+begin_statement org
+Для системы \(\begin{cases}T_1 = P_1 \\ \vdots \\ T_n =
+p_n\end{cases}\) существует эквивалентное уравнение
+#+end_statement
+#+begin_proof org
+Выберем \(k\) --- новый ф.с. \(n\)-местный интервал
+\[ T_1\ \dots\ T_n = h\ P_1\ \dots\ P_n \]
+#+end_proof
+#+NAME: Наиболее общее решение задачи унификации_def1
+#+begin_definition org
+Определим порядок на подстановках: \(S \le T\), если \(S\) --- частный
+случай \(T\): существует подстановка \(U\), что \(S = U \circ T\)
+#+end_definition
+#+NAME: Наиболее общее решение задачи унификации_def2
+#+begin_definition org
+\(U \circ T\): \[ (U \circ T)(P) = U(T(P)) \]
+#+end_definition
+#+NAME: Наиболее общее решение задачи унификации
+#+begin_definition org
+*Наиболее общим решением* \(T = P\) назовем подстановку \(S\), что для
+любой \(S_1\): \(S_1(T) \equiv S_1(P)\) выполнено \(S_1 \le S\) и \(S(T) =
+S(P)\)
+#+end_definition
+#+begin_theorem org
+У уравнения в алгебраических термах \(T = P\) всегда есть наиболее
+общее решение, если есть хоть какое-то
+#+end_theorem
+#+NAME: Несовместная система
+#+begin_definition org
+*Несовместные система* --- система с уравнением вида:
+\[ f\ T_1\dots T_k = g\ P_1 \dots P_n \]
+, где \(k \neq n\), либо \(f \ne g\) либо \(x = \dots\ x\ \dots\).
+#+end_definition
+#+begin_remark org
+В Haskell и OCamll --- \(\text{<<occurs check>>}\)
+#+end_remark
+#+begin_definition org
+Система в *разрешенной форме*
+\( \begin{cases} a_1 = T_1 \\ \vdots \\ a_n = T_n \end{cases} \)
+, где
+1. все \(a\) различны
+2. \(T_i\) не содержит \(a_j\)
+#+end_definition
+** Алгоритм унификации
+Рассмотрим систему
+\( \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = P_n \end{cases} \):
+1. \(x = x\) --- отбрасываем
+2. \(T = x\), где \(T \not\equiv x\) \( \implies x = T \)
+3. \[ \begin{cases} x = P \\ \vdots \\ T_2 = P_2 \\ \vdots \\ T_n = P_n \end{cases} \implies \begin{cases} T_2[x \coloneqq P] = P_2[x \coloneqq P] \\ \vdots \\ T_n[x \coloneqq P] = P_n[x \coloneqq P] \\ \vdots \\ x = P \end{cases}\]
+4. \(f\ T_1\ \dots\ T_n = f\ P_1\ \dots\ P_n \implies\)
+   \( \begin{cases} T_1 = P_1 \\ \vdots \\ T_n = Pn \end{cases}\)
+#+begin_theorem org
+Применяя шаги алгоритма унификации, за конечное время можно получить
+систему либо в разрешенной форме, либо несовместной
+#+end_theorem
+** Вывод типов в \(\lambda_\to\)
+#+NAME: Алгоритм нахождения типа в просто типизированном лямбда-исчислении
+#+begin_remark org
+\((\to)\) --- двуместный функциональный символ \\
+Индукция по структуре \(\lambda\)-выражения
+1. \(x\) --- введем тип \(\alpha_x\). \\
+   Система: \(\varnothing\) \\
+   Тип: \(\alpha_x\)
+1. \(A\ B\) --- рекурсивный вызов, \(\pair{E_A, \tau_A}, \pair{E_B, \tau_B}\) \\
+   Система: \(E_A \cup E_B \cup \{\tau_B \to \beta = \tau_A\}\) \\
+   Тип: \(\beta\)
+1. \( \lambda x. A\) --- рекурсивный вызов \(\pair{E_A, \tau_A}\) \\
+   Система: \(E_A\) \\
+   Тип: \(\alpha_x \to \tau_A\)
+_Разрешение системы_: унификация (перепишем \(\alpha \rightarrow \beta\) в алгебраических термах --- \(\to\ \alpha\ \beta\))
+#+end_remark
+#+begin_examp org
+\[ \overbrace{\lambda x. \underbrace{x}_A}^B \]
+- \(E_A = \varnothing\), \(\tau_A = \alpha_x\)
+- \(E_B = \varnothing\), \(\tau_B = \alpha_x \to \alpha_x\)
+\[ \begin{cases} \tau_A = \alpha \\ \tau_B = \alpha \to \alpha \end{cases} \]
+--- эта система в разрешенной форме
+\[ \vdash \lambda x. x : \alpha \to \alpha \]
+#+end_examp
+#+NAME: Слабая нормализация
+#+begin_definition org
+Терм называется *слабо-нормализуемым*, если существует
+последовательность \(\beta\)-редукция, приводящая его к нормальной форме
+#+end_definition
+#+NAME: Сильная нормализация
+#+begin_definition org
+Терм --- *сильно-нормализуем*, если не существует бесконечной
+последовательность \(\beta\)-редукций, не приводящая к нормальной форме
+#+end_definition
+#+begin_theorem org
+\(\lambda_\to\) сильно нормализуемо
+#+end_theorem
+* Исчисление предикатов 2 порядка
+Хотим писать \(\forall p. p \lor \lnot p\)
+#+NAME: Логика второго порядка
+#+begin_definition org
+*Логика \(2\) порядка*
+\[\Phi_\Pi ::= p\ |\ \Phi_\Pi \lor \Phi_\Pi\ |\ \Phi_\Pi \& \Phi_\Pi\ |\ \Phi_\Pi \to \Phi_\Pi\ |\ \forall p. \Phi_\Pi\ |\ \exists p. \Phi_\Pi\ |\ \perp\]
+#+end_definition
+#+NAME: Выразимость связок через импликацию и квантор всеобщности в интуиционистской логике 2-го порядка (конъюнкция, дизъюнкция, ложь, отрицание, квантор существования)
+#+begin_statement org
+Можно выразить:
+- \(a\&b \coloneqq \forall p. (a \to b \to p) \to p\)
+- \(a\lor b \coloneqq \forall p. (a \to p) \to (b \to p) \to p\)
+- \(\perp \coloneqq \forall p. p\)
+- \(\exists p. A \coloneqq \forall x. (\forall p. A \to x) \to x\), (\(\exists p. A \approx \lnot \forall p. \lnot A\))
+#+end_statement
+#+NAME: Система \(F\)
+#+begin_definition org
+\(L_2\) -- лямбда исчисление 2 порядка (Система F)
+\[ L_2 ::= x\ |\ \lambda x^\alpha. A\ |\ P\ Q\ |\ \color{red} \Lambda \alpha. A\ \color{black}|\ \color{red}P\ \tau \]
+#+end_definition
+#+begin_examp org
+\-
+- \(id: \alpha \to \alpha\). \(id \equiv \Lambda \alpha. \lambda x^\alpha. x\), \(id\ (Int)\ 5\)
+#+end_examp
+
+* Практика
+** ДЗ 3.6
+\[ A^{\eta \to \eta \to \eta}\ M^\eta\ N^\eta\ f^{\alpha \to \alpha}\ a: \alpha : \alpha \]
+- \( \vdash x : \eta, \alpha \to \alpha, \alpha \)
+- \(P\ Q\) ?
+- \(( \lambda x^\tau. P^\pi)^{\tau \to \pi}\ A^\tau : \pi\), \(\pi \equiv \alpha\)
+  Гиганский тип выражения \(A\) окажется в переменной \(x\) в \(P\)
+** Черчевский нумералы в F
+\[ \Lambda \alpha. \lambda f^{\alpha \to \alpha} . \lambda x^\alpha. f\dots f(x) : \eta : \forall \alpha. (\alpha \to \alpha) \to \alpha \to \alpha \]
+\[ (+) = \Lambda \alpha. \lambda a^\eta. \lambda b^\eta. \lambda f^{\alpha \to \alpha}. \lambda x^\alpha. (a\ \alpha)\ f\ ((b\ \alpha)\ f\ x)  \]
+** Правила
+#+NAME: Система \(F\)_rules
+#+begin_remark org
+\[ \frac{\Gamma \vdash A : \varphi}{\Gamma \vdash \Lambda \alpha. A : \forall \alpha. \varphi} \]
+\[ \frac{\Gamma \vdash A : \forall \alpha. \varphi}{\Gamma \vdash A\ \pi : \varphi[\alpha \coloneqq \pi]} \]
+#+end_remark
+

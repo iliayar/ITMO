@@ -1,0 +1,106 @@
+#+setupfile: setup.org
+ #+TITLE: Лекция 5
+#+date: 30 сентября
+
+* Восходящий синтаксический анализ
+\begin{center}
+\begin{array}{l}
+E \to E + T \\
+E \rightarrow T \\
+T \rightarrow F \cdot T \\
+T \rightarrow F
+F \rightarrow n \\
+F \rightarrow (E)
+\end{array}
+\end{center}
+
+Операции:
+- ~shift~ --- перенос из ввода в стэк разбора
+- ~reduce~ --- свертка
+** LR-анализ 
+\(LR(0) \subset SLR \subset LALR \subset LR(1)\) \\
+- ~handle~ --- основа. \\
+  Если \(A \Rightarrow^* \alpha A y \Rightarrow \alpha \beta y \Rightarrow^* xy\), то \(\beta\) называется основой для свертки \(A \rightarrow \beta\).
+- \(LR(0)\)-автомат (\(LSR, LR0\) разбор)
+- \(LR(1)\)-автомат (\(LARL, LR1\) разбор)
+#+begin_definition org
+\(LR0\)-ситуация(\(LR(0) - \text{item}\)) --- пара
+\(\pair{\text{правило}, i \in \{0, \dots, len(\text{правая часть})\}}\)
+#+end_definition
+#+begin_examp org
+\(\pair{E \to E _ T, 2}\)
+#+end_examp
+#+begin_remark org
+\[ |\{LR(0) \text{-ситуация}\} = \sum (len(\text{п.ч.}) + 1) \]
+#+end_remark
+#+begin_remark org
+Можем кодировать пару из примера так: \(E \rightarrow E + \cdot T\)
+#+end_remark
+#+begin_definition org
+Автомат:
+- Алфавит: \(A = \Sigma \cup N\)
+- Переходы:
+
+\begin{center}
+\begin{tikzpicture}
+\node[state] at (0, 0) (A) [circle] {\(A \to \alpha \cdot c \beta\)};
+\node[state] at (4, 0) (B) [circle] {\(A \to \alpha c \cdot \beta\)};
+\draw[->] (A) edge node[above] {c} (B);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[state] at (0, 0) (A) [circle] {\(A \to \alpha \cdot B \beta\)};
+\node[state] at (4, 0) (B) [circle] {\(A \to \alpha B \cdot \beta\)};
+\node[state] at (3, -3) (C) [circle] {\(B \to \cdot \gamma\)};
+\draw[->] (A) edge node[above] {B} (B);
+\draw[->] (A) edge node[above] {\(\varepsilon\)} (C);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[state,accepting] at (0, 0) (A) [circle] {\(A \to \xi \cdot\)};
+\end{tikzpicture}
+\end{center}
+#+end_definition
+#+begin_examp org
+\-
+\begin{center}
+\begin{array}{l}
+E \rightarrow E + n \\
+E \rightarrow n \\
+E_0 \rightarrow E
+\end{array}
+\end{center}
+\[ \todo \]
+#+end_examp
+#+begin_definition org
+\(SLR\) --- Simple \(LR\)-разбор. Добавили символ предпросмотра \(\text{lookahead} \in \FOLLOW(\text{левая часть})\)
+#+end_definition
+#+begin_examp org
+\-
+\begin{center}
+\begin{array}{ll}
+0) & E_0 \rightarrow E \\
+1) & E \rightarrow E - T \\
+2) & E \rightarrow T \\
+3) & T \rightarrow n \\
+4) & T \rightarrow (E)
+\end{array}
+\end{center}
+\[ \todo \]
+
+\begin{center}
+\begin{array}{l|c|cc|ccccc}
+ & & E & T & n & - & ( & ) & \$ \\
+\hline
+1 & E_0 \rightarrow \cdot E, E \rightarrow \cdot E - T, E \rightarrow \cdot T, T \rightarrow \cdot n, T \rightarrow \cdot(E) & 2 & 3 & s,4 & {\color{red}\times} & s,5 &{\color{red}\times} &{\color{red}\times} \\
+2 & E_o \rightarrow E\cdot, E \rightarrow E \cdot - T &{\color{red}\times} &{\color{red}\times} &{\color{red}\times}  & s,6 &{\color{red}\times} &{\color{red}\times} & r_0 \\
+3 & E \rightarrow T\cdot &{\color{red}\times} &{\color{red}\times} &{\color{red}\times}  & r_2 &{\color{red}\times} & r_2 & r_2 \\
+4 & T \rightarrow n \cdot &{\color{red}\times} &{\color{red}\times} &{\color{red}\times}  & r_3 &{\color{red}\times} & r_3 & r_3 \\
+5 & T \rightarrow (\cdot E), E \rightarrow E - T \cdot, E \rightarrow \cdot T, T \rightarrow \cdot n, T \rightarrow \cdot (E) & & & s,4 & & s,5 & &
+\end{array}
+\end{center}
+#+end_examp

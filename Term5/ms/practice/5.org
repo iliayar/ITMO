@@ -1,0 +1,58 @@
+#+setupfile: setup.org
+#+TITLE: Практика 5
+#+date: 6 октября
+
+\[ \overline{X} = 97.600 \]
+\[ S^2 = 62.245 \]
+\[ S = 7.890 \]
+
+
+#+begin_task org
+Найти довертиельный интервал ... при известном \(\sigma = 8\) 
+#+end_task
+#+begin_solution org
+\[ \Phi(t_\gamma) = \gamma \implies \Phi(t_\gamma) = \frac{\gamma}{2} = 0.495 \quad t_\gamma = 2.58 \]
+\[ \overline{X} - t_\gamma \frac{\sigma}{\sqrt{n}} < a < \overline{X} + t_\gamma \frac{\sigma}{\sqrt{n}} \]
+\[ 97.6 - 2.58 \frac{7.9}{\sqrt{50}} < a < 97.6 + 2.58 \frac{7.9}{\sqrt{50}} \]
+\[ 94.718 < a < 100.482 \]
+_Ответ_: \((94.718, 100.482)\) с вероятностью \(\gamma = 0.99\)
+#+end_solution
+#+begin_task org
+То-же самое? для \(a\)
+#+end_task
+#+begin_solution org
+\[ k = n - 1 = 50 - 1 = 49 \quad t_\gamma = 2.68 \]
+\[ \overline{X} - t_\gamma \frac{S}{\sqrt{n}} < a < \overline{X} + t_\gamma \frac{S}{\sqrt{n}} \]
+\[ 94.609 < a < 100.590 \]
+_Ответ_: \((94.609; 100.590)\) с вероятностью \(\gamma = 0.99\)
+#+end_solution
+#+begin_task org
+Найти довереительные интервалы параметров \(\sigma^2, \sigma\), при \(\gamma = 0.99\)
+при неизвестном значении параметра \(A\)
+#+end_task
+#+begin_solution org
+\[ k = n - 1= 49 \quad \gamma = 0.99 \quad \frac{1 - \gamma}{2} = 0.005 \quad \frac{1 + \gamma}{2} = 0.995 \]
+В Excel:
+\[\chi_2^2 = \texttt{ХИ2.ОБР}(\frac{1 - \gamma}{2}; 49) = 78.231\]
+\[\chi_1^2 = \texttt{ХИ2.ОБР}(\frac{1 + \gamma}{2}; 49) = 27.249\]
+\[ \frac{(n - 1)S^2}{\chi^2_2} \le \sigma^2 \le \frac{(n - 1)S^2}{\chi^2_1} \]
+\[ 38.987 \le \sigma^2 \le 111.931 \]
+#+end_solution
+#+begin_task org
+Найти доверительный интервал для \(\sigma^2\), при известном \(a = 98\)
+#+end_task
+#+begin_solution org
+\[ \frac{n\sigma^2^*}{\chi^2_2} \le \sigma^2 \le \frac{n\sigma^2^*}{\chi^2_1} \quad k = n  = 50 \quad \gamma = 0.99 \]
+\[ \chi^2_1 = \texttt{ХИ2.ОБР}(\frac{1 - \gamma}{2}; 50) = 27.991 \quad \chi^2_2 = \dots = 79.4901 \]
+\[ \sigma^2^* = \frac{1}{n} \sum^n_{i = 1} (X_i - a)^2 \]
+\[ \sigma^2^* = \frac{1}{n} \sum^7_{i = 1} (c_i - 98)^2 \cdot m_i \]
+#+end_solution
+#+begin_task org
+По исходной выборки найти доверительный интервал
+1. для \(a\) при известном \(\sigma = 7.9\)
+2. для \(a\) при неизвестном \(\sigma\)
+#+end_task
+#+begin_solution org
+1. \(\texttt{ДОВЕРИТ.НОРМ}(50, 1 - \gamma, 7.9)\)
+#+end_solution
+

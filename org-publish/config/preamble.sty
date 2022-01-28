@@ -39,33 +39,33 @@
 \newcommand{\beginproperty}{\setcounter{propertycnt}{1}}
 
 \theoremstyle{plain}
-\newtheorem{propertyinner}{Свойство}
+\newtheorem{propertyinner}{\protect\propertyname}
 \newenvironment{property}{
   \renewcommand\thepropertyinner{\arabic{propertycnt}}
   \propertyinner
 }{\endpropertyinner\stepcounter{propertycnt}}
-\newtheorem{axiom}{Аксиома}
-\newtheorem{lemma}{Лемма}
-\newtheorem*{statement}{Утверждение}
-\newtheorem{manuallemmainner}{Лемма}
+\newtheorem{axiom}{\protect\axiomname}
+\newtheorem{lemma}{\protect\lemmaname}
+\newtheorem*{statement}{\protect\statementname}
+\newtheorem{manuallemmainner}{\protect\lemmaname}
 \newenvironment{manuallemma}[1]{%
   \renewcommand\themanuallemmainner{#1}%
   \manuallemmainner
 }{\endmanuallemmainner}
 
 \theoremstyle{remark}
-\newtheorem*{remark}{Примечание}
-\newtheorem*{solution}{Решение}
-\newtheorem{corollary}{Следствие}[theorem]
-\newtheorem*{examp}{Пример}
-\newtheorem*{observation}{Наблюдение}
+\newtheorem*{remark}{\protect\remarkname}
+\newtheorem*{solution}{\protect\solutionname}
+\newtheorem{corollary}{\protect\corollaryname}[theorem]
+\newtheorem*{examp}{\protect\exampname}
+\newtheorem*{observation}{\protect\observationname}
 
 \theoremstyle{definition}
-\newtheorem{task}{Задача}
-\newtheorem{theorem}{Теорема}[section]
-\newtheorem*{definition}{Определение}
-\newtheorem*{symb}{Обозначение}
-\newtheorem{manualtheoreminner}{Теорема}
+\newtheorem{task}{\protect\taskname}
+\newtheorem{theorem}{\protect\theoremname}[section]
+\newtheorem*{definition}{\protect\definitionname}
+\newtheorem*{symb}{\protect\symbname}
+\newtheorem{manualtheoreminner}{\protect\theoremname}
 \newenvironment{manualtheorem}[1]{%
   \renewcommand\themanualtheoreminner{#1}%
   \manualtheoreminner
@@ -81,7 +81,54 @@
 { }%space after head
 {}
 \theoremstyle{colon}
-\newtheorem*{answer}{Ответ}
+\newtheorem*{answer}{\protect\answername}
+
+\newcommand{\propertyname}{}
+\newcommand{\axiomname}{}
+\newcommand{\lemmaname}{}
+\newcommand{\statementname}{}
+\newcommand{\remarkname}{}
+\newcommand{\solutionname}{}
+\newcommand{\corollaryname}{}
+\newcommand{\exampname}{}
+\newcommand{\observationname}{}
+\newcommand{\taskname}{}
+\newcommand{\theoremname}{}
+\newcommand{\definitionname}{}
+\newcommand{\symbname}{}
+\newcommand{\answername}{}
+\addto\captionsrussian{%
+  \renewcommand{\propertyname}{Свойство}%
+  \renewcommand{\axiomname}{Аксиома}%
+  \renewcommand{\lemmaname}{Лемма}%
+  \renewcommand{\statementname}{Утверждение}%
+  \renewcommand{\remarkname}{Замечание}%
+  \renewcommand{\solutionname}{Решение}%
+  \renewcommand{\corollaryname}{Следствие}%
+  \renewcommand{\exampname}{Пример}%
+  \renewcommand{\observationname}{Наблюдение}%
+  \renewcommand{\taskname}{Задача}%
+  \renewcommand{\theoremname}{Теорема}%
+  \renewcommand{\definitionname}{Определение}%
+  \renewcommand{\symbname}{Обозначение}%
+  \renewcommand{\answername}{Ответ}%
+}
+\addto\captionsenglish{%
+  \renewcommand{\propertyname}{Property}%
+  \renewcommand{\axiomname}{Axiom}%
+  \renewcommand{\lemmaname}{Lemma}%
+  \renewcommand{\statementname}{Statement}%
+  \renewcommand{\remarkname}{Remark}%
+  \renewcommand{\solutionname}{Solution}%
+  \renewcommand{\corollaryname}{Corollary}%
+  \renewcommand{\exampname}{Example}%
+  \renewcommand{\observationname}{Observation}%
+  \renewcommand{\taskname}{Task}%
+  \renewcommand{\theoremname}{Theorem}%
+  \renewcommand{\definitionname}{Definition}%
+  \renewcommand{\answername}{Answer}%
+}
+
 
 \captionsetup{justification=centering,margin=2cm}
 \newenvironment{colored}[1]{\color{#1}}{}

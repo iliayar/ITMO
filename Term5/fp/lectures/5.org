@@ -1,0 +1,121 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 5
+#+date: 24 сентября
+
+* Functor
+#+begin_definition org
+\-
+#+begin_src haskell
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+#+end_src
+#+end_definition
+
+#+begin_remark org
+\((\hsOp{<\$>}) = fmap\) --- инфиксный оператор
+#+end_remark
+
+#+begin_examp org
+\-
+#+begin_src
+Prelude> :kind (->)
+(->) :: * -> * -> *
+Prelude> :kind (->) Int
+(->) Int :: * -> *
+#+end_src
+
+#+begin_src haskell
+ instance Functor ((->) r)  where
+   fmap :: (a -> b) -> (r -> a) -> r -> b
+   fmap = (.)
+#+end_src
+#+end_examp
+
+** Законы
+1. \(\hsFu{fmap}\ \hsFu{id} \equiv \hsFu{id}\)
+2. \(\hsFu{fmap}\ (\hsFu{f}\ \hsOp{.}\ \hsFu{g}) \equiv \hsFu{fmap f} \hsOp{.} \hsFu{fmap g}\)
+* Applicative
+#+begin_definition org
+\-
+#+begin_src haskell
+ class Functor f => Applicative f where
+   pure :: a -> f a
+   (<*>) :: f (a -> b) -> f a -> f b
+#+end_src
+#+end_definition
+
+#+begin_examp org
+\-
+#+begin_src haskell
+instance Applicative ((->) r) where
+  pure :: a -> r -> a
+  pure x = \_ -> x
+
+  (<*>) :: (r -> a -> b) -> (r -> a) -> r -> b
+  f <*> g = \x -> f x (g x)
+#+end_src
+#+end_examp
+
+** Законы
+1. \(\hsFu{pure id} \hsOp{<*>} \hsFu{v} \equiv \hsFu{b}\)
+2. \(\hsFu{pure}\ (\hsOp{.}) \hsOp{<*>} \hsFu{u} \hsOp{<*>} \hsFu{v} \hsOp{<*>} \hsFu{w} \equiv \hsFu{u} \hsOp{<*>} (\hsFu{v} \hsOp{<*>} \hsFu{w})\)
+3. \(\hsFu{pure f} \hsOp{<*>} \hsFu{pure x} \equiv \hsFu{pure (f x)}\)
+4. \(\hsFu{u} \hsOp{<*>} \hsFu{pure y} \equiv \hsFu{pure} (\hsOp{\$} \hsFu{y}) \hsOp{<*>} \hsFu{u}\)
+
+* Alternative
+#+begin_definition org
+\-
+#+begin_src haskell
+class Applicative f => Alternative f where
+  empty :: f a
+  (<|>) :: f a -> f a -> f a
+#+end_src
+#+end_definition
+
+#+begin_examp org
+\-
+#+begin_src haskell
+instance Alternative Maybe where
+  empty :: Maybe a
+  empty = Nothing
+
+  (<|>) :: Maybe a -> Maybe a -> Maybe a
+  Nothing <|> r = r
+  l       <|> _ = l
+#+end_src
+#+begin_src haskell
+instance Alternative [] where
+  empty :: [a]
+  empty = []
+
+  (<|>) :: [a] -> [a] -> {a}
+  <|> = (++)
+#+end_src
+#+end_examp
+
+* Traversable
+#+begin_definition org
+\-
+#+begin_src haskell
+ class (Functor t, Foldable t)  => Traversable t where
+   traverse :: Applicative f => (a -> f b) -> t a -> f (t b)
+   sequenceA :: Applicative f => t (f a) -> f (t a)
+#+end_src
+#+end_definition
+
+#+begin_examp org
+\-
+#+begin_src haskell
+ instance Traversable Maybe where
+   traverse :: Applicative f => (a -> f b) -> Maybe a -> f (Maybe b)
+   traverse _ Nothing = pure Nothing
+   traverse f (Just x) = Just <$> f x
+#+end_src
+#+begin_src haskell
+instance Traversable [] where
+  traverse :: Applicative f => (a -> f b) -> [a] -> f [b]
+  traverse f = foldr consF (pure [])
+    where
+      consF x ys = (:) <$> f x <*> ys
+#+end_src
+#+end_examp

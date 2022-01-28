@@ -1,0 +1,77 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 3
+#+date: 28 сентября
+
+#+begin_remark org
+Зачем \(\lambda_\to\)?
+1. Логические выражения \(\supset\)
+2. Запрещенные выражения
+   - \(Y\) --- явно нехорошо
+   - \(\Phi_A =_\beta \Phi_A \supset A\)
+Добавим очевидные аксиомы
+- \(A =_\beta B\), то \(\vdash A \supset B\) и \(\vdash B \supset A\)
+- \((A \supset A \supset B) \supset (A \supset B)\)
+- \(A, A \supset B\), то \(B\)
+Тогда при любом \(A\), \(\vdash A\)
+#+end_remark
+
+#+begin_remark org
+\[ \Phi_A \equiv Y\ (\lambda x. x \supset A) \]
+#+end_remark
+
+* Изоморфизм Карри-Ховарда
+#+NAME: Изоморфизм Карри-Ховарда
+#+begin_definition org
+\[ \frac{}{\Gamma, x: \tau \vdash x : \tau} \quad \frac{}{\Gamma, \tau \vdash \tau} \]
+\[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B : \sigma}{\Gamma \vdash A\ B : \tau} \quad \frac{\Gamma \vdash \sigma \to \tau \quad \Gamma \vdash \sigma}{\Gamma \vdash \tau} \]
+\[ \frac{\Gamma, x : \sigma \vdash A : \tau}{\Gamma \vdash \lambda x. A : \sigma \to \tau} \quad \frac{\Gamma, \sigma \vdash \tau}{\Gamma \vdash \sigma \to \tau} \]
+Если \(\Gamma \vdash A : \tau\), то
+- \(A\) --- эквиваленто доказательству \(\tau\)
+- \(\tau\) --- выражения в ИИВ
+- Обитаемость типа --- доказуемость \(\tau\)
+- Тип \(\lambda\)-абстракции --- импилкация
+- \dots
+#+end_definition
+#+begin_symb org
+\(|\Gamma|\) --- оставляем только типы
+#+end_symb
+#+ATTR_LATEX: :options [об изоморфизме Карри-Ховарда]
+#+begin_theorem org
+\-
+- \(\Gamma \vdash_{\lambda_\to} A : \tau\), то \(|\Gamma| \vdash_\to \tau\)
+- Если \(\Delta \vdash_\to \tau\), то найдутся \(\Gamma, A\): \(|\Gamma| = \Delta\), \(\Gamma \vdash A : \tau\)
+#+end_theorem
+#+NAME: Импликационный фрагмент ИИВ
+#+begin_definition org
+*Импликационный фрагмент ИИВ* --- оставляем правила \(I_\to, E_\to, Ax\)
+#+end_definition
+#+NAME: Теорема о замкнутости И.Ф. относительно доказуемости_symb
+#+begin_symb org
+\(\Gamma \vdash_\to \tau\) --- доказуемость в И.Ф. ИИВ
+#+end_symb
+#+NAME: Теорема о замкнутости И.Ф. относительно доказуемости
+#+begin_theorem org
+Импликационный фрагмент ИИВ замкнут относительно доказуемости. Если
+\(\Gamma \vdash \tau\) и \(\tau\) содержит только \(\alpha, \to\), то \(\Gamma \vdash_\to
+\tau\). И если \(\Gamma \vdash_\to \tau\), то \(\Gamma \vdash \tau\)
+#+end_theorem
+#+begin_proof org
+\(\Gamma^*\) -- множество формул, замкнутых по доказуемости, т.е. \(\tau \in \Gamma^*\) т.и т.т.к \(\Gamma^* \vdash \tau\)
+\todo
+#+end_proof
+#+NAME: Задачи проверки типа, реконструкции (вывода) типа, обитаемости типа в просто типизированном лямбда-исчислении
+#+begin_remark org
+\(? \vdash ? : ?\). Три задачи
+1. Обитаемость типа: \(\Gamma \vdash ? : \tau\) \\
+   По изоморфизму К-Х и теореме(о замкнутости И.Ф. относительно
+   доказуемости) эквивалентно \(\Gamma \vdash \tau\)
+2. Вывод типа(реконструкция): \(\Gamma \vdash A : ?\)
+3. Проверка типов: \(\Gamma \vdash A : \tau\) \\
+   Вывод типа и проверка что одно и то же
+1 --- полнота; 2,3 --- разрешимость
+#+end_remark
+#+NAME: Теорема о выразительной силе просто типизированного лямбда-исчисления (формулировка)
+#+begin_statement org
+Выразимы только расширенные полиномы
+#+end_statement
+

@@ -1,0 +1,104 @@
+#+setupfile: setup.org
+#+TITLE: Lecture 1
+#+date: October 14
+#+LATEX: \selectlanguage{english}
+
+* Set Theory
+We are not going to use CF axiom?. Just have a *sack of dots*.
+#+begin_examp org
+\-
+- \(\underline{0} = \{\}\)
+- \(\underline{1} = \{1\}\)
+- \(\underline{2} = \{1,2\}\)
+- \(\underline{3} = \{1,2,3\}\)
+- \(\dots\)
+- \(\N =\{0, 1, 2, \dots\}\) --- natural numbers
+- \(\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}\)
+#+end_examp
+* Functions
+Relationships between sets. Our functions is /total and deterministic/.
+#+begin_definition org
+Rules for assigning values of one set to values of another
+#+end_definition
+#+begin_examp org
+We can represent functions as tables:
+| X | Y |
+|---+---|
+| 1 | b |
+| 2 | b |
+| 3 | a |
+| 4 | b |
+\[ f(1) = b = f(2) = f(4) \quad f(3) = a \]
+#+end_examp
+#+begin_task org
+How many functions are there
+- from \(\underline{2}\) to \(\underline{3}\)
+- from \(\underline{n}\) to \(\underline{m}\)
+#+end_task
+#+begin_answer org
+\-
+- \(9\)
+- \(n^m\)
+#+end_answer
+
+Back to sets:
+#+begin_examp org
+\(\text{Bool} = \{\text{True}, \text{False}\}\)
+#+end_examp
+
+** Composition of functions
+#+begin_definition org
+\[ g \circ f (x) \coloneqq g(f(x)) \]
+#+end_definition
+#+begin_remark org
+Composition is /associative/.
+\[ (e \circ f) \circ g = e \circ (f \circ g) = e \circ f \circ g \]
+
+#+end_remark
+
+** Identity functions
+#+begin_remark org
+\-
+- \(id_A \circ f = f\)
+- \(f \circ id_B = f\)
+#+end_remark
+
+** Isomorhpism
+#+begin_definition org
+\(f: A \rightarrow B\) is *isomorphism*, if \(\exists g: B \rightarrow B\) such that \(g \circ f =
+id_A\) nd \(f \circ g = id_B\)
+#+end_definition
+#+begin_examp org
+\(\underline{2}\) and Bool are isomorphic
+#+end_examp
+* Category
+#+begin_definition org
+A *category* \(C\) consists of 4 consituents:
+1. a set \(Ob(C)\), elements of which are called ``objects``
+2. for every 2 objects \(c, d \in Ob(C)\), there is a set \(C(c, d)\)
+   (\(Hom_C(c,d)\)), elements if which are called ``morhisms from
+   \(c\) to \(d\)``
+3. for each object \(c\), a chosen element \(id_c \in C(c, c)\)
+4. for any 3 objects \(c,d,e\) and morphisms \(f\in C(c, d): c \rightarrow d\),
+   \(g: C(d, c): d \rightarrow e\) there is a chosen morphism \(g \circ f: c \rightarrow e\)
+#+end_definition
+If anyone want to set a category, they must follow rules:
+#+begin_remark org
+subject to 2 constraints:
+1. for any morphism \(f: c \rightarrow d\), \(f \circ id_c = f\), \(id_d \circ f = f\)
+   --- *unital law*
+2. for any 3 morphism \(f_3 \circ (f_2 \circ f_1) = (f_3 \circ f_2) \circ f_1\)
+#+end_remark
+#+begin_examp org
+\[ Ob\ C_\text{bad} = \{ \varepsilon \} \]
+\[ C_\text{bad}(\varepsilon, \varepsilon) = \N \]
+\[ id_\varepsilon = 0 \]
+\[  \varepsilon \xrightarrow{m} \varepsilon \xrightarrow{n} \varepsilon  \quad m + n \]
+It's /monoid/
+#+end_examp
+#+begin_examp org
+\[ Ob\ C = \{1, 2\} \]
+\[ C(1, 1) = id \quad C(2, 1) = \varnothing \quad C(1, 2) = \varnothing \quad C(2, 2) = id \]
+It's /discrete/ category.
+#+end_examp
+

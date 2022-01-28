@@ -1,3 +1,2 @@
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_CLASS: general
-#+LATEX_HEADER_EXTRA: \newcommand{\X}{\mathbb{X}}
