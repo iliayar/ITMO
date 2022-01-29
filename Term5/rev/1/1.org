@@ -1,3 +1,4 @@
+#+PUBNOTE:html
 * DONE One
 #+begin_src c
 #include <stdio.h>

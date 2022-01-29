@@ -1,3 +1,4 @@
+#+PUBNOTE:html
 * DONE spbctf_4_x86_64
 
 Свапает ~permutation[input[i]]~ и ~permutation[input[i] + 1]~, проверяет что ~permuation~ отсорченый
