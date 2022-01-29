@@ -43,4 +43,3 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://iliaya
 *** [[file:Term1/algo/README.org][Algorithms and data structures]]
 *** [[file:Term1/programming/README.org][Programming]]
 *** [[file:Term1/linal/README.org][Linear algebra]]
-   
