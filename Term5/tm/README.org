@@ -9,3 +9,9 @@
 - [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/4.pdf][Lecture 4]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/5.pdf][Lecture 5]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/6.pdf][Lecture 6]]
+* Labs
+- [[file:labs/lab1/][Perl Regex]] \\
+  [[file:labs/lab1/01-perl-re.pdf][Statements]]
+- [[file:lab2/][Topdown LL(1) parser]]
+- [[file:lab3/][Calculator using `bison`]]
+- [[file:lab4/][LALR Parser generator]]
