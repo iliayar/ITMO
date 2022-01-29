@@ -1,0 +1,90 @@
+#+setupfile: setup.org
+#+TITLE: Практика 4
+#+date: 29 сентября
+
+#+begin_task org
+\(I(p)\) для \(B_p\)
+#+end_task
+#+begin_solution org
+\[ f_p(x) = \begin{case} 1 - p & x = 0 \\ p & x = 1 \end{cases} \]
+\[ C = \{0, 1\} \]
+\[ \ln f_p(1) = \ln p; \quad \ln f_p(0) = \ln 1 - p\]
+\[ \frac{\partial}{\partial p} \ln f_\Theta(1) = \frac{1}{p}; \quad \frac{\partial}{\partial p} \ln f_\Theta(0) = -\frac{1}{1 - p}\]
+\[ I(p) = E\left(\frac{\partial}{\partial p} \ln f_\Theta(1)\right)^2 = E\left(\frac{1}{p}\right)^2 = \frac{1}{p^2} \]
+\[ I(p) = E\left(\frac{\partial}{\partial p} \ln f_\Theta(0)\right)^2 = E\left(-\frac{1}{1 - p}\right)^2 = \frac{1}{(1 - p)^2} \]
+\[ Dp^* = \frac{1}{n}DX = \frac{pq}{n} \]
+#+end_solution
+
+#+begin_task org
+Случайные величины \(\xi\) и \(\eta\) независимы и имеют стандартное
+нормальное распределение(\(\xi, \eta \in N(0, 1)\)). Будут независимы величины \(\xi + \eta\) и
+\(\xi - \eta\)
+#+end_task
+#+begin_solution org
+\[ B = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \]
+\[ C = \begin{pmatrix} \frac{1}{\sqrt{2]}} & \frac{1}{\sqrt{2]}} \\ \frac{1}{\sqrt{2]}} & -\frac{1}{\sqrt{2]}}\end{pmatrix} \]
+\[ \xi' = \frac{1}{\sqrt{2}}\delta + \frac{1}{\sqrt{2}} n = \frac{1}{\sqrt{2}}(\delta + \eta) \quad \eta' = \frac{1}{\sqrt{2}}\delta - \frac{1}{\sqrt{2}} n = \frac{1}{\sqrt{2}}(\delta - \eta)  \]
+По теорему независимы
+#+end_solution
+#+begin_task org
+Доказать, что если \(A\) --- симметричная положительно определенная матрица, то существует матрица \(B = \sqrt{A}\), т.е. \(B^2 = A\)
+#+end_task
+#+begin_proof org
+\(\exists C\) --- ортогональное преобразование.
+\[ C^TAC = \begin{pmatrix} \lambda_1 & 0 & \dots & 0 \\ 0 & \lambda_2 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \lambda_n  \end{pmatrix} = A' \]
+\[ \lambda_i > 0\quad \sqrt{A'} = \begin{pmatrix} \sqrt{\lambda_1} & 0 & \dots & 0 \\ 0 & \sqrt{\lambda_2} & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \sqrt{\lambda_n}  \end{pmatrix} = B' \]
+\[ B = CB'C^T \]
+Осталось проверить, что \(B^2 = A\)
+\[ B^2 = (CB'C^T)(CB'C^T) = C(B')^2C^T = CA'C^T = A \]
+#+end_proof
+#+begin_task org
+Доказать, что правило трех \(\sigma\) не улучшаемо
+#+end_task
+#+begin_proof org
+\todo
+#+end_proof
+
+
+* Многомерное нормальное распределение
+#+begin_definition org
+Пусть случайный вектор \(\vec{\xi} = (\xi_1 \dots, \xi_n)\) имеет вектор средних
+\(\vec{a} = (E\xi_1, \dots, E\xi_n)\). \(K\) --- симметричная положительно
+определенная матрица. Вектор \(\xi\) имеет многомерное нормальное
+распределение с параметрами, если его плотность выглядит так:
+\[ f_{\vec{\xi}} (\vec{x}) = \frac{1}{(\sqrt{2\pi})^n\cdot \sqrt{\det K}}\cdot e^{-\frac{1}{2}((\veec{x} - \vec{a})^TK^{-1}(\vec{x} - \vec{a}))} \]
+#+end_definition
+#+begin_remark org
+\((\vec{x} - \vec{a})^TK^{-1}(\vec{x} - \vec{a})\) --- положительно определенная квадратичная форма от \((x_1, \dots, x_n)\)
+#+end_remark
+
+\beginproperty
+#+begin_property org
+Пусть \(\vec{\eta}\) состоит из независимых стандартных нормальный
+величин, \(B\) --- невырожденная матрицы. _Тогда_ случайный вектор
+\(\vec{\xi} = B\vec{\eta} + \vec{a}\) --- имеет многомерное нормальное
+распределение с параметрами \(\vec{a},\ K = B^TB\)
+#+end_property
+#+begin_property org
+Пусть \(\vec{\xi}\) имеет многомерное нормальное распределение с
+параметрами \(\vec{A}, K\). _Тогда_ случайный вектор \(\vec{\eta} =
+B^{-1}(\vec{\xi} - \vec{a})\), где \(B = \sqrt{K}\) состоит из
+нормальных случайных величин
+#+end_property
+#+begin_property org
+\[ K = \mathop{\rm Cov}(\xi_i, \xi_j) \]
+#+end_property
+#+begin_property org
+Пусть случайный \(\vec{\xi}\) имеет многомерное нормальное распределение
+с параметрами \(\vec{a}, K\). Координаты \(\vec{\xi}\) независимы \(\Leftrightarrow\)
+координаты \(\vec{\xi}\) не коррелируют, т.е. матрица ? диагональная
+#+end_property
+#+begin_corollary org
+Если \(\xi, \eta\) ---- ... и \((\delta, \eta)\) имеют ненулевую плотность, то \(\xi\) и \(\eta\): \(r_{\xi, \eta} = 0\)
+#+end_corollary
+#+ATTR_LATEX: :options[Многмерная ЦПТ]
+#+begin_theorem org
+Среднее арифметическое независимых случайных векторов слабо сходится к
+многомерному нормальному распределению.
+#+end_theorem
+
+

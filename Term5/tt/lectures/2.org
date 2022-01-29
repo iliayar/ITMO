@@ -1,0 +1,227 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 2
+#+date: 14 сентября
+
+#+NAME: Бестиповое лямбда-исчисление
+#+begin_definition org
+*Пред \lambda-терм*:
+1. \(x\) --- переменная
+2. \(L\ L\) --- аппликация
+3. \(\lambda x. L\) --- абстракция
+#+end_definition
+
+#+NAME: Бестиповое лямбда-исчисление_remark
+#+begin_remark
+\-
+1. \(\lambda a. a\)
+2. \(\lambda b. b\)
+Хотим чтоб не отличались
+#+end_remark
+
+#+NAME: Общие определения альфа-эквивалентность
+#+begin_definition org
+\(\alpha\)-эквивалентность. \(A =_\alpha B\)
+1. \(A \equiv x,\ B \equiv x\) --- одна и та же переменная
+2. \(A \equiv P\ Q,\ B \equiv R\ S \quad P =_\alpha R,\ Q =_\alpha S\)
+3. \(A \equiv \lambda x. P,\ B \equiv \lambda y. Q\). Существует \(t\) --- новая переменная, что \(P[x \coloneqq t] =_\alpha Q[y \coloneqq t]\)
+#+end_definition
+
+#+begin_definition org
+\-
+- свободные вхождения
+- свобода для подстановки \\
+  \(A[x \coloneqq B]\). Никакое свободное вхождение переменных в \(B\),
+  не станет связным после подстановки
+- замена свободных вхождений \(A[x \coloneqq B]\)
+#+end_definition
+
+#+begin_examp org
+\[ (\lambda x. \lambda y. x) \xlongequal{?}_\alpha (\lambda y. \lambda x. y) \quad \text{Правило 3} \]
+\[(\lambda y. x)[x \coloneqq t] =_\alpha (\lambda x. y)[y \coloneqq t] \quad \text{Правило 3} \]
+\[ t[y \coloneqq S] =_\alpha t[x \coloneqq S] \quad \text{Правило 1} \]
+#+end_examp
+
+#+begin_definition org
+*\lambda-трем*. \(\Lambda/_{=_\alpha}\) --- множество \lambda-термов
+#+end_definition
+
+#+begin_definition org
+*\beta-редекс*. Выражение вида \((\lambda x. A)\ B\)
+#+end_definition
+
+#+NAME: Общие определения бета-редукция
+#+begin_definition org
+Выражения \(A\) и \(B\) находятся в отношении *\beta-редукции*: \(A \to_\beta B\), если
+1. \(A \equiv P\ Q,\ B \equiv R\ S\) и одно из
+   - \(P \to_\beta R\) и \(Q =_\alpha S\)
+   - \(P =_\alpha R\) и \(Q \to_\beta S\)
+2. \(A \equiv \lambda x. P,\ B \equiv \lambda x. Q\) и \(P \to_\beta Q\)
+3. \(A \equiv (\lambda x. P)\ Q,\ B \equiv P[x \coloneqq Q]\) \\
+   \(Q\) свободно для подстановки. Ценой переименования связных переменных можно подставить любое выражение.
+#+end_definition
+
+#+NAME: Комбинаторы_I
+#+begin_examp org
+Комбинатор \(I\) (Identity). Доказательство того, что (\(\to_\beta\)) не
+обладает ромбовидным свойством:
+\[ I = \lambda x. x \]
+\begin{center}
+\begin{tikzpicture}
+  \node (A) at (0, 0) {\((I\ I)\ (I\ I)\)};
+  \node (B) at (-1, -1) {\(I\ (I\ I)\)};
+  \node (C) at (1, -1) {\((I\ I)\ I\)};
+  \node (D) at (1, -2) {\(I\ I\)};
+  \node (E) at (-1, -2) {\(I\ I\)};
+  \node (F) at (0, -3) {\(I\)};
+
+  \path[->] (A) edge (B);
+  \path[->] (A) edge (C);
+  \path[->] (B) edge (E);
+  \path[->] (C) edge (D);
+  \path[->] (D) edge (F);
+  \path[->] (E) edge (F);
+\end{tikzpicture}
+\end{center}
+#+end_examp
+
+#+NAME: Комбинаторы_I_K_Omega
+#+begin_remark org
+\[ I = \lambda x. x \quad K = \lambda x. \lambda y. x \quad \Omega = \omega\ \omega \quad \omega = \lambda x. x\ x \]
+\begin{center}
+\begin{tikzpicture}
+  \node (A) at (0, 0) {\(KI\Omega\)};
+  \node (B) at (0, -1) {\(((\lambda x. \lambda y. x)\ I)\ \Omega\)};
+  \node (C) at (0, -2) {\((\lambda y. I)\ \Omega\)};
+  \node (D) at (0, -3) {\(I\)};
+
+  \path[->] (A) edge (B);
+  \path[->] (B) edge (C);
+  \path[->] (C) edge (D);
+  \path[->] (B) edge[loop right] (B);
+\end{tikzpicture}
+\end{center}
+#+end_remark
+
+
+#+NAME: Комбинаторы_I_K_Omega_2
+#+begin_examp org
+\-
+- \(I = \lambda x. x\)
+- \(K = \lambda x. \lambda y. x\) --- Константа
+- \(\Omega = \omega\ \omega\), где \(\omega = \lambda x. x\ x\)
+\begin{align*}
+  k\ I\ \Omega & = \\
+  ((\lambda x. \lambda y. x)\ I)\ \Omega & \to_\beta \\
+  (\lambda y. I)\ \Omega & \to_\beta
+  I
+\end{align*}
+#+end_examp
+
+#+NAME: Теорема Чёрча-Россера_romb
+#+begin_definition org
+Будем говорить что отношение \(R\) обладает *ромбовидным* свойством,
+если для любых \(a, b, c\)
+1. \(aRb,\ aRc\)
+2. \(b \neq c\)
+Существует \(d\): \(bRd,\ cRd\)
+#+end_definition
+
+#+begin_remark org
+Не выполняется на натуральных числах
+#+end_remark
+
+#+NAME: Теорема Чёрча-Россера_def
+#+begin_definition org
+*\beta-редуциремость* \((\twoheadrightarrow_\beta)\) --- рефлексивное, транзитивное замыкание \((\to_\beta)\)
+#+end_definition
+
+#+NAME: Теорема Чёрча-Россера
+#+ATTR_LATEX: :options [Черча-Россера]
+#+begin_theorem org
+\beta-редуцируемость обладает ромбовидным свойством
+#+end_theorem
+
+#+NAME: Параллельная бета-редукция
+#+begin_definition org
+*Параллельная \beta-редукция* \((\rightrightarrows_\beta)\) это \((\to_\beta) +\)правило:
+- 0. :: \(A =_\alpha B\)
+- 1. :: \(A \equiv P\ Q,\ B \equiv R\ S\) и \(P \rightrightarrows_\beta R\) и \(Q \rightrightarrows_\beta S\)
+- 2,3. :: аналогично \((\to_\beta)\)
+#+end_definition
+
+#+begin_lemma org
+\((\rightrightarrows_\beta)\) --- обладает ромбовидными свойством
+#+end_lemma
+
+#+begin_lemma org
+Если \(R\) --- обладает ромбовидным свойством, то \(R^*\) (транзитивное, рефлексивное замыкание) --- обладает ромбовидным свойством
+#+end_lemma
+
+#+begin_lemma org
+\((\rightrightarrows_\beta) \subseteq (\twoheadrightarrow_\beta)\)
+#+end_lemma
+
+#+ATTR_LATEX: :options [Доказательство Теоремы]
+#+begin_proof org
+\-
+1. \((\rightrightarrows_\beta)^* \subseteq (\twoheadrightarrow_\beta)\) --- из леммы
+2. \((\twoheadrightarrow_\beta) \subseteq (\rightrightarrows_\beta)^*\)
+3. Раз \((\rightrightarrows_\beta)^*\) обладает ромбовидным свойством, то и \((\twoheadrightarrow_\beta)\) обладает ромбовидным свойством
+#+end_proof
+
+#+begin_corollary org
+У \lambda-выражения существует не более 1 нормальной формы
+#+end_corollary
+
+#+begin_proof org
+Пусть \(A\) имеет две нормальные формы:
+- \(A \twoheadrightarrow_\beta B\)
+- \(A \twoheadrightarrow_\beta C\)
+и \(B \neq_\beta C\). Тогда есть D: \(B \twoheadrightarrow_\beta D\) и \(C \twoheadrightarrow_\beta D\). _Противоречие_
+#+end_proof
+
+#+NAME: Нормальный порядок редукций
+#+begin_definition org
+*Нормальный порядок редукции* --- редукция самого левого \(\beta\)-редекса
+#+end_definition
+
+#+NAME: Аппликативный порядок редукций
+#+begin_definition org
+*Аппликативный порядок редукции* --- редукция самого левого \(\beta\)-редекса из самых вложенных
+#+end_definition
+
+#+NAME: Теорема о выразительной силе просто типизированного лямбда-исчисления (формулировка)
+#+begin_theorem org
+Если нормальная форма существует, она может быть получена нормальным
+порядком редукции.
+#+end_theorem
+
+#+begin_examp org
+Перепишем =if (a > b) then X else Y= в \lambda-выражение:
+\[ (((a > b)\ X)\ Y) \]
+\begin{align*}
+  (((T)\ X)\ Y) & \to_\beta \\
+  (\lambda b. X)\ Y & \to_\beta \\
+  X
+\end{align*}
+Это ленивое вычисление
+#+end_examp
+
+* Про Y-комбинатор
+\[ Y\ f =_\beta f\ (Y\ f) =_\beta f\ (f\ (Y\ f)) =_\beta \dots =_\beta f^{(n)}\ (Y\ f) \]
+\[ Y\ \overbrace{(\lambda f. \lambda x.  x)}^{\varphi} =_\beta \varphi\ (Y\ \varphi) \]
+
+#+begin_task org
+Дз 8.g
+#+end_task
+#+begin_solution org
+\[ (Y \lambda f. \lambda a. \lambda b. \lambda n. (\mathop{IsZero}\ n) a (f\ b\ (a + b)\ (n - 1)))\ 1\ 1 \]
+#+begin_src haskell
+fib a b n =
+  if n = 0 then a
+  else fib b (a + b) (n - 1)
+#+end_src
+#+end_solution
+
+
+

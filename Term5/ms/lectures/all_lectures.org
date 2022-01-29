@@ -4,3 +4,15 @@
 
 * Лекция 1
 #+INCLUDE: "1.org" :lines "4-"
+* Лекция 2
+#+INCLUDE: "2.org" :lines "4-"
+* Лекция 3
+#+INCLUDE: "3.org" :lines "4-"
+* TODO Лекция 4
+* TODO Лекция 5
+* TODO Лекция 6
+* TODO Лекция 7
+* Лекция 8
+#+INCLUDE: "8.org" :lines "4-"
+* Лекция 9
+#+INCLUDE: "9.org" :lines "4-"

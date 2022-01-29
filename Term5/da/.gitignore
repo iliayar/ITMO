@@ -1,0 +1,4 @@
+venv
+.lab.appdir
+*.egg-info
+dist
