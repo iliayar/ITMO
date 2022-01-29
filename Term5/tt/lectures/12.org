@@ -1,0 +1,106 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 12
+#+date: 30 ноября
+
+* Парадокс Жирара
+\(\lambda\)-куб не такой вырахительный как хотелось бы
+#+begin_remark org
+Топология: \(\Omega \subseteq \mathcal{P}(X)\)
+- \(\mathcal{P}(X)\) --- множество всех функций типа ~X -> *~
+- \(x \in \mathcal{P}(X)\), ~x : X -> *~
+Топология: ~(X -> *) -> *~ --- про подмножество говорим, подходит ли оно
+#+end_remark
+#+begin_remark org
+\-
+| 0: | Все значения (\(\lambda\)-терм) |               |
+| 1: | Типы (утверждения)        | \(*\)         |
+| 2: | Рода                      | \(* \rightarrow *\)     |
+| 3: | Сорта                     | \(\square\)   |
+| 4: |                           | \(\triangle\) |
+#+end_remark
+** Обобщение \(\lambda\)-куба
+#+begin_remark org
+\(\lambda\)HOL:
+- \(*, \square, \triangle\)
+- Правила: \((*, *),(\square, \square), (\square, *)\).
+Если добавим \((\triangle, * )\), все останется хорошо. Там живет: \(\Pi
+x^\square.\text{значения}\). Если добавим \((\triangle, \square)\),
+получим неконсистентность.
+\[ \overbrace{\underbrace{( * , * )\ (\square, \square)\ (\square, * )\ (\triangle, \square)}_{\textbf{Система }U^-}\ (\triangle, * )}^{\textbf{Система }U} \]
+И \(U\) и \(U^-\) неконсистентны.
+#+end_remark
+#+begin_remark org
+\(\mathcal{P}(X)\) --- тип всех функций \(X \rightarrow *\), тогда топология:
+\[ \underbrace{\underbrace{X \rightarrow *}_\square \rightarrow *}_\square \]
+Заметим, что это на самом деле квантор всеобщности:
+\[ \forall \alpha^\tau. \varphi(\alpha) = A(\underset{ * }{\tau}, \underset{\square}{\varphi})^\square \]
+\[ S\ :\ A(\tau) \approx \overbrace{(\tau \rightarrow *)}^\varphi \rightarrow * \]
+\(\varphi\) --- обобщенная функция отображающая значения типа в утверждение,
+квантор всеобщности --- штука, которая отображает такую фукнцию в
+утверждение: истина эта функция или ложна.
+#+end_remark
+#+NAME: Общая идея построения парадокса Жирара в системе U
+#+begin_remark org
+В системе U можем написать что-то вроде Y-комбинатора --- \(F \equiv
+\lambda\)-выражение, которое не заканчивается, но \(\vdash F : \varphi\), \(\varphi\) -
+любой. Значит любой тип обитаем
+#+end_remark
+* Парадок Бурали-Форте
+1. 
+  #+begin_statement org
+  Не существует максиамльного ординала (множества всех ординалов)
+  #+end_statement
+  #+begin_definition org
+  Ординал --- транзитивное, вполне упорядоченное множество
+  #+end_definition
+  \(S\) --- множество всех ординалов, Тогда оно \(\in S\)?
+2. Фундированное множество \(X\) --- множество, где нет бесконечной цепочки \(\in\)
+   \[ \underbrace{X \ni x_1 \ni x_2 \ni \dots \ni x_n}_{\text{конечное }n} \]
+   Множество всех фундированных множеств --- фундированное
+3. Множество всех множеств
+   \[\sigma : X \rightarrow \mathcal{P} X\]
+   \[\tau : \mathcal{P} X \rightarrow X\]
+   - \(\sigma X\) --- \(\{a | a \in X\}\) --- начальный отрезок до \(X\)
+   - \(\tau X\) --- ординал, соответствующий \(X\)
+   \[ \sigma \tau X = \{\tau\sigma\alpha | \alpha \in X\}\]
+   \[ \sigma \tau X = \{\beta | \beta < \tau X\} = \{\beta | \beta = \tau \sigma \alpha\text{ для } \alpha \in Z\} \]
+#+NAME: Парадоксальные универсумы
+   #+begin_definition org
+   *Парадоксальный универсум*
+   - \(\sigma : U \rightarrow \mathcal{P} U\)
+   - \(\tau : \mathcal{P} U \rightarrow U\)
+   Если для всех \(X \in \mathcal{P} U\)
+   \[ \sigma \tau X = \{\tau \sigma x | x \in X\} \]
+   #+end_definition
+#+begin_definition org
+\(y \in \sigma x\), то \(y < x\)
+#+end_definition
+#+begin_remark org
+\(\tau \sigma y < \tau \sigma x\)
+#+end_remark
+#+begin_defintiion org
+\(X\) --- *индуктивен*, если каждый \(x: y < x\), то \(y \in X\), тогда \(x \in X\)
+#+end_defintiion
+#+begin_remark org
+Трансфинитная индукция --- если утверждение истнинно для всех ординалов
+меньше \(x\) \(\implies\) истинно для ординалов \(x\), то оно истинно
+везде
+#+end_remark
+\(X\) --- фундировано, если \(x\) принадлежит всем индуктивным множествам
+#+begin_definition org
+\(\Omega = \tau\{x | x\text{ --- фундировано}\}\)
+#+end_definition
+#+begin_statement org
+\(\Omega\) --- фундировано
+#+end_statement
+#+begin_statement org
+\(\Omega\) --- не фундировано
+#+end_statement
+#+begin_remark org
+Как это выразить в U?
+- \(\mathcal{P} X\) ~: X -> *~
+- \(U\) ~:~ \(\square\)
+- \(\sigma\) ~:~ \(U \rightarrow \mathcal{P} U\)
+- \(\tau\) ~:~ \(\mathcal{P} U \rightarrow U\)
+- \(o\) : \(\forall S^{\mathcal{P} U}. \sigma (\tau(x)) = \lambda u^U. \exists x^U. (S x) \& u = \tau (\sigma(x))\)
+#+end_remark

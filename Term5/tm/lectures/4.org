@@ -1,0 +1,185 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 4
+#+date: 23 сентября
+
+* Атрибутно транслирующая грамматика
+- Атрибуты
+  \[ F \to n \]
+  \[ n\ val : int \]
+  - *синтезируемые*. Если значение берется от детей, себя или токена
+  - *наследуемые*. Если значение берется от братьев или родителя
+- Транслирующие символы
+  #+begin_examp org
+  \(\$ADD\)
+  \[ E \to T \]
+  \[ E \to E + T \texttt{\$ADD} \]
+  #+end_examp
+  Вычисление происходит, когда нетерминал раскрывается в \(\varepsilon\)
+- Присваивание атрибутов
+  #+begin_examp org
+  \[ E \to T \quad \texttt{E.val = T.val} \]
+  \[ E\ val\text{ --- синтезируемый } \]
+  \[ T\ val\text{ --- синтезиуремый } \]
+  \[ E \to E + T \texttt{\$ADD} \]
+  #+begin_src 
+  $ADD.op1 = E1.val
+  $ADD.op2 = T.val
+  E0.val = $ADD.res 
+  #+end_src
+  #+begin_src 
+  $ADD {
+    op1 - наследуемый
+    op2 - наследуеммый
+    res - синтезируемый
+    res = op1 + op2
+  } 
+  #+end_src
+  #+begin_src 
+  E -> E + T {
+    E.val = E1.val + T.val
+  } 
+  #+end_src
+  #+end_examp
+
+#+begin_definition org
+Грамматика \(S\)-атрибутная если вне транслирующий символов происходит
+только присваивание, а внутри происходит только обращения к атрибутам
+траслирующего символа
+#+end_definition
+#+begin_definition org
+Грамматика \(L\)-атрибутная, если наследуемые атрибуты зависят только
+от атрибутов родителя и братьев, которые находятся левее текущего
+#+end_definition
+\[ A \to \alpha c \beta \]
+
+#+begin_src python
+def A(acc, foobar):
+    res = A()
+    res.acc = ac
+    res.foobar = foobar
+    # --snip--
+    # c
+    assert(token == c)
+    ci_val = token_val
+    nextToken()
+    # --snip--
+#+end_src
+#+begin_src python
+def ADD(op1, op2):
+    res = op1 + op2
+    return res
+#+end_src
+** Устранение левой рекурсии
+\begin{center}
+\begin{array}{ll}
+A \to A \alpha & \texttt{A0.c = g(A1.c, a.b)} \\
+A \to \beta & \texttt{A,c = f (b.a)}
+\end{array}
+\end{center}
+
+\begin{center}
+\begin{array}{ll}
+A \to \beta A'  & \texttt{A'.ca = f(b.a); A.c = A'.c} \\
+A' \to \alpha A' & \texttt{Aa'.ca = g(A0'.ca, a.b); A0'.c = Aa'.c} \\
+A' \to \varepsilon & \texttt{A'.c = A',ca}
+\end{array}
+\end{center}
+** Нерекусрчивные парсеры
+\[ A \to \xi B \eta C \zeta \]
+#+begin_examp org
+\-
+\begin{center}
+\begin{array}{ll}
+(1) & E \to E + T\texttt{\$ADD} \\
+(2) & E \to T \\
+(4) & T \to T \cdot F \texttt{\$MUL} \\
+(5) & T \to n \\
+(5) & F \to n \\
+(6) & F \to (E)
+\end{array}
+\end{center}
+\begin{center}
+\begin{array}{lll}
+E & \textt{val} & \texttt{\$ADD op1 op2 res} \\
+T & \textt{val} & \texttt{\$MUL op1 op2 res} \\
+F & \textt{val} & \\
+n & \textt{val} &
+\end{array}
+\end{center}
+1. 
+   #+begin_src 
+   $ADD.op1 = E1.res
+   $ADD.op2 = T.res
+   E0.res = $ADD.res
+   #+end_src
+2. 
+   #+begin_src 
+   E.res = T.res 
+   #+end_src
+3. 
+   #+begin_src 
+   $MUL.op1 = T1.res
+   $MUL.op2 = F.res
+   T0.res = $MUL.res
+   #+end_src
+4. 
+   #+begin_src 
+   T.res = F.res
+   #+end_src
+5. 
+   #+begin_src 
+   F.res = n.val
+   #+end_src
+6. 
+   #+begin_src 
+   F.res = E.res
+   #+end_src
+\begin{center}
+\begin{array}{l}
+E \to TE' \\
+E' \to + T\texttt{\$ADD}E' \\
+E' \to \varepsilon \\
+\vdots
+\end{array}
+\end{center}
+1. 
+   #+begin_src 
+   E'.acc = T.res
+   E.res = E'.res 
+   #+end_src
+1. 
+   #+begin_src 
+   $ADD.op1 = E0'.acc
+   $ADD.op2 = T.res
+   E4'.acc = $ADD.res
+   E0'.res = E4'.res
+   #+end_src
+1. 
+   #+begin_src 
+   E'.res = E'.acc
+   #+end_src
+_Рекурсивный_:
+#+begin_src python
+# E_ $\equiv E'$
+def E() -> int:
+    Tres = T()
+    E_acc = Tres
+    E_re = E_(E_acc)
+    Eres = E_res
+    return Rres
+def E_(acc: int) -> int:
+    if token == '+':
+        skip('+')
+        Tres = T()
+        ADDop1 = acc
+        ADDop2 = Tres
+        ADDres = ADD(ADDop1, ADDop2)
+        E4_acc = ADDres
+        E4_res = E_(E4_acc)
+        E_res = E4_res
+        return Eres
+    elif token == ')' or token == '$':
+        E_res = acc
+        return E_res
+#+end_src
+#+end_examp

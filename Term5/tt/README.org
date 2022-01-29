@@ -2,5 +2,20 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/all_lectures.pdf][All lectures]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/0.pdf][Lecture 0]]
+[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/all_lectures.pdf][All lectures]] \\
+[[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/questions.pdf][Questions for zachet]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/1.pdf][Lecture 1]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/2.pdf][Lecture 2]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/3.pdf][Lecture 3]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/4.pdf][Lecture 4]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/5.pdf][Lecture 5]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/6.pdf][Lecture 6]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/7.pdf][Lecture 7]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/8.pdf][Lecture 8]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/9.pdf][Lecture 9]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/10.pdf][Lecture 10]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/11.pdf][Lecture 11]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/12.pdf][Lecture 12]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/13.pdf][Lecture 13]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/14.pdf][Lecture 14]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/15.pdf][Lecture 15]]

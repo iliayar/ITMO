@@ -1,0 +1,191 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 2
+#+date: 9 сентября
+
+* \(LL(1)\) грамматика
+#+begin_lemma org
+\[ \alpha = c \beta \implies \FIRST(\alpha) = \{c\} \]
+\[ \alpha = \varepsilon \implies \FIRST(\alpha) = \{\varepsilon\} \]
+\[ \alpha = A\beta \implies \FIRST(\alpha) = \FIRST(\alpha) \setminus \varepsilon \cup (\FIRST(\beta) \text{ если } \varepsilon \in \FIRST(A)) \]
+
+- Массив =FIRST[]: map<NonTerm, Set<Term1>>=: \(N \to 2^{\Sigma \cup \{\varepsilon\}}\)
+
+#+ATTR_LATEX: :options escapeinside=@@
+#+begin_src python 
+while(change):
+    for @\(A \to \alpha \in \Gamma\)@:
+        FIRST[A] @\(\cup\)@= FIRST(@\(\alpha\)@)
+#+end_src
+#+end_lemma
+
+#+begin_proof org
+\fixme
+\[ \FIRST[A] \subset \FIRST(A) \implies c \in \FIRST(A) \text{ и } c \not\in \FIRST[A] \]
+Тогда \(A \Rightarrow^k c \varepsilon\), \(k \leadsto \min\). Предположим, что на \(k\)-той итерации ничего не поменялось, но мы прошли правило \(A \Rightarrow^k \alpha \Rightarrow c\varepsilon\), *противоречие*.
+#+end_proof
+
+#+begin_lemma org
+\-
+- =FOLLOW[]=
+#+ATTR_LATEX: :options escapeinside=@@
+#+begin_src python
+FOLLOW[@\(S\)@] = \{@\(\$\)@\}
+while(change):
+    for @\(A \to \alpha \in \Gamma\)@:
+        for @\(\beta:\ \alpha = \beta B \gamma\)@:
+            FOLLOW[B] @\(\cup\)@= FIRST(@\(\gamma\)@)@\(\setminus \varepsilon\ \cup\ \)@(FOLLOW(@\(A\)@)@\(\text{ если } \varepsilon \in\)@ FIRST(@\(\gamma\)@))
+#+end_src
+#+end_lemma
+#+NAME: грамматика для выражений
+#+begin_examp org
+\-
+\begin{center}
+\begin{array}{l}
+  E \to E + T \\
+  E \to T \\
+  T \to T \cdot E \\
+  T \to F \\
+  F \to (E) \\
+  F \to n
+\end{array}
+\end{center}
+
+| /     | <        | <               |
+|       | FIRST    | FOLLOW          |
+|-------+----------+-----------------|
+| \(E\) | \((\ n\) | \(\$\ +\ )\)    |
+| \(T\) | \((\ n\) | \(\$\ +\ \cdot\ )\) |
+| \(F\) | \((\ n\) | \(\$\ +\ \cdot\ )\) |
+
+Проверим, что \(LL(1)\):
+\[ \FIRST(E) \cap \FIRST(T) = \{(,n\} \neq \varnothing \]
+\(\implies\) *не \(LL(1)\)*
+#+end_examp
+
+#+ATTR_LATEX: :options [Доказательство Теоремы]
+#+begin_proof org
+Пусть не \(LL(1)\), тогда \(\xi \neq \eta\)
+1. \(\xi\) не порождает \(\varepsilon\), \(\eta\) не порождает \(\varepsilon\) \(\implies\) \(c \in \FIRST(\xi)\) и \(c \in \FIRST(\eta)\)
+2. \(\xi\) порождает \(\varepsilon\), \(\eta\) порождает \(\varepsilon\) \(\implies\) \(\varepsilon \in \FIRST(\xi)\) и \(\varepsilon \in \FIRST(\eta)\)
+3. \(\xi\) порождает \(\varepsilon\), \(\eta\) не порождает \(\varepsilon\) \(\implies \varepsilon \in \FIRST(\xi),\ c \in \FOLLOW(A),\ c \in \FIRST(\eta)\)
+#+end_proof
+
+#+begin_definition org
+\(\Gamma\) --- *леворекурсивная*, если
+\[ \exists A: A \Rightarrow^* A \alpha \]
+#+end_definition
+
+#+begin_statement org
+Леворекурсивная \(\implies\) не \(LL(1)\) (почти всегда)
+#+end_statement
+
+#+begin_remark org
+Непосредственная левая рекурсия: \(A \to A \alpha\). \(A\) не порождающий, значит есть \(A \to \beta\).
+- \(c \in \FIRST(\beta)\)
+- \(c \in \FIRST(A\alpha)\)
+\begin{center}
+  \begin{tikzpicture}
+    \node {A}
+    child {node {A}
+      child {node {A}
+        child {node {A}
+          child {node {\(\beta\)}}
+          child {node {\(\alpha\)}}}
+        child {node {\(\alpha\)}}}
+      child {node {\(\alpha\)}}}
+    child {node {\(\alpha\)}}
+  \end{tikzpicture}
+\end{center}
+\[ \Downarrow \]
+\begin{center}
+  \begin{tikzpicture}
+    \node {A}
+    child {node {\(\beta\)}}
+    child {node {A'}
+      child {node {\(\alpha\)}}
+      child {node {A'}
+        child {node {\(\alpha\)}}
+        child {node {A'}
+          child {node {\(\varepsilon\)}}}}}
+  \end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{array}{l}
+  A \to \beta A' \\
+  A' \to \alpha A' \\
+  A' \to \varepsilon
+\end{array}
+\end{center}
+#+end_remark
+
+#+begin_definition org
+\(A \to \alpha \beta\), \(A \to \alpha \gamma\) --- *правое ветвление*
+#+end_definition
+
+#+begin_statement org
+Правое ветвление  \(\implies\) не \(LL(1)\) (почти всегда)
+\begin{center}
+\begin{array}{l}
+  A \to \alpha A' \\
+  A' \to \beta \\
+  A' \to \gamma
+\end{array}
+\end{center}
+#+end_statement
+
+#+begin_examp org
+Перестроим [[грамматика для выражений][грамматику для выражений]]:
+\begin{center}
+\begin{array}{l}
+  E \to T E' \\
+  E \to + T E' \\
+  E' \to \varepsilon \\
+  T \to F T' \\
+  T' \to \cdot F T' \\
+  T' \to \varepsilon \\
+  F \to (E) \\
+  F \to n
+\end{array}
+\end{center}
+
+| /      | <        | <               |
+|        | FIRST    | FOLLOW          |
+|--------+----------+-----------------|
+| \(E\)  | \(n\ (\) | \(\$\ )\)       |
+| \(E'\) | \(\varepsilon\ +\) | \(\$\ )\)       |
+| \(T\)  | \(n\ c\) | \(+\ \$\ )\)    |
+| \(T'\) | \(\varepsilon\ \cdot\) | \(+\ \$\ )\)    |
+| \(F\)  | \(n\ c\) | \(+\ \cdot\ \$\ )\) |
+
+Это \(LL(1)\) грамматика.
+#+end_examp
+
+* Конструирование парсеров
+- Сверху (Top Down). Знаем корень, начинаем с него
+- Снизу (Bottom Up). Знаем крону, начинаем с токенов
+
+** Рекурсивный спуск
+Контекст:
+- Текущий токен (=token=)
+- =nextToken()= --- следующий токен
+- =FIRST1=\((\alpha) = \FIRST(\alpha) \setminus \varepsilon \cup (\FOLLOW(A) \text{ если } \varepsilon \in \FIRST(\alpha))\)
+
+  #+ATTR_LATEX: :options escapeinside=@@
+  #+begin_src C++
+Tree A():
+    r = Tree(A)
+    switch(token):
+        case FIRST1(@\(\alpha_1\)@):
+            // $\alpha_1$
+        case FIRST1(@\(\alpha_2\)@):
+            // $\alpha_2$
+        @$\vdots$@ 
+        case FIRST1(@\(\alpha_j\)@):
+            for @\(X_j\)@ : @\(\alpha_i = X_1 X_2 \dots\)@:
+                // $X_i = c$ - терминал
+                ensure @\(X_j = token\)@
+                nextToken()
+                r.addChild(@\(X_j\)@)
+                // $X_j = A$ - нетерминал
+                r.addChild(@\(X_j\)@())
+  #+end_src
