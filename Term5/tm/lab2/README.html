@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-10-09 Sat 20:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Ilya Yaroshevskiy" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3de883c">1. Лабораторная 2. Вариант 10. Заголовок функции в Си</a>
+<ul>
+<li><a href="#org125a7fa">1.1. Условие</a></li>
+<li><a href="#orgc4bfebc">1.2. Отчет</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3de883c" class="outline-2">
+<h2 id="org3de883c"><span class="section-number-2">1.</span> Лабораторная 2. Вариант 10. Заголовок функции в Си</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org125a7fa" class="outline-3">
+<h3 id="org125a7fa"><span class="section-number-3">1.1.</span> Условие</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Заголовок функции в Си. Заголовок начинается именем возвращаемого типа
+или словом "<code>void</code>", далее идет имя функции, скобка, затем разделенные
+запятой описания аргументов. Переменная может быть указателем, в этом
+случае перед ней идет звездочка (возможны и указатели на указатели, и
+т. д.). Аргументов может быть несколько.  Используйте один терминал
+для всех имен переменных и имен типов. <br />
+Пример: <code>int fib(int n);</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgc4bfebc" class="outline-3">
+<h3 id="orgc4bfebc"><span class="section-number-3">1.2.</span> Отчет</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Токены:
+</p>
+<pre class="example" id="org063e1ed">
+LPAREN:   : '('
+RPAREN:   : ')'
+ASTERISK  : '*'
+COMMA     : ','
+IDENTIFER : '[a-zA-Z_][a-zA-Z0-9_]*'
+END       : The end of input
+</pre>
+
+<p>
+Грамматика:
+</p>
+<pre class="example" id="org2dcadf9">
+DECLRATION -&gt; IDENTIFIER IDENTIFIER ( ARGS ) ;
+ARGS       -&gt; ARG ARGS_REST
+ARGS       -&gt; EPS
+ARGS_REST  -&gt; , ARG ARGS_REST
+ARGS_REST  -&gt; EPS
+ARG        -&gt; IDENTIFIER POINTER IDENTIFIER
+POINTER    -&gt; * POINTER
+POINTER    -&gt; EPS
+</pre>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">FIRST</th>
+<th scope="col" class="org-left">FOLLOW</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">DECLARATION</td>
+<td class="org-left">IDENTIFIER</td>
+<td class="org-left">END</td>
+</tr>
+
+<tr>
+<td class="org-left">ARGS</td>
+<td class="org-left">EPS IDENTIFIER</td>
+<td class="org-left">')'</td>
+</tr>
+
+<tr>
+<td class="org-left">ARGS<sub>REST</sub></td>
+<td class="org-left">EPS ','</td>
+<td class="org-left">')'</td>
+</tr>
+
+<tr>
+<td class="org-left">ARG</td>
+<td class="org-left">IDENTIFIER</td>
+<td class="org-left">',' ')'</td>
+</tr>
+
+<tr>
+<td class="org-left">POINTER</td>
+<td class="org-left">EPS '*'</td>
+<td class="org-left">IDENTIFIER</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ilya Yaroshevskiy</p>
+<p class="date">Created: 2021-10-09 Sat 20:45</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
