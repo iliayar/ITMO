@@ -1,0 +1,84 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 15
+#+date: 21 декабря
+
+* Подтипы
+#+NAME: Полиморфизм (параметрический и наследственный)
+#+begin_remark org
+Полиморфизм:
+- Параметрический
+  - Параметричекий полифморфизм как Х-М, F \\
+    \(\forall x. x \rightarrow x\)
+  - Перегрузка Ad-Hoc
+    #+begin_src python
+print("a")
+print(7)
+    #+end_src
+- Наследственный
+  - ООП
+  - Приведение
+#+end_remark
+#+NAME: Отношение подтипизации
+#+begin_definition org
+\(F \prec: G\) (\(F\) подтип \(G\)):
+- \(f: F\), \(g: G\)
+- \(f\) годится везде, где годится \(g\)
+#+end_definition
+#+begin_remark org
+\(F \prec: G\)
+- \(T = F \rightarrow H\)
+- \(S = G \rightarrow H\)
+тогда \(S \prec: T\)
+- \(T' = H \rightarrow F\)
+- \(S' = H \rightarrow G\)
+тогда \(T' \prec: S'\)
+#+end_remark
+#+NAME: Ко- и контравариантность.
+#+begin_definition org
+*Вариантность*
+- Ковариантность: \(a \prec_F b\), \(f(a) \prec_G f(b)\)
+- Контрвариантность: \(a \prec_F b\), \(g(a) \succ_H g(b)\)
+#+end_definition
+#+begin_examp org
+Рассмотрим списки \(A \prec B\):
+- ~set~ --- ковариантен, \(B[] \prec A[]\)
+- ~get~ --- контрвариантен,\(A[] \prec B[]\)
+Списко инвариантен
+#+end_examp
+#+begin_definition org
+\(A[x] = x \rightarrow H\), \(A : * \rightarrow *\)
+#+end_definition
+
+#+NAME: Система \(F_{\prec:}\)
+#+begin_definition org
+\(F_{\prec:}\)
+1. \(\frac{}{S \prec: S}\) --- рефлексивность
+2. \(\frac{}{S \prec: \text{Top}}\), где Top --- константа(тип)
+3. \(\frac{S \prec: U \quad U \prec: T}{S \prec: T}\) --- тразитивность
+4. \(\frac{T_1 \prec: S_1 \quad S_2 \prec: T_2}{S_1 \rightarrow S_2 \prec: T_1 \rightarrow T_2}\)
+5. \(\frac{\Gamma \vdash t : S \quad S \prec: T}{\Gamma \vdash t : T}\)
+#+end_definition
+#+NAME: Система \(F_{\prec:}\)_rem
+#+begin_remark org
+Хотим делать ограничения на кванторы \(\forall x. x \rightarrow x\)
+\[ \frac{}{\Gamma \vdash \text{Top} : *} \]
+\[ \frac{X \prec: T, \Gamma \vdash T : K}{X \prec: T, \Gamma \vdash X : K} \]
+\[ \frac{\Gamma, X \prec: T_1 \vdash T_2 : *}{\Gamma \vdash \forall x \prec: T_1. T_2 : *} \]
+\[ \frac{\Gamma \vdash S : *}{\Gamma \vdash S \prec: \text{Top}} \]
+#+end_remark
+#+NAME: Ядерное и полное правила
+#+begin_remark org
+Есть 2 варианта исчисления:
+- Ядерное (проще работать)
+  \[ \frac{\Gamma \vdash U_1 : K_1 \quad \Gamma, X \prec: U_1 \vdash S_2 \prec: T_2}{\Gamma \vdash \forall x \prec: U_1. S_2 \prec: \forall x \prec: U_1. T_2} \]
+- Полное
+  \[ \frac{\Gamma \vdash U_2 \prec: U_1 \quad \Gamma, X \prec: U_1 \vdash S_2 \prec: T_2}{\Gamma \vdash \forall x \prec: U_1. S_2 \prec: \forall x \prec: U_2. T_2} \]
+#+end_remark
+#+begin_remark org
+Соберем ООП:
+- \((\prec:)\)
+- \(\exists\) (экзистенциальные типы)
+- ~B = A + {x : S}~ \(\prec:\) ~A = { ... }~
+  \[ \frac{}{\{l_i : T_{i=\overline{1\dots n + k}}\} \prec: \{l_i : T_{i = \overline{i\dots n}}\}} \]
+#+end_remark
+

@@ -1,0 +1,59 @@
+#+setupfile: setup.org
+#+TITLE: Практика 11
+#+date: 17 ноября
+
+\todo
+
+Метод наиме
+ньших квадратов получили систему уравнений:
+\[ A \vec{b} = Z \vec{X} \]
+Решим систему:
+\begin{align*}
+  \begin{pmatrix}
+    n & n \overline{z} \\
+    n \overline{z} & n \overline{z^2}
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+    a \\
+    b
+  \end{pmatrix}
+  & =
+  \begin{pmatrix}
+    1 & 1 & \dots & 1 \\
+    z_1 & z_2 & \dots & z_n
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+    1 & z_1 \\
+    1 & z_2 \\
+    \vdots & \vdots \\
+    1 & z_n
+  \end{pmatrix} \\
+
+  \begin{pmatrix}
+    an + bn\overline{z} \\
+    an\overline{z} + bn\overline{z^2}
+  \end{pmatrix}
+  & =
+  \begin{pmatrix}
+    n \overline{x} \\
+    n \overline{xz}
+  \end{pmatrix} \\
+
+  \begin{cases}
+    an + bn\overline{z} = n\overline{x} \\
+    an \overline{z} + bn \overline{z^2} = n\overline{xz}
+  \end{cases}
+  & \Leftrightarrow
+  \begin{cases}
+    a + b\overline{z} = \overline{x} \\
+    a \overline{z} + b \overline{z^2} = \overline{xz}
+  \end{cases}
+\end{align*}
+
+\[ n^2 \det A = \overline{z^2} - \overline{z}^2 = D(z) \]
+\[ A^{-1} = \frac{1}{nD{z}} \begin{pmatrix} \overline{z^2} & - \overline{z} \\ - \overline{z} & 1  \end{pmatrix} \]
+\[ D(b_i) = \sigma^2 (A^{-1})_{1i} \]
+\[ D(a) = \sigma^2 (A^{-1})_{11}  = \frac{\sigma^2 \overline{z^2}}{n D(z)} \to 0\]
+\[ D(b) = \sigma^2 (A^{-1})_{22}  = \frac{\sigma^2}{n D(z)} \to 0\]

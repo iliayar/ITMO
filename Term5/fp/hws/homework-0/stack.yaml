@@ -1,0 +1,14 @@
+resolver: lts-18.5
+
+packages:
+  - hw0
+
+extra-deps: []
+
+flags: {}
+
+extra-package-dbs: []
+
+nix:
+  enable: false
+  packages: [zlib.dev, zlib.out, pkgconfig]

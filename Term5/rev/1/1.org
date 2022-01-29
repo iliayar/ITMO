@@ -1,0 +1,851 @@
+* DONE One
+#+begin_src c
+#include <stdio.h>
+
+int main() {
+    char input[256];
+
+    printf("Enter flag to check: ");
+    scanf("%s", input);
+    if (strcmp(input, "f1rst_FLAG") == 0) {
+        printf("Yes! Correct flag is %s\n", input);
+        return 0;
+    }
+    printf("Wrong check!\n");
+    return 0;
+}
+#+end_src
+
+Просто скопируй строку
+_Flag_: ~f1rst_FLAG~
+
+* DONE Two
+#+begin_src c
+#include <stdio.h>
+
+int main() {
+    char input[256];
+
+    printf("Enter flag to check: ");
+    scanf("%s", input);
+    if (strlen(input) != 12) {
+        printf("Wrong length!\n");
+        return 0;
+    }
+    if (strcmp(input, "MicCheck_h4w") <= 0) {
+        printf("Wrong check 1!\n");
+        return 0;
+    }
+    if (strcmp(input, "MicCheck_h4y") >= 0) {
+        printf("Wrong check 2!\n");
+        return 0;
+    }
+    printf("Yes! Correct flag is %s\n", input);
+    return 0;
+}
+#+end_src
+
+Строка между ~MicCheck_h4w~ и ~MicCheck_h4y~
+
+j_Flag_: ~MicCheck_h4x~
+
+* DONE Three
+#+begin_src c
+#include <stdio.h>
+
+int get_char_code_at_position(char * string, int position) {
+    return (int) (string[position - 1]);
+}
+
+int main() {
+    char input[256];
+
+    printf("Enter flag to check: ");
+    scanf("%s", input);
+    if (strlen(input) != 17) {
+        printf("Wrong length!\n");
+        return 0;
+    }
+    if (atoi(input) != 333) {
+        printf("Wrong check 1!\n");
+        return 0;
+    }
+    if (get_char_code_at_position(input, 5) != 'o') { printf("No \"o1\"!\n"); return 0; }
+    if (get_char_code_at_position(input, 7) != 'o') { printf("No \"o2\"!\n"); return 0; }
+    if (get_char_code_at_position(input, 11) != 'o') { printf("No \"o3\"!\n"); return 0; }
+
+    if (get_char_code_at_position(input, 9) != get_char_code_at_position(input, 13)) { printf("Wrong check 2!\n"); return 0; }
+    if (get_char_code_at_position(input, 13) != get_char_code_at_position(input, 15)) { printf("Wrong check 3!\n"); return 0; }
+    if (get_char_code_at_position(input, 17) != get_char_code_at_position(input, 9)) { printf("Wrong check 4!\n"); return 0; }
+
+    if (get_char_code_at_position(input, 4) != get_char_code_at_position(input, 6)) { printf("Wrong check 5!\n"); return 0; }
+    if (get_char_code_at_position(input, 4) != get_char_code_at_position(input, 8)) { printf("Wrong check 6!\n"); return 0; }
+    if (get_char_code_at_position(input, 4) != get_char_code_at_position(input, 10)) { printf("Wrong check 7!\n"); return 0; }
+    if (get_char_code_at_position(input, 4) != get_char_code_at_position(input, 12)) { printf("Wrong check 8!\n"); return 0; }
+    if (get_char_code_at_position(input, 4) != get_char_code_at_position(input, 14)) { printf("Wrong check 9!\n"); return 0; }
+    if (get_char_code_at_position(input, 4) != get_char_code_at_position(input, 16)) { printf("Wrong check 10!\n"); return 0; }
+
+    if (get_char_code_at_position(input, 16) != 'g') { printf("No \"g\"!\n"); return 0; }
+    if (get_char_code_at_position(input, 9) != '0') { printf("No zero!\n"); return 0; }
+
+    printf("Yes! Correct flag is %s\n", input);
+    return 0;
+}
+#+end_src
+
+Смотрим на условия начиная с известного
+
+_Flag_: ~333gogog0gog0g0g0~
+
+* DONE Four
+#+begin_src c
+#include <stdio.h>
+
+int get_char_code_at_position(char * string, int position) {
+    return (int) (string[position - 1]);
+}
+
+int main() {
+    char input[256];
+
+    printf("Enter flag to check: ");
+    scanf("%s", input);
+    if (strlen(input) * 4 != get_char_code_at_position(input, 1)) {
+        printf("Wrong length!\n");
+        return 0;
+    }
+    if (strncmp(input, "4_points", 8)) {
+        printf("Wrong check 1!\n");
+        return 0;
+    }
+    if (strcmp(&input[8], "komne") != 0) {
+        printf("Wrong check 2!\n");
+        return 0;
+    }
+    printf("Yes! Correct flag is %s\n", input);
+    return 0;
+}
+#+end_src
+
+_Flag_: ~4_pointskomne~
+
+* DONE Five
+#+begin_src c
+#include <stdio.h>
+
+int main() {
+    char input[256];
+    char serial[] = "f2hwldozg|:wbq";
+    int i;
+
+    printf("Enter flag to check: ");
+    scanf("%s", input);
+    for (i = 0; i < strlen(serial); i++) {
+        if (input[i] + i != serial[i]) {
+            printf("Wrong position %d!\n", i);
+            return 0;
+        }
+    }
+    printf("Yes! Correct flag is %s\n", input);
+    return 0;
+}
+#+end_src
+
+#+begin_src python
+s = list("f2hwldozg|:wbq")
+for (i, c) in enumerate(s):
+    s[i] = chr(ord(c) - i)
+return "".join(s)
+#+end_src
+
+#+RESULTS:
+: f1fth_is_s0lVd
+
+
+_Flag_: ~f1fth_is_s0lVd~
+
+* DONE Erlang
+#+begin_src erlang
+-module(spbctf_2).
+-export([main/1]).
+
+%ord returns ASCII code of character, e.g. ord("a") return 97
+ord(A) -> hd(A).
+
+main(_) ->
+    io:format("Ave!\n"),
+    Flag = case io:fread("Give me the flag: ", "~s") of
+        {ok, [R|_]} -> R;
+        {error, _}  ->
+            io:format("Error while reading your string"),
+            erlang:exit(error_read)
+    end,
+    Caesar = fun(A) -> (A - ord("a") + 3) rem 26 + ord("a") end,
+    Caesared = lists:map(Caesar, Flag),
+    case string:equal(Caesared, "yhqlylglkdfnhulfl") of
+        true  -> io:format("Right\n");
+        false -> io:format("Wrong\n")
+    end.
+#+end_src
+
+#+begin_src python
+s = list("yhqlylglkdfnhulfl")
+for i in range(len(s)):
+    s[i] = chr((ord(s[i]) - ord("a") - 3) % 26 + ord("a"))
+return "".join(s)
+#+end_src
+
+#+RESULTS:
+: venividihackerici
+
+_Flag_: ~venividihackerici~
+
+* DONE crackme2
+
+#+begin_src c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// The flag looks like FLAG{md5}
+const char *flag = "464c41477b32653135356238376435383234653835656634313039346165633761383364637d";
+
+int check(const char *text)
+{
+    char buf[512];
+    memset(buf, 0, sizeof(buf));
+
+    char *ptr = buf;
+    for (size_t i = 0; text[i]; i++) {
+        sprintf(ptr, "%02x", text[i]);
+        ptr += 2;
+    }
+
+    return strcmp(flag, buf);
+}
+
+int main(int argc, char *argv[])
+{
+    char buf[256];
+    memset(buf, 0, sizeof(buf));
+
+    printf("Enter your flag: ");
+    fgets(buf, sizeof(buf), stdin);
+    buf[strlen(buf)-1] = '\0';
+
+    if (!check(buf)) {
+        printf("[+] You win!\n");
+    } else {
+        printf("[-] You lose!\n");
+    }
+
+    exit(EXIT_SUCCESS);
+}
+#+end_src
+
+#+begin_src python
+s = "464c41477b32653135356238376435383234653835656634313039346165633761383364637d"
+s = [s[i:i+2] for i in range(0, len(s), 2)]
+return "".join(chr(int(c, 16)) for c in s)
+#+end_src
+
+#+RESULTS:
+: FLAG{2e155b87d5824e85ef41094aec7a83dc}
+
+_Flag_: ~FLAG{2e155b87d5824e85ef41094aec7a83dc}~
+
+* DONE Lrep
+#+begin_src perl
+#!/usr/bin/perl -l
+
+$text = "2I7VjH)Q3RkPK*Sm3R!aY8!1P:5T6YL-`N4U5M,;xB#v1D%24U";
+$hahaha = <>;
+chop($hahaha);
+@hahaha = split //,$hahaha;
+for $i (0..length($text)-2){
+    ($a,$b) = (substr($text,$i,1),substr($text,$i+1,1));
+    if (ord($a) == (ord($b) ^ 97)){
+        next if $a eq shift @hahaha;
+        print "NOOO\n";
+        exit;
+    }
+}
+print "Congrats )\n";
+#+end_src
+
+#+begin_src python
+text = "2I7VjH)Q3RkPK*Sm3R!aY8!1P:5T6YL-`N4U5M,;xB#v1D%24U"
+res = ""
+for i in range(len(text) - 1):
+    if ord(text[i]) == ord(text[i + 1]) ^ 97:
+        res += text[i]
+return res
+#+end_src
+
+#+RESULTS:
+: 7H3K3Y15L4MBD4
+
+_Flag_: ~7H3K3Y15L4MBD4~
+
+* DONE crackme1
+#+begin_src c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// The flag looks like FLAG{md5}
+
+void encode(const char *filename, const char *text)
+{
+    FILE *fd = fopen(filename, "wb");
+    if (fd == NULL) {
+        printf("[*] Cannot open '%s'\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    int c = 0x7f;
+    printf("[*] Initialize number: 0x%02x\n", c);
+    for (size_t i = 0; i < strlen(text); i++) {
+        fputc(c ^ text[i], fd);
+        c ^= text[i];
+    }
+
+    fclose(fd);
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc < 3) {
+        printf("Usage: %s <FILENAME> <TEXT>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("[*] Encoding...\n");
+    encode(argv[1], argv[2]);
+
+    printf("[*] Result in '%s'\n", argv[1]);
+
+    exit(EXIT_SUCCESS);
+}
+#+end_src
+
+#+begin_src c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// The flag looks like FLAG{md5}
+
+void encode(const char *filename, const char *text)
+{
+    FILE *fd = fopen(filename, "wb");
+    if (fd == NULL) {
+        printf("[*] Cannot open '%s'\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    int c = 0x7f;
+    printf("[*] Initialize number: 0x%02x\n", c);
+    for (size_t i = 0; i < strlen(text); i++) {
+        fputc(c ^ text[i], fd);
+        c = text[i];
+    }
+
+    fclose(fd);
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc < 3) {
+        printf("Usage: %s <FILENAME> <TEXT>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("[*] Encoding...\n");
+    encode(argv[1], argv[2]);
+
+    printf("[*] Result in '%s'\n", argv[1]);
+
+    exit(EXIT_SUCCESS);
+}
+#+end_src
+
+Запустить на заенкоженом флаге измененую версию:
+=./crackme1 flag $(cat encoded_flag)=
+
+_Flag_: ~FLAG{c87ac46ff7d58780213623ab7a82e7f7}~
+* DONE Perl
+#+begin_src perl
+#!/usr/bin/env perl
+use MIME::Base64;
+
+print eval decode_base64('JGE9PD47IGlmICgkYSA9fiAicGVybHVzX2ZsYWd1cyIpeyJPa2F5X2l0KWlzX2ZpcnN0X3N0YWdlX2ZsYWcifWVsc2V7Ildvdywgbm9vIn0=');
+#+end_src
+#+begin_src python
+import base64
+return base64.b64decode("JGE9PD47IGlmICgkYSA9fiAicGVybHVzX2ZsYWd1cyIpeyJPa2F5X2l0KWlzX2ZpcnN0X3N0YWdlX2ZsYWcifWVsc2V7Ildvdywgbm9vIn0=")
+#+end_src
+
+#+RESULTS:
+: b'$a=<>; if ($a =~ "perlus_flagus"){"Okay_it)is_first_stage_flag"}else{"Wow, noo"}'
+
+_Flag_: ~perlus_flagus~
+
+* DONE Ruby
+#+begin_src ruby
+def f(n)
+    (2..n).reduce(1, :*)
+end
+
+a = STDIN.readlines.map {|x| x.to_i}
+
+puts (a.map {|x| f x}) ==
+    [3628800, 265252859812191058636308480000000, 30414093201713378043612608166064768844377641568960512000000000000] ? "Correct" : "Incorrect"
+#+end_src
+
+#+begin_src python :results output
+import math
+for i in range(100): 
+    if math.factorial(i) in [3628800, 265252859812191058636308480000000, 30414093201713378043612608166064768844377641568960512000000000000]:
+        print(i)
+#+end_src
+
+#+RESULTS:
+: 10
+: 30
+: 50
+
+
+Это факториалы 10, 30, 50
+
+_Flag_: ~103050~
+
+* DONE Deja Vu
+#+begin_src python
+verify = [521, 339, 1028, 365, 1132, 352, 833]
+res = ""
+for i in range(0, 7):
+    res += chr((verify[i] + 337) // 13 - i)
+return res
+#+end_src
+
+#+RESULTS:
+: B3g3m0T
+
+_Flag_: ~B3g3m0T~
+
+* DONE Haskell
+#+begin_src haskell
+import System.IO
+-- https://en.wikibooks.org/wiki/Haskell/Pattern_matching
+-- next line after commentary tells that
+-- function takes list of elements any type which implement a following functions:
+-- (+), (*), abs, signum, fromInteger, (negate | (-))
+-- and return list of same type
+--  ++ is a list concatenation [1]++[2] == [1,2]
+calculate1 :: Num a =>[a] -> [a]
+calculate1 (x:[]) = [x*4]
+calculate1 (x:y:[]) = [(x+y)*5] ++ (calculate1 [y])
+calculate1 (x:y:xs) = (calculate1 [x,y]) ++ (calculate1 xs)
+
+
+-- this function convert string(list of Char) into list of Int
+to_int :: [Char] -> [Int]
+to_int (first_element:[]) = [fromEnum first_element]
+to_int (first:tail) = [fromEnum first] ++ (to_int tail)
+
+
+-- function takes two lists and return True if they are equal
+compare_lists :: Eq a => [a] -> [a] -> Bool
+compare_lists [] (one_elem) = False
+compare_lists (one_elem) [] = False
+compare_lists (first_list1:[]) (first_list2:[]) =  (==) first_list1 first_list2
+compare_lists (first_list1:tail_list1) (first_list2:tail_list2) =  ((==) first_list1 first_list2)
+                                                                   &&
+                                                                   (compare_lists tail_list1 tail_list2)
+
+
+
+main = do
+       user_input <- getLine
+       putStrLn(
+         show(compare_lists
+               (calculate1 (to_int user_input))
+               [730,304,680,284,860,196,505,204,1020,408,1000,396,995,408,995,392,975,392,1130,500]
+          )
+        )
+#+end_src
+
+#+begin_src python
+l = [730,304,680,284,860,196,505,204,1020,408,1000,396,995,408,995,392,975,392,1130,500]
+l = [l[i:i+2] for i in range(0, len(l), 2)]
+res = ""
+for e in l:
+   y = e[1] // 4
+   x = e[0] // 5 - y
+   res += chr(x) + chr(y)
+return res
+#+end_src
+
+#+RESULTS:
+: FLAG{123ffecafebabe}
+
+_Flag_: ~FLAG{123ffecafebabe}~
+* DONE Rust
+#+begin_src rust
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    io::stdin().read_line(&mut input).expect("Error while reading");
+    let checked = input.trim();
+    if checked.len() == 0 {
+        println!("???");
+        return;
+    }
+    let check:Vec<u32> = vec![215, 233, 200, 218, 374, 167, 164, 158, 167, 311, 308, 296, 158, 164, 155, 167, 170, 173, 173, 167, 161, 158, 155, 152, 158, 164, 311, 311, 308, 380];
+    let mut counter = 0;
+    let len = check.len();
+    for i in checked.as_bytes() {
+        if counter >= len || ((*i as u32) * 3 + 5) != check[counter] {
+            println!("Nope");
+            return;
+        }
+        counter+=1;
+    }
+
+    println!("Well done!");
+
+}
+#+end_src
+
+#+begin_src python
+l = [215, 233, 200, 218, 374, 167, 164, 158, 167, 311, 308, 296, 158, 164, 155, 167, 170, 173, 173, 167, 161, 158, 155, 152, 158, 164, 311, 311, 308, 380]
+l = [chr((e - 5) // 3) for e in l]
+return "".join(l)
+#+end_src
+
+#+RESULTS:
+: FLAG{6536fea35267886432135ffe}
+
+
+_Flag_: ~FLAG{6536fea35267886432135ffe}~
+* DONE crackme4
+#+begin_src python :results output
+#!/usr/bin/env python3
+
+# Generate serial for name 'SPb_CTF_2017'
+
+def check(name, serial):
+    name = bytes(name, 'utf-8')
+
+    if len(name) != 12:
+        return False
+
+    valid = [
+        int.from_bytes(name[:4], 'big'),
+        int.from_bytes(name[4:8], 'big'),
+        int.from_bytes(name[8:], 'big')
+    ]
+
+    valid[0] ^= valid[2]
+    valid[2] ^= valid[0]
+    valid[0] ^= valid[2]
+
+    # Added
+    print('{:08x}-{:08x}-{:08x}'.format(*valid))
+
+    return serial == '{:08x}-{:08x}-{:08x}'.format(*valid)
+
+# Edited
+# name = input('What is your name?\n> ')
+# serial = input('... and your serial?\n> ')
+name = 'SPb_CTF_2017'
+serial = ""
+print('Your serial is {}'.format('valid!' if check(name, serial) else 'invalid...'))
+#+end_src
+
+#+RESULTS:
+: 32303137-4354465f-5350625f
+: Your serial is invalid...
+
+_Flag_: ~32303137-4354465f-5350625f~
+
+* DONE Keygen Me
+#+begin_src c
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+#define EMAIL_LEN 256
+#define SERIAL_LEN 256
+#define is_alpha(c) ({ char _c = (c) | 0x20; _c >= 'a' && _c <= 'z'; })
+#define is_digit(c) ({ (c) >= '0' && (c) <= '9'; })
+#define is_valid(c) ({ is_alpha(c) || is_digit(c); })
+#define A 7
+#define MODULE 26
+
+
+int check_email(const char *email)
+{
+    char c;
+    int at = 0, dot = 0;
+    int bdlen = 0;
+    int adbdlen = 0;
+    int adadlen = 0;
+
+    while ((c = *email++) != 0)
+    {
+        if (!at)
+        {
+            if (is_valid(c)) bdlen++;
+            if (c == '@') at = 1;
+        }
+        if (at)
+        {
+            if (!dot)
+            {
+                if (is_valid(c)) adbdlen++;
+                if (c == '.') dot = 1;
+            }
+            if (dot && is_valid(c)) adadlen++;
+        }
+    }
+
+    if (at && dot && bdlen && adbdlen && adadlen) return 1;
+    else return 0;
+}
+
+
+int check_serial(char *email, char *serial)
+{
+    char *em, *sr;
+    uint8_t val_em, val_sr;
+
+    if (!email) return 0;
+    if (!serial) return 0;
+
+    em = email;
+    sr = serial;
+    while (*em != 0) {
+        if (is_alpha(*em)) {
+            val_em = ((uint8_t)*em | 0x20) - 'a';
+            val_em = ((A * val_em) % MODULE) + 'a';
+            val_sr = (uint8_t)(*sr) | 0x20;
+            if (val_sr != val_em)
+                return 0;
+            else
+                sr++;
+        }
+        em++;
+    }
+
+    return 1;
+}
+
+int main()
+{
+    char email[EMAIL_LEN];
+    char serial[SERIAL_LEN];
+    char email_format[32];
+    char serial_format[32];
+
+    sprintf(email_format, "%%%ds", EMAIL_LEN-1);
+    sprintf(serial_format, "%%%ds", SERIAL_LEN-1);
+    memset(email, 0, EMAIL_LEN);
+    memset(serial, 0, SERIAL_LEN);
+
+    printf("Email: ");
+    scanf(email_format, email);
+    printf("Serial: ");
+    scanf(serial_format, serial);
+
+    if (check_email(email) && check_serial(email, serial))
+        puts("Right");
+    else
+        puts("Wrong");
+
+    return 0;
+}
+#+end_src
+
+По одному символу
+#+begin_src python
+def dec(c):
+    c = ord(c)
+    v = (c | 0x20) - ord("a")
+    v = ((v * 7) % 26) + ord("a")
+    # v = v | 0x20
+    return chr(v)
+def isalpha(c):
+    _c = ord(c) | 0x20
+    return _c >= ord("a") and _c <= ord("z")
+res = ""
+for c in "spbctf2017@forkbomb.ru":
+    if isalpha(c):
+        res += dec(c)
+return res
+#+end_src
+
+#+RESULTS:
+: wbhodjjupshughpk
+
+_Flag_: ~wbhodjjupshughpk~
+
+* DONE crackme3
+#+begin_src c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// The flag looks like FLAG{md5}
+
+void encode(const char *filename, const char *text)
+{
+    int number;
+    FILE *fd = fopen(filename, "wb");
+    if (fd == NULL) {
+        printf("[*] Cannot open '%s'\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    srand(time(NULL));
+    for (size_t i = 0; i < strlen(text); i++) {
+        number = rand() & 0xff;
+        fputc(text[i] ^ number, fd);
+        fputc(number, fd);
+    }
+
+    fclose(fd);
+}
+
+// Added
+void decode(const char *filename, const char *text)
+{
+    int number;
+    FILE *fd = fopen(filename, "wb");
+    if (fd == NULL) {
+        printf("[*] Cannot open '%s'\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    for (size_t i = 0; i < strlen(text); i+=2) {
+        number = text[i + 1];
+        fputc(text[i] ^ number, fd);
+    }
+
+    fclose(fd);
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc < 3) {
+        printf("Usage: %s <FILENAME> <TEXT>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("[*] Encoding...\n");
+    /* encode(argv[1], argv[2]); */
+    decode(argv[1], argv[2]);
+
+    printf("[*] Result in '%s'\n", argv[1]);
+
+    exit(EXIT_SUCCESS);
+}
+#+end_src
+
+[[/home/iliayar/Repos/ITMO/Term5/rev/1/crackme3.png2021-10-08-030338_690x110_scrot.png]]
+
+_Flag_: ~FLAG{a00e03041032a65c64a8c334d2daf2da}~
+
+* DONE Go task
+#+begin_src go
+package main
+
+import "fmt"
+import "time"
+import "encoding/binary"
+
+func test1 (truba1 chan uint64,truba3 chan uint64){
+    n1 := <- truba1
+    if n1*n1*n1*n1 - 333*n1*n1*n1 - 502852*n1*n1 + 32232192*n1 + 46093059072 == 0 {
+        truba3 <- n1
+    }else{
+        truba3 <- 0
+    }
+}
+
+func test2 (truba2 chan uint64,truba3 chan uint64){
+    n2 := <- truba2
+    if n2*n2*n2*n2 - 259*n2*n2*n2 - 455274*n2*n2 - 50590424*n2 + 11117720960 == 0 {
+        truba3 <- n2
+    }else{
+        truba3 <- 0
+    }
+}
+
+func test3 (truba3 chan uint64){
+    var wow uint64 = 0
+    for n:=0; n<2;n++{
+        lol := <- truba3
+        if lol % 2 !=0 {
+            wow += lol
+        }
+    }
+    truba3 <- wow
+}
+
+func main (){
+    var tvoe_chislo1 uint64
+    var tvoe_chislo2 uint64
+    fmt.Print("Enter serial: ")
+    fmt.Scanf("%d-%d",&tvoe_chislo1,&tvoe_chislo2)
+    truba1 := make(chan uint64,2)
+    truba2 := make(chan uint64,2)
+    truba3 := make(chan uint64,2)
+    go test1(truba1,truba3)
+    go test2(truba2,truba3)
+    go test3(truba3)
+    truba1 <- tvoe_chislo1
+    truba2 <- tvoe_chislo2
+    time.Sleep(time.Second * 1)
+    res := <-truba3
+    if res > 0 {
+        bs := make([]byte, 8)
+        binary.BigEndian.PutUint64(bs,res*31337+54203286357058)
+        fmt.Println("Flag{"+string(bs)+"}")
+    }else{
+        fmt.Println("Wrong serail")
+    }
+}
+// https://gobyexample.com/
+#+end_src
+
+Решаем уравнения:
+#+begin_src python :results output
+def calc_n1(n1):
+    return n1*n1*n1*n1 - 333*n1*n1*n1 - 502852*n1*n1 + 32232192*n1 + 46093059072
+def calc_n2(n2):
+    return n2*n2*n2*n2 - 259*n2*n2*n2 - 455274*n2*n2 - 50590424*n2 + 11117720960
+
+for i in range(1000):
+    if calc_n1(i) == 0:
+        print("n1 =", i)
+for i in range(1000):
+    if calc_n2(i) == 0:
+        print("n2 =", i)
+#+end_src
+
+#+RESULTS:
+: n1 = 337
+: n1 = 816
+: n2 = 109
+: n2 = 848
+
+
+[[/home/iliayar/Repos/ITMO/Term5/rev/1/Go_Task.png2021-10-08-030229_506x59_scrot.png]]

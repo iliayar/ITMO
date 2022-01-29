@@ -1,0 +1,50 @@
+\import Arith.Int
+\import Arith.Nat
+\import Paths
+
+-- 1.
+\func repl (A B : \Type) (eqProof : A = B) : A -> B =>
+  \lam a => coe (@ eqProof) a right
+
+-- 2.
+\func *-comm {x y : Nat} : x Nat.* y = y Nat.* x \elim x, y
+  | 0, 0 => idp
+  | 0, suc y => *-comm {0} {y}
+  | suc x, 0 => *-comm {x} {0}
+  | suc x, suc y
+    => pmap suc (pmap (\lam e => e Nat.+ x) *-comm *> *-comm1)
+
+\func *-comm1 {x y : Nat} : y Nat.* x Nat.+ y Nat.+ x = suc y Nat.* x Nat.+ y
+  => NatSemiring.+-assoc
+    *> (pmap (Nat.+ (y Nat.* x)) NatSemiring.+-comm)
+    *> (inv ((pmap (\lam e => e Nat.+ y) *-expand) *> NatSemiring.+-assoc))
+
+\func *-expand {x y : Nat} : suc y Nat.* x = y Nat.* x Nat.+ x \elim x, y
+  | 0, 0 => idp
+  | suc x, 0 => pmap suc (*-expand {x} {0})
+  | 0, suc y => *-expand {0} {y}
+  | suc x, suc y => pmap suc (inv (*-comm1 {x} {suc y}))
+
+-- 3.
+\func *+-distrib {x y z : Nat} : x Nat.* (y Nat.+ z) = x Nat.* y Nat.+ x Nat.* z \elim x, y, z
+  | 0, 0, 0 => idp
+  | suc x, 0, 0 => *+-distrib {x} {0} {0}
+  | 0, suc y, 0 => *+-distrib {0} {y} {0}
+  | 0, 0, suc z => *+-distrib {0} {0} {z}
+  | suc x, suc y, 0 => pmap (\lam e => suc (e Nat.+ x)) (*+-distrib {suc x} {y} {0})
+  | suc x, 0, suc z => pmap (\lam e => suc (e Nat.+ x)) (*+-distrib {suc x} {0} {z})
+  | 0, suc y, suc z => *+-distrib {0} {y} {z}
+  | suc x, suc y, suc z => pmap (\lam e => suc (suc e)) ((pmap (\lam e => e Nat.+ x Nat.+ x) (*+-distrib {suc x} {y} {z})) *> *+-distrib1)
+
+\func *+-distrib1 {x y z : Nat} : x Nat.+ suc y Nat.* z Nat.+ y Nat.+ y = x Nat.+ y Nat.+ (suc y Nat.* z Nat.+ y)
+  => NatSemiring.+-assoc
+    *> (inv (pmap (\lam e => x Nat.+ e) NatSemiring.+-assoc
+    *> (inv NatSemiring.+-assoc)))
+    *> (pmap (\lam e => x Nat.+ e) (*+-distrib2 {y} {z}))
+         *> (inv NatSemiring.+-assoc)
+
+\func *+-distrib2 {y z : Nat} : suc y Nat.* z Nat.+ y Nat.+ y = y Nat.+ (suc y Nat.* z Nat.+ y)
+  => NatSemiring.+-assoc
+    *> NatSemiring.+-comm
+    *> NatSemiring.+-assoc
+    *> (pmap (\lam e => y Nat.+ e) NatSemiring.+-comm)

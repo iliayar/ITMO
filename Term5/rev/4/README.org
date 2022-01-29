@@ -1,0 +1,492 @@
+#+title: Week 4
+
+* Cube
+*32*
+
+#+begin_src python :results output
+enc = [102, 109, 99, 100, 125, 70, 81, 96, 66, 76, 70, 111,
+       79, 120, 61, 57, 39, 88, 120, 124, 110, 120, 113, 70,
+       66, 79, 64, 43, 95, 41, 120, 83, 79, 16, 87, 75, 104,
+       111, 113, 18, 101, 30, 96, 99, 31, 69, 69, 85, 106,
+       120, 97, 107, 5, 6, 90, 77, 15, 64, 120, 81, 105, 15,
+       70, 82, 14, 38, 42, 33, 49, 44, 52, 113, 50, 49, 11,
+       15, 59, 127, 52, 12, 4, 105, 48, 49, 99, 57, 37, 13,
+       17, 24, 19, 56, 104, 46, 8, 42, 22, 83, 37, 50, 1, 51,
+       48, 10, 4, 1, 60, 95, 5, 60, 49, 61, 32, 24, 28, 39,
+       6, 60, 31, 1, 53, 44, 61, 66, 31, 39, 31, 43, 213, 228,
+       178, 203, 241, 234, 206, 238, 208, 186, 198, 206, 199,
+       233, 188, 199, 213, 164, 250, 234, 214, 207, 160, 199,
+       214, 169, 172, 172, 247, 213, 212, 215, 244, 233, 197,
+       210, 214, 149, 247, 244, 156, 254, 207, 250, 156, 226,
+       214, 197, 199, 246, 219, 225, 251, 193, 247, 219, 140,
+       212, 215, 250, 229, 248, 218, 237, 177, 134, 148, 247,
+       146, 245, 167, 140, 169, 252, 155, 130, 148, 167, 158,
+       165, 185, 133, 148, 131, 165, 183, 129, 176, 151, 232,
+       159, 235, 175, 235, 234, 128, 169, 211, 137, 142, 174,
+       128, 214, 129, 170, 138, 129, 154, 158, 219, 165, 151,
+       178, 186, 185, 162, 184, 145, 144, 163, 145, 190, 179,
+       200, 178, 174, 142, 87, 85, 102, 106, 49, 100, 54, 70,
+       70, 104, 64, 101, 69, 120, 69, 55, 72, 91, 39, 36, 103,
+       95, 121, 84, 84, 120, 77, 120, 75, 105, 95, 102, 22,
+       96, 86, 19, 67, 84, 126, 16, 107, 77, 70, 100, 101,
+       125, 28, 76, 3, 118, 122, 94, 117, 64, 84, 112, 117,
+       116, 9, 106, 13, 75, 123, 126, 44, 56, 8, 32, 13, 13,
+       127, 2, 124, 48, 63, 45, 32, 44, 41, 0]
+
+def check(row, col, cell):
+    if row != col:
+        return False
+    if cell == 0 or cell == 3:
+        return True
+    if row == 3:
+        return True
+    return row == 0
+
+res = ''
+for row in range(4):
+    for col in range(4):
+        for cell in range(4):
+            if check(row, col, cell):
+               res += chr(enc[100 * row + 10 * col + cell] ^ (100 * row + 10 * col + cell) % 255)
+print(res)
+#+end_src
+
+#+RESULTS:
+: flag_is_flag
+
+* Head of State
+*64*
+
+#+begin_src python :results output
+
+class Edge:
+
+    def __init__(self, fr, c, to):
+        self.fr = fr
+        self.c = chr(c)
+        self.to = to
+
+automata = [ Edge(1, 0x6B, 2),
+             Edge(1, 0x68, 6),
+             Edge(2, 0x6F, 3),
+             Edge(2, 0x73, 7),
+             Edge(3, 0x68, 2),
+             Edge(3, 0x75, 7),
+             Edge(4, 0x70, 3),
+             Edge(4, 0x69, 5),
+             Edge(4, 0x67, 0x0B),
+             Edge(4, 0, 0),
+             Edge(5, 0x61, 1),
+             Edge(5, 0x66, 4),
+             Edge(5, 0x6D, 6),
+             Edge(5, 0, 0),
+             Edge(6, 0x6F, 7),
+             Edge(6, 0, 0),
+             Edge(7, 0x6A, 8),
+             Edge(7, 0, 0),
+             Edge(8, 0x79, 5),
+             Edge(8, 0x75, 7),
+             Edge(8, 0, 0),
+             Edge(0x0B, 0x65, 0x0C),
+             Edge(0x0B, 0, 0),
+             Edge(0x0C, 0x75, 0x0F),
+             Edge(0x0D, 0x72, 0x0B),
+             Edge(0x0D, 0x6B, 0x0C),
+             Edge(0x0D, 0x6D, 0x0E),
+             Edge(0x0D, 0x76, 0x13),
+             Edge(0x0D, 0, 0),
+             Edge(0x0E, 0x73, 0x0B),
+             Edge(0x0F, 0x66, 0x0D),
+             Edge(0x0F, 0x63, 0x0E),
+             Edge(0x10, 0x7A, 0x11),
+             Edge(0x10, 0x6C, 0x12),
+             Edge(0x10, 0, 0),
+             Edge(0x11, 0x70, 0x12),
+             Edge(0x11, 0x61, 0x14),
+             Edge(0x12, 0x66, 0x13),
+             Edge(0x12, 0x68, 0x15),
+             Edge(0x12, 0x6A, 0x18),
+             Edge(0x12, 0, 0),
+             Edge(0x13, 0x6F, 0x10),
+             Edge(0x14, 0x6E, 0x12),
+             Edge(0x14, 0x62, 0x15),
+             Edge(0x15, 0x65, 0x13),
+             Edge(0x16, 0x6D, 0x17),
+             Edge(0x17, 0x71, 0x16),
+             Edge(0x17, 0x6A, 0x1A),
+             Edge(0x17, 0, 0),
+             Edge(0x18, 0x65, 0x16),
+             Edge(0x19, 0x77, 0x16),
+             Edge(0x19, 0x6B, 0x18),
+             Edge(0x19, 0x6E, 0x1A),
+             Edge(0x19, 0x74, 0x65),
+             Edge(0x1A, 0x72, 0x1B),
+             Edge(0x1A, 0, 0),
+             Edge(0x1B, 0x7A, 0x19),
+             Edge(0x1B, 0x6F, 0x1A),
+             Edge(0x65, 0x65, 0x68),
+             Edge(0x65, 0x7A, 0x6A),
+             Edge(0x65, 0x75, 0x6B),
+             Edge(0x65, 0x6C, 0x6F),
+             Edge(0x65, 0, 0),
+             Edge(0x66, 0x64, 0x67),
+             Edge(0x66, 0x7A, 0x539),
+             Edge(0x66, 0, 0),
+             Edge(0x67, 0x6C, 0x539),
+             Edge(0x67, 0, 0),
+             Edge(0x68, 0x6A, 0x69),
+             Edge(0x68, 0, 0),
+             Edge(0x69, 0x6E, 0x69),
+             Edge(0x69, 0x68, 0x6B),
+             Edge(0x69, 0x74, 0x6F),
+             Edge(0x69, 0, 0),
+             Edge(0x6A, 0x6F, 0x6B),
+             Edge(0x6A, 0x78, 0x6C),
+             Edge(0x6A, 0x6D, 0x6E),
+             Edge(0x6A, 0, 0),
+             Edge(0x6B, 0x72, 0x6F),
+             Edge(0x6C, 0x67, 0x6D),
+             Edge(0x6C, 0x62, 0x70),
+             Edge(0x6D, 0x6F, 0x70),
+             Edge(0x6E, 0x71, 0x70),
+             Edge(0x6E, 0x78, 0x73),
+             Edge(0x6E, 0x68, 0x78),
+             Edge(0x6E, 0, 0),
+             Edge(0x6F, 0x6B, 0x69),
+             Edge(0x70, 0x6F, 0x75),
+             Edge(0x71, 0x69, 0x77),
+             Edge(0x71, 0x67, 0x78),
+             Edge(0x72, 0x6E, 0x67),
+             Edge(0x72, 0x79, 0x73),
+             Edge(0x72, 0x65, 0x74),
+             Edge(0x72, 0x70, 0x76),
+             Edge(0x72, 0, 0),
+             Edge(0x73, 0x6D, 0x74),
+             Edge(0x73, 0x77, 0x76),
+             Edge(0x74, 0x6E, 0x74),
+             Edge(0x75, 0x6C, 0x6D),
+             Edge(0x76, 0x71, 0x72),
+             Edge(0x77, 0x64, 0x71),
+             Edge(0x77, 0x69, 0x78),
+             Edge(0x77, 0, 0),
+             Edge(0x78, 0x69, 0x6B),
+             Edge(0x78, 0x6B, 0x71),
+             Edge(0x78, 0x73, 0x77),
+             Edge(0x78, 0, 0) ]
+
+was = set()
+
+def dfs(u, s):
+    if u in was:
+        return
+    if u == 1:
+        print(s)
+        return
+    was.add(u)
+    for e in automata:
+        if e.to == u:
+            dfs(e.fr, e.c + s)
+
+dfs(1337, '')
+#+end_src
+
+#+RESULTS:
+: ksjyfgeufvoljemjrztzmxwqnl
+: hojyfgeufvoljemjrztzmxwqnl
+
+* rev_1_2
+*64*
+
+[[file:~/Envs/Reverse/week4/rev_1_2/splo.py][splo]]
+* rev_0_2
+*64*
+
+[[file:~/Envs/Reverse/week4/rev_0_2/splo.py][splo]]
+* UMS
+*32*
+
+#+begin_src text
+Welcome to User Management System!
+Maximum number of users supported: 10
+
+== Main Menu ==
+1. List users
+2. Add new user
+3. Delete user
+4. Get flag
+5. Exit
+> 2
+
+== Add User ==
+Enter passport no.: 1337148811
+Enter name: A
+Enter age: 13
+Enter password: 123
+ADD User ID 3: A (13 years old)
+    Passport #: 1337148811
+
+== Main Menu ==
+1. List users
+2. Add new user
+3. Delete user
+4. Get flag
+5. Exit
+> 2
+
+== Add User ==
+Enter passport no.: 1337148812
+Enter name: B
+Enter age: 14
+Enter password: 123
+ADD User ID 4: B (14 years old)
+    Passport #: 1337148812
+
+== Main Menu ==
+1. List users
+2. Add new user
+3. Delete user
+4. Get flag
+5. Exit
+> 2
+
+== Add User ==
+Enter passport no.: 2000010000
+Enter name: Flag_Holder
+Enter age: 25
+Enter password: 123
+ADD User ID 5: Flag_Holder (25 years old)
+    Passport #: 2000010000
+
+== Main Menu ==
+1. List users
+2. Add new user
+3. Delete user
+4. Get flag
+5. Exit
+> 4
+
+== FLAG VAULT ==
+To access the flag vault, you need to pass some background checks.
+What user ID do you want to identify as? 5
+Password: 123
+Access granted! Entering the flag vault
+
+flag: W00t_UMS_h4s_b33n_PWND
+#+end_src
+* List
+*32*
+
+#+begin_src python :results output
+d = ['f',
+     'x',
+     'l',
+     '?',
+     'a',
+     'l',
+     'g',
+     'l',
+     '_',
+     'l',
+     'i',
+     'l',
+     's',
+     'l',
+     '_',
+     'l',
+     's',
+     'l',
+     't',
+     'l',
+     'r',
+     'u',
+     'u',
+     'c',
+     'c',
+     't',
+     't',
+     's',
+     's',
+     '_',
+     '_',
+     'a',
+     'a',
+     'r',
+     'r',
+     'e',
+     'e',
+     '_',
+     '_',
+     'c',
+     'c',
+     '1',
+     'o',
+     '3',
+     'o',
+     '5',
+     'l' ]
+res = ''
+s = 0
+for i in range(len(d)):
+    if i % 2 == 0:
+        res += d[len(d) - i - 1]
+        # s ^= ord(d[len(d) - i - 1])
+print(res[::-1])
+#+end_src
+
+#+RESULTS:
+: flag_is_structs_are_cool
+
+* what
+*64*
+
+#+begin_src python :results output
+print(bytes.fromhex(hex(1633837924)[2:])[::-1])
+#+end_src
+
+#+RESULTS:
+: b'dcba'
+
+flag_cafe_0129837465dcba
+
+* MadhuFarai
+*PE*
+
+#+begin_src python :results output
+ps = [ (4, 4),
+       (4, 4),
+       (-4395, 4),
+       (4, -4) ]
+
+prevX = 0
+prevY = 0
+res = 0
+for (i, p) in enumerate(ps[::-1]):
+    if i % 2 == 0:
+        t = (p[0]*prevX + p[1]*prevY)
+        if t < 0:
+            res += -((-t) % 32000)
+        else:
+            res += t % 32000
+    prevX = p[0]
+    prevY = p[1]
+
+print(res)
+#+end_src
+
+#+RESULTS:
+: -17564
+
+* Hitrugan
+*64*
+
+[[/home/iliayar/Repos/ITMO/Term5/rev/4/hitrugan2021-10-30-123309_581x325_scrot.png]]
+
+
+[[file:~/Envs/Reverse/week4/Hitrugan/sol.c][sol.c]]
+
+* structurize
+*64*
+
+pass: sOmEeL33TpAss -> SOMEEL33TPASS
+login: SeCrEtUsEr
+
+#+begin_src shell
+structurize master* λ echo -n SOMEEL33TPASS | md5sum
+4e174163af3895bf49f843f979d37671  -
+#+end_src
+
+* JCOm
+*PE*
+
+| a1 | res |
+|----+-----|
+|  1 |   1 |
+|  2 |   1 |
+|  3 |   3 |
+|  4 |   5 |
+|  5 |   9 |
+
+[[file:~/Envs/Reverse/week4/JCOm/sol.c][sol.c]]
+
+=43=
+
+* Shmalidator
+*64*
+
+#+begin_src python :results output
+def dec(n):
+    return bytes.fromhex(hex(n)[2:])[::-1]
+res = dec(1496658995) + dec(1262695504) + dec(809972033)
+print(res)
+#+end_src
+
+#+RESULTS:
+: b'345YP4CKA1G0'
+* Callmebaby
+*64*
+
+#+begin_src python :results output
+d = [ 6, 0x0, 0x68, 0x6, 0x2, 0x68, 0x4, 0x3, 0x2, 0x7E, 0x7E, 0x7E, 0x4E, 0x0 ]
+res = ''
+for c in d[:13]:
+    res += chr(c ^ 0x37)
+print(res)
+#+end_src
+
+#+RESULTS:
+: 17_15_345IIIy
+
+* 0xF20B
+*32*
+
+#+begin_src python :results output
+s2 = [0]*28
+for (i, c) in enumerate(']B'):
+    s2[i] = ord(c)
+s2[2] = 30;
+s2[3] = 29;
+s2[4] = 117;
+s2[5] = 94;
+s2[6] = 66;
+s2[7] = 25;
+s2[8] = 117;
+s2[9] = 98;
+s2[10] = 25;
+s2[11] = 102;
+s2[12] = 102;
+s2[13] = 117;
+s2[14] = 67;
+s2[15] = 89;
+s2[16] = 117;
+s2[17] = 108;
+s2[18] = 120;
+s2[19] = 26;
+for (i, c) in enumerate('hd\x1Bik~o'):
+    s2[i + 20] = ord(c)
+res = ''
+for c in s2:
+    res += chr(c ^ 42)
+print(res)
+#+end_src
+
+#+RESULTS:
+: wh47_th3_H3LL_is_FR0BN1CATE*
+
+* JoeFain
+*PE*
+
+#+begin_src python :results output
+def f1(Re, Im):
+    return Re * Re - Im * Im - 1 + -5 * Re - 6 * Im
+def f2(Re, Im):
+    return 6 * Re - 5 * Im + 2 * Re * Im - 9
+
+for Re in range(-1000, 1000):
+    for Im in range(-1000, 1000):
+        if f1(Re, Im) == 0 and f2(Re, Im) == 0:
+            print(Re, Im)
+#+end_src
+
+#+RESULTS:
+: 1 -1
+: 4 -5

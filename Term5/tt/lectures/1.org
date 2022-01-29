@@ -3,10 +3,10 @@
 #+date: 14 сентября
 
 #+begin_definition org
-*Пред \lambda-терм*:
-1. x --- переменная
-2. \((L\ L)\) --- аппликация
-3. \((\lambda x. L)\) --- абстракция
+\-
+- \(\lambda x. A\) --- абстракция
+- \(A\ B\) --- применение (аппликация)
+- \(x\) --- переменная (атом)
 #+end_definition
 
 #+begin_remark
@@ -33,12 +33,7 @@
 - замена свободных вхождений \(A[x \coloneqq B]\)
 #+end_definition
 
-#+begin_examp org
-\[ (\lambda x. \lambda y. x) \xlongequal{?}_\alpha (\lambda y. \lambda x. y) \quad \text{Правило 3} \]
-\[(\lambda y. x)[x \coloneqq t] =_\alpha (\lambda x. y)[y \coloneqq t] \quad \text{Правило 3} \]
-\[ t[y \coloneqq S] =_\alpha t[x \coloneqq S] \quad \text{Правило 1} \]
-#+end_examp
-
+#+NAME: Чёрчевские нумералы
 #+begin_definition org
 *\lambda-трем*. \(\Lambda/_{=_\alpha}\) --- множество \lambda-термов
 #+end_definition

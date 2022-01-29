@@ -1,0 +1,105 @@
+#+title: Week 7
+
+* SINO
+=close(stdout)= \rightarrow =nop= \\
+=free= \rightarrow =printf=
+* patch1
+
+do not sleep, just put value directly
+
+Flag: ASIS{f18b0b4f1bc6c8af21a4a53ef002f9a2}
+
+* FIXME patch2
+#+begin_src python
+def rol(x, n, bits=32):
+    return (0xffffffff & (x << n)) | ((x & (0xffffffff << (bits - n))) >> (bits - n))
+ans = 0xf1d833fd
+return bytes.fromhex(hex(rol(ans ^ 0x64198234, 14))[2:])[::-1]
+#+end_src
+
+#+RESULTS:
+: b'perl'
+
+* patch3
+It's writing itself!
+
+#+begin_src python
+def bswap(n, bits=32):
+    ns = bytes.fromhex(hex(n)[2:].rjust(bits // 8, '0'))
+    return int(ns[::-1].hex(), 16)
+def rol(x, n, bits=32):
+    return (0xffffffff & (x << n)) | ((x & (0xffffffff << (bits - n))) >> (bits - n))
+a = 0xca9d63fe
+a ^= 0x13373389
+a = rol(a, 7)
+a ^= 0xe5e5e5e5
+a = bswap(a)
+a ^= 0x3a29e87f
+a = bswap(a)
+a ^= 0x36478241
+return bytes.fromhex(hex(a)[2:])[::-1]
+#+end_src
+
+#+RESULTS:
+: b'ruby'
+
+* patch4
+nop jump 🤪
+
+* patch5
+Decrypt code in ~.data~ XORing with ~0xcafebabe~
+
+* patch6
+Simply sum
+* Very Strong Protected
+Delete debugging protection
+[[/home/iliayar/Repos/ITMO/Term5/rev/7/2021-11-20-015349_1030x184_scrot.png]]
+
+* Slowpoke
+nop ~sleep~
+
+in got.plt!
+
+* Paraguas
+#+begin_src 
+sub_401560("8.8.8.8", 4343i64, &unk_408088); 
+                                0x00001234
+#+end_src
+
+Write ip somewhere else in ~.data~
+ 
+* rsay
+Change exponent to ~1~
+* trialver
+Increase iteration count
+
+* redcolor
+Fix entry point to ~0x1060~
+* refunc
+Change called function in main to one at ~0x12c4~
+* Dady Long Arms
+Nop conditional jumps
+
+* virtpp
+Change ctr call
+* rootybooty
+Nop ~reboot~
+
+* solidartnost
+=dart --disassemble solidartnost.jit=
+
+Change expected hash for 3rd question
+
+wait...
+
+* checksum
+Change device to ~/dev/LUL~
+
+Disable integrity check
+
+Make ~__fxstat~ to return info about stdin(0)
+
+#+begin_src
+spbctf{1_am_the_m1gh7y_p4tch3r}
+#+end_src
+
