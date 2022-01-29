@@ -1,7 +1,6 @@
 #+TITLE: Discrete math
 #+SETUPFILE: ../../level-subj.org
 
-
 * Lectures
 [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/all_lectures.pdf][All lectures]]
 - [[https://iliayar.ru/public-notes/conspects/Term4/discrete/lectures/1.pdf][Lecture 1]]

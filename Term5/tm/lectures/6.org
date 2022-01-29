@@ -1,0 +1,72 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 6
+#+date: 7 октября
+
+#+begin_examp org
+\begin{center}
+\begin{array}{l}
+S \rightarrow AaBa \\
+S \rightarrow BbAb \\
+A \rightarrow x \\
+B \rightarrow x \\
+\end{array}
+\end{center}
+
+|       | FOLLOW   |
+|-------+----------|
+| \(A\) | \(a, b\) |
+| \(B\) | \(a, b\) |
+#+end_examp
+
+#+begin_definition org
+\(LR(1)\)-граматика. НКА, состояния-\(LR(1)\)-ситуация
+\[ \pair{A \to \alpha, i \in \{0, \dots, |\alpha|\}, c \in \Sigma} \]
+\([A \to \beta \cdot \gamma, c]\), где \(c\) --- ожидаемый символ
+
+\begin{center}
+\begin{tikzpicture}
+\node[state] at (0, 0) (A) [circle] {\(A \to \alpha \cdot c \beta, a\)};
+\node[state] at (4, 0) (B) [circle] {\(A \to \alpha c \cdot \beta, a\)};
+\draw[->] (A) edge node[above] {\(c\)} (B);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[state] at (0, 0) (A) [circle] {\(A \to \alpha \cdot B \beta, a\)};
+\node[state] at (4, 0) (B) [circle] {\(A \to \alpha B \cdot \beta, a\)};
+\node[state] at (4, -4) (C) [circle] {\(B \to \cdot \gamma, b\)};
+\node[right] at (5,-4) {\(\text{Для всех }b \in \text{FIRST}(\beta a)\)};
+\draw[->] (A) edge node[above] {\(B\)} (B);
+\draw[->] (A) edge node[above] {\(\varepsilon\)} (C);
+\end{tikzpicture}
+\end{center}
+#+end_definition
+
+#+begin_examp org
+\-
+\begin{center}
+\begin{array}{ll}
+0) & E_0 \rightarrow E \\
+1) & E \rightarrow E + T \\
+2) & E \rightarrow T \\
+3) & E \rightarrow T \times F \\
+4) & T -> F \\
+5) & F \rightarrow n \\
+6) & F \rightarrow (E)
+\end{array}
+\end{center}
+
+\begin{center}
+\begin{array}{l|ccc|llllll}
+\text{состояние} & E & T & F & n & + & \times & ( & ) & \$ &
+\hline
+\substack{[E_0 \rightarrow \cdot E, \$][E \rightarrow \cdot E + T, \$+] [E \rightarrow \cdot T, \$+] [T \rightarrow \cdot T \times F, \$+\times] \\ [T \rightarrow \cdot F, \$+\times][F \rightarrow \cdot n, \$+\times][F \rightarrow \cdot (E), \$+\times]} & 2 & 3  & 4  & s,5   & {\color{red}\times} & {\color{red}\times} &  s,6  &  {\color{red}\times}  & {\color{red}\times} &
+[E_0 \rightarrow E \cdot, \$] [E \rightarrow E \cdot + T, \$+] & -  & -  & -   & {\color{red}\times} & s,7 & {\color{red}\times} & {\color{red}\times} & {\color{red}\times} & r_0 &
+[E \rightarrow T\cdot, \$+] [T \rightarrow T \cdot \times F, \$+\times] &  -  & -   & -  & {\color{red}\times}  & r_2  & s,8 & {\color{red}\times}  & {\color{red}\times}  & r_2  &
+[T \rightarrow F \cdot, \$+\times] &  -  & -   & -  & {\color{red}\times}  & r_4  & r_4 & {\color{red}\times}  & {\color{red}\times}  & r_4  &
+[F \to n \cdot, \$+\times] &  -  & -   & -  & {\color{red}\times}  & r_5  & r_5 & {\color{red}\times}  & {\color{red}\times}  & r_5  &
+\substack{[F \to (\cdot E),\$+\times][E \to \cdot E + T, )+][E \tp \cdot T, )+] \\ [T \to \cdot T \times F, )+\times] [T \to \cdot F, )+\times] [F \to \cdot n, )+\times] [F \to \cdot (E), )+\times] } &  9  & 3   & 11  &   &   &  &   &   &   &
+\end{array}
+\end{center}
+#+end_examp
