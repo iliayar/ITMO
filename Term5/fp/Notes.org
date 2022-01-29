@@ -1,0 +1,1415 @@
+#+PUBNOTE:html
+#+SETUPFILE: ../../level-subj.org
+#+title: Заметки к экзамену
+#+OPTIONS: num:nil
+
+* DRIFTED Лекция 0
+* DRIFTED Лекция 1
+* DRIFTED Лекция 2
+* DRIFTED Лекция 3
+* DRIFTED Лекция 4
+* DRIFTED Лекция 5
+* DRIFTED Лекция 6
+* Лекция 7
+#+begin_src haskell
+class Applicative m => Monad m where
+  return :: a -> m a                -- return
+  (>>=) :: m a -> (a -> m b) -> m b -- bind
+#+end_src
+
+Для ~Maybe~:
+#+begin_src haskell
+instance Monad Maybe where
+  return = Just
+
+  Nothing >>= _ = Nothing
+  Just a >>= f = f a
+#+end_src
+
+
+Пример для ~Identity~
+#+begin_src haskell
+newtype Identity a = Identity { runIdentity :: a } 
+#+end_src
+Инстанс монады тривиальный
+
+
+Пример для ~Either~
+#+begin_src haskell
+instance Monad (Either e)  where
+  --snip--
+#+end_src
+*NB*: Здесь тип ~e~ фиксированый для одного монадического вычисления
+
+Композиция функция для монад:
+#+begin_src haskell
+(<=<)  :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
+(>=>)  :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
+#+end_src
+
+- ~m >>= (f >=> g) ≡ m >>= f >>= g~
+- ~m >>= (f <=< g) ≡ m >>= g >>= f~
+- Ассоциативность
+
+Пример монады ~[]~
+#+begin_src haskell
+instance Monad [] where
+  return x = [x]
+
+  l >>= f = concat (map f l)
+#+end_src
+
+
+#+begin_src haskell
+(>>)  :: Monad m => m a -> m b -> mb
+m >> k = m >>= \_ -> k
+#+end_src
+
+Пример
+#+begin_src haskell
+ghci> [True, False]  >> [1, 2, 3]
+[1, 2, 3, 1, 2, 3]
+#+end_src
+
+
+
+~guard~ для списка
+#+begin_src haskell
+guard :: Bool -> [()]
+guard True  = [()]
+guard False = []
+#+end_src
+
+Полиморфная сигнатура
+#+begin_src 
+guard :: (Alternative f) => Bool -> f ()
+#+end_src
+
+Бесполезный пример
+#+begin_src haskell
+ghci> [True, False, True]  >> [1, 2]
+[1, 2, 1, 2, 1, 2]
+ghci> [True, False, True] >>= \b -> guard b >> [1, 2]
+[1, 2, 1, 2]
+#+end_src
+
+
+#+begin_src 
+join :: Monad m => m (m a) -> m a
+#+end_src
+
+Нельзя написать валидный инстанс монады 😭
+#+begin_src haskell
+data BarBaz a = Bar a | Baz a a 
+#+end_src
+
+
+#+begin_src haskell
+liftM :: Monad m => (a -> b) -> m a -> m b
+#+end_src
+
+Альтернитвные булевские опрераторы
+#+begin_src haskell
+(||^), (&&^) :: m Bool -> m Bool -> m Bool
+#+end_src
+
+
+Законы монад
+1. ~return a >>= f  ≡ f a~
+1. ~m >>= return    ≡ m~
+1. ~(m >>= f) >>= g ≡ m >>= (\x -> f x >>= g)~
+
+Можем попробовать доказать законы руками
+* Лекция 8
+** Writer
+#+begin_src haskell
+newtype Wrtier w a = Writer { runWriter :: (a, w) }  -- a is value, w is log
+
+instance Monoid w => Moand (Writer w) where
+  return a = Writer (a, mempty)
+
+  Writer (a, oldLog) >>= f = let Wrtier (b, newLog) = f a
+                             in Writer (b, oldLog <> newLog)
+#+end_src
+
+
+Вспомогательные функции
+#+begin_src haskell
+tell       :: w -> Writer w ()
+execWriter :: Writer w a -> w
+writer     :: (a, w) -> Writer w a
+#+end_src
+
+- Есть инстанс монады для пары, который работает как ~Writer~
+- ~Writer~ не эффективный, кушает много памяти
+
+** Reader
+
+#+begin_src haskell
+newtype Reader e a = Reader { runReader :: e -> a } -- e is environment
+
+instance Monad (Reader e) where
+  return a = Reader $ \_ -> a
+
+  m >>= f = Reader $ \r -> runReader (f $ runReader m r) r
+#+end_src
+
+Вспомогательные функции
+#+begin_src haskell
+ask   :: Reader e e
+asks  :: (e -> a) -> Reader e a
+local :: (e -> b) -> Reader b a -> Reader e a
+#+end_src
+
+
+*Note*: Typed holes — ~foo x = _x~
+
+** State
+
+#+begin_src haskell
+newtype State s a = State { runState :: s -> (a, s) } 
+
+instance Monad (State s) where
+  return a = State $ \s -> (a, s)
+
+  oldState >>= f = State $ \s -> let (a, newState) = runState oldState s
+                                 in runState (f a) newState
+#+end_src
+
+
+Пример для стека
+#+begin_src haskell
+type Stack = [Int]
+
+pop :: State Stack Int
+pop = State $ \(x:xs) -> (x, xs)
+
+push :: Int -> State Stack ()
+push x = State $ \xs -> ((), x:xs)
+#+end_src
+
+Полезные функции
+#+begin_src haskell
+get       :: State s s
+put       :: s -> State s ()
+modify    :: (s -> s) -> State s ()
+gets      :: (s -> a) -> State s a
+withState :: (s -> s) -> State s a -> State s a
+evalState :: State s a -> s -> a
+execState :: State s a -> s -> s
+#+end_src
+
+
+
+Полезные функции для монадов
+#+begin_src haskell
+replicateM :: Moad m => Int -> m a -> m [a] 
+
+forM_ :: (Monad m, Foldable t) => t a -> (a -> m b) -> m ()
+#+end_src
+
+** Cont
+#+begin_src haskell
+addCPS :: Int -> Int -> ((Int -> r) -> r)
+addCPS x y = \k -> k (x + y)
+#+end_src
+
+#+begin_src haskell
+newtype Cont r a = Cont { runCont :: (a -> r) -> r } 
+#+end_src
+
+* Лекция 9
+
+Почему не можем получит ввод с помощью функций
+#+begin_src haskell
+getChar :: Char 
+get2Char :: [Char]
+get4Char :: [Char]
+#+end_src
+
+Исопльзуем что-то вроде
+#+begin_src haskell
+getChar :: RealWorld -> (Char, RealWorld) 
+get2Char :: ReadWorld -> ([Char], RealWorld)
+get4Char :: ReadWorld -> ([Char], RealWorld)
+#+end_src
+
+
+~do~ нотация
+
+Полезные функции
+#+begin_src 
+sequence_ :: [IO a] -> IO ()
+#+end_src
+
+~return~ не то чем кажется
+
+Ленивость с файлами
+
+FFI, ~IORef~, ~IOArray~, ~IOException~, ~unsafePerformIO~
+
+~OverloadedStrings~
+
+~Text~, ~ByteString~ используют ~unsafe~ операции, по использовать их безопасно
+
+* Лекция 10
+#+begin_src haskell
+newtype Parser a = Parser { runP :: String -> Maybe (a, String) } 
+#+end_src
+
+
+Делаем простые парсеры, комбинируя их получаем более сложные
+
+#+begin_src haskell
+ok :: Parser ()
+ok = Parser $ \s -> Just ((), s)
+
+isnot :: Parser a -> Parser ()
+isnot parser = Parser $ \s ->
+  case runP parser s of
+    Just _  -> Nothing
+    Nothing -> Just ((), s)
+
+eof :: Parser ()
+eof = Parser $ \s ->
+  case s of
+    [] -> Just ((), "")
+    _  -> Nothing
+
+
+satisfy :: (Char -> Bool) -> Parser Char
+satisfy p = Parser $ \s ->
+  case s of
+    [] -> Nothing
+    (x:xs) -> if p x then Just (x, xs) else Nothing
+
+notok :: Parser ()
+notok = isnot ok
+
+char :: Char -> Parser Hcar
+char c = satisfy (== c)
+
+--snip--
+
+instance Functor Parser where
+  fmap f (Parser parser) = Parser (fmap (first f) . parser)
+
+instance Applicative Parser where
+  pure a = Parser $ \s -> Just (s, s)
+
+  Parser pf <*> Parser pa = Praser $ \s ->
+    case pf s of
+      Nothing -> Nothing
+      Just (f, t) -> case pa t of
+        Nothing -> Nothing
+        Just (a, r) -> Just (f a, r)
+
+
+instance Monad Parser where
+  return = pure
+
+  p >>= f = Parser $ \s ->
+    case runP p s of
+      Nothing -> Nothing
+      Just (a, t) -> runP (f a) t
+
+instance Aternative Parser
+  --snip--
+#+end_src
+
+* Лекция 11
+*** Unit testing — ~HSpec~
+Может сам искать тесты в модулях с префиксом ~spec~?
+
+- ~shouldSatisfy~ проверяет по предикату
+- ~shouldBe~ проверяет на равенство
+
+#+begin_src haskell
+hspecTestTree :: IO TestTree
+hspecTestTree = testSpec "Simple parser" spec_Parser
+
+spec_Parser :: Spec
+spec_Parser = do
+  describe "eof works" $ do
+    it "eof no empty input" $
+      runP eof "" `shouldSatisfy` isJust
+    it "eof no non-empty input" $
+      runP eof "x" `shouldSatisfy` isNothing
+  describe "char works" $ do
+    it "char parses character" $
+      runP (char 'a') "abc" `shouldBe` Just ('x', "bc")
+#+end_src
+
+*** Property-based — ~Hedgehog~
+/Пример/: ~∀ xs. reverse (reverse xs) ≡ xs~
+
+#+begin_src haskell
+genIntList :: Gen [Int]
+genIntList =
+  let listLength = Range.linear 0 10000
+  in Gen.List listLength Gen.enumBounded
+
+prop_reverse :: Property
+prop_reverse = property $
+  forAll genIntList >>= \xs ->
+  List.reverse (List.reverse xs) === xs
+#+end_src
+
+Shrinking — уменьшение размера теста до читабельного вида, который повторяет поведение
+
+Проверка обратных
+#+begin_src 
+read        . show      ≡ id
+decode      . encode    ≡ id
+deserialize . serialize ≡ id
+#+end_src
+
+Проверка законов моноидов и пр..
+#+begin_src 
+(a <> b) <> c ≡ a <> (b <> c)
+a <> mempty   ≡ a
+mempty <> a   ≡ a
+#+end_src
+
+* Лекция 12
+Можем композировать функторы, аппликативы, и т.д.
+#+begin_src haskell
+newtype Compose f g a = Compose { getCompose :: f (g a) }
+
+instance (Functor f, Functor g) => Functor (Compose f g)
+instance (Foldable f, Foldable g) => Foldable (Compose f g)
+instance (Applicative f, Applicative g) => Applicative (Compose f g)
+--snip--
+#+end_src
+*Но не монад*
+
+Для ~Maybe~
+#+begin_src haskell
+newtype MaybeIO = MaybeIO { runMaybeIO :: IO (Maybe a) }
+
+instance Monad MaybeIO where
+  return x = MaybeIO (return (Just x))
+  MaybeIO action >>= f = MaybeIO $ do
+    result <- action
+    case result of
+      Nothing -> return Nothing
+      Just x -> runMaybeIO (f x)
+#+end_src
+
+Проблема
+#+begin_src haskell
+result <- runMaybeIO $ do
+  c1 <- MaybeIO $ tryConnect "host1"
+  print "Hello"
+  c2 <- MaybeIO $ tryConnect "host2"
+#+end_src
+
+~print~ возвращает не ~Maybe~
+
+#+begin_src haskell
+transformIO2MaybeIO :: IO a -> MaybeIO a
+transformIO2MaybeIO action = MaybeIO $ do
+  result <- action
+  return (Just result)
+#+end_src
+
+Первый трансформер
+#+begin_src haskell
+newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) } 
+
+type MaybeIO = MaybeT IO
+
+instance Monad m => Monad (MaybeT m) where
+  return x = MaybeT (return (Just x))
+  MaybeT action >>= f = MaybeT $ do
+    result <- action
+    case result of
+      Nothing -> return Nothing
+      Just x -> runMaybeT (f x)
+
+transformIO2MaybeT :: Functor m => m a -> MaybeT m a
+transformIO2MaybeT action = MaybeT . fmap Just
+#+end_src
+
+
+Класс трансформеров
+#+begin_src haskell
+class MonadTrans t where
+  lift :: Monad m => m a -> t m a
+#+end_src
+- ~lift . return ≡ return~
+- ~lift (m >>= f) ≡ lift m >>= (lift . f)~
+
+
+Пример для ~Reader~
+#+begin_src haskell
+newtype ReaderT r m a = Reader T { runReaderT :: r -> m a }
+
+type Reader r a = ReaderT r Identity a
+type LoggerIO a = ReaderT LoggerName IO a
+#+end_src
+
+инстанс монады для ~ReaderT~ почти такой же как и для ~Reader~
+
+*NB* Таблица трансофрмеров
+| *Base Monad* | *Transormer* | *Original Type*   | *Combined Type*       |
+|------------+------------+-----------------+---------------------|
+| ~Maybe~    | ~MaybeT~   | ~Maybe a~       | ~m (Maybe a)~       |
+| ~Either~   | ~EitherT~  | ~Either a b~    | ~m (Either a b)~    |
+| ~Writer~   | ~WriterT~  | ~(a, w)~        | ~m (a, w)~          |
+| ~Reader~   | ~ReaderT~  | ~r -> a~        | ~r -> m a~          |
+| ~State~    | ~StateT~   | ~s -> (a, s)~   | ~s -> m (a, s)~     |
+| ~Cont~     | ~ContT~    | ~(a -> r) -> r~ | ~(a -> m r) -> m r~ |
+
+~IO~ не может быть трансформером
+
+
+*Проблема*: Если трансформеров много, то придется писать много ~lift~
+
+Все выше в пакете ~transformers~. Пакет ~mtl~ решает эту проблему
+
+#+begin_src haskell
+class Monad m => MonadReader r m | m -> r where
+  ask :: m r
+  --snip--
+
+instance Monad m => MonadReader r (ReaderT r m) where
+  --snip--
+
+instance Monad m => MonadReader r (StateT s m) where
+  ask = lift ask
+  --snip--
+#+end_src
+
+
+
+#+begin_src haskell
+class Monad m => MonadThrow m where
+  throwM : Exception e => e -> m a
+
+class MonadThrow m => MonadCatch m where
+  catch :: Exception e => m a -> (e -> m a) -> m a
+#+end_src
+
+~ThrowError~ – когда надо сломать все
+
+Можем испольовать ~deriving~ и ~mtl~
+#+begin_src haskell
+newtype M a = M(ReaderT Environment (StateT MyState IO) a)
+  deriving (Functor, Applicative, Monad, MonadIO, MonadState MyState, MonadReader Environment)
+#+end_src
+
+- Заворачивать ~IO~ только в ~ReaderT~
+- Использовать конкретную монаду, если конечно не пишите либу
+
+* Лекция 13
+[[http://slides.com/fp-ctd/lecture-10#/][Слайды]]
+
+Конкатенация списков за O(1)
+#+begin_src haskell
+newtype DList a = DL { unDL :: [a] -> [a] }
+
+fromList :: [a] -> DList a
+fromList l = DL (l++)
+
+toList :: DList a -> [a]
+toList (DL lf) = lf []
+
+append :: DList a -> DList a -> DList a
+(DL f) `append` (DL g) = DL $ \xs -> f (g xs) -- append = mappend = <>
+#+end_src
+
+Откладываем операции конкатенации, до тех пор. пока нам не понадобится
+результат, который вычислится за длину списка, благодаря правильному
+порядку аргументов ~++~
+
+
+Игрушечная реализация ~seq~ — форсит вычисление первого аргумента до WHNF
+#+begin_src haskell
+seq :: a -> b -> b
+_|_ `seq` _ = _|_
+_   `seq` b = b
+#+end_src
+
+
+- ~foldl~, ~foldr~ медленные
+- ~foldl'~ — строгая версия, использует ~seq~
+
+~deepseq~ как ~seq~, но вычисляет до нормальной формы. Чтобы компилятор
+знал, как вычислять вашу структуру до нормальной формы, нужно
+заинстансировать ~NFData~
+#+begin_src haskell
+class NFData a where
+  rnf :: a -> ()
+  rnf a = a `seq` ()
+
+instance NFData a => NFData (Maybe a) where
+  rnf Nothing = ()
+  rnf (Just x) = rnf x
+
+instance NFData a => NFData [a] where
+  rnf [] = ()
+  rnf (x:xs) = rnf x `seq` rnf xs
+
+
+deepseq :: NFData a => a -> b -> b
+a `deepseq` b = rnf a `seq` b
+#+end_src
+
+- ~-XBangPatterns~ — можно ставить ~!~ перед паттерном чтобы вычислить его до WHNF — сахар для ~seq~
+- ~-XIrrefutablePatterns~
+  #+begin_src haskell
+f :: (a, b) -> Int
+f (a, b) = const 1 a -- f undefined падает
+
+g :: (a, b) -> Int
+g ~(a, b) = const 1 a -- g undefined не падает
+  #+end_src
+
+Можем форсить вычисление полей
+#+begin_src haskell
+data Config = Config
+  { user : !Int
+  , extra :: !Maybe Settings
+  } deriving (Show)
+#+end_src
+
+- ~-XStrictData~ — строгие поля по умолчанию
+- ~-XStrict~ — строгость по умолчанию
+
+Когда стоит форсить:
+- Программа медленная или выходит за димит стека
+- Арифметические операции
+- Уменьшить рост вызовов
+  - ~f x = g$! (h x)~
+  - ~f x = g x~
+  - ~f !x = g (h x)~
+- Поля структур
+* Лекция 14
+Проблема: `map f . map g` медленнее чем ~map (f. g)~
+
+Deforestataion: Можем разворачивая, сворачивая функции можем делать
+эвристические оптимизации
+#+begin_src haskell
+func = foldr (+) 0 . map (*10)
+
+func l = case l of
+  [] -> 0
+  (y:ys) -> 10 * y + func ys
+#+end_src
+
+
+Игрушечный поток
+#+begin_src haskell
+newtype List a = List ([a] -> Maybe (a, [a]))
+
+map1 : (a -> b) -> List a -> List b
+map1 g (List f) = List h
+  where
+    h s' = case f s' of
+      Nothing -> Nothing
+      Just (x, s'') -> Just (g x, s'')
+#+end_src
+*Проблема*: типы не сойдутся
+
+Норм версия
+#+begin_src haskell
+data List a b = List ([a] -> Maybe (b, [a]))  [a]
+#+end_src
+
+#+begin_src haskell
+unfoldr :: b -> ([a] -> Maybe (b, [a]))  -> [a]
+#+end_src
+
+Добавим возможность скипать элементы стрима
+#+begin_src haskell
+data Step s a = Done
+              | Skip    s
+              | Yield a s
+
+data Stream a = forall s. Stream (s -> Step s a) s
+
+stream :: forall a. [a] -> Stream a
+stream xs = Stream next xs
+  where
+    next :: [a] -> Step [a] a
+    next [] = Done
+    next (x:xs) = Yield x xs
+
+unstream :: forall a. Stream a -> [a]
+unstream (Stream next s0) = go s0
+  where
+    go s = case next s of
+             Done -> []
+             Skip s' -> go s'
+             Yield a s' -> a : go s'
+#+end_src
+
+
+Альтернативные функции
+#+begin_src haskell
+mapS :: forall a b. (a -> b)-> Stream a -> Stream b
+mapS f (Stream next s) = Stream next' s
+  where
+    next' xs = case next xs of
+                 Done -> Done
+                 Skip s' -> Skip s'
+                 Yield a s' -> Yield (f a) s'
+
+mapS :: forall a. (a -> Bool)-> Stream a -> Stream b
+mapS p (Stream next s) = Stream next' s
+  where
+    next' xs = case next xs of
+                 Done -> Done
+                 Skip s' -> Skip s'
+                 Yield a s' -> if p a then Yield a s' else Skip s'
+#+end_src
+
+
+Rewrite rule:
+#+begin_src haskell
+map s = unstream . mapS s . stream
+filter s = unstream . filterS s . stream
+
+foo = map show . filter even
+#+end_src
+~foo~ раскрывается в ~foo s = unstream . mapS s . stream . unstream . filterS s . stream~
+Можем написать /правило/ чтобы компилятор сворачивал ~stream (unstream s)~
+#+begin_src haskell
+{-# RULES "stream/unstream"
+    forall (s :: Stream a). stream (unstream s) = s
+#-} 
+#+end_src
+
+~ST~ монада — что-то вроде IO, но без доступа к внешнему миру
+* Лекция 15
+Используются зеленые потоки, плюс есть т.н. spark'и — еще более
+легковесная единица выполнения
+
+
+#+begin_src haskell
+forkIO :: IO () -> IO ThreadId 
+#+end_src
+
+Можем указать флаги ~+RTS -N2~ чтобы программа выполнялась в 2х потоках
+
+#+begin_src haskell
+data MVar a 
+#+end_src
+Можем достать/полоить с ожиданием, внутри используется
+блокировка. Могут быть выкинуты исключения при успешной попытке
+задетектить deadlock.
+
+
+#+begin_src haskell
+throwTo :: Exception e => ThreadId -> e -> IO()
+killThread :: ThreadId -> IO()
+#+end_src
+Кидает ~AsyncException~ исключение в поток
+
+Можно ловить исключения. сигналы(SIGINT и пр.) - тоже исключения
+#+begin_src haskell 
+handle :: Exception e => IO a -> (e -> IO a) -> IO a
+handle :: Exception e => (e -> IO a) -> IO a -> IO a
+#+end_src
+
+
+#+begin_src haskell
+mask_ :: IO a -> IO a 
+#+end_src
+Если обернуть действие в ~mask_~ то это действие не может быть убито.
+
+
+~bracket~, ~finally~ — идиома RAII
+
+*~forkIO~ плоха*
+* Лекция 16
+~STM~ монада позволяет делать атомарные действия с аналогами ~MVar~.
+
+Распараллеливание читсых функций. Монада ~Eval~
+#+begin_src haskell
+runEval $ do
+   a <- rpar (f x)
+   b <- rpar (f y)
+   return (a, b)
+#+end_src
+
+Рантайм сам позаботиться об ожидании потоков, когда произойдет попытка
+получить зание ~a~ или ~b~. ~rseq~ позволяет явно подождать вычисление?
+
+#+begin_src haskell
+runEval $ do
+   a <- rpar (f x)
+   b <- rseq (f y)
+   return (a, b)
+#+end_src
+* Лекция 17
+** Линзы
+*Проблема*: Сеттеры для record'ов больно
+
+Lens(obj, field) — пара из геттера и сеттера
+#+begin_src haskell
+data Lens obj field = Lens
+  { view :: obj -> field
+  , set :: field -> obj -> obj
+  }
+
+view :: Lens obj field -> obj -> field
+set  :: Lens obj field -> field -> obj -> obj
+
+over :: Lens obj field :: (field -> field) -> (obj -> obj)
+over lens updated obj = set lens (updater $ view lens obj) obj
+#+end_src
+
+Удобнее следующая реализация
+#+begin_src haskell
+data Lens obj field = Lens
+  { view :: obj -> field
+  , over :: (field -> field) -> (obj -> obj) }
+#+end_src
+
+/Пример/:
+#+begin_src haskell
+data Person = Person
+  { name :: String
+  , age  :: Int
+  , address :: Address
+  }
+data Address = Address
+  { house :: Int
+  , street :: Street
+  , city :: City}
+
+newtype City = City String
+newtype Street = Street String
+
+personAddressLens :: Lens Person Address
+personAddressLens = Lens address (\fn obj -> obj { address = fn (address obj) })
+
+addressCityLens :: Lens Address City
+addressCityLens = Lens city (\fn obj -> obj { city = fn (city obj) })
+#+end_src
+
+Попробуем сделать композицию этих линз
+#+begin_src haskell
+personCityLens :: Lens Person City
+personCityLens =
+  Lens (city . address)
+  (\cityFn person -> person
+     { address = address person
+       { city = cityFn $ city $ address $ person }
+     }
+  )
+#+end_src
+
+Упростим
+#+begin_src haskell
+personCityLens :: Lens Person City
+personCityLens =
+  Lens (view addressCityLens . view personAddressLens)
+       (over personAddressLens . over addressCityLens)
+#+end_src
+
+Сделаем функцию для композиции:
+#+begin_src haskell
+(.>)  :: Lens obj field
+      -> Lens field subfield
+      -> Lens obj subfield
+o2f .> f2s = Lens (view f2s . view o2f)
+                  (over o2f . over f2s)
+#+end_src
+
+
+На самом деле используется одна функция объединяющая ~view~ и ~over~
+#+begin_src haskell
+type Lens s t a b = forall f. Functor f => (a -> f b) -> (s -> f t)
+type Lens' s a = Lens s s a a
+type Lens' s a = forall f. Functor f => (a -> f a) -> (s -> f s)
+
+view :: S -> a
+over :: (a -> a) -> (S -> S)
+#+end_src
+
+Добавим ~Identity~ к ~over~
+#+begin_src haskell
+type LensOver s a = (a -> Identity a) -> (s -> Identity s)
+
+over :: LensOver s a -> (a -> a) -> (s -> s)
+over lens f x = runIdentity (lens (Identity . f) x)
+#+end_src
+
+
+Попробуем сделать ~view~
+#+begin_src haskell
+type LensGetter s a = (a -> Const a a) -> (s -> Const a s)
+
+get :: LensGetter s a -> s -> a
+get lens x = getConst (lens Const x)
+#+end_src
+
+#+begin_src haskell
+lens :: (s -> a)  -> (s -> a -> s) -> Lens' s a
+lens get set f s = set s <$> f (get s)
+#+end_src
+
+* Лекция 18
+** Traverse
+Зачем нужны линзы с 4 типовыми параметрами
+#+begin_src haskell
+data Person a = Person
+  { name :: String
+  , age :: a
+  ]}
+#+end_src
+
+
+~Traversal'~ компиозируется с ~Lens'~. Заметим что ~Traversal~ — частный случай ~Lens~
+#+begin_src haskell
+type Traversal s t a b = forall f. Applicative f => (a -> f b) -> (s -> f t)
+type Traversal' obj field = forall f. Applicative f => (field -> f field) -> (obj -> f obj)
+
+class (Functor t, Foldable t) => Traversable r where
+  traverse :: Applicative f => (a -> f b) -> (t a) -> f (t b)
+
+traversed :: Traversable t => Traversal' (t a) a
+traversed = traverse
+
+(.) :: Lens' a b -> Traversal' b c -> Traversal a c
+#+end_src
+
+Можем использовать например:
+#+begin_src haskell
+unit :: Lens' Game [Unit]
+unit.traversed :: Traversal' Game Unit
+unit.traversed.health :: Traversal' Game Int
+#+end_src
+
+Хотим получить все объекты на которые сфокурисованы, положить в список
+#+begin_src haskell
+data Endo = Endo { appEndo :: a -> a}
+
+type Getting r s a = (a -> Const r a) -> s -> Const r s
+
+toListOf :: Getting (Endo [a]) s a -> s -> [a]
+(^..) :: s -> Getting (Endo [a]) s a -> [a]
+
+game^..unit.traversed.health :: Lens' Game [Int] -- ???
+#+end_src
+
+
+~zoom~:
+#+begin_src haskell
+partyLoc :: Traversal' Game Point
+partyLoc = unit.travesred.position
+
+retreat :: StateT Game IO ()
+retreat = do
+  lift $ putStrLn "Retreat!"
+  zoom partyLoc $ do
+    x += 10
+    y += 10
+
+battle :: StateT Game IO ()
+battle = do
+  --snip--
+  zoom (boss.position) $ do
+    x += 10
+    y += 10
+
+#+end_src
+
+** Призмы
+
+#+begin_src haskell
+type Prism s t a b = forall p f. (Choice p, Applicative f) => p a (f b) -> p s (f t)
+
+preview :: Prism' s a -> s -> Maybe a
+review :: Prism' s a -> a -> s
+#+end_src
+
+Пример для ~Either~ и ~Maybe~
+#+begin_src haskell
+_Left :: Prism' (Either a b) a
+_Just :: Prism' (Maybe a) a
+#+end_src
+#+begin_src 
+ghci> preview _Left (Left "hi")
+Just "ho"
+ghci> preview _Left (Right "hi")
+Nothing
+#+end_src
+#+begin_src 
+ghci> review _Left "hi"
+Left "hi"
+#+end_src
+
+Более сложный пример:
+#+begin_src haskell
+data X = mkX { _fieldX :: String }
+data C = MkC1 X | MkC2 Y
+data B = MkB { _fieldB :: C }
+data A = MkA { _fieldA :: [B] }
+
+foo :: A
+#+end_src
+Как изменить ~fieldX~ в ~A~, только если он в ~X~
+#+begin_src haskell
+foo & fieldA.traversed.fieldB._MkC1.fieldX .~ "New string" 
+#+end_src
+* Лекция 19
+Можем использовать Сишный препроцессор
+
+Можем генерировать линзы написав просто ~makeLenses ''Game~
+
+Напишем генерацию функции получения первого аргумента тюплов разного размера:
+#+begin_src haskell
+VarP :: Name -> Pat
+VarE :: Name -> Exp
+
+newName :: String -> Q Name
+varE :: Name -> Q Expr
+varP :: Name -> Q Pat
+#+end_src
+
+Как выглядит код ~\(x, _, _) -> x~ в AST 
+#+begin_src haskell
+LamE [TupP [VarP x_1, WildP, WildP]] (VarE x_1)
+#+end_src
+
+#+begin_src haskell
+fst3 = do
+  x <- newName "x"
+  lamE [tupP [varP x, wildP, wildP]] (varE x) -- \(x, _, _) -> x
+#+end_src
+
+#+begin_src haskell
+fst3 :: Q Expr
+$(fst3) :: (t2, t1, t) -> t2
+#+end_src
+#+begin_src haskell
+ghci> $(fst3) (1, 2, 3)
+1
+#+end_src
+
+#+begin_src haskell
+fstN = do
+  x <- newName "x"
+  lamE [tupP $ varP x : replicate (n - 1) wildP] (varE x) -- \(x, _, _, ... , _) -> x
+#+end_src
+
+*NB*: Использование и сами макросы должны быть в разных модулях
+
+~-XQuasiQuotes~:
+Теперь может писать AST не ручками а в ~[|...|]~
+#+begin_src haskell
+ghci> runQ [| \x -> x |]
+LamE [VarP x_0] (VarE x_0)
+#+end_src
+
+Чтобы распарсить другие штуки, специально это бозначаем:
+- Объявление: ~[d|..|]~
+- Выражение: ~[e|..|]~
+- Тип: ~[t|..|]~
+- Паттерн: ~[p|..|]~
+- Библиотеки могут предоставлять свои форматы, например форматированый текст
+
+** DSLки
+Попробуем сделать DSL для арифметичских выражений
+#+begin_src haskell
+data ArithExpr = AENum Int
+               | AEPlus ArithExpr ArithExpr
+               | AEAnd ArithExpr ArithExpr
+               | AEGt ArithExpr ArithExpr
+#+end_src
+*Проблема*: можем складывать булы
+
+~-XGADTs~:
+#+begin_src haskell
+data ArithExpr a where
+  AENum :: Int -> ArithExpr Int
+  AEPlus :: ArithExpr Int -> ArithExpr Int -> ArithExpr Int
+  AEAnd :: ArithExpr Bool -> ArithExpr Bool -> ArithExpr Bool
+  AEGt :: ArithExpr Int -> ArithExpr Int -> ArithExpr Bool
+#+end_src
+Теперь не можем написать некоректное выражение
+
+В тоже время, если попробуем написать парсер для таких выражений, то
+просто не сможем этого сделать. Следующий код не компилируется:
+#+begin_src haskell
+parse :: String -> Maybe (ArithExpr a)
+parse "1" = Just (AENum 1)
+parse _ = Nothing
+#+end_src
+
+Используем экзистенциальные типы:
+#+begin_src haskell
+data SomeAE where
+  SomeAE :: Show a => ArithExpr a -> SomeAE
+
+interpret :: ArithExpr a -> a
+  
+parse :: String -> Maybe SomeAE
+parse "1" = Just (SomeAE $ AENum 1)
+parse "1+2" = Just $ SomeAE $ AENum 1 `AEPlus` AENum 2
+parse _ = Nothing
+
+interpretShow :: SomeAE -> String
+interpretShow (SomeAE expr) = show (interpret expr)
+#+end_src
+
+
+Альтернативный синтаксис с использованием ~-XExistentialQuantification~
+#+begin_src 
+data SomeAE = forall a. Show a => SomeAE (ArithExpr a)  
+#+end_src
+
+Хотим попробовать получить ~Int~ из ~interpret~. Можем получать информацию о типе в рантайме
+#+begin_src haskell
+data SomeAE where
+  SomeAE :: (Typeable a, Show a) => ArithExpr a -> SomeAE
+
+class Typeable (a :: k)
+
+data a :~: b where
+  Refl :: a :~: a
+
+eqT :: forall a b. (Typeable a, Typeable b) => Maybe (a :~: b)
+#+end_src
+
+#+begin_src haskell
+parseInt :: String -> Maybe (ArithExpr Int)
+parseInt s = parse s >>=
+  \(SomeAE (expr :: ArithExpr t)) ->
+    do
+      Refl <- eqT @t @Int
+      pure expr
+#+end_src
+* Лекция 20
+** Где используем ~forall~
+- ~-XRankNTypes~
+  #+begin_src haskell
+applyToTuple :: (forall a. [a] -> Int) -> ([b], [c]) -> (Int, Int)
+applyToTuple f (x, y) = (f x, f y)
+  #+end_src
+
+- Вспомним ST:
+  #+begin_src haskell
+runSt :: forall a. (forall s. ST s a)  -> a
+
+newSTRef :: forall a s. a -> ST s (STRef s a)
+readSTRef :: forall a s. STRef s a -> ST s a
+writeSTRef :: forall a s. STRef s a -> a -> ST s ()
+  #+end_src
+  
+  Не можем использовать ST монаду немонадически. Не можем хакнуть ST монаду
+  #+begin_src haskell
+changeVarWrong var =
+  let _ = runST $ writeSTRef var 10
+      _ = runST $ writeSTRef var 42
+  in var
+  #+end_src
+  Не можем применить тип, т.к. тип ~s~ внутри. То есть тип ~s~ — маркер
+  контекста, уникальный для него
+- В дататипах
+  #+begin_src haskell
+data Ctx = Ctx { modulus :: Int }
+
+newtype Action a = Action
+  { runAction :: forall m. (MonadReader Ctx m, MonadCatch m) => m a }
+  #+end_src
+  Это не экзистенциальный тип!
+- ~-XScopedTypeVariables~
+** Final tagless DSLs
+Вместо вышеописанного дататайпа ~ArithExpr~:
+#+begin_src haskell
+class ArithExpr expr where
+  aeNum :: Int -> expr Int
+  aePlus :: expr Int -> expr Int -> expr Int
+  aeAnd :: expr Bool -> expr Bool -> expr Bool
+  aeGt :: expr Int -> expr Int -> expr Bool
+#+end_src
+#+begin_src haskell
+newtype ToS a = ToS { toString :: String }
+  deriving (Show, Semigroup)
+
+castTS :: ToS a -> ToS b
+castTS (ToS s) = ToS s
+
+instance ArithExpr ToS where
+  aeNum = ToS . show
+  aePlus a b = a <> (ToS " + ") <> b
+  aeAnd a b = a <> (ToS " && ") <> b
+  aeGt a b = castTS a <> (ToS " > ") <> castTS b
+#+end_src
+
+* Лекция 21
+Про кайнды
+#+begin_src haskell
+newtype ReaderT r (m :: * -> *) (a :: *) = ReaderT { runReaderT :: r -> m a }
+ReaderT :: * -> (* -> *) -> * -> *
+#+end_src
+
+#+begin_src haskell
+class Num a where
+  --snip--
+
+Num :: * -> Constraint
+#+end_src
+
+Можем делать алиасы для констрейнтов
+#+begin_src haskell
+type MyConstraint a = (Reade a, Num a, Show a)
+
+foo :: MyConstraint a => String -> a -> a
+#+end_src
+
+#+begin_src haskell
+type ConstraintEndomorphism p a = p a => a -> a
+ConstraintEndomorphism :: (* -> Constraint) -> * -> *
+#+end_src
+
+~-XTypeOperators~
+#+begin_src haskell
+data a * b = Mult a b
+(*) :: Num a => a -> a -> a -- type
+(*) :: * -> * -> * -- kind
+#+end_src
+
+** Кастомный кайнды
+#+begin_src haskell
+data Z
+data S n
+
+data Vec :: * -> * -> * where
+  Nil :: Vec a Z
+  Cons :: a -> Vec a n -> Vec a (S n)
+
+
+v2 :: Vec Int (S (S Z))
+v2 = 1 `Cons` (2 `Cons` Nil) -- ok
+
+v3 :: Vec Int Char -- не хотим чтобы это было валидно
+-- v3 = ??
+#+end_src
+
+Если включить ~-XDataKinds~, для каждой ~data~ создается соответствующий кайнд
+#+begin_src haskell
+data Nat = Z | S Nat
+
+data Vec :: * -> Nat -> * where
+  Nil :: Vec a Z
+  Const :: a -> Vec a n -> Vec a (S n)
+#+end_src
+
+#+begin_src haskell
+data Nat = Zero | Succ Nat
+
+Succ :: Nat -> Nat -- type
+Nat :: * -- kind
+#+end_src
+С расширением
+#+begin_src haskell
+Succ :: Nat -> Nat -- kind
+
+type Two = 'Succ ('Succ 'Zero)
+Two :: Nat -- kind
+#+end_src
+
+С апострофами типы. без — типовой конструктор
+
+Пример для листов, ~-XTypeOperators~
+#+begin_src haskell
+Prelude> :set -XDataKinds
+Prelude> :k '[]
+'[] :: [a]
+Prelude> :k '[Int, Bool]
+'[Int, Bool] :: [*]
+Prelude> :k '[Maybe, Either String]
+'[Maybe, Either String] :: [* -> *]
+Prelude> :set -XTypeOperators
+Prelude> :k (Int ': '[Bool])
+(Int ': '[Bool]) :: [*]
+#+end_src
+
+С такими строгими списками, можем сделать ~zip~ только для списков одинаковой длинны
+
+
+Гетерогенные списки:
+#+begin_src haskell
+data HList :: [*] -> * where
+  HNil :: HList '[]
+  (:^) :: a -> HList t -> HList (a ': t)
+
+infixr 2 :^
+
+foo0 :: HList '[]
+foo0 = HNil
+
+foo1 :: HList '[Int]
+foo1 = 3 :^ HNil
+
+foo2 :: HList '[Int, Bool]'
+foo2 = 5 :^ False :^ HNil
+#+end_src
+
+~Show~ для этой фигни
+#+begin_src haskell
+instance Show (HList '[]) where
+  show _ = "H[]"
+
+instance (Show e, Show (HList l)) => Show (HList (e ': l)) where
+  show (x :^ l) = let 'H' : '[' : s = show l
+                  in "H[" ++ show x ++ (if s == "]" then s else ", " ++ s)
+#+end_src
+
+Числа на уровне типов:
+#+begin_src haskell
+data Vec :: * -> Nat -> * where
+  Nil :: Vec a 0
+  (:>) :: a -> Vec a n -> Vec a (n + 1)
+#+end_src
+#+begin_src haskell
+newtype ArrPtr (n :: Nat) a = ArrPtr (Ptr a)
+
+clearPage :: ArrPtr 4096 Word8 -> IO ()
+#+end_src
+* Лекция 22
+Как сделать ~+~?
+#+begin_src haskell
+newtype Foo bar = MkFoo { unFoo :: bar }
+
+MkFoo :: bar -> Foo bar -- (term level)
+Foo :: * -> * -- (type level)
+
+data Foo a where
+  Foo :: Int -> Foo Int
+  Bar :: Char -> Foo Double
+
+Foo :: Int -> Foo Int -- (term level)
+Bar :: Char -> Foo Double -- (term level)
+Foo :: * -> * -- (type level)
+#+end_src
+Хотим писать что-то вроде
+#+begin_src haskell
+type fun Foo a where
+  | a == Char = Double
+  | otherwise = a
+#+end_src
+
+** Type and data families
+#+begin_src haskell
+-- открытая type family
+type family Foo var :: * where
+  Foo Char = Double
+  Foo b = b
+
+-- закрытая type family
+type family Foo bar :: *
+type instance Foo Char = Double
+type instance Foo Int = Int
+
+-- так нельзя! (можно только в открытых)
+type family Foo bar :: *
+type instance Foo Char = Double
+type instance Foo a = a
+#+end_src
+
+#+begin_src haskell
+data family Foo bar :: *
+data instance Foo Int = MkFoo Int
+#+end_src
+
+
+#+begin_src haskell
+class Foo p where
+  type AType p :: *
+  data BType p :: *
+
+  make :: AType p -> BType p
+
+instance Foo Int where
+  type AType Int = Int
+  data BType Int = B Integer
+
+  make = B .toInteger
+
+type family FromMaybe (m :: Maybe *) (def :: *) :: * where
+  FromMaybe ('Just t) def = t
+  FromMaybe 'Nothing def = def
+#+end_src
+~FromMaybe ('Just Int) Bool ~ Int~
+
+#+begin_src haskell
+type family Foo bar :: * where
+  Foo Char = Double
+  Foo a = a
+
+show' :: Show (Foo a) => Foo a -> String
+show' = show
+#+end_src
+В кратце: компилятору нужна инъеткивность типа ~a~ в ~show'~. Это
+решается следующим:
+#+begin_src haskell
+{-# LANGUAGE TypeFamilyDependencies #-}
+
+type family Foo a = r | r -> a where
+  Foo Char = Double
+  Foo Int = Int
+#+end_src
+Через ~r -> a~ обещаем инъективность. Пришлось убрать полиморфный
+паттерн, т.к. он нарушает инъективность. Теперь ~show'~ работает
+
+** ~Free~ Monad
+#+begin_src haskell
+data Free f a = Pure a | Free (f (Free f a))
+
+instance Functor f => Monad (Free f) where
+  return = pure
+
+  Pure a >>= f = f a
+  Free m >>= f = Free ((>>= f) <$> m)
+#+end_src
+
+* DRIFTED Лекция 23
+#+begin_src haskell
+class Functor w => Comonad w where
+  extract :: w a -> a
+  duplicate :: w a -> w (w a)
+  extend :: (w a -> b) -> w a -> w b
+
+(=>>) :: Comonad w => w a -> (w a -> b) -> w b
+#+end_src
+
+Определения по умолчанию
+#+begin_src haskell
+duplicate w = extend id w
+extend f w = fmap f (duplicate w)
+#+end_src
+
+
+Простой пример:
+#+begin_src haskell
+data Identity a = Identity { runIdentity :: a } 
+
+instance Comonad Indetity where
+  extract = runIdentity
+  duplicate = Identity
+#+end_src
+
+~Maybe~, ~[]~ не комонады(нельзя сделать ~extract~), а ~NonEmpty~ вполне себе.
+
+Двойственность в монаде:
+#+begin_src haskell
+return  :: a -> m a
+extract :: a <- m a
+
+
+(>>=) :: m a -> (a -> m b) -> m b
+(=>>) :: m a <- (a <- m b) <- m b
+
+
+join     :: m (m a) -> m a
+dupicate :: m (m a) <- m a
+#+end_src
+
+*Незакончено*

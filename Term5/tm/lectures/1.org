@@ -114,7 +114,7 @@ _Тогда_ \(\xi = \eta\)
 - \(FIRST: (N \cup \Sigma)^* \to 2^{\Sigma \cup \{\varepsilon\}}\)
   \[ FIRST(\alpha) \xlongequal{def} \{c \big| \alpha \Rightarrow^* c\beta\} \cup \{\varepsilon \big| \alpha \Rightarrow^* \varepsilon\} \]
 - \(FOLLOW: N \to 2^{\Sigma \cup \{\$\}}\)
-  \[ FOLLOW(a) \xlongequal{def} \{c \big| S \Rightarrow^* a A c \beta\} \cup \{\$ \big| S \Rightarrow^* a A\} \]
+  \[ FOLLOW(A) \xlongequal{def} \{c \big| S \Rightarrow^* \alpha A c \beta\} \cup \{\$ \big| S \Rightarrow^* \alpha A\} \]
 #+end_definition
 
 #+begin_theorem org
