@@ -1,0 +1,68 @@
+#+title: Week 8
+
+* Angruments
+[[file:~/Envs/Reverse/week8/Angruments/sol.py]]
+** 😞
+[[/home/iliayar/Repos/ITMO/Term5/rev/8/2021-11-26-235855_1097x196_scrot.png]]* 
+** 😼
+[[/home/iliayar/Repos/ITMO/Term5/rev/8/2021-11-27-000031_854x166_scrot.png]]
+* Puzzle
+[[file:~/Envs/Reverse/week8/Puzzle/sol.py]]
+[[/home/iliayar/Repos/ITMO/Term5/rev/8/2021-11-27-013027_464x198_scrot.png]]
+
+* Angry1
+[[file:~/Envs/Reverse/week8/Angry1/sol.py]]
+[[/home/iliayar/Repos/ITMO/Term5/rev/8/2021-11-27-013342_423x79_scrot.png]]
+
+* Crossword
+[[file:~/Envs/Reverse/week8/Crossword/splo.py]]
+* equhs
+[[file:~/Envs/Reverse/week8/equhs/sol.py]]
+
+* Mips Mops
+[[file:~/Envs/Reverse/week8/Mips Mops/sol.py]]
+[[/home/iliayar/Repos/ITMO/Term5/rev/8/2021-11-27-141705_615x382_scrot.png]]
+
+* binculator
+[[file:~/Envs/Reverse/week8/binculator/splo.py]]
+* Angry Opaq
+[[file:~/Envs/Reverse/week8/Angry Opaq/sol.py]]
+
+* sec_shell
+[[file:~/Envs/Reverse/week8/sec_shell/splo.py]]
+* Highway
+[[file:~/Envs/Reverse/week8/Highway/sol.py]]
+* filegr
+[[file:~/Envs/Reverse/week8/filegr/sol.py]]
+* 100libs Young
+[[file:~/Envs/Reverse/week8/100libs Young/100libs_young/sol.py]]
+* 100libs Hurt
+[[file:~/Envs/Reverse/week8/100libs Hurt/100libs_hurt/sol.py]]
+* 100libs Nightmare
+[[file:~/Envs/Reverse/week8/100libs Nightmare/100libs_nightmare/sol.py]]
+* cheat
+[[./2021-11-28-203511_401x151_scrot.png]]
+cc1d-bc5c-b3c5-f9e8
+
+[[file:~/Envs/Reverse/week8/cheat/sol.py]]
+
+* Hasher 1
+~SPBCTF-EXPLOR-ECOOL1-ANGRFE-ATURE1-LETSNE~
+
+Guest first letter, get 3 letter using ~sol1~. Use ~sol2~
+
+[[file:~/Envs/Reverse/week8/Hasher 1/sol2.py]]
+[[file:~/Envs/Reverse/week8/Hasher 1/sol1.py]]
+* Hasher 2
+~SPBCTF-Y0U4RE-4M4ZON-HOWY0U-SOLVE3-ITB34T~
+
+Guest first letter, get 3 letter using ~sol1~. Use ~sol2~
+
+[[file:~/Envs/Reverse/week8/Hasher 2/sol2.py]]
+[[file:~/Envs/Reverse/week8/Hasher 2/sol1.py]]
+
+* Desruction Set
+[[file:~/Envs/Reverse/week8/Destruction Set/sol.py]]
+
+* SMS Server
+[[file:~/Envs/Reverse/week8/SMS Server/sol.py]]
