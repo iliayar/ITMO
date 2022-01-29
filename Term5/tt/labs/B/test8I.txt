@@ -1,0 +1,5 @@
+a' : x -> x, b' : x |- a' b' : forall y. z [rule #5]
+*   a' : x -> x, b' : x |- a' b' : forall y. x [rule #6]
+*   *   a' : x -> x, b' : x |- a' b' : x [rule #2]
+*   *   *   a' : x -> x, b' : x |- a' : x -> x [rule #1]
+*   *   *   a' : x -> x, b' : x |- b' : x [rule #1]

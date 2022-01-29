@@ -19,3 +19,13 @@
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/13.pdf][Lecture 13]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/14.pdf][Lecture 14]]
 - [[https://iliayar.ru/public-notes/conspects/Term5/tt/lectures/15.pdf][Lecture 15]]
+* Labs
+- [[file:labs/A/][Task A]]
+- [[file:labs/B/][Task B]]
+[[file:labs/contest-25109-ru.pdf][Statements]]
+* HWs
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/hws/1.pdf][1]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/hws/2.pdf][2]]
+- [[https://iliayar.ru/public-notes/conspects/Term5/tt/hws/3.pdf][3]]
+- [[file:hws/arend/src/][Some Arend stuff]]
+- [[file:hws/][Some other stuff]]
