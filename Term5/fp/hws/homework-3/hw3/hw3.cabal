@@ -1,0 +1,74 @@
+cabal-version:      2.4
+name:               hw3
+version:            0.1.0.0
+
+author:             iliayar
+maintainer:         iliayar3@gmail.com
+
+library
+    exposed-modules:
+        HW3.Base
+        HW3.Evaluator
+        HW3.Evaluator.FunctionHelpers
+        HW3.Evaluator.Helpers
+        HW3.Evaluator.Base
+        HW3.Parser
+        HW3.Pretty
+        HW3.Helpers
+        HW3.Action
+    build-depends:
+        base ^>=4.14.1.0,
+        megaparsec,
+        parser-combinators,
+        prettyprinter,
+        prettyprinter-ansi-terminal,
+        scientific,
+        mtl,
+        transformers,
+        text,
+        containers,
+        bytestring,
+        zlib,
+        serialise,
+        directory,
+        time,
+        random,
+        prelude-safeenum,
+    hs-source-dirs:   src
+    ghc-options: -Wall -Werror
+    default-language: Haskell2010
+
+executable hi
+    main-is: Main.hs
+    hs-source-dirs: src
+    other-modules:
+        HW3.Base
+        HW3.Evaluator
+        HW3.Evaluator.FunctionHelpers
+        HW3.Evaluator.Helpers
+        HW3.Evaluator.Base
+        HW3.Parser
+        HW3.Pretty
+        HW3.Helpers
+        HW3.Action
+    build-depends:
+        base ^>=4.14.1.0,
+        haskeline,
+        megaparsec,
+        parser-combinators,
+        prettyprinter,
+        prettyprinter-ansi-terminal,
+        scientific,
+        mtl,
+        transformers,
+        text,
+        containers,
+        bytestring,
+        zlib,
+        serialise,
+        directory,
+        time,
+        random,
+        prelude-safeenum,
+    ghc-options: -Wall -Werror
+    default-language: Haskell2010
