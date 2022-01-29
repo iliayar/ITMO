@@ -9,6 +9,10 @@
 
 (org-reload)
 
+(setq org-html-inline-image-rules ' (("file" . #1="\\(?:\\.\\(?:gif\\|\\(?:jpe?\\|pn\\|sv\\)g\\)\\)")
+				     ("http" . #1#)
+				     ("https" . #1#)))
+
 (defun org-publish-command () (org-publish-project "conspects"))
 
 (setq org-latex-packages-alist '(
