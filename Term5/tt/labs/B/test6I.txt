@@ -1,0 +1,4 @@
+a' : x -> x, b' : x |- \b'. a' b' : x -> x [rule #3]
+*   a' : x -> x, b' : x |- a' b' : x [rule #2]
+*   *   a' : x -> x, b' : x |- a' : x -> x [rule #1]
+*   *   a' : x -> x, b' : x |- b' : x [rule #1]

@@ -1,0 +1,159 @@
+#+setupfile: setup.org
+#+TITLE: ДЗ 3
+#+date: 28 сентября
+
+* 2
+** a
+\[ \pNode{ \vdash \lambda f. \lambda b. \lambda a. f\ a\ b : (\alpha \to \beta \to \gamma) \to (\alpha \to \beta \to \gamma) }{\pNode{f : (\alpha \to \beta \to \gamma) \vdash \lambda b. \lambda a. f\ a\ b : \alpha \to (\beta \to \gamma)}{\pNode{f : (\alpha \to \beta \to \gamma), a: \alpha \vdash \lambda a. f\ a\ b : \beta \to \gamma}{\pNode{\Gamma \vdash f\ a\ b : \gamma}{ \pNode{\Gamma \vdash f\ a : \beta \to \gamma}{\pNode{\Gamma \vdash f : \alpha \to \beta \to \gamma}{} \quad \pNode{\Gamma \vdash a: \alpha}{}}\quad \pNode{\Gamma \vdash b : \beta}{} }}}} \]
+где \(\Gamma = f : \alpha \to \beta \to \gamma, a: \alpha, b: \beta\)
+
+#+begin_src haskell
+task :: (a -> b -> c) -> (b -> a -> c)
+task f b a = f a b
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+
+** b
+\[ \pNode{\vdash \lambda f. \lambda a. f\ a\ a : (\alpha \to \alpha \to \beta) \to (\alpha \to \beta)}{\pNode{f: \alpha \to \alpha \to \beta \vdash \lambda a. f\ a\ a : \alpha \to \beta}{\pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash f\ a\ a : \beta}{\pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash f\ a: \alpha \to \beta}{\pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash f : \alpha \to \alpha \to \beta}{}\quad \pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash a:\alpha}{}}\quad \pNode{f: \alpha \to \alpha \to \beta, a: \alpha \vdash a:\alpha}{}}}} \]
+
+#+begin_src haskell
+task :: (a -> a -> b) -> (a -> b)
+task f a = f a a
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+
+* 5
+
+** a
+*** i
+\[ \alpha \lor \beta \to \lnot (\lnot \alpha \& \lnot \beta) \]
+\[ \alpha \lor \beta \to ((\alpha \to \perp) \& (\beta \to \perp)) \to \perp \]
+\[ \lambda c. \lambda p. \lCase\ c\ ( \lambda a. \pi_l\ p\ a)\ ( \lambda b. \pi_r\ p\ b) \]
+
+*** ii
+#+begin_src haskell
+task :: Either a b -> ((a -> Void), (b -> Void)) -> Void
+task (Left a) (fa, _) = fa a
+task (Right b) (_, fb) = fb b
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+
+*** iii
+
+\[ \pNode{ \vdash \lambda c. \lambda p. \lCase\ c\ ( \lambda a. \pi_l\ p\ a)\ ( \lambda b. \pi_r\ p \ b) : (\alpha \lor \beta) \to ((\alpha \to \perp) \& (\beta \to \perp)) \to \perp}{\pNode{c : (\alpha \lor \beta) \vdash \lambda p. \lCase\ c\ ( \lambda a. \pi_l\ p\ a)\ ( \lambda b. \pi_r\ p\ a) : ((\alpha \to \perp)\&(\beta \to \perp)) \to \perp}{\pNode{\Gamma \vdash \lCase\ c\ ( \lambda a. \pi_l\ p \ a)\ ( \lambda b. \pi_r\ p\ b) : \perp}{\pNode{\Gamma \vdash c : \alpha \lor \beta}{}\quad \pNode{\Gamma \vdash \lambda a. \pi_l\ p\ a : \alpha \to \perp}{\pNode{\Gamma, a : \alpha \vdash \pi_l\ p\ a : \perp}{\pNode{\Gamma, a:\alpha \vdash \pi_l\ p : \alpha \to \perp}{\pNode{\Gamma, a:\alpha \vdash p : (\alpha \to \perp)\&(\beta \to \perp)}{}} \quad \pNode{\Gamma, a:\alpha \vdash a : \alpha}{}}} \quad \pNode{\Gamma \vdash \lambda b. \pi_r\ p\ b : \beta \to \perp}{\pNode{\Gamma, b:\beta \vdash \pi_r\ p\ b: \perp}{\pNode{\Gamma, b:\beta \vdash \pi_r\ p : \beta \to \perp}{\pNode{\Gamma, b:\beta \vdash p : (\alpha\to\perp)\&(\beta\to\perp)}{}} \quad \pNode{\Gamma, b:\beta \vdash b:\beta}{}}}}}} \]
+, где \(\Gamma = c: (\alpha \lor \beta), p: ((\alpha \to \perp)\&(\beta \to \perp))\)
+** b
+*** i
+\[ \alpha \& \beta \to \lnot (\lnot \alpha \lor \lnot \beta) \]
+\[ \alpha \& \beta \to ((\alpha \to \perp) \lor (\beta \to \perp)) \to \perp \]
+\[ \lambda p. \lambda c. \lCase\ c\ ( \lambda f. f\ (\pi_l\ p))\ ( \lambda f. f\ (\pi_r\ p)) \]
+*** ii
+#+begin_src haskell
+task :: (a, b) -> Either (a -> Void) (b -> Void) -> Void 
+task (a, _) (Left fa) = fa a
+task (_, b) (Right fb) = fb b
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+*** iii
+\[ \pNode{\vdash \lambda p. \lambda c. \lCase\ c\ ( \lambda f. f\ (\pi_l\ p))\ ( \lambda f. f\ (\pi_r\ p)) : \alpha\&\beta \to ((\alpha \to \perp)\lor(\beta \to \perp)) \to \perp}{\pNode{p: \alpha\&\beta \vdash \lambda c. \lCase\ c\ ( \lambda f. f\ (\pi_l\ p))\ ( \lambda f. f\ (\pi_r\ p)) : ((\alpha \to \perp)\lor(\beta \to \perp)) \to \perp}{\pNode{\Gamma\vdash \lCase\ c\ ( \lambda f. f\ (\pi_l\ p))\ ( \lambda f. f\ (\pi_r\ p))}{\pNode{\Gamma \vdash c : (\alpha \to \perp)\lor(\beta \to \perp)}{} \quad \pNode{\Gamma \vdash \lambda f. f\ (\pi_l\ p) : (\alpha \to \perp) \to \perp}{\pNode{\Gamma, f:\alpha\to\perp \vdash f\ (\pi_l p) : \perp}{\pNode{\Gamma ,f:\alpha \to \perp \vdash f : (\alpha \to \perp)}{} \quad \pNode{\Gamma , f:\alpha \to \perp \vdash \pi_l\ p : \alpha}{\pNode{\Gamma, f:\alpha \to \perp \vdash p : \alpha\&\beta}{}}}} \quad \pNode{\Gamma \vdash \lambda f. f\ (\pi_r\ p) : (\beta \to \perp) \to \perp}{\dots}}}} \]
+\[ \pNode{\Gamma \vdash \lambda f. f\ (\pi_r\ p) : (\beta \to \perp) \to \perp}{\pNode{\Gamma, f: \beta \to \perp \vdash f\ (\pi_r\ p) : \perp}{\pNode{\Gamma, f:\beta \to \perp \vdash f: \beta \to \perp}{} \quad \pNode{\Gamma, f:\beta \to \perp \vdash \pi_r\ p : \beta}{\pNode{\Gamma, f:\beta \to \perp \vdash p : \alpha \& \beta}{}}}} \]
+
+, где \(\Gamma = p:\alpha\&\beta, c:(\alpha\to\perp)\lor(\beta \to \perp) \)
+** c
+*** 
+\[ a \& (\beta \lor \gamma) \to (\alpha \& \beta) \lor (\alpha \& \gamma) \]
+\[ \lambda p. \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\pi_l\ p, c}) \]
+
+*** 
+#+begin_src haskell
+task :: (a, Either b c) -> Either (a, b) (a, c)
+task (a, Left b) = Left (a, b)
+task (a, Right c) = Right (a, c)
+#+end_src
+
+#+RESULTS:
+: works!
+*** 
+\[ \pNode{\vdash \lambda p. \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\pi_l\ p, c}) : a \& (\beta \lor \gamma) \to (a\&\beta) \lor (a \& \gamma)}
+  {\pNode{p: a\&(\beta \lor \gamma) \vdash \lCase\ (\pi_r\ p)\ ( \lambda b. \lIn_l\ \pair{\pi_l\ p, b})\ ( \lambda c. \lIn_r\ \pair{\pi_l\ p, c}): (a\&\beta) \lor (a \&\gamma)}
+   {\pNode{p : \alpha \& (\beta \lor \gamma) \vdash \pi_r\ p : \beta \lor \gamma }
+     {\pNode{p : \alpha \& (\beta \lor \gamma) \vdash p : \alpha \& (\beta \lor \gamma)}
+       {}}
+    \quad
+    \pNode{p : \alpha \& (\beta \lor \gamma) \vdash \lambda b. \lIn_l\ \pair{\pi_l\ p, b} : \beta \to (\alpha \& \beta) \lor (\alpha \& \gamma)}
+     {\pNode{p : \alpha \& (\beta \lor \gamma), b: \beta \vdash \lIn_l\ \pair{\pi_l\ p, b} : (\alpha \& \beta) \lor (\alpha \& \gamma)}
+       {\pNode{p : \alpha \& (\beta \lor \gamma), b: \beta \vdash \pair{\pi_l\ p, b} : \alpha \& \beta}
+         {\pNode{p : \alpha \& (\beta \lor \gamma), b : \beta \vdash \pi_l\ p : \alpha}
+           {\pNode{p : \alpha \& (\beta \lor \gamma), b : \beta \vdash p : \alpha \& (\beta \lor \gamma)}
+             {}}
+          \quad
+          \pNode{p : \alpha \& (\beta \lor \gamma), b : \beta \vdash b : \beta}
+           {}}}}
+     \quad
+    (\ref{3.5.c.3})}} \]
+\[ \pNode{p : \alpha \& (\beta \lor \gamma) \vdash \lambda c. \lIn_r\ \pair{\pi_l\ p, c} : \gamma \to (\alpha \& \beta) \lor (\alpha \& \gamma)}
+  {\pNode{p : \alpha \& (\beta \lor \gamma), c : \gamma \vdash \lIn_r\ \pair{\pi_l\ p, c}: (\alpha \& \beta) \lor (\alpha \& \gamma)}
+    {\pNode{p : \alpha \& (\beta \lor \gamma), c : \gamma \vdash \pair{\pi_l\ p, c} : (\alpha \& \gamma)}
+      {\pNode{p : \alpha \& (\beta \lor \gamma), c : \gamma \vdash \pi_l\ p : \alpha}
+        {\pNode{p : \alpha \& (\beta \lor \gamma), c : \gamma \vdash p : \alpha \& (\beta \lor \gamma)}
+          {}}
+       \quad
+       \pNode{p : \alpha \& (\beta \lor \gamma), c : \gamma \vdash c : \gamma}
+        {}}}} \addtag\label{3.5.c.3} \]
+** d
+*** i
+\[ (\alpha \to \beta) \to (\lnot \beta \to \lnot \alpha) \]
+\[ (\alpha \to \beta) \to (\beta \to \perp) \to \alpha \to \perp \]
+\[ \lambda f. \lambda b. \lambda a. b\ (f\ a) \]
+*** ii
+#+begin_src haskell
+task :: (a -> b) -> (b -> Void) -> a -> Void
+task f fb a = fb (f a)
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+*** iii
+\[ \pNode{\vdash \lambda f. \lambda b. \lambda a. b\ (f\ a) : (\alpha \to \beta) \to (\beta \to \perp) \to \alpha \to \perp}{\pNode{f:\alpha \to \beta \vdash \lambda b. \lambda a. b\ (f\ a) : (\beta \to \perp) \to \alpha \to \perp}{\pNode{f:\alpha \to \beta, b:\beta \to \perp \vdash \lambda a. b\ (f\ a) : \alpha \to \perp}{\pNode{\Gamma \vdash b\ (f\ a) : \perp}{\pNode{\Gamma \vdash b : \beta \to \perp}{} \quad \pNode{\Gamma \vdash f\ a : \beta}{\pNode{\Gamma \vdash f: \alpha \to \beta}{} \quad \pNode{\Gamma \vdash a : \alpha}{}}}}}} \]
+, где \(\Gamma = f:\alpha \to \beta, b:\beta \to \perp, a:\alpha \)
+** e
+*** i
+\[ \alpha \to \lnot \alpha \to \beta \]
+\[ \alpha \to (\alpha \to \perp) \to \beta \]
+\[ \lambda a. \lambda f. f\ a \]
+*** ii
+#+begin_src haskell
+task :: a -> (a -> Void) -> b
+task a f = f a
+
+main = do
+  putStrLn "works!"
+#+end_src
+
+#+RESULTS:
+: works!
+*** iii
+\[ \pNode{\vdash \lambda a. \lambda f. f\ a : \alpha \to (\alpha \to \perp) \to \beta}{\pNode{a: \alpha \vdash \lambda f. f\ a : (\alpha \to \perp) \to \beta}{\pNode{a : \alpha, f : \alpha \to \perp \vdash f\ a : \beta}{\pNode{a:\alpha, f:\alpha \to \perp \vdash f\ a : \perp}{\pNode{a : \alpha, f: \alpha \to \perp \vdash f: \alpha \to \perp}{} \quad \pNode{a: \alpha, f : \alpha \to \perp \vdash a : \alpha}{}}}}} \]

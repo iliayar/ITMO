@@ -1,0 +1,126 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 3
+#+date: 21 сентября
+
+* Просто типизированное \lambda-исчисление
+** Парадокс Карри
+Попробуем построить логику на основе \(\lambda\)-исчисления. Введем
+логический символ \(\supset\). Будем требовать от этого исчисления наличия
+следующий аксиом:
+1. \(\vdash A \supset A\)
+2. \(\vdash (A \supset (A \supset B)) \supset (A \supset B)\)
+3. \(\vdash A =_\beta B\), тогда \(A \supset B\)
+А также правила вывода MP:
+\[ \frac{\vdash A \supset B \quad \vdash A}{\vdash B} \]
+Не вводя дополнительные правила вывода и схемы аксиом, покажем, что
+данная логика является противоречивой. Для чего введем следующие
+условные обозначения:
+- \(F_\alpha \equiv \lambda x. (x\ x) \supset \alpha\)
+- \(\Phi_\alpha \equiv F_\alpha\ F_\alpha \equiv (\lambda x. (x\ x) \supset \alpha)\ (\lambda x. (x\ x) \supset \alpha)\)
+Редуцируя \(\Phi_\alpha\) получаем
+\begin{align*}
+  \Phi_\alpha & =_\beta (\lambda x. (x\ x) \supset \alpha)\ (\lambda x. (x\ x) \supset \alpha) \\
+  & =_\beta (\lambda x. (x\ x) \supset \alpha)\ (\lambda x. (x\ x) \supset \alpha) \supset \alpha \\
+  & =_\beta \Phi_\alpha \supset \alpha
+\end{align*}
+Теперь докажем противоречивость введенной логики. Для этого докажем, что в ней выводимо любое утверждение:
+\begin{center}
+\begin{array}{lll}
+  1) & \vdash \Phi_\alpha \supset \Phi_\alpha \supset \alpha & {\color{blue}\vdash \Phi_\alpha =_\beta \Phi_\alpha \supset \alpha} \\
+  2) & \vdash (\Phi_\alpha \supset \Phi_\alpha \supset \alpha) \supset (\Phi_\alpha \supset \alpha) & {\color{blue}\vdash (A \supset (A \supset B)) \supset (A \supset B)} \\
+  3) & \vdash \Phi_\alpha \supset \alpha & {\color{blue}\text{MP }2,1} \\
+  4) & \vdash (\Phi_\alpha \supset \alpha) \supset \Phi_\alpha & {\color{blue}\vdash \Phi_\alpha \supset \alpha =_\beta \Phi_\alpha} \\
+  5) & \vdash \Phi_\alpha & {\color{blue}\text{MP }4, 3} \\
+  6) & \vdash \alpha & {\color{blue}\text{MP }3, 5}
+\end{array}
+\end{center}
+Таким образом, введенная логика оказывается противоречивой
+** Исчисления
+#+NAME: Просто типизированное лямбда-исчисление
+#+begin_definition org
+*Типовые переменные*:
+- \(\alpha, \beta, \gamma\) --- атомарные
+- \(\tau, \sigma\) --- составные
+*Тип*: \(\tau ::= (\tau \to \tau)\ |\ \alpha\) \\
+_Следует_:
+- 2 традиции:
+  1. Исчисление по Черчу
+  2. Исчисление по Карри
+#+end_definition
+** Исчисление по Карри
+#+NAME: Исчисление по Карри
+#+begin_definition org
+*Исчисление по Карри*:
+- \(\Gamma \vdash A: \tau\) (\(\Gamma \vdash A^\tau\)), где \(\Gamma\) --- \(\{x_1: \tau_1,\ x_2:\tau_2, \dots\}\)
+- правила:
+  1. \[ \frac{}{\Gamma, x_1: \tau_1 \vdash x_1:\tau_1} \quad x_1 \not\in Fv(\Gamma) \quad \text{(Ax.)} \]
+  2. \[ \frac{\Gamma \vdash A : \sigma \to \tau \quad \Gamma \vdash B: \sigma}{\Gamma \vdash A\ B : \tau} \]
+  3. \[ \frac{\Gamma, x: \tau \vdash A : \sigma}{\Gamma \vdash \lambda x. A : \tau \to \sigma} \]
+#+end_definition
+
+#+begin_examp org
+\[ \lambda f. \lambda x. f\ (f\ x) : (\alpha \to \alpha) \to \alpha \to \alpha \]
+- \(x: \alpha\)
+- \(f: \alpha \to \alpha\)
+_Доказательство_:
+\[ \frac{\displaystyle\frac{\displaystyle \frac{\displaystyle \frac{}{f: \alpha \to \alpha \vdash f: \alpha \to \alpha} \quad \frac{\displaystyle \frac{}{\Gamma \vdash f: \alpha \to \alpha} \quad \frac{}{\Gamma \vdash x : \alpha}}{\Gamma \vdash f\ x : \alpha}}{f: \alpha \to \alpha, x: \alpha \vdash f\ f(f\ x) : \alpha}}{f: \alpha \to \alpha \vdash \lambda x. f\ (f\ x) : \alpha \to \alpha}}{\vdash \lambda f. \lambda x.\ f\ (f\ x) : (\alpha \to \alpha) \to \alpha \to \alpha} \]
+#+end_examp
+#+begin_examp org
+\[ \Omega = (\lambda x. x\ x)\ (\lambdax.x\ x) \]
+Применимо только правило 2. Не имеет типа
+#+end_examp
+#+begin_theorem org
+Если \(\Gamma \vdash A:\tau\), то любое подвыражение имеет тип
+#+end_theorem
+#+begin_proof org
+Рассмотрим случай: если выражение типизируется, значит используется одно из правил:
+1. \(\Gamma \vdash A:\tau\) используется 1 правило \(\frac{}{\Gamma, a:\tau \vdash a:\tau}\)
+_Переход_: \\
+пусть любое выражение короче \(n\) символов обладает
+свойством. Покажем что этим свойством обладает выражение \(A\) длины
+\\
+\todo
+#+end_proof
+#+ATTR_LATEX: :options [Subject reduction]
+#+begin_theorem org
+\(\Gamma \vdash A: \sigma\) и \(A \twoheadrightarrow_\beta B\) \\
+_Тогда_ \(\Gamma \vdash B: \sigma\)
+#+end_theorem
+#+begin_proof org
+\(A \to_\beta B\)
+случаи:
+1. \(\lambda x. A \to \lambda x. B\)
+2. \(A\ B \to A'\ B'\)
+3. \((\lambda x. A)\ B \to A[x \coloneqq B]\)
+#+end_proof
+
+#+begin_theorem org
+Если \(\Gamma \vdash M:\sigma\) и:
+- существуют \(N, P:\)
+  \[ M \twoheadrightarrow_\beta N \quad \Gamma \vdash N : \sigma \]
+  \[ M \twoheadrightarrow_\beta P \quad \Gamma \vdash P : \sigma \]
+_Тогда_ найдется такой \(S\), что \(\Gamma \vdash S :\sigma\) и \(N \twoheadrightarrow_\beta S\) и \(P \twoheadrightarrow_\beta S\)
+#+end_theorem
+** Исчисление по черчу
+#+NAME: Исчисление по Чёрчу
+#+begin_definition org
+*Исчисление по Чёрчу*: \(\Gamma \vdash_{\text{Ч}} A : \tau\) \\
+Язык:
+- \(x\) --- переменная
+- \(A\ B\) --- аппликация
+- \(\lambda x^\tau. P\) --- абстракция
+#+end_definition
+#+NAME: Исчисление по Чёрчу и по Карри_theorem_church
+#+begin_theorem org
+Если конекст \(\Gamma\) и выражение \(P\) типизируется, то \(\Gamma \vdash_{\text{Ч}} P: \sigma\)
+#+end_theorem
+#+NAME: Исчисление по Чёрчу и по Карри_theorem_church_examp_2
+#+begin_examp org
+\[\vdash_C \lambda x. x : \substack{\alpha \rightarrow \alpha \\ \beta \rightarrow \beta}\]
+\[ \vdash_{\text{Ч}} \lambda x. x : \sigma \to \sigma \]
+#+end_examp
+#+NAME: Исчисление по Чёрчу и по Карри_theorem_church_examp
+#+begin_examp org
+\[ \lambda f. \lambda x. f\ (f\ x) : \substack{(\alpha \to \alpha) \to (\alpha \to \alpha) \\ (\beta \to \beta) \to (\beta \to \beta)} \]
+\[ \lambda f^{\alpha \to \alpha}. \lambda x.^\alpha. f\ (f\ x) : (\alpha \to \alpha) \to (\alpha \to \alpha) \]
+#+end_examp

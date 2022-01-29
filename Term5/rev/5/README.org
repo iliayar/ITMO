@@ -1,0 +1,361 @@
+#+title: Week 5
+
+* Randomness
+*64*
+* Cucumber
+*64*
+
+#+begin_src 
+Breakpoint 1, 0x000000000040080b in check ()
+$1 = 77 'M'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$2 = 117 'u'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$3 = 116 't'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$4 = 52 '4'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$5 = 100 'd'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$6 = 51 '3'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$7 = 100 'd'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$8 = 95 '_'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$9 = 67 'C'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$10 = 117 'u'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$11 = 99 'c'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$12 = 117 'u'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$13 = 109 'm'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$14 = 98 'b'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$15 = 51 '3'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$16 = 114 'r'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$17 = 115 's'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$18 = 95 '_'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$19 = 107 'k'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$20 = 49 '1'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$21 = 108 'l'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$22 = 108 'l'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$23 = 95 '_'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$24 = 85 'U'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$25 = 110 'n'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$26 = 49 '1'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$27 = 99 'c'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$28 = 111 'o'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$29 = 114 'r'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$30 = 110 'n'
+
+Breakpoint 1, 0x000000000040080b in check ()
+$31 = 53 '5'
+Wrong!
+#+end_src
+
+#+begin_src 
+Mut4d3d_Cucumb3rs_k1ll_Un1corn5
+#+end_src
+
+* TwoBruter
+*64*
+
+#+begin_src shell
+strace ./twobruter.elf 2>&1 | grep flag
+#+end_src
+
+* Flag Bruter
+*64*
+
+#+begin_src 
+FlagBruter master* λ ltrace ./flagbruter.elf 2>&1 | grep flag
+memcpy(0x7ffc16f82170, "FLAGus_flagus_asparagus", 23) = 0x7ffc16f82170
+#+end_src
+
+* tracee
+*64*
+
+#+begin_src 
+flag{whoopie_XXX#}
+#+end_src
+
+#+begin_src 
+ ^C%                                                                                                                                                                                                                 tracee master* λ ltrace ./tracee.elf
+__libc_start_main(0x400b47, 1, 0x7ffce5b4bc08, 0x400da0 <unfinished ...>
+fork()                                                                                                                             = 1616431
+socket(1, 1, 0)                                                                                                                    = 3
+memset(0x7ffce5b4b980, '\0', 110)                                                                                                  = 0x7ffce5b4b980
+strncpy(0x7ffce5b4b982, "sckt", 107)                                                                                               = 0x7ffce5b4b982
+puts("get your string!"get your string!
+)                                                                                                           = 17
+fgets(flag{whoopie_XXX#}
+"flag{whoopie_XXX#}\n", 256, 0x7fcccf631800)                                                                                 = 0x7ffce5b4ba00
+connect(3, 0x7ffce5b4b980, 110, 0x7ffce5b4b980)                                                                                    = 0
+read(3, "P", 1)                                                                                                                    = 1
+read(3, "Z", 1)                                                                                                                    = 1
+read(3, "W", 1)                                                                                                                    = 1
+read(3, "Q", 1)                                                                                                                    = 1
+read(3, "M", 1)                                                                                                                    = 1
+read(3, "A", 1)                                                                                                                    = 1
+read(3, "^", 1)                                                                                                                    = 1
+read(3, "Y", 1)                                                                                                                    = 1
+read(3, "Y", 1)                                                                                                                    = 1
+read(3, "F", 1)                                                                                                                    = 1
+read(3, "_", 1)                                                                                                                    = 1
+read(3, "S", 1)                                                                                                                    = 1
+read(3, "i", 1)                                                                                                                    = 1
+read(3, "n", 1)                                                                                                                    = 1
+read(3, "n", 1)                                                                                                                    = 1
+read(3, "n", 1)                                                                                                                    = 1
+read(3, "\025", 1)                                                                                                                 = 1
+read(3, "K", 1)                                                                                                                    = 1
+puts("OK!"OK!
+)                                                                                                                        = 4
++++ exited (status 1) +++
+^C%                                                                                                                                                                                                                 tracee master* λ
+ 
+#+end_src
+
+** More automatic solution
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/tracee2021-11-06-023103_651x594_scrot.png]]
+
+#+begin_src python :results output
+s = b'PZWQMA^YYF_Sinnn\025K'
+res = ''
+for c in s:
+    res += chr(c ^ 0x36)
+print(res)
+#+end_src
+
+#+RESULTS:
+: flag{whoopie_XXX#}
+
+* Strong Protected
+*64*
+#+begin_src 
+Strong Protected master* λ strace -s 1000 ./sprotected.elf
+execve("./sprotected.elf", ["./sprotected.elf"], 0x7ffdfc3e8f60 /* 152 vars */) = 0
+uname({sysname="Linux", nodename="NixLaptop", ...}) = 0
+brk(NULL)                               = 0x7ec000
+brk(0x7ed1c0)                           = 0x7ed1c0
+arch_prctl(ARCH_SET_FS, 0x7ec880)       = 0
+readlink("/proc/self/exe", "/home/iliayar/Envs/Reverse/week5/Strong Protected/sprotected.elf", 4096) = 64
+brk(0x80e1c0)                           = 0x80e1c0
+brk(0x80f000)                           = 0x80f000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/tmp/flag.txt", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+write(3, "flag_is_413d791790502b30842994da1ec6def4", 40) = 40
+close(3)                                = 0
+unlink("/tmp/flag.txt")                 = 0
+exit_group(0)                           = ?
++++ exited with 0 +++
+#+end_src
+
+* JustExperiment
+*PE*
+
+#+begin_src 
+1120100 
+#+end_src
+
+* MiddleOut
+*PE*
+
+#+begin_src 
+9150347 
+#+end_src
+
+* Credentials
+*PE*
+
+#+begin_src 
+1769766724 
+#+end_src
+
+* abomination
+#+begin_src 
+ abomination master* λ ltrace ./abominate_language
+__libc_start_main(0x454710, 1, 0x7ffe404e9a28, 0x47b3d0 <unfinished ...>
+malloc(56)                                                                                                                         = 0x19792a0
+pthread_attr_init(0x19792a0, 0x19792d0, 65, 0x19792a0)                                                                             = 0
+pthread_attr_getstacksize(0x19792a0, 0x7ffe404e98e0, 65, 0x19792a0)                                                                = 0
+pthread_attr_destroy(0x19792a0, 0x7ffe404e98e0, 1, 0x19792a0)                                                                      = 0
+free(0x19792a0)                                                                                                                    = <void>
+mmap(0xc000000000, 0x10000, 0, 34)                                                                                                 = 0xc000000000
+mmap(0, 0x40000, 3, 34)                                                                                                            = 0x7f9275499000
+mmap(0xc820000000, 0x100000, 3, 34)                                                                                                = 0xc820000000
+mmap(0xc81fff8000, 0x8000, 3, 34)                                                                                                  = 0xc81fff8000
+mmap(0xc000000000, 4096, 3, 34)                                                                                                    = 0xc000000000
+mmap(0, 0x10000, 3, 34)                                                                                                            = 0x7f9275489000
+malloc(24)                                                                                                                         = 0x19792e0
+sigfillset(~<31-32>)                                                                                                               = 0
+pthread_sigmask(2, 0x7ffe404e96e0, 0x7ffe404e9760, 0x19792e0)                                                                      = 0
+pthread_attr_init(0x7ffe404e96a0, 0x7ffe404e96e0, 0, 0x7f927555f0f0)                                                               = 0
+pthread_attr_getstacksize(0x7ffe404e96a0, 0x7ffe404e9698, 0, 0x7f927555f0f0)                                                       = 0
+pthread_create(0x7ffe404e9690, 0x7ffe404e96a0, 0x47b0c0, 0x19792e0)                                                                = 0
+pthread_sigmask(2, 0x7ffe404e9760, 0, 0x7f92756aa564)                                                                              = 0
+mmap(0, 0x40000, 3, 34)                                                                                                            = 0x7f926ffc0000
+malloc(24)                                                                                                                         = 0x1979430
+sigfillset(~<31-32>)                                                                                                               = 0
+pthread_sigmask(2, 0x7ffe404e9610, 0x7ffe404e9690, 0x1979430)                                                                      = 0
+pthread_attr_init(0x7ffe404e95d0, 0x7ffe404e9610, 0, 0x7f927555f0f0)                                                               = 0
+pthread_attr_getstacksize(0x7ffe404e95d0, 0x7ffe404e95c8, 0, 0x7f927555f0f0)                                                       = 0
+pthread_create(0x7ffe404e95c0, 0x7ffe404e95d0, 0x47b0c0, 0x1979430)                                                                = 0
+pthread_sigmask(2, 0x7ffe404e9690, 0, 0x7f92756aa564)                                                                              = 0
+malloc(24)                                                                                                                         = 0x1979580
+sigfillset(~<31-32>)                                                                                                               = 0
+pthread_sigmask(2, 0x7ffe404e94c0, 0x7ffe404e9540, 0x1979580)                                                                      = 0
+pthread_attr_init(0x7ffe404e9480, 0x7ffe404e94c0, 0, 0x7f927555f0f0)                                                               = 0
+pthread_attr_getstacksize(0x7ffe404e9480, 0x7ffe404e9478, 0, 0x7f927555f0f0)                                                       = 0
+pthread_create(0x7ffe404e9470, 0x7ffe404e9480, 0x47b0c0, 0x1979580)                                                                = 0
+pthread_sigmask(2, 0x7ffe404e9540, 0, 0x7f92756aa564)                                                                              = 0
+pthread_mutex_lock(0x73a0e0, 0x720160, 0xc820073f18, 0)                                                                            = 0
+pthread_cond_broadcast(0x73a120, 0x720160, 0, 0)                                                                                   = 0
+pthread_mutex_unlock(0x73a0e0, 0x720160, 0, 0)                                                                                     = 0
+mmap(0, 0x40000, 3, 34)                                                                                                            = 0x7f9274447000
+123
+malloc(4)                                                                                                                          = 0x19796d0
+malloc(29)                                                                                                                         = 0x19796f0
+strcmp("flag{GO_iSTerrible_language}", "123")                                                                                      = 53
++++ exited (status 0) +++
+ 
+#+end_src
+
+* protected
+#+begin_src 
+ protected master* λ ltrace -s 10000 ./protected.elf
+__libc_start_main(0x400856, 1, 0x7ffd87a11fa8, 0x4019f0 <unfinished ...>
+__isoc99_scanf(0x401a74, 0x7ffd87a11e20, 0x7ffd87a11fb8, 0x7f7de708c598123
+)                                                           = 1
+strcpy(0x7ffd87a11e60, "0")                                                                                                        = 0x7ffd87a11e60
+strcpy(0x7ffd87a11e61, "1")                                                                                                        = 0x7ffd87a11e61
+strcpy(0x7ffd87a11e62, "2")                                                                                                        = 0x7ffd87a11e62
+strcpy(0x7ffd87a11e63, "3")                                                                                                        = 0x7ffd87a11e63
+strcpy(0x7ffd87a11e64, "4")                                                                                                        = 0x7ffd87a11e64
+strcpy(0x7ffd87a11e65, "5")                                                                                                        = 0x7ffd87a11e65
+strcpy(0x7ffd87a11e66, "6")                                                                                                        = 0x7ffd87a11e66
+strcpy(0x7ffd87a11e67, "7")                                                                                                        = 0x7ffd87a11e67
+strlen("01234567")                                                                                                                 = 8
+malloc(64)                                                                                                                         = 0x1e736b0
+memcpy(0x1e736b0, "01234567", 8)                                                                                                   = 0x1e736b0
+free(0x1e736b0)                                                                                                                    = <void>
+sprintf("45", "%02x", 0x45)                                                                                                        = 2
+sprintf("c8", "%02x", 0xc8)                                                                                                        = 2
+sprintf("8e", "%02x", 0x8e)                                                                                                        = 2
+sprintf("b2", "%02x", 0xb2)                                                                                                        = 2
+sprintf("55", "%02x", 0x55)                                                                                                        = 2
+sprintf("06", "%02x", 0x6)                                                                                                         = 2
+sprintf("df", "%02x", 0xdf)                                                                                                        = 2
+sprintf("c6", "%02x", 0xc6)                                                                                                        = 2
+sprintf("03", "%02x", 0x3)                                                                                                         = 2
+sprintf("af", "%02x", 0xaf)                                                                                                        = 2
+sprintf("b7", "%02x", 0xb7)                                                                                                        = 2
+sprintf("83", "%02x", 0x83)                                                                                                        = 2
+sprintf("21", "%02x", 0x21)                                                                                                        = 2
+sprintf("14", "%02x", 0x14)                                                                                                        = 2
+sprintf("0a", "%02x", 0xa)                                                                                                         = 2
+sprintf("be", "%02x", 0xbe)                                                                                                        = 2
+strcmp("123", "flag_is_45c88eb25506dfc603afb78321140abe")                                                                          = -53
+puts("Wrong!"Wrong!
+)                                                                                                                     = 7
++++ exited (status 0) +++
+ 
+#+end_src
+
+* MC7
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc2021-11-06-020958_869x594_scrot.png]]
+
+* MC6
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc62021-11-06-022732_680x578_scrot.png]]
+
+* MC4
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc42021-11-06-024307_663x809_scrot.png]]
+* MC5
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc52021-11-06-025215_664x553_scrot.png]]
+* MC3
+#+begin_src 
+execve("./mc3.elf", ["./mc3.elf"], 0x7ffcb208cd90 /* 152 vars */) = 0
+uname({sysname="Linux", nodename="NixLaptop", ...}) = 0
+brk(NULL)                               = 0x9d9000
+brk(0x9da1c0)                           = 0x9da1c0
+arch_prctl(ARCH_SET_FS, 0x9d9880)       = 0
+readlink("/proc/self/exe", "/home/iliayar/Envs/Reverse/week5"..., 4096) = 44
+brk(0x9fb1c0)                           = 0x9fb1c0
+brk(0x9fc000)                           = 0x9fc000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}) = 0
+write(1, "Hello!\n", 7Hello!
+)                 = 7
+write(1, "Now i will write the flag somewh"..., 37Now i will write the flag somewhere.
+) = 37
+write(1, "See if you can find it!\n", 24See if you can find it!
+) = 24
+write(1337, "flag: c4ught_Wh4Ts_be1ng_wr1tten", 32) = -1 EBADF (Bad file descriptor)
+write(1, "Ok, it's there\n", 15Ok, it's there
+)        = 15
+write(1, "Dunno if it was written OK, but "..., 55Dunno if it was written OK, but i've done what i could
+) = 55
+write(1, "Good luck!\n", 11Good luck!
+)            = 11
+exit_group(0)                           = ?
++++ exited with 0 +++
+ 
+#+end_src
+
+* MC2
+* MC1
+#+begin_src 
+V3ry_L0ng_f14g_70_4nn0y_3v3ryb0dY_wh0_r3V3rS3S_1t
+#+end_src
+
+[[/home/iliayar/Repos/ITMO/Term5/rev/5/mc12021-11-06-030218_1393x554_scrot.png]]
+

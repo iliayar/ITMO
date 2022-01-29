@@ -1,0 +1,93 @@
+#+setupfile: setup.org
+#+TITLE: ДЗ 1
+#+date: 14 сентября
+
+#+LATEX_HEADER_EXTRA: \newcommand{\Not}{\mathop{Not}}
+#+LATEX_HEADER_EXTRA: \newcommand{\And}{\mathop{And}}
+
+* 1
+** a
+\[ \lambda z. \lambda x. a b c \lambda y. d e f \]
+\[ \Downarrow \]
+\[ \lambda z. (\lambda x. (((a b) c) (\lambda y. ((d e) f)))) \]
+** b
+\[ (\lambda f. ((\lambda x. (f (f (x (\lambda z. (z s)))))) z)) \]
+\[ \Downarrow \]
+\[ \lambda f. (\lambda x. f (f (x \lambda z. z s))) z \]
+
+* 2
+** a
+\begin{align*}
+  T\ F & \to_\beta \\
+  (\lambda a. \lambda b. a) (\lambda a. \lambda b. b) & \to_\beta \\
+  (\lambda b. \lambda a. \lambda c. c)
+\end{align*}
+** b
+\begin{align*}
+  (T\ \Not\ (\lambda t. t))\ F & \to_\beta \\
+  ((\lambda a. \lambda b. a)\ (\lambda x. x\ F\ T) (\lambda t. t))\ (\lambda a. \lambda b. b) & \to_\beta \\
+  ((\lambda b. \lambda x. x\ F\ T)\ (\lambda t. t))\ (\lambda a. \lambda b. b) & \to_\beta \\
+  (\lambda x. x\ F\ T) (\lambda a. \lambda b. b) & \to_\beta \\
+  (\lambda a. \lambda b. b)\ F\ T & \to_\beta \\
+  T & \to_\beta \\
+  \lambda a. \lambda b. a
+\end{align*}
+** c
+\begin{align*}
+  \And\ (\And\ F\ F)\ T & \to_\beta \\
+  (\lambda x. \lambda y. x\ y\ F)\ (\And\ F\ F)\ T & \to_\beta \\
+  (\And\ F\ F)\ T\ F & \to_\beta \\
+  ((\lambda x. \lambda y. x\ y\ F)\ F\ F)\ T\ F & \to_\beta \\
+  (F\ F\ F)\ T\ F & \to_\beta \\
+  ((\lambda a. \lambda b. b)\ F\ F)\ T\ F & \to_\beta \\
+  F\ T\ F & \to_\beta \\
+  (\lambda a. \lambda b. b)\ T\ F & \to_\beta \\
+  F & \to_\beta \\
+  \lambda a. \lambda b. b
+\end{align*}
+* 3
+** a
+\[ \mathop{Or} = \lambda x. \lambda y. x\ T\ y \]
+** b
+\[ (`) = \lambda x. \lambda y. \Not (\And\ x\ y) \]
+** c
+\[ \mathop{Xor} = \lambda x. \lambda y. x\ (y\ F\ T)\ (y\ T\ F) \]
+* 4
+** a
+\[ \mathop{Mul2} = \lambda n. (\cdot)\ \overline{2} \]
+** b
+\[ \mathop{Pow} = \lambda a. \lambda b. b\ ((\cdot)\ a)\ \overline{1} \]
+\[ \mathop{Pow} = \lambda a. \lambda b. b a \]
+
+** c
+\[ \mathop{Odd} = \lambda a. a\ (\mathop{Xor}\ T)\ F \]
+\[ \mathop{Even} = \lambda a. a\ (\mathop{Xor}\ T)\ T \]
+** d
+\[ \mathop{IsZero} = \lambda a.a (\mathop{And}\ F) T \]
+* 5
+** a
+\begin{align*}
+  \mathop{PrL}\ (\mathop{MkPair}\ a\ b) & \to_\beta \\
+  (\lambda p. p\ T)\ ((\lambda a. \lambda b. (\lambda x.x\ a\ b))\ a\ b) & \to_\beta \\
+  (\lambda p. p\ T)\ ((\lambda b. (\lambda x.x\ a\ b))\ b) & \to_\beta \\
+  (\lambda p.p\ T)\ (\lambda x. x\ a\ b) & \to_\beta \\
+  (\lambda x.x\ a\ b)\ (\lambda a. \lambda b. a) & \to_\beta \\
+  (\lambda a. \lambda b. a)\ a\ b & \to_\beta \\
+  (\lambda b. a)\ b & \to_\beta \\
+  a
+\end{align*}
+
+** b
+\[ (-1) = \lambda n. \lambda f. \lambda x. \mathop{PrL}\ (n\ (\lambda p. (\mathop{PrR}\ p)\ (\mathop{MkPair}\ (f\ (\mathop{PrL}\ p))\ T)\ (\mathop{MkPair}\ (\mathop{PrL}\ p)\ T))\ (\mathop{MkPair}\ x\ F)) \]
+** c
+\[ (-) = \lambda a. \lambda b. b\ (-1)\ a \]
+
+* 8
+** a
+\begin{align*}
+  Y\ f & \to_\beta \\
+  \lambda f. (\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x))\ f & \to_\beta \\
+  (\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) & \to_\beta \\
+  f\ ((\lambda x.f\ (x\ x))\ (\lambda x. f\ (x\ x))) & =_\beta \\
+  f\ (Y f)
+\end{align*}

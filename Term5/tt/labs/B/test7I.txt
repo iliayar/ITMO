@@ -1,0 +1,2 @@
+a : forall x. (x -> x) |- a : x [rule #5]
+*   a : forall x. (x -> x) |- a : forall x. (x -> x) [rule #1]

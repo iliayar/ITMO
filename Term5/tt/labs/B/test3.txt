@@ -1,0 +1,5 @@
+|- \x. \y. x : forall a. forall b. a -> b -> a [rule #6]
+*   |- \x. \y. x : forall b. a -> b -> a [rule #6]
+*   *   |- \x. \y. x : a -> b -> a [rule #3]
+*   *   *   x : a |- \y. x : b -> a [rule #3]
+*   *   *   *   x : a, y : b |- x : a [rule #1]

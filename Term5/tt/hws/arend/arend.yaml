@@ -1,0 +1,4 @@
+langVersion: 1.7
+sourcesDir: src
+binariesDir: bin
+dependencies: [arend-lib]

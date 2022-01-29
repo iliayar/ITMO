@@ -1,0 +1,41 @@
+Add1 = \n. \f. \x. f (n f x);
+I = \x. x;
+K = \x. \y. x;
+S = \x. \y. \z. x z (y z);
+
+T = \a. \b. a;
+F = \a. \b. b;
+
+If = \v. \t. \f. v t f;
+IsZero = \n. n (K F) T;
+
+MkPair = \a. \b. (\x. x a b);
+PrL = \p. p T;
+PrR = \p. p F;
+
+Pow = \a. \b. b a;
+
+
+Minus1 = \n. \f. \x. PrL (n (\p. (PrR p) (MkPair (f (PrL p)) T) (MkPair (PrL p) T)) (MkPair x F));
+Minus = \a. \b. b Minus1 a;
+
+Head = Case (K F) PrL;
+Tail = Case (K F) PrR;
+
+Ith = Y \f. \i. \l. Case (K F) (\p. If (IsZero i) (PrL p) (f (Minus1 i) (PrR p))) l;
+
+Case = \l. \r. \c. c l r;
+InL = \l. \x. \y. x l;
+InR = \r. \x. \y. y r;
+
+Nil = InL 0;
+Cons = \a. \b. InR (MkPair a b);
+
+TestList3 = Cons 1 (Cons 2 (Cons 3 Nil));
+TestList0 = Nil;
+
+Length = Y \f. \l. Case (\x. 0) (\p. Add1 (f (PrR p))) l;
+NList = (Y \f. \i. \n. If (IsZero (Minus n i)) Nil (Cons i (f (Add1 i) n))) 0;
+NList1 = (Y \f. \l. \n. If (IsZero n) l (f (Cons (Minus1 n) l) (Minus1 n))) Nil;
+Reverse = (Y \f. \h. \r. Case (K h) (\p. f (Cons (PrL p) h) (PrR p)) r) Nil;
+Map = Y \f. \g. \l. Case (K Nil) (\p. Cons (g (PrL p)) (f g (PrR p))) l;

@@ -1,0 +1,232 @@
+* DONE spbctf_4_x86_64
+
+Свапает ~permutation[input[i]]~ и ~permutation[input[i] + 1]~, проверяет что ~permuation~ отсорченый
+
+#+begin_src python :results output
+arr = [8, 7, 5, 4, 1, 3, 2, 6, 9, 10]
+res = []
+for i in range(len(arr)):
+    for j in range(len(arr) - 1):
+        if arr[j] > arr[j + 1]:
+            res.append(j)
+            arr[j + 1], arr[j] = arr[j], arr[j + 1]
+
+print(''.join(map(lambda x: str(x), res)))
+#+end_src
+
+#+RESULTS:
+: 012345601234501230121
+
+* DONE s2.out
+* DONE spbctf_2_x86
+#+begin_src 
+497 1207 1273 871 476 884 1615 475 2233 231 505 1919 190 2755 231 561
+#+end_src
+Каждая пара чисел это ~x * prime1~ и ~x * prime2~, где ~x~ число из ввода, а
+~prime1, prime2~ два различных простых числа
+
+#+begin_src python
+import math
+arr = [497, 1207, 1273, 871, 476, 884, 1615, 475, 2233, 231, 505, 1919, 190, 2755, 231, 561]
+res = ''
+
+
+for i in range(0, len(arr), 2):
+    res += chr(math.gcd(arr[i], arr[i + 1]))
+
+return res
+#+end_src
+
+#+RESULTS:
+: GCD_Me_!
+
+* DONE cosy
+#+begin_src python :results output
+import math
+arr = [3089, 9659, 174, 9993, 3255, 9961, 5876, 8910, 6155, 9986, 4382, 7880, 1218, 8660, 3255, 8746, 6155, 9781, 4999, 9455, 1218, 7987]
+res = ''
+for (i, x) in enumerate(arr):
+    if i % 2 == 0:
+        c = math.asin(x / 10000.) * 180. / math.pi
+    else:
+        c = math.acos(x / 10000.) * 180. / math.pi
+    c = round(c)
+    if c == 36:
+        res += '{'
+    elif c == 37:
+        res += '}'
+    elif c == 38:
+        res += '_'
+    elif c <= 25:
+        res += chr(c + ord('a'))
+    else:
+        res += chr(c + 0x16)
+print(res) 
+#+end_src
+
+#+RESULTS:
+: spbctf{1_d0_h4t3_m4th}
+
+* DONE sparta
+#+begin_src python :results output
+s = "st_3phr_b13gcsvut_3yf1rz{55}"
+res = [0]*len(s)
+k = 0
+for i in range(7):
+    for j in range(i, len(s), 7):
+        res[j] = ord(s[k])
+        k += 1
+
+
+print(''.join(map(lambda x: chr(x), res)))
+#+end_src
+
+#+RESULTS:
+: spbctf{th1s_15_r3v3r53_guyz}
+
+* DONE spbctf3_x86_64
+Есть функция ~swapper(input, step)~, которая свапает эдементы ~input[i]~ и
+~input[i + step - 1]~ для ~i = 0, step, step * 2, ...~ и ~step = 10..2~.
+
+#+begin_src python :results output
+s = "_A_m_aFneSuyn_w_IypvSr_ahIEwp_gitrnMhaetevT_so!"
+res = list(s)
+
+for step in range(2, 11):
+    for i in range(0, len(s) - step + 1, step):
+        res[i], res[i + step - 1] = res[i + step - 1], res[i]
+
+print(''.join(res))
+#+end_src
+
+#+RESULTS:
+: I_Am_Funny_Swaper_I_Swap_Everything_That_Moves!
+
+* DONE mixer
+#+begin_src python :results output
+arr1 = "abcdefghijklmnopqrstuvwxyz_{}0123456789"
+arr2 = "wmf9slha2r}v7te_13kby8ug4c{oz5j0idp6nqx"
+
+dec = "k_mfblobadb{udp{idp4{iaxz"
+res = ''
+
+for c in dec:
+   res += arr1[arr2.find(c)] 
+
+print(res)
+#+end_src
+
+#+RESULTS:
+: spbctf{th4t_w45_345y_3h9}
+
+* DONE task2.out
+Решим систему
+- id('s') = id(x) * id('d') + id(y) % 29
+- id('p') = id(x) * id('i') + id(y) % 29
+#+begin_src python :results output
+s = "abcdefghijklmnopqrstuvwxyz{}_"
+enc = "dix_gyhiiz}xdduah}puvyhn}u}pxa}tnbfh}ozbc"
+
+id_d = s.find(enc[0])
+id_i = s.find(enc[1])
+for x in range(len(s)):
+    for y in range(len(s)):
+        id_s = (x * id_d + y) % 29
+        id_p = (x * id_i + y) % 29
+        if s[id_s] == 'f' and s[id_p] == 'l':
+            print(s[x], s[y])
+#+end_src
+
+#+RESULTS:
+: l o
+
+* DONE task4
+#+begin_src python :results output
+print(0x0804867F) 
+#+end_src
+
+#+RESULTS:
+: 134514303
+
+* DONE s3.out
+#+begin_src python :results output
+f = 61
+c = 117 * f
+i = 1
+while c * i % 256 != 118:
+    i += 1
+print(chr(f - 1), chr(i - 1))
+#+end_src
+
+#+RESULTS:
+: < 5
+
+* DONE crackme1
+all ones
+
+* DONE task1.out
+#+begin_src python :results output
+import struct
+s = "FLAG{123REALFLAG!!!}"
+h = -889266515
+for i in range(0, len(s), 4):
+    h ^= struct.unpack('I', s[i:i+4].encode())[0]
+print(h)
+#+end_src
+
+#+RESULTS:
+: -928216155
+
+#+begin_src python :results output
+import struct
+h = -889266515
+print(struct.pack('I', h ^ -928216155 ^ struct.unpack('I', b'1234')[0]))
+#+end_src
+
+#+RESULTS:
+: b'9ga6'
+
+* DONE task3
+#+begin_src fundamental
+01234567
+zfssaizs
+#+end_src
+[[/home/iliayar/Repos/ITMO/Term5/rev/2/2021-10-15-203232_702x128_scrot.png]]
+
+* DONE s5.out
+#+begin_src python :results output
+s = 'a'
+for i in range(6):
+    s += chr(ord(s[-1]) + i + 1)
+print(s)
+#+end_src
+
+#+RESULTS:
+: abdgkpv
+
+
+* DONE s7.out
+#+begin_src python :results output
+s = 'x'
+for i in range(5, 0, -1):
+    s = chr(ord(s[0]) - i) + s
+print(s)
+#+end_src
+
+#+RESULTS:
+: ijlosx
+
+* DONE s6.out
+#+begin_src 
+0123456
+X2Fw13D
+#+end_src
+
+
+* DONE s4.out
+#+begin_src 
+89ABCD
+c14aeB  
+#+end_src
+
+* DONE s1.out
