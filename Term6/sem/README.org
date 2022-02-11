@@ -1,0 +1,5 @@
+#+TITLE: Programming Language Semantic
+#+SETUPFILE: ../../level-subj.org
+
+* Lectures
+- [[https://iliayar.ru/public-notes/conspects/Term6/sem/lectures/1.pdf][Lecture 1]]
