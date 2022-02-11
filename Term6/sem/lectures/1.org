@@ -1,0 +1,156 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 1
+#+date: 9 февраля
+
+#+LATEX_HEADER_EXTRA: \DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+#+LATEX_HEADER_EXTRA: \DeclareFontShape{U}{matha}{m}{n}{
+#+LATEX_HEADER_EXTRA:       <5> <6> <7> <8> <9> <10> gen * matha
+#+LATEX_HEADER_EXTRA:       <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> matha12
+#+LATEX_HEADER_EXTRA:       }{}
+#+LATEX_HEADER_EXTRA: \DeclareSymbolFont{matha}{U}{matha}{m}{n}
+#+LATEX_HEADER_EXTRA: \DeclareMathSymbol{\odiv}{2}{matha}{"63}
+
+
+* Общие определения
+#+begin_definition org
+*Язык программирования* --- набор слов из алфавита
+#+end_definition
+#+begin_remark org
+Чем отличается язык программирования от естественных языков?
+Единственное отличие --- строгость и некоторая формальная модель
+вычисления програм.
+#+end_remark
+#+begin_definition org
+Способы задасть синтаксис языка:
+- *Грамматика* --- набор правил по генерации высказываний в языке
+- *Набор слов* \\
+  /Например/: \(L = \varnothing\)
+#+end_definition
+#+begin_definition org
+Способы задать семантику:
+- Функция по слову \( \rightarrow \) функция \(\text{<<делания>>}\)
+  \[ \llbracket \cdot \rrbracket:\ L \rightarrow \underbrace{(\texttt{input} \rightarrow \texttt{output})}_{\textbf{Семантический домен}} \]
+- Примерами
+  #+begin_src python
+print("Hello world!")
+b = 6
+a = 5 + b
+print(a)
+  #+end_src
+  Печатает текст, складывает числа, и т.д.
+- Интепретатор: \(L \times \texttt{input} \rightarrow \texttt{output}\)
+- Компилятор: \(L \rightarrow L'\)
+#+end_definition
+#+begin_remark org
+Зачем нужна *формальная* семнатика:
+- Доказательство корректности
+- Программисту \\
+  /Например/: Java Memory Model
+- Разработчику языка или компилятора:
+  /Например/: доказательсво корректности оптимизации, проводимой компилятором
+#+end_remark
+#+begin_remark org
+\-
+#+begin_src c++
+int x = 1;
+int a = x++ + x++ + x++ + x++;
+#+end_src
+Undefined behaviour --- любая семантика
+#+end_remark
+#+begin_remark org
+Рассмотрим программу, которая исполняется в два потока:
+#+begin_src 
+[x] := 1;
+a := [y];
+#+end_src
+#+begin_src 
+[y] := 1;
+b := [x];
+#+end_src
+Возможны все четыре варианта, чему буду равны ~a~ и ~b~ после завершения
+#+end_remark
+* Семантика большого шага
+#+begin_definition org
+Грамматика выражений:
+\[ e \in \mathbb{E} ::= z \in \mathbb{Z}\ |\ X \in \mathbb{V}\ |\ e\mathop{\rm binop}e \]
+\[ \mathop{\rm binop} & ::= \oplus\ |\ \ominus\ |\ \otimes\ |\ \dots \]
+#+end_definition
+#+begin_definition org
+\[ \frac{}{\pair{\underbrace{\sigma}_{\text{контекст}}, \underbrace{e}_{\text{выражение}}} \rightarrow \underbrace{x}_{\text{<<число>>}}} \]
+\[ \frac{}{\pair{\sigma, z} \rightarrow z} \text{ --- константа} \]
+\[ \frac{\pair{X, z} \in_1 \sigma}{\pair{\sigma, X} \rightarrow z} \text{ --- переменная} \]
+\[ \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad \pair{\sigma, e_2} \rightarrow z_2}{\pair{\sigma, e_1 \oplus e_2} \rightarrow z_1 + z_2} \]
+\[ \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad \pair{\sigma, e_2} \rightarrow z_2 \quad z_2 \neq 0}{\pair{\sigma, e_1 \odiv e_2} \rightarrow z_1 \div z_2} \]
+\[ \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad \pair{\sigma, e_2} \rightarrow z_2 \quad z_1 < z_2}{\pair{\sigma, e_1 \olt e_2} \rightarrow 1} \]
+\[ \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad \pair{\sigma, e_2} \rightarrow z_2 \quad z_1 \ge z_2}{\pair{\sigma, e_1 \olt e_2} \rightarrow 0} \]
+\[ \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad \pair{\sigma, e_2} \rightarrow z_2  \quad \{z_1, z_2\} \in \{0, 1\}}{\pair{\sigma, e_1 \oland e_2} \rightarrow z_1 \land z_2} \]
+\[ \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad \pair{\sigma, e_2} \rightarrow z_2  \quad \{z_1, z_2\} \in \{0, 1\}}{\pair{\sigma, e_1 \olor e_2} \rightarrow z_1 \lor z_2} \]
+\[ \text{Нестрогая семантика: }  \frac{\pair{\sigma, e_1} \rightarrow z_1 \quad z_1 = 0}{\pair{\sigma, e_1 \oland e_2} \rightarrow 0} \quad \frac{\pair{\sigma, e_1} -> z_1 \quad \pair{\sigma, e_2} \rightarrow z_2 \quad z_1 = 1}{\pair{\sigma, e_1 \oland e_2} \rightarrow z_2} \]
+#+end_definition
+#+begin_definition org
+\(e_0 \approx e_1\) тогда и только тогда, когда
+\[ \forall z \in \mathbb{Z}, \sigma \in \Sigma.\pair{\sigma, e_0} \rightarrow z \Leftrightarrow \pair{\sigma, e_1} \rightarrow z \]
+#+end_definition
+#+begin_examp org
+\-
+- \(0 < 1 \approx 2 < 3\)
+- \(a + b \approx b + a\)
+- \(\forall e. e \approx e\)
+- \(a \approx b \land b \approx c \Rightarrow a \approx c\)
+- \(1 + 2 + 3 \approx 6\)
+#+end_examp
+#+begin_examp org
+\-
+#+begin_src coq
+let cfold e : E :=
+  match e with
+  | z => z
+  | X => X
+  | e1 op e2 =>
+      let c1 = cfold e1 in
+      let c2 = cfold e2 in
+      match c1, c2 with
+      | z1, z2 => apply op z1 z2
+      | _. _ => c1 op c2
+      end
+  end.
+
+Lem. forall e in E. cfold e equiv e
+#+end_src
+#+end_examp
+#+begin_remark org
+Индукция по \(\N\):
+\[ \forall n \in \N. P(n) \Leftrightarrow P(0) \land (\forall n. P(n) \Rightarrow P(n + 1)) \]
+#+end_remark
+#+begin_examp org
+\[ P(n) & \xlongequal{\triangle} f(n) = n \% 3 \]
+\begin{align*}
+  f(0) & = 0 \\
+  f(1) & = 1 \\
+  f(2) & = 2 \\
+  f(n) & = f(n - 3)
+\end{align*}
+Хотим \(\xLeftrightarrow{?} \forall n. (\forall k < n. P(k)) \Rightarrow P(n)\). Фиксируем
+\(n\) и хотим показать \((\forall k < n. P(k)) \Rightarrow P(n)\):
+- \(n = 0, 1, 2\) все хорошо
+- \(n \ge 3: f(n) = f(n - 3)\), по предположению \(P(n-3)\) и \(P(n) \Leftrightarrow P(n - 3)\)
+#+end_examp
+#+begin_remark org
+\(n \in \N ::= 0\ |\ n'\)
+#+end_remark
+#+begin_definition org
+Индукция по \(\mathbb{Z}\)
+\[ \forall z \in \mathbb{Z}. P(z) \Leftrightarrow P(0) \land (\forall z > 0. P(z) \Rightarrow P(z + 1)) \land (\forall z < 0. P(z) \Rightarrow P(z - 1)) \]
+#+end_definition
+#+begin_definition org
+\[ z \in \mathbb{Z} ::= 0\ |\ +n\ |\ -n \]
+#+end_definition
+#+begin_definition org
+Структурная индукция по \(\mathbb{E}\)
+\[ (\forall e \in \mathbb{E}. P(e)) \Leftrightarrow (\forall z \in \mathbb{Z}. P(z)) \land (\forall x \in \mathbb{V}. P(x)) \land (\forall e_1,e_2 \in \mathbb{E}. P(e_1) \land P(e_2) \Rightarrow P(e_1\mathop{\rm op}e_2)) \]
+
+#+end_definition
+
+
+
+
