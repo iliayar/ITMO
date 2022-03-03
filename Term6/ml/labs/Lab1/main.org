@@ -1,0 +1,107 @@
+#+title: Lab 1
+
+
+#+begin_src jupyter-julia
+include("main.jl") 
+#+end_src
+
+#+RESULTS:
+: # Out[26]:
+: : one_hot (generic function with 1 method)
+
+* Loading libraries
+#+begin_src jupyter-julia
+using Pkg
+
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+#+end_src
+
+#+RESULTS:
+: # Out[1]:
+
+#+begin_src jupyter-julia
+using CSV
+using DataFrames
+#+end_src
+
+#+RESULTS:
+: # Out[2]:
+
+
+* Loading dataset
+DataSet: https://www.openml.org/d/54
+
+#+begin_src jupyter-julia
+df = CSV.read("./data/dataset_54_vehicle.csv", DataFrame);
+#+end_src
+
+#+RESULTS:
+: # Out[11]:
+
+
+#+begin_src jupyter-julia
+show(df, allcols=true)
+#+end_src
+
+#+RESULTS:
+: # Out[12]:
+
+#+begin_src jupyter-julia :results raw drawer
+Set(df[!, "Class"])
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[37]:
+#+BEGIN_EXAMPLE
+  Set{String7} with 4 elements:
+  "bus"
+  "opel"
+  "saab"
+  "van"
+#+END_EXAMPLE
+:end:
+
+
+* One hot
+
+#+begin_src jupyter-julia :results raw drawer
+one_hot(df, "Class")
+# show(df[!, [:Class, :class_bus, :class_opel, :class_saab, :class_van]], allcols=true)
+df[!, [:Class, :class_bus, :class_opel, :class_saab, :class_van]]
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[43]:
+#+BEGIN_EXAMPLE
+  846×5 DataFrame
+   Row │ Class    class_bus  class_opel  class_saab  class_van 
+       │ String7  Float64    Float64     Float64     Float64   
+  ─────┼───────────────────────────────────────────────────────
+  1 │ van            0.0         0.0         0.0        1.0
+  2 │ van            0.0         0.0         0.0        1.0
+  3 │ saab           0.0         0.0         1.0        0.0
+  4 │ van            0.0         0.0         0.0        1.0
+  5 │ bus            1.0         0.0         0.0        0.0
+  6 │ bus            1.0         0.0         0.0        0.0
+  7 │ bus            1.0         0.0         0.0        0.0
+  8 │ van            0.0         0.0         0.0        1.0
+  9 │ van            0.0         0.0         0.0        1.0
+  10 │ saab           0.0         0.0         1.0        0.0
+  11 │ van            0.0         0.0         0.0        1.0
+  ⋮  │    ⋮         ⋮          ⋮           ⋮           ⋮
+  837 │ van            0.0         0.0         0.0        1.0
+  838 │ saab           0.0         0.0         1.0        0.0
+  839 │ van            0.0         0.0         0.0        1.0
+  840 │ van            0.0         0.0         0.0        1.0
+  841 │ opel           0.0         1.0         0.0        0.0
+  842 │ saab           0.0         0.0         1.0        0.0
+  843 │ van            0.0         0.0         0.0        1.0
+  844 │ saab           0.0         0.0         1.0        0.0
+  845 │ saab           0.0         0.0         1.0        0.0
+  846 │ van            0.0         0.0         0.0        1.0
+                                               825 rows omitted
+#+END_EXAMPLE
+:end:
