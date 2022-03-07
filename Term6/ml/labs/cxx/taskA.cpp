@@ -1,4 +1,6 @@
-#define _USE_MATH_DEFINES
+
+// Generated at 2022-02-27 13:39:19.570752 
+// By iliayar
 #pragma comment(linker, "/STACK:36777216")
 #include <iostream>
 #include <vector>
@@ -68,8 +70,37 @@ ostream& operator<<(ostream& out, pair<T, K> p) {
   return out;
 }
 
-//CODE_HERE
+//##################CODE BEGIN#############
+//entry
+void sol() {
 
+    int n, m, k; cin >> n >> m >> k;
+
+    vector<vint> cs(m, vint{});
+    for (int i = 0; i < n; ++i) {
+        int j; cin >> j; j--;
+        cs[j].push_back(i + 1);
+    }
+
+
+    vector<vint> res(k, vint{});
+
+    int i = 0, j = 0;
+    while (j < m) {
+        if (cs[j].empty()) {
+            j++;
+            continue;
+        }
+        res[i].push_back(cs[j].back());
+        cs[j].pop_back();
+        i = (i + 1) % k;
+    }
+
+    for (int i = 0; i < k; ++i) {
+        cout << res[i].size() << " " << res[i];
+    }
+}
+//##################CODE END###############
 #ifdef LOCAL
 #undef FILE_IO
 #undef FILENAME
