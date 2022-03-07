@@ -3,11 +3,14 @@
 
 #+begin_src jupyter-julia
 include("main.jl") 
+include("helpers.jl") 
+include("reg.jl") 
+include("valid.jl") 
 #+end_src
 
 #+RESULTS:
-: # Out[26]:
-: : one_hot (generic function with 1 method)
+: # Out[32]:
+: : f_score (generic function with 1 method)
 
 * Loading libraries
 #+begin_src jupyter-julia
@@ -18,7 +21,7 @@ Pkg.add("DataFrames")
 #+end_src
 
 #+RESULTS:
-: # Out[1]:
+: # Out[2]:
 
 #+begin_src jupyter-julia
 using CSV
@@ -26,7 +29,7 @@ using DataFrames
 #+end_src
 
 #+RESULTS:
-: # Out[2]:
+: # Out[3]:
 
 
 * Loading dataset
@@ -37,7 +40,7 @@ df = CSV.read("./data/dataset_54_vehicle.csv", DataFrame);
 #+end_src
 
 #+RESULTS:
-: # Out[11]:
+: # Out[4]:
 
 
 #+begin_src jupyter-julia
@@ -45,7 +48,7 @@ show(df, allcols=true)
 #+end_src
 
 #+RESULTS:
-: # Out[12]:
+: # Out[5]:
 
 #+begin_src jupyter-julia :results raw drawer
 Set(df[!, "Class"])
@@ -53,7 +56,7 @@ Set(df[!, "Class"])
 
 #+RESULTS:
 :results:
-# Out[37]:
+# Out[6]:
 #+BEGIN_EXAMPLE
   Set{String7} with 4 elements:
   "bus"
@@ -64,44 +67,265 @@ Set(df[!, "Class"])
 :end:
 
 
-* One hot
+* Preprocessing
+** One hot
 
 #+begin_src jupyter-julia :results raw drawer
-one_hot(df, "Class")
-# show(df[!, [:Class, :class_bus, :class_opel, :class_saab, :class_van]], allcols=true)
-df[!, [:Class, :class_bus, :class_opel, :class_saab, :class_van]]
+Y = one_hot!(df, "Class")
+df = Float64.(df)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[43]:
+# Out[7]:
 #+BEGIN_EXAMPLE
-  846×5 DataFrame
-   Row │ Class    class_bus  class_opel  class_saab  class_van 
-       │ String7  Float64    Float64     Float64     Float64   
-  ─────┼───────────────────────────────────────────────────────
-  1 │ van            0.0         0.0         0.0        1.0
-  2 │ van            0.0         0.0         0.0        1.0
-  3 │ saab           0.0         0.0         1.0        0.0
-  4 │ van            0.0         0.0         0.0        1.0
-  5 │ bus            1.0         0.0         0.0        0.0
-  6 │ bus            1.0         0.0         0.0        0.0
-  7 │ bus            1.0         0.0         0.0        0.0
-  8 │ van            0.0         0.0         0.0        1.0
-  9 │ van            0.0         0.0         0.0        1.0
-  10 │ saab           0.0         0.0         1.0        0.0
-  11 │ van            0.0         0.0         0.0        1.0
-  ⋮  │    ⋮         ⋮          ⋮           ⋮           ⋮
-  837 │ van            0.0         0.0         0.0        1.0
-  838 │ saab           0.0         0.0         1.0        0.0
-  839 │ van            0.0         0.0         0.0        1.0
-  840 │ van            0.0         0.0         0.0        1.0
-  841 │ opel           0.0         1.0         0.0        0.0
-  842 │ saab           0.0         0.0         1.0        0.0
-  843 │ van            0.0         0.0         0.0        1.0
-  844 │ saab           0.0         0.0         1.0        0.0
-  845 │ saab           0.0         0.0         1.0        0.0
-  846 │ van            0.0         0.0         0.0        1.0
-                                               825 rows omitted
+  846×18 DataFrame
+   Row │ COMPACTNESS  CIRCULARITY  DISTANCE_CIRCULARITY  RADIUS_RATIO  PR.AXIS_A ⋯
+       │ Float64      Float64      Float64               Float64       Float64   ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+  1 │        95.0         48.0                  83.0         178.0            ⋯
+  2 │        91.0         41.0                  84.0         141.0
+  3 │       104.0         50.0                 106.0         209.0
+  4 │        93.0         41.0                  82.0         159.0
+  5 │        85.0         44.0                  70.0         205.0            ⋯
+  6 │       107.0         57.0                 106.0         172.0
+  7 │        97.0         43.0                  73.0         173.0
+  8 │        90.0         43.0                  66.0         157.0
+  9 │        86.0         34.0                  62.0         140.0            ⋯
+  10 │        93.0         44.0                  98.0         197.0
+  11 │        86.0         36.0                  70.0         143.0
+  ⋮  │      ⋮            ⋮                ⋮                 ⋮                  ⋱
+  837 │        87.0         45.0                  66.0         139.0
+  838 │        94.0         46.0                  77.0         169.0            ⋯
+  839 │        95.0         43.0                  76.0         142.0
+  840 │        90.0         44.0                  72.0         157.0
+  841 │        93.0         34.0                  66.0         140.0
+  842 │        93.0         39.0                  87.0         183.0            ⋯
+  843 │        89.0         46.0                  84.0         163.0
+  844 │       106.0         54.0                 101.0         222.0
+  845 │        86.0         36.0                  78.0         146.0
+  846 │        85.0         36.0                  66.0         123.0            ⋯
+                                                   14 columns and 825 rows omitted
 #+END_EXAMPLE
+:end:
+
+#+begin_src jupyter-julia
+show(df, allcols=true)
+#+end_src
+
+#+RESULTS:
+: # Out[8]:
+
+#+begin_src jupyter-julia
+show(Y, allcols=true)
+#+end_src
+
+#+RESULTS:
+: # Out[9]:
+
+#+begin_src jupyter-julia :results raw drawer
+describe(df)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[10]:
+#+BEGIN_EXAMPLE
+  18×7 DataFrame
+   Row │ variable                   mean       min      median   max      nmissi ⋯
+       │ Symbol                     Float64    Float64  Float64  Float64  Int64  ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+  1 │ COMPACTNESS                 93.6785      73.0     93.0    119.0         ⋯
+  2 │ CIRCULARITY                 44.8617      33.0     44.0     59.0
+  3 │ DISTANCE_CIRCULARITY        82.0887      40.0     80.0    112.0
+  4 │ RADIUS_RATIO               168.941      104.0    167.0    333.0
+  5 │ PR.AXIS_ASPECT_RATIO        61.6939      47.0     61.0    138.0         ⋯
+  6 │ MAX.LENGTH_ASPECT_RATIO      8.56738      2.0      8.0     55.0
+  7 │ SCATTER_RATIO              168.839      112.0    157.0    265.0
+  8 │ ELONGATEDNESS               40.9338      26.0     43.0     61.0
+  9 │ PR.AXIS_RECTANGULARITY      20.5827      17.0     20.0     29.0         ⋯
+  10 │ MAX.LENGTH_RECTANGULARITY  147.999      118.0    146.0    188.0
+  11 │ SCALED_VARIANCE_MAJOR      188.625      130.0    178.5    320.0
+  12 │ SCALED_VARIANCE_MINOR      439.911      184.0    364.0   1018.0
+  13 │ SCALED_RADIUS_OF_GYRATION  174.703      109.0    173.0    268.0         ⋯
+  14 │ SKEWNESS_ABOUT_MAJOR        72.4622      59.0     71.5    135.0
+  15 │ SKEWNESS_ABOUT_MINOR         6.37707      0.0      6.0     22.0
+  16 │ KURTOSIS_ABOUT_MAJOR        12.5993       0.0     11.0     41.0
+  17 │ KURTOSIS_ABOUT_MINOR       188.933      176.0    188.0    206.0         ⋯
+  18 │ HOLLOWS_RATIO              195.632      181.0    197.0    211.0
+                                                                 2 columns omitted
+#+END_EXAMPLE
+:end:
+
+** Normalization
+#+begin_src jupyter-julia
+normalize!(df)
+#+end_src
+
+#+RESULTS:
+: # Out[11]:
+
+#+begin_src jupyter-julia :results raw drawer
+describe(df)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[12]:
+#+BEGIN_EXAMPLE
+  18×7 DataFrame
+   Row │ variable                   mean      min      median    max      nmissi ⋯
+       │ Symbol                     Float64   Float64  Float64   Float64  Int64  ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+  1 │ COMPACTNESS                0.449532      0.0  0.434783      1.0         ⋯
+  2 │ CIRCULARITY                0.456219      0.0  0.423077      1.0
+  3 │ DISTANCE_CIRCULARITY       0.584565      0.0  0.555556      1.0
+  4 │ RADIUS_RATIO               0.283585      0.0  0.275109      1.0
+  5 │ PR.AXIS_ASPECT_RATIO       0.161471      0.0  0.153846      1.0         ⋯
+  6 │ MAX.LENGTH_ASPECT_RATIO    0.123913      0.0  0.113208      1.0
+  7 │ SCATTER_RATIO              0.371498      0.0  0.294118      1.0
+  8 │ ELONGATEDNESS              0.42668       0.0  0.485714      1.0
+  9 │ PR.AXIS_RECTANGULARITY     0.298562      0.0  0.25          1.0         ⋯
+  10 │ MAX.LENGTH_RECTANGULARITY  0.428555      0.0  0.4           1.0
+  11 │ SCALED_VARIANCE_MAJOR      0.308554      0.0  0.255263      1.0
+  12 │ SCALED_VARIANCE_MINOR      0.306848      0.0  0.215827      1.0
+  13 │ SCALED_RADIUS_OF_GYRATION  0.413228      0.0  0.402516      1.0         ⋯
+  14 │ SKEWNESS_ABOUT_MAJOR       0.177134      0.0  0.164474      1.0
+  15 │ SKEWNESS_ABOUT_MINOR       0.289867      0.0  0.272727      1.0
+  16 │ KURTOSIS_ABOUT_MAJOR       0.3073        0.0  0.268293      1.0
+  17 │ KURTOSIS_ABOUT_MINOR       0.431087      0.0  0.4           1.0         ⋯
+  18 │ HOLLOWS_RATIO              0.487746      0.0  0.533333      1.0
+                                                                 2 columns omitted
+#+END_EXAMPLE
+:end:
+* Main
+
+Test example
+#+begin_src jupyter-julia
+leave_one_out(:euclidean, :triangular, :variable, 4, dataframe_to_vector(df), dataframe_to_vector(Y))
+#+end_src
+
+#+RESULTS:
+: # Out[31]:
+: : 0.7158879675890994
+
+
+#+begin_src jupyter-julia
+dists = [
+    :euclidean,
+    :manhattan,
+    :chebyshev,
+]
+windows = [
+    :fixed,
+    :variable,
+]
+kerns = [
+    :uniform,
+    :triangular,
+    :epanechnikov,
+    :quartic,
+]
+
+sqrt_df = sqrt(size(df)[1])
+df_v = dataframe_to_vector(df)
+Y_v = dataframe_to_vector(Y)
+
+res = []
+
+for dist_n in dists
+    R = dataframe_radius(df, mk_dist_by_name(dist_n))
+    for kern_n in kerns
+        for win_n in windows
+            for i in 1:sqrt_df
+                if win_n == :fixed
+                    param = R / sqrt_df * i
+                elseif win_n == :variable
+                    param = Int(i)
+                end
+                score = leave_one_out(dist_n, kern_n, win_n, param, df_v, Y_v)
+                push!(res, (score, (dist_n, kern_n, win_n, param)))
+            end
+        end
+    end
+end
+res
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# Out[38]:
+,#+BEGIN_EXAMPLE
+  696-element Vector{Any}:
+  (0.11047193544372273, (:euclidean, :uniform, :fixed, 0.09916099670454341))
+  (0.3587581053390694, (:euclidean, :uniform, :fixed, 0.19832199340908682))
+  (0.6341956297498483, (:euclidean, :uniform, :fixed, 0.2974829901136302))
+  (0.6727908065354656, (:euclidean, :uniform, :fixed, 0.39664398681817364))
+  (0.6127153218047148, (:euclidean, :uniform, :fixed, 0.49580498352271707))
+  (0.5865075961600927, (:euclidean, :uniform, :fixed, 0.5949659802272604))
+  (0.5176297326931952, (:euclidean, :uniform, :fixed, 0.6941269769318039))
+  (0.44435013926486844, (:euclidean, :uniform, :fixed, 0.7932879736363473))
+  (0.34663616563424676, (:euclidean, :uniform, :fixed, 0.8924489703408907))
+  (0.3123713760476754, (:euclidean, :uniform, :fixed, 0.9916099670454341))
+  (0.30332906593040254, (:euclidean, :uniform, :fixed, 1.0907709637499776))
+  (0.3073258748298075, (:euclidean, :uniform, :fixed, 1.1899319604545209))
+  (0.31835019072342746, (:euclidean, :uniform, :fixed, 1.2890929571590644))
+  ⋮
+  (0.6876836092635504, (:chebyshev, :quartic, :variable, 18))
+  (0.6888496511804405, (:chebyshev, :quartic, :variable, 19))
+  (0.6872275125132612, (:chebyshev, :quartic, :variable, 20))
+  (0.6852271191005406, (:chebyshev, :quartic, :variable, 21))
+  (0.6811860285325793, (:chebyshev, :quartic, :variable, 22))
+  (0.6831870619932574, (:chebyshev, :quartic, :variable, 23))
+  (0.6831302127616945, (:chebyshev, :quartic, :variable, 24))
+  (0.6843596461264205, (:chebyshev, :quartic, :variable, 25))
+  (0.6831795957808141, (:chebyshev, :quartic, :variable, 26))
+  (0.6854931489967557, (:chebyshev, :quartic, :variable, 27))
+  (0.6874164908737784, (:chebyshev, :quartic, :variable, 28))
+  (0.6886514725109715, (:chebyshev, :quartic, :variable, 29))
+,#+END_EXAMPLE
+#+end_example
+
+#+begin_src jupyter-julia :results output
+mf = 0
+mp = nothing
+for (f, params) in res
+    if f > mf
+        mf = f
+        mp = params
+    end
+end
+println("F = $(mf), params = $(mp)")
+#+end_src
+
+#+RESULTS:
+: F = 0.7189592234898559, params = (:euclidean, :epanechnikov, :variable, 6)
+
+#+begin_src jupyter-julia
+using Plots
+#+end_src
+
+#+RESULTS:
+: # Out[42]:
+
+#+begin_src jupyter-julia :results raw drawer
+fs = []
+params = []
+for i in 1:sqrt_df
+    param = Int(i)
+    score = leave_one_out(:euclidean, :epanechnikov, :variable, param, df_v, Y_v)
+    push!(fs, score)
+    push!(params, param)
+end
+#+end_src
+
+
+#+begin_src jupyter-julia :results raw drawer
+plot(params, fs; xlabel = "Count of neightbours", ylabel = "F1")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[54]:
+[[file:./obipy-resources/jxkaaZ.svg]]
 :end:
