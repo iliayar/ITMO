@@ -9,7 +9,7 @@ include("valid.jl")
 #+end_src
 
 #+RESULTS:
-: # Out[32]:
+: # Out[59]:
 : : f_score (generic function with 1 method)
 
 * Loading libraries
@@ -210,7 +210,7 @@ leave_one_out(:euclidean, :triangular, :variable, 4, dataframe_to_vector(df), da
 : : 0.7158879675890994
 
 
-#+begin_src jupyter-julia
+#+begin_src jupyter-julia :async
 dists = [
     :euclidean,
     :manhattan,
@@ -234,17 +234,24 @@ Y_v = dataframe_to_vector(Y)
 res = []
 
 for dist_n in dists
-    R = dataframe_radius(df, mk_dist_by_name(dist_n))
+    dist = mk_dist_by_name(dist_n)
+    R = dataframe_radius(df, dist)
     for kern_n in kerns
+        kern = mk_kern_by_name(kern_n)
         for win_n in windows
             for i in 1:sqrt_df
                 if win_n == :fixed
-                    param = R / sqrt_df * i
+                    win_param = R / sqrt_df * i
                 elseif win_n == :variable
-                    param = Int(i)
+                    win_param = Int(i)
                 end
-                score = leave_one_out(dist_n, kern_n, win_n, param, df_v, Y_v)
-                push!(res, (score, (dist_n, kern_n, win_n, param)))
+
+                score = leave_one_out(df_v, Y_v) do x, D, y
+                    win = mk_win_by_name(win_n, D, x, dist, win_param)
+                    w = mk_weight(dist, kern, win)
+                    non_param_reg(x, D, y, w)
+                end
+                push!(res, (score, (dist_n, kern_n, win_n, win_param)))
             end
         end
     end
@@ -254,7 +261,7 @@ res
 
 #+RESULTS:
 #+begin_example
-# Out[38]:
+# Out[61]:
 ,#+BEGIN_EXAMPLE
   696-element Vector{Any}:
   (0.11047193544372273, (:euclidean, :uniform, :fixed, 0.09916099670454341))
@@ -306,7 +313,7 @@ using Plots
 #+end_src
 
 #+RESULTS:
-: # Out[42]:
+: # Out[63]:
 
 #+begin_src jupyter-julia :results raw drawer
 fs = []
@@ -319,6 +326,11 @@ for i in 1:sqrt_df
 end
 #+end_src
 
+#+RESULTS:
+:results:
+# Out[64]:
+:end:
+
 
 #+begin_src jupyter-julia :results raw drawer
 plot(params, fs; xlabel = "Count of neightbours", ylabel = "F1")
@@ -326,6 +338,34 @@ plot(params, fs; xlabel = "Count of neightbours", ylabel = "F1")
 
 #+RESULTS:
 :results:
-# Out[54]:
-[[file:./obipy-resources/jxkaaZ.svg]]
+# Out[65]:
+[[file:./obipy-resources/wkts7e.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+fs_fix = []
+params_fix = []
+R = dataframe_radius(df, mk_dist_by_name(:euclidean))
+for i in 1:sqrt_df
+    param = R / sqrt_df * i
+    score = leave_one_out(:euclidean, :epanechnikov, :fixed, param, df_v, Y_v)
+    push!(fs_fix, score)
+    push!(params_fix, param)
+end
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[66]:
+:end:
+
+
+#+begin_src jupyter-julia :results raw drawer
+plot(params_fix, fs_fix; xlabel = "Window size", ylabel = "F1")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[57]:
+[[file:./obipy-resources/C8S68T.svg]]
 :end:
