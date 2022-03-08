@@ -73,17 +73,13 @@ function non_param_reg(x::Vector{Float64}, D::Vector{Vector{Float64}}, y::Vector
     sum(map(Base.splat((xi, yi) -> yi * w(xi, x)), zip(D, y))) / sum(map((xi) -> w(xi , x), D))
 end
 
-function leave_one_out(dist_n, kern_n, window_n, window_param, X::Vector{Vector{Float64}}, y_true::Vector{Vector{Float64}})
+function leave_one_out(a, X::Vector{Vector{Float64}}, y_true::Vector{Vector{Float64}})
     pred::Vector{Vector{Float64}} = []
-    dist = mk_dist_by_name(dist_n)
-    kern = mk_kern_by_name(kern_n)
     for i ∈ 1:size(X)[1]
         x::Vector{Float64} = X[i]
         D::Vector{Vector{Float64}} = X[Not(i)]
         y::Vector{Vector{Float64}} = y_true[Not(i)]
-        window = mk_win_by_name(window_n, D, x, dist, window_param)
-        w = mk_weight(dist, kern, window)
-        push!(pred, non_param_reg(x, D, y, w))
+        push!(pred, a(x, D, y))
     end
     f_score(pred, y_true)
 end
