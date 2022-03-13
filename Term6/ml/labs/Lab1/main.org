@@ -9,7 +9,7 @@ include("valid.jl")
 #+end_src
 
 #+RESULTS:
-: # Out[59]:
+: # Out[1]:
 : : f_score (generic function with 1 method)
 
 * Loading libraries
@@ -48,7 +48,7 @@ show(df, allcols=true)
 #+end_src
 
 #+RESULTS:
-: # Out[5]:
+: # Out[6]:
 
 #+begin_src jupyter-julia :results raw drawer
 Set(df[!, "Class"])
