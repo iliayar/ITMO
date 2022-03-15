@@ -26,5 +26,3 @@ function read_data(filename::String)::Tuple{Vector{Object}, Vector{Object}}
     return (train, test)
 end
 
-d = read_data("6.txt")
-println(d[2][1])
