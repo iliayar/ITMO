@@ -15,16 +15,21 @@ function least_squares(objs::Vector{Object})::Vector{Float64}
 end
 
 b = 20
+μ = 1
 
 function gradient_descent(objs::Vector{Object}, init::Vector{Float64}, loss::Loss)::Vector{Float64}
     # X, y = split_objects(objs)
 
     w = init
-    w_grad = loss.grad(w)
 
-    while norm(w_grad) >= eps() do
-        X, y = sample(objs, b) |> split_objects
-	for i in 1:size(X)[1]
+    while true do
+        batch = sample(objs, b)
+        f(o::Object) = loss.calc(o.y, w * o.X) * o.X
+        grad = mapreduce(f, +, batch)
+        if norm(grad) < eps()
+            break
         end
+        w -= μ * grad
     end
 end
+    
