@@ -1,0 +1,27 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 2
+#+date: 9 марта
+
+
+* Семантика большого шага. Команды
+\begin{align*}
+  s \in \mathbb{S} ::=\ & \texttt{skip}\ |\ X \coloneqq e\ |\ s;s \\ 
+  & |\ \texttt{if}\ e\ \texttt{then}\ s\ \texttt{else}\ s\ \texttt{fi} \\
+  & |\ \texttt{while}\ e\ \texttt{do}\ s\ \texttt{od} \\
+  & |\ \texttt{read}(x) \\
+  & |\ \texttt{write}(x)
+\end{align*}
+
+Правила:
+\[ \frac{}{\pair{\sigma, \texttt{skip}} \rightarrow \sigma} \quad \frac{\pair{\sigma, e} \rightarrow z}{\pair{\sigma, X \coloneqq e} \rightarrow \sigma[X \mapsto z]} \]
+\[ \frac{\pair{\sigma, s_1} \rightarrow \sigma' \quad \pair{\sigma', s_2} \rightarrow \sigma''}{\pair{\sigma, s_1;s_2} \rightarrow \sigma''} \]
+\[ \frac{\pair{\sigma, e} \rightarrow 1 \quad \pair{\sigma, s_1} \rightarrow \sigma'}{\pair{\sigma, \texttt{if}\ e\ \texttt{then}\ s_1\ \texttt{else}\ s_2\ \texttt{fi}} \rightarrow \sigma'}
+\quad \frac{\pair{\sigma, e} \rightarrow 0 \quad \pair{\sigma, s_2} \rightarrow \sigma'}{\pair{\sigma, \texttt{if}\ e\ \texttt{then}\ s_1\ \texttt{else}\ s_2\ \texttt{fi}} \rightarrow \sigma'}\]
+\[ \frac{\pair{\sigma, e} \rightarrow 1 \quad \pair{\sigma, s} \rightarrow \sigma' \quad \pair{\sigma', \texttt{while}\ e\ \texttt{do}\ s\ \texttt{od}} \rightarrow \sigma''}{\pair{\sigma, \texttt{while}\ e\ \texttt{do}\ s\ \texttt{od}} \rightarrow \sigma''} \quad \frac{\pair{\sigma, e} \rightarrow 0}{\pair{\sigma, \texttt{while}\ e\ \texttt{do}\ s\ \texttt{od}} \rightarrow \sigma} \]
+
+** Эквивалентность команд
+#+begin_definition org
+\(s_1 \approx s_2\) если:
+\[ \forall \sigma, \sigma'.\pair{\sigma, s_0} \rightarrow \sigma' \Leftrightarrow \pair{\sigma, s_1} \rightarrow \sigma'\]
+,где \(\pair{\sigma, s} \rightarrow \sigma' \Leftrightarrow \exists \sigma'' \approx \sigma'. \pair{\sigma, s} \rightarrow \sigma''\)
+#+end_definition
