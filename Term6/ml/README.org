@@ -1,2 +1,6 @@
 #+TITLE: Machine Learning
 #+SETUPFILE: ../../level-subj.org
+
+* Labs
+- [[file:labs/Lab1/][Lab 1]]
+- [[file:labs/Lab2/][Lab 2]]
