@@ -1,1 +1,50 @@
 #+title: Lab 3
+
+#+begin_src jupyter-julia
+include("main.jl") 
+#+end_src
+
+#+RESULTS:
+: # Out[1]:
+: : leave_one_out (generic function with 1 method)
+
+* Loading libraries
+#+begin_src jupyter-julia
+using CSV
+using DataFrames
+#+end_src
+
+#+RESULTS:
+: # Out[4]:
+
+* Loading dataset
+#+begin_src jupyter-julia
+df = CSV.read("./data/chips.csv", DataFrame);
+#+end_src
+
+#+RESULTS:
+: # Out[5]:
+
+
+#+begin_src jupyter-julia
+show(df, allcols=true)
+#+end_src
+
+#+RESULTS:
+: # Out[6]:
+
+#+begin_src jupyter-julia :results raw drawer
+Set(df[!, "Class"])
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[6]:
+#+BEGIN_EXAMPLE
+  Set{String7} with 4 elements:
+  "bus"
+  "opel"
+  "saab"
+  "van"
+#+END_EXAMPLE
+:end:
