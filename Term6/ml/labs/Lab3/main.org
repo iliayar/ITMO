@@ -5,7 +5,7 @@ include("main.jl")
 #+end_src
 
 #+RESULTS:
-: # Out[74]:
+: # Out[94]:
 : : read_dataframe (generic function with 1 method)
 
 * Loading libraries
@@ -27,106 +27,110 @@ X_geyser, y_geyser = read_dataframe("./data/geyser.csv");
 : # Out[3]:
 
 * Finding best
-#+begin_src jupyter-julia :result output
+#+begin_src jupyter-julia :results drawer
 res_chips = find_best(X_chips, y_chips)
 #+end_src
 
 #+RESULTS:
-#+begin_example
-# Out[75]:
-,#+BEGIN_EXAMPLE
+:results:
+# Out[116]:
+#+BEGIN_EXAMPLE julia
   80-element Vector{Any}:
-  (0.4153846153846154, (:linear, (), 0.05))
-  (0.5002136752136752, (:linear, (), 0.1))
-  (0.5085470085470085, (:linear, (), 0.5))
-  (0.4916666666666667, (:linear, (), 1.0))
-  (0.5170940170940171, (:linear, (), 5.0))
-  (0.5256410256410255, (:linear, (), 10.0))
-  (0.5341880341880342, (:linear, (), 50.0))
-  (0.533974358974359, (:linear, (), 100.0))
-  (0.4743589743589743, (:polynomial, 2, 0.05))
-  (0.432051282051282, (:polynomial, 2, 0.1))
-  (0.4997863247863248, (:polynomial, 2, 0.5))
-  (0.5081196581196582, (:polynomial, 2, 1.0))
-  (0.5425213675213675, (:polynomial, 2, 5.0))
+  (0.5085470085470085, (:linear, (), 0.05))
+  (0.5, (:linear, (), 0.1))
+  (0.4914529914529915, (:linear, (), 0.5))
+  (0.4995726495726496, (:linear, (), 1.0))
+  (0.5508547008547009, (:linear, (), 5.0))
+  (0.4997863247863248, (:linear, (), 10.0))
+  (0.5596153846153846, (:linear, (), 50.0))
+  (0.5258547008547008, (:linear, (), 100.0))
+  (0.4914529914529915, (:polynomial, 2, 0.05))
+  (0.4914529914529915, (:polynomial, 2, 0.1))
+  (0.7371794871794872, (:polynomial, 2, 0.5))
+  (0.736965811965812, (:polynomial, 2, 1.0))
+  (0.7286324786324786, (:polynomial, 2, 5.0))
   ⋮
-  (0.517094017094017, (:gauss, 4, 5.0))
-  (0.5423076923076923, (:gauss, 4, 10.0))
-  (0.533974358974359, (:gauss, 4, 50.0))
-  (0.5512820512820512, (:gauss, 4, 100.0))
-  (0.5256410256410257, (:gauss, 5, 0.05))
-  (0.48333333333333334, (:gauss, 5, 0.1))
-  (0.5002136752136752, (:gauss, 5, 0.5))
-  (0.49166666666666664, (:gauss, 5, 1.0))
-  (0.5254273504273503, (:gauss, 5, 5.0))
-  (0.5596153846153845, (:gauss, 5, 10.0))
-  (0.5423076923076923, (:gauss, 5, 50.0))
-  (0.48269230769230775, (:gauss, 5, 100.0))
-,#+END_EXAMPLE
-#+end_example
+  (0.7630341880341881, (:gauss, 4, 5.0))
+  (0.7544871794871795, (:gauss, 4, 10.0))
+  (0.7544871794871795, (:gauss, 4, 50.0))
+  (0.7544871794871795, (:gauss, 4, 100.0))
+  (0.5085470085470085, (:gauss, 5, 0.05))
+  (0.5085470085470085, (:gauss, 5, 0.1))
+  (0.7294871794871794, (:gauss, 5, 0.5))
+  (0.7797008547008547, (:gauss, 5, 1.0))
+  (0.7544871794871795, (:gauss, 5, 5.0))
+  (0.7544871794871795, (:gauss, 5, 10.0))
+  (0.7544871794871795, (:gauss, 5, 50.0))
+  (0.7544871794871795, (:gauss, 5, 100.0))
+#+END_EXAMPLE
+:end:
 
-#+begin_src jupyter-julia
+#+begin_src jupyter-julia :results drawer
 res_geyser = find_best(X_geyser, y_geyser)
 #+end_src
 #+RESULTS:
-#+begin_example
-# Out[55]:
-,#+BEGIN_EXAMPLE
+:results:
+# Out[114]:
+#+BEGIN_EXAMPLE julia
   80-element Vector{Any}:
-  (0.6036363636363636, (:linear, (), 0.05))
-  (0.6036363636363636, (:linear, (), 0.1))
-  (0.6036363636363636, (:linear, (), 0.5))
-  (0.6036363636363636, (:linear, (), 1.0))
-  (0.6036363636363636, (:linear, (), 5.0))
-  (0.6036363636363636, (:linear, (), 10.0))
-  (0.6036363636363636, (:linear, (), 50.0))
-  (0.6036363636363636, (:linear, (), 100.0))
-  (0.6036363636363636, (:polynomial, 2, 0.05))
-  (0.6036363636363636, (:polynomial, 2, 0.1))
-  (0.6036363636363636, (:polynomial, 2, 0.5))
-  (0.6036363636363636, (:polynomial, 2, 1.0))
-  (0.6036363636363636, (:polynomial, 2, 5.0))
+  (0.8962626262626262, (:linear, (), 0.05))
+  (0.8962626262626262, (:linear, (), 0.1))
+  (0.9052525252525253, (:linear, (), 0.5))
+  (0.9007070707070707, (:linear, (), 1.0))
+  (0.8962626262626262, (:linear, (), 5.0))
+  (0.8690909090909091, (:linear, (), 10.0))
+  (0.877979797979798, (:linear, (), 50.0))
+  (0.8605050505050504, (:linear, (), 100.0))
+  (0.8380808080808082, (:polynomial, 2, 0.05))
+  (0.7462626262626263, (:polynomial, 2, 0.1))
+  (0.6891919191919191, (:polynomial, 2, 0.5))
+  (0.7569696969696971, (:polynomial, 2, 1.0))
+  (0.6571717171717172, (:polynomial, 2, 5.0))
   ⋮
-  (0.6036363636363636, (:gauss, 4, 5.0))
-  (0.6036363636363636, (:gauss, 4, 10.0))
-  (0.6036363636363636, (:gauss, 4, 50.0))
-  (0.6036363636363636, (:gauss, 4, 100.0))
+  (0.833030303030303, (:gauss, 4, 5.0))
+  (0.833030303030303, (:gauss, 4, 10.0))
+  (0.833030303030303, (:gauss, 4, 50.0))
+  (0.8420202020202019, (:gauss, 4, 100.0))
   (0.6036363636363636, (:gauss, 5, 0.05))
   (0.6036363636363636, (:gauss, 5, 0.1))
-  (0.6036363636363636, (:gauss, 5, 0.5))
-  (0.6036363636363636, (:gauss, 5, 1.0))
-  (0.6036363636363636, (:gauss, 5, 5.0))
-  (0.6036363636363636, (:gauss, 5, 10.0))
-  (0.6036363636363636, (:gauss, 5, 50.0))
-  (0.6036363636363636, (:gauss, 5, 100.0))
-,#+END_EXAMPLE
-#+end_example
+  (0.8334343434343434, (:gauss, 5, 0.5))
+  (0.833030303030303, (:gauss, 5, 1.0))
+  (0.8285858585858585, (:gauss, 5, 5.0))
+  (0.8285858585858585, (:gauss, 5, 10.0))
+  (0.8285858585858585, (:gauss, 5, 50.0))
+  (0.824141414141414, (:gauss, 5, 100.0))
+#+END_EXAMPLE
+:end:
 
-#+begin_src jupyter-julia
+#+begin_src jupyter-julia :results drawer
 best_chips = best_by_kernels(res_chips) 
 #+end_src
 
 #+RESULTS:
-: # Out[70]:
-: #+BEGIN_EXAMPLE
-:   Dict{Any, Any} with 3 entries:
-:   :polynomial => (0.559402, (:polynomial, 3, 50.0))
-:   :linear     => (0.567949, (:linear, (), 50.0))
-:   :gauss      => (0.559829, (:gauss, 4, 10.0))
-: #+END_EXAMPLE
+:results:
+# Out[113]:
+#+BEGIN_EXAMPLE julia
+  Dict{Any, Any} with 3 entries:
+  :polynomial => (0.75406, (:polynomial, 2, 5.0))
+  :linear     => (0.551282, (:linear, (), 100.0))
+  :gauss      => (0.804915, (:gauss, 1, 1.0))
+#+END_EXAMPLE
+:end:
 
-#+begin_src jupyter-julia
+#+begin_src jupyter-julia :results drawer
 best_geyser = best_by_kernels(res_geyser) 
 #+end_src
 
 #+RESULTS:
-: # Out[57]:
-: #+BEGIN_EXAMPLE
-:   Dict{Any, Any} with 3 entries:
-:   :polynomial => (0.603636, (:polynomial, 2, 0.05))
-:   :linear     => (0.603636, (:linear, (), 0.05))
-:   :gauss      => (0.603636, (:gauss, 1, 0.05))
-: #+END_EXAMPLE
+:results:
+# Out[112]:
+#+BEGIN_EXAMPLE julia
+  Dict{Any, Any} with 3 entries:
+  :polynomial => (0.838182, (:polynomial, 2, 0.1))
+  :linear     => (0.909697, (:linear, (), 1.0))
+  :gauss      => (0.896263, (:gauss, 1, 0.5))
+#+END_EXAMPLE
+:end:
 
 
 * Plots
@@ -138,6 +142,7 @@ using IterTools
 #+RESULTS:
 : # Out[6]:
 
+** Dataset plots
 #+begin_src jupyter-julia
 Xm_chips = reduce(hcat, X_chips)
 Xm_geyser = reduce(hcat, X_geyser)
@@ -193,8 +198,8 @@ scatter_geyser = scatter!(scatter_geyser1, XmP_geyser[1, :], XmP_geyser[2, :], c
 
 #+begin_src jupyter-julia
 function with_scatter(p, XmN, XmP)
-    scatter1 = scatter(p, XmN[1, :], XmN[2, :], c = :red)
-    scatter(scatter1, XmP[1, :], XmP[2, :], c = :blue)
+    scatter1 = scatter(p, XmN[1, :], XmN[2, :], c = :red, label = "N")
+    scatter(scatter1, XmP[1, :], XmP[2, :], c = :blue, label = "P")
 end
 
 function plot_best(best, kern, X, y)
@@ -217,70 +222,38 @@ end
 #+end_src
 
 #+RESULTS:
-: # Out[17]:
+: # Out[126]:
 : : plot_best (generic function with 1 method)
 
 ** chips
 
 #+begin_src jupyter-julia :results raw drawer
-plot_best(best_chips, :linear, X_chips, y_chips)
+X_df, y_df, best_df = X_chips, y_chips, best_chips
+p1 = plot_best(best_df, :linear, X_df, y_df)
+p2 = plot_best(best_df, :polynomial, X_df, y_df)
+p3 = plot_best(best_df, :gauss, X_df, y_df)
+plot(p1, p2, p3, size=(1280, 720), title = ["linear" "polynomial" "gauss"])
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[76]:
-[[file:./obipy-resources/fEqHl6.svg]]
-:end:
-
-
-#+begin_src jupyter-julia :results raw drawer
-plot_best(best_chips, :polynomial, X_chips, y_chips)
-#+end_src
-
-#+RESULTS:
-:results:
-# Out[77]:
-[[file:./obipy-resources/NhZWOC.svg]]
-:end:
-
-#+begin_src jupyter-julia :results raw drawer
-plot_best(best_chips, :gauss, X_chips, y_chips)
-#+end_src
-
-#+RESULTS:
-:results:
-# Out[78]:
-[[file:./obipy-resources/SEyVAO.svg]]
+# Out[127]:
+[[file:./obipy-resources/GInZfP.svg]]
 :end:
 
 ** geyser
 
+
 #+begin_src jupyter-julia :results raw drawer
-plot_best(best_geyser, :linear, X_geyser, y_geyser)
+X_df, y_df, best_df = X_geyser, y_geyser, best_geyser
+p1 = plot_best(best_df, :linear, X_df, y_df)
+p2 = plot_best(best_df, :polynomial, X_df, y_df)
+p3 = plot_best(best_df, :gauss, X_df, y_df)
+plot(p1, p2, p3, size=(1280, 720), title = ["linear" "polynomial" "gauss"])
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[21]:
-[[file:./obipy-resources/x7JKiA.svg]]
-:end:
-
-#+begin_src jupyter-julia :results raw drawer
-plot_best(best_geyser, :polynomial, X_geyser, y_geyser)
-#+end_src
-
-#+RESULTS:
-:results:
-# Out[22]:
-[[file:./obipy-resources/WBbdkB.svg]]
-:end:
-
-#+begin_src jupyter-julia :results raw drawer
-plot_best(best_geyser, :gauss, X_geyser, y_geyser)
-#+end_src
-
-#+RESULTS:
-:results:
-# Out[23]:
-[[file:./obipy-resources/cdzXQM.svg]]
+# Out[128]:
+[[file:./obipy-resources/329TXZ.svg]]
 :end:

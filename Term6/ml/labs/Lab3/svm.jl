@@ -14,7 +14,7 @@ kernel_linear() = (x1, x2) -> x1 ⋅ x2
 kernel_polynomial(d) = (x1, x2) -> (x1 ⋅ x2)^d
 kernel_gauss(β) = (x1, x2) -> exp(- β * norm(x1 - x2))
 
-mutable struct SVC1
+mutable struct SVC
     kernel
     C
     α
@@ -23,9 +23,10 @@ mutable struct SVC1
     N
     X
     y
+    K
 end
 
-function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC1
+function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC
     kernel = (if kernel_name == :linear
         kernel_linear
     elseif kernel_name == :polynomial
@@ -33,51 +34,57 @@ function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC1
     elseif kernel_name == :gauss
         kernel_gauss
     end)(kernel_param...)
-    SVC1(kernel, C, zeros(N), 0, zeros(N), N, nothing, nothing)
+    SVC(kernel, C, zeros(N), 0, zeros(N), N, nothing, nothing, nothing)
 end
 
 
-function fit_svc(cls::SVC1, X, y; ITERS = 100)
+function fit_svc(cls::SVC, X, y; ITERS = 100)
     cls.X = X
     cls.y = y
-    Xm = reduce(hcat, X)
+    cls.K = calc_K(cls.kernel, X, X)
     for _ in 1:ITERS
         prev_α = copy(cls.α)
-        for j in 1:cls.N
-            i = rand_neq(1:cls.N, j)
-
-            η = -2 * cls.kernel(X[i], X[j]) + cls.kernel(X[i], X[i]) + cls.kernel(X[j], X[j])
-            # if η >= 0
-            #     continue
-            # end
-            L, H = get_bounds(cls, i, j)
-            # if H - L < eps()
-            #     continue
-            # end
-
-            cls.w = (cls.α .* cls.y)' * Xm'
-            cls.b = sum(y - (cls.w * Xm)') / size(y)[1]
+        for i in 1:cls.N
+            j = rand_neq(1:cls.N, i)
 
             ei = calc_error(cls, i)
             ej = calc_error(cls, j)
 
-            prev_prev_αi = cls.α[i]
-            prev_prev_αj = cls.α[j]
-            cls.α[j] = max(L, min(H, prev_prev_αj + (y[j] * (ei - ej)) / η))
-            cls.α[i] = prev_prev_αi + y[i] * y[j] * (prev_prev_αj - cls.α[j])
+            old_αi = cls.α[i]
+            old_αj = cls.α[j]
+
+            L, H = get_bounds(cls, i, j)
+            if H == L
+                continue
+            end
+
+            η = 2 * cls.kernel(X[i], X[j]) - cls.kernel(X[i], X[i]) - cls.kernel(X[j], X[j])
+            if η >= 0
+                continue
+            end
+
+            cls.α[j] = max(L, min(H, old_αj + (y[j] * (ej - ei)) / η))
+            if abs(cls.α[j] - old_αj) < eps()
+                continue
+            end
+
+            cls.α[i] = old_αi + y[i]*y[j] * (old_αj - cls.α[j])
+
+            b1 = cls.b - ei - y[i] * (cls.α[i] - old_αi) * cls.kernel(X[i], X[i]) - y[j] * (cls.α[j] - old_αj) * cls.kernel(X[i], X[j])
+            b2 = cls.b - ej - y[i] * (cls.α[i] - old_αi) * cls.kernel(X[i], X[j]) - y[j] * (cls.α[j] - old_αj) * cls.kernel(X[j], X[j])
+
+            cls.b = if 0 < cls.α[i] < cls.C
+                b1
+            elseif 0 < cls.α[j] < cls.C
+                b2
+            else
+                (b1 + b2) / 2
+            end
         end
         if norm(cls.α - prev_α) < eps()
             break
         end
     end
-    cls.w = (cls.α .* cls.y)' * Xm'
-    cls.b = sum(y - (cls.w * Xm)') / size(y)[1]
-end
-
-function calc_K(kernel, X1, X2)
-    N = size(X1)[1]
-    M = size(X2)[1]
-    reshape([kernel(x1, x2) for x1 in X1 for x2 in X2], (N, M))
 end
 
 function get_bounds(cls, i, j)
@@ -90,36 +97,12 @@ function get_bounds(cls, i, j)
     end
 end
 
-function calc_b(cls, i)
-    1 / cls.y[i] - (cls.α .* cls.y) ⋅ cls.K[i, :]
-end
-
-function get_sv_ids(cls)
-    f((_,α)) = α > eps() && α + eps() < cls.C
-    d((i, _)) = i
-    return collect(d.(filter(f, collect(enumerate(cls.α)))))
-end
-
-function calc_b_sv(cls)
-    is = get_sv_ids(cls)
-    if size(is)[1] == 0
-        f1((_, α)) = α > eps()
-        αs = filter(f1, collect(enumerate(cls.α)))
-        g((i, _)) = calc_b(cls, i)
-        if size(αs)[1] == 0
-            return 0
-        end
-        return mapreduce(g, +, αs) / size(αs)[1]
-    end
-    return calc_b(cls, is[1])
-end
-
 function calc_error(cls, i)
-    sign(cls.w ⋅ cls.X[i] + cls.b) - cls.y[i]
+    predict(cls, cls.X[i]) - cls.y[i]
 end
 
 function predict(cls, x)
-    cls.w ⋅ x + cls.b
+    return mapreduce((αi, xi, yi) -> αi * yi * cls.kernel(xi, x), +, cls.α, cls.X, cls.y) + cls.b
 end
 
 function rand_neq(r, i)
