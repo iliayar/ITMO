@@ -8,7 +8,7 @@ end
 
 function sample(X::Vector{T}, n::Int64; do_delete::Bool=false)::Vector{T} where {T}
     ixs = []
-    for _ in 1:n
+    for _ in 1:min(n, size(X)[1])
         while true
             i = rand(1:size(X)[1])
             if i ∉ ixs
@@ -29,7 +29,7 @@ end
 function split_samples(Xi::Vector{T}, n::Int64)::Vector{Vector{T}} where {T}
     X = copy(Xi)
     res = []
-    while size(X)[1] > n
+    while size(X)[1] > 0
         append!(res, sample(Xi, n; do_delete=true))
     end
 end

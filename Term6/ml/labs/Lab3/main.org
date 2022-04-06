@@ -6,7 +6,7 @@ include("main.jl")
 
 #+RESULTS:
 : # Out[1]:
-: : leave_one_out (generic function with 1 method)
+: : read_dataframe (generic function with 1 method)
 
 * Loading libraries
 #+begin_src jupyter-julia
@@ -15,36 +15,272 @@ using DataFrames
 #+end_src
 
 #+RESULTS:
-: # Out[4]:
+: # Out[2]:
 
 * Loading dataset
 #+begin_src jupyter-julia
-df = CSV.read("./data/chips.csv", DataFrame);
+X_chips, y_chips = read_dataframe("./data/chips.csv");
+X_geyser, y_geyser = read_dataframe("./data/geyser.csv");
 #+end_src
 
 #+RESULTS:
-: # Out[5]:
+: # Out[3]:
 
+* Finding best
+#+begin_src jupyter-julia :result output
+res_chips = find_best(X_chips, y_chips)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# Out[4]:
+,#+BEGIN_EXAMPLE
+  80-element Vector{Any}:
+  (0.5085470085470085, (:linear, (), 0.05))
+  (0.5085470085470085, (:linear, (), 0.1))
+  (0.4576923076923077, (:linear, (), 0.5))
+  (0.4826923076923077, (:linear, (), 1.0))
+  (0.48354700854700855, (:linear, (), 5.0))
+  (0.5081196581196581, (:linear, (), 10.0))
+  (0.4995726495726496, (:linear, (), 50.0))
+  (0.533974358974359, (:linear, (), 100.0))
+  (0.5085470085470085, (:polynomial, 2, 0.05))
+  (0.5085470085470085, (:polynomial, 2, 0.1))
+  (0.7373931623931623, (:polynomial, 2, 0.5))
+  (0.7711538461538462, (:polynomial, 2, 1.0))
+  (0.7711538461538462, (:polynomial, 2, 5.0))
+  ⋮
+  (0.7630341880341881, (:gauss, 4, 5.0))
+  (0.7544871794871795, (:gauss, 4, 10.0))
+  (0.7544871794871795, (:gauss, 4, 50.0))
+  (0.7544871794871795, (:gauss, 4, 100.0))
+  (0.5085470085470085, (:gauss, 5, 0.05))
+  (0.5085470085470085, (:gauss, 5, 0.1))
+  (0.7294871794871794, (:gauss, 5, 0.5))
+  (0.7797008547008547, (:gauss, 5, 1.0))
+  (0.7544871794871795, (:gauss, 5, 5.0))
+  (0.7544871794871795, (:gauss, 5, 10.0))
+  (0.7544871794871795, (:gauss, 5, 50.0))
+  (0.7544871794871795, (:gauss, 5, 100.0))
+,#+END_EXAMPLE
+#+end_example
 
 #+begin_src jupyter-julia
-show(df, allcols=true)
+res_geyser = find_best(X_geyser, y_geyser)
+#+end_src
+#+RESULTS:
+#+begin_example
+# Out[5]:
+,#+BEGIN_EXAMPLE
+  80-element Vector{Any}:
+  (0.9052525252525253, (:linear, (), 0.05))
+  (0.9007070707070707, (:linear, (), 0.1))
+  (0.9052525252525253, (:linear, (), 0.5))
+  (0.9096969696969698, (:linear, (), 1.0))
+  (0.7963636363636364, (:linear, (), 5.0))
+  (0.7652525252525253, (:linear, (), 10.0))
+  (0.8026262626262627, (:linear, (), 50.0))
+  (0.7159595959595959, (:linear, (), 100.0))
+  (0.8963636363636363, (:polynomial, 2, 0.05))
+  (0.8783838383838385, (:polynomial, 2, 0.1))
+  (0.7647474747474747, (:polynomial, 2, 0.5))
+  (0.7688888888888888, (:polynomial, 2, 1.0))
+  (0.6576767676767676, (:polynomial, 2, 5.0))
+  ⋮
+  (0.833030303030303, (:gauss, 4, 5.0))
+  (0.833030303030303, (:gauss, 4, 10.0))
+  (0.833030303030303, (:gauss, 4, 50.0))
+  (0.8375757575757575, (:gauss, 4, 100.0))
+  (0.6036363636363636, (:gauss, 5, 0.05))
+  (0.6036363636363636, (:gauss, 5, 0.1))
+  (0.8334343434343434, (:gauss, 5, 0.5))
+  (0.833030303030303, (:gauss, 5, 1.0))
+  (0.8285858585858585, (:gauss, 5, 5.0))
+  (0.8285858585858585, (:gauss, 5, 10.0))
+  (0.8285858585858585, (:gauss, 5, 50.0))
+  (0.8105050505050505, (:gauss, 5, 100.0))
+,#+END_EXAMPLE
+#+end_example
+
+#+begin_src jupyter-julia
+best_chips = best_by_kernels(res_chips) 
+#+end_src
+
+#+RESULTS:
+: # Out[12]:
+: #+BEGIN_EXAMPLE
+:   Dict{Any, Any} with 3 entries:
+:   :polynomial => (0.771154, (:polynomial, 2, 1.0))
+:   :linear     => (0.533974, (:linear, (), 100.0))
+:   :gauss      => (0.804915, (:gauss, 1, 1.0))
+: #+END_EXAMPLE
+
+#+begin_src jupyter-julia
+best_geyser = best_by_kernels(res_geyser) 
+#+end_src
+
+#+RESULTS:
+: # Out[13]:
+: #+BEGIN_EXAMPLE
+:   Dict{Any, Any} with 3 entries:
+:   :polynomial => (0.896364, (:polynomial, 2, 0.05))
+:   :linear     => (0.909697, (:linear, (), 1.0))
+:   :gauss      => (0.896263, (:gauss, 1, 0.5))
+: #+END_EXAMPLE
+
+
+* Plots
+#+begin_src jupyter-julia
+using Plots 
+using IterTools
 #+end_src
 
 #+RESULTS:
 : # Out[6]:
 
+#+begin_src jupyter-julia
+Xm_chips = reduce(hcat, X_chips)
+Xm_geyser = reduce(hcat, X_geyser)
+
+function split_classes_for_plot(X, y)
+    pN((x, y)) = y == -1
+    pP((x, y)) = y == 1
+    d((x, y)) = x
+    XN = d.(filter(pN, collect(zip(X, y))))
+    XP = d.(filter(pP, collect(zip(X, y))))
+    return (XN, XP)
+end
+XN_chips, XP_chips = split_classes_for_plot(X_chips, y_chips)
+XmN_chips = reduce(hcat, XN_chips)
+XmP_chips = reduce(hcat, XP_chips)
+
+XN_geyser, XP_geyser = split_classes_for_plot(X_geyser, y_geyser)
+XmN_geyser = reduce(hcat, XN_geyser)
+XmP_geyser = reduce(hcat, XP_geyser)
+#+end_src
+
+#+RESULTS:
+: # Out[7]:
+: #+BEGIN_EXAMPLE
+:   2×88 Matrix{Float64}:
+:   1.0  1.0  1.0  1.0  2.0  2.0  2.0  …  23.0  23.0  23.0  23.0  23.0  23.0
+:   4.0  2.3  1.7  1.7  1.7  3.7  3.1      4.0   1.8   1.8   2.1   2.1   2.0
+: #+END_EXAMPLE
+
+
 #+begin_src jupyter-julia :results raw drawer
-Set(df[!, "Class"])
+scatter_chips1 = scatter(XmN_chips[1, :], XmN_chips[2, :], c = :blue)
+scatter_chips = scatter!(scatter_chips1, XmP_chips[1, :], XmP_chips[2, :], c = :red)
+#+end_src
+
+
+#+RESULTS:
+:results:
+# Out[8]:
+[[file:./obipy-resources/Fj5GZc.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+scatter_geyser1 = scatter(XmN_geyser[1, :], XmN_geyser[2, :], c = :blue)
+scatter_geyser = scatter!(scatter_geyser1, XmP_geyser[1, :], XmP_geyser[2, :], c = :red)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[6]:
-#+BEGIN_EXAMPLE
-  Set{String7} with 4 elements:
-  "bus"
-  "opel"
-  "saab"
-  "van"
-#+END_EXAMPLE
+# Out[9]:
+[[file:./obipy-resources/7mfeot.svg]]
+:end:
+
+#+begin_src jupyter-julia
+function with_scatter(p, XmN, XmP)
+    scatter1 = scatter(p, XmN[1, :], XmN[2, :], c = :red)
+    scatter(scatter1, XmP[1, :], XmP[2, :], c = :blue)
+end
+
+function plot_best(best, kern, X, y)
+    Xm = reduce(hcat, X)
+    XN, XP = split_classes_for_plot(X, y)
+    XmN = reduce(hcat, XN)
+    XmP = reduce(hcat, XP)
+
+    _, (kern, kern_param, C) = best[kern]
+    cls = mk_svc(kern, kern_param, size(X)[1]; C=C)
+    fit_svc(cls, X, y)
+
+    f(x1, x2) = predict(cls, [x1, x2])
+    rx = range(minimum(Xm[1, :]),stop=maximum(Xm[1, :]),length=100)
+    ry = range(minimum(Xm[2, :]),stop=maximum(Xm[2, :]),length=100)
+
+    p = heatmap(rx, ry, f, c = :redsblues, clims=(-1, 1))
+    with_scatter(p, XmN, XmP)
+end
+#+end_src
+
+#+RESULTS:
+: # Out[17]:
+: : plot_best (generic function with 1 method)
+
+** chips
+
+#+begin_src jupyter-julia :results raw drawer
+plot_best(best_chips, :linear, X_chips, y_chips)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[18]:
+[[file:./obipy-resources/e0Eofz.svg]]
+:end:
+
+
+#+begin_src jupyter-julia :results raw drawer
+plot_best(best_chips, :polynomial, X_chips, y_chips)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[19]:
+[[file:./obipy-resources/wipE2c.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+plot_best(best_chips, :gauss, X_chips, y_chips)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[20]:
+[[file:./obipy-resources/icMLTN.svg]]
+:end:
+
+** geyser
+
+#+begin_src jupyter-julia :results raw drawer
+plot_best(best_geyser, :linear, X_geyser, y_geyser)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[21]:
+[[file:./obipy-resources/x7JKiA.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+plot_best(best_geyser, :polynomial, X_geyser, y_geyser)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[22]:
+[[file:./obipy-resources/WBbdkB.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+plot_best(best_geyser, :gauss, X_geyser, y_geyser)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[23]:
+[[file:./obipy-resources/cdzXQM.svg]]
 :end:

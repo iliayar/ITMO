@@ -1,8 +1,6 @@
 {
   description = "Data Analysis";
-  
-  inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
+  inputs = { flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/554d2d8aa25b6e583575459c297ec23750adb6cb";
   };
 
@@ -33,6 +31,10 @@
         {
             devShell = pkgs.mkShell {
               buildInputs = with pkgs; [
+                qt5.qtbase
+                qt5Full
+                libGL
+
                 pythonEnv
                 nodePackages.pyright
                 julia-bin
