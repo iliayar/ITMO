@@ -14,7 +14,7 @@ kernel_linear() = (x1, x2) -> x1 ⋅ x2
 kernel_polynomial(d) = (x1, x2) -> (x1 ⋅ x2)^d
 kernel_gauss(β) = (x1, x2) -> exp(- β * norm(x1 - x2))
 
-mutable struct SVC
+mutable struct SVC1
     kernel
     C
     α
@@ -23,10 +23,9 @@ mutable struct SVC
     N
     X
     y
-    K
 end
 
-function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC
+function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC1
     kernel = (if kernel_name == :linear
         kernel_linear
     elseif kernel_name == :polynomial
@@ -34,41 +33,45 @@ function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC
     elseif kernel_name == :gauss
         kernel_gauss
     end)(kernel_param...)
-    SVC(kernel, C, zeros(N), 0, zeros(N), N, nothing, nothing, nothing)
+    SVC1(kernel, C, zeros(N), 0, zeros(N), N, nothing, nothing)
 end
 
 
-function fit_svc(cls::SVC, X, y; ITERS = 100)
+function fit_svc(cls::SVC1, X, y; ITERS = 100)
     cls.X = X
     cls.y = y
-    cls.K = calc_K(cls.kernel, X, X)
+    Xm = reduce(hcat, X)
     for _ in 1:ITERS
         prev_α = copy(cls.α)
-        for i in 1:cls.N
-            j = rand_neq(1:cls.N, i)
+        for j in 1:cls.N
+            i = rand_neq(1:cls.N, j)
 
-            η = 2 * cls.K[i, j] - cls.K[i, i] - cls.K[j, j]
-            if η >= 0
-                continue
-            end
+            η = -2 * cls.kernel(X[i], X[j]) + cls.kernel(X[i], X[i]) + cls.kernel(X[j], X[j])
+            # if η >= 0
+            #     continue
+            # end
             L, H = get_bounds(cls, i, j)
-            if H - L < eps()
-                continue
-            end
+            # if H - L < eps()
+            #     continue
+            # end
+
+            cls.w = (cls.α .* cls.y)' * Xm'
+            cls.b = sum(y - (cls.w * Xm)') / size(y)[1]
 
             ei = calc_error(cls, i)
             ej = calc_error(cls, j)
 
             prev_prev_αi = cls.α[i]
             prev_prev_αj = cls.α[j]
-            cls.α[j] = max(L, min(H, prev_prev_αj + (y[j] * (ej - ei)) / η))
-            cls.α[i] = prev_prev_αi + y[i]*y[j] * (prev_prev_αj - cls.α[j])
+            cls.α[j] = max(L, min(H, prev_prev_αj + (y[j] * (ei - ej)) / η))
+            cls.α[i] = prev_prev_αi + y[i] * y[j] * (prev_prev_αj - cls.α[j])
         end
         if norm(cls.α - prev_α) < eps()
             break
         end
     end
-    cls.b = calc_b_sv(cls)
+    cls.w = (cls.α .* cls.y)' * Xm'
+    cls.b = sum(y - (cls.w * Xm)') / size(y)[1]
 end
 
 function calc_K(kernel, X1, X2)
@@ -112,12 +115,11 @@ function calc_b_sv(cls)
 end
 
 function calc_error(cls, i)
-    (cls.α .* cls.y) ⋅ cls.K[i, :] - cls.y[i]
+    sign(cls.w ⋅ cls.X[i] + cls.b) - cls.y[i]
 end
 
 function predict(cls, x)
-    K = calc_K(cls.kernel, [x], cls.X)
-    return sum((cls.α .* cls.y) .* K[1, :]) + cls.b
+    cls.w ⋅ x + cls.b
 end
 
 function rand_neq(r, i)
