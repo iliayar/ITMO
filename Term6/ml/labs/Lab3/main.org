@@ -222,38 +222,32 @@ end
 #+end_src
 
 #+RESULTS:
-: # Out[126]:
+: # Out[140]:
 : : plot_best (generic function with 1 method)
 
 ** chips
 
 #+begin_src jupyter-julia :results raw drawer
-X_df, y_df, best_df = X_chips, y_chips, best_chips
-p1 = plot_best(best_df, :linear, X_df, y_df)
-p2 = plot_best(best_df, :polynomial, X_df, y_df)
-p3 = plot_best(best_df, :gauss, X_df, y_df)
+p1, p2, p3 = (k -> plot_best(best_chips, k, X_chips, y_chips)).((:linear, :polynomial, :gauss))
 plot(p1, p2, p3, size=(1280, 720), title = ["linear" "polynomial" "gauss"])
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[127]:
-[[file:./obipy-resources/GInZfP.svg]]
+# Out[141]:
+[[file:./obipy-resources/UZhYLm.svg]]
 :end:
 
 ** geyser
 
 
 #+begin_src jupyter-julia :results raw drawer
-X_df, y_df, best_df = X_geyser, y_geyser, best_geyser
-p1 = plot_best(best_df, :linear, X_df, y_df)
-p2 = plot_best(best_df, :polynomial, X_df, y_df)
-p3 = plot_best(best_df, :gauss, X_df, y_df)
+p1, p2, p3 = (k -> plot_best(best_geyser, k, X_geyser, y_geyser)).((:linear, :polynomial, :gauss))
 plot(p1, p2, p3, size=(1280, 720), title = ["linear" "polynomial" "gauss"])
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[128]:
-[[file:./obipy-resources/329TXZ.svg]]
+# Out[142]:
+[[file:./obipy-resources/W8aXRF.svg]]
 :end:

@@ -1,5 +1,5 @@
 
-function find_best(X, y)
+function find_best(X::Vector{Vector{Float64}}, y::Vector{Float64})
     res = []
 
     ds = collect(2:5)
@@ -23,7 +23,6 @@ function find_best(X, y)
                     r = collect((x -> predict(cls, x)).(X_test))
                     return r
                 end
-                # return []
                 params = (kern, kern_param, C)
                 println("Accuracy ", acc, "\tWith params ", params)
                 push!(res, (acc, params))

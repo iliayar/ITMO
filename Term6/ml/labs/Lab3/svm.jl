@@ -16,14 +16,12 @@ kernel_gauss(β) = (x1, x2) -> exp(- β * norm(x1 - x2))
 
 mutable struct SVC
     kernel
-    C
-    α
-    b
-    w
-    N
-    X
-    y
-    K
+    C::Float64
+    α::Vector{Float64}
+    b::Float64
+    N::Int64
+    X::Vector{Vector{Float64}}
+    y::Vector{Float64}
 end
 
 function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC
@@ -38,7 +36,7 @@ function mk_svc(kernel_name, kernel_param, N; C = 1.)::SVC
 end
 
 
-function fit_svc(cls::SVC, X, y; ITERS = 100)
+function fit_svc(cls::SVC, X::Vector{Vector{Float64}}, y::Vector{Float64}; ITERS = 100)
     cls.X = X
     cls.y = y
     cls.K = calc_K(cls.kernel, X, X)
@@ -87,7 +85,7 @@ function fit_svc(cls::SVC, X, y; ITERS = 100)
     end
 end
 
-function get_bounds(cls, i, j)
+function get_bounds(cls::SVC, i::Int64, j::Int64)::Tuple{Float64, Float64}
     if cls.y[i] != cls.y[j]
         (max(0, cls.α[j] - cls.α[i]),
          min(cls.C, cls.C - cls.α[i] + cls.α[j]))
@@ -97,15 +95,15 @@ function get_bounds(cls, i, j)
     end
 end
 
-function calc_error(cls, i)
+function calc_error(cls::SVC, i::Int64)::Float64
     predict(cls, cls.X[i]) - cls.y[i]
 end
 
-function predict(cls, x)
-    return mapreduce((αi, xi, yi) -> αi * yi * cls.kernel(xi, x), +, cls.α, cls.X, cls.y) + cls.b
+function predict(cls, x::Vector{Float64})::Float64
+    mapreduce((αi, xi, yi) -> αi * yi * cls.kernel(xi, x), +, cls.α, cls.X, cls.y) + cls.b
 end
 
-function rand_neq(r, i)
+function rand_neq(r, i::Int64)::Int64
     n = rand(r)
     while n == i
         n = rand(r)

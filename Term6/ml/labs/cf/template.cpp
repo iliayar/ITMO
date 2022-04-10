@@ -1,3 +1,4 @@
+#include <iterator>
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
 #include <iostream>
@@ -32,18 +33,25 @@ using namespace std;
 #endif
 
 #define INF 1e+18
+#define ALL(a) a.begin(), a.end()
 
 using vint = vector<int>;
 using vint2 = vector<vint>;
 
+template <typename K, typename V>
+struct map_pair {
+    K k;
+    V v;
+};
+
 template<typename T>
 class Join {
   T& v;
-  string& separator;
+  string const& separator;
   
 public:
   
-  Join(T v, string separator)
+  Join(T v, string const& separator)
     : v(v), separator(separator)
   {}
 
@@ -56,19 +64,39 @@ public:
   }
 };
 
-template<typename T>
-ostream& operator<<(ostream& out, vector<T> v) {
-  out << Join(v, " ") << endl;
+template <typename T>
+ostream &operator<<(ostream &out, vector<T> v) {
+  out << "[" << Join(v, ", ") << "]";
   return out;
 }
 
-template<typename T, typename K>
-ostream& operator<<(ostream& out, pair<T, K> p) {
+template <typename T, typename K>
+ostream &operator<<(ostream &out, pair<T, K> p) {
   out << "(" << p.first << ", " << p.second << ")";
   return out;
 }
 
-//CODE_HERE
+template <typename K, typename V>
+ostream &operator<<(ostream &out, map<K, V> m) {
+  vector<map_pair<K, V>> v;
+  transform(m.begin(), m.end(), back_inserter(v), [](pair<K, V> const& p){return map_pair<K, V>{p.first, p.second};});
+  out << "{" << Join(v, ", ") << "}";
+  return out;
+}
+
+template <typename K, typename V>
+ostream &operator<<(ostream &out, map_pair<K, V> m) {
+  out << m.k << ": " << m.v;
+  return out;
+}
+
+template <typename K>
+ostream &operator<<(ostream &out, set<K> s) {
+  out << "{" << Join(s, ", ") << "}";
+  return out;
+}
+
+// CODE_HERE
 
 #ifdef LOCAL
 #undef FILE_IO
