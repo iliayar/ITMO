@@ -1,0 +1,20 @@
+#+title: Lab 3
+
+#+begin_src jupyter-julia
+include("main.jl") 
+#+end_src
+
+#+RESULTS:
+: # Out[94]:
+: : read_dataframe (generic function with 1 method)
+
+* Loading libraries
+#+begin_src jupyter-julia
+using CSV
+using DataFrames
+#+end_src
+
+#+RESULTS:
+: # Out[2]:
+
+* Loading dataset
