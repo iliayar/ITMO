@@ -28,15 +28,15 @@ include("bayes.jl")
 
 #############
 
-dss = build_ngramm_datasets(read_data("data"); N=1, N_SUBJ=1)
+# dss = build_ngramm_datasets(read_data("data"); N=2, N_SUBJ=1)
 
-cross_validation(dss) do X_train, y_train, X_test
-    X_train_subj, X_train_body = prep_train_dataset(X_train)
-    X_test_subj, X_test_body = prep_test_dataset(X_test)
-    clf_subj = mk_bayes_clf(1.0, Dict(:spam => 1.0, :legal => 1.0))
-    clf_body = mk_bayes_clf(1.0, Dict(:spam => 1.0, :legal => 1.0))
-    fit(clf_subj, X_train_subj)
-    fit(clf_body, X_train_body)
-    pred = (x_subj, x_body) -> argmax(sum_dicts(predictw(clf_subj, x_subj), predictw(clf_body, x_body)))
-    return collect(map(pred, X_test_subj, X_test_body))
-end
+# cross_validation(dss) do X_train::Vector{Event{NGrammWord}}, y_train::Vector{Symbol}, X_test::Vector{Event{NGrammWord}}
+#     X_train_subj, X_train_body = prep_train_dataset(X_train)
+#     X_test_subj, X_test_body = prep_test_dataset(X_test)
+#     clf_subj = mk_bayes_clf(NGrammWord, 1.0, Dict(:spam => 1.0, :legal => 1.0))
+#     clf_body = mk_bayes_clf(NGrammWord, 1.0, Dict(:spam => 1.0, :legal => 1.0))
+#     fit(clf_subj, X_train_subj)
+#     fit(clf_body, X_train_body)
+#     pred = (x_subj, x_body) -> argmax(sum_dicts(predictw(clf_subj, x_subj), predictw(clf_body, x_body)))
+#     return collect(map(pred, X_test_subj, X_test_body))
+# end
