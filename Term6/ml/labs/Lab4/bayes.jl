@@ -1,8 +1,8 @@
 
 
-Events = Vector{Tuple{Symbol, Vector{NGrammWord}}}
+Events{T} = Vector{Tuple{Symbol, Vector{T}}}
 
-function prep_train_dataset(events::Vector{Event})::Tuple{Events, Events}
+function prep_train_dataset(events::Vector{Event{T}})::Tuple{Events{T}, Events{T}} where {T}
     res_body = []
     res_subj = []
     for e in events
@@ -12,7 +12,7 @@ function prep_train_dataset(events::Vector{Event})::Tuple{Events, Events}
     return (res_body, res_subj)
 end
 
-function prep_test_dataset(events::Vector{Event})::Tuple{Vector{Vector{NGrammWord}}, Vector{Vector{NGrammWord}}}
+function prep_test_dataset(events::Vector{Event{T}})::Tuple{Vector{Vector{T}}, Vector{Vector{T}}} where {T}
     res_body = []
     res_subj = []
     for e in events
@@ -22,21 +22,21 @@ function prep_test_dataset(events::Vector{Event})::Tuple{Vector{Vector{NGrammWor
     return (res_body, res_subj)
 end
 
-mutable struct Bayes
+mutable struct Bayes{T}
     α::Float64
     λs::Dict{Symbol, Float64}
     ne_c::Dict{Symbol, Int64}
-    ne_wc::Dict{Symbol, Dict{NGrammWord, Int64}}
-    ws::Set{NGrammWord}
+    ne_wc::Dict{Symbol, Dict{T, Int64}}
+    ws::Set{T}
     ne::Int64
     classes::Set{Symbol}
 end
 
-function mk_bayes_clf(α::Float64, λs::Dict{Symbol, Float64})::Bayes
-    return Bayes(α, λs, Dict(), Dict(), Set(), 0, Set())
+function mk_bayes_clf(T::Type, α::Float64, λs::Dict{Symbol, Float64})::Bayes
+    return Bayes{T}(α, λs, Dict(), Dict(), Set(), 0, Set())
 end
 
-function fit(clf::Bayes, events::Events)
+function fit(clf::Bayes{T}, events::Events{T}) where {T}
     for (c, ws) ∈ events
         push!(clf.classes, c)
         clf.ne += 1
@@ -49,7 +49,7 @@ function fit(clf::Bayes, events::Events)
         end
         clf.ne_c[c] += 1
 
-        ws_set::Set{NGrammWord} = Set()
+        ws_set::Set{T} = Set()
         for w ∈ ws
             push!(ws_set, w)
         end
@@ -75,8 +75,8 @@ function fit(clf::Bayes, events::Events)
     # println(clf.ws)
 end
 
-function predictw(clf::Bayes, msg::Vector{NGrammWord})::Dict{Symbol, Float64}
-    ws::Set{NGrammWord} = Set()
+function predictw(clf::Bayes{T}, msg::Vector{T})::Dict{Symbol, Float64} where {T}
+    ws::Set{T} = Set()
     res::Dict{Symbol, Float64} = Dict()
 
     for w ∈ msg
@@ -104,21 +104,21 @@ function predictw(clf::Bayes, msg::Vector{NGrammWord})::Dict{Symbol, Float64}
     return res
 end
 
-function predict(clf::Bayes, msg::Vector{NGrammWord})::Symbol
+function predict(clf::Bayes{T}, msg::Vector{T})::Symbol where {T}
     res = predictw(clf, msg)
     return argmax(res)
 end
 
-function sum_dicts(dl, dr)
+function sum_dicts(dl, dr; w = 1)
     d = Dict()
     for k in keys(dl)
         d[k] = dl[k]
     end
     for k in keys(dl)
         if k ∉ keys(d)
-            d[k] = dr[k]
+            d[k] = w * dr[k]
         else
-            d[k] += dr[k]
+            d[k] += w * dr[k]
         end
     end
     return d

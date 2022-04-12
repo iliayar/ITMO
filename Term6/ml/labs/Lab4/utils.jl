@@ -2,7 +2,7 @@ using DataFrames
 
 unzip(a) = map(x->getfield.(a, x), fieldnames(eltype(a)))
 
-function extract_classes(ds::Dataset)::Vector{Tuple{Event, Symbol}}
+function extract_classes(ds::Dataset{T})::Vector{Tuple{Event{T}, Symbol}} where {T}
     res = []
     for e in ds.events
         push!(res, (e, e.class))
@@ -22,21 +22,21 @@ function cross_validation_with(splitf, X, y; k::Int64 = 100)
 end
 
 
-function cross_validation_const(dss::Vector{Dataset})
+function cross_validation_const(dss::Vector{Dataset{T}}) where {T}
     return cross_validation_with((X, y; k) -> map(extract_classes, dss), nothing, nothing)
 end
 
-function cross_validation(a, dss::Vector{Dataset}) where {T, E}
+function cross_validation(a, dss::Vector{Dataset{T}}; scoref = accuracy) where {T}
     acc::Vector{Float64} = []
     for (X_train, y_train, X_test, y_test) ∈ cross_validation_const(dss)
-        push!(acc, f_score(a(X_train, y_train, X_test), y_test))
+        push!(acc, scoref(a(X_train, y_train, X_test), y_test))
         println("Iteration ", size(acc)[1], "\tAccuracy ", sum(acc) / size(acc)[1])
     end
     return sum(acc) / size(acc)[1]
 end
 
 
-function make_conj_matrix(y::Vector{T}, y_true::Vector{T}) where {T}
+function make_conj_matrix(y::Vector{Symbol}, y_true::Vector{Symbol})
     classes = Set(y) ∪ Set(y_true)
     res = Dict()
     for c1 ∈ classes
@@ -51,8 +51,11 @@ function make_conj_matrix(y::Vector{T}, y_true::Vector{T}) where {T}
     res
 end
 
+function accuracy(y::Vector{Symbol}, y_true::Vector{Symbol})::Float64
+    mapreduce((p, t) -> p == t ? 1 : 0, +, y, y_true) / size(y)[1]
+end
 
-function f_score(y::Vector{T}, y_true::Vector{T}) where {T}
+function f_score(y::Vector{Symbol}, y_true::Vector{Symbol})::Float64
     cm = make_conj_matrix(y, y_true)
     classes = Set(y) ∪ Set(y_true)
 
