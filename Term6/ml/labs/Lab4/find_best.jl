@@ -10,7 +10,7 @@ res = []
 
 for (n, α) ∈ params
     ds = build_ngramm_datasets(raw_ds; N=n, N_SUBJ=n)
-    score = cross_validation(ds) do X_train, y_train, X_test
+    score = cross_validation(ds; score=f_score) do X_train, y_train, X_test
         X_train_subj, X_train_body = prep_train_dataset(X_train)
         X_test_subj, X_test_body = prep_test_dataset(X_test)
         clf_subj = mk_bayes_clf(NGrammWord, α, Dict(:spam => 1.0, :legal => 1.0))
