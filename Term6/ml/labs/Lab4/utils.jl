@@ -26,10 +26,10 @@ function cross_validation_const(dss::Vector{Dataset{T}}) where {T}
     return cross_validation_with((X, y; k) -> map(extract_classes, dss), nothing, nothing)
 end
 
-function cross_validation(a, dss::Vector{Dataset{T}}; scoref = accuracy) where {T}
+function cross_validation(a, dss::Vector{Dataset{T}}; score = accuracy) where {T}
     acc::Vector{Float64} = []
     for (X_train, y_train, X_test, y_test) ∈ cross_validation_const(dss)
-        push!(acc, scoref(a(X_train, y_train, X_test), y_test))
+        push!(acc, score(a(X_train, y_train, X_test), y_test))
         println("Iteration ", size(acc)[1], "\tAccuracy ", sum(acc) / size(acc)[1])
     end
     return sum(acc) / size(acc)[1]
