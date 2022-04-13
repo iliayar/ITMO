@@ -1,4 +1,4 @@
-#+title: Lab 3
+#+title: Lab 4
 
 #+begin_src jupyter-julia
 include("main.jl") 

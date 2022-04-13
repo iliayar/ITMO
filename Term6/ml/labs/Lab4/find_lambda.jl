@@ -35,16 +35,6 @@ while true
         return collect(map(pred, X_test_subj, X_test_body))
     end
     
-    # X_train_subj, X_train_body = prep_train_dataset(X)
-    # X_test_subj, X_test_body = prep_test_dataset(X)
-    # clf_subj = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.))
-    # clf_body = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.))
-    # fit(clf_subj, X_train_subj)
-    # fit(clf_body, X_train_body)
-    # pred = (x_subj, x_body) -> argmax(sum_dicts(predictw(clf_body, x_body), predictw(clf_subj, x_subj); w = w))
-
-    # score = score_strict(map(pred, X_test_subj, X_test_body), y)
-
     println("score\tλ_legit")
     println(score, "\t", λ_legit)
     println("=========================")
