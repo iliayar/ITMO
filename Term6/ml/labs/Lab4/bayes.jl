@@ -98,9 +98,6 @@ function predictw(clf::Bayes{T}, msg::Vector{T})::Dict{Symbol, Float64} where {T
         res[c] = r
     end
 
-    # mp::Float64 = maximum(res)
-    # st::Float64 = log(mapreduce(p -> exp(p - mp), +, res)) + mp
-    # return collect(map(x -> exp(x - st), res))
     return res
 end
 
@@ -109,16 +106,35 @@ function predict(clf::Bayes{T}, msg::Vector{T})::Symbol where {T}
     return argmax(res)
 end
 
-function sum_dicts(dl, dr; w = 1)
+function convert_to_prob(res_origin::Dict)::Dict
+    res = copy(res_origin)
+    mp::Float64 = maximum(values(res))
+    st::Float64 = log(mapreduce(p -> exp(p - mp), +, values(res))) + mp
+    for k in keys(res)
+        res[k] = exp(res[k] - st)
+    end
+    return res
+end
+
+function norm_res(res_origin::Dict)::Dict
+    res = copy(res_origin)
+    st::Float64 = sum(values(res))
+    for k in keys(res)
+        res[k] = res[k] / abs(st)
+    end
+    return res
+end
+
+function sum_dicts(dl, dr; ratio = 0.5)
     d = Dict()
     for k in keys(dl)
-        d[k] = dl[k]
+        d[k] = ratio * dl[k]
     end
     for k in keys(dl)
         if k ∉ keys(d)
-            d[k] = w * dr[k]
+            d[k] = (1 - ratio) * dr[k]
         else
-            d[k] += w * dr[k]
+            d[k] += (1 - ratio) * dr[k]
         end
     end
     return d

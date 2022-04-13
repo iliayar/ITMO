@@ -3,6 +3,7 @@ include("input.jl")
 include("utils.jl")
 include("ngramm.jl")
 include("bayes.jl")
+include("roc.jl")
 
 # println(read_message("data/part1/11003spmsg97.txt"))
 # println(read_dataset("data/part1"))
