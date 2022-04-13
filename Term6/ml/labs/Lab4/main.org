@@ -5,8 +5,8 @@ include("main.jl")
 #+end_src
 
 #+RESULTS:
-: # Out[2]:
-: : sum_dicts (generic function with 1 method)
+: # Out[104]:
+: : get_roc_data (generic function with 1 method)
 
 * Loading libraries
 #+begin_src jupyter-julia
@@ -53,8 +53,8 @@ Best: =0.9668647262759154=
 Params: =(1, 0.010000000000000004)=
 
 
-Subj weight: =0.16409099173266675=
-Score: =0.9770016862436313=
+Subj weight: =0.6842105263157895=
+Score: =0.9770192017936647=
 
 |             score |  λ_legit |
 |-------------------+----------|
@@ -75,12 +75,12 @@ Params:	1.0e9
 * Loading dataset
 #+begin_src jupyter-julia
 n, α = (1, 0.010000000000000004)
-w = 0.16409099173266675
+ratio = 0.6842105263157895
 λ_legit = 1.0e9
 #+end_src
 
 #+RESULTS:
-: # Out[3]:
+: # Out[15]:
 : : 1.0e9
 
 #+begin_src jupyter-julia
@@ -110,7 +110,7 @@ ds = build_ngramm_datasets(read_data("data"); N=n, N_SUBJ=n)
 
 ** \lambda_legit
 #+begin_src jupyter-julia :results raw drawer
-λ_legits = range(1., 1.e9, length=20) |> collect
+λ_legits = map(exp, range(log(1.), log(1.e9), length=20)) |> collect
 
 function pred(λ_legit)
     return cross_validation(ds; score=accuracy) do X_train, y_train, X_test
@@ -120,18 +120,63 @@ function pred(λ_legit)
         clf_body = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.0))
         fit(clf_subj, X_train_subj)
         fit(clf_body, X_train_body)
-        pred = (x_subj, x_body) -> argmax(sum_dicts(predictw(clf_body, x_body), predictw(clf_subj, x_subj); w = w))
+        pred = (x_subj, x_body) -> argmax(sum_dicts(predictw(clf_body, x_body), predictw(clf_subj, x_subj); ratio = ratio))
         return collect(map(pred, X_test_subj, X_test_body))
     end
 end
 
-plot(λ_legits, map(pred, λ_legits) |> collect)
+plot(map(log, λ_legits) |> collect, map(pred, λ_legits) |> collect, label="", ylabel="Accuracy", xlabel="ln λ")
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[12]:
-[[file:./obipy-resources/zanVtS.svg]]
+# Out[13]:
+[[file:./obipy-resources/9762vQ.svg]]
 :end:
 
 
+
+** ROC
+#+begin_src jupyter-julia :results raw drawer
+fp, tp = get_roc_data(ds, :spam; L=eps(), H=1, TICKS=1000, LOG=true) do X_train, y_train, X_test
+    X_train_subj, X_train_body = prep_train_dataset(X_train)
+    X_test_subj, X_test_body = prep_test_dataset(X_test)
+    clf_subj = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.0))
+    clf_body = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.0))
+    fit(clf_subj, X_train_subj)
+    fit(clf_body, X_train_body)
+    pred = (x_subj, x_body) -> convert_to_prob(sum_dicts(predictw(clf_body, x_body), predictw(clf_subj, x_subj); ratio = ratio))
+
+    return collect(map(pred, X_test_subj, X_test_body))
+end
+
+plot(tp, fp, label="", xlabel="True Postitive Rate", ylabel="False Positive Rate")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[93]:
+[[file:./obipy-resources/TX7IYF.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+fp, tp = get_roc_data(ds, :spam; TICKS=100) do X_train, y_train, X_test
+    X_train_subj, X_train_body = prep_train_dataset(X_train)
+    X_test_subj, X_test_body = prep_test_dataset(X_test)
+    clf_subj = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.0))
+    clf_body = mk_bayes_clf(NGrammWord, α, Dict(:legal => λ_legit, :spam => 1.0))
+    fit(clf_subj, X_train_subj)
+    fit(clf_body, X_train_body)
+    pred = (x_subj, x_body) -> norm_res(sum_dicts(predictw(clf_body, x_body), predictw(clf_subj, x_subj); ratio = ratio))
+
+    return collect(map(pred, X_test_subj, X_test_body))
+end
+
+plot(tp, fp, label="", xlabel="True Postitive Rate", ylabel="False Positive Rate")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[105]:
+[[file:./obipy-resources/V1Sajo.svg]]
+:end:
