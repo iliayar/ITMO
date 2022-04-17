@@ -1,6 +1,6 @@
-#include <iterator>
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
+#include <iterator>
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -16,7 +16,10 @@
 #include <deque>
 #include <list>
 #include <sstream>
-
+#include <numeric>
+#include <optional>
+#include <variant>
+#include <functional>
 
 using namespace std;
 
@@ -25,12 +28,14 @@ using namespace std;
 
 #define int long long
 #ifdef LOCAL
-#define DBG(x) cout << "DBG: " << x << endl
+#define DBG_VAR true
 #define DBG_CODE(x) x
 #else
-#define DBG(x)
+#define DBG_VAR false
 #define DBG_CODE(x)
 #endif
+
+#define DBG() if (DBG_VAR) cout << "DBG: "
 
 #define INF 1e+18
 #define ALL(a) a.begin(), a.end()

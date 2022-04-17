@@ -1,6 +1,7 @@
 
 // Generated at 2022-04-17 21:20:50.537053 
 // By iliayar
+// 805/1000 points
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
 #include <iterator>
