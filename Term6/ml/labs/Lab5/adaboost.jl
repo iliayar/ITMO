@@ -16,13 +16,14 @@ function mk_ada_boost(algorithms::Vector{T}; positive_class::Union{Class, Nothin
     return AdaBoost(algorithms, nothing, zeros(size(algorithms)[1]), positive_class, nothing)
 end
 
-function fit(clf::AdaBoost{T}, objects::Vector{Object}) where {T <: Classifier}
+function fit(clf::AdaBoost{T}, objects::Vector{Object}; cb=(_, _) -> ()) where {T <: Classifier}
     if isnothing(clf.positive_class)
         clf.positive_class = objects[1].y
     end
 
     clf.weights = [1 / size(objects)[1] for _ in 1:size(objects)[1]]
     clf.bs = []
+    i = 1
     for algo in clf.algorithms
         fit(algo, objects; weights=clf.weights)
         preds = map(o -> predict(algo, o.x), objects)
@@ -36,6 +37,8 @@ function fit(clf::AdaBoost{T}, objects::Vector{Object}) where {T <: Classifier}
 
         println(N, " | ", b)
         println("[", size(clf.bs)[1], "/", size(clf.algorithms)[1], "] Algos trained")
+        cb(clf, i)
+        i += 1
     end
     println(clf.weights)
 end

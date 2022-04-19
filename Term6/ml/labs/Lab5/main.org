@@ -5,7 +5,7 @@ include("main.jl")
 #+end_src
 
 #+RESULTS:
-: # Out[17]:
+: # Out[104]:
 : : predict (generic function with 3 methods)
 
 * Loading dataset
@@ -104,8 +104,10 @@ overlay_scatter(nothing, geyser)
 :end:
 
 #+begin_src jupyter-julia
-function plot_space(clf, data)
-    fit(clf, data)
+function plot_space(clf, data; do_fit=true)
+    if do_fit
+        fit(clf, data)
+    end
     f(x1, x2) = predictw(clf, [x1, x2])
 
     rx = range(minimum(o -> o.x[1], data),stop=maximum(o -> o.x[1], data),length=100)
@@ -117,7 +119,7 @@ end
 #+end_src
 
 #+RESULTS:
-: # Out[21]:
+: # Out[36]:
 : : plot_space (generic function with 1 method)
 
 ** Random Forest
@@ -134,4 +136,204 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :results:
 # Out[31]:
 [[file:./obipy-resources/CD2XiA.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
+p10 = plot_space(mk_rf(10), geyser)
+p100 = plot_space(mk_rf(100), geyser)
+p1000 = plot_space(mk_rf(1000), geyser)
+p10000 = plot_space(mk_rf(10000), geyser)
+plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10000 Trees"], size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[83]:
+[[file:./obipy-resources/LTQvk5.svg]]
+:end:
+
+** AdaBoost
+#+begin_src jupyter-julia :results raw drawer
+N = 9
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
+ids = gen_fibs(N)
+plots = []
+titles = []
+function adaboost_plot(clf::AdaBoost, i::Int64)
+    if i ∈ ids
+        push!(plots, plot_space(clf, chips; do_fit=false))
+        push!(titles, "$(i) Iteration")
+    end
+end
+fit(ab, chips; cb=adaboost_plot)
+plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[54]:
+[[file:./obipy-resources/MeIr5P.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+N = 9
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
+ids = gen_fibs(N)
+plots = []
+titles = []
+function adaboost_plot(clf::AdaBoost, i::Int64)
+    if i ∈ ids
+        push!(plots, plot_space(clf, geyser; do_fit=false))
+        push!(titles, "$(i) Iteration")
+    end
+end
+fit(ab, geyser; cb=adaboost_plot)
+plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[79]:
+[[file:./obipy-resources/YnOzl5.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:6]; positive_class=:P)
+scores = []
+function adaboost_score(clf::AdaBoost, i::Int64)
+    push!(scores, estimate(clf, chips; predict_kwargs=(:negative_class => :N,)))
+end
+fit(ab, chips; cb=adaboost_score)
+plot(1:size(scores)[1], scores, label="f-score")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[77]:
+[[file:./obipy-resources/sN72CP.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:10]; positive_class=:P)
+scores = []
+function adaboost_score(clf::AdaBoost, i::Int64)
+    push!(scores, estimate(clf, geyser; predict_kwargs=(:negative_class => :N,)))
+end
+fit(ab, geyser; cb=adaboost_score)
+plot(1:size(scores)[1], scores, label="f-score", ylims=(0, 1.))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[82]:
+[[file:./obipy-resources/HSDJjm.svg]]
+:end:
+
+** Random Forest Gini
+#+begin_src jupyter-julia :results raw drawer
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
+p10 = plot_space(mk_rf(10), chips)
+p100 = plot_space(mk_rf(100), chips)
+p1000 = plot_space(mk_rf(1000), chips)
+p10000 = plot_space(mk_rf(10000), chips)
+plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10000 Trees"], size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[112]:
+[[file:./obipy-resources/bBjs1a.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
+p10 = plot_space(mk_rf(10), geyser)
+p100 = plot_space(mk_rf(100), geyser)
+p1000 = plot_space(mk_rf(1000), geyser)
+p10000 = plot_space(mk_rf(10000), geyser)
+plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10000 Trees"], size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[113]:
+[[file:./obipy-resources/HecEu1.svg]]
+:end:
+
+** AdaBoost Gini
+#+begin_src jupyter-julia :results raw drawer
+N = 9
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:100]; positive_class=:P)
+ids = gen_fibs(N)
+plots = []
+titles = []
+function adaboost_plot(clf::AdaBoost, i::Int64)
+    if i ∈ ids
+        push!(plots, plot_space(clf, chips; do_fit=false))
+        push!(titles, "$(i) Iteration")
+    end
+end
+fit(ab, chips; cb=adaboost_plot)
+plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[105]:
+[[file:./obipy-resources/GRPztp.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+N = 9
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:100]; positive_class=:P)
+ids = gen_fibs(N)
+plots = []
+titles = []
+function adaboost_plot(clf::AdaBoost, i::Int64)
+    if i ∈ ids
+        push!(plots, plot_space(clf, geyser; do_fit=false))
+        push!(titles, "$(i) Iteration")
+    end
+end
+fit(ab, geyser; cb=adaboost_plot)
+plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[106]:
+[[file:./obipy-resources/5OXsQs.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:25]; positive_class=:P)
+scores = []
+function adaboost_score(clf::AdaBoost, i::Int64)
+    push!(scores, estimate(clf, chips; predict_kwargs=(:negative_class => :N,)))
+end
+fit(ab, chips; cb=adaboost_score)
+plot(1:size(scores)[1], scores, label="f-score")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[108]:
+[[file:./obipy-resources/Q7Of8E.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:10]; positive_class=:P)
+scores = []
+function adaboost_score(clf::AdaBoost, i::Int64)
+    push!(scores, estimate(clf, geyser; predict_kwargs=(:negative_class => :N,)))
+end
+fit(ab, geyser; cb=adaboost_score)
+plot(1:size(scores)[1], scores, label="f-score", ylims=(0, 1.))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[111]:
+[[file:./obipy-resources/pGq4zm.svg]]
 :end:
