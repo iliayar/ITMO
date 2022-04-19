@@ -14,7 +14,7 @@ function mk_random_forest(;dt_params=(), ntrees=100, positive_class::Union{Class
 end
 
 
-function fit(clf::RandomForest, objects::Vector{Object}; weights::Union{Vector{Float64}, Nothing}=nothing)
+function fit(clf::RandomForest, objects::Vector{Object}; weights::Union{Vector{Float64}, Nothing}=nothing, cb=(_, _) -> ())
     if isnothing(weights)
         weights = ones(size(objects)[1])
     end
@@ -31,6 +31,7 @@ function fit(clf::RandomForest, objects::Vector{Object}; weights::Union{Vector{F
     while size(clf.trees)[1] < clf.ntrees
         push!(clf.trees, build_tree(clf, objects, weights))
         println("[", size(clf.trees)[1], "/", clf.ntrees, "] Building random forest")
+        cb(clf, size(clf.trees)[1])
     end
 end
 

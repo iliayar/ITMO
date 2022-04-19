@@ -5,7 +5,7 @@ include("main.jl")
 #+end_src
 
 #+RESULTS:
-: # Out[104]:
+: # Out[119]:
 : : predict (generic function with 3 methods)
 
 * Loading dataset
@@ -139,6 +139,22 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
+rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=200, positive_class=:P)
+scores = []
+function rf_score(clf::RandomForest, i::Int64)
+    push!(scores, estimate(clf, chips))
+end
+fit(rf, chips; cb=rf_score)
+plot(1:size(scores)[1], scores, label="f-score")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[121]:
+[[file:./obipy-resources/TNAkO5.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
 mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
 p10 = plot_space(mk_rf(10), geyser)
 p100 = plot_space(mk_rf(100), geyser)
@@ -151,6 +167,22 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :results:
 # Out[83]:
 [[file:./obipy-resources/LTQvk5.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=200, positive_class=:P)
+scores = []
+function rf_score(clf::RandomForest, i::Int64)
+    push!(scores, estimate(clf, geyser))
+end
+fit(rf, geyser; cb=rf_score)
+plot(1:size(scores)[1], scores, label="f-score")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[122]:
+[[file:./obipy-resources/JlOFaI.svg]]
 :end:
 
 ** AdaBoost
@@ -247,6 +279,22 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
+rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=200, positive_class=:P)
+scores = []
+function rf_score(clf::RandomForest, i::Int64)
+    push!(scores, estimate(clf, chips))
+end
+fit(rf, chips; cb=rf_score)
+plot(1:size(scores)[1], scores, label="f-score")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[123]:
+[[file:./obipy-resources/LddKnl.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
 mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
 p10 = plot_space(mk_rf(10), geyser)
 p100 = plot_space(mk_rf(100), geyser)
@@ -259,6 +307,22 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :results:
 # Out[113]:
 [[file:./obipy-resources/HecEu1.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=200, positive_class=:P)
+scores = []
+function rf_score(clf::RandomForest, i::Int64)
+    push!(scores, estimate(clf, geyser))
+end
+fit(rf, geyser; cb=rf_score)
+plot(1:size(scores)[1], scores, label="f-score")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[126]:
+[[file:./obipy-resources/qbus4d.svg]]
 :end:
 
 ** AdaBoost Gini
