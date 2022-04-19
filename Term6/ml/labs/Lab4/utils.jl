@@ -35,7 +35,6 @@ function cross_validation(a, dss::Vector{Dataset{T}}; score = accuracy) where {T
     return sum(acc) / size(acc)[1]
 end
 
-
 function make_conj_matrix(y::Vector{Symbol}, y_true::Vector{Symbol})
     classes = Set(y) ∪ Set(y_true)
     res = Dict()

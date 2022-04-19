@@ -1,6 +1,247 @@
 #include "template.cpp"
 
-//entry
-void sol() {
+struct Obj {
+    vector<double> x;
+    int y;
 
+    Obj(Obj const&) = delete;
+    Obj & operator=(Obj const&) = delete;
+
+    Obj(Obj&&) = default;
+    Obj & operator=(Obj&&) = default;
+};
+
+struct Node {
+    Node* left;
+    Node* right;
+
+    int cls;
+    int fi;
+    double thresh;
+
+    int id;
+
+    Node(int id, int cls)
+        : left(nullptr), right(nullptr), cls(cls), fi(-1), thresh(0), id(id) {}
+    Node(int id, int fi, double thresh, Node *left, Node *right)
+        : left(left), right(right), cls(-1), fi(fi), thresh(thresh), id(id) {}
+
+    bool is_leaf() { return left == nullptr && right == nullptr; }
+};
+
+template <typename T>
+T sum(vector<T> a) {
+    return accumulate(a.begin(), a.end(), 0);
+}
+
+bool check_same_classes(vector<Obj> const &objs) {
+    int last_cls = -1;
+    for (auto const& obj : objs) {
+        if (last_cls != -1 && obj.y != last_cls) {
+            return false;
+        }
+        last_cls = obj.y;
+    }
+    return true;
+}
+
+template <typename T>
+double entropy(vector<T> a) {
+    T n = sum(a);
+    double res = 0;
+    for (auto x : a) {
+        if (x > 0) {
+            res -= (1. * x / n) * log(1. * x / n);
+        }
+    }
+    return res;
+}
+
+struct DT {
+  int max_depth;
+  int nclasses;
+  int nfeats;
+  Node *root;
+
+  int nnodes;
+
+  DT(int max_depth, int nclasses, int nfeats)
+      : max_depth(max_depth), nclasses(nclasses), nfeats(nfeats), root(nullptr),
+        nnodes(0) {}
+
+  int find_major_class(vector<Obj> const &objs) {
+      vector<int> nc(nclasses, 0);
+      for (auto const& obj : objs) {
+          nc[obj.y]++;
+      }
+      return max_element(ALL(nc)) - nc.begin();
+  }
+
+  optional<pair<double, int>> find_thresh_by(
+      function<optional<pair<double, pair<double, int>>>(int, vector<Obj> const &)> f,
+      vector<Obj> &objs) {
+    optional<double> bsc;
+    optional<pair<double, int>> br;
+    for (int i = 0; i < nfeats; ++i) {
+      sort(ALL(objs),
+           [i](auto const &a, auto const &b) { return a.x[i] < b.x[i]; });
+      if (objs.front().x[i] == objs.back().x[i]) {
+        continue;
+      }
+
+      auto res = f(i, objs);
+      if (res) {
+          if (!bsc || *bsc > res->first) {
+              bsc = res->first;
+              br = res->second;
+          }
+      }
+    }
+    return br;
+  }
+
+  optional<pair<double, int>> find_thresh_by_entropy(vector<Obj> &objs) {
+    return find_thresh_by(
+        [this](int fi, vector<Obj> const& objs) {
+          optional<double> bsc;
+          optional<pair<double, int>> br;
+          vint lc(nclasses, 0);
+          vint rc(nclasses, 0);
+
+          for (auto const &obj : objs) {
+            rc[obj.y]++;
+          }
+
+          int pxi = -1;
+          for (int i = 0; i < objs.size(); ++i) {
+            auto const &obj = objs[i];
+            if (i != 0 && obj.x[fi] != pxi) {
+              double sc = entropy(lc) * sum(lc) + entropy(rc) * sum(rc);
+              if (!bsc || *bsc > sc) {
+                br = {(pxi + obj.x[fi]) / 2., fi};
+                bsc = sc;
+              }
+            }
+            rc[obj.y]--;
+            lc[obj.y]++;
+            pxi = obj.x[fi];
+          }
+
+          return bsc ? optional(make_pair(*bsc, *br)) : nullopt;
+        },
+        objs);
+  }
+
+  optional<pair<double, int>> find_thresh_by_gini(vector<Obj> &objs) {
+    return find_thresh_by(
+        [this](int fi, vector<Obj> const& objs) {
+          optional<double> bsc;
+          optional<pair<double, int>> br;
+          vint lc(nclasses, 0);
+          vint rc(nclasses, 0);
+          int ls = 0;
+          int rs = 0;
+          int lsum = 0;
+          int rsum = 0;
+
+          for (auto const &obj : objs) {
+            rsum -= rc[obj.y] * rc[obj.y];
+            rc[obj.y]++;
+            rsum += rc[obj.y] * rc[obj.y];
+            rs++;
+          }
+
+          int pxi = -1;
+          for (int i = 0; i < objs.size(); ++i) {
+            auto const &obj = objs[i];
+            if (i != 0 && obj.x[fi] != pxi) {
+              double sc = -1. * lsum / ls - 1. * rsum / rs;
+              if (!bsc || *bsc > sc) {
+                br = {(pxi + obj.x[fi]) / 2., fi};
+                bsc = sc;
+              }
+            }
+            rsum -= rc[obj.y] * rc[obj.y];
+            rc[obj.y]--;
+            rsum += rc[obj.y] * rc[obj.y];
+
+            lsum -= lc[obj.y] * lc[obj.y];
+            lc[obj.y]++;
+            lsum += lc[obj.y] * lc[obj.y];
+
+            rs--; ls++;
+            pxi = obj.x[fi];
+          }
+
+          return bsc ? optional(make_pair(*bsc, *br)) : nullopt;
+        },
+        objs);
+  }
+
+  Node *make_node(vector<Obj> objs, int depth) {
+    if (check_same_classes(objs) || depth == max_depth) {
+      return new Node(nnodes++, find_major_class(objs));
+    }
+
+    auto br = find_thresh_by_gini(objs);
+    if (br) {
+        int fi = br->second;
+        double thresh = br->first;
+        vector<Obj> l, r;
+        for (auto& obj : objs) {
+            if (obj.x[fi] < thresh) {
+                l.push_back(move(obj));
+            } else {
+                r.push_back(move(obj));
+            }
+        }
+        DBG() << "Thresh for feat " << fi + 1 << " is " << thresh << endl;
+        return new Node(nnodes++, fi, thresh, make_node(move(l), depth + 1), make_node(move(r), depth + 1));
+    } else {
+        return new Node(nnodes++, find_major_class(objs));
+    }
+  }
+
+  void build(vector<Obj> objs) {
+    root = make_node(move(objs), 0);
+  }
+
+};
+
+ostream &operator<<(ostream &o, Node * node) {
+  if (node->is_leaf()) {
+      o << "C " << node->cls + 1 << endl;
+  } else {
+    o << "Q " << node->fi + 1 << " " << node->thresh << " "
+      << node->left->id + 1 << " "
+      << node->right->id + 1 << endl;
+    o << node->left << node->right;
+  }
+  return o;
+}
+
+ostream &operator<<(ostream &o, DT &clf) {
+  o << clf.nnodes << endl;
+  o << clf.root;
+  return o;
+}
+
+// entry
+void sol() {
+    int M, K, H; cin >> M >> K >> H;
+    int N; cin >> N;
+    vector<Obj> objs;
+    for (int i = 0; i < N; ++i) {
+        vector<double> x;
+        for (int j = 0; j < M; ++j) {
+            double xi; cin >> xi;
+            x.push_back(xi);
+        }
+        int y; cin >> y; y--;
+        objs.emplace_back(Obj{std::move(x), y});
+    }
+
+    DT clf(H, K, M);
+    clf.build(move(objs));
+    cout << clf;
 }

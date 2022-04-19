@@ -1,5 +1,5 @@
 
-// Generated at 2022-04-17 21:20:50.537053 
+// Generated at 2022-04-17 21:39:26.853585 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -188,11 +188,24 @@ struct DT {
     optional<double> bsc;
     optional<pair<double, int>> br;
     for (int i = 0; i < nfeats; ++i) {
-      sort(ALL(objs),
-           [i](auto const &a, auto const &b) { return a.x[i] < b.x[i]; });
-      if (objs.front().x[i] == objs.back().x[i]) {
-        continue;
-      }
+      // sort(ALL(objs),
+      //      [i](auto const &a, auto const &b) { return a.x[i] < b.x[i]; });
+        bool hflag = false;
+        double p = -1;
+        for (auto const& obj : objs) {
+            if (p != obj.x[i]) {
+                hflag = true;
+                break;
+            }
+            p = obj.x[i];
+        }
+        if (!hflag) {
+            continue;
+        }
+
+      // if (objs.front().x[i] == objs.back().x[i]) {
+      //   continue;
+      // }
 
       auto res = f(i, objs);
       if (res) {
