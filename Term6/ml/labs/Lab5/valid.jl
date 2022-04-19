@@ -58,3 +58,10 @@ function f_score(y::Vector{Class}, y_true::Vector{Class})::Float64
 
     res / sum(map(x -> sum(values(x)), values(cm)))
 end
+
+function estimate(clf, test::Vector{Object}; score=f_score, predict_kwargs=())::Float64
+    yp = [convert(Class, predict(clf, o.x; predict_kwargs...)) for o in test]
+    y = [o.y for o in test]
+
+    return f_score(yp, y)
+end

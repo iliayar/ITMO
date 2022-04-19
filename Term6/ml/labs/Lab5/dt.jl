@@ -54,8 +54,12 @@ function find_major_class(objects::Vector{Object})::Class
     return argmax(nc)
 end
 
-thresh_by_entropy(lc, rc) = - entropy(values(lc) |> collect) * sum(values(lc)) - entropy(values(rc) |> collect) * sum(values(rc))
-thresh_by_gini(lc, rc) = sum(x -> x^2, values(lc)) * sum(values(lc)) + sum(x -> x^2, values(rc)) * sum(values(rc))
+thresh_by_entropy(lc, rc) = entropy(values(lc) |> collect) * sum(values(lc)) + entropy(values(rc) |> collect) * sum(values(rc))
+function thresh_by_gini(lc, rc)
+    sl = sum(values(lc))
+    sr = sum(values(rc))
+    return (1 - sum(x -> (x / sl)^2 , values(lc))) * sl + (1 - sum(x -> (x / sr)^2, values(rc))) * sr
+end
 
 function find_thresh_by(clf::DecisionTree, objects::Vector{Object}, weights::Vector{Float64})::Union{Tuple{Float64, Int64}, Nothing}
     bsc::Union{Float64, Nothing} = nothing
@@ -83,7 +87,7 @@ function find_thresh_by(clf::DecisionTree, objects::Vector{Object}, weights::Vec
             w = weights[j]
             if j != 1 && obj.x[i] != pxi
                 sc::Float64 = clf.thresh_by_fun(lc, rc)
-                if isnothing(bsc) || bsc < sc
+                if isnothing(bsc) || bsc > sc
                     br = ((pxi + obj.x[i]) / 2, i)
                     bsc = sc
                 end
