@@ -1,0 +1,137 @@
+#+title: Lab 5
+
+#+begin_src jupyter-julia
+include("main.jl") 
+#+end_src
+
+#+RESULTS:
+: # Out[17]:
+: : predict (generic function with 3 methods)
+
+* Loading dataset
+#+begin_src jupyter-julia
+chips = read_dataframe("./data/chips.csv")
+geyser = read_dataframe("./data/geyser.csv")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# Out[2]:
+,#+BEGIN_EXAMPLE
+  222-element Vector{Object}:
+  Object([1.0, 4.4], :N)
+  Object([1.0, 3.9], :N)
+  Object([1.0, 4.0], :P)
+  Object([1.0, 4.0], :N)
+  Object([1.0, 3.5], :N)
+  Object([1.0, 4.1], :N)
+  Object([1.0, 2.3], :P)
+  Object([1.0, 4.7], :N)
+  Object([1.0, 1.7], :P)
+  Object([1.0, 4.9], :N)
+  Object([1.0, 1.7], :P)
+  Object([1.0, 4.6], :N)
+  Object([1.0, 3.4], :N)
+  ⋮
+  Object([23.0, 2.2], :P)
+  Object([23.0, 4.7], :N)
+  Object([23.0, 4.0], :P)
+  Object([23.0, 1.8], :P)
+  Object([23.0, 4.7], :N)
+  Object([23.0, 1.8], :P)
+  Object([23.0, 4.5], :N)
+  Object([23.0, 2.1], :P)
+  Object([23.0, 4.2], :N)
+  Object([23.0, 2.1], :P)
+  Object([23.0, 5.2], :N)
+  Object([23.0, 2.0], :P)
+,#+END_EXAMPLE
+#+end_example
+
+* Plots
+#+begin_src jupyter-julia
+using Plots 
+#+end_src
+
+#+RESULTS:
+: # Out[3]:
+
+
+#+begin_src jupyter-julia
+function data_for_scatter(objects::Vector{Object})::Tuple{Tuple{Vector{Float64}, Vector{Float64}}, Tuple{Vector{Float64}, Vector{Float64}}}
+    N = filter(o -> o.y == :N, objects)
+    P = filter(o -> o.y == :P, objects)
+    ext(i, a) = map(o -> o.x[i], a)
+    return ((ext(1, P), ext(2, P)), (ext(1, N), ext(2, N)))
+end
+#+end_src
+
+#+RESULTS:
+: # Out[4]:
+: : data_for_scatter (generic function with 1 method)
+
+#+begin_src jupyter-julia
+function overlay_scatter(p, objects::Vector{Object})
+    (Px1, Px2), (Nx1, Nx2) = data_for_scatter(objects)
+    prev_plot = isnothing(p) ? () : (p,)
+    scatter1 = scatter(prev_plot..., Nx1, Nx2, c = :blue, label = "N")
+    scatter(scatter1, Px1, Px2, c = :red, label = "P")
+end
+#+end_src
+
+#+RESULTS:
+: # Out[5]:
+: : overlay_scatter (generic function with 1 method)
+
+#+begin_src jupyter-julia :results raw drawer
+overlay_scatter(nothing, chips) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[6]:
+[[file:./obipy-resources/jvKeFb.svg]]
+:end:
+
+#+begin_src jupyter-julia :results raw drawer
+overlay_scatter(nothing, geyser) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[7]:
+[[file:./obipy-resources/7VxINs.svg]]
+:end:
+
+#+begin_src jupyter-julia
+function plot_space(clf, data)
+    fit(clf, data)
+    f(x1, x2) = predictw(clf, [x1, x2])
+
+    rx = range(minimum(o -> o.x[1], data),stop=maximum(o -> o.x[1], data),length=100)
+    ry = range(minimum(o -> o.x[2], data),stop=maximum(o -> o.x[2], data),length=100)
+
+    p = heatmap(rx, ry, f, c = :bluesreds, clims=(-1, 1))
+    overlay_scatter(p, data)
+end
+#+end_src
+
+#+RESULTS:
+: # Out[21]:
+: : plot_space (generic function with 1 method)
+
+** Random Forest
+#+begin_src jupyter-julia :results raw drawer
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
+p10 = plot_space(mk_rf(10), chips)
+p100 = plot_space(mk_rf(100), chips)
+p1000 = plot_space(mk_rf(1000), chips)
+p10000 = plot_space(mk_rf(10000), chips)
+plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10000 Trees"], size=(1280, 720))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[31]:
+[[file:./obipy-resources/CD2XiA.svg]]
+:end:
