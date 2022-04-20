@@ -124,7 +124,7 @@ end
 
 ** Random Forest
 #+begin_src jupyter-julia :results raw drawer
-mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:split_score_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
 p10 = plot_space(mk_rf(10), chips)
 p100 = plot_space(mk_rf(100), chips)
 p1000 = plot_space(mk_rf(1000), chips)
@@ -139,7 +139,7 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=200, positive_class=:P)
+rf = mk_random_forest(;dt_params=(:split_score_fun_name => :entropy,), ntrees=200, positive_class=:P)
 scores = []
 function rf_score(clf::RandomForest, i::Int64)
     push!(scores, estimate(clf, chips))
@@ -155,7 +155,7 @@ plot(1:size(scores)[1], scores, label="f-score")
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:split_score_fun_name => :entropy,), ntrees=ntrees, positive_class=:P)
 p10 = plot_space(mk_rf(10), geyser)
 p100 = plot_space(mk_rf(100), geyser)
 p1000 = plot_space(mk_rf(1000), geyser)
@@ -170,7 +170,7 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :entropy,), ntrees=200, positive_class=:P)
+rf = mk_random_forest(;dt_params=(:split_score_fun_name => :entropy,), ntrees=200, positive_class=:P)
 scores = []
 function rf_score(clf::RandomForest, i::Int64)
     push!(scores, estimate(clf, geyser))
@@ -188,7 +188,7 @@ plot(1:size(scores)[1], scores, label="f-score")
 ** AdaBoost
 #+begin_src jupyter-julia :results raw drawer
 N = 9
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
 ids = gen_fibs(N)
 plots = []
 titles = []
@@ -210,7 +210,7 @@ plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
 
 #+begin_src jupyter-julia :results raw drawer
 N = 9
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
 ids = gen_fibs(N)
 plots = []
 titles = []
@@ -231,7 +231,7 @@ plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:6]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:entropy) for _ in 1:6]; positive_class=:P)
 scores = []
 function adaboost_score(clf::AdaBoost, i::Int64)
     push!(scores, estimate(clf, chips; predict_kwargs=(:negative_class => :N,)))
@@ -247,7 +247,7 @@ plot(1:size(scores)[1], scores, label="f-score")
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:entropy) for _ in 1:10]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:entropy) for _ in 1:10]; positive_class=:P)
 scores = []
 function adaboost_score(clf::AdaBoost, i::Int64)
     push!(scores, estimate(clf, geyser; predict_kwargs=(:negative_class => :N,)))
@@ -264,7 +264,7 @@ plot(1:size(scores)[1], scores, label="f-score", ylims=(0, 1.))
 
 ** Random Forest Gini
 #+begin_src jupyter-julia :results raw drawer
-mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:split_score_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
 p10 = plot_space(mk_rf(10), chips)
 p100 = plot_space(mk_rf(100), chips)
 p1000 = plot_space(mk_rf(1000), chips)
@@ -279,7 +279,7 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=200, positive_class=:P)
+rf = mk_random_forest(;dt_params=(:split_score_fun_name => :gini,), ntrees=200, positive_class=:P)
 scores = []
 function rf_score(clf::RandomForest, i::Int64)
     push!(scores, estimate(clf, chips))
@@ -295,7 +295,7 @@ plot(1:size(scores)[1], scores, label="f-score")
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-mk_rf(ntrees) = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
+mk_rf(ntrees) = mk_random_forest(;dt_params=(:split_score_fun_name => :gini,), ntrees=ntrees, positive_class=:P)
 p10 = plot_space(mk_rf(10), geyser)
 p100 = plot_space(mk_rf(100), geyser)
 p1000 = plot_space(mk_rf(1000), geyser)
@@ -310,7 +310,7 @@ plot(p10, p100, p1000, p10000, titles = ["10 Trees" "100 Trees" "1000 Trees" "10
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=200, positive_class=:P)
+rf = mk_random_forest(;dt_params=(:split_score_fun_name => :gini,), ntrees=200, positive_class=:P)
 scores = []
 function rf_score(clf::RandomForest, i::Int64)
     push!(scores, estimate(clf, geyser))
@@ -328,7 +328,7 @@ plot(1:size(scores)[1], scores, label="f-score")
 ** AdaBoost Gini
 #+begin_src jupyter-julia :results raw drawer
 N = 9
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:100]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:gini) for _ in 1:100]; positive_class=:P)
 ids = gen_fibs(N)
 plots = []
 titles = []
@@ -350,7 +350,7 @@ plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
 
 #+begin_src jupyter-julia :results raw drawer
 N = 9
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:100]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:gini) for _ in 1:100]; positive_class=:P)
 ids = gen_fibs(N)
 plots = []
 titles = []
@@ -371,7 +371,7 @@ plot(plots..., titles=reshape(titles, (1, N)), size=(1280, 720))
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:25]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:gini) for _ in 1:25]; positive_class=:P)
 scores = []
 function adaboost_score(clf::AdaBoost, i::Int64)
     push!(scores, estimate(clf, chips; predict_kwargs=(:negative_class => :N,)))
@@ -387,7 +387,7 @@ plot(1:size(scores)[1], scores, label="f-score")
 :end:
 
 #+begin_src jupyter-julia :results raw drawer
-ab = mk_ada_boost([mk_decision_tree(max_depth=3, find_thresh_fun_name=:gini) for _ in 1:10]; positive_class=:P)
+ab = mk_ada_boost([mk_decision_tree(max_depth=3, split_score_fun_name=:gini) for _ in 1:10]; positive_class=:P)
 scores = []
 function adaboost_score(clf::AdaBoost, i::Int64)
     push!(scores, estimate(clf, geyser; predict_kwargs=(:negative_class => :N,)))

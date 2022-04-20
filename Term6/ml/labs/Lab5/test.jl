@@ -42,13 +42,13 @@ ds = read_dataframe("./data/chips.csv")
 train = ds
 test = ds
 
-adaboost = mk_ada_boost([mk_decision_tree(max_depth=2, find_thresh_fun_name=:entropy) for _ in 1:100], :P)
+adaboost = mk_ada_boost([mk_decision_tree(max_depth=2, split_score_fun_name=:entropy) for _ in 1:100]; positive_class=:P)
 fit(adaboost, train)
 
 yp = [convert(Class, predict(adaboost, o.x; negative_class=:N)) for o in test]
 y = [o.y for o in test]
 
-# rf = mk_random_forest(;dt_params=(:find_thresh_fun_name => :gini,), ntrees=1000)
+# rf = mk_random_forest(;dt_params=(:split_score_fun_name => :gini,), ntrees=1000)
 # fit(rf, train)
 
 # yp = [convert(Class, predict(rf, o.x)) for o in test]
