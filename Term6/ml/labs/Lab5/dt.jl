@@ -18,19 +18,19 @@ mutable struct DecisionTree <: Classifier
     nclasses::Union{Int64, Nothing}
     nfeatures::Union{Int64, Nothing}
     root::Union{Node, Nothing}
-    thresh_by_fun
+    split_score_fun
 end
 
-function mk_find_thresh_fun(name::Symbol)
+function mk_split_score_fun(name::Symbol)
     if name == :entropy
-        return thresh_by_entropy
+        return split_score_entropy
     elseif name == :gini
-        return thresh_by_gini
+        return split_score_gini
     end
 end
 
-function mk_decision_tree(;max_depth=nothing, nclasses=nothing, nfeatures=nothing, find_thresh_fun_name::Symbol=:entropy)::DecisionTree
-    return DecisionTree(max_depth, nclasses, nfeatures, nothing, mk_find_thresh_fun(find_thresh_fun_name))
+function mk_decision_tree(;max_depth=nothing, nclasses=nothing, nfeatures=nothing, split_score_fun_name::Symbol=:entropy)::DecisionTree
+    return DecisionTree(max_depth, nclasses, nfeatures, nothing, mk_split_score_fun(split_score_fun_name))
 end
 
 function has_same_classes(objects::Vector{Object})::Bool
@@ -54,14 +54,14 @@ function find_major_class(objects::Vector{Object})::Class
     return argmax(nc)
 end
 
-thresh_by_entropy(lc, rc) = entropy(values(lc) |> collect) * sum(values(lc)) + entropy(values(rc) |> collect) * sum(values(rc))
-function thresh_by_gini(lc, rc)
+split_score_entropy(lc, rc) = entropy(values(lc) |> collect) * sum(values(lc)) + entropy(values(rc) |> collect) * sum(values(rc))
+function split_score_gini(lc, rc)
     sl = sum(values(lc))
     sr = sum(values(rc))
     return (1 - sum(x -> (x / sl)^2 , values(lc))) * sl + (1 - sum(x -> (x / sr)^2, values(rc))) * sr
 end
 
-function find_thresh_by(clf::DecisionTree, objects::Vector{Object}, weights::Vector{Float64})::Union{Tuple{Float64, Int64}, Nothing}
+function find_split(clf::DecisionTree, objects::Vector{Object}, weights::Vector{Float64})::Union{Tuple{Float64, Int64}, Nothing}
     bsc::Union{Float64, Nothing} = nothing
     br::Union{Tuple{Float64, Int64}, Nothing} = nothing
     for i ∈ 1:clf.nfeatures
@@ -86,7 +86,7 @@ function find_thresh_by(clf::DecisionTree, objects::Vector{Object}, weights::Vec
             obj = objects[j]
             w = weights[j]
             if j != 1 && obj.x[i] != pxi
-                sc::Float64 = clf.thresh_by_fun(lc, rc)
+                sc::Float64 = clf.split_score_fun(lc, rc)
                 if isnothing(bsc) || bsc > sc
                     br = ((pxi + obj.x[i]) / 2, i)
                     bsc = sc
@@ -107,7 +107,7 @@ function make_node(clf::DecisionTree, objects::Vector{Object}, weights::Vector{F
         return Leaf(find_major_class(objects))
     end
 
-    br = find_thresh_by(clf, objects, weights)
+    br = find_split(clf, objects, weights)
     if !isnothing(br)
         fi = br[2]
         thresh = br[1]
