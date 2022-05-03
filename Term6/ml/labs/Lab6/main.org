@@ -6,22 +6,61 @@ sys.executable
 #+end_src
 
 #+RESULTS:
-: # Out[236]:
-: : '/nix/store/pkld6nc54inn5dsfvzddr813p1g7ffmc-python3-3.9.6-env/bin/python3.9'
+: # Out[1]:
+: : '/nix/store/my9c3h8021nf6zqi8qqqm4asnh2319js-python3-3.9.6-env/bin/python3.9'
 
-
-* Load datasets
-
+* Imports
 #+begin_src jupyter-python
 import torch
 import torchvision
 import torchvision.transforms as transforms
 
-batch_size = 10
+import random
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+import torch.nn as nn
+import torch.nn.functional as F
+
+import torch.optim as optim
+
+from mpl_toolkits.axes_grid1 import ImageGrid
+
+from tqdm import tqdm
+
+import seaborn as sns
+#+end_src
+
+#+RESULTS:
+: # Out[2]:
+
+* Settings
+#+begin_src jupyter-python
+RANDOM_SEED = 42
+BATCH_SIZE = 10 
+#+end_src
+
+#+RESULTS:
+: # Out[3]:
+
+#+begin_src jupyter-python
+torch.manual_seed(RANDOM_SEED)
+random.seed(RANDOM_SEED)
+np.random.seed(RANDOM_SEED)
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+#+end_src
+
+#+RESULTS:
+: # Out[5]:
+
+
+* Load datasets
+
+#+begin_src jupyter-python
 transform = transforms.Compose([
     transforms.ToTensor(),
-    # transforms.Normalize((0.5, 0.5, ))
 ])
 
 mnist_train = torchvision.datasets.MNIST('data/mnist', download=True, transform=transform, train=True)
@@ -30,21 +69,27 @@ fashion_mnist_train = torchvision.datasets.FashionMNIST('data/mnist', download=T
 fashion_mnist_test = torchvision.datasets.FashionMNIST('data/mnist', download=True, transform=transform, train=False)
 
 mnist_train_loader = torch.utils.data.DataLoader(mnist_train,
-                                                batch_size=batch_size,
+                                                batch_size=BATCH_SIZE,
                                                 shuffle=True)
+mnist_test_loader = torch.utils.data.DataLoader(mnist_test, batch_size=len(mnist_test))
+
+fashion_mnist_train_loader = torch.utils.data.DataLoader(fashion_mnist_train,
+                                                batch_size=BATCH_SIZE,
+                                                shuffle=True,)
+fashion_mnist_test_loader = torch.utils.data.DataLoader(fashion_mnist_test, batch_size=len(fashion_mnist_test))
 #+end_src
 
 #+RESULTS:
-: # Out[1]:
+: # Out[6]:
 
-#+begin_src jupyter-python
+#+begin_src jupyter-python :results raw drawer
 mnist_train
 #+end_src
 
 #+RESULTS:
-#+begin_example
-# Out[2]:
-,#+BEGIN_EXAMPLE
+:results:
+# Out[7]:
+#+BEGIN_EXAMPLE
   Dataset MNIST
   Number of datapoints: 60000
   Root location: data/mnist
@@ -53,38 +98,148 @@ mnist_train
   Transform: Compose(
   ToTensor()
   )
-,#+END_EXAMPLE
-#+end_example
+#+END_EXAMPLE
+:end:
 
 
 #+begin_src jupyter-python :results raw drawer
-import numpy as np
-import matplotlib.pyplot as plt
-
-dataiter = iter(mnist_train_loader)
-images, labels = next(dataiter)
-
+images, labels = next(iter(mnist_train_loader))
 print(np.shape(images))
-
-
-plt.imshow(np.transpose(images[1], (1, 2, 0)))
+plt.imshow(np.transpose(images[0], (1, 2, 0)))
+plt.show()
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[3]:
-: <matplotlib.image.AxesImage at 0x7faf257c4ac0>
-[[file:./obipy-resources/UUfnOj.png]]
+# Out[8]:
+[[file:./obipy-resources/A3Uwet.png]]
 :end:
 
-* COMMENT Train
+#+begin_src jupyter-python :results raw drawer
+images, labels = next(iter(fashion_mnist_train_loader))
+print(np.shape(images))
+plt.imshow(np.transpose(images[0], (1, 2, 0)))
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[77]:
+[[file:./obipy-resources/kQZsYS.png]]
+:end:
+
+* Train
 
 #+begin_src jupyter-python
-import torch.nn as nn
-import torch.nn.functional as F
+criterion = nn.CrossEntropyLoss()
+#+end_src
+
+#+RESULTS:
+: # Out[9]:
 
 
-# 0.9256
+#+begin_src jupyter-python
+def make_optimizer(net):
+    return optim.Adam(net.parameters())
+#+end_src
+
+#+RESULTS:
+: # Out[17]:
+
+#+begin_src jupyter-python
+def train(net, data_loader, epoch=5, loss_dens=100):
+    loss_log = []
+    net = net.to(device)
+    for epoch in range(epoch):
+    
+        running_loss = 0.0
+        for i, data in enumerate(tqdm(data_loader), 0):
+    
+            inputs, labels = data
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+    
+            optimizer.zero_grad()
+    
+            outputs = net(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+    
+            running_loss += loss.item()
+    
+            if i % loss_dens == loss_dens - 1:
+                loss_log.append(running_loss / loss_dens)
+                running_loss = 0.0
+    net = net.to('cpu')
+    return loss_log
+#+end_src
+
+#+begin_src jupyter-python
+def show_loss_log(loss_log):
+    plt.figure(figsize=(8, 6))
+    plt.plot(loss_log)
+    plt.show()
+#+end_src
+
+
+#+begin_src jupyter-python
+def accuracy(net, data_loader):
+    data, labels = next(iter(data_loader))
+    preds = net(data)
+    print(preds.argmax(dim=1))
+    labels_pred = preds.argmax(dim=1).detach().numpy()
+    T = 0
+    for label_true, label_pred in zip(labels, labels_pred):
+        T += label_pred == label_true
+    return T / len(mnist_test)
+#+end_src
+
+#+RESULTS:
+: # Out[25]:
+
+#+begin_src jupyter-python
+def show_confusion_matrix(net, data_loader):
+    data, labels = next(iter(data_loader))
+    preds = net(data)
+    stacked = torch.stack((labels, preds.argmax(dim=1)), dim=1)
+    cmt = torch.zeros(10, 10, dtype=torch.int64)
+    for p in stacked:
+        tl, pl = p.tolist()
+        cmt[tl, pl] += 1
+    plt.figure(figsize=(16, 9))
+    sns.heatmap(cmt, annot=True, cmap='Blues', fmt='d')
+    plt.show()
+#+end_src
+
+#+RESULTS:
+: # Out[33]:
+
+#+begin_src jupyter-python
+def show_similar(net, data_loader):
+    data, labels = next(iter(data_loader))
+    preds = net(data)
+    msi = [[None for i in range(10)] for i in range(10)]
+    for d, p, l in zip(data.to('cpu'), preds, labels):
+        for i in range(10):
+            if msi[l][i] == None or msi[l][i][0] < p[i]:
+                msi[l][i] = (p[i], d)
+    
+    fig = plt.figure(figsize=(10, 10))
+    grid = ImageGrid(fig, 111, nrows_ncols=(10, 10))
+    
+    for i, ax in enumerate(grid):
+        ax.imshow(np.transpose(msi[i // 10][i % 10][1], (1, 2, 0)))
+    
+    plt.show()
+#+end_src
+
+#+RESULTS:
+: # Out[43]:
+
+** Attempt 1 =0.9285=
+
+#+begin_src jupyter-python
 net = nn.Sequential(
     nn.Conv2d(1, 8, 5), # 24
     nn.MaxPool2d(2, 2), # 12
@@ -94,134 +249,268 @@ net = nn.Sequential(
     nn.Flatten(),
     nn.Linear(100, 10),
     nn.Softmax(1),
-).to('cuda')
+)
 #+end_src
 
 #+RESULTS:
-: # Out[4]:
-
-#+begin_src jupyter-python
-import torch.optim as optim
-
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(net.parameters())
-#+end_src
-
-#+RESULTS:
-: # Out[5]:
+: # Out[49]:
 
 #+begin_src jupyter-python :async yes
-from tqdm import tqdm
-loss_log = []
-for epoch in range(5):
-
-    running_loss = 0.0
-    for i, data in enumerate(tqdm(mnist_train_loader), 0):
-
-        inputs, labels = data
-        inputs = inputs.to('cuda')
-        labels = labels.to('cuda')
-
-        optimizer.zero_grad()
-
-        outputs = net(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
-
-        running_loss += loss.item()
-
-        if i % 100 == 99:
-            # print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}')
-            loss_log.append(running_loss / 100)
-            running_loss = 0.0
+optimizer = make_optimizer(net)
+loss_log = train(net, mnist_train_loader) 
 #+end_src
 
 #+RESULTS:
-: # Out[6]:
+: # Out[50]:
 
 #+begin_src jupyter-python :results raw drawer
-plt.figure(figsize=(8, 6))
-plt.plot(loss_log)
-plt.show()
+show_loss_log(loss_log) 
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[7]:
-[[file:./obipy-resources/1CEo25.png]]
+# Out[51]:
+[[file:./obipy-resources/loO758.png]]
 :end:
 
 
-
-#+begin_src jupyter-python :results raw drawer :async yes
-test_loader = torch.utils.data.DataLoader(mnist_test, batch_size=len(mnist_test))
-data, labels = next(iter(test_loader))
-preds = net(data.to('cuda')).to('cpu')
-print(preds.argmax(dim=1))
-labels_pred = preds.argmax(dim=1).detach().numpy()
-T = 0
-for label_true, label_pred in zip(labels, labels_pred):
-    T += label_pred == label_true
-T / len(mnist_test)
+#+begin_src jupyter-python :results raw drawer
+accuracy(net, mnist_test_loader)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[8]:
-: tensor(0.9030)
+# Out[52]:
+: tensor(0.9285)
 :end:
 
 #+begin_src jupyter-python :results raw drawer
-import seaborn as sns
-stacked = torch.stack((labels, preds.argmax(dim=1)), dim=1)
-cmt = torch.zeros(10, 10, dtype=torch.int64)
-for p in stacked:
-    tl, pl = p.tolist()
-    cmt[tl, pl] += 1
-plt.figure(figsize=(16, 9))
-sns.heatmap(cmt, annot=True, cmap='Blues', fmt='d')
-plt.show()
+show_confusion_matrix(net, mnist_test_loader)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[20]:
-[[file:./obipy-resources/9SXb4X.png]]
+# Out[53]:
+[[file:./obipy-resources/i0K6AW.png]]
 :end:
 
-#+begin_src jupyter-python
-cmt[9][0] 
-#+end_src
 
-#+RESULTS:
-: # Out[25]:
-: : tensor(10)
-
-#+begin_src jupyter-python
-msi = [[None for i in range(10)] for i in range(10)]
-for d, p, l in zip(data.to('cpu'), preds, labels):
-    for i in range(10):
-        if msi[l][i] == None or msi[l][i][0] < p[i]:
-            msi[l][i] = (p[i], d)
-#+end_src
-
-#+begin_src  jupyter-python :results raw drawer
-from mpl_toolkits.axes_grid1 import ImageGrid
-
-fig = plt.figure(figsize=(10, 10))
-grid = ImageGrid(fig, 111, nrows_ncols=(10, 10), labels=['1', '2', '3', '4', '5', '6'])
-
-for i, ax in enumerate(grid):
-    ax.imshow(np.transpose(msi[i // 10][i % 10][1], (1, 2, 0)))
-
-plt.show()
+#+begin_src jupyter-python :results raw drawer
+show_similar(net, mnist_test_loader) 
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[36]:
-[[file:./obipy-resources/JijN6t.png]]
+# Out[54]:
+[[file:./obipy-resources/Qoah49.png]]
+:end:
+
+#+begin_src jupyter-python
+net1 = net 
+#+end_src
+
+#+RESULTS:
+: # Out[55]:
+
+** Attempt 2 =0.9810=
+
+#+begin_src jupyter-python
+net = nn.Sequential(
+    nn.Conv2d(1, 8, 5), # 24
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 12
+    nn.Conv2d(8, 16, 5), # 8
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 4
+    nn.Conv2d(16, 32, 4), # 1
+    nn.Flatten(),
+    nn.Linear(32, 10),
+    nn.Softmax(1),
+)
+#+end_src
+
+#+RESULTS:
+: # Out[60]:
+
+#+begin_src jupyter-python :async yes
+optimizer = make_optimizer(net)
+loss_log = train(net, mnist_train_loader) 
+#+end_src
+
+#+RESULTS:
+: # Out[61]:
+
+#+begin_src jupyter-python :results raw drawer
+show_loss_log(loss_log) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[62]:
+[[file:./obipy-resources/6aYErl.png]]
 :end:
 
 
+#+begin_src jupyter-python :results raw drawer
+accuracy(net, mnist_test_loader)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[63]:
+: tensor(0.9810)
+:end:
+
+#+begin_src jupyter-python :results raw drawer
+show_confusion_matrix(net, mnist_test_loader)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[64]:
+[[file:./obipy-resources/byoALC.png]]
+:end:
+
+
+#+begin_src jupyter-python :results raw drawer
+show_similar(net, mnist_test_loader) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[65]:
+[[file:./obipy-resources/TrdOAI.png]]
+:end:
+
+#+begin_src jupyter-python
+net2 = net 
+#+end_src
+
+#+RESULTS:
+: # Out[66]:
+
+** Attempt 3 =0.9461=
+
+#+begin_src jupyter-python
+net = nn.Sequential(
+    nn.Conv2d(1, 10, 3, padding=1), # 28
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 14
+    nn.Conv2d(10, 25, 3), # 12
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 6
+    nn.Conv2d(25, 50, 3), # 4
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 2
+    nn.Conv2d(50, 100, 2), # 1
+    nn.Flatten(),
+    nn.Linear(100, 50),
+    nn.ReLU(),
+    nn.Linear(50, 10),
+    nn.Softmax(1),
+)
+#+end_src
+
+#+RESULTS:
+: # Out[67]:
+
+#+begin_src jupyter-python :async yes
+optimizer = make_optimizer(net)
+loss_log = train(net, mnist_train_loader) 
+#+end_src
+
+#+RESULTS:
+: # Out[68]:
+
+#+begin_src jupyter-python :results raw drawer
+show_loss_log(loss_log) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[69]:
+[[file:./obipy-resources/RnzO0h.png]]
+:end:
+
+
+#+begin_src jupyter-python :results raw drawer
+accuracy(net, mnist_test_loader)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[70]:
+: tensor(0.9461)
+:end:
+
+#+begin_src jupyter-python :results raw drawer
+show_confusion_matrix(net, mnist_test_loader)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[71]:
+[[file:./obipy-resources/t3txgD.png]]
+:end:
+
+
+#+begin_src jupyter-python :results raw drawer
+show_similar(net, mnist_test_loader) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[72]:
+[[file:./obipy-resources/SwrcHY.png]]
+:end:
+
+#+begin_src jupyter-python
+net3 = net 
+#+end_src
+
+#+RESULTS:
+: # Out[73]:
+
+** Final
+#+begin_src jupyter-python
+net = nn.Sequential(
+    nn.Conv2d(1, 8, 5), # 24
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 12
+    nn.Conv2d(8, 16, 5), # 8
+    nn.ReLU(),
+    nn.MaxPool2d(2, 2), # 4
+    nn.Conv2d(16, 32, 4), # 1
+    nn.Flatten(),
+    nn.Linear(32, 10),
+    nn.Softmax(1),
+)
+#+end_src
+
+#+begin_src jupyter-python :async yes
+optimizer = make_optimizer(net)
+loss_log = train(net, fashion_mnist_train_loader) 
+#+end_src
+
+#+RESULTS:
+: # Out[74]:
+
+#+begin_src jupyter-python :results raw drawer
+show_loss_log(loss_log) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[75]:
+[[file:./obipy-resources/2KNHwv.png]]
+:end:
+
+#+begin_src jupyter-python :results raw drawer
+accuracy(net, mnist_test_loader)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[76]:
+: tensor(0.2158)
+:end:
