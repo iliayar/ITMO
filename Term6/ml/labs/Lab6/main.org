@@ -506,11 +506,11 @@ show_loss_log(loss_log)
 :end:
 
 #+begin_src jupyter-python :results raw drawer
-accuracy(net, mnist_test_loader)
+accuracy(net, fashion_mnist_test_loader)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[76]:
-: tensor(0.2158)
+# Out[78]:
+: tensor(0.6055)
 :end:
