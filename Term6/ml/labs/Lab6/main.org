@@ -175,6 +175,9 @@ def train(net, data_loader, epoch=5, loss_dens=100):
     return loss_log
 #+end_src
 
+#+RESULTS:
+: # Out[101]:
+
 #+begin_src jupyter-python
 def show_loss_log(loss_log):
     plt.figure(figsize=(8, 6))
@@ -487,13 +490,16 @@ net = nn.Sequential(
 )
 #+end_src
 
+#+RESULTS:
+: # Out[102]:
+
 #+begin_src jupyter-python :async yes
 optimizer = make_optimizer(net)
 loss_log = train(net, fashion_mnist_train_loader) 
 #+end_src
 
 #+RESULTS:
-: # Out[74]:
+: # Out[103]:
 
 #+begin_src jupyter-python :results raw drawer
 show_loss_log(loss_log) 
@@ -501,8 +507,8 @@ show_loss_log(loss_log)
 
 #+RESULTS:
 :results:
-# Out[75]:
-[[file:./obipy-resources/2KNHwv.png]]
+# Out[104]:
+[[file:./obipy-resources/tz70Xl.png]]
 :end:
 
 #+begin_src jupyter-python :results raw drawer
@@ -511,6 +517,26 @@ accuracy(net, fashion_mnist_test_loader)
 
 #+RESULTS:
 :results:
-# Out[78]:
-: tensor(0.6055)
+# Out[105]:
+: tensor(0.8621)
+:end:
+
+#+begin_src jupyter-python :results raw drawer
+show_confusion_matrix(net, fashion_mnist_test_loader)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[106]:
+[[file:./obipy-resources/raLiTO.png]]
+:end:
+
+#+begin_src jupyter-python :results raw drawer
+show_similar(net, fashion_mnist_test_loader) 
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[108]:
+[[file:./obipy-resources/gcy8Ja.png]]
 :end:
