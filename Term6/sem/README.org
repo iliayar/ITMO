@@ -5,6 +5,6 @@
 - [[https://iliayar.ru/public-notes/conspects/Term6/sem/lectures/1.pdf][Lecture 1]]
 
 * HWs
-- [[hws/coq-introductory-problems][coq-introductory-problems]]
-- [[hws/coq-workout][coq-workout]]
+- [[file:hws/coq-introductory-problems][coq-introductory-problems]]
+- [[file:hws/coq-workout][coq-workout]]
 
