@@ -4,3 +4,12 @@
 * Labs
 - [[file:labs/Lab1/][Lab 1]]
 - [[file:labs/Lab2/][Lab 2]]
+- [[file:labs/Lab3/][Lab 3]]
+- [[file:labs/Lab4/][Lab 4]]
+- [[file:labs/Lab5/][Lab 5]]
+- [[file:labs/Lab6/][Lab 6]]
+
+** Codeforces
+[[file:labs/cf/statements.pdf][Statements]] \\
+[[file:labs/cf/][Solutions]]
+  
