@@ -1,0 +1,17 @@
+*.glob
+.*.aux
+*.aux
+*.nav
+*.snm
+*.toc
+*.out
+*.pdf
+*.log
+*.vo
+*.vok
+*.vos
+*.vrb
+*~
+_CoqProject
+Makefile.coq
+Makefile.coq.conf
