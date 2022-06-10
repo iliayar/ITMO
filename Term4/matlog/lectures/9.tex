@@ -1,0 +1,242 @@
+% Created 2022-06-11 Sat 01:27
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titling}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{svg}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\input{~/.emacs.d/preamble.sty}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 9}
+\hypersetup{
+	pdfauthor={Ilya Yaroshevskiy},
+	pdftitle={Лекция 9},
+	pdfkeywords={},
+	pdfsubject={},
+	pdfcreator={Emacs 28.1 (Org mode 9.5.3)},
+	pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Теория первого порядка}
+\label{sec:orgd2391a4}
+\begin{definition}
+	\textbf{Теория I порядка} --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
+	\label{org150f8a2}
+\end{definition}
+\begin{definition}
+	Будем говорить, что \(N\) соответсвует \textbf{аксиоматике Пеано} если:
+	\begin{itemize}
+		\item задан \(('): N \to N\) --- инъективная функция (для разных элементов, разные значения)
+		\item задан \(0 \in N\): нет \(a \in N\), что \(a' = 0\)
+		\item если \(P(x)\) --- некоторое утверждение, зависящее от \(x \in N\), такое, что \(P(0)\) и всегда, когда \(P(x)\), также и \(P(x')\). Тогда \(P(x)\)
+	\end{itemize}
+	\label{orgf24eb27}
+\end{definition}
+\beginproperty
+\begin{property}
+	\(0\) единственный
+	\label{orgcb301aa}
+\end{property}
+\begin{proof}
+	\(P(x)=x = 0\) либо существует \(t:\ t' = x\)
+	\begin{itemize}
+		\item \(P(0): 0 = 0\)
+		\item \(P(x) \to P(x')\). Заметим, что \(x'\) --- не `ноль`
+	\end{itemize}
+	\(P(x)\) выполнено при всех \(x \in N\)
+	\label{orge9b4e01}
+\end{proof}
+\begin{definition}
+	\[ a + b = \begin{cases}
+			a        & b = 0  \\
+			(a + c)' & b = c'
+		\end{cases}\]
+	\label{orgbf96441}
+\end{definition}
+Можем определить это опираясь на \hyperref[orge9b4e01]{доказательтво}
+\begin{definition}
+	\-
+	\begin{itemize}
+		\item \(1 = 0'\)
+		\item \(2 = 0''\)
+		\item \(3 = 0'''\)
+		\item \(4 = 0''''\)
+		\item \(\dots\)
+	\end{itemize}
+\end{definition}
+\begin{task}
+	\(2 + 2 = 4\)
+\end{task}
+\begin{solution}
+	\[ 2 + 2 = 0'' + 0'' = (0'' + 0')' = ((0'' + 0)')' = ((0'')')' = 0'''' = 4 \]
+\end{solution}
+\begin{definition}
+	\[ a \cdot b = \begin{cases}
+			0               & b = 0  \\
+			(a \cdot c) + a & b = c'
+		\end{cases}\]
+	\label{org75c396e}
+\end{definition}
+\begin{definition}
+	\[ a^b = \begin{cases}
+			1            & b = 0  \\
+			(a^c)\cdot a & b = c'
+		\end{cases}\]
+	\label{org937b257}
+\end{definition}
+\beginproperty
+\begin{property}
+	\(a + 0 = 0 + a\)
+	\label{orgd913f3c}
+\end{property}
+\begin{proof}
+	\(P(a) = (a + 0 = 0 + a)\) \\
+	\uline{База} \(P(0): 0 + 0 = 0 + 0\) \\
+	\uline{Переход} \(P(x) \to P(x')\)
+	\[ x + 0 = 0 + x \]
+	\[ x' + 0 \xlongequal{?} 0 + x' \]
+	\[ 0 + x' = (0 + x)' \quad\text{определение }+ \]
+	\[ (0 + x)' = (x + 0)' \quad\text{предположение} \]
+	\[ (x + 0)' = x' \quad\text{определение }+\]
+	\[ x' = x' + 0 \quad\text{определение }+ \]
+\end{proof}
+\begin{property}
+	\(a + b' = a' + b\)
+\end{property}
+\begin{proof}
+	\-
+	\begin{description}
+		\item[{\(b = 0\)}] \(a + 0' = a' + 0\)
+			\[ a' = (a + 0)' = a + 0' = a'+0 = a' \]
+		\item[{\(b = c'\)}] Есть: \(a + c' = a' + c\). Покажем: \(a + c'' = a' + c'\)
+			\[ (a + c')' = (a' + c)' = a' + c \]
+	\end{description}
+\end{proof}
+\begin{property}
+	\(a + b = b + a\)
+\end{property}
+\begin{proof}
+	\uline{База} \(b = 0\) --- \hyperref[orgd913f3c]{свойство} \\
+	\uline{Переход} \(a + c'' = c'' + a\), если \(a + c' = c' + a\)
+	\[ a + c'' = (a + c')' = (c' + a)' = c' + a' = c'' + a\]
+\end{proof}
+\subsection{Формальная арифметика}
+\label{sec:org37b9561}
+\begin{definition}
+	Исчесление предикатов:
+	\begin{itemize}
+		\item Функциональные символы:
+		      \begin{itemize}
+			      \item \(0\) --- 0-местный
+			      \item \((')\) --- 1-местный
+			      \item \((\cdot)\) --- 2-местный
+			      \item \((+)\) --- 2-местный
+		      \end{itemize}
+		\item \((=)\) --- 2-местный предикатный символ
+	\end{itemize}
+	Аксимомы:
+	\begin{enumerate}
+		\item \(a = b \to a' = b'\)
+		\item \(a = b \to a = c \to b = c\)
+		\item \(a' = b' \to a= b\)
+		\item \(\neg a' = 0\)
+		\item \(a + b' = (a + b)'\)
+		\item \(a + 0 = a\)
+		\item \(a\cdot 0 = 0\)
+		\item \(a\cdot b' = a\cdot b + a\)
+		\item Схема аксиом индукции:
+		      \[ (\psi[x:=0])\&(\forall x. \psi \to (\psi[x:=x'])) \to \psi \]
+		      \(x\) входит свободно в \(\psi\)
+	\end{enumerate}
+\end{definition}
+\beginproperty
+\begin{property}
+	\[ ((a + 0 = a) \to (a + 0 = a) \to (a = a)) \]
+\end{property}
+\begin{proof}
+	\[ \forall a. \forall b. \forall c. a = b \to a = c \to b = c \]
+	\[ (\forall a. \forall b. \forall c. a = b \to a = c \to b = c) \to \forall b. \forall c. (a + 0 = b \to a + 0 = c \to b = c) \]
+	\[ \forall b. \forall c. a + 0 = b \to a + 0 = c\to b = c \]
+	\[ (\forall b. \forall c. a + 0 = b \to a + 0 = c \to b = c) \to \forall c.(a + 0 = a \to a + 0 = c \to a=c) \]
+	\[ \forall c. a + 0 = a \to a + 0 = c \to a = c \]
+	\[ (\forall c. a + 0 = a \to a + 0 = c \to a = c) \to a+0 = a \to a + 0 = a \to a= a \]
+	\[ a + 0  = a \to a + 0 = a \to a = a \]
+	\[ a + 0 = a \]
+	\[ a + 0 = a \to a = a \]
+	\[ a = a \]
+	\[ \forall b. \forall c. a = b \to a = c \to b = c \]
+	\[ (0 = 0 \to 0 = 0 \to 0 = 0) \]
+	\[ (\forall b. \forall c. a = b \to a = c\ to b = c) \to (0 = 0 \to 0 = 0 \to 0 = 0) \to \phi \]
+	\fixme
+\end{proof}
+\begin{definition}
+	\(\exists! x.\varphi(x) \equiv (\exists x. \varphi(x))\&\forall p.\forall q. \varphi(p)\&\varphi(q) \to p = q\) \\
+	Можно также записать \(\exists ! x.\neg \exists s. s' = x\) или \((\forall q.(\exists x. x' = q)\vee q= 0)\)
+\end{definition}
+\begin{definition}
+	\(a \le b\) --- сокращение для \(\exists n. a + n = b\)
+\end{definition}
+\begin{definition}
+	\[ \overline{n} = 0^{(n)}\]
+	\[ 0^{(n)} = \begin{cases}
+			0            & n = 0 \\
+			0^{(n - 1)'} & n > 0
+		\end{cases}\]
+\end{definition}
+\subsection{Выразимость отношений и представимость функций в формальной арифметике}
+\label{sec:orgedd3b0e}
+\begin{definition}
+	\(W \subseteq \N_0^n\). \(W\) --- выразимое в формальной арифметике. отношение, если существует формула \(\omega\) со свободными переменными \(x_1,\dots,x_n\). Пусть \(k_1,\dots,k_n \in \N\)
+	\begin{itemize}
+		\item \((k_1,\dots,k_n) \in W\), тогда \(\vdash \omega[x_1:=\overline{k_1}, \dots, x_n := \overline{k_n}]\)
+		\item \((k_1,\dots,k_n) \not\in W\), тогда \(\vdash \neg \omega[x_1:=\overline{k_1},\dots,x_n:=\overline{k_n}]\)
+	\end{itemize}
+	\[ \omega[x_1:=\Theta_1,\dots,x_n:=\Theta_n] \equiv \omega(\Theta_1, \dots, \Theta_n) \]
+	\label{orgbef1612}
+\end{definition}
+\begin{definition}
+	\(f: \N^n \to \N\) --- представим в формальной арифметике, если найдется \(\varphi\) --- фомула с \(n + 1\) свободными переменными \(k_1, \dots, k_{n + 1} \in \N\)
+	\begin{itemize}
+		\item \(f(k_1,\dots,k_n) = k_{n + 1}\), то \(\vdash \varphi(\overline{k_1},\dots,\overline{k_{n + 1}})\) \\
+		\item \(\vdash \exists! x.\varphi(\overline{k_1},\dots,\overline{k_n},x)\)
+	\end{itemize}
+	\label{orgf5100eb}
+\end{definition}
+\end{document}

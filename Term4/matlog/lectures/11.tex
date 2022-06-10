@@ -1,0 +1,233 @@
+% Created 2022-06-11 Sat 01:27
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titling}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{svg}
+\usepackage{capt-of}
+\newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\input{~/.emacs.d/preamble.sty}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 11}
+\hypersetup{
+	pdfauthor={Ilya Yaroshevskiy},
+	pdftitle={Лекция 11},
+	pdfkeywords={},
+	pdfsubject={},
+	pdfcreator={Emacs 28.1 (Org mode 9.5.3)},
+	pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+
+\section{Геделева нумерация}
+\label{sec:org09a84c6}
+\begin{definition}
+	\((\gedel{\bullet})\)
+	\begin{center}
+		\begin{tabular}{l|l}
+			\(s\)       & \(\gedel{s}\)                 \\
+			\hline
+			\((\)       & \(3\)                         \\
+			\hline
+			\()\)       & \(5\)                         \\
+			\hline
+			\(,\)       & \(7\)                         \\
+			\hline
+			\(\&\)      & \(9\)                         \\
+			\hline
+			\(\vee\)    & \(11\)                        \\
+			\hline
+			\(\neg\)    & \(13\)                        \\
+			\hline
+			\(\to\)     & \(15\)                        \\
+			\hline
+			\(\forall\) & \(17\)                        \\
+			\hline
+			\(\exists\) & \(19\)                        \\
+			\hline
+			\(.\)       & \(21\)                        \\
+			\hline
+			\(f^n_k\)   & \(23 + 6\cdot 2^n \cdot 3^k\) \\
+			\hline
+			\(P^n_k\)   & \(25 + 6\cdot 2^n\cdot 3^k\)  \\
+			\hline
+			\(x_k\)     & \(27 + 6\cdot 2^k\)           \\
+		\end{tabular}
+	\end{center}
+	Тогда известные функции будут:
+	\begin{itemize}
+		\item \((=) = P^2_0\)
+		\item \((0) = f^0_0\)
+		\item \((+) = f^2_0\)
+		\item \((\cdot) = f^2_1\)
+		\item \((') = f^1_0\)
+	\end{itemize}
+	\label{orge38736f}
+\end{definition}
+\begin{definition}
+	\(\gedel{a_0a_1\dots a_{n - 1}} = 2^{\gedel{a_0}}\cdot 3^{\gedel{a_1}} \cdot \dots \cdot p_n^{\gedel{a_{n - 1}}}\)
+	\label{org13c4631}
+\end{definition}
+\begin{definition}
+	\(S_0\ S_1\ S_2 = 2^{\gedel{S_0}}\cdot 3^{\gedel{S_1}}\cdot\dots\cdot p_n^{\gedel{S_n}}\)
+	\label{orgd571b4a}
+\end{definition}
+\begin{remark}
+	\(p_i\) --- \(i\)-е простое (\(p_1 = 2\))
+	\label{org5e34870}
+\end{remark}
+\begin{examp}
+	\(\gedel{a = 0} = 2^{27 + 6}\cdot 3^{25 + 6\cdot 4}\cdot 5^{23 + 6}\)
+\end{examp}
+\begin{theorem}
+	Рассмотрим функцию \(\mathop{\rm Proof}(x, p) = \begin{cases}
+		1 & \text{если }p\text{ --- геделев номер доказательства }\chi \\
+		0 & \text{иначе}
+	\end{cases}\), Proof --- рекурсивна
+\end{theorem}
+\begin{theorem}
+	Если функция представима в формальной арифметике, то она рекурсивна
+	\label{orgcdcb4bd}
+\end{theorem}
+\begin{proof}
+	\(f: \N^n \to \N\), т.е. существует формула \(\varphi\) с \(n + 1\) свободными переменными \(x_1, \dots, x_{n + 1}\). Если \(f(k_1, \dots, k_n) = k_{n + 1}\) \\
+	\textbf{\uline{Ожидаем}} \(\vdash \varphi(\overline{k_1}, \dots, \overline{k_n}, \overline{k_{n + 1}})\), т.е. существует доказательство \(\delta\) --- последовательность \(\delta_1, \dots, \delta_t\)
+	\[ \mathop{\rm Proof}(\gedel{\varphi{\overline{k_1}, \dots, \overline{k_{n + 1}}}}, \gedel{k}) = 1 \]
+	\begin{array}{l}
+		S\langle{\rm plog}_2,                                                                                                                           \\
+		\quad M \langle S \langle {\rm Proof},                                                                                                          \\
+		\quad\quad S\pair{{\rm Subst}_{n + 1}, \gedel{\varphi}, P^2_{n + 1}, P^3_{n + 1}, \dots, P^{n + 1}_{n + 1}, S\pair{{\rm plog}_2, P^1_{n + 2}}}, \\
+		\quad\quad S \pair{{\rm plog}_3, P^1_{n + 1}}                                                                                                   \\
+		\quad \rangle                                                                                                                                   \\
+		\rangle
+	\end{array} \\
+\end{proof}
+\begin{remark}
+	\({\rm Subst}\) --- функция которая подставляет аргументы в формулу
+	\label{org22b65b6}
+\end{remark}
+\begin{remark}
+	\(\chi\) --- формула формальной арифметики
+	\[ W_1(\gedel{\chi}, \gedel{p}) = \begin{cases} 0 & \text{если }p\text{ --- доказательство }\chi[x_0\coloneqq\overline{\gedel{\chi}}] \\ 1 & \text{иначе} \end{cases} \]
+	Реализация \(W_1\) через Subst очевидна, тогда \(W_1\) представима в формальной арифметике формулой \(\omega_1\).
+	\(\sigma(x) = \forall p. \neg \omega_1(x, p)\) --- ``самоприменение \(x\) недоказуемо``
+	\[\vdash^? \sigma(\overline{\gedel{\sigma}})\]
+	\label{orgab2858e}
+\end{remark}
+\begin{definition}
+	\(\omega\)-непротиворечивость. Теория \(\omega\)-непротиворечива, если для любой формулы \(\varphi(x)\):
+	\begin{itemize}
+		\item если \(\vdash \varphi(\overline{0}), \vdash \varphi(\overline{1}), \dots\), то \(\not\vdash \exists x. \neg \varphi(x)\)
+	\end{itemize}
+	\label{org9c2b1b7}
+\end{definition}
+\begin{lemma}
+	Если теория \(\omega\)-непротиворечива, то непротиворечива
+	\label{orgc88b6cc}
+\end{lemma}
+\begin{proof}
+	Рассмотрим \(\varphi(x) \coloneqq x = x\)
+	\[ \vdash \overline{0} = \overline{0} \quad \vdash \overline{1} = \overline{1} \quad \dots\]
+	Т.е. \(\not\vdash \exists x. x\neq x\)
+\end{proof}
+\begin{theorem}[Геделя о неполноте арифметики №1]
+	\-
+	\begin{enumerate}
+		\item Если формальная арифметика непротиворечива, то \(\not\vdash \sigma(\overline{\gedel{\sigma}})\)
+		\item Если формальная арифметика \(\omega\)-непротиворечива, то \(\not\vdash \neg \sigma(\overline{\gedel{\sigma}})\)
+	\end{enumerate}
+	\label{orgc93cc28}
+\end{theorem}
+\begin{proof}
+	\-
+	\begin{enumerate}
+		\item Пусть \(\vdash \sigma(\overline{\gedel{\sigma}})\), т.е. существует \(p\) --- геделев номер доказательства
+		      \[ \vdash \sigma(\overline{\gedel{\sigma}}) \quad \vdash \forall p. \neg \omega_1(\overline{\gedel{\sigma}}, p) \]
+		      С другой стороны, \(W_1(\gedel{\sigma}, p) = 0\), т.е. \(\vdash \omega_1(\overline{\gedel{\sigma}}, p)\)
+		\item Пусть \(\vdash \neg \sigma(\overline{\gedel{\sigma}})\)
+		      \[ \vdash \exists p. \omega_1(\overline{\gedel{\sigma}}, p) \]
+		      \[ \left.\begin{matrix}
+				      \vdash \neg \omega_1(\overline{\gedel{\sigma}}, \overline{0}) \\
+				      \vdash \neg \omega_1(\overline{\gedel{\sigma}}, \overline{1}) \\
+				      \vdash \neg \omega_1(\overline{\gedel{\sigma}}, \overline{2}) \\
+				      \vdots
+			      \end{matrix}\right\} \text{ иначе} \vdash \sigma(\overline{\gedel{\sigma}})  \]
+		      \[ \not\vdash \exists p. \omega_1(\overline{\gedel{\sigma}}, p) \]
+	\end{enumerate}
+\end{proof}
+\begin{corollary}
+	Формальная арифметика со стандартной интерпретацией неполна
+	\label{org569d202}
+\end{corollary}
+\begin{proof}
+	\todo
+\end{proof}
+\begin{theorem}[Геделя о неполноте арифметики №1 в форме Россера]
+	\[ W_2(x, p) = \begin{cases} 0 & \text{если }p\text{ --- доказательство }\lnot x(\overline{\gedel{x}}) \\ 1 & \text{иначе} \end{cases} \]
+	\(\omega_2\) --- формула соответствующая \(W_2\)
+	\[ \rho(x) = \forall p. \omega_1(x, p) \to \exists q. q < p \& \omega_2(x, q) \]
+
+	\begin{enumerate}
+		\item Если формальная арифметика непротиворечива, то \(\not\vdash \rho(\overline{\gedel{\rho}})\)
+		\item Если формальная арифметика непротиворечива, то \(\not\vdash \neg\rho(\overline{\gedel{\rho}})\)
+	\end{enumerate}
+	\label{org2ef13e8}
+\end{theorem}
+\todo
+\begin{definition}
+	\[{\rm Consis} \equiv \forall p. \neg \pi(\overline{\gedel{1 = 0}}, p)\]
+	\(\pi\) --- формула соответствующая \(Proof(x, p)\), т.е. \(p\) --- доказательство \(x\)
+	\label{orgb1710cc}
+\end{definition}
+
+\begin{theorem}[Геделя о неполноте арифметики №2]
+	\[ \vdash {\rm Consis} \to \sigma(\overline{\gedel{\sigma}}) \]
+	Т.е. если докажем, что если формальная арифметика непротиворечива, то автоматически \(\sigma(\overline{\gedel{\sigma}})\), т.е. ФА противоречива
+	\label{orgdd8e44b}
+\end{theorem}
+\begin{proof}[Схема]
+	Прочтем что написано в теореме: \(\sigma(\overline{\gedel{\sigma}})\) раскрывается в \(\forall p. \neg \omega_1(\overline{\gedel{\sigma}}, p)\), т.е. если формальная арифметика непротиворечива, то не существует \(p\), который доказывает \(\sigma(\overline{\gedel{\sigma}})\), а это в точности утверждение теоремы Геделя о неполноте №1. Т.е. эта теорема --- формализация теоремы Геделя о неполноте №1.
+	\label{org5dff23a}
+\end{proof}
+\begin{corollary}
+	Никакая теория, содержащая формальную арифметику, не может доказать свою непротиворечивость
+	\label{org573ded7}
+\end{corollary}
+\end{document}
