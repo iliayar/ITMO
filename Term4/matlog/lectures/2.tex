@@ -1,0 +1,227 @@
+% Created 2022-06-11 Sat 01:27
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titling}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{svg}
+\usepackage{capt-of}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\input{~/.emacs.d/preamble.sty}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Лекция 2}
+\hypersetup{
+	pdfauthor={Ilya Yaroshevskiy},
+	pdftitle={Лекция 2},
+	pdfkeywords={},
+	pdfsubject={},
+	pdfcreator={Emacs 28.1 (Org mode 9.5.3)},
+	pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\begin{symb}
+	\(\Gamma, \Delta, \Sigma\) --- списки высказываний
+\end{symb}
+\begin{definition}
+	Следование: \(\Gamma \vDash \alpha\), если
+	\begin{itemize}
+		\item \(\Gamma = \gamma_1, \dots, \gamma_n\)
+		\item Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
+	\end{itemize}
+	\label{org1769352}
+\end{definition}
+\begin{examp}
+	\(\vDash \alpha\) --- \(\alpha\) общезначимо
+	\label{orge9b0a5c}
+\end{examp}
+\begin{definition}
+	\sout{Теория} Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
+	\label{orgcc3de94}
+\end{definition}
+\begin{definition}
+	Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
+	\label{org24232c4}
+\end{definition}
+\begin{theorem}[о дедукции]
+	\(\Gamma, \alpha \vdash \beta\) \uline{тогда и только тогда, когда} \(\Gamma \vdash \alpha \to \beta\)
+	\label{orge117125}
+\end{theorem}
+\begin{proof}
+	\-
+	\begin{description}
+		\item[{\((\Leftarrow)\)}] Пусть \(\Gamma \vdash \alpha \to \beta\). \\
+			Т.е. существует доказательство \(\delta_1, \dots, \delta_n\), где \(\delta_n = \alpha \to \beta\) \\
+			Построим новое доказательство: \(\delta_1, \dots, \delta_n, \alpha(\text{гипотеза}), \beta(\text{M.P.})\) \\
+			Эта новая последовательность --- доказательство \(\Gamma, \alpha \vdash \beta\)
+		\item[{\((\Rightarrow)\)}] Рассмотрим \(\delta_1, \dots, \delta_n\) --- доказательство \(\Gamma, \alpha \vdash \beta\)
+			\begin{center}
+				\begin{tabular}{ll}
+					\(\sigma_1\) & \(\alpha \to \delta_1\) \\
+					\(\vdots\)   & \(\vdots\)              \\
+					\(\sigma_n\) & \(\alpha \to \delta_n\) \\
+				\end{tabular}
+			\end{center}
+			Утвреждение: последовательность \(\sigma_1, \dots, \sigma_n\) можно дополнить до доказательства, т.е. каждый \(\sigma_i\) --- аксиома, гипотеза или получается по M.P. Докажем по индукции: \\
+			\uline{База}: \(n = 0\) \\
+			\uline{Переход}: пусть \(\sigma_0, \dots, \sigma_n\) --- доказательсво. тогда \(\sigma_{n + 1} = \alpha \to \delta_{n + 1}\) по трем вариантам:
+			\begin{enumerate}
+				\item \(\delta_{n + 1}\) --- аксиома или гипотеза \(\not\equiv \alpha\)
+				\item \(\delta_{n + 1} \equiv \alpha\)
+				\item \(\delta_k \equiv \delta_l \to \delta_{n + 1},\ k,l\le n\)
+			\end{enumerate}
+			Докажем каждый из трех вариантов
+			\begin{enumerate}
+				\item \-
+				      \begin{center}
+					      \begin{tabular}{l|ll}
+						      (n + 0.2) & \(\delta_{n + 1}\)                              & (аксиома или гипотеза)      \\
+						      (n + 0.4) & \(\deta_{n + 1} \to \alpha \to \delta_{n + 1}\) & (сх. акс. 1)                \\
+						      (n + 1)   & \(\alpha \to \delta_{n + 1}\)                   & (M.P. \(n + 0.2, n + 0.4\)) \\
+					      \end{tabular}
+				      \end{center}
+				\item \((n + 0.2, n + 0.4, n+0.6, n+0.8, n+1)\) --- доказательтво \(\alpha \to \alpha\)
+				\item \-
+				      \begin{center}
+					      \begin{tabular}{lll}
+						      \((k)\)       & \(\alpha \to (\sigma_l \to \sigma_{n + 1})\)                                                             &                       \\
+						      \((l)\)       & \(\alpha \to \sigma_l\)                                                                                  &                       \\
+						      \((n + 0.2)\) & \((\alpha \to \delta_l) \to (\alpha \to (\delta_l \to \delta_{n + 1})) \to (\alpha \to \delta_{n + 1})\) & (сх. 2)               \\
+						      \((n + 0.4)\) & \((\alpha \to \delta_l \to \delta_{n + 1}) \to (\alpha \to \delta_{n + 1})\)                             & (M.P. \(n + 0.2, l\)) \\
+						      \((n + 1)\)   & \(\alpha \to \delta_{n + 1}\)                                                                            & (M.P. \(n + 0.4, k\)) \\
+					      \end{tabular}
+				      \end{center}
+			\end{enumerate}
+	\end{description}
+\end{proof}
+\begin{theorem}[о корректности]
+	Пусть \(\vdash \alpha\) \\
+	\uline{Тогда} \(\vDash \alpha\)
+	\label{orgf5765ea}
+\end{theorem}
+\begin{proof}
+	Индукция по длине доказательства: каждая \(\llb \delta_i \rrb = \text{И}\), если \(\delta_1, \dots, \delta_k\) --- доказательство \(\alpha\) \\
+	Пусть \(\llb \delta_1 \rrb = \text{И}, \dots, \llb \delta_n \rrb = \text{И}\). Тогда осн. \(\delta_{n + 1}\):
+	\begin{enumerate}
+		\item \(\delta_{n + 1}\) --- аксиома
+		      \begin{enumerate}
+			      \item \(\delta_{n + 1} \equiv \alpha \to \beta \to \alpha\) (Сущесвуют \(\alpha, \beta\), что) \\
+			            Пусть \(\delta_{n + 1} = A \to B \to A\). Тогда \(\alpha \equiv A, \beta \equiv B\) \\
+			            \(\llb \alpha \to \beta \to \alpha \rrb ^{\llb \alpha \rrb \coloneqq a, \llb \beta \rrb \coloneqq b} = \text{И}\)
+			            \begin{center}
+				            \begin{tabular}{ll|l|l}
+					            \(a\) & \(b\) & \(\beta \to \alpha\) & \(\alpha \to \beta \to \alpha\) \\
+					            \hline
+					            Л     & Л     & И                    & И                               \\
+					            Л     & И     & Л                    & И                               \\
+					            И     & Л     & И                    & И                               \\
+					            И     & И     & И                    & И                               \\
+				            \end{tabular}
+			            \end{center}
+		      \end{enumerate}
+		\item \(\delta_{n + 1}\) --- M.P. \(\delta_k = \delta_l \to \delta_{n + 1}\) \\
+		      Фиксируем оценку \(\llb \delta_k \rrb = \llb \delta_l \rrb = \text{И}\), тогда \(\llb \delta_l \to \delta_{n + 1} \rrb = \text{И}\)
+		      \begin{center}
+			      \begin{tabular}{lll}
+				      \(\llb \delta_l \rrb\) & \(\llb \delta_{n + 1} \rrb\) & \(\llb \delta_k \rrb = \llb \delta_l \to \delta_{n + 1} \rrb\) \\
+				      \hline
+				      \sout{Л}               & \sout{Л}                     & \sout{И}                                                       \\
+				      \sout{Л}               & \sout{И}                     & \sout{И}                                                       \\
+				      \sout{И}               & \sout{Л}                     & \sout{Л}                                                       \\
+				      И                      & И                            & И                                                              \\
+			      \end{tabular}
+		      \end{center}
+		      Т.е. \(\llb \delta_{n + 1} \rrb = \text{И}\)
+	\end{enumerate}
+\end{proof}
+\begin{theorem}[о полноте]
+	Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+	\label{orgd48309d}
+\end{theorem}
+\begin{symb}
+	\[ [\beta]^\alpha \equiv \begin{cases}
+			\alpha      & \llb \beta \rrb = \text{И} \\
+			\neg \alpha & \llb \beta \rrb = \text{Л}
+		\end{cases}\]
+\end{symb}
+\begin{proof}
+	Фиксируем набор перменных из \(\alpha\): \(P_1, \dots, P_n\) \\
+	Рассмотрим \(\llb \alpha \rrb^{P_1 \coloneqq x_1, \dots P_n \coloneqq x_n} = \text{И}\).
+	Докажем, что \(\underbrace{[x_1]^{P_1},\dots,[x_n]^{P_n}}_\Delta \vdash [\alpha]^\alpha\). \\
+	\uline{Индукция} по длине формулы (по структуре) \\
+	\uline{База}: \(\alpha \equiv P_i\) \([P_i]^{P_i} \vdash [P_i]^{P_i}\) \\
+	\uline{Переход}: пусть \(\eta, \zeta\): \(\Delta \vdash [\eta]^\eta, \Delta \vdash [\zeta]^\zeta\). Покажем, что \(\Delta \vdash [\eta \star \zeta]^{\eta \star \zeta}\), где \(\star\) --- все свзяки \\
+	Используя \hyperref[orgef60dde]{лемму}: \(\vDash \alpha\), т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash [\alpha]^\alpha\). Но \(\llb \alpha \rrb = \text{И}\) при любой оценке, \\
+	т.е. \([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\) при всех \(x_i\) \\
+	\[ \left.\begin{matrix}
+			[x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, P_n \vdash \alpha \\
+			[x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}}, \neg P_n \vdash \alpha
+		\end{matrix}\right| \xRightarrow{\text{лемма}} [x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n - 1}} \vdash \alpha\]
+\end{proof}
+\begin{lemma}
+	\-
+	\begin{itemize}
+		\item \(\Gamma, \eta \vdash \zeta\)
+		\item \(\Gamma, \neg \eta \vdash \zeta\)
+	\end{itemize}
+	\uline{Тогда} \(\Gamma \vdash \zeta\)
+	\label{orgef60dde}
+\end{lemma}
+\begin{lemma}
+	\([x_1]^{P_1},\dots,[x_n]^{P_n} \vdash \alpha\), то \([x_1]^{P_1},\dots,[x_{n - 1}]^{P_{n- 1}} \vdash \alpha\)
+	\label{org0080726}
+\end{lemma}
+\section{Интуиционистская логика}
+\label{sec:orgd1fa5a3}
+\(A \vee B\) --- плохо
+\begin{examp}
+	Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
+	Пусть \(a = b = \sqrt{2}\). Рассмотрим \(\sqrt{2}^{\sqrt{2}} \in \R \setminus \mathbb{Q}\)
+	\begin{itemize}
+		\item Если нет, то ОК
+		\item Если да, то возьмем \(a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}\), \(a^b = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{2} = 2\)
+	\end{itemize}
+\end{examp}
+\begin{defintion}
+	ВНК-интерпретация. \(\alpha, \beta\)
+	\begin{itemize}
+		\item \(\alpha \& \beta\) --- есть \(\alpha, \beta\)
+		\item \(\alpha \vee \beta\) --- есть \(\alpha\) либо \(\beta\) и мы знаем какое
+		\item \(\alpha \to \beta\) --- есть способ перестроить \(\alpha\) в \(\beta\)
+		\item \(\perp\) --- конструкция без построения \(\neg \alpha \equiv \alpha \to \perp\)
+	\end{itemize}
+\end{defintion}
+\end{document}

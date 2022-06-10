@@ -1,0 +1,1614 @@
+% Created 2022-06-11 Sat 01:26
+% Intended LaTeX compiler: pdflatex
+
+\documentclass[english]{article}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[english, russian]{babel}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titling}
+\usepackage{grffile}
+\usepackage{extarrows}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{lipsum}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{svg}
+\usepackage{capt-of}
+\usepackage{cmll}
+\newcommand{\gedel}[1]{\custombracket{\ulcorner}{\urcorner}{#1}}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,top=2cm,right=2.5cm,bottom=2cm,marginparsep=7pt, marginparwidth=.6in}
+\input{~/.emacs.d/preamble.sty}
+\author{Ilya Yaroshevskiy}
+\date{\today}
+\title{Вопросы к зачету}
+\hypersetup{
+	pdfauthor={Ilya Yaroshevskiy},
+	pdftitle={Вопросы к зачету},
+	pdfkeywords={},
+	pdfsubject={},
+	pdfcreator={Emacs 28.1 (Org mode 9.5.3)},
+	pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\renewcommand{\P}{\mathcal{P}}
+
+
+\section{Топология}
+\label{sec:orgeb79e4c}
+\subsection{Топологическое пространство, открытое и замкнутое множество}
+\label{sec:orgbde94b4}
+\begin{definition}
+	Рассмотрим множество \(X\) --- \textbf{носитель}. Рассмотрим \(\Omega \subseteq 2^X\) --- подмножество подмножеств \(X\) --- \textbf{топология}.
+	\begin{enumerate}
+		\item \(\bigcup X_i \in \Omega\), где \(X_i \in \Omega\)
+		\item \(X_1 \cap \dots \cap X_n \in \Omega\), если \(X_i \in \Omega\)
+		\item \(\emptyset, X \in \Omega\)
+	\end{enumerate}
+	\label{orgfa61403}
+\end{definition}
+\subsection{Внутренность и замыкание множества}
+\label{sec:org12becc3}
+\begin{definition}
+	\[ (X)^\circ = \text{наиб.}\{w \big| w \subseteq X, w\text{ --- откр.} \} \]
+	\label{org35bd421}
+\end{definition}
+\begin{definition}
+	\textbf{Замыкание} X --- \(\overline{X} = \text{наим.}\{A \not\in \Omega \big| X \subseteq A \}\)
+\end{definition}
+\subsection{Топология стрелки}
+\label{sec:org0f76dfb}
+\begin{theorem}
+	\-
+	\begin{itemize}
+		\item \(a + b = a \cup b\)
+		\item \(a \cdot b = a \cap b\)
+		\item \(a \to b = \left((X \setminus a) \cup b\right)^\circ\)
+		\item \(a \le b\) тогда и только тогда, когда \(a \subseteq b\)
+	\end{itemize}
+	\uline{Тогда} \(\langle \Omega, \le \rangle\) --- алгебра Гейтинга
+	\label{org945182c}
+\end{theorem}
+\subsection{Дискретная топология}
+\label{sec:org334d0d7}
+\begin{examp}
+	Дискретная топология: \(\Omega = 2^X\) --- любое множество открыто. Тогда \(\langle \Omega, \le \rangle\) --- булева алгебра
+	\label{org09f2aac}
+\end{examp}
+\subsection{Топология на частично упорядоченном множестве}
+\label{sec:org4927813}
+Топология на частично упорядоченном множестве \(\langle \Omega, \le \rangle\) --- булева алгебра, где \(\Omega\) --- дискретная топология
+\subsection{Индуцированная топология}
+\label{sec:org1b1221e}
+\begin{definition}
+	\textbf{Индуцированная топология} на подпространстве \(\langle X, \Omega \rangle\) --- топлогия. Пусть \(Y \subset X\). Определим \(\Omega_Y\) --- семейство подмножеств \(Y\) так:
+	\[ \Omega_Y = \{U \cap Y \big| U \in \Omega\} \]
+	\(\Omega_Y\) --- индуцированная топология на подпространстве \(Y\).
+\end{definition}
+\subsection{Связность}
+\label{sec:org36f443c}
+Будем говорить, что топологическое пространство \(\pair{X, \Omega}\) \textbf{связно}, если нет таких открытых множеств \(A\) и \(B\), что \(X = A \cup B\), но \(A \cap B = \varnothing\)
+\section{Исчисление высказываний}
+\label{sec:orgc48a275}
+\subsection{Метапеременные, пропозициональные переменные, Высказывания}
+\label{sec:org92f2e71}
+\subsubsection{Язык}
+\label{sec:org84afb1c}
+\begin{enumerate}
+	\item Пропозициональные переменные \\
+	      \(A'_i\) --- большая буква начала латинского алфавита
+	\item Связки \\
+	      \(\underbrace{\alpha}_\text{\color{green}метапеременная}, \beta\) --- высказывания \\
+	      Тогда \((\alpha \to \beta),(\alpha \& \beta),(\alpha \vee \beta), (\neg \alpha)\) --- высказывания
+\end{enumerate}
+\subsubsection{Мета и предметные}
+\label{sec:org38f6ee8}
+\begin{itemize}
+	\item \(\alpha, \beta, \gamma, \dots, \varphi, \psi, \dots\) --- метапеременные для выражений
+	\item \(X, Y, Z\) --- метапеременные для предметных переменные
+\end{itemize}
+Метавыражение: \(\alpha \to \beta\) \\
+Предметное выражение: \(A \to (A \to A)\) (заменили \(\alpha\) на \(A\), \(\beta\) на \((A \to A)\) )
+\begin{examp}
+	Черным --- предметные выражения, Синим --- метавыражения
+	\[ (\color{blue}X \color{black}\to\color{blue} Y\color{black})\color{blue}[X \coloneqq A, Y \coloneqq B] \color{black} \equiv A \to B \]
+	\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq A, X \coloneqq B] \equiv \color{black} A \to (A \to B) \]
+	\[ (\color{blue}\alpha \color{black} \to (A \to \color{blue}X \color{black}))\color{blue}[\alpha \coloneqq (A \to P), X \coloneqq B] \equiv \color{black} (A \to P) \to (A \to B) \]
+\end{examp}
+\subsection{Схемы аксиом, доказуемость}
+\label{sec:org08a8b75}
+\subsubsection{Теория доказательств}
+\label{sec:org5ad6dcb}
+\begin{definition}
+	\textbf{Схема высказывания} --- строка соответсвующая определению высказывания, с:
+	\begin{itemize}
+		\item метапеременными \(\alpha, \beta, \dots\)
+	\end{itemize}
+\end{definition}
+\begin{definition}
+	Аксиома --- высказывания:
+	\begin{enumerate}
+		\item \(\alpha \to (\beta \to \alpha)\)
+		\item \((\alpha \to \beta) \to (\alpha \to \beta \to \gamma) \to (\alpha \to \gamma)\)
+		\item \(\alpha \to \beta \to \alpha \& \beta\)
+		\item \(\alpha \& \beta \to \alpha\)
+		\item \(\alpha \& \beta \to \beta\)
+		\item \(\alpha \to \alpha \vee \beta\)
+		\item \(\beta \to \alpha \vee \beta\)
+		\item \((\alpha \to \gamma) \to (\beta \to \gamma) \to (\alpha \vee \beta \to \gamma)\)
+		\item \((\alpha \to \beta) \to (\alpha \to \neg \beta) \to \neg \alpha\)
+		\item \(\neg\neg \alpha \to \alpha\)
+	\end{enumerate}
+\end{definition}
+\subsection{Правило Modus Ponens, доказательство, вывод из гипотез}
+\label{sec:orgfdaa039}
+\subsubsection{Правило Modus Ponens и доказательство}
+\label{sec:org79e4dd3}
+\begin{definition}
+	\textbf{Доказательство} (вывод) --- последовательность высказываний \(\alpha_1, \dots, \alpha_n\), где \(\alpha_i\):
+	\begin{itemize}
+		\item аксиома
+		\item существует \(k, l < i\), что \(\alpha_k = \alpha_l \to \alpha\) \\
+		      \[ \frac{A,\ A \to B}{B} \]
+	\end{itemize}
+\end{definition}
+\begin{examp}
+	\(\vdash A \to A\)
+	\begin{center}
+		\begin{tabular}{r|ll}
+			1 & \(A \to A\ \to A\)                                              & (схема аксиом 1) \\
+			2 & \(A \to (A \to A) \to A\)                                       & (схема аксиом 1) \\
+			3 & \((A \to (A \to A)) \to (A \to (A \to A) \to A) \to (A \to A)\) & (схема аксиом 2) \\
+			4 & \((A \to (A \to A) \to A) \to (A \to A)\)                       & (M.P. 1 и 3)     \\
+			5 & \(A \to A\)                                                     & (M.P. 2 и 4)     \\
+		\end{tabular}
+	\end{center}
+\end{examp}
+\begin{definition}
+	Доказательством высказывания \(\beta\) --- список высказываний \(\alpha_1, \dots, \alpha_n\)
+	\begin{itemize}
+		\item \(\alpha_1, \dots, \alpha_n\) --- доказательство
+		\item \(\alpha_n \equiv \beta\)
+	\end{itemize}
+\end{definition}
+\subsection{Множество истинностных значений, модель (оценка перменных), Оценка высказывания}
+\label{sec:orgc57050a}
+\subsubsection{Теория моделей}
+\label{sec:org778ecb4}
+\begin{itemize}
+	\item \(\mathcal{P}\) --- множество предметных переменных
+	\item \(\llb\cdot\rrb: \mathcal{T} \to V\), где \(\mathcal{T}\) --- множество высказываний, \(V = \{\text{И}, \text{Л}\}\) --- множество истиностных значений
+\end{itemize}
+
+
+
+\begin{enumerate}
+	\item \(\llb x \rrb: \mathcal{P} \to V\) --- задается при оценке \\
+	      \(\llb \rrb^{A \coloneqq v_1, B \coloneqq v_2}\):
+	      \begin{itemize}
+		      \item \(\mathcal{P} = v_1\)
+		      \item \(\mathcal{P} = v_2\)
+	      \end{itemize}
+	\item \(\llb \alpha \star \beta \rrb = \llb \alpha \rrb \color{blue}\underbrace{\star}_{\substack{\text{определенно} \\ \text{ественным образом}}}\color{black} \llb \beta \rrb\), где \(\star \in [\&, \vee, \neg, \to]\)
+	      \begin{examp}
+		      \[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} \color{blue}\to\color{black}\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = \color{blue} \text{И} \to \text{И} = \text{И} \]
+		      Также можно записать так:
+		      \[ \llb A \to A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}} = f_\to(\llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}, \llb A \rrb^{A \coloneqq \text{И}, B \coloneqq \text{Л}}) = f_\to(\color{blue} \text{И}\color{black} , \color{blue}\text{И}\color{black}) \color{blue}= \text{И} \]
+		      , где \(f_\to\) определена так:
+		      \begin{center}
+			      \begin{tabular}{ll|l}
+				      \(a\) & \(b\) & \(f_\to\) \\
+				      \hline
+				      И     & И     & И         \\
+				      И     & Л     & Л         \\
+				      Л     & И     & И         \\
+				      Л     & Л     & И         \\
+			      \end{tabular}
+		      \end{center}
+	      \end{examp}
+\end{enumerate}
+\subsection{Общезначимость}
+\label{sec:orgf1c9cbd}
+\begin{examp}
+	\(\vDash \alpha\) --- \(\alpha\) общезначимо
+	\label{orge0e70e0}
+\end{examp}
+\subsection{Выполнимость}
+\label{sec:org8c158aa}
+Существует оценка, при которой высказывание истинно
+\subsection{Невыполнимость}
+\label{sec:org6dcfbc2}
+Отрицание выполнимости
+\subsection{Следование}
+\label{sec:org2ab57cb}
+\begin{definition}
+	Следование: \(\Gamma \vDash \alpha\), если
+	\begin{itemize}
+		\item \(\Gamma = \gamma_1, \dots, \gamma_n\)
+		\item Всегда когда все \(\llb \gamma_i \rrb = \text{И}\), то \(\llb \alpha \rrb = \text{И}\)
+	\end{itemize}
+	\label{org575b0c6}
+\end{definition}
+\subsection{Корректность}
+\label{sec:org376064f}
+\begin{definition}
+	\sout{Теория} Исчисление высказываний корректна, если при любом \(\alpha\) из \(\vdash \alpha\) следует \(\vDash \alpha\)
+	\label{org854d420}
+\end{definition}
+\subsection{Полнота}
+\label{sec:orgc7ec7f4}
+\begin{definition}
+	Исчисление полно, если при любом \(\alpha\) из \(\vDash \alpha\) следует \(\vdash \alpha\)
+	\label{orgba22909}
+\end{definition}
+\subsection{Противоречивость}
+\label{sec:orgf6e51e8}
+\begin{definition}
+	Множество формул \(\Gamma\) \textbf{противоречиво}, если для некоторой
+	формулы \(\alpha\) имеем \(\Gamma \vdash \alpha\) и \(\Gamma \vdash
+	\neg \alpha\)
+\end{definition}
+\subsection{Теорема о дедукции}
+\label{sec:orgaada355}
+\begin{theorem}[о дедукции]
+	\(\Gamma, \alpha \vdash \beta\) \uline{тогда и только тогда, когда} \(\Gamma \vdash \alpha \to \beta\)
+	\label{orgbde7405}
+\end{theorem}
+\subsection{Теорема о корректности}
+\label{sec:orgd30540b}
+\begin{theorem}[о корректности]
+	Пусть \(\vdash \alpha\) \\
+	\uline{Тогда} \(\vDash \alpha\)
+	\label{org9f0e354}
+\end{theorem}
+\subsection{Теорема о полноте ИВ}
+\label{sec:org0a34fde}
+\begin{theorem}[о полноте]
+	Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+	\label{org5302bee}
+\end{theorem}
+\section{Интуиционистское исчисление высказываний}
+\label{sec:org28bcdef}
+Отличается от ИВ 10-ой схемой аксиом: вместо \(\neg \neg \alpha \to \alpha\) стало \(\alpha \to \neg \alpha \to \beta\)
+\subsection{Закон исключенного третьего}
+\label{sec:orgccb9d6f}
+\[ \vdash A \vee \neg A \]
+\subsection{Закон снятия двойного отрицания}
+\label{sec:org7bcbb15}
+\[ \vdash \neg\neg A \to A \]
+\subsection{Закон Пирса}
+\label{sec:org985dda5}
+\[ \vdash ((A \to B) \to A) \to A \]
+\subsection{ВНК-интерпретация логических связок}
+\label{sec:org5e0e9af}
+\subsubsection{Интуиционистская логика}
+\label{sec:orgcc7646d}
+\(A \vee B\) --- плохо
+\begin{examp}
+	Докажем: существует \(a, b\), что \(a, b \in \R \setminus \mathbb{Q}\), но \(a^b \in \mathbb{Q}\) \\
+	Пусть \(a = b = \sqrt{2}\). Рассмотрим \(\sqrt{2}^{\sqrt{2}} \in \R \setminus \mathbb{Q}\)
+	\begin{itemize}
+		\item Если нет, то ОК
+		\item Если да, то возьмем \(a = \sqrt{2}^{\sqrt{2}}, b = \sqrt{2}\), \(a^b = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{2} = 2\)
+	\end{itemize}
+\end{examp}
+\begin{defintion}
+	ВНК-интерпретация. \(\alpha, \beta\)
+	\begin{itemize}
+		\item \(\alpha \& \beta\) --- есть \(\alpha, \beta\)
+		\item \(\alpha \vee \beta\) --- есть \(\alpha\) либо \(\beta\) и мы знаем какое
+		\item \(\alpha \to \beta\) --- есть способ перестроить \(\alpha\) в \(\beta\)
+		\item \(\perp\) --- конструкция без построения \(\neg \alpha \equiv \alpha \to \perp\)
+	\end{itemize}
+\end{defintion}
+\subsection{Теорема Гливенко}
+\label{sec:org6b650dd}
+\begin{theorem}
+	Обозначим доказуемость высказывания \(\alpha\) в классической логике как \(\vdash_{\text{к}} \alpha\), а в интуицонистской как \(\vdash_{\text{и}}\). Оказывается возможным показать, что какое бы ни было \(\alpha\), если \(\vdash_{\text{к}} \alpha\), то \(\vdash_{\text{и}} \neg\neg \alpha\)
+\end{theorem}
+\subsection{Решетка}
+\label{sec:org03ce24e}
+\begin{definition}
+	Фиксируем \(A\) \\
+	Частичный порядок --- антисимметричное, транзитивное, рефлексивное отношение \\
+	Линейный --- сравнимы любые 2 элемента \\
+	\begin{itemize}
+		\item \(a \le b \vee b \le a\)
+		\item \textbf{Наименьший элемент} \(S\) --- такой \(k \in S\), что если \(x \in S\), то \(k \le x\)
+		\item \textbf{Минимальный элемент} \(S\) --- такой \(k \in S\), что нет \(x \in S\), что \(x \le k\)
+	\end{itemize}
+	\label{org98a83aa}
+\end{definition}
+\begin{definition}
+	\-
+	\begin{itemize}
+		\item \textbf{Множество верхних граней} \(a\) и \(b\): \(\{x \big| a \le x \& b \le x\}\)
+		\item \textbf{Множество нижних граней} \(a\) и \(b\): \(\{x \big| x \le a \& x \le b\}\)
+	\end{itemize}
+	\label{org7193a41}
+\end{definition}
+\begin{definition}
+	\-
+	\begin{itemize}
+		\item \textbf{\(a + b\)} --- нименьший элемент множества верхних граней
+		\item \textbf{\(a \cdot b\)} --- наибольший элемент множества нижних граней
+	\end{itemize}
+	\label{orgc83c072}
+\end{definition}
+\begin{definition}
+	\textbf{Решетка} = \(\langle A, \le \rangle\) --- структура, где для каждых \(a, b\) есть как \(a + b\), так и \(a \cdot b\), \\
+	т.е. \(a \in A, b \in B \implies a + b \in A\) и \(a \cdot b \in A\)
+	\label{org74d6e99}
+\end{definition}
+\subsection{Дистрибутивная решетка}
+\label{sec:orgc5109eb}
+\begin{definition}
+	\textbf{Дистрибутивная решетка} если всегда  \(a \cdot (b + c) = a \cdot b + a \cdot c\)
+	\label{orgd41d985}
+\end{definition}
+\begin{lemma}
+	В дистрибутивной решетке \(a + b\cdot c = (a + b) \cdot(a + c)\)
+	\label{org1bc351e}
+\end{lemma}
+\subsection{Импликативная решетка}
+\label{sec:orgf386636}
+\begin{definition}
+	\textbf{Псевдодополнение} \(a \to b = \text{наиб.}\{c \big| a \cdot c \le b\}\)
+	\label{org224aedd}
+\end{definition}
+\begin{definition}
+	\textbf{Импликативная решетка} --- решетка, где для любых \(a, b\) есть \(a \to b\)
+	\label{org889260d}
+\end{definition}
+\begin{definition}
+	\textbf{0} --- наименьший элемент решетки, \textbf{1} --- наибольший элемент решетки
+	\label{orgb9c8891}
+\end{definition}
+\begin{lemma}
+	В импликативной решетке всегда есть \(1\).
+	\label{orgc4618e6}
+\end{lemma}
+\begin{lemma}
+	Импликативная решетка дистрибутивна
+\end{lemma}
+\subsection{Алгебра Гейтинга}
+\label{sec:org1214ac6}
+\begin{definition}
+	\textbf{Псевдобулева алгебра (алгебра Гейтинга)} --- импликативная решетка с \(0\)
+	\label{org05378cc}
+\end{definition}
+\begin{theorem}
+	Любая алгебра Гейтинга --- модель ИИВ
+	\label{orgf0f6370}
+\end{theorem}
+\begin{examp}
+	см. \ref{sec:org0f76dfb}
+\end{examp}
+\begin{definition}
+	\textbf{Гомоморфизм} алгебр Гейтинга \\
+	\begin{itemize}
+		\item \(\varphi: \A \to \B\)
+		\item \(\varphi(a \star b) = \varphi(a)\star\varphi(b)\)
+		\item \(\varphi(1_\A) = 1_\B\)
+		\item \(\varphi(0_\A) = 0_\B\)
+	\end{itemize}
+	\label{org06d9dd0}
+\end{definition}
+\begin{theorem}
+	\(a \le b\), то \(\varphi(a) \le \varphi(b)\)
+	\label{org91b7505}
+\end{theorem}
+\begin{definition}
+	\-
+	\begin{itemize}
+		\item \(\alpha\) --- формула ИИВ
+		\item \(f, g\): оценки ИИВ
+		\item \(f\): ИИВ \(\to\) \(\A\)
+		\item \(g\): ИИВ \(\to\) \(\B\)
+	\end{itemize}
+	\(\varphi\) согласована с \(f, g\), если \(\varphi(f(\alpha)) = g(\alpha)\)
+	\label{orgde651bd}
+\end{definition}
+\begin{theorem}
+	если \(\varphi: \A \to \B\) согласована с \(f, g\) и оценка \(\llbracket \alpha \rrbracket_g \neq 1_\B\), то \(\llbracket \alpha \rrbracket_f \neq 1_\A\)
+	\label{org52e6d4c}
+\end{theorem}
+\begin{theorem}
+	Алгебра Гейтинга --- полная модель ИИВ
+	\label{orgaaa3ca9}
+\end{theorem}
+\subsection{Булева алгебра}
+\label{sec:orgcbe9b2d}
+\begin{definition}
+	\textbf{Булева алгебра} --- псевдобулева алгебра, такая что \(a + (a \to 0) = 1\)
+	\label{org85be37c}
+\end{definition}
+\begin{examp}
+	см. \ref{sec:org334d0d7}
+\end{examp}
+\begin{examp}
+	\-
+	\begin{center}
+		\begin{tikzpicture}
+			\node (A) at (0, 0) {\(1\)};
+			\node (B) at (-1, -1) {\(a\)};
+			\node (C) at (1, -1) {\(b\)};
+			\node (D) at (0, -2) {\(0\)};
+			\draw[->] (A) -- (B);
+			\draw[->] (A) -- (C);
+			\draw[->] (B) -- (D);
+			\draw[->] (C) -- (D);
+		\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\item \(a \cdot 0 = 0\)
+		\item \(1\cdot b = b\)
+		\item \(a \cdot b = 0\)
+		\item \(a + b = 1\)
+		\item \(a \to b = \text{наиб.}\{x \big| a\cdot x \le b\} = b\) \\
+		      \(\{x \big| a \cdot x \le \} = \{0, b\}\)
+		\item \(a \to 1 = 1\)
+		\item \(a \to 0 = 0\)
+	\end{itemize}
+	Можем представить в виде пары \(\langle x, y \rangle\)
+	\begin{itemize}
+		\item \(a = \langle 1, 0 \rangle\)
+		\item \(b = \langle 0 , 1\rangle\)
+		\item \(1 = \langle 1, 1 \rangle\)
+		\item \(0 = \langle 0, 0 \rangle\)
+	\end{itemize}
+	\label{orgad69fc5}
+\end{examp}
+\begin{theorem}
+	Любая булева алгебра --- модель КИВ
+	\label{org0586fb8}
+\end{theorem}
+\subsection{Геделева алгебра}
+\label{sec:org3bbc5e6}
+\begin{definition}
+	Гёделева алгебра --- алгебра Гейтинга, такая что из \(\alpha + \beta = 1\) следует что \(\alpha = 1\) или \(\beta = 1\) \\
+	\label{orgbcbdbfb}
+\end{definition}
+\subsection{Операция \(\Gamma(A)\)}
+\label{sec:org93faad6}
+\begin{definition}
+	Пусть \(\A\) --- алгебра Гейтинга, тогда:
+	\begin{enumerate}
+		\item \(\Gamma(\A)\) \\
+		      \begin{center}
+			      \begin{tikzpicture}
+				      \draw (-1, 0) circle[radius=0.5cm] node {\(\A\)};
+				      \draw (1, 0) circle[radius=0.5cm] node {\(\A\)};
+				      \node (0, 0) {\(\Rightarrow\)};
+				      \draw (-1, 0.5) circle[radius=1pt,fill=black] node[above] {\(1\)};
+				      \draw (1, 0.5) circle[radius=1pt,fill=black] node[above right] {\(\omega\)};
+				      \draw (1, 1.5) circle[radius=1pt,fill=black] node[above] {\(1\)};
+				      \draw (1, 1.5) -- (1, 0.5);
+			      \end{tikzpicture}
+		      \end{center}
+
+		      Добавим новый элемент \(1_{\Gamma(\A)}\) переименуем \(1_\A\) в  \(\omega\)
+	\end{enumerate}
+	\label{orgc5bc136}
+\end{definition}
+\begin{theorem}
+	\-
+	\begin{itemize}
+		\item \(\Gamma(\A)\) --- алгебра Гейтинга
+		\item \(\Gamma(\A)\) --- Геделева
+	\end{itemize}
+	\label{orgf9f585b}
+\end{theorem}
+\subsection{Алгебра Линденбаума}
+\label{sec:org7bda8f6}
+\begin{definition}
+	\(X\) --- все формулы логики
+	\begin{itemize}
+		\item \(\alpha \le \beta\) --- это \(\alpha \vdash \beta\)
+		\item \(\alpha \approx \beta\), если \(\alpha \vdash \beta\) и \(\beta \vdash \alpha\)
+		\item \([\alpha]_\approx = \{\gamma \big| \gamma \approx \alpha\}\) --- класс эквивалентности
+		\item \(X/_\approx = \{[\alpha]_\approx \big| \alpha \in X\}\)
+	\end{itemize}
+	\(\pair{X/_\approx, \le}\) --- алгебра Гейтинга
+	\label{org2400208}
+\end{definition}
+\begin{property}
+	\(\langle X/_\approx, \le \rangle\) --- алгебра Линденбаума, где \(X, \approx\) --- из интуиционистской логики
+	\label{orgf09abb3}
+\end{property}
+\subsection{Свойство дизъюнктивности ИИВ}
+\label{sec:orgd1d6009}
+\begin{definition}
+	\textbf{Дизъюнктивность} ИИВ: \(\vdash \alpha \vee \beta\) влечет \(\vdash \alpha\) или \(\vdash \beta\)
+	\label{org5d06441}
+\end{definition}
+\begin{theorem}
+	ИИВ дизъюнктивно
+	\label{org2fb66c7}
+\end{theorem}
+\subsection{Свойство нетабличности ИИВ}
+\label{sec:org73ba29e}
+\begin{definition}
+	Назовем модель \textbf{табличной} для ИИВ:
+	\begin{itemize}
+		\item \(V\) --- множество истинностных значений \\
+		      \(f_\to,f_\&, f_V: V^2 \to V\), \(f_\neg: V \to V\) \\
+		      Выделенные значения \(T \in V\) \\
+		      \(\llbracket p_i \rrbracket \in V\) \(f_\P : p_i \to V\)
+		\item \(\eval{p_i} = f_\P(p_i)\) \\
+		      \(\llbracket\alpha \star \beta\rrbracket = f_\star(\llbracket\alpha\rrbracket, \llbracket\beta\rrbracket)\) \\
+		      \(\llbracket\neg \alpha\rrbracket = f_\neg(\llbracket\alpha\rrbracket)\)
+	\end{itemize}
+	\sout{Если \(\vdash \alpha\), то} \(\vDash \alpha\) означает, что \(\llbracket\alpha\rrbracket = T\), при любой \(f_\P\)
+	\label{orgdc4e189}
+\end{definition}
+\begin{theorem}
+	У ИИВ не существует полной конечной табличной модели
+	\label{org04f64c1}
+\end{theorem}
+\subsection{Модель Крипке, Вынужденность}
+\label{sec:org935e1af}
+\begin{defintion}
+	\-
+	\begin{enumerate}
+		\item \(W = \{W_i\}\) --- множество миров
+		\item частичный порядок(\(\succeq\))
+		\item отношение вынужденности: \(W_j \Vdash p_i\) \\
+		      \((\Vdash)  \subseteq W \times \P\) \\
+		      При этом, если \(W_j \Vdash p_i\) и \(W_j \preceq W_k\), то \(W_k \Vdash p\)
+	\end{enumerate}
+	\label{org70d4cdc}
+\end{defintion}
+\begin{definition}
+	\-
+	\begin{enumerate}
+		\item \(W_i \Vdash \alpha\) и \(W_i \Vdash \beta\), тогда (и только тогда) \(W_i \Vdash \alpha \& \beta\) \\
+		\item \(W_i \Vdash \alpha\) или \(W_i \Vdash \beta\), то \(W_i \Vdash \alpha \vee \beta\)
+		\item Пусть во всех \(W_i \preceq W_j\) всегда когда \(W_j \Vdash \alpha\) имеет место \(W_j \Vdash \beta\) \\
+		      Тогда \(W_i \Vdash \alpha \to \beta\)
+		\item \(W_i \Vdash \neg \alpha\) --- \(\alpha\) не вынуждено нигде, начиная с \(W_i\):
+		      \(W_i \preceq W_j\), то \(W_j \not\Vdash \alpha\)
+	\end{enumerate}
+	\label{org8f1edec}
+\end{definition}
+\begin{theorem}
+	Если \(W_i \Vdash \alpha\) и \(W_i \preceq W_j\), то \(W_j \Vdash \alpha\)
+	\label{org15974c2}
+\end{theorem}
+\begin{definition}
+	Если \(W_i \Vdash \alpha\) при всех \(W_i \in W\), то \(\vDash \alpha\)
+	\label{org2a4be2d}
+\end{definition}
+\begin{theorem}
+	ИИВ корректна в модели Крипке
+	\label{orgdaed82d}
+\end{theorem}
+\section{Исчиление предикатов}
+\label{sec:org8ea33d6}
+\subsection{Предикатные и функциональные символы, константы и пропозициональные переменные}
+\label{sec:orgab4f820}
+\begin{definition}
+	Язык исчисления предикатов
+	\begin{itemize}
+		\item логические выражения ``предикаты``/``формулы``
+		\item предметные выражния ``термы``
+	\end{itemize}
+	\(\Theta\) --- метаперменные для термов \\
+	Термы:
+	\begin{itemize}
+		\item Атомы:
+		      \begin{itemize}
+			      \item \(a, b, c, d, \dots\) --- предметные переменные
+			      \item \(x, y, z\) --- метапеременные для предметных перменных
+		      \end{itemize}
+		\item Функциональные Символы
+		      \begin{itemize}
+			      \item \(f, g, h\) --- Функциональные символы(метаперемнные)
+			      \item \(f(\Theta_1, \dots \Theta_n)\) --- применение функциональных символов
+		      \end{itemize}
+		\item Логические выражения: \\
+		      \color{gray}Если \(n = 0\), будем писать \(f, g\) --- без скобок\color{black}
+		      \begin{itemize}
+			      \item \(P\) --- метаперменные для предикатных символов
+			      \item \(A, B, C\) --- предикатный символ
+			      \item \(P(\Theta_1, \dots, \Theta_n)\) --- применение предикатных символов
+			      \item \(\&, \vee, \neg, \to\) --- Cвязки
+			      \item \(\forall x.\varphi\) и \(\exists x.\varphi\) --- кванторы \\
+			            \color{gray}``<квантор> <переменная>.<выражение>``\color{black} \\
+		      \end{itemize}
+	\end{itemize}
+	\label{orgfbe9308}
+\end{definition}
+\subsubsection{Теория моделей}
+\label{sec:org7baf089}
+Оценка формулы в исчислении предикатов:
+\begin{enumerate}
+	\item Фиксируем \(D\) --- предметное множетво
+	\item Кажодму \(f_i(x_1, \dots, x_n)\) сопоставим функцию \(D^n \to D\)
+	\item Каждому \(P_j(x_1, \dots, x_m)\) сопоставим функцию(предикат) \(D^2 \to V\)
+	\item Каждой \(x_i\) сопоставим элемент из \(D\)
+\end{enumerate}
+\begin{examp}
+	\[\forall x.\forall y.\ E(x, y)\]
+	Чтобы определить формулу сначала определим \(D = \N\)
+	\[ E(x, y) = \begin{cases}\text{И} & ,x = y \\ \text{Л} &, x\neq y\end{cases} \]
+	\begin{itemize}
+		\item \(\llbracket x \rrbracket = f_{x_i}\)
+		\item \(\llbracket \alpha \star \beta \rrbracket\) --- смотри ИИВ
+		\item \(\llbracket P_i(\Theta_1, \dots , \Theta_n) \rrbracket = f_{P_i}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
+		\item \(\llbracket f_j(\Theta_1 , \dots, \Theta_n ) \rrbracket = f_{f_j}(\llbracket \Theta_1 \rrbracket, \dots, \llbracket \Theta_n \rrbracket)\)
+		\item \[ \llbracket \forall x. \varphi \rrbracket = \begin{cases} \text{И} & , \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И}\text{ при всех } k \in D  \\ \text{Л} &,\text{иначе}\end{cases} \]
+		\item \[ \llbracket \exists x.\varphi \rrbracket = \begin{cases} \text{И} &, \text{если } \llbracket \varphi \rrbracket^{f_x = k} = \text{И при некотором } k \in D \\ \text{Л} &,\text{иначе} \end{cases} \]
+	\end{itemize}
+	\[ \llbracket \forall x.\forall y.E(x, y) \rrbracket = \text{Л} \]
+	т.к. \(\llbracket E(x, y) \rrbracket^{x:=1,\ y:=2} = \text{Л}\)
+\end{examp}
+\newcommand{\colorboxed}[2]{\,\color{#1}\fbox{\color{black}#2}\color{black}\,}
+
+\begin{examp}
+	\[ \forall \colorboxed{green}{\varepsilon > \colorboxed{blue}{0}}\ \exists N\ \forall \colorboxed{green}{\colorboxed{blue}{n} > \colorboxed{blue}{N}}\quad \colorboxed{green}{\colorboxed{blue}{|a_n - a|} < \colorboxed{blue}{\varepsilon}} \]
+	Синим отмечены функциональные конструкции(термы), зеленым предикатные
+	\[ \forall \varepsilon. (\varepsilon > 0) \to \exists N. \forall n. (n > N) \to (|a_n - a| < \varepsilon) \]
+	Обозначим:
+	\begin{itemize}
+		\item \((>)(a, b) = G(a, b)\) --- предикат
+		\item \(|\bullet|(a) = m_|(a)\)
+		\item \((-)(a, b) = m_-(a, b)\)
+		\item \(0() = m_0\)
+		\item \(a_\bullet(n) = m_a(n)\)
+	\end{itemize}
+	\[ \forall e. \colorboxed{green}{G(\colorboxed{blue}{e}, \colorboxed{blue}{m_0})} \to \exists n_0.\forall n. \colorboxed{green}{G(n, n_0)}\to \colorboxed{green}{G\bigg(e, \colorboxed{blue}{m_|\Big(m_- \big(m_a(n), a\big)\Big)}\bigg)} \]
+\end{examp}
+\subsection{Свободные и связанные вхождения предметных переменных в формулу}
+\label{sec:org8495f7c}
+\subsubsection{Вхождение}
+\label{sec:org56a14f1}
+\begin{examp}
+	\[ (P(\underset{1}{x}) \vee Q(\underset{2}{x})) \to (R(\underset{3}{x}) \& (\underbrace{\forall \underset{4}{x}. P_1(\underset{5}{x})}_{\text{область }\forall\text{ по }x})) \]
+	1, 2, 3 --- свободные, 5 --- связанное, по пермененной 4
+\end{examp}
+\begin{examp}
+	\[ \underbrace{\forall x. \forall y. \forall x. \forall y. \forall x. P(x)}_{\text{область }\forall\text{ по }x} \]
+	Здесь \(x\) в \(P(x)\) связано. \(x\) не входит свободно в эту формулу, потому что нет свободных вхождений
+\end{examp}
+\begin{definition}
+	Переменная \(x\) входит свободно если существует свободное вхождение
+\end{definition}
+\begin{definition}
+	Вхождение свободно, если не связано
+\end{definition}
+Можно относится к свободно входящим перменным как с перменным из библиотеки, т.е. мы не имеем права их переименовывать
+\begin{examp}
+	Некорректная формула
+	\begin{description}
+		\item[{\(\alpha_1\)}] \(x = 0 \to x = 0\)
+		\item[{\(\alpha_2\)}] \color{red}\((\exists x. x = 0) \to (x = 0)\) --- не доказано\color{black}
+		\item[{\(\alpha_2'\)}] \((\exists t. x = 0) \to (x = 0)\) --- (правило \(\exists\))
+	\end{description}
+\end{examp}
+\begin{examp}
+	\-
+	\begin{description}
+		\item[{\((n)\)}] \(x = 0 \to y = 0\) --- откуда то
+		\item[{\((n + 1)\)}] \((\exists x. x = 0) \to (y = 0)\) --- (правило \(\exists\))
+	\end{description}
+\end{examp}
+\subsubsection{Свободные подстановки}
+\label{sec:org5d02cb6}
+\begin{definition}
+	\(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\), если никакая свободная перменная в \(\Theta\) не станет связанной в \(\varphi[x := \Theta]\)
+\end{definition}
+\begin{definition}
+	\(\varphi[x := \Theta]\) --- "Заменить все свободные вхождения x в \(\varphi\) на \(\Theta\)"
+\end{definition}
+\begin{examp}
+	\[ (\forall x. \forall y. \forall x. P(x))[x := y] \equiv \forall x. \forall y. \forall x. P(x) \]
+\end{examp}
+\begin{examp}
+	\[ (P(x) \vee \forall x. P(x))[x := y] \equiv P(y) \vee \forall x. P(x) \]
+\end{examp}
+\begin{examp}
+	\[ (\forall y. x = y)\ [x := \underbrace{y}_{\equiv \Theta}] \equiv \forall y. \underset{1}{y} = y\]
+	\(FV(\Theta) = \{y\}\) --- свободные перменные в \(\Theta\). Вхождение \(y\) с номером 1 стало связанным
+\end{examp}
+\begin{examp}
+	\[ P(x) \& \forall y. x = y\ [x := y + z] \equiv P(y + z) \& \forall y. \underset{1}{y} + z = y \]
+	Здесь при подстановке вхождение \(y\) с номером 1 cтало связанным. \(x\) --- библиотечная функция, переименовали \(x\) во что-то другое.
+\end{examp}
+\subsection{Свобода для подстановки, Правила вывода для кванторов, аксиомы исчисления предикатов для кванторов, оценки и модели в исчислении предикатов}
+\label{sec:orge85d7cd}
+\subsubsection{Теория доказательств}
+\label{sec:org3787295}
+Все аксимомы И.В + M.P.
+\begin{description}
+	\item[{(cхема 11)}] \((\forall x. \varphi) \to \varphi[x:=\Theta]\)
+	\item[{(схема 12)}] \(\varphi[x:=\Theta]\to \exists x. \varphi\)
+\end{description}
+Если \(\Theta\) свободен для подстановки вместо \(x\) в \(\varphi\).
+\begin{definition}
+	\textbf{Свободен для подстановки} --- никакое свободное вхождение \(x\) в \(\Theta\) не станет связанным
+\end{definition}
+\begin{examp}
+	\-
+	\begin{minted}[frame=lines,linenos=true,mathescape]{c}
+  int y;
+  int f(int x) {
+          x = y;
+  }
+\end{minted}
+	Заменим \texttt{y := x}. Код сломается, т.к. у нас нет свобод для подстановки
+\end{examp}
+\begin{description}
+	\item[{(Правило \(\forall\))}] \[\frac{\varphi \to \psi}{\varphi \to \forall x. \psi}\]
+	\item[{(Правило \(\exists\))}] \[ \frac{\psi \to \varphi}{(\exists x.\psi) \to \varphi} \]
+\end{description}
+В обоих правилах \(x\) не входит свободно в \(\varphi\)
+\begin{examp}
+	\[ \frac{x = 5 \to x^2 = 25}{x = 5 \to \forall x. x^2 = 25} \]
+	Между \(x\) и \(x^2\) была связь, мы ее разрушили. Нарушено ограничение
+\end{examp}
+\begin{examp}
+	\[ \exists y. x = y \]
+	\[ \forall x. \exists y. x = y \to \exists y. y + 1 = y \]
+	Делаем замену \texttt{x := y+1}. Нарушено требование свобод для подстановки. \(y\) входит в область действия квантора \(\exists\) и поэтому свободная переменная \(x\) стала связанная.
+\end{examp}
+\subsection{Теорема о дедукции для исчисления предикатов}
+\label{sec:org54aeef3}
+\begin{theorem}
+	Пусть задана \(\Gamma,\ \alpha,\beta\)
+	\begin{enumerate}
+		\item Если \(\Gamma, \alpha \vdash \beta\), то \(\Gamma \vdash \alpha \to \beta\), при условии, если в доказательстве \(\Gamma, \alpha \vdash \beta\) не применялись правила для \(\forall, \exists\) по перменным, входяшим свободно в \(\alpha\)
+		\item Если \(\Gamma \vdash \alpha \to \beta\), то \(\Gamma, \alpha \vdash \beta\)
+	\end{enumerate}
+	\label{org9bc2177}
+\end{theorem}
+\subsection{Теорема о корректности для исчисления предикатов}
+\label{sec:org7e08a51}
+\begin{definition}[Условие для корректности]
+	Правила для кванторов по свободным перменным из \(\Gamma\) запрещены. \\
+	\uline{Тогда} \(\Gamma \vdash \alpha\) влечет \(\Gamma \vDash \alpha\)
+	\label{org8bf610f}
+\end{definition}
+\subsection{Полное множество (бескванторных) формул}
+\label{sec:org641e70f}
+\begin{definition}
+	\(\Gamma\) --- \textbf{непротиворечивое} множество формул, если \(\Gamma \not\vdash \alpha \& \neg \alpha\) ни при каком \(\alpha\)
+	\label{org3740c2c}
+\end{definition}
+\begin{definition}
+	Полное непротиворечивое замкнутых бескванторных формул --- такое, что для каждой замкнутой бескванторной формулы \(\alpha\): либо \(\alpha \in \Gamma\), либо \(\neg \alpha \in \Gamma\)
+	\label{org2677d0c}
+\end{definition}
+\begin{theorem}
+	Если \(\Gamma\) --- непротиворечивое множество з.б. фомул и \(\alpha\) --- з.б.  формула. \\
+	То либо \(\Gamma \cup \{\alpha\}\), либо \(\Gamma \cup \{\neg \alpha\}\) --- непр. мн. з.б. формул
+	\label{org9fdb16c}
+\end{theorem}
+\begin{theorem}
+	Если \(\Gamma\) --- непр. мн. з.б. фомул, то можно построить \(\Delta\) --- полное непр. мн. з.б. формул. \(\Gamma \subseteq \Delta\) и в языке --- счетное количество формул
+	\label{org572fd1d}
+\end{theorem}
+\begin{definition}
+	\(\varphi_1, \varphi_2, \varphi_3, \dots\) --- формулы з.б. \\
+	\begin{itemize}
+		\item \(\Gamma_0 = \Gamma\)
+		\item \(\Gamma_1 = \Gamma_0 \cup \{\varphi_1\}\) либо \(\Gamma_0 \cup \{\neg \varphi_1\}\) --- смотря что непротиворечивое
+		\item \(\Gamma_2 = \Gamma_1 \cup \{\varphi_2\}\) либо \(\Gamma_1 \cup \{\neg \varphi_2\}\)
+	\end{itemize}
+	\[ \Gamma^* = \bigcup_i \Gamma_i \]
+	\label{org7e5c24c}
+\end{definition}
+\begin{property}
+	\(\Gamma^*\) --- полное
+	\label{org13d2bf2}
+\end{property}
+\begin{property}
+	\(\Gamma^*\) --- непротиворечивое
+	\label{orgcee8aa7}
+\end{property}
+\begin{theorem}
+	Любое полное непротиворечивое множество замкнутых бескванторных формул \(\Gamma\) имеет модель, т.е. существует оценка \(\llbracket \rrbracket\): если \(\gamma \in \Gamma\), то \(\llbracket \gamma \rrbracket = \text{И}\)
+	\label{orgc8c73cd}
+\end{theorem}
+\begin{theorem}
+	Если \(\Gamma_i\) --- непротиворечиво, то \(\Gamma_{i + 1}\) --- непротиворечиво
+	\label{org06d9e06}
+\end{theorem}
+\begin{theorem}
+	\(\Gamma*\) --- непротиворечиво
+	\label{org8f2be5a}
+\end{theorem}
+\begin{corollary}
+	\(\Gamma^\triangle = \Gamma*\) без формул с \(\forall, \exists\)
+	\label{org5c9d3d4}
+\end{corollary}
+\begin{definition}
+	\textbf{Предваренная нормальная форма} --- формула, где \(\forall \exists \forall \dots(\tau)\), \(\tau\) --- формула без кванторов
+	\label{org1a513b0}
+\end{definition}
+\begin{theorem}
+	Если \(\varphi\) --- формула, то существует \(\psi\) --- в п.ф., то \(\varphi \to \psi\) и \(\psi \to \varphi\)
+	\label{orgc5bb91c}
+\end{theorem}
+\subsection{Модель для формулы}
+\label{sec:orgfdfb903}
+\begin{definition}
+	\textbf{Моделью} для непротиворечивого множества замкнутых бескванторных формул \(\Gamma\) --- такая модель, что каждая формула из \(\Gamma\) оценивается в И
+	\label{org908ff33}
+\end{definition}
+\subsection{Теорема Гёделя о полноте исчисления предикатов}
+\label{sec:org71a8fb7}
+\begin{theorem}[Геделя о полноте]
+	Если \(\Gamma\) --- полное неротиворечивое множество замкнутых(не бескванторных) фомул, то оно имеет модель
+	\label{org72277cf}
+\end{theorem}
+\begin{theorem}[Геделя о полноте ИП]
+	У любого н.м.з.ф. (непротиворечивого множества замкнутых формул) ИП существует модель
+	\label{orgb96a5fa}
+\end{theorem}
+\subsection{Следствие из теоремы Гёделя о полноте исчисления предикатов}
+\label{sec:org4604328}
+\begin{corollary}
+	Пусть \(\vDash \alpha\), тогда \(\vdash \alpha\)
+	\label{orga5faebc}
+\end{corollary}
+\subsection{Неразрешимость исчисления предикатов (формулировка, что такое неразрешимость).}
+\label{sec:org3c004a9}
+\begin{definition}
+	\textbf{Язык} --- множество слов. Язык \(\mathcal{L}\) разрешим, если существует \(A\) --- алгоритм, что по слову \(w\): \\
+	\(A(w)\) --- останавливается в `1`, если \(w \in \mathcal{L}\) и `0`, если \(w \not\in \mathcal{L}\)
+	\label{org230480c}
+\end{definition}
+\begin{remark}
+	Проблема останова: не существует алгоритма, который по программе для машина Тьюринга ответит, остановится она или нет. \\
+	Пусть \(\mathcal{L}'\) --- язык всех останов программы для машины Тьюринга. \(\mathcal{L}'\) неразрешим
+	\label{orgb656258}
+\end{remark}
+\begin{theorem}
+	ИП неразрешимо
+	\label{org07d2421}
+\end{theorem}
+\section{Арифметика и теории первого порядка}
+\label{sec:org4f52afc}
+\subsection{Теория первого порядка}
+\label{sec:orge47421f}
+\begin{definition}
+	\textbf{Теория I порядка} --- Исчесление предикатов + нелогические функции + предикатные символы + нелогические (математические) аксиомы.
+	\label{org21ccd35}
+\end{definition}
+\subsection{Модели и структуры теорий первого порядка}
+\label{sec:org7aad238}
+Назовём \textbf{структурой} теории первого порядка такую модель исчисления предикатов, что для всех нелогических
+функциональных и предикатных символов теории в ней задана оценка.
+Назовём \textbf{моделью} теории первого порядка такую структуру, что все нелогические аксиомы данной теории в ней
+истинны.
+\subsection{Аксиоматика Пеано}
+\label{sec:org5a30a16}
+\begin{definition}
+	Будем говорить, что \(N\) соответсвует \textbf{аксиоматике Пеано} если:
+	\begin{itemize}
+		\item задан \(('): N \to N\) --- инъективная функция (для разных элементов, разные значения)
+		\item задан \(0 \in N\): нет \(a \in N\), что \(a' = 0\)
+		\item если \(P(x)\) --- некоторое утверждение, зависящее от \(x \in N\), такое, что \(P(0)\) и всегда, когда \(P(x)\), также и \(P(x')\). Тогда \(P(x)\)
+	\end{itemize}
+	\label{org744ec42}
+\end{definition}
+\subsection{Определение операций (сложение, умножение, возведение в степень)}
+\label{sec:org8283f57}
+\begin{definition}
+	\[ a + b = \begin{cases}
+			a        & b = 0  \\
+			(a + c)' & b = c'
+		\end{cases}\]
+	\label{orge628873}
+\end{definition}
+\begin{definition}
+	\[ a \cdot b = \begin{cases}
+			0               & b = 0  \\
+			(a \cdot c) + a & b = c'
+		\end{cases}\]
+	\label{org93b9bc7}
+\end{definition}
+\begin{definition}
+	\[ a^b = \begin{cases}
+			1            & b = 0  \\
+			(a^c)\cdot a & b = c'
+		\end{cases}\]
+	\label{orgff7a1f1}
+\end{definition}
+\subsection{Формальная арифметика (язык, схема аксиом индукции и общая характеристика остальных аксиом).}
+\label{sec:org6fbcf7d}
+\subsubsection{Формальная арифметика}
+\label{sec:orgeea56b7}
+\begin{definition}
+	Исчесление предикатов:
+	\begin{itemize}
+		\item Функциональные символы:
+		      \begin{itemize}
+			      \item \(0\) --- 0-местный
+			      \item \((')\) --- 1-местный
+			      \item \((\cdot)\) --- 2-местный
+			      \item \((+)\) --- 2-местный
+		      \end{itemize}
+		\item \((=)\) --- 2-местный предикатный символ
+	\end{itemize}
+	Аксимомы:
+	\begin{enumerate}
+		\item \(a = b \to a' = b'\)
+		\item \(a = b \to a = c \to b = c\)
+		\item \(a' = b' \to a= b\)
+		\item \(\neg a' = 0\)
+		\item \(a + b' = (a + b)'\)
+		\item \(a + 0 = a\)
+		\item \(a\cdot 0 = 0\)
+		\item \(a\cdot b' = a\cdot b + a\)
+		\item Схема аксиом индукции:
+		      \[ (\psi[x:=0])\&(\forall x. \psi \to (\psi[x:=x'])) \to \psi \]
+		      \(x\) входит свободно в \(\psi\)
+	\end{enumerate}
+\end{definition}
+\beginproperty
+\begin{property}
+	\[ ((a + 0 = a) \to (a + 0 = a) \to (a = a)) \]
+\end{property}
+\begin{proof}
+	\[ \forall a. \forall b. \forall c. a = b \to a = c \to b = c \]
+	\[ (\forall a. \forall b. \forall c. a = b \to a = c \to b = c) \to \forall b. \forall c. (a + 0 = b \to a + 0 = c \to b = c) \]
+	\[ \forall b. \forall c. a + 0 = b \to a + 0 = c\to b = c \]
+	\[ (\forall b. \forall c. a + 0 = b \to a + 0 = c \to b = c) \to \forall c.(a + 0 = a \to a + 0 = c \to a=c) \]
+	\[ \forall c. a + 0 = a \to a + 0 = c \to a = c \]
+	\[ (\forall c. a + 0 = a \to a + 0 = c \to a = c) \to a+0 = a \to a + 0 = a \to a= a \]
+	\[ a + 0  = a \to a + 0 = a \to a = a \]
+	\[ a + 0 = a \]
+	\[ a + 0 = a \to a = a \]
+	\[ a = a \]
+	\[ \forall b. \forall c. a = b \to a = c \to b = c \]
+	\[ (0 = 0 \to 0 = 0 \to 0 = 0) \]
+	\[ (\forall b. \forall c. a = b \to a = c\ to b = c) \to (0 = 0 \to 0 = 0 \to 0 = 0) \to \phi \]
+	\fixme
+\end{proof}
+\begin{definition}
+	\(\exists! x.\varphi(x) \equiv (\exists x. \varphi(x))\&\forall p.\forall q. \varphi(p)\&\varphi(q) \to p = q\) \\
+	Можно также записать \(\exists ! x.\neg \exists s. s' = x\) или \((\forall q.(\exists x. x' = q)\vee q= 0)\)
+\end{definition}
+\begin{definition}
+	\(a \le b\) --- сокращение для \(\exists n. a + n = b\)
+\end{definition}
+\begin{definition}
+	\[ \overline{n} = 0^{(n)}\]
+	\[ 0^{(n)} = \begin{cases}
+			0            & n = 0 \\
+			0^{(n - 1)'} & n > 0
+		\end{cases}\]
+\end{definition}
+
+\section{Примитивно-рекурсивные и рекурсивные функции}
+\label{sec:org96a6284}
+\begin{definition}
+	\(f: \N^n \to \N\)
+	\begin{enumerate}
+		\item \(Z: \N \to \N\) \\
+		      \(Z(x) = 0\)
+		\item \(N: \N \to \N\) \\
+		      \(N(x) = x + 1\)
+		\item \(S_k: \N^m \to \N\)
+		      \begin{itemize}
+			      \item \(f_1, \dots, f_k:\ \N^m \to \N\)
+			      \item \(g: \N^k \to \N\)
+		      \end{itemize}
+		      \[S_k \pair{g, f_1, \dots, f_k}(x_1,\dots,x_m) = g(f_1(\overline{x}), f_2(\overline{x}),\dots,f_k(\overline{x}))\] \\
+		      , где \(\overline{x} = x_1,\dots,x_m\)
+		\item \(P^l_k: \N^k \to \N\), \(l \le k\)
+		      \[ P^l_k(x_1, \dots, x_k) = x_l \]
+		\item \(R\pair{f, g}: \N^{m + 1} \to \N\) --- \textbf{примитивная рекурсия}
+		      \begin{itemize}
+			      \item \(f: \N^m \to \N\)
+			      \item \(g: \N^{m + 2} \to \N\)
+			            \[ R\pair{f, g}(y, x_1, \dots, x_m) = \begin{cases}
+					            f(x_1, \dots, x_m)                                              & y = 0 \\
+					            g(y - 1, R\pair{f, g}(y - 1, x_1, \dots, x_m), x_1, \dots, x_m) & y > 0
+				            \end{cases} \]
+		      \end{itemize}
+	\end{enumerate}
+	\label{org61312a9}
+\end{definition}
+\begin{definition}
+	\-
+	\begin{enumerate}
+		\setcounter{enumi}{5}
+		\item \(M\pair{f}: \N^m \to \N\) --- \textbf{минимизация}
+		      \begin{itemize}
+			      \item \(f: \N^{m + 1} \to \N\)
+		      \end{itemize}
+		      \[ M\pair{f}(x_1, \dots, x_m) = y \]
+		      --- минимальный \(y\)
+		      \[ f(y, x_1, \dots, x_m) = 0 \]
+		      Если \(f(y, x_1, \dots, x_m) > 0\) при всех \(y\), то результат не определен
+	\end{enumerate}
+	\label{orgc7e0b3b}
+\end{definition}
+\begin{definition}
+	\(f: \N^m \to \N\) --- \textbf{примитивно-рекурсивная}, если найдется \(g\) -- выражение \(f\) через примитивы \(Z, N, S, P, R\), т.е. \(f(x_1, \dots, x_n) = g(x_1, \dots, x_n)\)
+	\label{org4f4939d}
+\end{definition}
+\subsection{Примитивная рекурсивность арифметических функций, функций вычисления простых чисел, частичного логарифма}
+\label{sec:orgc7e6cb4}
+\begin{theorem}
+	\((+), (\cdot), (x^y), (:), (\sqrt)\), деление с остатком --- примитивно-рекурсивные функции
+	\label{org7d84a87}
+\end{theorem}
+\begin{lemma}
+	\(p_1, p_2, \dots\) --- простые числа. \\
+	\(p(i): \N \to \N\), \(p(i) - p_i\) --- примитивно-рекурсивная функция
+	\label{org291140c}
+\end{lemma}
+\begin{definition}
+	\(\mathop{\rm plog}_nk = \max t: n^t | k\) --- примитивно-рекурсивная функция
+	\label{org546a657}
+\end{definition}
+\subsection{Выразимость отношений и представимость функций в формальной арифметике}
+\label{sec:org11d6cc5}
+\subsubsection{Выразимость отношений и представимость функций в формальной арифметике}
+\label{sec:orga0a4deb}
+\begin{definition}
+	\(W \subseteq \N_0^n\). \(W\) --- выразимое в формальной арифметике. отношение, если существует формула \(\omega\) со свободными переменными \(x_1,\dots,x_n\). Пусть \(k_1,\dots,k_n \in \N\)
+	\begin{itemize}
+		\item \((k_1,\dots,k_n) \in W\), тогда \(\vdash \omega[x_1:=\overline{k_1}, \dots, x_n := \overline{k_n}]\)
+		\item \((k_1,\dots,k_n) \not\in W\), тогда \(\vdash \neg \omega[x_1:=\overline{k_1},\dots,x_n:=\overline{k_n}]\)
+	\end{itemize}
+	\[ \omega[x_1:=\Theta_1,\dots,x_n:=\Theta_n] \equiv \omega(\Theta_1, \dots, \Theta_n) \]
+	\label{org5dedbe6}
+\end{definition}
+\begin{definition}
+	\(f: \N^n \to \N\) --- представим в формальной арифметике, если найдется \(\varphi\) --- фомула с \(n + 1\) свободными переменными \(k_1, \dots, k_{n + 1} \in \N\)
+	\begin{itemize}
+		\item \(f(k_1,\dots,k_n) = k_{n + 1}\), то \(\vdash \varphi(\overline{k_1},\dots,\overline{k_{n + 1}})\) \\
+		\item \(\vdash \exists! x.\varphi(\overline{k_1},\dots,\overline{k_n},x)\)
+	\end{itemize}
+	\label{org390a1d7}
+\end{definition}
+\subsection{Харктеристические функции}
+\label{sec:org09c559e}
+Назовём \textbf{характериситческим отношением} \(C_f\) для функции \(f: \mathbb{N}^n \rightarrow \mathbb{N}\)
+такое отношение \(C_f\subseteq\mathbb{N}^{n+1}\), что
+\(\langle k_1,k_2,\dots,k_{n+1} \rangle \in C_f\) тогда и только тогда, когда \(f(k_1,k_2,\dots,k_n) = k_{n+1}\).
+\begin{lemma}
+	Если функция представима в формальной арифметике, то её характеристическое отношение выразимо в формальной арифметике.
+\end{lemma}
+\subsection{Представимость примитивов \(N\), \(Z\), \(S\), \(U\) в формальной арифметике}
+\label{sec:org9c0af38}
+\begin{theorem}
+	Примитивы \(Z, N, S, P\) представимы в ФА
+	\label{orge5b7cb3}
+\end{theorem}
+\begin{proof}
+	Аргументы: \(x_1, \dots, x_n\)
+	\begin{enumerate}
+		\item \(Z(x): \N \to \N\)
+		      \[ \xi \coloneqq x_1 = x_1 \& x_2 = 0 \]
+		\item \(N(x): \N \to \N\)
+		      \[ \nu \coloneqq x_2 = x_1' \]
+		\item \(P_k^l(x, \dots, x_k): \N^k \to \N\)
+		      \[ \pi_k^l \coloneqq x_1 = x_1 \& x_2 = x_2 \& \dots \& x_l = x_{k + 1} \& \dots \& x_k = x_k\]
+		      \[ \left(\bigwith_{i \neq l} x_i = x_i\right) \& x_l = x_{k + 1} \]
+		\item \(S\pair{\underset{\gamma}{g}, \underset{\varphi_1}{f_1}, \dots, \underset{\varphi_k}{f_k}}\)
+		      \begin{itemize}
+			      \item \((x_1, \dots, x_m) = x_{m + 1}\)
+		      \end{itemize}
+		      \[ \exists r_1. \exists r_2. \dots\exists r_k. \varphi_1(x_1, \dots, x_m, r_1) \& \dots \& \varphi_k(x_1, \dots, x_m, r_k) \& \gamma(r_1, \dots, r_k, x_{m + 1}) \]
+	\end{enumerate}
+	\label{orgecd070a}
+\end{proof}
+\subsection{Бета-функция Гёделя}
+\label{sec:orgde0e6fa}
+\begin{definition}
+	\(\beta\)-функция Геделя
+	\[ \beta(b, c, i) = b \mathop{\rm mod} (1 + c\cdot(i + 1)) \]
+	\label{org7b1a953}
+\end{definition}
+\begin{theorem}
+	\-
+	\begin{itemize}
+		\item \(a_0, a_1, \dots, a_k\) --- некоторые значения \(\in \N\)
+	\end{itemize}
+	\uline{Тогда} найдутся \(b\) и \(c\), что
+	\[ \beta(b, c, i) = a_i \]
+	\label{orga40181e}
+\end{theorem}
+\begin{remark}
+	\(\beta\)-функция Геделя --- представима в ФА
+	\[ B(b, c, i, q) = (\exists p. b = p\cdot(q + c\cdot(1 + i)) + q) \& q < b \]
+	\label{org562d016}
+\end{remark}
+\subsection{Представимость примитивов \(R\) и \(M\) и рекурсивных функций в формальной арифметике}
+\label{sec:orgb36ab05}
+\begin{remark}
+	\-
+	\begin{itemize}
+		\item \(M\pair{f}\),  \(f: \N^{m + 1} \to \N\)
+		      \[ \varphi(x_{m + 1}, x_1, \dots, x_m, \overline{0}) \& \forall y. y < x_{m + 1} \to \neg \varphi(y, x_1, \dots, x_m, \overline{0}) \]
+		      , где \((a < b) = (\exists n. a+ n = b)\&\neg a = b\)
+		\item \[R\pair{g, x_1, \dots, x_n}  = \begin{cases}
+				      f(x_1, \dots, x_n) y = 0                             & y = 0 \\
+				      g(y - 1, R(y - 1, x_1, \dots, x_n), x_1, \dots, x_n) & y > 0
+			      \end{cases}\]
+		      \[ \exists b. \exists c. \exists f. \varphi(x_1, \dots, x_n f) \& B(b, c, \overline{0}, f) \& \\ \]
+		      \[ \& \forall y. y < x_{n + 1} \to \exists r_{y}. B(b, c, y, r_{y})\&\exists r_{y + 1}. B(b, c, y + 1, r_{y + 1})\&\gamma(y, r_{y}, x_1, \dots, x_n, r_{y + 1}) \]
+	\end{itemize}
+	\label{org52dc2d1}
+\end{remark}
+\subsection{Гёделева нумерация}
+\label{sec:org8c12004}
+\begin{definition}
+	\((\gedel{\bullet})\)
+	\begin{center}
+		\begin{tabular}{l|l}
+			\(s\)       & \(\gedel{s}\)                 \\
+			\hline
+			\((\)       & \(3\)                         \\
+			\hline
+			\()\)       & \(5\)                         \\
+			\hline
+			\(,\)       & \(7\)                         \\
+			\hline
+			\(\&\)      & \(9\)                         \\
+			\hline
+			\(\vee\)    & \(11\)                        \\
+			\hline
+			\(\neg\)    & \(13\)                        \\
+			\hline
+			\(\to\)     & \(15\)                        \\
+			\hline
+			\(\forall\) & \(17\)                        \\
+			\hline
+			\(\exists\) & \(19\)                        \\
+			\hline
+			\(.\)       & \(21\)                        \\
+			\hline
+			\(f^n_k\)   & \(23 + 6\cdot 2^n \cdot 3^k\) \\
+			\hline
+			\(P^n_k\)   & \(25 + 6\cdot 2^n\cdot 3^k\)  \\
+			\hline
+			\(x_k\)     & \(27 + 6\cdot 2^k\)           \\
+		\end{tabular}
+	\end{center}
+	Тогда известные функции будут:
+	\begin{itemize}
+		\item \((=) = P^2_0\)
+		\item \((0) = f^0_0\)
+		\item \((+) = f^2_0\)
+		\item \((\cdot) = f^2_1\)
+		\item \((') = f^1_0\)
+	\end{itemize}
+	\label{org3e808a7}
+\end{definition}
+\begin{definition}
+	\(\gedel{a_0a_1\dots a_{n - 1}} = 2^{\gedel{a_0}}\cdot 3^{\gedel{a_1}} \cdot \dots \cdot p_n^{\gedel{a_{n - 1}}}\)
+	\label{org75cbe5d}
+\end{definition}
+\begin{definition}
+	\(S_0\ S_1\ S_2 = 2^{\gedel{S_0}}\cdot 3^{\gedel{S_1}}\cdot\dots\cdot p_n^{\gedel{S_n}}\)
+	\label{org4e978da}
+\end{definition}
+\begin{remark}
+	\(p_i\) --- \(i\)-е простое (\(p_1 = 2\))
+	\label{org03737e1}
+\end{remark}
+\subsection{Рекурсивность представимых в формальной арифметике функций}
+\label{sec:orgd546203}
+\begin{theorem}
+	\(f\) --- рекурсивная функция, тогда \(f\) представима в формальной арифметике
+	\label{orgef430f0}
+\end{theorem}
+\begin{theorem}
+	Если \(f\) представима в формальной арифметике, то она рекурсивна
+	\label{orga2fc517}
+\end{theorem}
+\begin{theorem}
+	Если функция представима в формальной арифметике, то она рекурсивна
+	\label{org770dd7e}
+\end{theorem}
+\section{Неполнота, непротиворечивость формальной арифметики}
+\label{sec:org7bcdb3a}
+\subsection{{\bfseries\sffamily TODO} Непротиворечивость (эквивалентные определения, доказательство эквивалентности) и \(\omega\)-непротиворечивость.}
+\label{sec:org3dd0e46}
+\begin{definition}
+	\(\omega\)-непротиворечивость. Теория \(\omega\)-непротиворечива, если для любой формулы \(\varphi(x)\):
+	\begin{itemize}
+		\item если \(\vdash \varphi(\overline{0}), \vdash \varphi(\overline{1}), \dots\), то \(\not\vdash \exists x. \neg \varphi(x)\)
+	\end{itemize}
+	\label{orgd81f148}
+\end{definition}
+\begin{lemma}
+	Если теория \(\omega\)-непротиворечива, то непротиворечива
+	\label{orge33d28f}
+\end{lemma}
+\subsection{Первая теорема Гёделя о неполноте арифметики}
+\label{sec:org7e9b145}
+\begin{remark}
+	\({\rm Subst}\) --- функция которая подставляет аргументы в формулу
+	\label{orgc26dbf8}
+\end{remark}
+\begin{remark}
+	\(\chi\) --- формула формальной арифметики
+	\[ W_1(\gedel{\chi}, \gedel{p}) = \begin{cases} 0 & \text{если }p\text{ --- доказательство }\chi[x_0\coloneqq\overline{\gedel{\chi}}] \\ 1 & \text{иначе} \end{cases} \]
+	Реализация \(W_1\) через Subst очевидна, тогда \(W_1\) представима в формальной арифметике формулой \(\omega_1\).
+	\(\sigma(x) = \forall p. \neg \omega_1(x, p)\) --- ``самоприменение \(x\) недоказуемо``
+	\[\vdash^? \sigma(\overline{\gedel{\sigma}})\]
+	\label{orgf609a09}
+\end{remark}
+\begin{theorem}[Геделя о неполноте арифметики №1]
+	\-
+	\begin{enumerate}
+		\item Если формальная арифметика непротиворечива, то \(\not\vdash \sigma(\overline{\gedel{\sigma}})\)
+		\item Если формальная арифметика \(\omega\)-непротиворечива, то \(\not\vdash \neg \sigma(\overline{\gedel{\sigma}})\)
+	\end{enumerate}
+	\label{orgbdee0db}
+\end{theorem}
+\subsection{Формулировка первой теоремы Гёделя о неполноте арифметики в форме Россера}
+\label{sec:org132f27f}
+\begin{theorem}[Геделя о неполноте арифметики №1 в форме Россера]
+	\[ W_2(x, p) = \begin{cases} 0 & \text{если }p\text{ --- доказательство }\lnot x(\overline{\gedel{x}}) \\ 1 & \text{иначе} \end{cases} \]
+	\(\omega_2\) --- формула соответствующая \(W_2\)
+	\[ \rho(x) = \forall p. \omega_1(x, p) \to \exists q. q < p \& \omega_2(x, q) \]
+
+	\begin{enumerate}
+		\item Если формальная арифметика непротиворечива, то \(\not\vdash \rho(\overline{\gedel{\rho}})\)
+		\item Если формальная арифметика непротиворечива, то \(\not\vdash \neg\rho(\overline{\gedel{\rho}})\)
+	\end{enumerate}
+	\label{org97a367b}
+\end{theorem}
+\subsection{Неполнота арифметики}
+\label{sec:orgf6736a9}
+\begin{corollary}
+	Формальная арифметика со стандартной интерпретацией неполна
+	\label{org7e344ec}
+\end{corollary}
+\subsection{Формулировка второй теоремы Гёделя о неполноте арифметики, \(Consis\)}
+\label{sec:org4f526f4}
+\begin{definition}
+	\[{\rm Consis} \equiv \forall p. \neg \pi(\overline{\gedel{1 = 0}}, p)\]
+	\(\pi\) --- формула соответствующая \(Proof(x, p)\), т.е. \(p\) --- доказательство \(x\)
+	\label{org64ceb50}
+\end{definition}
+\begin{theorem}[Геделя о неполноте арифметики №2]
+	\[ \vdash {\rm Consis} \to \sigma(\overline{\gedel{\sigma}}) \]
+	Т.е. если докажем, что если формальная арифметика непротиворечива, то автоматически \(\sigma(\overline{\gedel{\sigma}})\), т.е. ФА противоречива
+	\label{orgbc24845}
+\end{theorem}
+\begin{corollary}
+	Никакая теория, содержащая формальную арифметику, не может доказать свою непротиворечивость
+	\label{orgbf5aa8f}
+\end{corollary}
+\subsection{Неформальное пояснение метода доказательства}
+\label{sec:org29fb7f9}
+\begin{proof}[Схема]
+	Прочтем что написано в теореме: \(\sigma(\overline{\gedel{\sigma}})\) раскрывается в \(\forall p. \neg \omega_1(\overline{\gedel{\sigma}}, p)\), т.е. если формальная арифметика непротиворечива, то не существует \(p\), который доказывает \(\sigma(\overline{\gedel{\sigma}})\), а это в точности утверждение теоремы Геделя о неполноте №1. Т.е. эта теорема --- формализация теоремы Геделя о неполноте №1.
+	\label{orgc1ceb0f}
+\end{proof}
+\section{Теория множеств}
+\label{sec:orgb55032d}
+\begin{definition}
+	\textbf{Теория множеств} --- теория первого порядка с нелогическим предикатом `принадлежность` \((\in)\) и следующими аксиомами и схемами аксиом.
+	\label{orgec460c0}
+\end{definition}
+\subsection{Определения равенства}
+\label{sec:orgc8c5c2c}
+\begin{definition}
+	B -- \textbf{бинарное отношение} на \(X\): \(B \subseteq X^2\)
+	\[ \pair{a, b} = \{\{a\}, \{a, b\}\} \]
+	\[ \mathop{\rm snd}\pair{a, b} = \bigcup\left(\bigcup \pair{a, b} \setminus \bigcap \pair{a, b}\right) = \{b\} \]
+	\[ \mathop{\rm fst}\pair{a, b} = \bigcup\left(\bigcap \pair{a, b}\right) = \{a\} \]
+	\label{org035dde5}
+\end{definition}
+\begin{definition}
+	\(a \subseteq b\), если \(\forall x. x \in a \to x \in b\)
+	\label{org0c79125}
+\end{definition}
+\begin{definition}
+	\(a = b\), если \(a \subseteq b \& b \subseteq a\)
+	\label{org43d75af}
+\end{definition}
+\subsection{Аксиоматика Цермело-Френкеля}
+\label{sec:orgb810827}
+\begin{definition}
+	``Предикат`` \(P(x)\) --- множество \(\{x \big| P(x)\}\)
+	\label{org61b3629}
+\end{definition}
+\begin{axiom}[равенства]
+	Равные множества содержатся в одних и тех же множествах
+	\[ \forall a.\forall b.\forall c. a = b\&a\in c\to b \in c \]
+	\label{orgefe0349}
+\end{axiom}
+\begin{axiom}[пустого множества]
+	Существует \(\varnothing\): \(\forall x. \neg x \in \varnothing\)
+	\label{org9ef4887}
+\end{axiom}
+\begin{axiom}[пары]
+	Если \(a \neq b\), то \(\{a, b\}\) --- множество
+	\[ \forall a. \forall b. a\neq b \to \exists p. a \in p \& b\in p \& \forall t. t \in p \to t = a \vee t = b \]
+	\label{org745f232}
+\end{axiom}
+\begin{axiom}[объединения]
+	Если \(x\) --- непустое множество, то \(\bigcup x\) --- множество
+	\[ \forall x. (\exists y. y \in x) \to \exists p. \forall y. y\in p \leftrightarrow \exists s. y \in s \& s \in x \]
+	\label{orga00ff60}
+\end{axiom}
+\begin{axiom}[Степени]
+	Для множества \(x\), существует \(\mathcal{P}(x)\) --- множество всех подмножеств
+	\[ \forall x. \exists p. \forall y. y\in p \leftrightarrow y \subseteq x  \]
+	\label{org0867fb7}
+\end{axiom}
+\begin{axiom}[Схема аксиом выделения]
+	Если \(a\) --- множество, \(\varphi(x)\) --- формула, в которую не входит свободно \(b\), то \(\{x \big| x \in a \& \varphi(x)\}\) --- множество
+	\[ \forall x. \exists b. \forall y. y \in b \leftrightarrow y \in x \& \varphi(y) \]
+	\label{orgb9c218a}
+\end{axiom}
+\subsection{Частичный, линейный, полный порядок}
+\label{sec:org8a54933}
+\subsubsection{Упорядоченность}
+\label{sec:org4e8c251}
+\begin{definition}
+	\textbf{Предпорядок} --- транзитивное, рефлексивнре
+\end{definition}
+\begin{definition}
+	\textbf{Отношение порядка} (частичный) --- антисимметричное, транзитивное, рефлексивное
+\end{definition}
+\begin{definition}
+	\textbf{Линейный порядок} --- порядок в котором \(a \preceq b\) или \(b \preceq a\)
+\end{definition}
+\begin{definition}
+	\textbf{Полный порядок} --- линейный, каждое подмножество имеет наименьший элемент.
+\end{definition}
+\begin{examp}
+	\(\N\) --- вполне упорядоченное множество
+\end{examp}
+\begin{examp}
+	\(\R\) --- не вполне упорядоченной множество
+	\begin{itemize}
+		\item \((0, 1)\) не имееи наименььшего
+		\item \(\R\) не имеет наименьшего
+	\end{itemize}
+\end{examp}
+\subsection{Ординальные числа, аксиома бесконечности}
+\label{sec:orgc1c2482}
+\begin{axiom}[Аксиома бесконечности]
+	Существуют множества \(N\), такие, что
+	\[ \varnothing \in N \& \forall x. x \in N \to x \cup \{x\} \in N \]
+	\label{orgd5ff5d3}
+\end{axiom}
+\begin{definition}
+	\(a' = a \cup \{a\}\)
+	\label{orgc6f66dc}
+\end{definition}
+\begin{definition}
+	\textbf{Ординальные числа}
+	\begin{itemize}
+		\item \(\overline{0} = \varnothing\)
+		\item \(\overline{1} = \varnothing' = \{\varnothing\}\)
+		\item \(\overline{2} = \varnothing'' = \{\varnothing\}' = \{\varnothing, \{\varnothing\}\}\)
+		\item \(\dots\)
+	\end{itemize}
+	\label{org71c17a9}
+\end{definition}
+\begin{examp}
+	\[ \omega = \{\varnothing, 1, 2, 3, 4, \dots\} \]
+	Очевидно, что \(\omega \subseteq N\) (из \hyperref[orgd5ff5d3]{аксиомы бесконечности})
+	\label{orge2a1ac1}
+\end{examp}
+\begin{theorem}
+	\(\omega\) --- множество
+	\label{orgd8a95ef}
+\end{theorem}
+\subsection{Схема доказательства существования ординала \(\omega\), операции над ординалами, доказательство \(1+\omega\ne\omega+1\)}
+\label{sec:org7b2754b}
+\begin{definition}
+	\[ a + b = \begin{cases}
+			a                            & b = 0                               \\
+			(a + c)'                     & b = c'                              \\
+			\sup\limits_{c \in b}(a + c) & \text{если }b\text{ --- предельный}
+		\end{cases} \]
+	\label{org860455f}
+\end{definition}
+\begin{definition}
+	\[ a \cdot b = \begin{cases}
+			0                           & b = 0                   \\
+			a\cdot c + a                & b = c'                  \\
+			\sup_{c \le b}\{a \cdot c\} & b\text{ --- предельный}
+		\end{cases} \]
+	\label{org1dd2330}
+\end{definition}
+\begin{definition}
+	\(\sup t\) --- минимальный ординал, содержащий все элементы из \(t\)
+	\label{org02534bb}
+\end{definition}
+\begin{examp}
+	\[1 + \omega = \sup\limits_{c \in \omega}(1 + c) = \sup \{0 + 1, 1 + 1, 2+ 1, \dots\}\]
+	\[ \sup \{1, 2, 3, 4, 5, \dots\} = \omega \]
+	\label{orgb2b1bbf}
+\end{examp}
+\begin{examp}
+	\[ \omega + 1 = \omega' = \omega \cup \{\omega\} = \{0, 1, 2, 3, \dots, \omega\} \]
+	\label{org3128bee}
+\end{examp}
+\subsection{Связь ординалов и упорядочений}
+\label{sec:orgb9c4321}
+\begin{definition}
+	Множество \(S\) \textbf{транзитивно}, если
+	\[ \forall a. \forall b. a \in b \& b \in S \to a \in S \]
+	\label{orgec6ba28}
+\end{definition}
+\begin{definition}
+	Множество \(S\) \textbf{вполне упорядочено} отношением \(\in\), если
+	\begin{enumerate}
+		\item \(\forall a. \forall b. a\neq b\& a \in S \& b \in S \to a \in b \vee b \in a\) --- линейный
+		\item \(\forall t. t \subseteq S \to \exists a. a\in t \&\forall b. b \in t \to b = a \vee a \in b\) --- в любом подмножестве есть наименьший элемент
+	\end{enumerate}
+	\label{org207f341}
+\end{definition}
+\begin{definition}
+	\textbf{Ординал} (Ординальное число) --- вполне упорядоченное отношением \(\in\), транзитивное множество
+	\label{org11ed225}
+\end{definition}
+\begin{definition}
+	\textbf{Предельный ординал} \(s \neq \varnothing\) --- ординал, не имеющий предшественника
+	\[ \forall p. p' \neq s \]
+	\label{org08026de}
+\end{definition}
+\section{Кардинальные числа}
+\label{sec:orgcca49a4}
+\subsection{мощность множеств}
+\label{sec:org507583e}
+\begin{definition}
+	\textbf{Равномощность} \(|a| = |b|\), если существует биекция \(a \to b\)
+	\label{org8923d9f}
+\end{definition}
+\begin{definition}
+	\textbf{Строго большая мощность} \(|a| > |b|\), если существует \(f: b \to a\) --- инъекция, но не биекция
+	\label{org86131c9}
+\end{definition}
+\begin{definition}
+	\textbf{Кардинальное число} \(t\) --- ординал \(x\): для всех \(y \in x\): \(|y| \neq |x|\)
+	\label{orgf3f6a83}
+\end{definition}
+\begin{definition}
+	Мощность множества \(|x|\) --- такое кардинальное число \(t\), что \(|t| = |x|\)
+	\label{orga9ad016}
+\end{definition}
+\subsection{Теорема Кантора-Бернштейна (формулировка), теорема Кантора}
+\label{sec:orgb5d8fae}
+\begin{remark}
+	\-
+	\begin{itemize}
+		\item \(\overline{0}, \overline{1}, \overline{2}, \overline{3}, \dots\) --- конечные кардиналы
+		\item \(\aleph_0 = |\omega|\)
+		\item \(\aleph_1\) --- следующий кардинал за \(\aleph_0\)
+	\end{itemize}
+	\label{orgb6de8ea}
+\end{remark}
+\begin{theorem}[Кантора]
+	Рассмотрим \(S\) --- множетво, \(\mathcal{P}(S)\) --- множество всех подмножеств \\
+	\uline{Тогда} \(|\mathcal{P}(S)| > |S|\)
+	\label{org92425c3}
+\end{theorem}
+\begin{theorem}[Кантора-Бернштейна]
+	Если \(a, b\) --- множества, \(f: a \to b\), \(g: b \to a\) --- инъективны \\
+	\uline{Тогда} существует биекция \(a \to b\)
+	\label{orgbdc08a9}
+\end{theorem}
+\subsection{Аксиома выбора, теорема Диаконеску (формулировка)}
+\label{sec:org064eaea}
+\subsubsection{Аксиома выбора}
+\label{sec:org7721ee5}
+\begin{axiom*}{\bf Аксиома 8.}
+	\begin{itemize}
+		\item На любом семействе непустых множеств \(\{A_S\}_{S \in \mathbb{S}}\) можно определить функцию \(f: \mathbb{S} \to \bigcup_{S}A_S\), которая по множеству возвращает его элемент
+		\item Любое множество можно вполне упорядочить
+		\item Для любой сюрьективной функции \(f: A \to B\), найдется частично обратная \(g: B \to A\), \(g(f(x)) = x\)
+	\end{itemize}
+\end{axiom*}
+\begin{definition}
+	\textbf{Дизъюнктное семейство множество} --- семейство непересекающихся множеств
+	\[ D(y):\ \forall p.\forall q. p \in y \& q \in y \to p \cap q = \varnothing \]
+\end{definition}
+\begin{definition}
+	\textbf{Прямое произведение} дизъюнктного множества
+	\[ \bigtimes S = \{t \big| \forall p. p \in S \leftrightarrow \exists ! c. c \in p \& c \in t\} \]
+\end{definition}
+\begin{axiom*}{\bf Аксиома 8.}
+	Если \(D(y)\& \forall t. t \in y \to t \neq \varnothing\), то \(\bigtimes y \neq \varnothing\)
+	\label{org48573a9}
+\end{axiom*}
+\begin{theorem}[Диаконеску]
+	Рассморим \(ZF\)(аксиоматика Цермело-Френкеля) поверх ИИП. Если добавим аксиому выбора то \(\vdash \alpha \lor \lnot \alpha\)
+	\label{org4e06a34}
+\end{theorem}
+\subsection{Аксиома фундирования}
+\label{sec:org21bf81f}
+\subsubsection{Аксиома фундирования}
+\label{sec:org778e564}
+\begin{axiom*}{\bf Аксиома 9.}
+	\[ \forall x. x = \varnothing \lor \exists y. y \in x \& y \cap x = \varnothing \]
+	В каждом непустом множестве есть элемент, не пересекающийся с ним
+\end{axiom*}
+\subsection{Схема аксиом подстановки}
+\label{sec:org2a874b2}
+\subsubsection{Схема аксиом подстановки}
+\label{sec:org6285305}
+ZFC --- Zemelo-Frenkel Choice \\
+\begin{axiom*}{\bf Аксиома 10.}
+	\(S\) --- множество, \(f\) --- функция, то \(f(S)\) --- множество, т.е. существует формула \(\varphi(x, y)\):
+	\[\forall x \in S. \exists ! y. \varphi(x, y)\]
+\end{axiom*}
+\begin{examp}
+	\[ f(x) = \begin{cases} {x} & p(x) \\ \varnothing & \neg p(x) \end{cases} \]
+	\[ \{x \in S | p(x)\} = \cup f(S) \]
+\end{examp}
+\subsection{Теорема Лёвенгейма-Сколема (формулировка), парадокс Сколема}
+\label{sec:org307ab4e}
+\subsubsection{Теорема Левенгейма-Сголема}
+\label{sec:org46ee660}
+\begin{definition}
+	\textbf{Мощность модели}
+	\begin{itemize}
+		\item \(D\) --- предметное множество
+	\end{itemize}
+	Тогда \(|D|\) --- мощность модели
+\end{definition}
+\begin{definition}
+	Пусть есть две модели \(M, M'\). \(M'\) --- \textbf{элементарная подмодель} \(M\), если
+	\begin{itemize}
+		\item предметное множество \(M' \subseteq\) предметное множество \(M\)
+		\item пусть \(\vDash_M\varphi\), тогда \(\vDash_{M'}\varphi\)
+		\item Все функции и предикаты \(M'\) --- сужение соответствующих функций и предикатов из \(M\)
+	\end{itemize}
+\end{definition}
+\begin{theorem}
+	Пусть задана теория и модель \(M\). Все ее формулы образуют множество \(T\) \\
+	\uline{Тогда} для нее существует элементарная подмодель \(M'\)
+	\[ |M'| = \max(|T|, \aleph_0) \]
+	\label{orgbbfe46f}
+\end{theorem}
+\begin{proof}
+	\(D_0 \subseteq D_1 \subseteq D_2 \subseteq \dots\) --- предметные множества. \(D_i \subseteq D\) \\
+	\(D' = \bigcup D_i\) --- ?? предметное множество \\
+	Рассмотрим все формулы из \(T\) \\
+	Определим операцию преобразования \(D\):
+	\[ \varphi \in T \quad \underset{y,x_i \in D_n}{\eval{\varphi(y, x_1, \dots x_k)}} = \text{И} \]
+	\todo
+\end{proof}
+\begin{remark}
+	\textbf{``Парадокс`` Сколема} \\
+	Известно, что:
+	\begin{enumerate}
+		\item вещественные числа + матан --- счетно-аксиоматизированны
+		\item \(|\R| > \aleph_0\) \color{gray} --- внутри теории, на предметном языке\color{black}
+		\item У вещественных чисел есть счетная модель \(|\R| = \aleph_0\) --- по \hyperref[orgbbfe46f]{теореме} \color{gray} --- вне теории, на метаязыке\color{black}
+	\end{enumerate}
+	\label{org73efa75}
+\end{remark}
+\end{document}
