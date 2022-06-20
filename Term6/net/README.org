@@ -1,0 +1,5 @@
+#+TITLE: Networks
+#+SETUPFILE: ../../level-subj.org
+
+* Lectures
+[[https://iliayar.ru/public-notes/conspects/Term5/fp/Notes.html][Notes for exam]]

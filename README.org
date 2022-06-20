@@ -10,6 +10,7 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://iliaya
 *** [[file:Term6/sem/README.org][Programming Language Semantic]]
 *** [[file:Term6/ml/README.org][Machine Learning]]
 *** [[https://github.com/iliayar/compilers-supplementary][Compilers]]
+*** [[file:Term6/net/README.org][Networks]]
 ** Term 5
 *** [[file:Term5/tm/README.org][Translation Methods]]
 *** [[file:Term5/fp/README.org][Functional Programming]]
