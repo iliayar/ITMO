@@ -5,6 +5,6 @@ setup(
     version = "1.0.1",
     packages = [ "lab_pchip" ],
     install_requires = [
-        "numpy==1.18.0"
+        "numpy==1.22.0"
     ],
 )
