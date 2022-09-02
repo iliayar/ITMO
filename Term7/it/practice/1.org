@@ -1,0 +1,92 @@
+#+setupfile: setup.org
+#+TITLE: Практика 1
+#+date: 2 сентября
+
+#+begin_definition org
+\[ X^n \rightarrow Y^n \]
+*Скорость кода* --- \(\frac{k}{k}\) (отношение размера исходных данных с размеру закодированных данным) 
+\[ \F_{2^q}^k \rightarrow \F_{2^q}^n \]
+#+end_definition
+#+begin_examp org
+\(5 \rightarrow 10\) --- скорость \(\frac{1}{2}\)
+#+end_examp
+
+#+begin_task org
+\begin{center}
+\begin{pmatrix}
+  1 & 2 & 3 & 4 \\
+  5 & 6 & 6 & 8 \\
+  9 & 10 & 11 & 12 \\
+  13 & 14 & 15 & 16
+\end{pmatrix} \quad x = \begin{cmatrix}
+  1 \\ 1 \\ 1 \\ 1
+\end{cmatrix}
+\end{center}
+#+end_task
+
+#+begin_symbol org
+\(U_a^b = (U_a, U_{a + 1}, \dots, U_{b})\)
+#+end_symbol
+
+#+begin_definition org
+Код задан *Порождающей матрицей* \(G\) \(k \times n\) ранга \(k\).
+#+end_definition
+
+
+#+begin_definitions org
+*Линейные коды* --- \(C_1^n = U_1^n G\), где \(U_i \in \F_2\) \\
+*Проверочная матрица* --- \(H\), такая что
+- \(G H = 0\)
+- \(C H = 0\)
+Размерность \(H\) \((n - k) \times n\)
+#+end_definitions
+
+
+#+begin_task org
+\begin{center}
+  \begin{pmatrix}
+    1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
+    1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
+    1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\ 
+    1 & 0 & 1 & 0 & 1 & 0 & 1 & 0
+  \end{pmatrix}
+\end{center}
+
+- \(G = [I_{k \times k \big| A_{k \times (n - k)}}]\)
+- \(H^T_{n \times (n - k)} = \begin{pmatrix} -A_{k \times (n - k)} \\ I_{(n - k) \times (n - k)}  \end{pmatrix}\)
+- \(H_{(n - k) \times n} = \begin{pmatrix} -A^T_{(n - k) \times k} \big| I_{(n - k) \times (n - k)}  \end{pmatrix}\)
+
+\begin{align*}
+  G \sim \dots \sim \begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+    0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 \\
+    0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
+  \end{pmatrix} \\
+  H = \begin{pmatrix}
+     0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+     1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+     1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 \\
+     1 & 1 & 0 & 1 & 0 & 0 & 0 & 1 \\
+  \end{pmatrix}
+\end{align*}
+\fixme
+#+end_task
+
+#+begin_remark org
+Можно взять проверочную как порождающую --- тогда код называется *дуальным*
+#+end_remark
+
+#+begin_definition org
+\-
+\[ c_i \in \{0, 1\} \rightarrow x_i \in \{-1, 1\} \xrightarrow[\text{channel}]{} y_i = x_i + \eta\]
+\[ \eta_i \sim \mathcal{N}(0, \sigma^2) \]
+
+На вход декодеру подаем логарифмичское отношение правдоподобия
+
+\begin{align*}
+  L & = \log \frac{P(c_i = 1 | y+i)}{P(c_i = 1 | y_i)} = \log \frac{P(y_i | c_i = 0)}{P(y_i | c_i = 1)} \\
+  & = \log \frac{e ^ {-\frac{(y_i + 1)^2}{2 \sigma^2}}}{e ^ {-\frac{(y_i - 1)^2}{2 \sigma^2}}} =
+  & = -\frac{2y}{\sigma^2}
+\end{align*}
+#+end_definition
