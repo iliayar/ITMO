@@ -1,0 +1,5 @@
+#+TITLE: Information Theory
+#+SETUPFILE: ../../level-subj.org
+
+* Practice
+- [[https://iliayar.ru/public-notes/conspects/Term7/it/practice/1.pdf][Practice 1]]

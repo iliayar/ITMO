@@ -71,3 +71,4 @@ target
 
 # Cache
 .direnv
+**/*.~undo-tree~
