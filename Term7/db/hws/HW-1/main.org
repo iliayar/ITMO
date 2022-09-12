@@ -1,0 +1,353 @@
+#+title: HW 1
+
+В интерактивном: =psql=
+Батчево: =psql -d <database> -f <file.sql>=
+
+* Создание базы данных
+#+header: :engine postgres
+#+begin_src sql
+CREATE DATABASE ctd;
+#+end_src
+
+#+RESULTS:
+|---|
+
+* Создание таблиц
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+CREATE TABLE Groups(
+       group_id int,
+       group_no char(6)
+);
+#+end_src
+
+#+RESULTS:
+| CREATE TABLE |
+|--------------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+CREATE TABLE Students(
+       student_id int,
+       name varchar(30),
+       group_id int
+);
+#+end_src
+
+#+RESULTS:
+| CREATE TABLE |
+|--------------|
+
+* Вставка данных
+#+begin_remark org
+Можно обернуть названия столбцов, таблиц, ... в двойные кавычки чтобы
+избежать конфликта с кейвордами.
+#+end_remark
+
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+INSERT INTO Groups (group_id, group_no)
+VALUES
+	(1, 'M34371'),
+	(2, 'M34391');
+#+end_src
+
+#+RESULTS:
+| INSERT 0 2 |
+|------------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+INSERT INTO Students (student_id, name, group_id)
+VALUES
+	(1, 'Ilona Bozhe', 2),
+	(2, 'Alex Slastin', 1),
+	(3, 'Ivan Uss', 1);
+#+end_src
+
+#+RESULTS:
+| INSERT 0 3 |
+|------------|
+
+* Получение данных
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT group_id, group_no FROM Groups;
+#+end_src
+
+#+RESULTS:
+| group_id | group_no |
+|----------+----------|
+|        1 | M34371   |
+|        2 | M34391   |
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT student_id, name, group_id FROM Students;
+#+end_src
+
+#+RESULTS:
+| student_id | name         | group_id |
+|------------+--------------+----------|
+|          1 | Ilona Bozhe  |        2 |
+|          2 | Alex Slastin |        1 |
+|          3 | Ivan Uss     |        1 |
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT name, group_no
+FROM Students NATURAL JOIN Groups;
+#+end_src
+
+#+RESULTS:
+| name         | group_no |
+|--------------+----------|
+| Ivan Uss     | M34371   |
+| Alex Slastin | M34371   |
+| Ilona Bozhe  | M34391   |
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT Students.name, Groups.group_no
+FROM Students
+     INNER JOIN Groups
+     ON Students.group_id = Groups.group_id;
+#+end_src
+
+#+RESULTS:
+| name         | group_no |
+|--------------+----------|
+| Ivan Uss     | M34371   |
+| Alex Slastin | M34371   |
+| Ilona Bozhe  | M34391   |
+
+** =ORDER BY=
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT group_id, group_no FROM Groups ORDER BY group_id;
+#+end_src
+
+#+RESULTS:
+| group_id | group_no |
+|----------+----------|
+|        1 | M34371   |
+|        2 | M34391   |
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT group_id, group_no FROM Groups ORDER BY group_no;
+#+end_src
+
+#+RESULTS:
+| group_id | group_no |
+|----------+----------|
+|        1 | M34371   |
+|        2 | M34391   |
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT group_id, group_no FROM Groups ORDER BY group_no DESC;
+#+end_src
+
+#+RESULTS:
+| group_id | group_no |
+|----------+----------|
+|        2 | M34391   |
+|        1 | M34371   |
+
+* Удаление данных
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+DROP TABLE Groups;
+#+end_src
+
+#+RESULTS:
+| DROP TABLE |
+|------------|
+
+* Обновление данных
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+UPDATE Students
+       SET group_id = 2
+       WHERE student_id = 2;
+#+end_src
+
+#+RESULTS:
+| UPDATE 1 |
+|----------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+UPDATE Students
+       SET group_id = 2
+       WHERE name = 'Alex Slastin';
+#+end_src
+
+#+RESULTS:
+| UPDATE 1 |
+|----------|
+
+* Повторяющийся идентификатор
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+INSERT INTO Groups (group_id, group_no)
+VALUES
+	(1, 'M32381');
+#+end_src
+
+#+RESULTS:
+| INSERT 0 1 |
+|------------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT group_id, group_no FROM Groups;
+#+end_src
+
+#+RESULTS:
+| group_id | group_no |
+|----------+----------|
+|        1 | M34371   |
+|        2 | M34391   |
+|        1 | M32381   |
+
+Проблемы:
+- Дубли
+- Противоречия
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+DELETE FROM Groups WHERE group_no = 'M32381';
+#+end_src
+
+#+RESULTS:
+| DELETE 1 |
+|----------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+ALTER TABLE Groups
+      ADD CONSTRAINT group_id_unique unique (group_id);
+#+end_src
+
+#+RESULTS:
+| ALTER TABLE |
+|-------------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+INSERT INTO Groups (group_id, group_no)
+VALUES
+	(1, 'M32381');
+#+end_src
+
+#+RESULTS:
+|---|
+
+#+begin_src 
+psql:/tmp/babel-oESQj7/sql-in-jieQhI:4: ERROR:  duplicate key value violates unique constraint "group_id_unique"
+DETAIL:  Key (group_id)=(1) already exists.
+#+end_src
+
+* Несуществующий идентификатор
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+UPDATE Students SET group_id = 5 WHERE student_id = 1;
+#+end_src
+
+#+RESULTS:
+| UPDATE 1 |
+|----------|
+
+Проблемы:
+- Потеря информации
+- Противоречия
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+UPDATE Students SET group_id = 1 WHERE student_id = 1;
+#+end_src
+
+#+RESULTS:
+| UPDATE 1 |
+|----------|
+
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+ALTER TABLE Students
+      ADD FOREIGN KEY (group_id)
+      REFERENCES Groups (group_id);
+#+end_src
+
+#+RESULTS:
+| ALTER TABLE |
+|-------------|
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+UPDATE Students SET group_id = 5 WHERE student_id = 1;
+#+end_src
+
+#+RESULTS:
+|---|
+
+#+begin_src 
+psql:/tmp/babel-oESQj7/sql-in-bVa0e3:2: ERROR:  insert or update on table "students" violates foreign key constraint "students_group_id_fkey"
+DETAIL:  Key (group_id)=(5) is not present in table "groups".
+#+end_src
+
+* Проверка русского языка
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+INSERT INTO Students (student_id, name, group_id)
+VALUES
+	(4, 'Илья Ярошевский', 1);
+#+end_src
+
+#+RESULTS:
+| INSERT 0 1 |
+|------------|
+
+
+#+header: :engine postgres
+#+header: :database ctd
+#+begin_src sql
+SELECT name, group_no FROM Students NATURAL JOIN Groups;
+#+end_src
+
+#+RESULTS:
+| name            | group_no |
+|-----------------+----------|
+| Ivan Uss        | M34371   |
+| Alex Slastin    | M34391   |
+| Ilona Bozhe     | M34371   |
+| Илья Ярошевский | M34371   |
