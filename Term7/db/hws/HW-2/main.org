@@ -1,0 +1,296 @@
+#+title: HW 2
+
+Каждй студент обязательно состоит ровно в одной группе. Группа
+целоиком записана на определенные предметы у определенного набора
+преподавателей (лектор, практики). Преподаватели могу преподавать один
+или больше предметов. Преподаватель может ставить оценки ученикам
+(сколько угодно). Преподаватель может быть еще и студентом. Группы не пустые.
+
+* SQL
+#+header: :engine postgres
+#+begin_src sql
+CREATE DATABASE hw2;
+#+end_src
+
+#+RESULTS:
+| CREATE DATABASE |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+DROP TABLE IF EXISTS Subjects CASCADE;
+DROP TABLE IF EXISTS Marks CASCADE;
+DROP TABLE IF EXISTS Persons CASCADE;
+DROP TABLE IF EXISTS PersonGroups CASCADE;
+DROP TABLE IF EXISTS Groups CASCADE;
+DROP TABLE IF EXISTS Teachers CASCADE;
+DROP TABLE IF EXISTS ActiveSubjects CASCADE;
+
+CREATE TABLE Persons (
+       Id SERIAL not null,
+       Name varchar(50) not null,
+       PRIMARY KEY (Id)
+);
+
+CREATE TABLE Subjects (
+       Id int GENERATED ALWAYS AS IDENTITY,
+       Name varchar(50) not null,
+       PRIMARY KEY (Id)
+);
+
+CREATE TABLE Groups (
+       Id SERIAL not null,
+       Name varchar(50) not null,
+       PersonGroupId int not null,
+       PRIMARY KEY (Id)
+);
+
+CREATE TABLE Teachers (
+       Role varchar(50) not null,
+       PersonId int not null,
+       PRIMARY KEY (Role, PersonId),
+       FOREIGN KEY (PersonId)
+       REFERENCES Persons(Id)
+);
+
+CREATE TABLE ActiveSubjects (
+       SubjectId int not null,
+       TeacherId int not null,
+       TeacherRole varchar(50) not null,
+       GroupId int not null,
+       PRIMARY KEY (SubjectId, TeacherId, TeacherRole, GroupId),
+       FOREIGN KEY (SubjectId)
+       REFERENCES Subjects(Id),
+       FOREIGN KEY (GroupId)
+       REFERENCES Groups(Id),
+       FOREIGN KEY (TeacherId, TeacherRole)
+       REFERENCES Teachers(PersonId, Role)
+);
+
+
+CREATE TABLE Marks (
+       Id SERIAL not null,
+       Mark int not null,
+       TeacherId int not null,
+       TeacherRole varchar(50) not null,
+       SubjectId int not null,
+       GroupId int not null,
+       StudentId int not null,
+       PRIMARY KEY (Id),
+       FOREIGN KEY (StudentId)
+       REFERENCES Persons(Id),
+       FOREIGN KEY (TeacherId, TeacherRole, SubjectId, GroupId)
+       REFERENCES ActiveSubjects(TeacherId, TeacherRole, SubjectId, GroupId)
+);
+
+CREATE TABLE PersonGroups (
+       GroupId int not null,
+       PersonId int not null,
+       PRIMARY KEY (PersonId),
+       UNIQUE (GroupId, PersonId),
+       FOREIGN KEY (PersonId)
+       REFERENCES Persons(Id),
+       FOREIGN KEY (GroupId)
+       REFERENCES Groups(Id)
+);
+
+ALTER TABLE Groups
+      ADD CONSTRAINT fk_person_group_id
+      	  FOREIGN KEY (Id, PersonGroupId)
+	  REFERENCES PersonGroups(GroupId, PersonId);
+#+end_src
+
+#+RESULTS:
+| DROP TABLE   |
+|--------------|
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| ALTER TABLE  |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+INSERT INTO Persons (Name) VALUES
+       ('Иванов Иван'),
+       ('Петров Петр'),
+       ('Казимиров Казимир'),
+       ('Игнатьев Игнат'),
+       ('Тимуров Тимур'),
+       ('Станиславов Станислав'),
+       ('Корнеев Георгий'),
+       ('Кохась Константин'),
+       ('Маврин Павел');
+#+end_src
+
+#+RESULTS:
+| INSERT 0 9 |
+|------------|
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+SELECT (Id, Name) FROM Persons;
+#+end_src
+
+#+RESULTS:
+| row                         |
+|-----------------------------|
+| (1,"Иванов Иван")           |
+| (2,"Петров Петр")           |
+| (3,"Казимиров Казимир")     |
+| (4,"Игнатьев Игнат")        |
+| (5,"Тимуров Тимур")         |
+| (6,"Станиславов Станислав") |
+| (7,"Корнеев Георгий")       |
+| (8,"Кохась Константин")     |
+| (9,"Маврин Павел")          |
+
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+INSERT INTO Subjects (Name) VALUES
+       ('Матанализ'),
+       ('Базы Данных'),
+       ('АиСД');
+#+end_src
+
+#+RESULTS:
+| INSERT 0 3 |
+|------------|
+
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+SELECT (Id, NAME) FROM Subjects;
+#+end_src
+
+#+RESULTS:
+| row               |
+|-------------------|
+| (1,Матанализ)     |
+| (2,"Базы Данных") |
+| (3,АиСД)          |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+WITH new_groups AS (
+     INSERT INTO Groups (Id, Name, PersonGroupId) VALUES
+     	    (1, 'M3139', 1),
+	    (2, 'M34371', 2),
+	    (3, 'M3234', 3)
+)
+INSERT INTO PersonGroups (GroupId, PersonId) VALUES
+       (1, 1),
+       (1, 4),
+       (2, 2),
+       (2, 5),
+       (3, 3),
+       (3, 6);
+#+end_src
+
+
+#+RESULTS:
+| INSERT 0 6 |
+|------------|
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+SELECT (Id, NAME, PersonGroupId) FROM Groups;
+#+end_src
+
+#+RESULTS:
+| row          |
+|--------------|
+| (1,M3139,1)  |
+| (2,M34371,2) |
+| (3,M3234,3)  |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+SELECT (GroupId, PersonId) FROM PersonGroups;
+#+end_src
+
+#+RESULTS:
+| row   |
+|-------|
+| (1,1) |
+| (1,4) |
+| (2,2) |
+| (2,5) |
+| (3,3) |
+| (3,6) |
+
+
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+INSERT INTO Teachers (Role, PersonId) VALUES
+       ('Лектор', 1),
+       ('Лектор', 2),
+       ('Лектор', 3),
+       ('Практик', 3);
+#+end_src
+
+#+RESULTS:
+| INSERT 0 4 |
+|------------|
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+SELECT (Role, PersonId) FROM Teachers;
+#+end_src
+
+#+RESULTS:
+| row         |
+|-------------|
+| (Лектор,1)  |
+| (Лектор,2)  |
+| (Лектор,3)  |
+| (Практик,3) |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+INSERT INTO ActiveSubjects (SubjectId, TeacherId, TeacherRole, GroupId) VALUES
+       (1, 2, 'Лектор', 3),
+       (2, 1, 'Лектор', 2),
+       (3, 3, 'Лектор', 1),
+       (3, 3, 'Практик', 1);
+#+end_src
+
+#+RESULTS:
+| INSERT 0 4 |
+|------------|
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+INSERT INTO Marks (Mark, SubjectId, TeacherId, TeacherRole, GroupId, StudentId) VALUES
+       (50, 1, 2, 'Лектор', 3, 1),
+       (-1, 2, 1, 'Лектор', 2, 2),
+       (5 , 3, 3, 'Лектор', 1, 3),
+       (2 , 3, 3, 'Практик', 1, 3);
+#+end_src
+
+#+RESULTS:
+| INSERT 0 4 |
+|------------|
