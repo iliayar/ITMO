@@ -1,0 +1,123 @@
+#+title: HW 3
+
+StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark
+
+
+* 1
+
+#+begin_src 
+-- У студента есть имя и он обучается в определенной группе, при чем могут быть студенты с одинаковыми именами
+StudentId -> StudentName
+StudentId -> GroupId
+-- У группы есть название, при чем название может повторяться в разных университетах
+GroupId -> GroupName
+-- У курса есть название, при чем названия в разных университетах могут повторяться
+CourseId -> CourseName
+-- У лектора есть имя
+LecturerId -> LecturerName
+-- Студент может иметь оценка по итогам какого-либо курса, при чем эту оценку выставил лектор этого курса
+StudentId, CourseId -> Mark, LecturerId
+-- Курс у группы читает определенный лектор, при чем у разныз групп один и тот же курс могут читать разные лекторы
+-- Так же лектор может читать больше одного курса
+GroupId, CourseId -> LecturerId
+#+end_src
+
+* 2
+
+Возьмем надключ из всех аттрибутов. Mark стоит в правой части только в
+одной ФЗ, в которой слева находится StudentId, CourseId. При чем
+StudentId и CourseId не находятся в правой части ни в одной
+ФЗ. Следовательно любой ключ будет содержать StudentId и
+CourseId. Проверим что {StudentId, CourseId} --- надключ, получим что
+он также и ключ:
+{StudentId, CourseId}* = {StudentId, CourseId, StudentName, GroupId, GroupName, CourseName, Mark, LecturerId, LecturerName}
+
+#+begin_src 
+StudentId, CourseId 
+#+end_src
+
+* 3
+** 1
+#+begin_src 
+GroupId, CourseId
+GroupId, CourseId, GroupName
+GroupId, CourseId, GroupName, CourseName
+GroupId, CourseId, GroupName, CourseName, LecturerId
+GroupId, CourseId, GroupName, CourseName, LecturerId, LecturerName
+#+end_src
+** 2
+#+begin_src 
+StudentId, CourseId  
+StudentId, CourseId, StudentName
+StudentId, CourseId, StudentName, GroupId
+StudentId, CourseId, StudentName, GroupId, GroupName
+StudentId, CourseId, StudentName, GroupId, GroupName, CourseName
+StudentId, CourseId, StudentName, GroupId, GroupName, CourseName, Mark, LecturerId
+StudentId, CourseId, StudentName, GroupId, GroupName, CourseName, Mark, LecturerId, LecturerName
+#+end_src
+** 3
+#+begin_src 
+StudentId, LecturerId
+StudentId, LecturerId, StudentName
+StudentId, LecturerId, StudentName, GroupId
+StudentId, LecturerId, StudentName, GroupId, GroupName
+StudentId, LecturerId, StudentName, GroupId, GroupName, LecturerName
+#+end_src
+
+* 4
+*** 1
+#+begin_src 
+Есть одна ФЗ в которой в правой части больше 1 аттрибута, расщепляем ее
+#+end_src
+
+#+begin_src 
+StudentId -> StudentName
+StudentId -> GroupId
+GroupId -> GroupName
+CourseId -> CourseName
+LecturerId -> LecturerName
+StudentId, CourseId -> Mark
+StudentId, CourseId -> LecturerId
+GroupId, CourseId -> LecturerId
+#+end_src
+** 2
+#+begin_src 
+Есть 3 правила с больше чем 2 аттрибутами, построим замыкания этих аттрибутов:
+StudentId* = StudentId, StudentName, GroupId, GroupName
+CourseId = CourseId, CourseName
+GroupId = GroupId, GroupName
+Не можем применить правило удаление аттрибута ни в одной ФЗ
+#+end_src
+
+#+begin_src 
+StudentId -> StudentName
+StudentId -> GroupId
+GroupId -> GroupName
+CourseId -> CourseName
+LecturerId -> LecturerName
+StudentId, CourseId -> Mark
+StudentId, CourseId -> LecturerId
+GroupId, CourseId -> LecturerId
+#+end_src
+** 3
+#+begin_src 
+Построим замыкания аттрибутов левых частей каждой ФЗ, без этой ФЗ:
+StudentId* = StudentId, GroupId, GroupName -- не можем выкинуть
+StudentId* = StudentId, StudentName -- не можем выкинуть
+GroupId* = GroupId -- не можем выкинуть
+CourseId* = CourseId -- не можем выкинуть
+LecturerId* = LecturerId -- не можем выкинуть
+{StudentId, CourseId}* = StudentId, CourseId, StudentName, GroupId, GroupName, LecturerId, LecturerName, CourseName -- не можем выкинуть
+{StudentId, CourseId}* = StudentId, CourseId, StudentName, GroupId, GroupName, CourseId, Mark, CourseName, LecturerId -- LecturerId входит в замыкание, выкидываем
+{GroupId, CourseId}* = GroupId, CourseId, GroupName, CourseName -- не можем выкинуть
+#+end_src
+
+#+begin_src 
+StudentId -> StudentName
+StudentId -> GroupId
+GroupId -> GroupName
+CourseId -> CourseName
+LecturerId -> LecturerName
+StudentId, CourseId -> Mark
+GroupId, CourseId -> LecturerId
+#+end_src
