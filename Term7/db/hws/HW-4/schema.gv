@@ -1,0 +1,65 @@
+digraph G { 
+    node [shape=none, margin=0.01]
+ 
+    // edge [arrowhead=crow, arrowtail=none, dir=both]
+
+    Group -> Student [arrowhead=crow];
+
+    Lecturers [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">Lecturers</td></tr>
+            <tr><td align="left"><u>LecturerId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">LecturerName</td><td align="left">string</td><td></td></tr>
+        </table>
+    >]
+
+    StudentGroups [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">StudentGroups</td></tr>
+            <tr><td align="left"><u>StudentId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">GroupId</td><td align="left">id</td><td></td></tr>
+        </table>
+    >]
+
+    Group [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">Group</td></tr>
+            <tr><td align="left"><u>Id</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">Name</td><td align="left">string</td><td></td></tr>
+        </table>
+    >]
+
+    Student [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">Student</td></tr>
+            <tr><td align="left"><u>Id</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">Name</td><td align="left">string</td><td></td></tr>
+        </table>
+    >]
+ 
+    GroupsCoursesLecturers [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">GroupsCoursesLecturers</td></tr>
+            <tr><td align="left"><u>GroupId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left"><u>CourseId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">LecturerId</td><td align="left">id</td><td></td></tr>
+        </table>
+    >]
+
+    StudentsCoursesMarks [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">StudentsCoursesMarks</td></tr>
+            <tr><td align="left"><u>StudentId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left"><u>CourseId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">Mark</td><td align="left">mark</td><td></td></tr>
+        </table>
+    >]
+
+    Courses [label=<
+        <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+            <tr><td colspan="3" bgcolor="lightblue">Courses</td></tr>
+            <tr><td align="left"><u>CourseId</u></td><td align="left">id</td><td></td></tr>
+            <tr><td align="left">CourseName</td><td align="left">string</td><td></td></tr>
+        </table>
+    >]
+}
