@@ -1,0 +1,1 @@
+pi{CourseName, StudentId}(Students njoin Marks njoin Courses) gdiv pi{StudentId, GroupName}(Students njoin Groups)

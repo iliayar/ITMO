@@ -1,0 +1,1 @@
+pi{StudentId, StudentName, GroupName}(sigma{StudentName = :StudentName}(Students njoin Groups))
