@@ -1,0 +1,1 @@
+r(StudentId, StudentName, GroupName) :- Students(StudentId, StudentName, GroupId), Groups(GroupId, GroupName).
