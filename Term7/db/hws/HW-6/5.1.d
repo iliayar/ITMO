@@ -1,0 +1,2 @@
+HasMark(StudentId, LecturerId) :- Students(StudentId, _, GroupId), Plan(GroupId, CourseId, LecturerId), Marks(StudentId, CourseId, _).
+r(StudentId) :- HasMark(StudentId, LecturerId), Lecturers(LecturerId, :LecturerName).
