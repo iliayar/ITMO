@@ -1,0 +1,88 @@
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION RevertMarkUpdate()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+   UPDATE Marks
+   SET Mark = OLD.Mark
+   WHERE Marks.StudentId = OLD.StudentId
+         AND Marks.CourseId = OLD.CourseId;
+   RETURN NEW;
+END;
+$$;
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT *
+FROM Marks
+WHERE StudentId = 2;
+#+end_src
+
+#+RESULTS:
+| studentid | courseid | mark |
+|-----------+----------+------|
+|         2 |        1 |   20 |
+|         2 |        2 |   23 |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+UPDATE Marks
+SET Mark = 15
+WHERE StudentId = 2
+      AND CourseId = 1;
+#+end_src
+
+#+RESULTS:
+| UPDATE 1 |
+|----------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE TRIGGER PreserveMarks AFTER UPDATE ON Marks
+FOR EACH ROW
+WHEN (NEW.Mark < OLD.Mark)
+EXECUTE PROCEDURE RevertMarkUpdate();
+#+end_src
+
+#+RESULTS:
+| CREATE TRIGGER |
+|----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION RevertMarkUpdate()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+   UPDATE Marks
+   SET Mark = OLD.Mark
+   WHERE Marks.StudentId = OLD.StudentId
+         AND Marks.CourseId = OLD.CourseId;
+   RETURN NEW;
+END;
+$$;
+
+CREATE OR REPLACE TRIGGER PreserveMarks AFTER UPDATE ON Marks
+FOR EACH ROW
+WHEN (NEW.Mark < OLD.Mark)
+EXECUTE PROCEDURE RevertMarkUpdate();
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+| CREATE TRIGGER  |

@@ -76,7 +76,8 @@ INSERT INTO Students (StudentId, StudentName, GroupId) VALUES
        (3, 'Петров П.П.', 2),
        (4, 'Сидров С.С.', 2),
        (5, 'Неизвестный Н.Н.', 3),
-       (6, 'Безымянный Б.Б', 4);
+       (6, 'Безымянный Б.Б', 4),
+       (10, 'AMOGUS', 4);
 
 INSERT INTO Groups (GroupId, GroupName) VALUES
     (1, 'M3435'),
@@ -133,7 +134,7 @@ INSERT INTO Marks (StudentId, CourseId, Mark) VALUES
 #+end_src
 
 #+RESULTS:
-| INSERT 0 6  |
+| INSERT 0 7  |
 |-------------|
 | INSERT 0 4  |
 | INSERT 0 6  |
