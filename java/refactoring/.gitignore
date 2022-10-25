@@ -1,2 +1,6 @@
 .direnv
 .envrc
+target
+.settings
+.project
+.classpath
