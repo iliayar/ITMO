@@ -1,0 +1,1 @@
+SELECT * FROM Product ORDER BY Price DESC LIMIT 1;

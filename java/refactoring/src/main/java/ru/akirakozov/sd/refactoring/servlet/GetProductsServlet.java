@@ -3,6 +3,10 @@ package ru.akirakozov.sd.refactoring.servlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import ru.akirakozov.sd.refactoring.database.Database;
+import ru.akirakozov.sd.refactoring.types.Product;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,30 +18,27 @@ import java.sql.Statement;
  */
 public class GetProductsServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-                Statement stmt = c.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
-                response.getWriter().println("<html><body>");
+  Database database;
 
-                while (rs.next()) {
-                    String  name = rs.getString("name");
-                    int price  = rs.getInt("price");
-                    response.getWriter().println(name + "\t" + price + "</br>");
-                }
-                response.getWriter().println("</body></html>");
+  public GetProductsServlet(Database database) {
+    this.database = database;
+  }
 
-                rs.close();
-                stmt.close();
-            }
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    try {
+      response.getWriter().println("<html><body>");
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+      for (Product product : database.getProducts()) {
+        response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
+      }
 
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
+      response.getWriter().println("</body></html>");
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
+
+    response.setContentType("text/html");
+    response.setStatus(HttpServletResponse.SC_OK);
+  }
 }

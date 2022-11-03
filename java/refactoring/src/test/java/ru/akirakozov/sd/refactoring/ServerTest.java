@@ -18,6 +18,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ru.akirakozov.sd.refactoring.database.Database;
+import ru.akirakozov.sd.refactoring.database.SQLite;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -41,16 +44,19 @@ public class ServerTest {
   @BeforeAll
   static public void runServer() {
     try {
-      app = new App(8080);
-      app.Start();
+      Database db = new SQLite("test.db");
+      db.init();
+      app = new App(db, 8080);
+      app.start();
     } catch (Exception e) {
+      System.err.println("Failed start app: " + e.toString());
     }
   }
 
   @AfterAll
   static public void stopServer() {
     try {
-      app.Stop();
+      app.stop();
     } catch (Exception e) {
     }
   }

@@ -3,6 +3,8 @@ package ru.akirakozov.sd.refactoring;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+
+import ru.akirakozov.sd.refactoring.database.Database;
 import ru.akirakozov.sd.refactoring.servlet.AddProductServlet;
 import ru.akirakozov.sd.refactoring.servlet.GetProductsServlet;
 import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
@@ -18,38 +20,34 @@ public class App {
   private int port;
   private Server server;
 
-  public App(int port) {
+  private Database database;
+
+  public App(Database database, int port) {
     this.port = port;
+    this.database = database;
   }
 
-  public App() {
-    this(DEFAULT_PORT);
+  public App(Database database) {
+    this(database, DEFAULT_PORT);
   }
 
-  public void Start() throws Exception {
-    try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-      String sql = "CREATE TABLE IF NOT EXISTS PRODUCT" + "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-          + " NAME           TEXT    NOT NULL, " + " PRICE          INT     NOT NULL)";
-      Statement stmt = c.createStatement();
-
-      stmt.executeUpdate(sql);
-      stmt.close();
-    }
-
+  public void start() throws Exception {
+    database.init();
+    
     server = new Server(port);
 
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
     context.setContextPath("/");
     server.setHandler(context);
 
-    context.addServlet(new ServletHolder(new AddProductServlet()), "/add-product");
-    context.addServlet(new ServletHolder(new GetProductsServlet()), "/get-products");
-    context.addServlet(new ServletHolder(new QueryServlet()), "/query");
+    context.addServlet(new ServletHolder(new AddProductServlet(database)), "/add-product");
+    context.addServlet(new ServletHolder(new GetProductsServlet(database)), "/get-products");
+    context.addServlet(new ServletHolder(new QueryServlet(database)), "/query");
 
     server.start();
   }
 
-  public void Stop() throws Exception {
+  public void stop() throws Exception {
     if (server == null) {
       throw new Exception("Server is not running");
     }
@@ -57,7 +55,7 @@ public class App {
     server.stop();
   }
 
-  public void Wait() throws Exception {
+  public void join() throws Exception {
     if (server == null) {
       throw new Exception("Server is not running");
     }
