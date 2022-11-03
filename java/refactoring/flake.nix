@@ -19,6 +19,8 @@
             buildInputs = with pkgs; [
               openjdk
               maven
+
+              python3Packages.sqlparse
             ];
           };
         }
