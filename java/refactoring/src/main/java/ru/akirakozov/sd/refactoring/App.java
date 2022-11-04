@@ -5,6 +5,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import ru.akirakozov.sd.refactoring.database.Database;
+import ru.akirakozov.sd.refactoring.servlet.AbstractGetHtmlServlet;
 import ru.akirakozov.sd.refactoring.servlet.AddProductServlet;
 import ru.akirakozov.sd.refactoring.servlet.GetProductsServlet;
 import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
@@ -15,52 +16,47 @@ public class App {
 
   private static final int DEFAULT_PORT = 8081;
 
-  private int port;
   private Server server;
-
   private Database database;
-  private Template template;
 
-  public App(Database database, int port) {
-    this.port = port;
+  public App(Database database, int port) throws Exception {
     this.database = database;
-    this.template = new HTMLTemplate();
+
+    init(port);
   }
 
-  public App(Database database) {
+  public App(Database database) throws Exception {
     this(database, DEFAULT_PORT);
   }
 
   public void start() throws Exception {
+    server.start();
+  }
+
+  public void stop() throws Exception {
+    server.stop();
+  }
+
+  public void join() throws Exception {
+    server.join();
+  }
+
+  private void init(int port) throws Exception {
     database.init();
-    
+
     server = new Server(port);
 
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
     context.setContextPath("/");
     server.setHandler(context);
 
-    context.addServlet(new ServletHolder(new AddProductServlet(database, template)), "/add-product");
-    context.addServlet(new ServletHolder(new GetProductsServlet(database, template)), "/get-products");
-    context.addServlet(new ServletHolder(new QueryServlet(database, template)), "/query");
-
-    server.start();
+    addServlet(context, new AddProductServlet(database), "/add-product");
+    addServlet(context, new GetProductsServlet(database), "/get-products");
+    addServlet(context, new QueryServlet(database), "/query");
   }
 
-  public void stop() throws Exception {
-    if (server == null) {
-      throw new Exception("Server is not running");
-    }
-
-    server.stop();
-  }
-
-  public void join() throws Exception {
-    if (server == null) {
-      throw new Exception("Server is not running");
-    }
-
-    server.join();
+  private void addServlet(ServletContextHandler context, AbstractGetHtmlServlet servlet, String path) {
+    context.addServlet(new ServletHolder(servlet), path);
   }
 
 }
