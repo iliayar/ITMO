@@ -8,10 +8,6 @@ import ru.akirakozov.sd.refactoring.database.Database;
 import ru.akirakozov.sd.refactoring.types.Product;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * @author akirakozov
