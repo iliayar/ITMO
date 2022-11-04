@@ -51,70 +51,43 @@ public class SQLite implements Database, AutoCloseable {
 
   @Override
   public List<Product> getProducts() throws Exception {
-    try (Statement stmt = connection.createStatement()) {
-      try (ResultSet result = stmt.executeQuery(sqlGetProducts)) {
-        List<Product> res = new ArrayList<>();
+    return withExecutingQuery(sqlGetProducts, result -> {
+      List<Product> res = new ArrayList<>();
 
-        while (result.next()) {
-          res.add(getProductFromResult(result));
-        }
-
-        return res;
+      while (result.next()) {
+        res.add(getProductFromResult(result));
       }
 
-    }
+      return res;
+    });
   }
 
   @Override
   public int getProductsCount() throws Exception {
-    try (Statement stmt = connection.createStatement()) {
-      try (ResultSet result = stmt.executeQuery(sqlGetProductsCount)) {
-        if (result.next()) {
-          return result.getInt(1);
-        }
-      }
-    }
-
-    throw new RuntimeException("No rows in result");
+    return withExecutingQuerySingleRow(sqlGetProductsCount, result -> {
+      return Integer.valueOf(result.getInt(1));
+    }).intValue();
   }
 
   @Override
   public long getSumPrice() throws Exception {
-    try (Statement stmt = connection.createStatement()) {
-      try (ResultSet result = stmt.executeQuery(sqlGetSumPrice)) {
-        if (result.next()) {
-          return result.getInt(1);
-        }
-      }
-    }
-
-    throw new RuntimeException("No rows in result");
+    return withExecutingQuerySingleRow(sqlGetSumPrice, result -> {
+      return Long.valueOf(result.getLong(1));
+    }).longValue();
   }
 
   @Override
   public Product getMinPrice() throws Exception {
-    try (Statement stmt = connection.createStatement()) {
-      try (ResultSet result = stmt.executeQuery(sqlGetMinPrice)) {
-        if (result.next()) {
-          return getProductFromResult(result);
-        }
-      }
-    }
-
-    throw new RuntimeException("No rows in result");
+    return withExecutingQuerySingleRow(sqlGetMinPrice, result -> {
+      return getProductFromResult(result);
+    });
   }
 
   @Override
   public Product getMaxPrice() throws Exception {
-    try (Statement stmt = connection.createStatement()) {
-      try (ResultSet result = stmt.executeQuery(sqlGetMaxPrice)) {
-        if (result.next()) {
-          return getProductFromResult(result);
-        }
-      }
-    }
-
-    throw new RuntimeException("No rows in result");
+    return withExecutingQuerySingleRow(sqlGetMaxPrice, result -> {
+      return getProductFromResult(result);
+    });
   }
 
   @Override
@@ -129,7 +102,7 @@ public class SQLite implements Database, AutoCloseable {
     connection.close();
   }
 
-  String loadSQLScript(String filename) {
+  private String loadSQLScript(String filename) {
     ClassLoader classLoader = getClass().getClassLoader();
     InputStream inputStream = classLoader.getResourceAsStream("sql/" + filename + ".sql");
     BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
@@ -138,10 +111,32 @@ public class SQLite implements Database, AutoCloseable {
     return script;
   }
 
-  Product getProductFromResult(ResultSet result) throws Exception {
+  private Product getProductFromResult(ResultSet result) throws Exception {
     String name = result.getString("Name");
     long price = result.getLong("Price");
     return new Product(name, price);
+  }
+
+  private<R> R withExecutingQuery(String query, CheckedFunction<ResultSet, R> fun) throws Exception {
+    try (Statement stmt = connection.createStatement()) {
+      try (ResultSet result = stmt.executeQuery(query)) {
+          return fun.apply(result);
+      }
+    }
+  }
+
+  private <R> R withExecutingQuerySingleRow(String query, CheckedFunction<ResultSet, R> fun) throws Exception {
+    return withExecutingQuery(query, result -> {
+      if (result.next()) {
+        return fun.apply(result);
+      }
+      throw new RuntimeException("No rows in result");
+    });
+  }
+
+  @FunctionalInterface
+  private interface CheckedFunction<T, R> {
+    R apply(T t) throws Exception;
   }
 
 }
