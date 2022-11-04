@@ -20,6 +20,8 @@ public class HTMLTemplate implements Template {
   private final String htmlSumPrice;
   private final String htmlProductsCount;
 
+  private final String htmlUnknownCommand;
+
   public HTMLTemplate() {
 
     htmlOkResponse = loadHTMLTemplate("ok");
@@ -31,6 +33,8 @@ public class HTMLTemplate implements Template {
     htmlMinPrice = loadHTMLTemplate("min_price");
     htmlSumPrice = loadHTMLTemplate("sum_price");
     htmlProductsCount = loadHTMLTemplate("products_count");
+
+    htmlUnknownCommand = loadHTMLTemplate("unknown_command");
   }
 
   @Override
@@ -72,6 +76,13 @@ public class HTMLTemplate implements Template {
   public String getProductsCount(int count) {
     ResponseBuilder builder = new ResponseBuilder(htmlProductsCount);
     builder.param("count", String.valueOf(count));
+    return builder.getResponse();
+  }
+
+  @Override
+  public String unknownCommand(String command) {
+    ResponseBuilder builder = new ResponseBuilder(htmlUnknownCommand);
+    builder.param("command", command);
     return builder.getResponse();
   }
 

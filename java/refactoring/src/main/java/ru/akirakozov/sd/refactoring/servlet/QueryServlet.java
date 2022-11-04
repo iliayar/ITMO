@@ -1,66 +1,38 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import ru.akirakozov.sd.refactoring.database.Database;
 import ru.akirakozov.sd.refactoring.models.Product;
-import ru.akirakozov.sd.refactoring.templates.Template;
 
-import java.io.IOException;
 
 /**
  * @author akirakozov
  */
-public class QueryServlet extends HttpServlet {
+public class QueryServlet extends AbstractGetHtmlServlet {
 
-  private Database database;
-  private Template template;
-
-  public QueryServlet(Database database, Template template) {
-    this.database = database;
-    this.template = template;
+  public QueryServlet(Database database) {
+    super(database);
   }
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected String handle(HttpServletRequest request) throws Exception {
     String command = request.getParameter("command");
 
     if ("max".equals(command)) {
-      try {
-        Product product = database.getMaxPrice();
-        response.getWriter().write(template.getMaxPrice(product));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+      Product product = database.getMaxPrice();
+      return template.getMaxPrice(product);
     } else if ("min".equals(command)) {
-      try {
-        Product product = database.getMinPrice();
-        response.getWriter().write(template.getMinPrice(product));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+      Product product = database.getMinPrice();
+      return template.getMinPrice(product);
     } else if ("sum".equals(command)) {
-      try {
-        long sum = database.getSumPrice();
-        response.getWriter().write(template.getSumPrice(sum));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+      long sum = database.getSumPrice();
+      return template.getSumPrice(sum);
     } else if ("count".equals(command)) {
-      try {
-        int count = database.getProductsCount();
-        response.getWriter().write(template.getProductsCount(count));
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+      int count = database.getProductsCount();
+      return template.getProductsCount(count);
     } else {
-      response.getWriter().println("Unknown command: " + command);
+      return template.unknownCommand(command);
     }
-
-    response.setContentType("text/html");
-    response.setStatus(HttpServletResponse.SC_OK);
   }
-
 }

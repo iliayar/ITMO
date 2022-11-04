@@ -15,4 +15,6 @@ public interface Template {
   String getSumPrice(long sum);
   String getProductsCount(int count);
 
+  String unknownCommand(String command);
+
 }
