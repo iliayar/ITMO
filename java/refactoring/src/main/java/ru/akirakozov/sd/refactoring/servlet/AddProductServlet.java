@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ru.akirakozov.sd.refactoring.database.Database;
+import ru.akirakozov.sd.refactoring.models.Product;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ public class AddProductServlet extends HttpServlet {
     long price = Long.parseLong(request.getParameter("price"));
 
     try {
-      database.addProduct(name, price);
+      database.addProduct(new Product(name, price));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

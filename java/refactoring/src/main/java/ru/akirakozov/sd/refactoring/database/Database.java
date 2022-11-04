@@ -2,13 +2,13 @@ package ru.akirakozov.sd.refactoring.database;
 
 import java.util.List;
 
-import ru.akirakozov.sd.refactoring.types.Product;
+import ru.akirakozov.sd.refactoring.models.Product;
 
 public interface Database {
 
   void init() throws Exception;
 
-  void addProduct(String name, long price) throws Exception;
+  void addProduct(Product product) throws Exception;
 
   List<Product> getProducts() throws Exception;
 

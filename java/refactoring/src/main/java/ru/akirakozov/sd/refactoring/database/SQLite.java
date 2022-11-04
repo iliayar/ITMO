@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ru.akirakozov.sd.refactoring.types.Product;
+import ru.akirakozov.sd.refactoring.models.Product;
 
 public class SQLite implements Database, AutoCloseable {
 
@@ -41,10 +41,10 @@ public class SQLite implements Database, AutoCloseable {
   }
 
   @Override
-  public void addProduct(String name, long price) throws Exception {
+  public void addProduct(Product product) throws Exception {
     try (PreparedStatement stmt = connection.prepareStatement(sqlAddProduct)) {
-      stmt.setString(1, name);
-      stmt.setLong(2, price);
+      stmt.setString(1, product.getName());
+      stmt.setLong(2, product.getPrice());
       stmt.executeUpdate();
     }
   }

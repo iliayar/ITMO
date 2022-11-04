@@ -1,4 +1,4 @@
-package ru.akirakozov.sd.refactoring.types;
+package ru.akirakozov.sd.refactoring.models;
 
 
 public class Product {
