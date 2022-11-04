@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ru.akirakozov.sd.refactoring.database.Database;
-import ru.akirakozov.sd.refactoring.types.Product;
+import ru.akirakozov.sd.refactoring.models.Product;
 
 import java.io.IOException;
 
