@@ -8,6 +8,8 @@ import ru.akirakozov.sd.refactoring.database.Database;
 import ru.akirakozov.sd.refactoring.servlet.AddProductServlet;
 import ru.akirakozov.sd.refactoring.servlet.GetProductsServlet;
 import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
+import ru.akirakozov.sd.refactoring.templates.HTMLTemplate;
+import ru.akirakozov.sd.refactoring.templates.Template;
 
 public class App {
 
@@ -17,10 +19,12 @@ public class App {
   private Server server;
 
   private Database database;
+  private Template template;
 
   public App(Database database, int port) {
     this.port = port;
     this.database = database;
+    this.template = new HTMLTemplate();
   }
 
   public App(Database database) {
@@ -36,9 +40,9 @@ public class App {
     context.setContextPath("/");
     server.setHandler(context);
 
-    context.addServlet(new ServletHolder(new AddProductServlet(database)), "/add-product");
-    context.addServlet(new ServletHolder(new GetProductsServlet(database)), "/get-products");
-    context.addServlet(new ServletHolder(new QueryServlet(database)), "/query");
+    context.addServlet(new ServletHolder(new AddProductServlet(database, template)), "/add-product");
+    context.addServlet(new ServletHolder(new GetProductsServlet(database, template)), "/get-products");
+    context.addServlet(new ServletHolder(new QueryServlet(database, template)), "/query");
 
     server.start();
   }

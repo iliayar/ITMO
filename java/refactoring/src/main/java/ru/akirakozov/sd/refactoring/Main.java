@@ -2,8 +2,6 @@ package ru.akirakozov.sd.refactoring;
 
 import ru.akirakozov.sd.refactoring.database.*;
 
-// import ru.akirakozov.sd.refactoring.database.D;
-
 /**
  * @author akirakozov
  */

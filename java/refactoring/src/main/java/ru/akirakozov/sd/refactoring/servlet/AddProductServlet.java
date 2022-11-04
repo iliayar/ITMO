@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ru.akirakozov.sd.refactoring.database.Database;
 import ru.akirakozov.sd.refactoring.models.Product;
+import ru.akirakozov.sd.refactoring.templates.Template;
 
 import java.io.IOException;
 
@@ -15,9 +16,11 @@ import java.io.IOException;
 public class AddProductServlet extends HttpServlet {
 
   private Database database;
+  private Template template;
 
-  public AddProductServlet(Database database) {
+  public AddProductServlet(Database database, Template template) {
     this.database = database;
+    this.template = template;
   }
 
   @Override
@@ -27,12 +30,12 @@ public class AddProductServlet extends HttpServlet {
 
     try {
       database.addProduct(new Product(name, price));
+      response.getWriter().write(template.getOkResponse());
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
 
     response.setContentType("text/html");
     response.setStatus(HttpServletResponse.SC_OK);
-    response.getWriter().println("OK");
   }
 }

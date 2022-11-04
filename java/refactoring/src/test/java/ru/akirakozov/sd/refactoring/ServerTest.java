@@ -28,7 +28,10 @@ import java.sql.Statement;
 public class ServerTest {
 
   private static final String HOST = "http://localhost:8080";
+
   private static App app;
+
+  private static SQLite database;
 
   @BeforeEach
   public void cleanDb() throws Exception {
@@ -44,9 +47,9 @@ public class ServerTest {
   @BeforeAll
   static public void runServer() {
     try {
-      Database db = new SQLite("test.db");
-      db.init();
-      app = new App(db, 8080);
+      database = new SQLite("test.db");
+      database.init();
+      app = new App(database, 8080);
       app.start();
     } catch (Exception e) {
       System.err.println("Failed start app: " + e.toString());
@@ -57,11 +60,12 @@ public class ServerTest {
   static public void stopServer() {
     try {
       app.stop();
+      database.close();
     } catch (Exception e) {
     }
   }
 
-  public String Get(String path, Map<String, String> queryValues) throws Exception {
+  public String get(String path, Map<String, String> queryValues) throws Exception {
     String query = "";
     if (!queryValues.isEmpty()) {
       StringBuilder queryBuilder = new StringBuilder();
@@ -100,7 +104,7 @@ public class ServerTest {
     Map<String, String> query = new HashMap<>();
     query.put("name", name);
     query.put("price", String.valueOf(price));
-    String resp = Get("/add-product", query);
+    String resp = get("/add-product", query);
     assertEquals(resp, "OK\n");
   }
 
@@ -118,7 +122,7 @@ public class ServerTest {
     addProduct("Test1", 1);
     addProduct("Test2", 2);
 
-    resp = Get("/get-products", new HashMap<>());
+    resp = get("/get-products", new HashMap<>());
     assertEquals(resp, "<html><body>\n"
                  + "Test1\t1</br>\n"
                  + "Test2\t2</br>\n"
@@ -126,7 +130,7 @@ public class ServerTest {
 
     addProduct("Test3", 3);
 
-    resp = Get("/get-products", new HashMap<>());
+    resp = get("/get-products", new HashMap<>());
     assertEquals(resp, "<html><body>\n"
                  + "Test1\t1</br>\n"
                  + "Test2\t2</br>\n"
@@ -144,7 +148,7 @@ public class ServerTest {
     addProduct("Test1", 1);
     addProduct("Test2", 2);
 
-    resp = Get("/query", query);
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "<h1>Product with max price: </h1>\n"
                  + "Test2\t2</br>\n"
@@ -152,7 +156,7 @@ public class ServerTest {
 
     addProduct("Test3", 3);
 
-    resp = Get("/query", query);
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "<h1>Product with max price: </h1>\n"
                  + "Test3\t3</br>\n"
@@ -169,7 +173,7 @@ public class ServerTest {
     addProduct("Test1", 1);
     addProduct("Test2", 2);
 
-    resp = Get("/query", query);
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "<h1>Product with min price: </h1>\n"
                  + "Test1\t1</br>\n"
@@ -178,7 +182,7 @@ public class ServerTest {
     addProduct("Test3", 0);
 
 
-    resp = Get("/query", query);
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "<h1>Product with min price: </h1>\n"
                  + "Test3\t0</br>\n"
@@ -195,7 +199,7 @@ public class ServerTest {
     addProduct("Test1", 1);
     addProduct("Test2", 2);
 
-    resp = Get("/query", query);
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "Summary price: \n"
                  + "3\n"
@@ -203,7 +207,7 @@ public class ServerTest {
 
     addProduct("Test3", 3);
 
-    resp = Get("/query", query);
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "Summary price: \n"
                  + "6\n"
@@ -214,11 +218,14 @@ public class ServerTest {
   @Test
   public void testQueryCount() throws Exception {
     String resp;
+    Map<String, String> query = new HashMap<>();
+    query.put("command", "count");
+
 
     addProduct("Test1", 1);
     addProduct("Test2", 2);
 
-    resp = Get("/query?command=count", new HashMap<>());
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "Number of products: \n"
                  + "2\n"
@@ -226,7 +233,7 @@ public class ServerTest {
 
     addProduct("Test3", 3);
 
-    resp = Get("/query?command=count", new HashMap<>());
+    resp = get("/query", query);
     assertEquals(resp, "<html><body>\n"
                  + "Number of products: \n"
                  + "3\n"

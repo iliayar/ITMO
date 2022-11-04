@@ -6,30 +6,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import ru.akirakozov.sd.refactoring.database.Database;
 import ru.akirakozov.sd.refactoring.models.Product;
+import ru.akirakozov.sd.refactoring.templates.Template;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author akirakozov
  */
 public class GetProductsServlet extends HttpServlet {
 
-  Database database;
+  private Database database;
+  private Template template;
 
-  public GetProductsServlet(Database database) {
+  public GetProductsServlet(Database database, Template template) {
     this.database = database;
+    this.template = template;
   }
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
-      response.getWriter().println("<html><body>");
-
-      for (Product product : database.getProducts()) {
-        response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-      }
-
-      response.getWriter().println("</body></html>");
+      List<Product> products = database.getProducts();
+      response.getWriter().write(template.getListProducts(products));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

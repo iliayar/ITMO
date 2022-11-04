@@ -1,8 +1,5 @@
 package ru.akirakozov.sd.refactoring.database;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,20 +7,20 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import ru.akirakozov.sd.refactoring.Utils;
 import ru.akirakozov.sd.refactoring.models.Product;
 
 public class SQLite implements Database, AutoCloseable {
 
-  private String sqlCreateTable;
-  private String sqlAddProduct;
-  private String sqlGetProducts;
+  private final String sqlCreateTable;
+  private final String sqlAddProduct;
+  private final String sqlGetProducts;
 
-  private String sqlGetProductsCount;
-  private String sqlGetSumPrice;
-  private String sqlGetMaxPrice;
-  private String sqlGetMinPrice;
+  private final String sqlGetProductsCount;
+  private final String sqlGetSumPrice;
+  private final String sqlGetMaxPrice;
+  private final String sqlGetMinPrice;
 
   private Connection connection;
 
@@ -104,11 +101,7 @@ public class SQLite implements Database, AutoCloseable {
 
   private String loadSQLScript(String filename) {
     ClassLoader classLoader = getClass().getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("sql/" + filename + ".sql");
-    BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
-
-    String script = input.lines().collect(Collectors.joining("\n"));
-    return script;
+    return Utils.getResource(classLoader, "sql/" + filename + ".sql");
   }
 
   private Product getProductFromResult(ResultSet result) throws Exception {
