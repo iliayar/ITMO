@@ -1,0 +1,537 @@
+#+header: :engine postgres
+#+begin_src sql
+CREATE DATABASE hw;
+#+end_src
+
+#+RESULTS:
+| CREATE DATABASE |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+#+end_src
+
+#+RESULTS:
+| DROP TABLE |
+|------------|
+| DROP TABLE |
+| DROP TABLE |
+
+
+* 0.1
+#+begin_src 
+PostgreSQL 14.5
+#+end_src
+* 0.2
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+DROP TABLE IF EXISTS Flights CASCADE;
+DROP TABLE IF EXISTS Seats CASCADE;
+DROP TABLE IF EXISTS Tickets CASCADE;
+DROP TABLE IF EXISTS Users CASCADE;
+
+CREATE TABLE Flights (
+       FlightId int GENERATED ALWAYS AS IDENTITY not null,
+       FlightTime TIMESTAMP not null,
+       PlaneId int not null,
+
+       PRIMARY KEY (FlightId)
+);
+
+CREATE TABLE Seats (
+       PlaneId int not null,
+       SeatNo VARCHAR(4) not null,
+
+       PRIMARY KEY (PlaneId, SeatNo)
+);
+
+CREATE TABLE Users (
+       UserId int GENERATED ALWAYS AS IDENTITY not null,
+       Pass TEXT not null,
+
+       PRIMARY KEY (UserId)
+);
+
+CREATE TABLE Tickets (
+       SeatNo VARCHAR(4) not null,
+       PlaneId int not null,
+       FlightId int not null,
+       BookedUntil TIMESTAMP,
+       Taken bool not null,
+       UserId int,
+
+       PRIMARY KEY (SeatNo, PlaneId, FlightId),
+
+       FOREIGN KEY (FlightId)
+       REFERENCES Flights(FlightId),
+
+       FOREIGN KEY (PlaneId, SeatNo)
+       REFERENCES Seats(PlaneId, SeatNo),
+
+       FOREIGN KEY (UserId)
+       REFERENCES Users(UserId)
+);
+
+-- CREATE EXTENSION pgcrypto;
+#+end_src
+
+#+RESULTS:
+| DROP TABLE   |
+|--------------|
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+
+* Fill
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+INSERT INTO Flights(FlightTime, PlaneId) VALUES
+       ('2022-11-05 18:00:00', 0),
+       ('2022-11-12 18:00:00', 0),
+       ('2022-11-03 10:00:00', 1),
+       ('2022-11-05 10:00:00', 1),
+       ('2022-11-07 10:00:00', 2);
+
+INSERT INTO Seats(PlaneId, SeatNo) VALUES
+       (0, '001A'),
+       (0, '001B'),
+       (0, '002A'),
+       (0, '002B'),
+       (0, '003A'),
+       (0, '003B'),
+       (1, '001A'),
+       (1, '001B'),
+       (1, '001C'),
+       (1, '002A'),
+       (1, '002B'),
+       (1, '002C'),
+       (2, '0001'),
+       (2, '0002'),
+       (2, '0003'),
+       (2, '0004');
+
+INSERT INTO Users(Pass) VALUES
+       (CRYPT('qwerty', GEN_SALT('bf'))),
+       (CRYPT('123456', GEN_SALT('bf'))),
+       (CRYPT('amogus', GEN_SALT('bf')));
+
+INSERT INTO Tickets(SeatNo, PlaneId, FlightId, BookedUntil, Taken, UserId) VALUES
+       ('001A', 0, 1, NULL, TRUE, 1),
+       ('001B', 0, 1, '2022-11-05 17:00:00', FALSE, 2),
+       ('001A', 0, 2, '2022-11-12 17:00:00', FALSE, 3),
+       ('002A', 0, 2, NULL, TRUE, NULL),
+       ('001B', 0, 2, NULL, FALSE, 2);
+#+end_src
+
+#+RESULTS:
+| INSERT 0 5  |
+|-------------|
+| INSERT 0 16 |
+| INSERT 0 3  |
+| INSERT 0 5  |
+* View
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM Flights;
+#+end_src
+
+#+RESULTS:
+| flightid | flighttime          | planeid |
+|----------+---------------------+---------|
+|        1 | 2022-11-05 18:00:00 |       0 |
+|        2 | 2022-11-12 18:00:00 |       0 |
+|        3 | 2022-11-03 10:00:00 |       1 |
+|        4 | 2022-11-05 10:00:00 |       1 |
+|        5 | 2022-11-07 10:00:00 |       2 |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM Users;
+#+end_src
+
+#+RESULTS:
+| userid | pass                                                         |
+|--------+--------------------------------------------------------------|
+|      1 | $2a$06$Au91NPziCYtwqJNKrG3OO.3eyuPxI9veSO/HMkczOVTkS5kMOa5xa |
+|      2 | $2a$06$AxwAbNOvZIuoMqzn6fhG.uKQfE9ZhSEM8c8sIJINm6M.uuJKQ7Fva |
+|      3 | $2a$06$d591a2vgWmOxbbt4L9pEou.LDb7q7HyZJHRGAKBGmLk25ESgdv9XK |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM Tickets;
+#+end_src
+
+#+RESULTS:
+| seatno | planeid | flightid | bookeduntil                | taken | userid |
+|--------+---------+----------+----------------------------+-------+--------|
+| 001A   |       0 |        1 |                            | t     |      1 |
+| 001B   |       0 |        1 | 2022-11-05 17:00:00        | f     |      2 |
+| 001A   |       0 |        2 | 2022-11-12 17:00:00        | f     |      3 |
+| 002A   |       0 |        2 |                            | t     |        |
+| 001B   |       0 |        2 | 2022-11-09 17:48:32.200699 | f     |      1 |
+| 002B   |       0 |        2 |                            | t     |        |
+| 0002   |       2 |        5 | 2022-11-09 18:08:03.871966 | f     |      3 |
+| 0001   |       2 |        5 |                            | t     |      2 |
+
+* 0.3
+
+
+* 1
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION FreeSeats(FlightId int)
+RETURNS TABLE (
+	SeatNo VARCHAR(4)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+   RETURN QUERY (
+   	  SELECT Seats.SeatNo AS SeatNo
+	  FROM Flights
+	       NATURAL JOIN Seats
+             NATURAL LEFT JOIN Tickets
+	  WHERE Flights.FlightId = FreeSeats.FlightId
+              AND Flights.FlightTime > NOW()
+	  	AND (
+			Tickets.Taken IS NULL
+			OR NOT Tickets.Taken
+		)
+	      	AND  (
+			Tickets.BookedUntil IS NULL
+			OR Tickets.BookedUntil < NOW()
+		)
+   );
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM FreeSeats(5);
+#+end_src
+
+#+RESULTS:
+| seatno |
+|--------|
+|   0003 |
+|   0004 |
+
+* 2
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION Authenticate(UserId INT, Pass TEXT)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RETURN EXISTS (
+	       SELECT *
+	       FROM Users
+	       WHERE Users.UserId = Authenticate.UserId
+	       	     AND Users.Pass = CRYPT(Authenticate.Pass, Users.Pass)
+	);
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION IsFreeSeat(FlightId INT, SeatNo VARCHAR(40))
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RETURN SeatNo IN (
+	       SELECT FreeSeats.SeatNo FROM FreeSeats(FlightId)
+	);
+END;
+$$;
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+| CREATE FUNCTION |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM Authenticate(1, 'qwerty');
+#+end_src
+
+#+RESULTS:
+| authenticate |
+|--------------|
+| t            |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION Reserve(_UserId INT, _Pass TEXT, _FlightId INT, _SeatNo VARCHAR(4))
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+AS $$
+DECLARE _PlaneId INT = (
+	SELECT PlaneId
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+DECLARE _FlightTime TIMESTAMP = (
+	SELECT FlightTime
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+BEGIN
+	IF _PlaneId IS NULL OR _FlightTime IS NULL THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF NOT Authenticate(_UserId, _Pass) THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF _FlightTime < NOW() THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF NOT IsFreeSeat(_FlightId, _SeatNo) THEN
+	   RETURN FALSE;
+	END IF;
+
+	INSERT INTO Tickets(SeatNo, PlaneId, FlightId, BookedUntil, Taken, UserId) VALUES
+	       (_SeatNo, _PlaneId, _FlightId, NOW() + INTERVAL '3' DAY, FALSE, _UserId)
+	ON CONFLICT(SeatNo, PlaneId, FlightId) DO UPDATE
+	   SET UserId = _UserId,
+	       BookedUntil = NOW() + INTERVAL '3' DAY,
+	       Taken = FALSE;
+
+	RETURN TRUE;
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM Reserve(3, 'amogus', 5, '0002');
+#+end_src
+
+#+RESULTS:
+| reserve |
+|---------|
+| t       |
+
+* 3
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION ExtendReservation(_UserId INT, _Pass TEXT, _FlightId INT, _SeatNo VARCHAR(4))
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+AS $$
+DECLARE _PlaneId INT = (
+	SELECT PlaneId
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+DECLARE _FlightTime TIMESTAMP = (
+	SELECT FlightTime
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+DECLARE _ReservedByUser INT = (
+	SELECT UserId
+	FROM Tickets
+	WHERE PlaneId = _PlaneId
+	      AND FlightId = _FlightId
+	      AND SeatNo = _SeatNo
+);
+BEGIN
+	IF _PlaneId IS NULL OR _FlightTime IS NULL OR _ReservedByUser IS NULL THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF NOT Authenticate(_UserId, _Pass) THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF _UserId != _ReservedByUser THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF _FlightTime < NOW() THEN
+	   RETURN FALSE;
+	END IF;
+
+	UPDATE Tickets
+	SET BookedUntil = NOW() + INTERVAL '3' DAY
+	WHERE PlaneId = _PlaneId
+	      AND FlightId = _FlightId
+	      AND SeatNo = _SeatNo;
+
+	RETURN TRUE;
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM ExtendReservation(1, 'qwerty', 2, '001B');
+#+end_src
+
+#+RESULTS:
+| extendreservation |
+|-------------------|
+| t                 |
+
+* 4
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION BuyFree(_FlightId INT, _SeatNo VARCHAR(4))
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+AS $$
+DECLARE _PlaneId INT = (
+	SELECT PlaneId
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+DECLARE _FlightTime TIMESTAMP = (
+	SELECT FlightTime
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+BEGIN
+	IF _PlaneId IS NULL OR _FlightTime IS NULL THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF _FlightTime < NOW() THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF NOT IsFreeSeat(_FlightId, _SeatNo) THEN
+	   RETURN FALSE;
+	END IF;
+
+	INSERT INTO Tickets(SeatNo, PlaneId, FlightId, BookedUntil, Taken, UserId) VALUES
+	       (_SeatNo, _PlaneId, _FlightId, NULL, TRUE, NULL)
+	ON CONFLICT(SeatNo, PlaneId, FlightId) DO UPDATE
+	   SET UserId = NULL,
+	       BookedUntil = NULL,
+	       Taken = TRUE;
+
+	RETURN TRUE;
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM BuyFree(2, '002B');
+#+end_src
+
+#+RESULTS:
+| buyfree |
+|---------|
+| t       |
+
+* 5
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION BuyReserved(_UserId INT, _Pass TEXT, _FlightId INT, _SeatNo VARCHAR(4))
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+AS $$
+DECLARE _PlaneId INT = (
+	SELECT PlaneId
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+DECLARE _FlightTime TIMESTAMP = (
+	SELECT FlightTime
+	FROM Flights
+	WHERE FlightId = _FlightId
+);
+DECLARE _ReservedByUser INT = (
+	SELECT UserId
+	FROM Tickets
+	WHERE PlaneId = _PlaneId
+	      AND FlightId = _FlightId
+	      AND SeatNo = _SeatNo
+);
+BEGIN
+	IF _PlaneId IS NULL OR _FlightTime IS NULL OR _ReservedByUser IS NULL THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF NOT Authenticate(_UserId, _Pass) THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF _UserId != _ReservedByUser THEN
+	   RETURN FALSE;
+	END IF;
+
+	IF _FlightTime < NOW() THEN
+	   RETURN FALSE;
+	END IF;
+
+	UPDATE Tickets
+	SET BookedUntil = NULL,
+	    TAKEN = TRUE
+	WHERE PlaneId = _PlaneId
+	      AND FlightId = _FlightId
+	      AND SeatNo = _SeatNo;
+
+	RETURN TRUE;
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM BuyReserved(2, '123456', 5, '0001');
+#+end_src
+
+#+RESULTS:
+| buyreserved |
+|-------------|
+| t           |

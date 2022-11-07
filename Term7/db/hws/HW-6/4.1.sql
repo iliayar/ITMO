@@ -9,5 +9,5 @@ FROM (
 	       WHERE Marks.CourseId = Plan.CourseId
 	   )
 ) AS SC, Students, Courses
-WHERE SC.StudentId = Students.StudentID
+WHERE SC.StudentId = Students.StudentId
       AND SC.CourseId = Courses.CourseId;

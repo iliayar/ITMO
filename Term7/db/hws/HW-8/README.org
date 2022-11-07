@@ -1,0 +1,339 @@
+
+* 1
+** 1.S
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Первичный ключ, не нужен порядок.
+-- ДЗ-5.1.1. Информацию о студентах с заданным идентификатором
+-- (StudentId, StudentName, GroupId по :StudentId)
+-- ДЗ-5.2.1. Полную информацию о студентах с заданным
+-- идентификатором (StudentId, StudentName, GroupName по :StudentId)
+-- ДЗ-7.2.1. Напишите запросы, обновляющие данные студентов
+-- изменение имени студента (StudentId, StudentName)
+CREATE UNIQUE INDEX StudentsStudentId ON Students USING HASH (StudentId);
+
+-- Используем целую строку, высокая селективность, не нужен порядок,
+-- ДЗ-5.1.2. Информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupId по :StudentName)
+-- ДЗ-5.2.2. Полную информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupName по :StudentName)
+-- ДЗ-6.1.1. Информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupId по :StudentName)
+CREATE INDEX StudentsStudentName ON Students USING HASH (StudentName);
+
+-- Внешний ключ, средняя селективность, не нужен порядок,
+-- ДЗ-5.2.1. Полную информацию о студентах с заданным идентификатором
+-- (StudentId, StudentName, GroupName по :StudentId)
+-- ДЗ-5.2.2. Полную информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupName по :StudentName)
+-- ДЗ-6.1.1. Информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupId по :StudentName)
+CREATE INDEX StudentsGroupId ON Students USING HASH (GroupId);
+
+-- Для использования в соединениях
+-- ДЗ-5.4.1. Информацию о студентах не имеющих оценки по дисциплине
+-- среди всех студентов
+-- (StudentId, StudentName, GroupId по :CourseName)
+-- ДЗ-5.8.3. Суммарный балл каждой группы (GroupName, SumMark)
+-- ДЗ-5.9.3. Средний балл средних баллов студентов
+-- каждой группы (GroupName, AvgAvgMark)
+CREATE INDEX StudentsStudentIdGroupId ON Students USING BTREE (StudentId, GroupId);
+#+end_src
+
+#+RESULTS:
+|---|
+
+** 1.G
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Первичный ключ, не нужен порядок.
+-- ДЗ-5.2.1. Полную информацию о студентах с заданным идентификатором
+-- (StudentId, StudentName, GroupName по :StudentId)
+-- ДЗ-5.2.2. Полную информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupName по :StudentName)
+-- ДЗ-6.1.1. Информацию о студентах с заданным ФИО
+-- (StudentId, StudentName, GroupId по :StudentName)
+CREATE UNIQUE INDEX GroupsGroupId ON Groups USING HASH (GroupId);
+
+-- Используем целую строку, есть ФЗ GroupName -> GroupId
+-- (GroupName - ключ),не нужен порядок.
+-- ДЗ-6.1.2. Информацию о студентах учащихся в заданной группе
+-- (StudentId, StudentName, GroupId по :GroupName)
+-- ДЗ-7.1.2. Напишите запросы, удаляющие студентов учащихся в
+-- группе, заданной названием (GroupName)
+-- ДЗ-7.2.4. Напишите запросы, обновляющие данные студентов перевод
+-- всех студентов из группы в группу по названиям
+-- (GroupName, FromGroupName)
+CREATE UNIQUE INDEX GroupsGroupName ON Groups USING HASH (GroupName);
+#+end_src
+
+#+RESULTS:
+|---|
+
+** 1.C
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Первичный ключ, не нужен порядок.
+-- ДЗ-5.4.2.  Информацию о студентах не имеющих оценки по дисциплине
+-- среди студентов, у которых есть эта дисциплина
+-- (StudentId, StudentName, GroupId по :CourseName)
+-- ДЗ-5.5.1. Для каждого студента ФИО и названия дисциплин которые
+-- у него есть по плану (StudentName, CourseName)
+-- ДЗ-5.5.2. Для каждого студента ФИО и названия дисциплин есть,
+-- но у него нет оценки (StudentName, CourseName)
+CREATE UNIQUE INDEX CoursesCourseId ON Courses USING HASH (CourseId);
+
+-- Используем целую строку, высокая селективность, не нужен порядок,
+-- ДЗ-5.4.2.  Информацию о студентах не имеющих оценки по дисциплине
+-- среди студентов, у которых есть эта дисциплина
+-- (StudentId, StudentName, GroupId по :CourseName)
+-- ДЗ-5.4.1. Информацию о студентах не имеющих оценки по дисциплине
+-- среди всех студентов
+-- (StudentId, StudentName, GroupId по :CourseName)
+-- ДЗ-6.2.5. Полную информацию о студентах студентов, не имеющих
+-- оценки по дисциплине, у которых есть эта дисциплина
+-- (StudentId, StudentName, GroupName по :CourseName)
+CREATE UNIQUE INDEX CoursesCourseName ON Courses USING HASH (CourseName);
+#+end_src
+
+** 1.L
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Первичный ключ, не нужен порядок.
+-- ДЗ-5.3.6. Информацию о студентах с заданной оценкой по дисциплине
+-- которую вёл лектор, заданный ФИО
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerName)
+-- ДЗ-7.5.3. Идентификаторы студентов по преподавателю имеющих оценки
+-- по всем дисциплинам преподавателя (StudentId по :LecturerName)
+-- ДЗ-7.5.1. Идентификаторы студентов по преподавателю имеющих хотя
+-- бы одну оценку у преподавателя (StudentId по :LecturerName)
+CREATE UNIQUE INDEX LecturersLecturerId ON Lecturers USING HASH (LecturerId);
+
+-- Используем целую строку, высокая селективность, не нужен порядок,
+-- ДЗ-5.3.6. Информацию о студентах с заданной оценкой по дисциплине
+-- которую вёл лектор, заданный ФИО
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerName)
+-- ДЗ-7.5.3. Идентификаторы студентов по преподавателю имеющих оценки
+-- по всем дисциплинам преподавателя (StudentId по :LecturerName)
+-- ДЗ-7.5.1. Идентификаторы студентов по преподавателю имеющих хотя
+-- бы одну оценку у преподавателя (StudentId по :LecturerName)
+CREATE INDEX LecturersLecturerName ON Lecturers USING HASH (LecturerName);
+#+end_src
+
+** 1.P
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Используется для соединений. CourseId, GroupId - ключ
+-- ДЗ-5.3.3. Которую у него вёл лектор заданный идентификатором
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerId)
+-- ДЗ-6.2.4. Полную информацию о студентах студентов, не имеющих
+-- оценки по дисциплине, у которых есть эта дисциплина
+-- (StudentId, StudentName, GroupName по :CourseId)
+-- ДЗ-6.2.4. Напишите запросы, удаляющие студентов студентов, c
+-- долгами (здесь и далее — по отсутствию оценки)
+CREATE UNIQUE INDEX PlanCourseIdGroupId ON Plan USING BTREE (CourseId, GroupId);
+
+-- Используется для соединений. Ищем по LecturerId
+-- ДЗ-5.6.1. Идентификаторы студентов по преподавателю имеющих хотя
+-- бы одну оценку у преподавателя (StudentId по :LecturerName)
+-- ДЗ-5.3.4. Информацию о студентах с заданной оценкой по дисциплине
+-- которую у него вёл лектор, заданный ФИО
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerName).
+-- ДЗ-5.3.5. Информацию о студентах с заданной оценкой по дисциплине
+-- которую вёл лектор, заданный идентификатором
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerId)
+CREATE INDEX PlanLecturerIdCourseId ON Plan USING BTREE (LecturerId, CourseId);
+
+-- Используется для соединений. GroupId, CourseId - ключ
+-- ДЗ-5.3.3. Которую у него вёл лектор заданный идентификатором
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerId)
+-- ДЗ-6.2.4. Полную информацию о студентах студентов, не имеющих
+-- оценки по дисциплине, у которых есть эта дисциплина
+-- (StudentId, StudentName, GroupName по :CourseId)
+-- ДЗ-6.2.4. Напишите запросы, удаляющие студентов студентов, c
+-- долгами (здесь и далее — по отсутствию оценки)
+CREATE UNIQUE INDEX PlanGroupIdCourseId ON Plan USING BTREE (GroupId, CourseId);
+#+end_src
+
+#+RESULTS:
+|---|
+
+** 1.M
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Используется для соединений.
+-- ДЗ-5.3.1. Информацию о студентах с заданной оценкой по дисциплине
+-- с заданным идентификатором
+-- (StudentId, StudentName, GroupId по :Mark, :CourseId)
+-- ДЗ-6.5.3. Идентификаторы студентов по преподавателю имеющих оценки
+-- по всем дисциплинам преподавателя (StudentId по :LecturerName).
+-- ДЗ-7.1.6. Напишите запросы, удаляющие студентов студентов, c
+-- долгами (здесь и далее — по отсутствию оценки)
+CREATE INDEX MarksStudentIdCourseId ON Marks USING BTREE (StudentId, CourseId);
+
+-- Используется для соединений.
+-- ДЗ-6.1.3. Информацию о студентах c заданной оценкой по дисциплине,
+-- заданной идентификатором
+-- (StudentId, StudentName, GroupId по :Mark, :CourseId)
+-- ДЗ-6.4.1. Студенты и дисциплины, такие что дисциплина есть в его
+-- плане, и у студента долг по этой дисциплине долгом считается
+-- отсутствие оценки (StudentName, CourseName)
+-- ДЗ-6.5.3. Идентификаторы студентов по преподавателю имеющих оценки
+-- по всем дисциплинам преподавателя (StudentId по :LecturerName).
+CREATE INDEX MarksCourseIdStudentId ON Marks USING BTREE (CourseId, StudentId);
+
+-- Нужен порядок на Mark.
+-- ДЗ-5.3.6. Информацию о студентах с заданной оценкой по дисциплине
+-- которую вёл лектор, заданный ФИО
+-- (StudentId, StudentName, GroupId по :Mark, :LecturerName)
+-- ДЗ-5.5.3. Для каждого студента ФИО и названия дисциплин есть,
+-- но у него не 4 или 5 (StudentName, CourseName)
+-- ДЗ-6.4.3. Студенты и дисциплины, такие что дисциплина есть в его
+-- плане, и у студента долг по этой дисциплине долгом считается
+-- отсутствие оценки или оценка не выше 2 (StudentName, CourseName)
+CREATE INDEX MarksMark ON Marks USING BTREE (Mark, StudentId);
+#+end_src
+* 2
+** 2.Q
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT GroupName, CourseName, AVG(CAST(Mark AS FLOAT)) AS AvgMark
+FROM Groups
+     LEFT JOIN Students ON Groups.GroupId = Students.GroupId
+     LEFT JOIN Marks ON Students.StudentId = Marks.StudentId
+     LEFT JOIN Courses ON Marks.CourseId = Courses.CourseId
+WHERE Marks.Mark IS NOT NULL
+GROUP BY Groups.GroupId, Groups.GroupName, Courses.CourseId, Courses.CourseName;
+#+end_src
+
+#+RESULTS:
+| groupname | coursename           | avgmark |
+|-----------+----------------------+---------|
+| M3239     | Технологии Java      |       5 |
+| M3435     | Базы данных          |     4.5 |
+| M3238     | Технологии Java      |       5 |
+| M3439     | Базы данных          |       3 |
+| M3439     | ППО                  |       3 |
+| M3435     | Управление проектами |       3 |
+| M3439     | Управление проектами |     4.5 |
+
+** 2.I
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Ускорение соединения с Groups.
+CREATE UNIQUE INDEX StudentsStudentId ON Students USING HASH (StudentId);
+
+-- Ускорение соединения с Students.
+CREATE INDEX MarksStudentId ON Marks USING HASH (StudentId);
+
+-- Ускорение группировки по CourseId.
+CREATE UNIQUE INDEX CoursesCourseId ON Courses USING HASH (CourseId);
+
+-- Ускорение группировки по GroupId, GroupName.
+CREATE UNIQUE INDEX GroupsGroupIdGroupName ON Groups USING BTREE (GroupId, GroupName);
+
+-- Ускорение группировки по CourseId, CourseName.
+CREATE UNIQUE INDEX CoursesCourseIdCourseName ON Courses USING BTREE (CourseId, CourseName);
+#+end_src
+
+#+RESULTS:
+|---|
+* 3
+** 3.1.Q
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Список студентов курса в алфавитном порядке
+SELECT StudentName
+FROM Students
+     NATURAL JOIN Plan
+WHERE CourseId = :CourseId
+ORDER BY StudentName;
+#+end_src
+
+#+RESULTS:
+|---|
+
+
+** 3.1.I
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Нужен порядок
+CREATE INDEX StudentsStudentNameOrd ON Students USING BTREE (StudentName);
+#+end_src
+
+#+RESULTS:
+| CREATE INDEX |
+|--------------|
+
+
+** 3.2.Q
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Получить информацию о группах определенного (4-го) курса
+SELECT GroupId, GroupName
+FROM Groups
+WHERE GroupName LIKE 'M34%';
+#+end_src
+
+#+RESULTS:
+| groupid | groupname |
+|---------+-----------|
+|       1 | M3435     |
+|       2 | M3439     |
+
+** 3.2.I
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Нужен поиск по префиксу. При чем GroupName - ключ
+CREATE UNIQUE INDEX GroupsGroupNameOrd ON Groups USING BTREE (GroupName);
+#+end_src
+
+#+RESULTS:
+| CREATE INDEX |
+|--------------|
+
+** 3.3.Q
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Рейтинг студентов курса
+SELECT DISTINCT StudentName, Mark
+FROM Students
+     NATURAL LEFT JOIN Marks
+WHERE CourseId = :Courseid
+      AND Mark IS NOT NULL
+ORDER BY Mark DESC;
+#+end_src
+
+#+RESULTS:
+| studentname | mark |
+|-------------+------|
+| Иванов И.И. |    5 |
+| Петров П.П. |    4 |
+| Петров П.П. |    3 |
+
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Ускорение соединения по StudentId, поиск по CourseId и
+--  сортировки по Mark
+CREATE UNIQUE INDEX MarksStudentIdCourseIdMark ON Marks USING BTREE (StudentId, CourseId, Mark);
+#+end_src
+
+#+RESULTS:
+| CREATE INDEX |
+|--------------|
