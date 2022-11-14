@@ -1,11 +1,12 @@
 #+header: :engine postgres
 #+begin_src sql
 CREATE DATABASE hw;
+CREATE EXTENSION pgcrypto;
 #+end_src
 
 #+RESULTS:
-| CREATE DATABASE |
-|-----------------|
+| CREATE EXTENSION |
+|------------------|
 
 #+header: :engine postgres
 #+header: :database hw
@@ -32,6 +33,7 @@ DROP TABLE IF EXISTS Seats CASCADE;
 DROP TABLE IF EXISTS Tickets CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 
+-- Список рейсов
 CREATE TABLE Flights (
        FlightId int GENERATED ALWAYS AS IDENTITY not null,
        FlightTime TIMESTAMP not null,
@@ -40,6 +42,7 @@ CREATE TABLE Flights (
        PRIMARY KEY (FlightId)
 );
 
+-- Список мест
 CREATE TABLE Seats (
        PlaneId int not null,
        SeatNo VARCHAR(4) not null,
@@ -47,6 +50,7 @@ CREATE TABLE Seats (
        PRIMARY KEY (PlaneId, SeatNo)
 );
 
+-- Описание пользователей: Идентификатор и захещированный пароль
 CREATE TABLE Users (
        UserId int GENERATED ALWAYS AS IDENTITY not null,
        Pass TEXT not null,
@@ -54,6 +58,10 @@ CREATE TABLE Users (
        PRIMARY KEY (UserId)
 );
 
+-- Купленные и забронированные места. Если место забронированно то
+-- BookedUntil указано время когда бронь слетает, а также указан
+-- пользователь взявший бронь. Если билет на место куплен то Taken =
+-- TRUE.
 CREATE TABLE Tickets (
        SeatNo VARCHAR(4) not null,
        PlaneId int not null,
@@ -62,7 +70,7 @@ CREATE TABLE Tickets (
        Taken bool not null,
        UserId int,
 
-       PRIMARY KEY (SeatNo, PlaneId, FlightId),
+       PRIMARY KEY (SeatNo, PlaneId, FlightId) DEFERRABLE,
 
        FOREIGN KEY (FlightId)
        REFERENCES Flights(FlightId),
@@ -73,8 +81,6 @@ CREATE TABLE Tickets (
        FOREIGN KEY (UserId)
        REFERENCES Users(UserId)
 );
-
--- CREATE EXTENSION pgcrypto;
 #+end_src
 
 #+RESULTS:
@@ -88,16 +94,50 @@ CREATE TABLE Tickets (
 | CREATE TABLE |
 | CREATE TABLE |
 
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Все места актуальных рейсов
+CREATE OR REPLACE VIEW AllSeats AS
+SELECT Flights.FlightId, Seats.PlaneId, Seats.SeatNo, Tickets.Taken, Tickets.BookedUntil, Tickets.UserId
+FROM Flights
+     NATURAL JOIN Seats
+     NATURAL LEFT JOIN Tickets
+WHERE Flights.FlightTime > NOW();
+
+-- Все не купленные места актуальных рейсов
+CREATE OR REPLACE VIEW FreeOrReservedTickets AS
+SELECT FlightId, PlaneId, SeatNo, BookedUntil, UserId
+FROM AllSeats
+WHERE AllSeats.Taken IS NULL
+      OR NOT AllSeats.Taken;
+
+
+-- Все места актуальных рейсов
+CREATE OR REPLACE VIEW FreeSeatsView AS
+SELECT FlightId, PlaneId, SeatNo, BookedUntil, UserId
+FROM FreeOrReservedTickets
+WHERE BookedUntil IS NULL
+      OR BookedUntil < NOW();
+#+end_src
+
+
+#+RESULTS:
+| CREATE VIEW |
+|-------------|
+| CREATE VIEW |
+| CREATE VIEW |
+
 * Fill
 #+header: :engine postgres
 #+header: :database hw
 #+begin_src sql
 INSERT INTO Flights(FlightTime, PlaneId) VALUES
-       ('2022-11-05 18:00:00', 0),
        ('2022-11-12 18:00:00', 0),
-       ('2022-11-03 10:00:00', 1),
-       ('2022-11-05 10:00:00', 1),
-       ('2022-11-07 10:00:00', 2);
+       ('2022-11-19 18:00:00', 0),
+       ('2022-11-10 10:00:00', 1),
+       ('2022-11-12 10:00:00', 1),
+       ('2022-11-14 10:00:00', 2);
 
 INSERT INTO Seats(PlaneId, SeatNo) VALUES
        (0, '001A'),
@@ -124,8 +164,8 @@ INSERT INTO Users(Pass) VALUES
 
 INSERT INTO Tickets(SeatNo, PlaneId, FlightId, BookedUntil, Taken, UserId) VALUES
        ('001A', 0, 1, NULL, TRUE, 1),
-       ('001B', 0, 1, '2022-11-05 17:00:00', FALSE, 2),
-       ('001A', 0, 2, '2022-11-12 17:00:00', FALSE, 3),
+       ('001B', 0, 1, '2022-11-12 17:00:00', FALSE, 2),
+       ('001A', 0, 2, '2022-11-19 17:00:00', FALSE, 3),
        ('002A', 0, 2, NULL, TRUE, NULL),
        ('001B', 0, 2, NULL, FALSE, 2);
 #+end_src
@@ -161,9 +201,9 @@ SELECT * FROM Users;
 #+RESULTS:
 | userid | pass                                                         |
 |--------+--------------------------------------------------------------|
-|      1 | $2a$06$Au91NPziCYtwqJNKrG3OO.3eyuPxI9veSO/HMkczOVTkS5kMOa5xa |
-|      2 | $2a$06$AxwAbNOvZIuoMqzn6fhG.uKQfE9ZhSEM8c8sIJINm6M.uuJKQ7Fva |
-|      3 | $2a$06$d591a2vgWmOxbbt4L9pEou.LDb7q7HyZJHRGAKBGmLk25ESgdv9XK |
+|      1 | $2a$06$tnjQ1sZNiK95kffP0mLtNuXopEx31MDpjtPSoXWT4Rzs/ajmgcOje |
+|      2 | $2a$06$MY7pH4qqwoFI0uL2vJ80VOyz6mcgbOYadnVthEuJp92vxEgd9y6YC |
+|      3 | $2a$06$4sRjTdhnOycmwjzfd3Wo9u1gk4kc9vRh30X0XbJS8nY6NZ//8MIva |
 
 #+header: :engine postgres
 #+header: :database hw
@@ -172,25 +212,18 @@ SELECT * FROM Tickets;
 #+end_src
 
 #+RESULTS:
-| seatno | planeid | flightid | bookeduntil                | taken | userid |
-|--------+---------+----------+----------------------------+-------+--------|
-| 001A   |       0 |        1 |                            | t     |      1 |
-| 001B   |       0 |        1 | 2022-11-05 17:00:00        | f     |      2 |
-| 001A   |       0 |        2 | 2022-11-12 17:00:00        | f     |      3 |
-| 002A   |       0 |        2 |                            | t     |        |
-| 001B   |       0 |        2 | 2022-11-09 17:48:32.200699 | f     |      1 |
-| 002B   |       0 |        2 |                            | t     |        |
-| 0002   |       2 |        5 | 2022-11-09 18:08:03.871966 | f     |      3 |
-| 0001   |       2 |        5 |                            | t     |      2 |
+| seatno | planeid | flightid | bookeduntil         | taken | userid |
+|--------+---------+----------+---------------------+-------+--------|
+| 001A   |       0 |        1 |                     | t     |      1 |
+| 001A   |       0 |        2 |                     | t     |        |
+| 001B   |       0 |        2 | 2022-11-19 17:00:00 | f     |      3 |
 
 * 0.3
-
-
 * 1
 #+header: :engine postgres
 #+header: :database hw
 #+begin_src sql
-CREATE OR REPLACE FUNCTION FreeSeats(FlightId int)
+CREATE OR REPLACE FUNCTION FreeSeats(_FlightId int)
 RETURNS TABLE (
 	SeatNo VARCHAR(4)
 )
@@ -198,20 +231,9 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
    RETURN QUERY (
-   	  SELECT Seats.SeatNo AS SeatNo
-	  FROM Flights
-	       NATURAL JOIN Seats
-             NATURAL LEFT JOIN Tickets
-	  WHERE Flights.FlightId = FreeSeats.FlightId
-              AND Flights.FlightTime > NOW()
-	  	AND (
-			Tickets.Taken IS NULL
-			OR NOT Tickets.Taken
-		)
-	      	AND  (
-			Tickets.BookedUntil IS NULL
-			OR Tickets.BookedUntil < NOW()
-		)
+   	  SELECT FreeSeatsView.SeatNo
+	  FROM FreeSeatsView
+	  WHERE FlightId = _FlightId
    );
 END;
 $$
@@ -224,19 +246,21 @@ $$
 #+header: :engine postgres
 #+header: :database hw
 #+begin_src sql
-SELECT * FROM FreeSeats(5);
+SELECT * FROM FreeSeats(2);
 #+end_src
 
 #+RESULTS:
 | seatno |
 |--------|
-|   0003 |
-|   0004 |
+| 001B   |
+| 002B   |
+| 003A   |
 
 * 2
 #+header: :engine postgres
 #+header: :database hw
 #+begin_src sql
+-- Проверка что пользователь сущесвует и пароль корректный
 CREATE OR REPLACE FUNCTION Authenticate(UserId INT, Pass TEXT)
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -251,13 +275,16 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION IsFreeSeat(FlightId INT, SeatNo VARCHAR(40))
+-- Проверка что место не забронированно и не куплено
+CREATE OR REPLACE FUNCTION IsFreeSeat(_FlightId INT, _SeatNo VARCHAR(40))
 RETURNS BOOLEAN
 LANGUAGE plpgsql
 AS $$
 BEGIN
-	RETURN SeatNo IN (
-	       SELECT FreeSeats.SeatNo FROM FreeSeats(FlightId)
+	RETURN _SeatNo IN (
+	       SELECT FreeSeatsView.SeatNo
+	       FROM FreeSeatsView
+	       WHERE FlightId = _FlightId
 	);
 END;
 $$;
@@ -278,6 +305,17 @@ SELECT * FROM Authenticate(1, 'qwerty');
 | authenticate |
 |--------------|
 | t            |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM IsFreeSeat(2, '002A');
+#+end_src
+
+#+RESULTS:
+| isfreeseat |
+|------------|
+| f          |
 
 #+header: :engine postgres
 #+header: :database hw
@@ -333,7 +371,7 @@ $$
 #+header: :engine postgres
 #+header: :database hw
 #+begin_src sql
-SELECT * FROM Reserve(3, 'amogus', 5, '0002');
+SELECT * FROM Reserve(3, 'amogus', 5, '0003');
 #+end_src
 
 #+RESULTS:
@@ -535,3 +573,289 @@ SELECT * FROM BuyReserved(2, '123456', 5, '0001');
 | buyreserved |
 |-------------|
 | t           |
+
+* 6
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+-- Статистика по местам которые можно забронировать
+CREATE OR REPLACE VIEW StatCanReserve AS
+SELECT FlightId, COUNT(*) AS CanReserve
+FROM FreeOrReservedTickets
+WHERE BookedUntil IS NULL
+      OR BookedUntil < NOW()
+GROUP BY FlightId;
+
+-- Статистика по местам которые может купить пользователь
+CREATE OR REPLACE FUNCTION StatCanBuy(_UserId INT)
+RETURNS TABLE (
+	FlightId INT,
+	CanBuy INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+   RETURN QUERY (
+   	  SELECT FreeOrReservedTickets.FlightId,
+	  	 CAST(COUNT(*) AS INT) AS CanBuy
+	  FROM FreeOrReservedTickets
+	  WHERE BookedUntil IS NULL
+		OR BookedUntil < NOW()
+		OR (
+		   BookedUntil > NOW()
+		   AND UserId = _UserId
+		)
+	  GROUP BY FreeOrReservedTickets.FlightId
+   );
+END;
+$$;
+
+
+-- Статистика по свободным местам
+CREATE OR REPLACE VIEW StatFree AS
+SELECT FlightId, COUNT(*) AS Free
+FROM FreeOrReservedTickets
+WHERE BookedUntil IS NULL
+      OR BookedUntil < NOW()
+GROUP BY FlightId;
+
+
+-- Статистика по забронированным местам
+CREATE OR REPLACE VIEW StatReserved AS
+SELECT FlightId, COUNT(*) AS Reserved
+FROM FreeOrReservedTickets
+WHERE BookedUntil > NOW()
+GROUP BY FlightId;
+
+
+-- Статистика по купленным местам
+CREATE OR REPLACE VIEW StatSold AS
+SELECT FlightId, COUNT(Taken = TRUE) AS Sold
+FROM AllSeats
+GROUP BY FlightId;
+#+end_src
+
+#+RESULTS:
+| CREATE VIEW     |
+|-----------------|
+| CREATE VIEW     |
+| CREATE VIEW     |
+| CREATE FUNCTION |
+| CREATE VIEW     |
+| CREATE VIEW     |
+| CREATE VIEW     |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM AllSeats;
+#+end_src
+
+#+RESULTS:
+| flightid | planeid | seatno | taken | bookeduntil                | userid |
+|----------+---------+--------+-------+----------------------------+--------|
+|        2 |       0 | 001A   | f     | 2022-11-19 17:00:00        |      3 |
+|        2 |       0 | 001B   | f     |                            |      2 |
+|        2 |       0 | 002A   | t     |                            |        |
+|        2 |       0 | 002B   |       |                            |        |
+|        2 |       0 | 003A   |       |                            |        |
+|        2 |       0 | 003B   | f     | 2022-11-16 17:37:06.944904 |      3 |
+|        5 |       2 | 0001   |       |                            |        |
+|        5 |       2 | 0002   |       |                            |        |
+|        5 |       2 | 0003   | f     | 2022-11-16 17:37:59.719887 |      3 |
+|        5 |       2 | 0004   |       |                            |        |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM StatCanBuy(3);
+#+end_src
+
+#+RESULTS:
+| flightid | canbuy |
+|----------+--------|
+|        2 |      5 |
+|        5 |      4 |
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION FlightsStatistics(_UserId INT, _Pass TEXT)
+RETURNS TABLE (
+	CanReserve INT,
+	CanBuy INT,
+	Free INT,
+	Reserved INT,
+	Sold INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	IF NOT Authenticate(_UserId, _Pass) THEN
+	   RETURN;
+	END IF;
+
+	RETURN QUERY (
+         SELECT CAST(SUM(StatCanReserve.CanReserve) AS INT),
+		CAST(SUM(StatCanBuy.CanBuy) AS INT),
+		CAST(SUM(StatFree.Free) AS INT),
+		CAST(SUM(StatReserved.Reserved) AS INT),
+		CAST(SUM(StatSold.Sold) AS INT)
+         FROM StatFree
+             NATURAL LEFT JOIN StatReserved
+             NATURAL LEFT JOIN StatSold
+             NATURAL LEFT JOIN StatCanReserve
+             NATURAL LEFT JOIN StatCanBuy(_UserId)
+	);
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM FlightsStatistics(3, 'amogus');
+#+end_src
+
+#+RESULTS:
+| canreserve | canbuy | free | reserved | sold |
+|------------+--------+------+----------+------|
+|          6 |      9 |    6 |        3 |    5 |
+
+* 7
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION FlightStat(_UserId INT, _Pass TEXT, _FlightId INT)
+RETURNS TABLE (
+	CanReserve INT,
+	CanBuy INT,
+	Free INT,
+	Reserved INT,
+	Sold INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	IF NOT Authenticate(_UserId, _Pass) THEN
+	   RETURN;
+	END IF;
+
+	RETURN QUERY (
+         SELECT CAST(StatCanReserve.CanReserve AS INT),
+		CAST(StatCanBuy.CanBuy AS INT),
+		CAST(StatFree.Free AS INT),
+		CAST(StatReserved.Reserved AS INT),
+		CAST(StatSold.Sold AS INT)
+         FROM StatFree
+             NATURAL LEFT JOIN StatReserved
+             NATURAL LEFT JOIN StatSold
+             NATURAL LEFT JOIN StatCanReserve
+             NATURAL LEFT JOIN StatCanBuy(_UserId)
+	 WHERE StatFree.FlightId = _FlightId
+	);
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM FlightStat(2, '123456', 5);
+#+end_src
+
+#+RESULTS:
+| canreserve | canbuy | free | reserved | sold |
+|------------+--------+------+----------+------|
+|          3 |      3 |    3 |        1 |    1 |
+
+* 8
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+CREATE OR REPLACE FUNCTION CompressSeats(_FlightId INT)
+RETURNS BOOL
+LANGUAGE plpgsql
+AS $$
+DECLARE _CurSeatNo VARCHAR(4);
+DECLARE _SeatCursor CURSOR FOR
+	SELECT SeatNo
+	FROM Seats
+	     NATURAL JOIN Flights
+	WHERE FlightId = _FlightId
+	ORDER BY SeatNo
+	FOR READ ONLY;
+DECLARE _TakenCursor CURSOR FOR
+	SELECT SeatNo
+	FROM Tickets
+	WHERE FlightId = _FlightId
+	      AND Taken
+	FOR UPDATE;
+DECLARE _ReservedCursor CURSOR FOR
+	SELECT SeatNo
+	FROM Tickets
+	WHERE FlightId = _FlightId
+	      AND NOT Taken
+	      AND BookedUntil >= NOW()
+      FOR UPDATE;
+BEGIN
+	SET CONSTRAINTS ALL DEFERRED;
+
+	DELETE FROM Tickets
+	WHERE NOT Taken
+	      AND (
+	       BookedUntil < NOW()
+	       OR BookedUntil IS NULL
+	      )
+	      AND FlightId = _FlightId;
+
+	IF _FlightId NOT IN (SELECT FlightId FROM Flights) THEN
+	   RETURN FALSE;
+	END IF;
+
+	OPEN _SeatCursor;
+
+	FOR _SeatNo IN _TakenCursor LOOP
+	    FETCH NEXT FROM _SeatCursor INTO _CurSeatNo;
+	    UPDATE Tickets
+	    SET SeatNo = _CurSeatNo
+	    WHERE CURRENT OF _TakenCursor; 
+	END LOOP;
+
+	FOR _SeatNo IN _ReservedCursor LOOP
+	    FETCH NEXT FROM _SeatCursor INTO _CurSeatNo;
+	    UPDATE Tickets
+	    SET SeatNo = _CurSeatNo
+	    WHERE CURRENT OF _ReservedCursor; 
+	END LOOP;
+
+	CLOSE _SeatCursor;
+
+	RETURN TRUE;
+END;
+$$
+#+end_src
+
+#+RESULTS:
+| CREATE FUNCTION |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+SELECT * FROM CompressSeats(2);
+#+end_src
+
+#+RESULTS:
+| compressseats |
+|---------------|
+| t             |
