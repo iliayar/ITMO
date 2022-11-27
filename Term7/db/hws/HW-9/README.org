@@ -5,19 +5,7 @@ CREATE EXTENSION pgcrypto;
 #+end_src
 
 #+RESULTS:
-| CREATE EXTENSION |
-|------------------|
-
-#+header: :engine postgres
-#+header: :database hw
-#+begin_src sql
-#+end_src
-
-#+RESULTS:
-| DROP TABLE |
-|------------|
-| DROP TABLE |
-| DROP TABLE |
+|---|
 
 
 * 0.1
@@ -133,11 +121,11 @@ WHERE BookedUntil IS NULL
 #+header: :database hw
 #+begin_src sql
 INSERT INTO Flights(FlightTime, PlaneId) VALUES
-       ('2022-11-12 18:00:00', 0),
-       ('2022-11-19 18:00:00', 0),
-       ('2022-11-10 10:00:00', 1),
-       ('2022-11-12 10:00:00', 1),
-       ('2022-11-14 10:00:00', 2);
+       ('2022-11-26 18:00:00', 0),
+       ('2022-12-03 18:00:00', 0),
+       ('2022-11-24 10:00:00', 1),
+       ('2022-11-26 10:00:00', 1),
+       ('2022-11-28 10:00:00', 2);
 
 INSERT INTO Seats(PlaneId, SeatNo) VALUES
        (0, '001A'),
@@ -164,8 +152,8 @@ INSERT INTO Users(Pass) VALUES
 
 INSERT INTO Tickets(SeatNo, PlaneId, FlightId, BookedUntil, Taken, UserId) VALUES
        ('001A', 0, 1, NULL, TRUE, 1),
-       ('001B', 0, 1, '2022-11-12 17:00:00', FALSE, 2),
-       ('001A', 0, 2, '2022-11-19 17:00:00', FALSE, 3),
+       ('001B', 0, 1, '2022-11-28 17:00:00', FALSE, 2),
+       ('001A', 0, 2, '2022-12-03 17:00:00', FALSE, 3),
        ('002A', 0, 2, NULL, TRUE, NULL),
        ('001B', 0, 2, NULL, FALSE, 2);
 #+end_src
@@ -186,11 +174,11 @@ SELECT * FROM Flights;
 #+RESULTS:
 | flightid | flighttime          | planeid |
 |----------+---------------------+---------|
-|        1 | 2022-11-05 18:00:00 |       0 |
-|        2 | 2022-11-12 18:00:00 |       0 |
-|        3 | 2022-11-03 10:00:00 |       1 |
-|        4 | 2022-11-05 10:00:00 |       1 |
-|        5 | 2022-11-07 10:00:00 |       2 |
+|        1 | 2022-11-12 18:00:00 |       0 |
+|        2 | 2022-11-19 18:00:00 |       0 |
+|        3 | 2022-11-10 10:00:00 |       1 |
+|        4 | 2022-11-12 10:00:00 |       1 |
+|        5 | 2022-11-14 10:00:00 |       2 |
 
 #+header: :engine postgres
 #+header: :database hw
@@ -201,9 +189,9 @@ SELECT * FROM Users;
 #+RESULTS:
 | userid | pass                                                         |
 |--------+--------------------------------------------------------------|
-|      1 | $2a$06$tnjQ1sZNiK95kffP0mLtNuXopEx31MDpjtPSoXWT4Rzs/ajmgcOje |
-|      2 | $2a$06$MY7pH4qqwoFI0uL2vJ80VOyz6mcgbOYadnVthEuJp92vxEgd9y6YC |
-|      3 | $2a$06$4sRjTdhnOycmwjzfd3Wo9u1gk4kc9vRh30X0XbJS8nY6NZ//8MIva |
+|      1 | $2a$06$zYSg5W1AerjWZ1sSyxc7tutHDx8Ggy55zEBoSkCzGnr/.zBhe5WBC |
+|      2 | $2a$06$z9Pge4Ogf8raWzZE8/jUH.IjBPIgrfDR4Z3fJvpDUcWiUrUCZ.jrO |
+|      3 | $2a$06$qm23.0C5zhV3mP5xo6BQiuy764Uj3y2L4f.uHlRoN.dPlfFQzWTUO |
 
 #+header: :engine postgres
 #+header: :database hw
@@ -859,3 +847,25 @@ SELECT * FROM CompressSeats(2);
 | compressseats |
 |---------------|
 | t             |
+
+
+
+* HW-10 tests
+#+header: :engine postgres
+#+header: :database hw
+#+begin_src sql
+START TRANSACTION READ ONLY ISOLATION LEVEL READ COMMITTED;
+SELECT SeatNo, BookedUntil FROM FreeOrReservedTickets
+  WHERE FlightId = 2
+  AND (UserId = 1 OR UserId IS NULL);
+COMMIT;
+#+end_src
+
+#+RESULTS:
+| START TRANSACTION |             |
+|-------------------+-------------|
+| seatno            | bookeduntil |
+| 002B              |             |
+| 003A              |             |
+| 003B              |             |
+| COMMIT            |             |
