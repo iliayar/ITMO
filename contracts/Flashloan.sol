@@ -12,13 +12,9 @@ interface PatchedERC20 {
 
 contract Flashloan is FlashLoanReceiverBase {
     event LogBalances(
-	uint256 Stage1WETHBalance,
-	uint256 Stage2WETHBalance,
-	uint256 Stage3LINKBalance,
-	uint256 Stage4LINKBalance,
-	uint256 Stage5USDTBalance,
-	uint256 Stage6USDTBalance,
-	uint256 Stage7WETHBalance
+	uint256 WETHBalance,
+	uint256 LINKBalance,
+	uint256 USDTBalance
     );
 
     PatchedERC20 constant WETH = PatchedERC20(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
@@ -66,9 +62,20 @@ contract Flashloan is FlashLoanReceiverBase {
 	override
 	returns (bool)
     {
+	uint256 WETHBalance = WETH.balanceOf(address(this));
 	swap(WETH, LINK, amounts[0]);
+
+	uint256 LINKBalance = LINK.balanceOf(address(this));
 	swapAll(LINK, USDT);
+
+	uint256 USDTBalance = USDT.balanceOf(address(this));
 	swapAll(USDT, WETH);
+
+	emit LogBalances(
+	    WETHBalance,
+	    LINKBalance,
+	    USDTBalance
+	);
 
 	uint amountOwing = amounts[0].add(premiums[0]);
 	IERC20(assets[0]).approve(address(LENDING_POOL), amountOwing);
