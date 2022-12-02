@@ -25,7 +25,13 @@ describe("Trade Contract", function () {
     expect(await WETH.balanceOf(owner.address)).to.equal(prevBalance.sub(balance));
     expect(await WETH.balanceOf(flashloan.address)).to.equal(balance);
 
-    await flashloan.flashloan();
+    await expect(flashloan.flashloan())
+      .to.emit(flashloan, "LogBalances")
+      .withArgs(
+	  balance.add(flashloanAmount),
+	  ethers.BigNumber.from("830831382461664813"),
+	  ethers.BigNumber.from("5830345"),
+      );
 
     expect(await WETH.balanceOf(flashloan.address))
       .to.lessThan(balance)

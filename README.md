@@ -1,13 +1,20 @@
-# Sample Hardhat Project
-
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
+# DeFI, protocols code review
+## Instruction
+Install deps with:
 ```shell
-npx hardhat help
+npm install
+```
+
+Run test with:
+```shell
 npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+```
+
+## Example
+```shell
+  Trade Contract
+    ✔ Test transfer (2355ms)
+
+
+  1 passing (2s)
 ```
