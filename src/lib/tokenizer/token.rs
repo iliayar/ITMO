@@ -1,14 +1,18 @@
 use crate::TokenVisitor;
 
+use log::*;
+
 pub trait Token {
     fn accept(&self, visitor: &mut dyn TokenVisitor);
 }
 
+#[derive(Debug, Clone, Copy)]
 pub enum Brace {
     LEFT,
     RIGHT,
 }
 
+#[derive(Debug, Clone, Copy)]
 pub enum Operation {
     ADD,
     SUB,
@@ -16,6 +20,7 @@ pub enum Operation {
     MUL,
 }
 
+#[derive(Debug, Clone, Copy)]
 pub struct NumberToken {
     pub value: i64,
 }
