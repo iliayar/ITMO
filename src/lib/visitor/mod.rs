@@ -3,7 +3,7 @@
 mod visitor;
 mod print_visitor;
 mod parser_visitor;
-mod match_visitor;
+mod token_type_visitor;
 mod eval_visitor;
 
 pub use visitor::TokenVisitor;

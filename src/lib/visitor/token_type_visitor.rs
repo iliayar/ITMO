@@ -9,41 +9,41 @@ pub enum Assoc {
 }
 
 #[derive(Debug)]
-pub enum Matched {
+pub enum TokenType {
     OpenBrace,
     CloseBrace,
     Operator { prior: usize, assoc: Assoc },
     None,
 }
 
-struct MatchVisitor {
-    matched: Matched,
+struct TokenTypeVisitor {
+    matched: TokenType,
 }
 
-impl MatchVisitor {
+impl TokenTypeVisitor {
     pub fn new() -> Self {
         Self {
-            matched: Matched::None,
+            matched: TokenType::None,
         }
     }
 }
 
-impl TokenVisitor for MatchVisitor {
+impl TokenVisitor for TokenTypeVisitor {
     fn visit_operation(&mut self, token: &token::Operation) {
         self.matched = match token {
-            token::Operation::ADD => Matched::Operator {
+            token::Operation::ADD => TokenType::Operator {
                 prior: 1,
                 assoc: Assoc::Left,
             },
-            token::Operation::SUB => Matched::Operator {
+            token::Operation::SUB => TokenType::Operator {
                 prior: 1,
                 assoc: Assoc::Left,
             },
-            token::Operation::DIV => Matched::Operator {
+            token::Operation::DIV => TokenType::Operator {
                 prior: 0,
                 assoc: Assoc::Left,
             },
-            token::Operation::MUL => Matched::Operator {
+            token::Operation::MUL => TokenType::Operator {
                 prior: 0,
                 assoc: Assoc::Left,
             },
@@ -52,16 +52,16 @@ impl TokenVisitor for MatchVisitor {
 
     fn visit_brace(&mut self, token: &token::Brace) {
         self.matched = match token {
-            token::Brace::LEFT => Matched::OpenBrace,
-            token::Brace::RIGHT => Matched::CloseBrace,
+            token::Brace::LEFT => TokenType::OpenBrace,
+            token::Brace::RIGHT => TokenType::CloseBrace,
         };
     }
 
     fn visit_number(&mut self, _token: &token::NumberToken) {}
 }
 
-pub fn match_token(token: &dyn Token) -> Matched {
-    let mut visitor = MatchVisitor::new();
+pub fn token_type(token: &dyn Token) -> TokenType {
+    let mut visitor = TokenTypeVisitor::new();
     token.accept(&mut visitor);
     visitor.matched
 }

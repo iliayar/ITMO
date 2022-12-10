@@ -2,7 +2,7 @@ use crate::token;
 use crate::Token;
 use crate::TokenVisitor;
 
-use super::match_visitor::{match_token, Matched};
+use super::token_type_visitor::{token_type, TokenType};
 
 use thiserror::Error;
 
@@ -62,11 +62,11 @@ impl ParserVisitor {
         }
     }
 
-    fn match_top(&self) -> Matched {
+    fn match_top(&self) -> TokenType {
         if let Some(token) = self.stack.last() {
-            match_token(token.as_ref())
+            token_type(token.as_ref())
         } else {
-            Matched::None
+            TokenType::None
         }
     }
 
@@ -89,8 +89,8 @@ impl TokenVisitor for ParserVisitor {
             return;
         }
 
-        let prior = match match_token(token) {
-            Matched::Operator { prior, .. } => prior,
+        let prior = match token_type(token) {
+            TokenType::Operator { prior, .. } => prior,
             matched => panic!("Matched operation: {:?}", matched),
         };
 
@@ -100,7 +100,7 @@ impl TokenVisitor for ParserVisitor {
             }
 
             match self.match_top() {
-                Matched::Operator {
+                TokenType::Operator {
                     prior: top_prior,
                     assoc,
                 } => {
@@ -111,7 +111,7 @@ impl TokenVisitor for ParserVisitor {
                         self.stack.push(Box::new(*token));
                     }
                 }
-                Matched::OpenBrace | Matched::None => {
+                TokenType::OpenBrace | TokenType::None => {
                     self.stack.push(Box::new(*token));
                 }
                 matched => panic!("Matched on top of the stack: {:?}", matched),
@@ -137,7 +137,7 @@ impl TokenVisitor for ParserVisitor {
                 }
 
                 match self.match_top() {
-                    Matched::OpenBrace => {
+                    TokenType::OpenBrace => {
                         self.stack.pop();
                         self.dec_balance();
                         return;
