@@ -13,6 +13,9 @@ derive_builder = "0.11.2"
 thiserror = "1.0.37"
 anyhow = "1.0.66"
 # iced = { version = "0.6", default-features = false, features = [ "glow" ] }
-nannou = { version = "0.17" }
+# nannou = { version = "0.17" }
 # simple = "0.3"
-druid = "0.7"
+# druid = "0.7"
+# minifb = "0.15.3"
+# raqote = "0.7.10"
+sdl2 = { version = "0.35", features = [ "gfx" ] }

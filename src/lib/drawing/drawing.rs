@@ -8,4 +8,6 @@ pub trait DrawingApi {
 
     fn draw_circle(&mut self, center: Point, radius: i64);
     fn draw_line(&mut self, start: Point, end: Point);
+
+    fn run(&mut self);
 }
