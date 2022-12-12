@@ -30,9 +30,17 @@
 
               # libxkbcommon
               # libGL
-              vulkan-loader
+              # vulkan-loader
               # gtk3
               # hyperscan
+              # gtk3
+              # gdk-pixbuf
+              # pango
+              # atk
+              # cairo
+              # glib
+              SDL2
+              SDL2_gfx
 
               xorg.libXi
               xorg.libXrandr

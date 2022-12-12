@@ -20,6 +20,10 @@ impl DrawingApi for TermLog {
     fn draw_line(&mut self, start: crate::Point, end: crate::Point) {
         info!("Drawing line from {:?} -> {:?}", start, end);
     }
+
+    fn run(&mut self) {
+        info!("Running app");
+    }
 }
 
 impl TermLog {
