@@ -20,7 +20,10 @@ impl SimpleBackend {
         let sdl_context = sdl2::init().unwrap();
         let video_subsystem = sdl_context.video().unwrap();
 
-        let window = video_subsystem.window("Graph", size.0, size.1).build().unwrap();
+        let window = video_subsystem
+            .window("Graph", size.0, size.1)
+            .build()
+            .unwrap();
 
         let size = window.size();
 
@@ -85,13 +88,11 @@ impl DrawingApi for SimpleBackend {
     }
 
     fn draw_text(&mut self, anchor: crate::Point, text: &str, size: u16) {
-	let mut pattern = crossfont::ft::fc::Pattern::new();
-	pattern.add_family("Ubuntu");
-        let fc = crossfont::ft::fc::font_match(
-            crossfont::ft::fc::Config::get_current(),
-            &pattern,
-        ).unwrap();
-	let found_font = fc.file(0).unwrap();
+        let mut pattern = crossfont::ft::fc::Pattern::new();
+        pattern.add_family("Ubuntu");
+        let fc = crossfont::ft::fc::font_match(crossfont::ft::fc::Config::get_current(), &pattern)
+            .unwrap();
+        let found_font = fc.file(0).unwrap();
 
         let texture_creator = self.canvas.texture_creator();
         let font = self.ttf_context.load_font(found_font, size).unwrap();
