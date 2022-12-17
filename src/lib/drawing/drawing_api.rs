@@ -1,6 +1,4 @@
-
 use crate::Point;
-
 
 pub trait DrawingApi {
     fn get_drawing_area_width(&self) -> i64;

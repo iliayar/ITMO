@@ -40,7 +40,7 @@ impl<'a> EdgesGraph<'a> {
             let from_to: Vec<Result<usize, _>> = line.split(" ").map(|e| e.parse()).collect();
             let from = from_to[0].clone()?;
             let to = from_to[1].clone()?;
-	    edges.push((from, to));
+            edges.push((from, to));
         }
 
         Ok(Self::new(drawing_api, edges))

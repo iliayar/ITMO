@@ -28,17 +28,7 @@
 
               pkgconfig
 
-              # libxkbcommon
-              # libGL
               vulkan-loader
-              # gtk3
-              # hyperscan
-              # gtk3
-              # gdk-pixbuf
-              # pango
-              # atk
-              # cairo
-              # glib
               SDL2
               SDL2_ttf
               SDL2_gfx

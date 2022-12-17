@@ -5,8 +5,8 @@ use log::*;
 
 use iced::widget::{column, text, Canvas};
 use iced::{
-    executor, Alignment, Application, Color, Command, Element, Length, Settings, Subscription,
-    Theme, window,
+    executor, window, Alignment, Application, Color, Command, Element, Length, Settings,
+    Subscription, Theme,
 };
 
 pub struct ReactiveBackend {
@@ -18,7 +18,7 @@ impl ReactiveBackend {
     pub fn new(size: (u32, u32)) -> Self {
         Self {
             graph: Graph::new(),
-	    size,
+            size,
         }
     }
 }
@@ -41,18 +41,18 @@ impl DrawingApi for ReactiveBackend {
     }
 
     fn draw_text(&mut self, anchor: Point, text: &str, size: u16) {
-	self.graph.add_text(anchor, text, size);
+        self.graph.add_text(anchor, text, size);
     }
 
     fn run(&mut self) {
         App::run(Settings {
             flags: (self.graph.clone(),),
-	    window: window::Settings {
-		size: (800, 600),
-		resizable: false,
-		decorations: true,
-		..window::Settings::default()
-	    },
+            window: window::Settings {
+                size: (800, 600),
+                resizable: false,
+                decorations: true,
+                ..window::Settings::default()
+            },
             ..Settings::default()
         })
         .unwrap();
