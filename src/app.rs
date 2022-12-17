@@ -33,15 +33,10 @@ impl App {
 
         let mut stdin = std::io::stdin().lock();
         let mut graph: Box<dyn Graph> = match self.format {
-            Format::Adjacent => Box::new(AdjacentGraph::new(
+            Format::Adjacent => Box::new(AdjacentGraph::from_stream(
                 drawing_api.as_mut(),
-                vec![
-                    vec![false, true, false, false],
-                    vec![false, false, true, false],
-                    vec![true, false, false, true],
-                    vec![true, false, false, false],
-                ],
-            )),
+                &mut stdin,
+            )?),
             Format::EdgesList => {
                 Box::new(EdgesGraph::from_stream(drawing_api.as_mut(), &mut stdin)?)
             }
