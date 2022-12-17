@@ -24,6 +24,10 @@ impl DrawingApi for TermLog {
     fn run(&mut self) {
         info!("Running app");
     }
+
+    fn draw_text(&mut self, anchor: crate::Point, text: &str, size: u16) {
+        info!("Drawing text at {:?} \"{}\" with size {}", anchor, text, size);
+    }
 }
 
 impl TermLog {
