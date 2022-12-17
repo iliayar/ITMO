@@ -1,6 +1,7 @@
 use std::collections::HashSet;
+use std::io::BufRead;
 
-use super::common;
+use super::common::*;
 use super::graph::AbstractGraph;
 use crate::Point;
 use crate::{Graph, HasDrawingApi};
@@ -14,7 +15,7 @@ pub struct EdgesGraph<'a> {
 }
 
 impl<'a> EdgesGraph<'a> {
-    pub fn new(edges: Vec<(usize, usize)>, drawing_api: &'a mut dyn crate::DrawingApi) -> Self {
+    pub fn new(drawing_api: &'a mut dyn crate::DrawingApi, edges: Vec<(usize, usize)>) -> Self {
         let mut vertices = HashSet::<usize>::new();
         for (from, to) in edges.iter() {
             vertices.insert(*from);
@@ -26,6 +27,23 @@ impl<'a> EdgesGraph<'a> {
             drawing_api,
             vertices,
         }
+    }
+
+    pub fn from_stream(
+        drawing_api: &'a mut dyn crate::DrawingApi,
+        stream: &mut dyn BufRead,
+    ) -> Result<Self, anyhow::Error> {
+        let mut edges = Vec::new();
+
+        for mb_line in stream.lines() {
+            let line = mb_line?;
+            let from_to: Vec<Result<usize, _>> = line.split(" ").map(|e| e.parse()).collect();
+            let from = from_to[0].clone()?;
+            let to = from_to[1].clone()?;
+	    edges.push((from, to));
+        }
+
+        Ok(Self::new(drawing_api, edges))
     }
 }
 
@@ -39,25 +57,13 @@ impl<'a> AbstractGraph for EdgesGraph<'a> {}
 
 impl<'a> Graph for EdgesGraph<'a> {
     fn draw_graph(&mut self) {
-	let radius = 5.;
-        let width = self.drawing_api.get_drawing_area_width();
-        let height = self.drawing_api.get_drawing_area_height();
-        let points = common::arrange_vertices_in_circle(&self.vertices, width, height, radius);
+        let drawing_settings = DrawingSettings::default();
+        let state = self.get_state(drawing_settings, &self.vertices.clone());
 
-        for (v, point) in points.iter() {
-            self.drawing_api.draw_circle(*point, radius as i64);
-        }
+        self.draw_vertices(&state);
 
-        for (from, to) in self.edges.iter() {
-            let from_point = points.get(from);
-            let to_point = points.get(to);
-
-            if from_point.is_none() || to_point.is_none() {
-                error!("Cannot draw edges between {} and {}", from, to);
-            }
-
-            self.drawing_api
-                .draw_line(*from_point.unwrap(), *to_point.unwrap());
+        for (from, to) in self.edges.clone().into_iter() {
+            self.draw_edge(&state, from, to);
         }
     }
 }
