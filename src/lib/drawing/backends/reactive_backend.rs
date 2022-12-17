@@ -25,11 +25,11 @@ impl ReactiveBackend {
 
 impl DrawingApi for ReactiveBackend {
     fn get_drawing_area_width(&self) -> i64 {
-        800
+        self.size.0 as i64
     }
 
     fn get_drawing_area_height(&self) -> i64 {
-        600
+        self.size.1 as i64
     }
 
     fn draw_circle(&mut self, center: Point, radius: i64) {

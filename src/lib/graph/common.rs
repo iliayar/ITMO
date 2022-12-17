@@ -44,6 +44,36 @@ pub fn arrange_vertices_in_circle(
     res
 }
 
+pub fn calculate_arrow_head(from: Point, to: Point) -> (Point, Point) {
+    let vec = ((to.x - from.x) as f64, (to.y - from.y) as f64);
+    let len = (vec.0.powi(2) + vec.1.powi(2)).sqrt();
+    let vec = (vec.0 / len, vec.1 / len);
+
+    debug!("Vec: {:?}", vec);
+
+    let perp_up = (-vec.1, vec.0);
+    let perp_down = (vec.1, -vec.0);
+
+    let scale = 15.;
+    let coef = 0.3;
+    let p1 = (
+        to.x as f64 - (vec.0 - coef * perp_up.0) * scale,
+        to.y as f64 - (vec.1 - coef * perp_up.1) * scale,
+    );
+
+    let p2 = (
+        to.x as f64 - (vec.0 - coef * perp_down.0) * scale,
+        to.y as f64 - (vec.1 - coef * perp_down.1) * scale,
+    );
+
+    debug!("Arrow heads: {:?}, {:?}", p1, p2);
+
+    (
+        Point::new(p1.0 as i64, p1.1 as i64),
+        Point::new(p2.0 as i64, p2.1 as i64),
+    )
+}
+
 pub struct DrawingSettings {
     pub node_radius: f64,
     pub font_size: u16,
@@ -57,8 +87,8 @@ pub struct DrawingState {
 impl Default for DrawingSettings {
     fn default() -> Self {
         Self {
-            node_radius: 5.,
-            font_size: 10,
+            node_radius: 20.,
+            font_size: 20,
         }
     }
 }
@@ -68,11 +98,13 @@ pub trait DrawingHelper: Graph {
         for (v, point) in state.points.iter() {
             self.drawing_api()
                 .draw_circle(point.circle_center, state.settings.node_radius as i64);
-            self.drawing_api().draw_text(
-                point.circle_center,
-                &format!("{}", v),
-                state.settings.font_size,
+
+            let text_achor = Point::new(
+                point.circle_center.x + state.settings.node_radius as i64,
+                point.circle_center.y + state.settings.node_radius as i64,
             );
+            self.drawing_api()
+                .draw_text(text_achor, &format!("{}", v), state.settings.font_size);
         }
     }
 
@@ -84,10 +116,13 @@ pub trait DrawingHelper: Graph {
             error!("Cannot draw edges between {} and {}", from, to);
         }
 
-        self.drawing_api().draw_line(
-            from_point.unwrap().edges_anchor,
-            to_point.unwrap().edges_anchor,
-        );
+        let from_anchor = from_point.unwrap().edges_anchor;
+        let to_anchor = to_point.unwrap().edges_anchor;
+        self.drawing_api().draw_line(from_anchor, to_anchor);
+
+        let (head1, head2) = calculate_arrow_head(from_anchor, to_anchor);
+        self.drawing_api().draw_line(to_anchor, head1);
+        self.drawing_api().draw_line(to_anchor, head2);
     }
 
     fn get_state(&mut self, settings: DrawingSettings, vertices: &HashSet<usize>) -> DrawingState {
