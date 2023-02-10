@@ -5,6 +5,9 @@
 My stuff from ITMO University. \\
 All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://iliayar.ru/public-notes/conspects/README.html][published here]]
 
+* Year 4
+** Term7
+*** [[file:Term7/bc/README.org][Blockchain]]
 * Year 3
 ** Term 6
 *** [[file:Term6/sem/README.org][Programming Language Semantic]]
