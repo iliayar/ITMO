@@ -1,0 +1,10 @@
+#+TITLE: Software Design
+#+SETUPFILE: ../../level-subj.org
+
+* HWs
+[[file:statements.pdf][Tasks]] \\
+- [[file:HW-1/][HW-1]]
+- [[file:HW-3/][HW-3]]
+- [[file:HW-5/][HW-5]]
+- [[file:HW-6/][HW-6]]
+- [[file:HW-8/][HW-8]]
