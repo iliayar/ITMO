@@ -1,0 +1,84 @@
+#+header: :engine postgres
+#+begin_src sql
+CREATE DATABASE kr;
+#+end_src
+
+#+RESULTS:
+| CREATE DATABASE |
+|-----------------|
+
+#+header: :engine postgres
+#+header: :database kr
+#+begin_src sql
+DROP TABLE IF EXISTS Teams CASCADE;
+DROP TABLE IF EXISTS Sessions CASCADE;
+DROP TABLE IF EXISTS Contests CASCADE;
+DROP TABLE IF EXISTS Problems CASCADE;
+DROP TABLE IF EXISTS Runs CASCADE;
+
+
+CREATE TABLE Teams (
+       TeamId INT GENERATED ALWAYS AS IDENTITY not null,
+       TeamName VARCHAR(100),
+
+       PRIMARY KEY (TeamId)
+);
+
+CREATE TABLE Contests (
+       ContestId INT GENERATED ALWAYS AS IDENTITY not null,
+       ContestName VARCHAR(100),
+
+       PRIMARY KEY (ContestId)
+);
+
+CREATE TABLE Problems (
+       Letter CHAR,
+       ProblemName VARCHAR(100),
+       ContestId INT not null,
+
+       PRIMARY KEY (Letter, ContestId),
+       FOREIGN KEY (ContestId) REFERENCES Contests(ContestId)
+);
+
+CREATE TABLE Sessions (
+       SessionId INT GENERATED ALWAYS AS IDENTITY not null,
+       Start TIMESTAMP,
+       TeamId INT not null,
+       ContestId INT not null,
+
+       PRIMARY KEY (SessionId),
+       FOREIGN KEY (TeamId) REFERENCES Teams(TeamId),
+       FOREIGN KEY (ContestId) REFERENCES Contests(ContestId)
+);
+
+CREATE TABLE Runs (
+       RunId INT GENERATED ALWAYS AS IDENTITY not null,
+       SubmitTime INT not null,
+       Accepted BOOL,
+       SessionId INT not null,
+       Letter CHAR not null,
+
+       PRIMARY KEY (RunId),
+       FOREIGN KEY (SessionId) REFERENCES Sessions(SessionId)
+);
+#+end_src
+
+
+#+RESULTS:
+| DROP TABLE   |
+|--------------|
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| DROP TABLE   |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+| CREATE TABLE |
+
+
+* 1
+** 1
+#+begin_src text
+pi{TeamId}(sigma{ContestId = :ContestId}(Teams nj Sessions))
+#+end_src
