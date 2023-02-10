@@ -1,0 +1,6 @@
+{
+    "tabSize": 2,
+    "indentSize": 2,
+    "convertTabsToSpaces": true,
+    "max-line-length": [false, 100]
+}
