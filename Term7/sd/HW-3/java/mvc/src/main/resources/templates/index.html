@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <title>Add question</title>
+</head>
+<body>
+
+<h3>Select products</h3>
+<form method="GET" action="/filter-products">
+    <select th:name="filter">
+        <option value="all">all</option>
+        <option value="max">max</option>
+        <option value="min">min</option>
+    </select>
+    <input type="submit" value="filter">
+</form>
+
+<table>
+    <th:block th:each="product : ${products}">
+    <tr>
+        <td th:text="${product.getId()}"/>
+        <td th:text="${product.getName()}"/>
+        <td th:text="${product.getPrice()}"/>
+    </tr>
+    </th:block>
+</table>
+
+<h3>Add new products</h3>
+<form th:object="${product}" method="POST" action="/add-product">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td><label>Price:</label></td>
+            <td><input type="text" th:field="*{price}"/></td>
+        </tr>
+    </table>
+
+    <input type="submit" value="add">
+</form>
+
+</body>
+</html>
