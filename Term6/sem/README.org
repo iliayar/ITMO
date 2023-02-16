@@ -2,7 +2,7 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-- [[https://iliayar.ru/public-notes/conspects/Term6/sem/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.ilyay.space/Term6/sem/lectures/1.pdf][Lecture 1]]
 
 * HWs
 - [[file:hws/coq-introductory-problems][coq-introductory-problems]]

@@ -2,13 +2,13 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/all_lectures.pdf][All lectures]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/1.pdf][Lecture 1]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/2.pdf][Lecture 2]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/3.pdf][Lecture 3]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/4.pdf][Lecture 4]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/5.pdf][Lecture 5]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/tm/lectures/6.pdf][Lecture 6]]
+[[https://conspects.ilyay.space/Term5/tm/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.ilyay.space/Term5/tm/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.ilyay.space/Term5/tm/lectures/2.pdf][Lecture 2]]
+- [[https://conspects.ilyay.space/Term5/tm/lectures/3.pdf][Lecture 3]]
+- [[https://conspects.ilyay.space/Term5/tm/lectures/4.pdf][Lecture 4]]
+- [[https://conspects.ilyay.space/Term5/tm/lectures/5.pdf][Lecture 5]]
+- [[https://conspects.ilyay.space/Term5/tm/lectures/6.pdf][Lecture 6]]
 * Labs
 - [[file:labs/lab1/][Perl Regex]] \\
   [[file:labs/lab1/01-perl-re.pdf][Statements]]
