@@ -2,14 +2,14 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/all_lectures.pdf][All lectures]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/1.pdf][Lecture 1]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/2.pdf][Lecture 2]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/3.pdf][Lecture 3]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/lectures/9.pdf][Lecture 9]]
+[[https://conspects.ilyay.space/Term5/ms/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.ilyay.space/Term5/ms/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.ilyay.space/Term5/ms/lectures/2.pdf][Lecture 2]]
+- [[https://conspects.ilyay.space/Term5/ms/lectures/3.pdf][Lecture 3]]
+- [[https://conspects.ilyay.space/Term5/ms/lectures/9.pdf][Lecture 9]]
 * Practice
-[[https://iliayar.ru/public-notes/conspects/Term5/ms/practice/all_practice.pdf][All practice]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/practice/2.pdf][Practice 2]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/practice/3.pdf][Practice 3]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/practice/11.pdf][Practice 11]]
-- [[https://iliayar.ru/public-notes/conspects/Term5/ms/practice/13.pdf][Practice 13]]
+[[https://conspects.ilyay.space/Term5/ms/practice/all_practice.pdf][All practice]]
+- [[https://conspects.ilyay.space/Term5/ms/practice/2.pdf][Practice 2]]
+- [[https://conspects.ilyay.space/Term5/ms/practice/3.pdf][Practice 3]]
+- [[https://conspects.ilyay.space/Term5/ms/practice/11.pdf][Practice 11]]
+- [[https://conspects.ilyay.space/Term5/ms/practice/13.pdf][Practice 13]]
