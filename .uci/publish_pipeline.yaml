@@ -4,3 +4,28 @@ jobs:
     image: conspects-org-publish
     path: ${project.repos.main.path}/org-publish
     enabled: ${params.build-org-publish-image}
+
+  # FIXME: redunant?
+  _init_gen_dir:
+    type: script
+    env:
+      DATA_DIR: ${project.data.path}/gen-conspects
+    script: |
+      mkdir -p ${DATA_DIR}
+
+  publish:
+    needs:
+      - build-image
+      - _init_gen_dir
+    type: script
+    image: conspects-org-publish
+    interpreter: ['/bin/sh', '-c']
+    volumes:
+      '/root/.org-timestamps': conspects-org-publish-cache
+      '/publish/input': ${project.repos.conspects.path}
+      '/publish/config': ${project.repos.main.path}/org-publish/config
+      '/publish/output': ${project.data.path}/gen-conspects
+    script: |
+      set -e
+
+      emacs --batch -l /publish/config/init.el --eval '(org-publish-project "conspects")'
