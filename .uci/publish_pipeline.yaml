@@ -1,0 +1,6 @@
+jobs:
+  build-image:
+    type: build
+    image: conspects-org-publish
+    path: ${project.repos.main.path}/org-publish
+    enabled: ${params.build-org-publish-image}
