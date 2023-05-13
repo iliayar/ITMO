@@ -30,6 +30,9 @@ jobs:
     script: |
       set -e
 
+      # Remove lock files
+      rm -Rf /root/.org-timestamps/.#*
+
       emacs --batch -l /publish/config/init.el --eval '(org-publish-project "conspects")'
 
 stages:
