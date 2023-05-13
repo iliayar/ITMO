@@ -11,12 +11,14 @@ jobs:
     env:
       DATA_DIR: ${project.data.path}/gen-conspects
     script: |
-      mkdir -p ${DATA_DIR}
+      mkdir -p ${DATA_DIR} || echo "Already exists"
 
   publish:
     needs:
       - build-image
       - _init_gen_dir
+    stage: publish
+
     type: script
     image: conspects-org-publish
     interpreter: ['/bin/sh', '-c']
@@ -29,3 +31,13 @@ jobs:
       set -e
 
       emacs --batch -l /publish/config/init.el --eval '(org-publish-project "conspects")'
+
+stages:
+  publish:
+    on_overlap: cancel
+
+integrations:
+  github:
+    token: ${project.secrets.github_token}
+    repo: 'iliayar/ITMO'
+    rev: ${project.repos.conspects.rev}
