@@ -1,0 +1,25 @@
+actions:
+  publish:
+    - on: call
+      run_pipelines:
+        - publish-conspects
+      params:
+        build-org-publish-image: true
+
+    - on: changed
+      run_pipelines:
+        - publish-conspects
+      repo_id: conspects
+      changes:
+        - '^.*'
+      params:
+        build-org-publish-image: false
+
+    - on: changed
+      repo_id: main
+      changes:
+        - '^org-publish.*'
+      run_pipelines:
+        - publish-conspects
+      params:
+        build-org-publish-image: true
