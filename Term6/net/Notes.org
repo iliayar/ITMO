@@ -56,13 +56,13 @@
 - Physical
 
 *OSI* model:
-# - L7 :: Application
-# - L6 :: Presentation
-# - L5 :: Session
-# - L4 :: Transport
-# - L3 :: Network
-# - L2 :: Link
-# - L1 :: Physical
+- L7 :: Application
+- L6 :: Presentation
+- L5 :: Session
+- L4 :: Transport
+- L3 :: Network
+- L2 :: Link
+- L1 :: Physical
 
 * L3 IP
 - IPv4

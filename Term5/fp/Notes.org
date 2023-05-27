@@ -32,7 +32,6 @@ newtype Identity a = Identity { runIdentity :: a }
 #+end_src
 Инстанс монады тривиальный
 
-
 Пример для ~Either~
 #+begin_src haskell
 instance Monad (Either e)  where
