@@ -26,7 +26,6 @@ instance Monad Maybe where
   Just a >>= f = f a
 #+end_src
 
-
 Пример для ~Identity~
 #+begin_src haskell
 newtype Identity a = Identity { runIdentity :: a } 
