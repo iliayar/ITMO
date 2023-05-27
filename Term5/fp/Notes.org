@@ -318,7 +318,7 @@ instance Aternative Parser
 #+end_src
 
 * Лекция 11
-*** Unit testing — ~HSpec~
+** Unit testing — ~HSpec~
 Может сам искать тесты в модулях с префиксом ~spec~?
 
 - ~shouldSatisfy~ проверяет по предикату
@@ -340,7 +340,7 @@ spec_Parser = do
       runP (char 'a') "abc" `shouldBe` Just ('x', "bc")
 #+end_src
 
-*** Property-based — ~Hedgehog~
+** Property-based — ~Hedgehog~
 /Пример/: ~∀ xs. reverse (reverse xs) ≡ xs~
 
 #+begin_src haskell
