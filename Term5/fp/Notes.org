@@ -3,13 +3,13 @@
 #+title: Заметки к экзамену
 #+OPTIONS: num:nil
 
-* DRIFTED Лекция 0
-* DRIFTED Лекция 1
-* DRIFTED Лекция 2
-* DRIFTED Лекция 3
-* DRIFTED Лекция 4
-* DRIFTED Лекция 5
-* DRIFTED Лекция 6
+* TODO Лекция 0
+* TODO Лекция 1
+* TODO Лекция 2
+* TODO Лекция 3
+* TODO Лекция 4
+* TODO Лекция 5
+* TODO Лекция 6
 * Лекция 7
 #+begin_src haskell
 class Applicative m => Monad m where
