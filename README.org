@@ -1,7 +1,7 @@
 #+TITLE: ITMO
 #+SETUPFILE: level-0.org
 
-[[https://uci.ilyay.space/bin/badge/ghlike.svg?project_id=personal-site&pipeline_id=publish-conspects&job_id=publish]]
+[[https://uci.ilyay.space/api/badge/ghlike.svg?project_id=personal-site&pipeline_id=publish-conspects&job_id=publish]]
 
 ------
 My stuff from ITMO University. \\
