@@ -13,6 +13,22 @@ jobs:
     script: |
       mkdir -p ${DATA_DIR} || echo "Already exists"
 
+  clean_caches:
+    needs:
+      - _init_gen_dir
+    image: alpine:latest
+    type: script
+    interpreter: ['/bin/sh', '-c']
+    volumes:
+      '/timestamps': conspects-org-publish-cache
+    script: |
+      set -e
+
+      files="org-conspects.cache static-conspects.cache"
+      echo "Removing files:\n$files"
+      rm -Rf $files
+    enabled: ${params.clean-html-caches}
+
   publish:
     needs:
       - build-image

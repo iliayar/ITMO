@@ -5,6 +5,7 @@ actions:
         - publish-conspects
       params:
         build-org-publish-image: true
+        clean-html-caches: false
 
     - on: changed
       run_pipelines:
@@ -14,6 +15,7 @@ actions:
         - '^.*'
       params:
         build-org-publish-image: false
+        clean-html-caches: false
 
     - on: changed
       repo_id: main
@@ -23,3 +25,13 @@ actions:
         - publish-conspects
       params:
         build-org-publish-image: true
+        clean-html-caches: false
+
+  publish-rebuild-html:
+    - on: call
+      run_pipelines:
+        - publish-conspects
+      params:
+        build-org-publish-image: true
+        clean-html-caches: true
+        
