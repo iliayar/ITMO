@@ -24,9 +24,9 @@ jobs:
     script: |
       set -e
 
-      files="org-conspects.cache static-conspects.cache"
+      files="/timestamps/org-conspects.cache /timestamps/static-conspects.cache"
       echo "Removing files:\n$files"
-      rm -Rf $files
+      rm $files
     enabled: ${params.clean-html-caches}
 
   publish:
