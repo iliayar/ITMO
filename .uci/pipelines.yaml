@@ -1,3 +1,0 @@
-pipelines:
-  publish-conspects:
-    path: publish_pipeline.yaml

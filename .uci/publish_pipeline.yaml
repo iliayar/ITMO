@@ -1,55 +1,58 @@
 jobs:
   build-image:
-    type: build
-    image: conspects-org-publish
-    path: ${project.repos.main.path}/org-publish
     enabled: ${params.build-org-publish-image}
+    do:
+      type: build
+      image: conspects-org-publish
+      path: ${project.repos.main.path}/org-publish
 
   # FIXME: redunant?
   _init_gen_dir:
-    type: script
-    env:
-      DATA_DIR: ${project.data.path}/gen-conspects
-    script: |
-      mkdir -p ${DATA_DIR} || echo "Already exists"
+    do:
+      type: script
+      env:
+        DATA_DIR: ${project.data_path}/gen-conspects
+      script: |
+        mkdir -p ${DATA_DIR} || echo "Already exists"
 
   clean_caches:
+    enabled: ${params.clean-html-caches}
     needs:
       - _init_gen_dir
-    image: alpine:latest
-    type: script
-    interpreter: ['/bin/sh', '-c']
-    volumes:
-      '/timestamps': conspects-org-publish-cache
-    script: |
-      set -e
+    do:
+      type: script
+      image: alpine:latest
+      interpreter: ['/bin/sh', '-c']
+      volumes:
+        '/timestamps': conspects-org-publish-cache
+      script: |
+        set -e
 
-      files="/timestamps/org-conspects.cache /timestamps/static-conspects.cache"
-      echo "Removing files:\n$files"
-      rm $files
-    enabled: ${params.clean-html-caches}
+        files="/timestamps/org-conspects.cache /timestamps/static-conspects.cache"
+        echo "Removing files:\n$files"
+        rm $files
 
   publish:
+    stage: publish
     needs:
       - build-image
       - _init_gen_dir
-    stage: publish
+    do:
+      type: script
+      image: conspects-org-publish
+      interpreter: ['/bin/sh', '-c']
+      volumes:
+        '/root/.org-timestamps': conspects-org-publish-cache
+        '/publish/input': ${project.repos.conspects.path}
+        '/publish/config': ${project.repos.main.path}/org-publish/config
+        '/publish/output': ${project.data_path}/gen-conspects
+      script: |
+        set -e
 
-    type: script
-    image: conspects-org-publish
-    interpreter: ['/bin/sh', '-c']
-    volumes:
-      '/root/.org-timestamps': conspects-org-publish-cache
-      '/publish/input': ${project.repos.conspects.path}
-      '/publish/config': ${project.repos.main.path}/org-publish/config
-      '/publish/output': ${project.data.path}/gen-conspects
-    script: |
-      set -e
+        # Remove lock files
+        rm -Rf /root/.org-timestamps/.#*
 
-      # Remove lock files
-      rm -Rf /root/.org-timestamps/.#*
-
-      emacs --batch -l /publish/config/init.el --eval '(org-publish-project "conspects")'
+        emacs --batch -l /publish/config/init.el --eval '(org-publish-project "conspects")'
 
 stages:
   publish:
