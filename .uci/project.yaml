@@ -26,7 +26,7 @@ docker:
   volumes:
     conspects-org-publish-cache: {}
 
-actions: ${load(./actions.yaml)}
+actions: ${${load(./actions.yaml)}.actions}
 
 pipelines:
   publish-conspects: ${load(./publish_pipeline.yaml)}
