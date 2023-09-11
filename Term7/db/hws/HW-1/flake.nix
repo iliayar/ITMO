@@ -20,12 +20,14 @@
               postgresql_14
 
               (writeScriptBin "start_pg" ''
-                pg_ctl start -l $LOG_PATH -o "-c listen_addresses= -c unix_socket_directories=$PGHOST"
+                pg_ctl start -l $LOG_PATH -o "-c listen_addresses=localhost -p 5432 -c unix_socket_directories=$PGHOST"
               '')
 
               (writeScriptBin "stop_pg" ''
                 pg_ctl stop
               '')
+
+              gobang
             ];
 
 

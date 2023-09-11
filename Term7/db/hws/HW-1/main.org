@@ -10,30 +10,28 @@ CREATE DATABASE ctd;
 #+end_src
 
 #+RESULTS:
-| CREATE DATABASE |
-|-----------------|
+|---|
 
 * Создание таблиц
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-CREATE TABLE Groups(
-       group_id int,
-       group_no char(6)
+create table Groups (
+    group_id int,
+    group_no char(6)
 );
 #+end_src
 
 #+RESULTS:
-| CREATE TABLE |
-|--------------|
+|---|
 
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-CREATE TABLE Students(
-       student_id int,
-       name varchar(30),
-       group_id int
+create table Students (
+    student_id int,
+    name varchar(30),
+    group_id int
 );
 #+end_src
 
@@ -51,10 +49,10 @@ CREATE TABLE Students(
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-INSERT INTO Groups (group_id, group_no)
-VALUES
-	(1, 'M34371'),
-	(2, 'M34391');
+insert into Groups
+    (group_id, group_no) values
+    (1, 'M34371'),
+    (2, 'M34391');
 #+end_src
 
 #+RESULTS:
@@ -64,16 +62,17 @@ VALUES
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-INSERT INTO Students (student_id, name, group_id)
-VALUES
-	(1, 'Ilona Bozhe', 2),
-	(2, 'Alex Slastin', 1),
-	(3, 'Ivan Uss', 1);
+insert into Students
+    (student_id, name, group_id) values
+    (1, 'Maksim Alzhanov', 2),
+    (2, 'Artem Koton', 1),
+    (3, 'Anna Suris', 1);
 #+end_src
 
 #+RESULTS:
 | INSERT 0 3 |
 |------------|
+
 
 * Получение данных
 #+header: :engine postgres
@@ -95,11 +94,11 @@ SELECT student_id, name, group_id FROM Students;
 #+end_src
 
 #+RESULTS:
-| student_id | name         | group_id |
-|------------+--------------+----------|
-|          1 | Ilona Bozhe  |        2 |
-|          2 | Alex Slastin |        1 |
-|          3 | Ivan Uss     |        1 |
+| student_id | name            | group_id |
+|------------+-----------------+----------|
+|          1 | Maksim Alzhanov |        2 |
+|          2 | Artem Koton     |        1 |
+|          3 | Anna Suris      |        1 |
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -184,9 +183,9 @@ DROP TABLE Groups;
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-UPDATE Students
-       SET group_id = 2
-       WHERE student_id = 2;
+update Students
+    set group_id = 2 
+    where student_id = 2;
 #+end_src
 
 #+RESULTS:
@@ -196,9 +195,9 @@ UPDATE Students
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-UPDATE Students
-       SET group_id = 2
-       WHERE name = 'Alex Slastin';
+update Students
+    set group_id = 2 
+    where name = 'Artem Koton';
 #+end_src
 
 #+RESULTS:
@@ -209,13 +208,13 @@ UPDATE Students
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-INSERT INTO Groups (group_id, group_no)
-VALUES
-	(1, 'M32381');
+insert into Groups (group_id, group_no) values
+    (1, 'M34381');
 #+end_src
 
 #+RESULTS:
-|---|
+| INSERT 0 1 |
+|------------|
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -228,7 +227,6 @@ SELECT group_id, group_no FROM Groups;
 |----------+----------|
 |        1 | M34371   |
 |        2 | M34391   |
-|        1 | M32381   |
 
 Проблемы:
 - Дубли
@@ -237,7 +235,7 @@ SELECT group_id, group_no FROM Groups;
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-DELETE FROM Groups WHERE group_no = 'M32381';
+delete from Groups where group_no = 'M34381';
 #+end_src
 
 #+RESULTS:
@@ -247,8 +245,8 @@ DELETE FROM Groups WHERE group_no = 'M32381';
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-ALTER TABLE Groups
-      ADD CONSTRAINT group_id_unique unique (group_id);
+alter table Groups
+    add constraint group_id_unique unique (group_id);
 #+end_src
 
 #+RESULTS:
@@ -288,7 +286,7 @@ VALUES
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-UPDATE Students SET group_id = 5 WHERE student_id = 1;
+update Students set group_id = 5 where student_id = 1;
 #+end_src
 
 #+RESULTS:
@@ -301,7 +299,7 @@ UPDATE Students SET group_id = 5 WHERE student_id = 1;
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-UPDATE Students SET group_id = 1 WHERE student_id = 1;
+update Students set group_id = 1 where student_id = 1;
 #+end_src
 
 #+RESULTS:
@@ -341,6 +339,9 @@ DETAIL:  Key (group_id)=(5) is not present in table "groups".
 UPDATE Students SET group_id = 5 WHERE student_id = 1;
 #+end_src
 
+#+RESULTS:
+|---|
+
 * Проверка русского языка
 #+header: :engine postgres
 #+header: :database ctd
@@ -362,23 +363,24 @@ SELECT name, group_no FROM Students NATURAL JOIN Groups;
 #+end_src
 
 #+RESULTS:
-| name         | group_no |
-|--------------+----------|
-| Ilona Bozhe  | M34391   |
-| Ivan Uss     | M34371   |
-| Alex Slastin | M34391   |
+| name            | group_no |
+|-----------------+----------|
+| Anna Suris      | M34371   |
+| Artem Koton     | M34391   |
+| Maksim Alzhanov | M34371   |
 
 
 * Тест
+
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 INSERT INTO Students (student_id, name, group_id)
 VALUES
-	(4, 'Михайлов Максим Николаевич', 1),
-	(5, 'Назаров Георгий Дмитриевич', 1),
-	(6, 'Самсикова Мария Денисовна', 1),
-	(7, 'Стрельников Илья Денисович', 1);
+	(4, 'Кучма Андрей Андреевич', 2),
+	(5, 'Шехунов Максим Александрович', 2),
+	(6, 'Дзестелов Хетаг Артурович', 2),
+	(7, 'Жогова Мария Сергеевна', 2);
 #+end_src
 
 #+RESULTS:
@@ -395,7 +397,7 @@ select count(*) from Groups;
 #+RESULTS:
 | count |
 |-------|
-|     3 |
+|     2 |
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -414,7 +416,7 @@ select count(*) from Students;
 #+begin_src sql
 select count(*)
 from Students
-where group_id in (select group_id from Groups where group_no = 'M34371');
+where group_id in (select group_id from Groups where group_no = 'M34391');
 #+end_src
 
 #+RESULTS:
@@ -427,13 +429,13 @@ where group_id in (select group_id from Groups where group_no = 'M34371');
 #+begin_src sql
 select count(*)
 from Students natural join Groups
-where name like '%ов%' or group_no like '%9%';
+where name like '%зе%' or group_no like '%7%';
 #+end_src
 
 #+RESULTS:
 | count |
 |-------|
-|     6 |
+|     3 |
 
 
 #+header: :engine postgres
@@ -441,7 +443,7 @@ where name like '%ов%' or group_no like '%9%';
 #+begin_src sql
 select count(*)
 from Students natural join Groups
-where name like '%n' and group_no like '%9%';
+where name like '%v' and group_no like '%7%';
 #+end_src
 
 #+RESULTS:
@@ -470,8 +472,8 @@ DELETE FROM Students;
 #+end_src
 
 #+RESULTS:
-| DELETE 11 |
-|-----------|
+| DELETE 7 |
+|----------|
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -480,32 +482,34 @@ DELETE FROM Groups;
 #+end_src
 
 #+RESULTS:
-| DELETE 4 |
+| DELETE 2 |
 |----------|
 
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
-INSERT INTO Groups (group_id, group_no)
-VALUES
-	(1, 'M34341'),
-	(2, 'M34351'),
-	(3, 'M34361'),
-	(4, 'M34371');
+  INSERT INTO Groups (group_id, group_no)
+  VALUES
+          (1, 'M34361'),
+          (2, 'M34371'),
+          (3, 'M34381'),
+          (4, 'M34391');
 
-INSERT INTO Students (student_id, name, group_id)
-VALUES
-	(1, 'Student 1', 1),
-	(2, 'Student 2', 2),
-	(3, 'Student 3', 2),
-	(4, 'Student 4', 3),
-	(5, 'Student 5', 3),
-	(6, 'Student 6', 3),
-	(7, 'Student 7', 3),
-	(8, 'Student 8', 4),
-	(9, 'Student 9', 4),
-	(10, 'Student 10', 4),
-	(11, 'Student 11', 4);
+  INSERT INTO Students (student_id, name, group_id)
+  VALUES
+          (1, 'Student 1', 1),
+
+          (2, 'Student 2', 2),
+          (3, 'Student 3', 2),
+          (4, 'Student 4', 2),
+          (5, 'Student 5', 2),
+
+          (6, 'Student 6', 3),
+          (7, 'Student 7', 3),
+          (8, 'Student 8', 3),
+
+          (9, 'Student 9', 4),
+          (10, 'Student 10', 4),
 #+end_src
 
 #+RESULTS:
