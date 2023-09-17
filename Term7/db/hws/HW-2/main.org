@@ -1,104 +1,134 @@
 #+title: HW 2
 
-Каждй студент обязательно состоит ровно в одной группе. Группа
-целоиком записана на определенные предметы у определенного набора
-преподавателей (лектор, практики). Преподаватели могу преподавать один
-или больше предметов. Преподаватель может ставить оценки ученикам
-(сколько угодно). Преподаватель может быть еще и студентом. Группы не пустые.
+Каждый студент обязательно состоит ровно в одной группе. Группа
+целиком записана на определенные предметы у определенного набора
+преподавателей (лектор, практики). Группа имеет уникальное
+название. Преподаватели могу преподавать один или больше
+предметов. Преподаватель может ставить оценки ученикам (сколько
+угодно). Преподаватель может быть еще и студентом. Группы не пустые.
 
+* Модель сущность связь
+** Нотация
+Ограничения с нотацией по Мерису. Атрибуты по умолчанию обязательны, связи по умолчанию одиночные не обязательные
+** Сущности и атрибуты
+Subject - дисциплина. Name - уникальное название дисциплины. 
+Group - учебная группа. Name - уникальный номер группы. 
+Person - Человек (преподаватель либо студент). Name - ФИО. 
+Teacher - Преподаватель (определенный человек). Role - Преподавательская роль (лектор, практик, ...)
+Mark - оценка. Выставлена определенным преподвателем ровно одному студенту
+** Связи и ассоциации
+ActiveSubject - Читающаяся определенная дисциплина. Может проводиться одним или более преподавателями у одной или более груп. 
+По читающимся дисциплинам могут выставляться отметки. Оценка выставлятся по определенному предмету, определенным преподавателем в определнной группе определенному студенту.
+Предмет может не читаться, преподаватели могу не вести никакой предмет, группа может быть не записана ни на один предмет.
+Учебная группа включает как минимум одного студента
+Человек может состоять опционально в группе (студент) и может опционально быть преподавателем
+* Физическая модель
+** Нотация
+Столбцы по умолчанию обязательны
+** Домены
+name → varchar(50)
+mark -> int
+role -> varchar(50)
+id -> int
+** Преобразования
+Связь Person - Group преобразуется в join-таблицу и столбец PersonGroupId в Group, который гарантирует непустосту группы.
+Ассоциация ActiveSubject сначала преобразуется в слабую сущность с идентифицируещими одинарными связями к Subject, Teacher и Group, связь с Mark становиться связью один (строго один) к многим (ноль и больше). В соответсвующую таблицу добавляются идентифицирующие поля.
+Mark имеет связь с ActiveSubject и Person - добавляются соответсвующие внешние ключи.
 * SQL
 #+header: :engine postgres
 #+begin_src sql
-CREATE DATABASE hw2;
+  CREATE DATABASE hw2;
 #+end_src
 
 #+RESULTS:
 | CREATE DATABASE |
 |-----------------|
-
+** DDL
 #+header: :engine postgres
 #+header: :database hw2
 #+begin_src sql
-DROP TABLE IF EXISTS Subjects CASCADE;
-DROP TABLE IF EXISTS Marks CASCADE;
-DROP TABLE IF EXISTS Persons CASCADE;
-DROP TABLE IF EXISTS PersonGroups CASCADE;
-DROP TABLE IF EXISTS Groups CASCADE;
-DROP TABLE IF EXISTS Teachers CASCADE;
-DROP TABLE IF EXISTS ActiveSubjects CASCADE;
+  DROP TABLE IF EXISTS Subjects CASCADE;
+  DROP TABLE IF EXISTS Marks CASCADE;
+  DROP TABLE IF EXISTS Persons CASCADE;
+  DROP TABLE IF EXISTS PersonGroups CASCADE;
+  DROP TABLE IF EXISTS Groups CASCADE;
+  DROP TABLE IF EXISTS Teachers CASCADE;
+  DROP TABLE IF EXISTS ActiveSubjects CASCADE;
 
-CREATE TABLE Persons (
-       Id SERIAL not null,
-       Name varchar(50) not null,
-       PRIMARY KEY (Id)
-);
+  CREATE TABLE Persons (
+         Id int GENERATED ALWAYS AS IDENTITY,
+         Name varchar(50) not null,
+         PRIMARY KEY (Id)
+  );
 
-CREATE TABLE Subjects (
-       Id int GENERATED ALWAYS AS IDENTITY,
-       Name varchar(50) not null,
-       PRIMARY KEY (Id)
-);
+  CREATE TABLE Subjects (
+         Name varchar(50) not null,
+         PRIMARY KEY (Name)
+  );
 
-CREATE TABLE Groups (
-       Id SERIAL not null,
-       Name varchar(50) not null,
-       PersonGroupId int not null,
-       PRIMARY KEY (Id)
-);
+  CREATE TABLE Groups (
+         Name varchar(50) not null,
+         PersonGroupId int not null,
+         PRIMARY KEY (Name)
+  );
 
-CREATE TABLE Teachers (
-       Role varchar(50) not null,
-       PersonId int not null,
-       PRIMARY KEY (Role, PersonId),
-       FOREIGN KEY (PersonId)
-       REFERENCES Persons(Id)
-);
+  CREATE TABLE Teachers (
+         Role varchar(50) not null,
+         PersonId int not null,
+         PRIMARY KEY (Role, PersonId),
+         FOREIGN KEY (PersonId)
+         REFERENCES Persons(Id)
+  );
 
-CREATE TABLE ActiveSubjects (
-       SubjectId int not null,
-       TeacherId int not null,
-       TeacherRole varchar(50) not null,
-       GroupId int not null,
-       PRIMARY KEY (SubjectId, TeacherId, TeacherRole, GroupId),
-       FOREIGN KEY (SubjectId)
-       REFERENCES Subjects(Id),
-       FOREIGN KEY (GroupId)
-       REFERENCES Groups(Id),
-       FOREIGN KEY (TeacherId, TeacherRole)
-       REFERENCES Teachers(PersonId, Role)
-);
+  CREATE TABLE ActiveSubjects (
+         SubjectName varchar(50) not null,
+         TeacherId int not null,
+         TeacherRole varchar(50) not null,
+         GroupName varchar(50) not null,
+         PRIMARY KEY (SubjectName, TeacherId, TeacherRole, GroupName),
+         FOREIGN KEY (SubjectName)
+         REFERENCES Subjects(Name),
+         FOREIGN KEY (GroupName)
+         REFERENCES Groups(Name),
+         FOREIGN KEY (TeacherId, TeacherRole)
+         REFERENCES Teachers(PersonId, Role)
+  );
 
 
-CREATE TABLE Marks (
-       Id SERIAL not null,
-       Mark int not null,
-       TeacherId int not null,
-       TeacherRole varchar(50) not null,
-       SubjectId int not null,
-       GroupId int not null,
-       StudentId int not null,
-       PRIMARY KEY (Id),
-       FOREIGN KEY (StudentId)
-       REFERENCES Persons(Id),
-       FOREIGN KEY (TeacherId, TeacherRole, SubjectId, GroupId)
-       REFERENCES ActiveSubjects(TeacherId, TeacherRole, SubjectId, GroupId)
-);
+  CREATE TABLE Marks (
+         Id int GENERATED ALWAYS AS IDENTITY,
+         Mark int not null,
+         TeacherId int not null,
+         TeacherRole varchar(50) not null,
+         SubjectName varchar(50) not null,
+         GroupName varchar(50) not null,
+         StudentId int not null,
+         PRIMARY KEY (Id),
+         FOREIGN KEY (StudentId)
+         REFERENCES Persons(Id),
+         FOREIGN KEY (TeacherId, TeacherRole, SubjectName, GroupName)
+         REFERENCES ActiveSubjects(TeacherId, TeacherRole, SubjectName, GroupName)
+  );
 
-CREATE TABLE PersonGroups (
-       GroupId int not null,
-       PersonId int not null,
-       PRIMARY KEY (PersonId),
-       UNIQUE (GroupId, PersonId),
-       FOREIGN KEY (PersonId)
-       REFERENCES Persons(Id),
-       FOREIGN KEY (GroupId)
-       REFERENCES Groups(Id)
-);
+  CREATE TABLE PersonGroups (
+         GroupName varchar(50) not null,
+         PersonId int not null,
+         PRIMARY KEY (PersonId),
+         FOREIGN KEY (PersonId)
+         REFERENCES Persons(Id)
+  );
 
-ALTER TABLE Groups
-      ADD CONSTRAINT fk_person_group_id
-      	  FOREIGN KEY (Id, PersonGroupId)
-	  REFERENCES PersonGroups(GroupId, PersonId);
+  ALTER TABLE Groups
+        ADD CONSTRAINT fk_person_group_id
+            FOREIGN KEY (PersonGroupId)
+            REFERENCES PersonGroups(PersonId)
+        DEFERRABLE INITIALLY IMMEDIATE;
+
+  ALTER TABLE PersonGroups
+        ADD CONSTRAINT fk_group_name
+            FOREIGN KEY (GroupName)
+            REFERENCES Groups(Name)
+        DEFERRABLE INITIALLY IMMEDIATE;
 #+end_src
 
 #+RESULTS:
@@ -118,6 +148,9 @@ ALTER TABLE Groups
 | CREATE TABLE |
 | CREATE TABLE |
 | ALTER TABLE  |
+| ALTER TABLE  |
+
+** DML
 
 #+header: :engine postgres
 #+header: :database hw2
@@ -141,21 +174,21 @@ INSERT INTO Persons (Name) VALUES
 #+header: :engine postgres
 #+header: :database hw2
 #+begin_src sql
-SELECT (Id, Name) FROM Persons;
+SELECT Name FROM Persons;
 #+end_src
 
 #+RESULTS:
-| row                         |
-|-----------------------------|
-| (1,"Иванов Иван")           |
-| (2,"Петров Петр")           |
-| (3,"Казимиров Казимир")     |
-| (4,"Игнатьев Игнат")        |
-| (5,"Тимуров Тимур")         |
-| (6,"Станиславов Станислав") |
-| (7,"Корнеев Георгий")       |
-| (8,"Кохась Константин")     |
-| (9,"Маврин Павел")          |
+| name                  |
+|-----------------------|
+| Иванов Иван           |
+| Петров Петр           |
+| Казимиров Казимир     |
+| Игнатьев Игнат        |
+| Тимуров Тимур         |
+| Станиславов Станислав |
+| Корнеев Георгий       |
+| Кохась Константин     |
+| Маврин Павел          |
 
 
 #+header: :engine postgres
@@ -175,122 +208,334 @@ INSERT INTO Subjects (Name) VALUES
 #+header: :engine postgres
 #+header: :database hw2
 #+begin_src sql
-SELECT (Id, NAME) FROM Subjects;
+SELECT (Name) FROM Subjects;
 #+end_src
 
 #+RESULTS:
-| row               |
-|-------------------|
-| (1,Матанализ)     |
-| (2,"Базы Данных") |
-| (3,АиСД)          |
-
-#+header: :engine postgres
-#+header: :database hw2
-#+begin_src sql
-WITH new_groups AS (
-     INSERT INTO Groups (Id, Name, PersonGroupId) VALUES
-     	    (1, 'M3139', 1),
-	    (2, 'M34371', 2),
-	    (3, 'M3234', 3)
-)
-INSERT INTO PersonGroups (GroupId, PersonId) VALUES
-       (1, 1),
-       (1, 4),
-       (2, 2),
-       (2, 5),
-       (3, 3),
-       (3, 6);
-#+end_src
-
-
-#+RESULTS:
-| INSERT 0 6 |
-|------------|
-
-#+header: :engine postgres
-#+header: :database hw2
-#+begin_src sql
-SELECT (Id, NAME, PersonGroupId) FROM Groups;
-#+end_src
-
-#+RESULTS:
-| row          |
-|--------------|
-| (1,M3139,1)  |
-| (2,M34371,2) |
-| (3,M3234,3)  |
-
-#+header: :engine postgres
-#+header: :database hw2
-#+begin_src sql
-SELECT (GroupId, PersonId) FROM PersonGroups;
-#+end_src
-
-#+RESULTS:
-| row   |
-|-------|
-| (1,1) |
-| (1,4) |
-| (2,2) |
-| (2,5) |
-| (3,3) |
-| (3,6) |
-
-
-
-#+header: :engine postgres
-#+header: :database hw2
-#+begin_src sql
-INSERT INTO Teachers (Role, PersonId) VALUES
-       ('Лектор', 1),
-       ('Лектор', 2),
-       ('Лектор', 3),
-       ('Практик', 3);
-#+end_src
-
-#+RESULTS:
-| INSERT 0 4 |
-|------------|
-
-#+header: :engine postgres
-#+header: :database hw2
-#+begin_src sql
-SELECT (Role, PersonId) FROM Teachers;
-#+end_src
-
-#+RESULTS:
-| row         |
+| name        |
 |-------------|
-| (Лектор,1)  |
-| (Лектор,2)  |
-| (Лектор,3)  |
-| (Практик,3) |
+| Матанализ   |
+| Базы Данных |
+| АиСД        |
 
 #+header: :engine postgres
 #+header: :database hw2
 #+begin_src sql
-INSERT INTO ActiveSubjects (SubjectId, TeacherId, TeacherRole, GroupId) VALUES
-       (1, 2, 'Лектор', 3),
-       (2, 1, 'Лектор', 2),
-       (3, 3, 'Лектор', 1),
-       (3, 3, 'Практик', 1);
+  BEGIN TRANSACTION;
+  SET CONSTRAINTS ALL DEFERRED;
+
+  INSERT INTO Groups(Name, PersonGroupId)
+  SELECT 'M3139', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Иванов Иван';
+
+  INSERT INTO PersonGroups(GroupName, PersonId)
+  SELECT 'M3139', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Иванов Иван';
+
+  INSERT INTO PersonGroups(GroupName, PersonId)
+  SELECT 'M3139', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Игнатьев Игнат';
+
+  INSERT INTO Groups(Name, PersonGroupId)
+  SELECT 'M34371', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Петров Петр';
+
+  INSERT INTO PersonGroups(GroupName, PersonId)
+  SELECT 'M34371', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Петров Петр';
+
+  INSERT INTO PersonGroups(GroupName, PersonId)
+  SELECT 'M34371', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Тимуров Тимур';
+
+  INSERT INTO Groups(Name, PersonGroupId)
+  SELECT 'M3234', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Казимиров Казимир';
+
+  INSERT INTO PersonGroups(GroupName, PersonId)
+  SELECT 'M3234', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Казимиров Казимир';
+
+  INSERT INTO PersonGroups(GroupName, PersonId)
+  SELECT 'M3234', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Станиславов Станислав';
+
+  COMMIT;
 #+end_src
 
+
 #+RESULTS:
-| INSERT 0 4 |
-|------------|
+| BEGIN           |
+|-----------------|
+| SET CONSTRAINTS |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| INSERT 0 1      |
+| COMMIT          |
 
 #+header: :engine postgres
 #+header: :database hw2
 #+begin_src sql
-INSERT INTO Marks (Mark, SubjectId, TeacherId, TeacherRole, GroupId, StudentId) VALUES
-       (50, 1, 2, 'Лектор', 3, 1),
-       (-1, 2, 1, 'Лектор', 2, 2),
-       (5 , 3, 3, 'Лектор', 1, 3),
-       (2 , 3, 3, 'Практик', 1, 3);
+SELECT Name FROM Groups;
 #+end_src
 
 #+RESULTS:
-| INSERT 0 4 |
+| name   |
+|--------|
+| M3139  |
+| M34371 |
+| M3234  |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  SELECT GroupName, Persons.Name AS StudentName FROM PersonGroups
+  JOIN Persons ON Persons.Id = PersonId;
+#+end_src
+
+#+RESULTS:
+| groupname | studentname           |
+|-----------+-----------------------|
+| M3139     | Иванов Иван           |
+| M3139     | Игнатьев Игнат        |
+| M34371    | Петров Петр           |
+| M34371    | Тимуров Тимур         |
+| M3234     | Казимиров Казимир     |
+| M3234     | Станиславов Станислав |
+
+
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  INSERT INTO Teachers(Role, PersonId)
+  SELECT 'Лектор', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Корнеев Георгий';
+
+  INSERT INTO Teachers(Role, PersonId)
+  SELECT 'Лектор', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Кохась Константин';
+
+  INSERT INTO Teachers(Role, PersonId)
+  SELECT 'Лектор', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Маврин Павел';
+
+  INSERT INTO Teachers(Role, PersonId)
+  SELECT 'Практик', Persons.Id
+  FROM Persons
+  WHERE Persons.Name = 'Маврин Павел';
+#+end_src
+
+#+RESULTS:
+| INSERT 0 1 |
 |------------|
+| INSERT 0 1 |
+| INSERT 0 1 |
+| INSERT 0 1 |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  SELECT Role, Persons.Name AS TeacherName FROM Teachers
+  JOIN Persons ON Persons.Id = Teachers.PersonId;
+#+end_src
+
+#+RESULTS:
+| role    | teachername       |
+|---------+-------------------|
+| Лектор  | Корнеев Георгий   |
+| Лектор  | Кохась Константин |
+| Лектор  | Маврин Павел      |
+| Практик | Маврин Павел      |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  INSERT INTO ActiveSubjects(SubjectName, GroupName, TeacherId, TeacherRole)
+  SELECT 'Матанализ', 'M3139', Teachers.PersonId, Teachers.Role
+  FROM Teachers
+       JOIN Persons ON Teachers.PersonId = Persons.Id
+  WHERE Persons.Name = 'Кохась Константин'
+        AND Teachers.Role = 'Лектор';
+
+  INSERT INTO ActiveSubjects(SubjectName, GroupName, TeacherId, TeacherRole)
+  SELECT 'Базы Данных', 'M34371', Teachers.PersonId, Teachers.Role
+  FROM Teachers
+       JOIN Persons ON Teachers.PersonId = Persons.Id
+  WHERE Persons.Name = 'Корнеев Георгий'
+        AND Teachers.Role = 'Лектор';
+
+  INSERT INTO ActiveSubjects(SubjectName, GroupName, TeacherId, TeacherRole)
+  SELECT 'АиСД', 'M3234', Teachers.PersonId, Teachers.Role
+  FROM Teachers
+       JOIN Persons ON Teachers.PersonId = Persons.Id
+  WHERE Persons.Name = 'Маврин Павел'
+        AND Teachers.Role = 'Лектор';
+
+  INSERT INTO ActiveSubjects(SubjectName, GroupName, TeacherId, TeacherRole)
+  SELECT 'АиСД', 'M3234', Teachers.PersonId, Teachers.Role
+  FROM Teachers
+       JOIN Persons ON Teachers.PersonId = Persons.Id
+  WHERE Persons.Name = 'Маврин Павел'
+        AND Teachers.Role = 'Практик';
+#+end_src
+
+#+RESULTS:
+| INSERT 0 1 |
+|------------|
+| INSERT 0 1 |
+| INSERT 0 1 |
+| INSERT 0 1 |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  SELECT TeacherRole, SubjectName, GroupName, Teachers.Name AS TeacherName FROM ActiveSubjects
+  JOIN Persons AS Teachers ON TeacherId = Teachers.Id;
+#+end_src
+
+#+RESULTS:
+| teacherrole | subjectname | groupname | teachername       |
+|-------------+-------------+-----------+-------------------|
+| Лектор      | Матанализ   | M3139     | Кохась Константин |
+| Лектор      | Базы Данных | M34371    | Корнеев Георгий   |
+| Лектор      | АиСД        | M3234     | Маврин Павел      |
+| Практик     | АиСД        | M3234     | Маврин Павел      |
+
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  INSERT INTO Marks(Mark, SubjectName, TeacherId, TeacherRole, GroupName, StudentId)
+  SELECT 10, SubjectName, TeacherId, TeacherRole, GroupName, StudentId
+  FROM (
+       SELECT
+          SubjectName,
+          TeacherId,
+          TeacherRole,
+          ActiveSubjects.GroupName AS GroupName,
+          Students.Id AS StudentId
+       FROM ActiveSubjects
+            JOIN Persons AS Teachers
+              ON ActiveSubjects.TeacherId = Teachers.Id
+            JOIN PersonGroups
+              ON ActiveSubjects.GroupName = PersonGroups.GroupName
+            JOIN Persons AS Students
+              ON PersonGroups.PersonId = Students.Id
+       WHERE SubjectName = 'Матанализ'
+             AND Teachers.Name = 'Кохась Константин'
+             AND ActiveSubjects.TeacherRole = 'Лектор'
+             AND ActiveSubjects.GroupName = 'M3139'
+             AND Students.Name = 'Иванов Иван'
+       ) subjects_and_person;
+
+  INSERT INTO Marks(Mark, SubjectName, TeacherId, TeacherRole, GroupName, StudentId)
+  SELECT -1, SubjectName, TeacherId, TeacherRole, GroupName, StudentId
+  FROM (
+       SELECT
+          SubjectName,
+          TeacherId,
+          TeacherRole,
+          ActiveSubjects.GroupName AS GroupName,
+          Students.Id AS StudentId
+       FROM ActiveSubjects
+            JOIN Persons AS Teachers
+              ON ActiveSubjects.TeacherId = Teachers.Id
+            JOIN PersonGroups
+              ON ActiveSubjects.GroupName = PersonGroups.GroupName
+            JOIN Persons AS Students
+              ON PersonGroups.PersonId = Students.Id
+       WHERE SubjectName = 'Базы Данных'
+             AND Teachers.Name = 'Корнеев Георгий'
+             AND ActiveSubjects.TeacherRole = 'Лектор'
+             AND ActiveSubjects.GroupName = 'M34371'
+             AND Students.Name = 'Петров Петр'
+       ) subjects_and_person;
+
+  INSERT INTO Marks(Mark, SubjectName, TeacherId, TeacherRole, GroupName, StudentId)
+  SELECT 5, SubjectName, TeacherId, TeacherRole, GroupName, StudentId
+  FROM (
+       SELECT
+          SubjectName,
+          TeacherId,
+          TeacherRole,
+          ActiveSubjects.GroupName AS GroupName,
+          Students.Id AS StudentId
+       FROM ActiveSubjects
+            JOIN Persons AS Teachers
+              ON ActiveSubjects.TeacherId = Teachers.Id
+            JOIN PersonGroups
+              ON ActiveSubjects.GroupName = PersonGroups.GroupName
+            JOIN Persons AS Students
+              ON PersonGroups.PersonId = Students.Id
+       WHERE SubjectName = 'АиСД'
+             AND Teachers.Name = 'Маврин Павел'
+             AND ActiveSubjects.TeacherRole = 'Лектор'
+             AND ActiveSubjects.GroupName = 'M3234'
+             AND Students.Name = 'Казимиров Казимир'
+       ) subjects_and_person;
+
+  INSERT INTO Marks(Mark, SubjectName, TeacherId, TeacherRole, GroupName, StudentId)
+  SELECT 2, SubjectName, TeacherId, TeacherRole, GroupName, StudentId
+  FROM (
+       SELECT
+          SubjectName,
+          TeacherId,
+          TeacherRole,
+          ActiveSubjects.GroupName AS GroupName,
+          Students.Id AS StudentId
+       FROM ActiveSubjects
+            JOIN Persons AS Teachers
+              ON ActiveSubjects.TeacherId = Teachers.Id
+            JOIN PersonGroups
+              ON ActiveSubjects.GroupName = PersonGroups.GroupName
+            JOIN Persons AS Students
+              ON PersonGroups.PersonId = Students.Id
+       WHERE SubjectName = 'АиСД'
+             AND Teachers.Name = 'Маврин Павел'
+             AND ActiveSubjects.TeacherRole = 'Практик'
+             AND ActiveSubjects.GroupName = 'M3234'
+             AND Students.Name = 'Казимиров Казимир'
+       ) subjects_and_person;
+#+end_src
+
+#+RESULTS:
+| INSERT 0 1 |
+|------------|
+| INSERT 0 1 |
+| INSERT 0 1 |
+| INSERT 0 1 |
+
+#+header: :engine postgres
+#+header: :database hw2
+#+begin_src sql
+  SELECT Mark, TeacherRole, SubjectName, GroupName, Students.Name AS StudentName, Teachers.Name AS TeacherName FROM Marks
+  JOIN Persons AS Students ON StudentId = Students.Id
+  JOIN Persons AS Teachers ON TeacherId = Teachers.Id;
+#+end_src
+
+#+RESULTS:
+| mark | teacherrole | subjectname | groupname | studentname       | teachername       |
+|------+-------------+-------------+-----------+-------------------+-------------------|
+|   10 | Лектор      | Матанализ   | M3139     | Иванов Иван       | Кохась Константин |
+|   -1 | Лектор      | Базы Данных | M34371    | Петров Петр       | Корнеев Георгий   |
+|    5 | Лектор      | АиСД        | M3234     | Казимиров Казимир | Маврин Павел      |
+|    2 | Практик     | АиСД        | M3234     | Казимиров Казимир | Маврин Павел      |
