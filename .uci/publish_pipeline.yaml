@@ -46,6 +46,11 @@ jobs:
         '/publish/input': ${project.repos.conspects.path}
         '/publish/config': ${project.repos.main.path}/org-publish/config
         '/publish/output': ${project.data_path}/gen-conspects
+      env:
+        "CONSPECTS_BASE_URL": "https://conspects.iliay.ar"
+        "CONSPECTS_RES_BASE_URL": "https://iliay.ar"
+        "CONSPECTS_HOSTNAME": "conspects.iliay.ar"
+        "CONSPECTS_MATOMO_HOST": "matomo.iliay.ar"
       script: |
         set -e
 
