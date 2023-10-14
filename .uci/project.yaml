@@ -1,5 +1,5 @@
 bind:
-  enabled: false
+  enabled: true
   zones:
     'ilyay.space':
       cnames:
