@@ -68,6 +68,6 @@ integrations:
     token: ${project.secrets.github_token}
     repo: 'iliayar/ITMO'
     rev: ${project.repos.conspects.rev}
-    ui_url: 'https://uci.ilyay.space'
+    ui_url: 'https://uci.iliay.ar'
     jobs_to_report:
       - publish
