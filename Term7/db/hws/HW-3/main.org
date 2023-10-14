@@ -9,13 +9,14 @@ StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, Le
 -- У студента есть имя и он обучается в определенной группе, при чем могут быть студенты с одинаковыми именами
 StudentId -> StudentName
 StudentId -> GroupId
--- У группы есть название, при чем название может повторяться в разных университетах
+-- У группы есть название, при чем название уникально в пределах университета
 GroupId -> GroupName
--- У курса есть название, при чем названия в разных университетах могут повторяться
+GroupName -> GroupId
+-- У курса есть название, при чем названия курсов могут совпадать в разных программах
 CourseId -> CourseName
 -- У лектора есть имя
 LecturerId -> LecturerName
--- Студент может иметь оценка по итогам какого-либо курса, при чем эту оценку выставил лектор этого курса
+-- Студент может иметь оценку по итогам какого-либо курса, при чем эту оценку выставил лектор этого курса
 StudentId, CourseId -> Mark, LecturerId
 -- Курс у группы читает определенный лектор, при чем у разныз групп один и тот же курс могут читать разные лекторы
 -- Так же лектор может читать больше одного курса
@@ -24,12 +25,17 @@ GroupId, CourseId -> LecturerId
 
 * 2
 
-Возьмем надключ из всех аттрибутов. Mark стоит в правой части только в
-одной ФЗ, в которой слева находится StudentId, CourseId. При чем
-StudentId и CourseId не находятся в правой части ни в одной
-ФЗ. Следовательно любой ключ будет содержать StudentId и
-CourseId. Проверим что {StudentId, CourseId} --- надключ, получим что
-он также и ключ:
+Возьмем надключ из всех аттрибутов.
+Заметим что StudentId не встерчается в правых частях ФЗ, поэтому ключ обязательно будет содержать StudentId.
+Для любого множества аттрибутов без StudentId -- это множество не надключ и следовательно не ключ
+
+Аналогичное утверждение верно для CourseId.
+
+Следовательно не будет рассматривать множества аттрибутов не содержащих StudentId, CourseId в качестве ключей
+
+Если множество аттрибутов {StudentId, CourseId} -- надключ, то оно так же и ключ, т.к. любой другой надключ будет содержать в себe это множество и следовательно оно минимально по включению.
+
+Проверим что {StudentId, CourseId} -- надключ:
 {StudentId, CourseId}* = {StudentId, CourseId, StudentName, GroupId, GroupName, CourseName, Mark, LecturerId, LecturerName}
 
 #+begin_src 
@@ -74,6 +80,7 @@ StudentId, LecturerId, StudentName, GroupId, GroupName, LecturerName
 StudentId -> StudentName
 StudentId -> GroupId
 GroupId -> GroupName
+GroupName -> GroupId
 CourseId -> CourseName
 LecturerId -> LecturerName
 StudentId, CourseId -> Mark
@@ -82,17 +89,31 @@ GroupId, CourseId -> LecturerId
 #+end_src
 ** 2
 #+begin_src 
-Есть 3 правила с больше чем 2 аттрибутами, построим замыкания этих аттрибутов:
-StudentId* = StudentId, StudentName, GroupId, GroupName
-CourseId = CourseId, CourseName
-GroupId = GroupId, GroupName
-Не можем применить правило удаление аттрибута ни в одной ФЗ
+Рассмотрим ФЗ в которых потенциально можем удалить аттрибут. Рассмотрим замыкания подмножеств множеств аттрибутов левых частей 
+
+1. StudentId, CourseId -> Mark 
+   {StudentId}* = StudentId, StudentName, GroupId, GroupName
+   {CourseId}* = CourseId, CourseName
+   Mark не встречается в замыканиях, следовательно не можем убрать ни один аттрибут из левой части
+
+2. StudentId, CourseId -> LecturerId
+   {CourseId}* = CourseId, CourseName
+   {StudentId}* = StudentId, StudentName, GroupId, GroupName
+   LecturerId не встречается в замыканиях, следовательно не можем убрать ни один аттрибут из левой части
+
+3. GroupId, CourseId -> LecturerId
+   {GroupId}* = GroupId, GroupName
+   {CourseId}* = CourseId, CourseName
+   LecturerId не встречается в замыканиях, следовательно не можем убрать ни один аттрибут из левой части
+
+Остальные правило содержат по одному аттрибуту в левой части, не может удалить оттуда ни один аттрибут
 #+end_src
 
 #+begin_src 
 StudentId -> StudentName
 StudentId -> GroupId
 GroupId -> GroupName
+GroupName -> GroupId
 CourseId -> CourseName
 LecturerId -> LecturerName
 StudentId, CourseId -> Mark
@@ -100,22 +121,41 @@ StudentId, CourseId -> LecturerId
 GroupId, CourseId -> LecturerId
 #+end_src
 ** 3
-#+begin_src 
+#+begin_src
 Построим замыкания аттрибутов левых частей каждой ФЗ, без этой ФЗ:
-StudentId* = StudentId, GroupId, GroupName -- не можем выкинуть
-StudentId* = StudentId, StudentName -- не можем выкинуть
-GroupId* = GroupId -- не можем выкинуть
-CourseId* = CourseId -- не можем выкинуть
-LecturerId* = LecturerId -- не можем выкинуть
-{StudentId, CourseId}* = StudentId, CourseId, StudentName, GroupId, GroupName, LecturerId, LecturerName, CourseName -- не можем выкинуть
-{StudentId, CourseId}* = StudentId, CourseId, StudentName, GroupId, GroupName, CourseId, Mark, CourseName, LecturerId -- LecturerId входит в замыкание, выкидываем
-{GroupId, CourseId}* = GroupId, CourseId, GroupName, CourseName -- не можем выкинуть
+1. StudentId -> StudentName
+   {StudentId}* = StudentId, GroupId, GroupName
+   Не можем выкинуть, замыкание не содержит StudentName
+2. StudentId -> GroupId
+   {StudentId}* = StudentId, StudentName
+   Не можем выкинуть, замыкание не содержит GroupId
+3. GroupId -> GroupName
+   {GroupId}* = GroupId
+   Не можем выкинуть, замыкание не содержит GroupName
+4. GroupName -> GroupId
+   {GroupName}* = GroupName
+   Не можем выкинуть, замыкание не содержит GroupId
+5. CourseId -> CourseName
+   {CourseId}* = CourseId
+   Не можем выкинуть, замыкание не содержит CourseName
+6. LecturerId -> LecturerName
+   {LecturerId}* = LecturerId
+   Не можем выкинуть, замыкание не содержит LecturerName
+7. StudentId, CourseId -> Mark
+   {StudentId, CourseId}* = StudentId, CourseId, StudentName, GroupId, GroupName, LecturerId, LecturerName, CourseName
+   Не можем выкинуть, замыкание не содержит Mark
+8. StudentId, CourseId -> LecturerId
+   {StudentId, CourseId}* = StudentId, CourseId, StudentName, GroupId, GroupName, CourseId, Mark, CourseName, LecturerId
+   Можем выкинуть, LecturerId входит в замыкание
+9. GroupId, CourseId -> LecturerId
+   {GroupId, CourseId}* = GroupId, CourseId, GroupName, CourseName -- не можем выкинуть
 #+end_src
 
 #+begin_src 
 StudentId -> StudentName
 StudentId -> GroupId
 GroupId -> GroupName
+GroupName -> GroupId
 CourseId -> CourseName
 LecturerId -> LecturerName
 StudentId, CourseId -> Mark
