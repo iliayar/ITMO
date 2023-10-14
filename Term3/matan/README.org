@@ -1,5 +1,5 @@
 #+TITLE: Mathematical analysis
 #+SETUPFILE: ../../level-subj.org
 
-[[https://conspects.ilyay.space/Term3/matan/lectures/all_lectures.pdf][All lectures]] \\
-[[https://conspects.ilyay.space/Term3/matan/lectures/questions.pdf][Questions for exam]]
+[[https://conspects.iliay.ar/Term3/matan/lectures/all_lectures.pdf][All lectures]] \\
+[[https://conspects.iliay.ar/Term3/matan/lectures/questions.pdf][Questions for exam]]

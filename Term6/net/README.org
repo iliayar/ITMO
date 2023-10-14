@@ -2,4 +2,4 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://conspects.ilyay.space/Term6/net/Notes.html][Notes for exam]]
+[[https://conspects.iliay.ar/Term6/net/Notes.html][Notes for exam]]

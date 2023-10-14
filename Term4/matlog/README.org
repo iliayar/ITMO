@@ -1,28 +1,28 @@
 #+TITLE: Mathematical logic
 #+SETUPFILE: ../../level-subj.org
 * Lectures
-[[https://conspects.ilyay.space/Term4/matlog/lectures/all_lectures.pdf][All lectures]] \\
-[[https://conspects.ilyay.space/Term4/matlog/lectures/colloq1.pdf][First colloq]] \\
-[[https://conspects.ilyay.space/Term4/matlog/lectures/questions.pdf][Questions for zachet]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/1.pdf][Lecture 1]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/2.pdf][Lecture 2]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/3.pdf][Lecture 3]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/4.pdf][Lecture 4]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/5.pdf][Lecture 5]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/6.pdf][Lecture 6]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/7.pdf][Lecture 7]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/8.pdf][Lecture 8]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/9.pdf][Lecture 9]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/10.pdf][Lecture 10]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/11.pdf][Lecture 11]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/12.pdf][Lecture 12]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/13.pdf][Lecture 13]]
-- [[https://conspects.ilyay.space/Term4/matlog/lectures/14.pdf][Lecture 14]]
+[[https://conspects.iliay.ar/Term4/matlog/lectures/all_lectures.pdf][All lectures]] \\
+[[https://conspects.iliay.ar/Term4/matlog/lectures/colloq1.pdf][First colloq]] \\
+[[https://conspects.iliay.ar/Term4/matlog/lectures/questions.pdf][Questions for zachet]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/2.pdf][Lecture 2]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/3.pdf][Lecture 3]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/4.pdf][Lecture 4]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/5.pdf][Lecture 5]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/6.pdf][Lecture 6]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/7.pdf][Lecture 7]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/8.pdf][Lecture 8]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/9.pdf][Lecture 9]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/10.pdf][Lecture 10]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/11.pdf][Lecture 11]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/12.pdf][Lecture 12]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/13.pdf][Lecture 13]]
+- [[https://conspects.iliay.ar/Term4/matlog/lectures/14.pdf][Lecture 14]]
 * Homeworks
-- [[https://conspects.ilyay.space/Term4/matlog/hws/1.pdf][1.3.g]]
-- [[https://conspects.ilyay.space/Term4/matlog/hws/2.pdf][3.4.b]]
-- [[https://conspects.ilyay.space/Term4/matlog/hws/4.4.b.pdf][4.4.b]]
-- [[https://conspects.ilyay.space/Term4/matlog/hws/8.pdf][Some of 9]]
+- [[https://conspects.iliay.ar/Term4/matlog/hws/1.pdf][1.3.g]]
+- [[https://conspects.iliay.ar/Term4/matlog/hws/2.pdf][3.4.b]]
+- [[https://conspects.iliay.ar/Term4/matlog/hws/4.4.b.pdf][4.4.b]]
+- [[https://conspects.iliay.ar/Term4/matlog/hws/8.pdf][Some of 9]]
 * Labs
 [[file:labs/contest-mathlog-2021-ru.pdf][Statements]] \\
 [[file:labs/][Solutions]]
