@@ -5,14 +5,21 @@ bind:
       cnames:
         - 'conspects'
 
+    'iliay.ar':
+      cnames:
+        - 'conspects'
+
 caddy:
   hostnames:
     'conspects.ilyay.space': |
+      redir https://conspects.iliay.ar{uri}
+
+    'conspects.iliay.ar': |
       file_server
       root * ${project.data_path}/gen-conspects
   
       route / {
-          redir https://conspects.ilyay.space/README.html
+          redir https://conspects.iliay.ar/README.html
       }
   
       handle_errors {
