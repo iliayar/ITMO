@@ -5,23 +5,29 @@ StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, Le
 * 1
 ** 1
 Функциональные зависимости:
--- У студента есть имя и он обучается в определенной группе, при чем могут быть студенты с одинаковыми именами
-StudentId -> StudentName
-StudentId -> GroupId
--- У группы есть название
-GroupId -> GroupName
-GroupName -> GroupId
--- У курса есть название, при чем названия в разных университетах могут повторяться
-CourseId -> CourseName
--- У лектора есть имя
-LecturerId -> LecturerName
--- Студент может иметь оценку по итогам какого-либо курса, при чем эту оценку выставил лектор этого курса
-StudentId, CourseId -> Mark, LecturerId
--- Курс у группы читает определенный лектор, при чем у разныз групп один и тот же курс могут читать разные лекторы
--- Так же лектор может читать больше одного курса
-GroupId, CourseId -> LecturerId
+StudentId → StudentName, GroupId, GroupName;
+GroupId → GroupName;
+GroupName → GroupId;
+CourseId → CourseName;
+LecturerId → LecturerName;
+StudentId, CourseId → Mark;
+GroupId, CourseId → LecturerId, LecturerName.
 
-Из предыдущего ДЗ, у этого отношения единственный ключ: {StudentId, CourseId}.
+Из предыдущего ДЗ, у этого отношения единственный ключ: {StudentId, CourseId}:
+
+Возьмем надключ из всех аттрибутов.
+Заметим что StudentId не встерчается в правых частях ФЗ, поэтому ключ обязательно будет содержать StudentId.
+Для любого множества аттрибутов без StudentId -- это множество не надключ и следовательно не ключ
+
+Аналогичное утверждение верно для CourseId.
+
+Следовательно не будет рассматривать множества аттрибутов не содержащих StudentId, CourseId в качестве ключей
+
+Если множество аттрибутов {StudentId, CourseId} -- надключ, то оно так же и ключ, т.к. любой другой надключ будет содержать в себe это множество и следовательно оно минимально по включению.
+
+Проверим что {StudentId, CourseId} -- надключ:
+{StudentId, CourseId}* = {StudentId, CourseId, StudentName, GroupId, GroupName, CourseName, Mark, LecturerId, LecturerName}
+{StudentId, CourseId} -- ключ
 
 Критерии 1НФ:
 1. Повторяющихся групп аттрибутов нет
@@ -32,161 +38,387 @@ GroupId, CourseId -> LecturerId
 (StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark) => (StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark).
 #+end_src
 ** 2
+Ключ: {StudentId, CourseId}
 Найдем "мешающие" ФЗ:
 1. Для аттрибута StudentId
-StudentId -> StudentName
-StudentId -> GroupId
-StudentId -> GroupName
+  StudentId -> StudentName, GroupId, GroupName
 2. Для аттрибута CourseId
-CourseId -> CourseName
-GroupId, CourseId -> LecturerId
+  CourseId -> CourseName
 
-Заметим, что при разбиении по StudentId -> GroupId теряется ФЗ GroupId
--> GroupName, вместо StudentId -> GroupId, StudentId -> GroupName
-разобъем по: StudentId -> GroupId, GroupName
+Разобъем по ФЗ StudentId -> StudentName, GroupId, GroupName:
+- (StudentId, StudentName, GroupId, GroupName)
+- (StudentId, CourseId, CourseName, LecturerId, LecturerName, Mark)
 
-Теперь теряем ФЗ GroupId, CourseId -> LecturerId, поэтому декомпозиуем
-сначала по GroupId, CourseId -> LecturerId, LecturerName, добавив
-LecurerName чтобы не потерять ФЗ LecturerId -> LecturerName
+Распалась ФЗ GroupId, CourseId -> LecturerId, LecturerName. Попробуем вместо этого разбить по ней, добавив в парвую часть CourseName, т.к. нужно разбить по "мешающей" ФЗ CourseId -> CourseName.
+- (GroupId, CourseId, LecturerId, LecturerName, CourseName)
+- (StudentId, CourseId, StudentName, GroupId, GroupName, Mark)
 
-ФЗ StudentId, CourseId -> Mark, LecturerId не теряем, т.к. выводится из:
-StudentId -> GroupId
-GroupId, CourseId -> LecturerId
-StudentId, CourseId -> Mark
+Все ФЗ сохранились, теперь разобъем второе отношение по ФЗ StudentId -> StudentName, GroupId, GroupName:
+- (StudentId, StudentName, GroupId, GroupName)
+- (StudentId, CourseId, Mark)
 
-1. По GroupId, CourseId -> LecturerId, LecturerName
-   - (GroupId, CourseId, LecturerId, LecturerName)
-   - (StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, Mark)
-2. По StudentId -> GroupId, GroupName
-   - (GroupId, CourseId, LecturerId, LecturerName)
-   - (StudentId, GroupId, GroupName)
-   - (StudentId, StudentName, CourseId, CourseName, Mark)
-2. По StudentId -> StudentName
-   - (GroupId, CourseId, LecturerId, LecturerName)
-   - (StudentId, GroupId, GroupName)
-   - (StudentId, StudentName)
-   - (StudentId, CourseId, CourseName, Mark)
-3. По CourseId -> CourseName
-   - (GroupId, CourseId, LecturerId, LecturerName)
-   - (StudentId, GroupId, GroupName)
-   - (StudentId, StudentName)
-   - (CourseId, CourseName)
-   - (StudentId, CourseId, Mark)
+Рассмотри отношение (GroupId, CourseId, LecturerId, LecturerName, CourseName):
+Оно содержит ФЗ:
+- CourseId -> CourseName
+- GroupId, CourseId -> LecturerId, LecturerName
+- LecturerId -> LecturerName
+Ключ в нем: {GroupId, CourseId}. Мешающая ФЗ: CourseId -> CourseName. Разобъем по ней:
+- (CourseId, CourseName)
+- (GroupId, CourseId, LecturerId, LecturerName)
+
+Получим отношения:
+- (CourseId, CourseName)
+  ФЗ:
+  - CourseId -> CourseName
+  Ключ: CourseId
+  Во 2НФ (ключ не составной)
+- (GroupId, CourseId, LecturerId, LecturerName)
+  ФЗ:
+  - GroupId, CourseId -> LecturerId, LecturerName
+  - LecturerId -> LecturerName
+  Ключ: {GroupId, CourseId}
+  Во 2НФ (нет "мешающих" правил)
+- (StudentId, StudentName, GroupId, GroupName)
+  ФЗ:
+  - StudentId -> StudentName, GroupId, GroupName
+  - GroupId -> GroupName
+  - GroupName -> GroupId
+  Ключ: StudentId
+  Во 2НФ (ключ не составной)
+- (StudentId, CourseId, Mark)
+  ФЗ:
+  - StudentId, CourseId -> Mark
+  Ключ: {StudentId, CourseId}
+  Во 2НФ (нет "мешающих" правил)
 
 #+begin_src 
-(StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark) => (GroupId, CourseId, LecturerId, LecturerName); (StudentId, GroupId, GroupName); (StudentId, StudentName); (CourseId, CourseName); (StudentId, CourseId, Mark).
+(StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark) => (StudentId, CourseId, Mark); (CourseId, CourseName); (GroupId, CourseId, LecturerId, LecturerName); (StudentId, StudentName, GroupId, GroupName).
 #+end_src
 
 ** 3
-Найдем транзитивные зависимости неключевых аттрибутов в отношенях
-(GroupId, CourseId, LecturerId, LecturerName) и (StudentId, GroupId,
-GroupName), т.к. остальные декмопозировать не можем, т.к. они содержат
-лишь ключ и один неключевой аттрибут:
+Рассмотрим отношения:
+- (CourseId, CourseName)
+  ФЗ:
+  - CourseId -> CourseName
+  Ключ: CourseId
+  Все неключевые аттрибуты (CourseId) непосредственно зависят от ключевых (CourseId) (единственная ФЗ)
+  В 3НФ
 
 - (GroupId, CourseId, LecturerId, LecturerName)
-  GroupId, CourseId -> LecturerId
-  LecturerId -> LecturerName
+  ФЗ:
+  - GroupId, CourseId -> LecturerId, LecturerName
+  - LecturerId -> LecturerName
+  Ключ: (GroupId, CourseId)
+  Все неключевые аттрибуты (LecturerId, LecturerName) непосредственно зависят от ключевых (GroupId, CourseId) (по первой ФЗ)
+  В 3НФ
 
-  Декомпозируем на:
-  - (GroupId, CourseId, LecturerId)
-  - (LecturerId, LecturerName)
+- (StudentId, StudentName, GroupId, GroupName)
+  ФЗ:
+  - StudentId -> StudentName, GroupId, GroupName
+  - GroupId -> GroupName
+  - GroupName -> GroupId
+  Ключ: StudentId
+  Все неключевые аттрибуты (StudentName, GroupId, GroupName) непосредственно зависят от ключевых (StudentId) (по первой ФЗ)
+  В 3НФ
 
-- (StudentId, GroupId, GroupName)
-  StudentId -> GroupId
-  GroupId -> GroupName
-  GroupName -> GroupId
-
-  Декомпозируем на:
-  - (StudentId, GroupId)
-  - (GroupId, GroupName)
+- (StudentId, CourseId, Mark)
+  ФЗ:
+  - StudentId, CourseId -> Mark
+  Ключ: (StudentId, CourseId)
+  Все неключевые аттрибуты (Mark) непосредственно зависят от ключевых (StudentId, CourseId) (единственная ФЗ)
+  В 3НФ
 
 #+begin_src 
-(GroupId, CourseId, LecturerId, LecturerName) => (GroupId, CourseId, LecturerId); (LecturerId, LecturerName).
-(StudentId, GroupId, GroupName) => (StudentId, GroupId); (GroupId, GroupName).
-(StudentId, StudentName) => (StudentId, StudentName).
-(CourseId, CourseName) => (CourseId, CourseName).
 (StudentId, CourseId, Mark) => (StudentId, CourseId, Mark).
+(CourseId, CourseName) => (CourseId, CourseName).
+(GroupId, CourseId, LecturerId, LecturerName) => (GroupId, CourseId, LecturerId, LecturerName).
+(StudentId, StudentName, GroupId, GroupName) => (StudentId, StudentName, GroupId, GroupName).
 #+end_src
 
 ** 4
-- (GroupId, CourseId, LecturerId)
-  GroupId, CourseId -> LecturerId
-  GroupId, CourseId - ключ
-- (LecturerId, LecturerName)
-  LecturerId -> LecturerName
-  LecturerId - ключ
-- (StudentId, GroupId)
-  StudentId -> GroupId
-  StudentId - ключ
-- (GroupId, GroupName)
-  GroupId -> GroupName
-  GroupName -> GroupId
-  GroupId - ключ, GroupName - ключ
-- (StudentId, StudentName)
-  StudentId -> StudentName
-  StudentId - ключ
+Рассмотрим отношения:
 - (CourseId, CourseName)
-  CourseId -> CourseName
-  CourseId - ключ
-- (StudentId, CourseId, Mark)
-  StudentId, CourseId -> Mark
-  StudentId, CourseId - ключ
+  Отношение из двух аттрибутов
+  В НФБК
 
-Получается что уже в НФБК
+- (GroupId, CourseId, LecturerId, LecturerName)
+  ФЗ:
+  - GroupId, CourseId -> LecturerId, LecturerName
+  - LecturerId -> LecturerName
+  Ключ: (GroupId, CourseId)
+  Во второй ФЗ LecturerId - не надключ, декомпозируем по ней.
+  Перед этим построит эквивалентное множество ФЗ:
+  - GroupId, CourseId -> LecturerId
+  - GroupId, CourseId -> LecturerName
+  - LecturerId -> LecturerName
+  После декомпозиции потеряем ФЗ GroupId, CourseId -> LecturerName, получим:
+  - (GroupId, CourseId, LecturerId)
+    ФЗ:
+    - GroupId, CourseId -> LecturerId
+    Ключ: (GroupId, CourseId)
+    Имеем единственную ФЗ, такую что в левой части ключ => нет ФЗ таких что в левой части не надключ
+    В НФБК
+  - (LecturerId, LecturerName)
+    Отношение из двух аттрибутов
+    В НФБК
+
+- (StudentId, StudentName, GroupId, GroupName)
+  ФЗ:
+  - StudentId -> StudentName, GroupId, GroupName
+  - GroupId -> GroupName
+  - GroupName -> GroupId
+  Ключ: StudentId
+  Во второй и третьей ФЗ GroupId и GroupName соответственно - не надключи, декомпозируем по второй.
+  Перед этим построит эквивалентное множество ФЗ:
+  - StudentId -> StudentName, GroupId
+  - StudentId -> GroupName
+  - GroupId -> GroupName
+  - GroupName -> GroupId
+  После декомпозиции потеряем ФЗ StudentId -> GroupName, получим:
+  - (StudentId, StudentName, GroupId)
+    ФЗ:
+    - StudentId -> StudentName, GroupId
+    Ключ: (StudentId)
+    Имеем единственную ФЗ, такую что в левой части ключ => нет ФЗ таких что в левой части не надключ
+    В НФБК
+  - (GroupId, GroupName)
+    Отношение из двух аттрибутов
+    В НФБК
+
+- (StudentId, CourseId, Mark)
+  ФЗ:
+  - StudentId, CourseId -> Mark
+  Ключ: (StudentId, CourseId)
+  Имеем единственную ФЗ, такую что в левой части ключ => нет ФЗ таких что в левой части не надключ
+  В НФБК
+
+Потеряли две ФЗ:
+- StudentId -> GroupName
+- GroupId, CourseId -> LecturerName
 
 #+begin_src 
-(GroupId, CourseId, LecturerId) => (GroupId, CourseId, LecturerId).
-(LecturerId, LecturerName) => (LecturerId, LecturerName).
-(StudentId, GroupId) => (StudentId, GroupId).
-(GroupId, GroupName) => (GroupId, GroupName).
-(StudentId, StudentName) => (StudentId, StudentName).
-(CourseId, CourseName) => (CourseId, CourseName).
 (StudentId, CourseId, Mark) => (StudentId, CourseId, Mark).
+(CourseId, CourseName) => (CourseId, CourseName).
+(GroupId, CourseId, LecturerId, LecturerName) => (GroupId, CourseId, LecturerId); (LecturerId, LecturerName).
+(StudentId, StudentName, GroupId, GroupName) => (StudentId, StudentName, GroupId); (GroupId, GroupName).
 #+end_src
 
 ** 5
-Для всех отношений из 2х аттрибутов нет нетривиальных МЗ с
-непересекающимися X, Y, рассмотрим оставшиеся:
+Лемма 1:
+Отношенине R с аттрибутами (A, B, C) и множеством ФЗ:
+- A, B -> C
+находится в 4НФ
+  
+Рассмотрим потенциальные нетривиальные МЗ:
+- A -> B | C
+  x = A, y1 = B1, y2 = B2, z1 = C1, z2 = C2
+  {y | (x, y, z1) in R} = { B1 } != { B2 } = {y | (x, y, z2) in R }
+  Не МЗ
+
+  Следовательно A -> C | B тоже не МЗ
+
+- B -> A | C
+  | A  | B | C  |
+  |----+---+----|
+  | A1 | B | C1 |
+  | A2 | B | C2 |
+  x = B, y1 = A1, y2 = GI2, z1 = C1, z2 = C2
+  {y | (x, y, z1) in R} = { A1 } != { GI2 } = {y | (x, y, z2) in R }
+  Не МЗ
+
+  Следовательно B -> C | A тоже не МЗ
+
+- C -> A | B
+  | A  | B  | C |
+  |----+----+---|
+  | A1 | B1 | C |
+  | A2 | B2 | C |
+  x = C, y1 = A1, y2 = GI2, z1 = B1, z2 = B2
+  {y | (x, y, z1) in R} = { A1 } != { GI2 } = {y | (x, y, z2) in R }
+  Не МЗ
+
+  Следовательно C -> B | A тоже не МЗ
+
+- {} -> A, C | B
+  | A  | B  | C |
+  |----+----+---|
+  | A1 | B1 | C |
+  | A2 | B2 | C |
+  x = {}, y1 = (A1, C), y2 = (GI2, C), z1 = B1, z2 = B2
+  {y | (y, z1) in R} = { (A1, C) } != { (GI2, C) } = {y | (y, z2) in R }
+  Не МЗ
+
+  Следовательно {} -> B | A, C тоже не МЗ
+
+- {} -> B, C | A
+  | A  | B  | C |
+  |----+----+---|
+  | A1 | B1 | C |
+  | A2 | B2 | C |
+  x = {}, y1 = (B1, C), y2 = (B2, C), z1 = A1, z2 = GI2
+  {y | (y, z1) in R} = { (B1, C) } != { (B2, C) } = {y | (y, z2) in R }
+  Не МЗ
+
+  Следовательно {} -> A | B, C тоже не МЗ
+
+- {} -> B, A | C
+  | A  | B  | C  |
+  |----+----+----|
+  | A1 | B1 | C1 |
+  | A2 | B2 | C2 |
+  x = {}, y1 = (B1, C1), y2 = (B2, C2), z1 = A1, z2 = GI2
+  {y | (y, z1) in R} = { (B1, C1) } != { (B2, C2) } = {y | (y, z2) in R }
+  Не МЗ
+
+  Следовательно {} -> C | B, A тоже не МЗ
+
+
+Рассмотрим отношения:
+- (CourseId, CourseName)
+  ФЗ:
+  - CourseId -> CourseName
+  Ключ: (CourseId)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+  В 4НФ
+
 - (GroupId, CourseId, LecturerId)
-  Нет нетривиальных МЗ, т.к. GroupId, CourseId - единственный нетривиальный надключ
+  ФЗ:
+  - GroupId, CourseId -> LecturerId
+  Ключ: (GroupId, CourseId)
+  По Лемме 1 при A = GroupId, B = CourseId, C = LecturerId находится в 4НФ
+
+- (LecturerId, LecturerName)
+  ФЗ:
+  - LecturerId -> LecturerName
+  Ключ: (LecturerId)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+  В 4НФ
+
+- (StudentId, StudentName, GroupId)
+  ФЗ:
+  - StudentId -> StudentName, GroupId
+  Ключ: (StudentId)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+  В 4НФ
+
+- (GroupId, GroupName)
+  ФЗ:
+  - GroupId -> GroupName
+  - GroupName -> GroupId
+  Ключи: (GroupId), (GroupName)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+  В 4НФ
+
 - (StudentId, CourseId, Mark)
-  Аналогично предыдущему: (StudentId, CourseId) - единственный нетривиальный надключ
+  ФЗ:
+  - StudentId, CourseId -> Mark
+  Ключ: (StudentId, CourseId)
+  По Лемме 1 при A = StudentId, B = CourseId, C = Mark находится в 4НФ
+
 
 #+begin_src 
-(GroupId, CourseId, LecturerId) => (GroupId, CourseId, LecturerId).
-(LecturerId, LecturerName) => (LecturerId, LecturerName).
-(StudentId, GroupId) => (StudentId, GroupId).
-(GroupId, GroupName) => (GroupId, GroupName).
-(StudentId, StudentName) => (StudentId, StudentName).
-(CourseId, CourseName) => (CourseId, CourseName).
 (StudentId, CourseId, Mark) => (StudentId, CourseId, Mark).
+(CourseId, CourseName) => (CourseId, CourseName).
+(LecturerId, LecturerName) => (LecturerId, LecturerName).
+(GroupId, CourseId, LecturerId) => (GroupId, CourseId, LecturerId).
+(StudentId, StudentName, GroupId) => (StudentId, StudentName, GroupId).
+(GroupId, GroupName) => (GroupId, GroupName).
 #+end_src
 
 ** 6
-Рассмотрим отношения с 3мя аттрибутами, т.к. отношения с 2мя
-аттрибутами имеют единственный простой ключ и находятся в 3НФ, и по теореме
-Дейта-Фейгина 1 находятся в 5НФ.
+
+Лемма 2:
+Отношенине R с аттрибутами (A, B, C) и множеством ФЗ:
+- A, B -> C
+находится в 5НФ
+
+По Лемме 1 R не содержит МЗ и по теореме Фейгина не содержит ЗС из двух отношений
+
+Рассмотрим оставшуюся ЗС *{{A}, {B}, {C}}:
+Рассмотрим проекции для примера:
+| A  | B  | C  |
+|----+----+----|
+| A1 | B1 | C1 |
+| A2 | B2 | C2 |
+- P1
+  | A  |
+  |----|
+  | A1 |
+  | A2 |
+- P2
+  | B  |
+  |----|
+  | B1 |
+  | B2 |
+- P3
+  | C  |
+  |----|
+  | C1 |
+  | C2 |
+Получим что P1 join P2 join P3:
+| A  | B  | C  |
+|----+----+----|
+| A1 | B1 | C1 |
+| A1 | B2 | C1 |
+| A1 | B1 | C2 |
+| A1 | B2 | C2 |
+| A2 | B1 | C1 |
+| A2 | B2 | C1 |
+| A2 | B1 | C2 |
+| A2 | B2 | C2 |
+Что не равно исходной зависимости и следовательно не является ЗС
+
+Следовательно нет нетривиальных ЗС => В 5НФ
+
+Рассмотрим отношения:
+- (CourseId, CourseName)
+  ФЗ:
+  - CourseId -> CourseName
+  Ключ: (CourseId)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
 
 - (GroupId, CourseId, LecturerId)
-  GroupId, CourseId -> LecturerId
-  *{{GroupId, CourseId}, {GroupId, CourseId, LecturerId}}
-  Каждое разбиение содержит ключ (GroupId, CourseId), а значит и надключ
+  ФЗ:
+  - GroupId, CourseId -> LecturerId
+  Ключ: (GroupId, CourseId)
+  По Лемме 2 при A = GroupId, B = CourseId, C = LecturerId в 5НФ
+
+- (LecturerId, LecturerName)
+  ФЗ:
+  - LecturerId -> LecturerName
+  Ключ: (LecturerId)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+
+- (StudentId, StudentName, GroupId)
+  ФЗ:
+  - StudentId -> StudentName, GroupId
+  Ключ: (StudentId)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+
+- (GroupId, GroupName)
+  ФЗ:
+  - GroupId -> GroupName
+  - GroupName -> GroupId
+  Ключи: (GroupId), (GroupName)
+  По теореме Дейта-Фейгина 1 - отношение в 5НФ
+
 - (StudentId, CourseId, Mark)
-  StudentId, CourseId -> Mark
-  Аналогично предыдущему
+  ФЗ:
+  - StudentId, CourseId -> Mark
+  Ключ: (StudentId, CourseId)
+  По Лемме 2 при A = StudentId, B = CourseId, C = Mark в 5НФ
 
 #+begin_src 
-(GroupId, CourseId, LecturerId) => (GroupId, CourseId, LecturerId).
-(LecturerId, LecturerName) => (LecturerId, LecturerName).
-(StudentId, GroupId) => (StudentId, GroupId).
-(GroupId, GroupName) => (GroupId, GroupName).
-(StudentId, StudentName) => (StudentId, StudentName).
-(CourseId, CourseName) => (CourseId, CourseName).
 (StudentId, CourseId, Mark) => (StudentId, CourseId, Mark).
+(CourseId, CourseName) => (CourseId, CourseName).
+(LecturerId, LecturerName) => (LecturerId, LecturerName).
+(GroupId, CourseId, LecturerId) => (GroupId, CourseId, LecturerId).
+(StudentId, StudentName, GroupId) => (StudentId, StudentName, GroupId).
+(GroupId, GroupName) => (GroupId, GroupName).
 #+end_src
-* 2
-* 3
-* 4
+* TODO 2
+* TODO 3
+* TODO 4
 #+header: :engine postgres
 #+begin_src sql
 CREATE DATABASE hw4;
@@ -199,79 +431,71 @@ CREATE DATABASE hw4;
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-DROP TABLE IF EXISTS Students CASCADE;
-DROP TABLE IF EXISTS Groups CASCADE;
-DROP TABLE IF EXISTS Lecturers CASCADE;
-DROP TABLE IF EXISTS Courses CASCADE;
-DROP TABLE IF EXISTS Marks CASCADE;
-DROP TABLE IF EXISTS Teachers CASCADE;
-DROP TABLE IF EXISTS StudentGroups CASCADE;
+  DROP TABLE IF EXISTS Students CASCADE;
+  DROP TABLE IF EXISTS Groups CASCADE;
+  DROP TABLE IF EXISTS Lecturers CASCADE;
+  DROP TABLE IF EXISTS Courses CASCADE;
+  DROP TABLE IF EXISTS Marks CASCADE;
+  DROP TABLE IF EXISTS Teachers CASCADE;
 
-CREATE TABLE Students (
-       Id int GENERATED ALWAYS AS IDENTITY not null,
-       Name varchar(50) not null,
+  CREATE TABLE Courses (
+      Id int GENERATED ALWAYS AS IDENTITY,
+      Name varchar(50) not null,
+      PRIMARY KEY (Id)
+  );
 
-       PRIMARY KEY (Id)
-);
+  CREATE TABLE Lecturers (
+      Id int GENERATED ALWAYS AS IDENTITY,
+      Name varchar(50) not null,
+      PRIMARY KEY (Id)
+  );
 
-CREATE TABLE Groups (
-       Id int GENERATED ALWAYS AS IDENTITY not null,
-       Name varchar(50) not null,
+  CREATE TABLE Groups (
+      Id int GENERATED ALWAYS AS IDENTITY,
+      Name varchar(50) not null,
+      PRIMARY KEY (Id),
 
-       PRIMARY KEY (Id)
-);
+      UNIQUE (Name)
+  );
 
-CREATE TABLE Lecturers (
-       Id int GENERATED ALWAYS AS IDENTITY not null,
-       Name varchar(50) not null,
+  CREATE TABLE Students (
+     Id int GENERATED ALWAYS AS IDENTITY,
+     Name varchar(50) not null,
+     GroupId int not null,
+     PRIMARY KEY (Id),
 
-       PRIMARY KEY (Id)
-);
+     FOREIGN KEY (GroupId)
+     REFERENCES Groups(Id)
+  );
 
-CREATE TABLE Courses (
-       Id int GENERATED ALWAYS AS IDENTITY not null,
-       Name varchar(50) not null,
+  CREATE TABLE Teachers (
+      CourseId int not null,
+      GroupId int not null,
+      LecturerId int not null,
+      PRIMARY KEY (CourseId, GroupId),
 
-       PRIMARY KEY (Id)
-);
+      FOREIGN KEY (CourseId)
+      REFERENCES Courses(Id),
 
-CREATE TABLE Teachers (
-       CourseId int not null,
-       GroupId int not null,
-       LecturerId int not null,
-       PRIMARY KEY (CourseId, GroupId),
+      FOREIGN KEY (GroupId)
+      REFERENCES Groups(Id),
 
-       FOREIGN KEY (CourseId)
-       REFERENCES Courses(Id),
+      FOREIGN KEY (LecturerId)
+      REFERENCES Lecturers(Id)
+  );
 
-       FOREIGN KEY (GroupId)
-       REFERENCES Groups(Id),
+  CREATE TABLE Marks (
+      CourseId int not null,
+      StudentId int not null,
+      Mark int not null,
+      PRIMARY KEY (CourseId, StudentId),
 
-       FOREIGN KEY (LecturerId)
-       REFERENCES Lecturers(Id)
-);
+      FOREIGN KEY (CourseId)
+      REFERENCES Courses(Id),
 
-CREATE TABLE Marks (
-       CourseId int not null,
-       StudentId int not null,
-       Mark int not null,
-       PRIMARY KEY (CourseId, StudentId),
-
-       FOREIGN KEY (CourseId)
-       REFERENCES Courses(Id),
-
-       FOREIGN KEY (StudentId)
-       REFERENCES Students(Id)
-);
-
-CREATE TABLE StudentGroups (
-       GroupId int not null,
-       StudentId int not null,
-       PRIMARY KEY (StudentId),
-
-       FOREIGN KEY (GroupId)
-       REFERENCES Groups(Id)
-);
+      FOREIGN KEY (StudentId)
+      REFERENCES Students(Id)
+  );
 #+end_src
 
 #+RESULTS:
@@ -282,8 +506,6 @@ CREATE TABLE StudentGroups (
 | DROP TABLE   |
 | DROP TABLE   |
 | DROP TABLE   |
-| DROP TABLE   |
-| CREATE TABLE |
 | CREATE TABLE |
 | CREATE TABLE |
 | CREATE TABLE |
@@ -291,18 +513,43 @@ CREATE TABLE StudentGroups (
 | CREATE TABLE |
 | CREATE TABLE |
 
-* 6
-* 7
+* TODO 6
+* TODO 7
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-INSERT INTO Students (Name) VALUES
-       ('Иванов Иван'),
-       ('Петров Петр'),
-       ('Казимиров Казимир'),
-       ('Игнатьев Игнат'),
-       ('Тимуров Тимур'),
-       ('Станиславов Станислав');
+  INSERT INTO Groups (Name) VALUES
+         ('M33371'),
+         ('M3133'),
+         ('M34391');
+#+end_src
+
+#+RESULTS:
+| INSERT 0 3 |
+|------------|
+#+header: :engine postgres
+#+header: :database hw4
+#+begin_src sql
+  SELECT * FROM Groups;
+#+end_src
+
+#+RESULTS:
+| id | name   |
+|----+--------|
+|  1 | M33371 |
+|  2 | M3133  |
+|  3 | M34391 |
+
+#+header: :engine postgres
+#+header: :database hw4
+#+begin_src sql
+  INSERT INTO Students (Name, GroupId) VALUES
+         ('Иванов Иван', 1),
+         ('Петров Петр', 2),
+         ('Казимиров Казимир', 3),
+         ('Игнатьев Игнат', 1),
+         ('Тимуров Тимур', 2),
+         ('Станиславов Станислав', 3);
 #+end_src
 
 #+RESULTS:
@@ -312,10 +559,26 @@ INSERT INTO Students (Name) VALUES
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-INSERT INTO Groups (Name) VALUES
-       ('M33371'),
-       ('M3133'),
-       ('M34391');
+  SELECT * FROM Students;
+#+end_src
+
+#+RESULTS:
+| id | name                  | groupid |
+|----+-----------------------+---------|
+|  1 | Иванов Иван           |       1 |
+|  2 | Петров Петр           |       2 |
+|  3 | Казимиров Казимир     |       3 |
+|  4 | Игнатьев Игнат        |       1 |
+|  5 | Тимуров Тимур         |       2 |
+|  6 | Станиславов Станислав |       3 |
+
+#+header: :engine postgres
+#+header: :database hw4
+#+begin_src sql
+  INSERT INTO Lecturers (Name) VALUES
+         ('Корнеев Георгий'),
+         ('Кохась Константин'),
+         ('Маврин Павел');
 #+end_src
 
 #+RESULTS:
@@ -325,10 +588,23 @@ INSERT INTO Groups (Name) VALUES
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-INSERT INTO Lecturers (Name) VALUES
-       ('Корнеев Георгий'),
-       ('Кохась Константин'),
-       ('Маврин Павел');
+  SELECT * FROM Lecturers;
+#+end_src
+
+#+RESULTS:
+| id | name              |
+|----+-------------------|
+|  1 | Корнеев Георгий   |
+|  2 | Кохась Константин |
+|  3 | Маврин Павел      |
+
+#+header: :engine postgres
+#+header: :database hw4
+#+begin_src sql
+  INSERT INTO Courses (Name) VALUES
+         ('Матанализ'),
+         ('Базы Данных'),
+         ('АиСД');
 #+end_src
 
 #+RESULTS:
@@ -338,95 +614,26 @@ INSERT INTO Lecturers (Name) VALUES
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-INSERT INTO Courses (Name) VALUES
-       ('Матанализ'),
-       ('Базы Данных'),
-       ('АиСД');
+  SELECT * FROM Courses;
 #+end_src
 
 #+RESULTS:
-| INSERT 0 3 |
-|------------|
+| id | name        |
+|----+-------------|
+|  1 | Матанализ   |
+|  2 | Базы Данных |
+|  3 | АиСД        |
 
 
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-SELECT (Id, NAME) FROM Students;
-#+end_src
-
-#+RESULTS:
-| row                         |
-|-----------------------------|
-| (1,"Иванов Иван")           |
-| (2,"Петров Петр")           |
-| (3,"Казимиров Казимир")     |
-| (4,"Игнатьев Игнат")        |
-| (5,"Тимуров Тимур")         |
-| (6,"Станиславов Станислав") |
-
-#+header: :engine postgres
-#+header: :database hw4
-#+begin_src sql
-SELECT (Id, NAME) FROM Groups;
-#+end_src
-
-#+RESULTS:
-| row        |
-|------------|
-| (1,M33371) |
-| (2,M3133)  |
-| (3,M34391) |
-
-#+header: :engine postgres
-#+header: :database hw4
-#+begin_src sql
-SELECT (Id, NAME) FROM Lecturers;
-#+end_src
-
-#+RESULTS:
-| row                     |
-|-------------------------|
-| (1,"Корнеев Георгий")   |
-| (2,"Кохась Константин") |
-| (3,"Маврин Павел")      |
-
-#+header: :engine postgres
-#+header: :database hw4
-#+begin_src sql
-SELECT (Id, NAME) FROM Courses;
-#+end_src
-
-#+RESULTS:
-| row               |
-|-------------------|
-| (1,Матанализ)     |
-| (2,"Базы Данных") |
-| (3,АиСД)          |
-
-#+header: :engine postgres
-#+header: :database hw4
-#+begin_src sql
-INSERT INTO StudentGroups (StudentId, GroupId) VALUES
-       (1, 1),
-       (4, 2),
-       (3, 1),
-       (6, 3);
-#+end_src
-
-#+RESULTS:
-| INSERT 0 4 |
-|------------|
-
-#+header: :engine postgres
-#+header: :database hw4
-#+begin_src sql
-INSERT INTO Teachers (CourseId, GroupId, LecturerId) VALUES
-       (1, 2, 2),
-       (1, 1, 2),
-       (2, 1, 3),
-       (3, 1, 3),
-       (3, 2, 3);
+  INSERT INTO Teachers (CourseId, GroupId, LecturerId) VALUES
+         (1, 2, 2),
+         (1, 1, 2),
+         (2, 1, 3),
+         (3, 1, 3),
+         (3, 2, 3);
 #+end_src
 
 #+RESULTS:
@@ -437,11 +644,11 @@ INSERT INTO Teachers (CourseId, GroupId, LecturerId) VALUES
 #+header: :engine postgres
 #+header: :database hw4
 #+begin_src sql
-INSERT INTO Marks (CourseId, StudentId, Mark) VALUES
-       (1, 1, 2),
-       (1, 3, 5),
-       (2, 6, 1),
-       (3, 2, 10);
+  INSERT INTO Marks (CourseId, StudentId, Mark) VALUES
+         (1, 1, 2),
+         (1, 3, 5),
+         (2, 6, 1),
+         (3, 2, 10);
 #+end_src
 
 #+RESULTS:
