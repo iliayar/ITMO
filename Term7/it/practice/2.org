@@ -1,0 +1,71 @@
+#+setupfile: setup.org
+#+TITLE: Практика 2
+#+date: 8 сентября
+
+#+begin_definition org
+Код *дуальный* если \(GG^T = 0\).
+#+end_definition
+
+#+begin_definition org
+Вероятность ошибки \(P\) в двоично симметричном канале
+#+begin_export latex
+\usetikzlibrary{decorations.pathmorphing}
+\begin{center}
+\begin{tikzpicture}
+\node at (0,0) (lz) {\(0\)};
+\node at (2,0) (rz) {\(0\)};
+\node at (0,2) (lo) {\(1\)};
+\node at (2,2) (ro) {\(1\)};
+\draw[->] (lz) -- node[above] {\(1 - P\)} (rz);
+\draw[->] (lo) -- node[above] {\(1 - P\)} (ro);
+\draw[->] (lz) -- node[above] {\(P\)} (ro);
+\draw[->] (lo) -- node[below] {\(P\)} (rz);
+\end{tikzpicture}
+\end{center}
+#+end_export
+#+end_definition
+
+#+begin_task org
+Найти вероятность неправильно продекодировать, декодер, который исправляет \(t\) ошибок
+#+end_task
+#+begin_solution org
+Нужно посчитать вероятность что поменялось хотя бы \(t + 1\) символов
+\[ P = \sum^n_{i = t + 1} \begin{pmatrix} n \\ i \end{pmatrix} \cdot p^i \cdot (1 - P)^{n - i} \]
+#+end_solution
+
+
+#+begin_task org
+Доказать что для двоичного линейного блокового кода с размерностью \(k\) число кодовых слов \(i\)-й символ которых равен \(1\) равно либо \(0\) либо \(2^{k - 1}\)
+#+end_task
+
+#+begin_definition org
+Преобразование Адамара:
+\[ \hat{f}(u) = \sum_{v \in F_2^n} (-1)^{u \cdot v} f(v) \]
+где \(f: F_2^n \to \R\)
+#+end_definition
+
+#+begin_symb org
+\(C_\perp\) -- дуальный код
+#+end_symb
+
+
+#+begin_task org
+Доказать преобразование
+\[ \sum_{u \in C_\perp} f(u) = \frac{1}{|C|} \sum_{u \in C} \hat{f}(u) \]
+#+end_task
+#+begin_solution org
+\-
+#+begin_export latex
+\begin{center}
+\begin{align*}
+  \frac{1}{|C|} \sum_{u \in C} \hat{f}(u) & = \frac{1}{|C|} \sum_{u \in C} \sum_{v \in F_2^n} (-1)^{u \cdot v} f(v) = \\
+  & = \frac{1}{|C|} \sum_{v \in F_2^n} \sum_{u \in C} (-1)^{u \cdot v} f(v) = \\
+  & = \frac{1}{|C|} \sum_{v \in F_2^n} f(v) \left( \sum_{u \in C} (- 1)^{u \cdot v} \right) = \\
+  & = \frac{1}{|C|} \sum_{v \in C_\perp} f(v) |C| = \\
+  & = \sum_{v \in C_\perp} f(v)
+\end{align*}
+\end{center}
+#+end_export
+\(\sum_{u \in C} (-1)^{u \cdot v} = 0\) если \(v \not\in C_\perp\) и \(= |C|\) иначе
+#+end_solution
+

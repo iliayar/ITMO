@@ -1,6 +1,6 @@
 #+setupfile: setup.org
 #+TITLE: Практика 1
-#+date: 2 сенятбря 
+#+date: 1 сенятбря 
 
 
 #+begin_definition org
