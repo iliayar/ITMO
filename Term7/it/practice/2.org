@@ -28,10 +28,10 @@
 #+begin_task org
 Найти вероятность неправильно продекодировать, декодер, который исправляет \(t\) ошибок
 #+end_task
-#+begin_solution org
+#+begin_sol org
 Нужно посчитать вероятность что поменялось хотя бы \(t + 1\) символов
 \[ P = \sum^n_{i = t + 1} \begin{pmatrix} n \\ i \end{pmatrix} \cdot p^i \cdot (1 - P)^{n - i} \]
-#+end_solution
+#+end_sol
 
 
 #+begin_task org
@@ -53,7 +53,7 @@
 Доказать преобразование
 \[ \sum_{u \in C_\perp} f(u) = \frac{1}{|C|} \sum_{u \in C} \hat{f}(u) \]
 #+end_task
-#+begin_solution org
+#+begin_sol org
 \-
 #+begin_export latex
 \begin{center}
@@ -67,5 +67,5 @@
 \end{center}
 #+end_export
 \(\sum_{u \in C} (-1)^{u \cdot v} = 0\) если \(v \not\in C_\perp\) и \(= |C|\) иначе
-#+end_solution
+#+end_sol
 

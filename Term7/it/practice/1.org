@@ -149,21 +149,21 @@
 \[ \mathcal{L} = \log \frac{P(x_i = 0 | y_i)}{P(x_i = 1|y_i)} = \frac{2y_i}{\sigma^2} = \]
 В случае канала с аддитивным белым гаусовским шумом и двоично фазовой модуляцией: \(y_i = (-1)^{x_i} + \eta_i\), \(\eta_i \sim \mathcal{N}(o, \sigma^2)\)
 #+end_task
-#+begin_solution org
+#+begin_sol org
 \[ = \log\frac{P(x_i = 0) \cdot P(y_i|x_i = 0)}{P(x_i=1) \cdot P(y_i|x_i=1)} = \log\frac{P(y_i|x_i=0)}{y_i|x_i=1} \]
 Плотность вероятности \(f(y) = \frac{1}{\sqrt{2\pi\sigma^2}} \cdot e^{-\frac{(y - \mu)^2}{2\sigma^2}} \) \\
 \( F_Y(y) = f(y) = P(Y \le y) \) \\
 \( P( a \le Y \le b) = F_Y(b) - F_Y(a) \) \\
 \( P(Y = y_i) = \lim_{dy \to 0}F_Y(y_i + dy) - F_Y(y_i) = f(y)dy \)
 \[ = \log\frac{dy\sqrt{2\pi\sigma^2} e^{-\frac{(y - 1)^2}{2\sigma^2}}}{dy\sqrt{2\pi\sigma^2} e^{-\frac{(y + 1)^2}{2\sigma^2}}} = \log e^{\frac{-(y_i - 1)^2 + (y_i + 1)^2}{2\sigma^2}} = \frac{2y_i}{\sigma^2} \]
-#+end_solution
+#+end_sol
 
 #+begin_task org
 Доказать что декодирование по максимому правдоподобия (\(\hat{c} = \mathOp{\text{argmax}}_{c \in C}P(y\c)\)) некоторго коды
 для кодовых слов переданных по каналу с аддитивным гаусовским шумом
 эквивалентно декодирование по минимому расстоянию эвклида (\(\hat{c} = \mathOp{\text{argmin}}_{c \in C}d_{\mathcal{E}}(c, y)\))
 #+end_task
-#+begin_solution org
+#+begin_sol org
 \[ \hat{c} = \mathOp{\text{argmax}}_{c \in C}P(y\c) = \mathOp{\text{argmax}} \prod_t P(y_t | c_t) = \mathOp{\text{argmax}} \sum_t -\frac{(y_t - c_t)^2}{2\sigma^2} = \mathOp{\text{argmin}}\sum_t(y_t - c_t)^2 \]
 \[ \hat{c} = \mathOp{\text{argmin}}_{c \in C}d_{\mathcal{E}}(c, y) = \mathOp{\text{argmin}}\sqrt{\sum_t(y_t - c_y)^2} = \mathOp{\text{argmin}}\sum_t(y_t - c_t)^2 \]
-#+end_solution
+#+end_sol
