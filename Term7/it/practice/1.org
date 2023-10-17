@@ -1,92 +1,169 @@
 #+setupfile: setup.org
 #+TITLE: Практика 1
-#+date: 2 сентября
+#+date: 2 сенятбря 
+
 
 #+begin_definition org
-\[ X^n \rightarrow Y^n \]
-*Скорость кода* --- \(\frac{k}{k}\) (отношение размера исходных данных с размеру закодированных данным) 
-\[ \F_{2^q}^k \rightarrow \F_{2^q}^n \]
+*Код*: \\
+\(n\) - длина кода \\
+\(k\) - размерность кода \\
+\(d\) - минимальное расстояние \\
+Код записывается через \((n, k)\) или \((n, k, d)\). Количество кодовых слов \(Q^k\)
 #+end_definition
+
+#+begin_definition org
+\(F_2 = \{0, 1\}\) -- двоичный код
+#+end_definition
+
+
+#+begin_symb org
+\(C = (n, k) \subset F_2^n\)
+#+end_symb
+
+Как нужно выбирать эту последовательность: выбираем базис. Записываем
+базисные вектора в матрицу \(G_{n \times k}\). Кодовое слово из кода
+можно получить \(c = uG\), где \(u\) (инфорамационный вектор) --
+вектор длины \(k\), \(n \ge k\)
+
+#+begin_definition org
+\(G\) -- *Порождающая матрица*
+#+end_definition
+
+
+#+begin_export latex
+\usetikzlibrary{decorations.pathmorphing}
+\begin{center}
+\begin{tikzpicture}
+\node at (0,0) (BEGIN) {\(\dots\)};
+\node at (1.2,0) [square,draw] (A) {\(uG\)};
+\node at (3.1,0) [square,draw] (B) {Модулятор};
+\node at (5.3,0) [square,draw] (C) {Канал};
+\node at (7.7,0) [square,draw] (D) {Демодулятор};
+\node at (10.1,0) [square,draw] (E) {Декодер};
+\node at (12,0) (END) {\(\dots\)};
+\node at (5.3,1.5) (N) {Шум};
+\draw[->] (BEGIN) -- node[above] {\(u\)} (A);
+\draw[->] (A) -- node[above] {\(c\)} (B);
+\draw[->] (B) -- node[above] {\(x\)} (C);
+\draw[->] (C) -- node[above] {\(y\)} (D);
+\draw[->] (D) -- (E);
+\draw[->] (E) -- (END);
+\draw[->,decorate,decoration=snake] (N) -- (C);
+\end{tikzpicture}
+\end{center}
+#+end_export
+
+
+\(d\) -- минимальное количество символов, в которых отличаются любые два вектора из кода \(C\)
 #+begin_examp org
-\(5 \rightarrow 10\) --- скорость \(\frac{1}{2}\)
+\(C = (4, 1)\)
+\[ G_{4 \times 1} = \begin{pmatrix} 1 & 1 & 1 & 1 \end{pmatrix} \]
+Кодовые слова:
+- \( \begin{pmatrix} 1 & 1 & 1 & 1 \end{pmatrix} \)
+- \( \begin{pmatrix} 0 & 0 & 0 & 0 \end{pmatrix} \)
+\(d = 4\)
 #+end_examp
 
+#+begin_definition org
+*Проверочная матрица* \(H\), такая что \(G_{n \times k}H_{n \times k}^T = 0\). Если проверка проходит, то правильно декодировали код, либо выбрали вектор, который является кодовым словом
+#+end_definition
+
+\[G = \begin{pmatrix} I \big| A \end{pmatrix} \]
+\[H = \begin{pmatrix} A^T \big| -I \end{pmatrix} \]
+
 #+begin_task org
+\-
+#+begin_export latex
 \begin{center}
+\begin{aligned*}
 \begin{pmatrix}
   1 & 2 & 3 & 4 \\
-  5 & 6 & 6 & 8 \\
+  5 & 6 & 7 & 8 \\
   9 & 10 & 11 & 12 \\
-  13 & 14 & 15 & 16
-\end{pmatrix} \quad x = \begin{cmatrix}
-  1 \\ 1 \\ 1 \\ 1
-\end{cmatrix}
+  13 & 14 & 15 & 16 \\
+  \end{pmatrix} x = \begin{pmatrix} 1 \\ 1 \\ 1 \\ 1 \end{pmatrix}
+
+\left( \begin{array}{cccc|c}
+  1 & 2 & 3 & 4 & 1 \\
+  5 & 6 & 7 & 8 & 1 \\
+  9 & 10 & 11 & 12 & 1 \\
+  13 & 14 & 15 & 16 & 1 \\
+  \end{array} \right) \sim
+\left( \begin{array}{cccc|c}
+  1 & 2 & 3 & 4 & 1 \\
+  0 & 1 & 2 & 3 & 1 \\
+  0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 \\
+  \end{array} \right)
+
+\end{aligned*}
 \end{center}
+#+end_export
 #+end_task
-
-#+begin_symbol org
-\(U_a^b = (U_a, U_{a + 1}, \dots, U_{b})\)
-#+end_symbol
-
-#+begin_definition org
-Код задан *Порождающей матрицей* \(G\) \(k \times n\) ранга \(k\).
-#+end_definition
-
-
-#+begin_definitions org
-*Линейные коды* --- \(C_1^n = U_1^n G\), где \(U_i \in \F_2\) \\
-*Проверочная матрица* --- \(H\), такая что
-- \(G H = 0\)
-- \(C H = 0\)
-Размерность \(H\) \((n - k) \times n\)
-#+end_definitions
-
 
 #+begin_task org
+Найти проверочную матрицу по порождающей
+#+begin_export latex
 \begin{center}
-  \begin{pmatrix}
-    1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
-    1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
-    1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\ 
-    1 & 0 & 1 & 0 & 1 & 0 & 1 & 0
-  \end{pmatrix}
+\begin{aligned*}
+ G = \begin{pmatrix}
+ 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+ 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+ 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 \\
+  \end{pmatrix} \sim
+ \left( \begin{array}{cccccccc}
+ 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 \\
+ 0 & 1 & 0 & 1 & 1 & 0 & 1 & 0 \\
+ 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+  \end{array} \right) \sim
+ \left( \begin{array}{ccc|cccc|c}
+ 1 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+ 0 & 1 & 0 & 1 & 1 & 0 & 1 & 0 \\
+ 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+  \end{array} \right) \sim
+ \left( \begin{array}{ccc|cccc|c}
+ 1 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+ 0 & 1 & 0 & 1 & 1 & 0 & 1 & 0 \\
+ 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+  \end{array} \right) \\
+  
+ H = \left( \begin{array}{ccc|cccc|c}
+ 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 \\
+ 0 & 0 & 1 & 1 & 0 & 1 & 1 & 0 \\
+ 0 & 0 & 0 & 1 & 1 & 0 & 1 & 1 \\
+  \end{array} \right) \\
+
+\end{aligned*}
 \end{center}
-
-- \(G = [I_{k \times k \big| A_{k \times (n - k)}}]\)
-- \(H^T_{n \times (n - k)} = \begin{pmatrix} -A_{k \times (n - k)} \\ I_{(n - k) \times (n - k)}  \end{pmatrix}\)
-- \(H_{(n - k) \times n} = \begin{pmatrix} -A^T_{(n - k) \times k} \big| I_{(n - k) \times (n - k)}  \end{pmatrix}\)
-
-\begin{align*}
-  G \sim \dots \sim \begin{pmatrix}
-    1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
-    0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 \\
-    0 & 0 & 1 & 0 & 1 & 1 & 1 & 0 \\
-    0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
-  \end{pmatrix} \\
-  H = \begin{pmatrix}
-     0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
-     1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
-     1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 \\
-     1 & 1 & 0 & 1 & 0 & 0 & 0 & 1 \\
-  \end{pmatrix}
-\end{align*}
-\fixme
+#+end_export
+Можем перествалять только строки, перестановка столбцов *меняет* код
 #+end_task
 
-#+begin_remark org
-Можно взять проверочную как порождающую --- тогда код называется *дуальным*
-#+end_remark
+#+begin_task org
+Вывести формулу для логорифмических отношений правдоподобия
+\[ \mathcal{L} = \log \frac{P(x_i = 0 | y_i)}{P(x_i = 1|y_i)} = \frac{2y_i}{\sigma^2} = \]
+В случае канала с аддитивным белым гаусовским шумом и двоично фазовой модуляцией: \(y_i = (-1)^{x_i} + \eta_i\), \(\eta_i \sim \mathcal{N}(o, \sigma^2)\)
+#+end_task
+#+begin_solution org
+\[ = \log\frac{P(x_i = 0) \cdot P(y_i|x_i = 0)}{P(x_i=1) \cdot P(y_i|x_i=1)} = \log\frac{P(y_i|x_i=0)}{y_i|x_i=1} \]
+Плотность вероятности \(f(y) = \frac{1}{\sqrt{2\pi\sigma^2}} \cdot e^{-\frac{(y - \mu)^2}{2\sigma^2}} \) \\
+\( F_Y(y) = f(y) = P(Y \le y) \) \\
+\( P( a \le Y \le b) = F_Y(b) - F_Y(a) \) \\
+\( P(Y = y_i) = \lim_{dy \to 0}F_Y(y_i + dy) - F_Y(y_i) = f(y)dy \)
+\[ = \log\frac{dy\sqrt{2\pi\sigma^2} e^{-\frac{(y - 1)^2}{2\sigma^2}}}{dy\sqrt{2\pi\sigma^2} e^{-\frac{(y + 1)^2}{2\sigma^2}}} = \log e^{\frac{-(y_i - 1)^2 + (y_i + 1)^2}{2\sigma^2}} = \frac{2y_i}{\sigma^2} \]
+#+end_solution
 
-#+begin_definition org
-\-
-\[ c_i \in \{0, 1\} \rightarrow x_i \in \{-1, 1\} \xrightarrow[\text{channel}]{} y_i = x_i + \eta\]
-\[ \eta_i \sim \mathcal{N}(0, \sigma^2) \]
-
-На вход декодеру подаем логарифмичское отношение правдоподобия
-
-\begin{align*}
-  L & = \log \frac{P(c_i = 1 | y+i)}{P(c_i = 1 | y_i)} = \log \frac{P(y_i | c_i = 0)}{P(y_i | c_i = 1)} \\
-  & = \log \frac{e ^ {-\frac{(y_i + 1)^2}{2 \sigma^2}}}{e ^ {-\frac{(y_i - 1)^2}{2 \sigma^2}}} =
-  & = -\frac{2y}{\sigma^2}
-\end{align*}
-#+end_definition
+#+begin_task org
+Доказать что декодирование по максимому правдоподобия (\(\hat{c} = \mathOp{\text{argmax}}_{c \in C}P(y\c)\)) некоторго коды
+для кодовых слов переданных по каналу с аддитивным гаусовским шумом
+эквивалентно декодирование по минимому расстоянию эвклида (\(\hat{c} = \mathOp{\text{argmin}}_{c \in C}d_{\mathcal{E}}(c, y)\))
+#+end_task
+#+begin_solution org
+\[ \hat{c} = \mathOp{\text{argmax}}_{c \in C}P(y\c) = \mathOp{\text{argmax}} \prod_t P(y_t | c_t) = \mathOp{\text{argmax}} \sum_t -\frac{(y_t - c_t)^2}{2\sigma^2} = \mathOp{\text{argmin}}\sum_t(y_t - c_t)^2 \]
+\[ \hat{c} = \mathOp{\text{argmin}}_{c \in C}d_{\mathcal{E}}(c, y) = \mathOp{\text{argmin}}\sqrt{\sum_t(y_t - c_y)^2} = \mathOp{\text{argmin}}\sum_t(y_t - c_t)^2 \]
+#+end_solution
