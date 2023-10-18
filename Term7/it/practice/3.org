@@ -1,0 +1,84 @@
+#+setupfile: setup.org
+#+TITLE: Практика 3
+#+date: 15 сентября
+
+#+begin_definition org
+*Преобразование Адамара*
+\[ \hat{f}(u) = \sum_{v \in F_2^n} (-1)^{u \cdot v} f(v) \]
+#+end_definition
+
+#+begin_property org
+\[ \sum_{u \in C_\perp} f(u) = \frac{1}{|C|} \sum_{u \in C} \hat{f}(u) \]
+#+end_property
+
+#+begin_definition org
+\(\omega t (u)\) -- *вес вектора* \(u\), количество единиц
+#+end_definition
+
+
+#+begin_task org
+\[ W_\perp (x, y) = \frac{1}{2^k} W(x + y, x - y) \]
+где \( W(x, y) = \sum_{i = 0}^n \omega_i x^{n - i} y^i \) -- весовой многочлен
+#+end_task
+
+#+begin_note org
+Сумма произведений = Произведение сумм если в \(F_2^n\)
+#+end_note
+
+
+#+begin_sol org
+\-
+#+begin_export latex
+\begin{center}
+\begin{align*}
+  \hat{f}(u) = \sum_{v \in F_2^n} (-1)^{u \cdot v} f(v) & =  \sum_v (-1)^{u \cdot v} x^{n - \omega t(v)} y^{\omega t(v)} \\
+  & = \sum_v (-1)^{\sum_i u_i v_i} x^{n - \sum_i v_i} y^{\sum_i v_i} \\
+  & = \sum_v \prod_i (-1)^{u_i v_i} x^{- v_i} y^{v_i} = \\
+  & = \todo
+\end{align*}
+\end{center}
+#+end_export
+#+end_sol
+
+
+#+begin_task org
+\(k = 9,\ d = 7\)
+\[ N(k, d) \ge d + N\left(k - 1, \left\lceil \frac{d}{2} \right\rceil\right) \]
+#+end_task
+
+#+begin_sol org
+\[ \sum_{i=0}^{k - 1} \left\lceil \frac{d}{2^i} \right\rceil = \sum_{i=0}^{8} \left\lceil \frac{7}{2^i} \right\rceil = 11 \]
+\todo
+#+end_sol
+
+#+begin_task org
+Продекодировать вектор \(y = \begin{pmatrix} 1 & 1 & 1 & 0 & 1 \end{pmatrix} \) используя таблицу стандартной расстановки
+#+end_task
+#+begin_sol org
+\(C = (5, 2)\)
+#+begin_export latex
+\begin{center}
+H = \begin{pmatrix}
+ 1 & 1 & 1 & 0 & 0 \\
+ 1 & 0 & 0 & 1 & 0 \\
+ 1 & 1 & 0 & 0 & 1 
+\end{pmatrix}
+\end{center}
+#+end_export
+\(2^5\) векторов ошибки, \(r = n - k = 5 - 2 = 3\) синдрома. синдром \(S = eH^T\), где \(e\) -- вектор ошибки 
+| \(e\)                                                | \(S\)                                        |
+|------------------------------------------------------+----------------------------------------------|
+| \( \begin{pmatrix} 0 & 0 & 0 & 0 & 0 \end{pmatrix}\) | \(\begin{pmatrix} 0 & 0 & 0 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 0 & 0 & 1 \end{pmatrix}\) | \(\begin{pmatrix} 0 & 0 & 1 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 0 & 1 & 0 \end{pmatrix}\) | \(\begin{pmatrix} 0 & 1 & 0 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 0 & 1 & 1 \end{pmatrix}\) | \(\begin{pmatrix} 0 & 1 & 1 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 1 & 0 & 0 \end{pmatrix}\) | \(\begin{pmatrix} 1 & 0 & 0 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 1 & 0 & 1 \end{pmatrix}\) | \(\begin{pmatrix} 1 & 0 & 1 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 1 & 1 & 0 \end{pmatrix}\) | \(\begin{pmatrix} 1 & 1 & 0 \end{pmatrix} \) |
+| \( \begin{pmatrix} 0 & 0 & 1 & 1 & 1 \end{pmatrix}\) | \(\begin{pmatrix} 1 & 1 & 1 \end{pmatrix} \) |
+Сколько векторов ошибки соответсвует каждому синдрому \(\frac{2^5}{2^3} = 4\). Синдром для вектора \(y\) \( S = y H^T = \begin{pmatrix} 1 & 1 & 1 \end{pmatrix}\). Нужно найти /лидера смежного класса/, такой минимальный по весу вектор, что его синдром равен данному.
+Лидер смежного класса \( x = \begin{pmatrix} 1 & 0 & 0 & 0 & 0 \end{pmatrix} \). \((y - x) H = 0\) -- \(y\) это кодовое слово
+#+end_sol
+
+
+
