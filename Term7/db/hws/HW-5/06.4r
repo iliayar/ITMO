@@ -1,0 +1,1 @@
+pi{StudentId}(pi{StudentId, CourseId}(sigma{LecturerName = :LecturerName}(Students njoin Plan njoin Lecturers njoin Marks)) gdiv pi{CourseId, GroupId}(sigma{LecturerName = :LecturerName}(Plan njoin Lecturers)))
