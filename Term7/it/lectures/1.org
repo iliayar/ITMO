@@ -2,6 +2,7 @@
 #+TITLE: Лекция 1
 #+date: 2 сентября
 
+
 * Введение
 #+ATTR_LATEX: :width 0.3\textwidth
 [[file:1.1.png]]

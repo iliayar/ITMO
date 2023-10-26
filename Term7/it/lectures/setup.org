@@ -1,4 +1,5 @@
 #+AUTHOR: Ilya Yaroshevskiy
 #+LATEX_CLASS: general
 #+LATEX_HEADER: \newcommand{\Co}{\mathcal{C}}
-
+#+LATEX_HEADER: \newcommand{\argmin}{\mathOp{\text{argmin}}}
+#+LATEX_HEADER: \newcommand{\argmax}{\mathOp{\text{argmax}}}
