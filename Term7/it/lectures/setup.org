@@ -1,0 +1,4 @@
+#+AUTHOR: Ilya Yaroshevskiy
+#+LATEX_CLASS: general
+#+LATEX_HEADER: \newcommand{\Co}{\mathcal{C}}
+
