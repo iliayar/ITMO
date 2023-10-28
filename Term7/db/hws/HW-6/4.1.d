@@ -1,7 +1,6 @@
-HasCourse(StudentId, CourseId) :- Students(StudentId, _, GroupId), Plan(GroupId, CourseId, _).
 HasMark(StudentId, CourseId) :- Marks(StudentId, CourseId, _).
 r(StudentName, CourseName) :-
-	       Students(StudentId, StudentName, _),
+	       Students(StudentId, StudentName, GroupId),
 	       Courses(CourseId, CourseName),
-	       HasCourse(StudentId, CourseId),
+           Plan(GroupId, CourseId, _),
 	       not HasMark(StudentId, CourseId).

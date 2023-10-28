@@ -1,8 +1,9 @@
-HasCourse(StudentId, CourseName) :- Courses(CourseId, CourseName), Students(StudentId, _, GroupId), Plan(GroupId, CourseId, _).
-HasMark(StudentId, CourseName) :- Courses(CourseId, CourseName), Marks(StudentId, CourseId, _).
-Helper(StudentId, StudentName, GroupName, CourseName) :-
+HasMark(StudentId, CourseName) :- 
+    Courses(CourseId, CourseName),
+    Marks(StudentId, CourseId, _).
+r(StudentId, StudentName, GroupName) :-
+         Courses(CourseId, :CourseName),
 	     Students(StudentId, StudentName, GroupId),
 	     Groups(GroupId, GroupName),
-	     HasCourse(StudentId, CourseName),
-	     not HasMark(StudentId, CourseName).
-r(StudentId, StudentName, GroupName) :- Helper(StudentId, StudentName, GroupName, :CourseName).
+         Plan(GroupId, CourseId, _),
+	     not HasMark(StudentId, :CourseName).

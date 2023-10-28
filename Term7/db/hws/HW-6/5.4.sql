@@ -1,15 +1,26 @@
-SELECT StudentId
-FROM Students AS S
-WHERE NOT EXISTS (
-      SELECT *
-      FROM Lecturers, Plan
-      WHERE Lecturers.LecturerName = :LecturerName
-      	    AND Plan.LecturerId = Lecturers.LecturerId
-	    AND Plan.GroupId = S.GroupId
-	    AND NOT EXISTS (
-      	    	SELECT *
-	    	FROM Marks
-	    	WHERE Marks.StudentId = S.StudentId
-	    	      AND Marks.CourseId = Plan.CourseId
-            )
-);
+SELECT
+    StudentId
+FROM
+    Students
+EXCEPT
+SELECT
+    StudentId
+FROM (
+    SELECT
+        Students.StudentId,
+        Plan.CourseId
+    FROM
+        Students,
+        Lecturers,
+        Plan
+    WHERE
+        Lecturers.LecturerName = :LecturerName
+        AND Plan.GroupId = Students.GroupId
+        AND Plan.LecturerId = Lecturers.LecturerId
+    EXCEPT
+    SELECT
+        StudentId,
+        CourseId
+    FROM
+        Marks) sq;
+

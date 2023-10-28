@@ -1,13 +1,29 @@
-SELECT GroupId, CourseId
-From Groups AS G, Courses as C
-WHERE NOT EXISTS (
-      SELECT *
-      FROM Students
-      WHERE Students.GroupId = G.GroupId
-      	    AND NOT EXISTS (
-	    	SELECT *
-		FROM Marks
-		WHERE Marks.StudentId = Students.StudentId
-		      AND Marks.CourseId = C.CourseId
-	    )
-);
+SELECT
+    Groups.GroupId,
+    Courses.CourseId
+FROM
+    GROUPS,
+    Courses
+EXCEPT
+SELECT
+    GroupId,
+    CourseId
+FROM (
+    SELECT
+        Students.StudentId,
+        Students.GroupId,
+        Courses.CourseId
+    FROM
+        Students,
+        Courses
+    EXCEPT
+    SELECT
+        Students.StudentId,
+        Students.GroupId,
+        Marks.CourseId
+    FROM
+        Students,
+        Marks
+    WHERE
+        Students.StudentId = Marks.StudentId) sq;
+

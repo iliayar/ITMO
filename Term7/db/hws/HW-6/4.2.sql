@@ -1,14 +1,21 @@
-SELECT StudentName, CourseName
-FROM (
-     SELECT DISTINCT StudentId, CourseId
-     FROM Students, Plan
-     WHERE Students.GroupId = Plan.GroupId
-     	   AND Students.StudentId NOT IN (
-	       SELECT DISTINCT StudentId
-	       FROM Marks
-	       WHERE Marks.CourseId = Plan.CourseId
-	       	     AND Marks.Mark <= 2
-	   )
-) AS SC, Students, Courses
-WHERE SC.StudentId = Students.StudentID
-      AND SC.CourseId = Courses.CourseId;
+SELECT
+    StudentName,
+    CourseName
+FROM ( SELECT DISTINCT
+        Students.StudentId,
+        Plan.CourseId
+    FROM
+        Students,
+        Plan,
+        Marks
+    WHERE
+        Students.GroupId = Plan.GroupId
+        AND Students.StudentId = Marks.StudentId
+        AND Marks.CourseId = Plan.CourseId
+        AND Marks.Mark <= 2) SC,
+    Students,
+    Courses
+WHERE
+    SC.StudentId = Students.StudentID
+    AND SC.CourseId = Courses.CourseId;
+
