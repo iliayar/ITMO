@@ -10,3 +10,5 @@
 #+INCLUDE: "3.org" :lines "4-"
 * Лекция 4
 #+INCLUDE: "4.org" :lines "4-"
+* Лекция 5
+#+INCLUDE: "5.org" :lines "4-"
