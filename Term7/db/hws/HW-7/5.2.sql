@@ -1,14 +1,21 @@
-CREATE VIEW AllMarks(StudentId, Marks) AS
-SELECT SM.StudentId, COUNT(SM.Mark) AS Marks
-FROM (
-     SELECT Students.StudentId, Mark
-     FROM Students
-     	  LEFT JOIN Marks
-	       ON Students.StudentId = Marks.StudentId
-     UNION ALL
-     SELECT Students.StudentId, Mark
-     FROM Students
-     	  LEFT JOIN NewMarks
-	       ON Students.StudentId = NewMarks.StudentId
-) SM
-GROUP BY StudentId;
+CREATE VIEW AllMarks (StudentId, Marks) AS
+SELECT
+    Students.StudentId,
+    COUNT(M.Mark) AS Marks
+FROM
+    Students
+    LEFT JOIN (
+        SELECT
+            StudentId,
+            Mark
+        FROM
+            Marks
+    UNION ALL
+    SELECT
+        StudentId,
+        Mark
+    FROM
+        NewMarks) M ON Students.StudentId = M.StudentId
+GROUP BY
+    Students.StudentId;
+
