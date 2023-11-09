@@ -10,6 +10,7 @@
 - [[https://conspects.iliay.ar/Term7/it/lectures/4.pdf][Lecture 4]]
 - [[https://conspects.iliay.ar/Term7/it/lectures/5.pdf][Lecture 5]]
 - [[https://conspects.iliay.ar/Term7/it/lectures/6.pdf][Lecture 6]]
+- [[https://conspects.iliay.ar/Term7/it/lectures/7.pdf][Lecture 7]]
 * Practice
 - [[https://conspects.iliay.ar/Term7/it/practice/1.pdf][Practice 1]]
 - [[https://conspects.iliay.ar/Term7/it/practice/2.pdf][Practice 2]]
