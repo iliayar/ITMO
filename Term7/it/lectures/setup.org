@@ -3,3 +3,8 @@
 #+LATEX_HEADER: \newcommand{\Co}{\mathcal{C}}
 #+LATEX_HEADER: \newcommand{\argmin}{\mathOp{\text{argmin}}}
 #+LATEX_HEADER: \newcommand{\argmax}{\mathOp{\text{argmax}}}
+#+LATEX_HEADER: \newcommand{\F}{\mathbb{F}}
+#+LATEX_HEADER: \newcommand{\Z}{\mathbb{Z}}
+#+LATEX_HEADER: \DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+#+LATEX_HEADER: \newcommand{\One}{\mymathbb{1}}
+#+LATEX_HEADER: \newcommand{\Zero}{\mymathbb{0}}
