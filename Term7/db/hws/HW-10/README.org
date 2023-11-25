@@ -4,8 +4,6 @@
 * 1
 ** 1
 #+begin_src sql
-START TRANSACTION READ ONLY ISOLATION LEVEL READ COMMITTED;
-
 -- Аномалии:
 --   - Косая запись - нет, read only
 --   - Фантомная запись - нет, один SELECT
@@ -15,30 +13,26 @@ START TRANSACTION READ ONLY ISOLATION LEVEL READ COMMITTED;
 -- Избавляемся от аномалий:
 --   - Грязное чтение
 -- Достаточно уровня изоляции Read commited
+START TRANSACTION READ ONLY ISOLATION LEVEL READ COMMITTED;
 #+end_src
 
 ** 2
 #+begin_src sql
-START TRANSACTION READ WRITE ISOLATION LEVEL SNAPSHOT;
-
 -- Аномалии:
 --   - Косая запись - нет, изменяем данные только в Tickets
---   - Фантомная запись - есть, между проверкой что место свободно
---     и резервированием может быть добавление записи в Tickets
+--   - Фантомная запись - нет, читаем один раз одну строчку из Tickets
 --   - Неповторяемое чтение - есть, читаем несколько раз из Flights
 --   - Грязное чтение - есть, можем прочитать, к примеру,
 --     что место куплено, хотя транзакция не завершена
 -- Избавляемся от аномалий:
---   - Фантомная запись
 --   - Неповторяемое чтение
 --   - Грязное чтение
--- Достаточно уровня изоляции Snapshot
+-- Достаточно уровня изоляции Repeatable read
+START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
 #+end_src
 
 ** 3
 #+begin_src sql
-START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
-
 -- Аномалии:
 --   - Косая запись - нет, изменяем данные только в Tickets
 --   - Фантомная запись - нет, не может произойти мешающие добавление данных в Tickets
@@ -49,30 +43,26 @@ START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
 --   - Неповторяемое чтение
 --   - Грязное чтение
 -- Достаточно уровня изоляции Repeatable read
+START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
 #+end_src
 
 ** 4
 #+begin_src sql
-START TRANSACTION READ WRITE ISOLATION LEVEL SNAPSHOT;
-
 -- Аномалии:
 --   - Косая запись - нет, изменяем данные только в Tickets
---   - Фантомная запись - есть, между проверкой что место свободно
---     и резервированием может быть добавление записи в Tickets
+--   - Фантомная запись - нет, читаем один раз одну строчку из Tickets
 --   - Неповторяемое чтение - есть, читаем несколько раз из Flights
 --   - Грязное чтение - есть, можем прочитать, к примеру,
 --     что место куплено, хотя транзакция не завершена
 -- Избавляемся от аномалий:
---   - Фантомная запись
 --   - Неповторяемое чтение
 --   - Грязное чтение
--- Достаточно уровня изоляции Snapshot
+-- Достаточно уровня изоляции Repeatable read
+START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
 #+end_src
 
 ** 5
 #+begin_src sql
-START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
-
 -- Аномалии:
 --   - Косая запись - нет, изменяем данные только в Tickets
 --   - Фантомная запись - нет, не может произойти мешающие добавление данных в Tickets
@@ -83,46 +73,41 @@ START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
 --   - Неповторяемое чтение
 --   - Грязное чтение
 -- Достаточно уровня изоляции Repeatable read
+START TRANSACTION READ WRITE ISOLATION LEVEL REPEATABLE READ;
 #+end_src
 
 ** 6
 #+begin_src sql
-START TRANSACTION READ ONLY ISOLATION LEVEL SNAPSHOT;
-
 -- Аномалии:
 --   - Косая запись - нет, read only
---   - Фантомная запись - есть, может произойти запись в Tickets
+--   - Фантомная запись - нет, читаем один из Tickets
 --   - Неповторяемое чтение - есть, читаем несколько раз из Flights
 --   - Грязное чтение - есть, можем прочитать, к примеру,
 --     что место куплено, хотя транзакция не завершена
 -- Избавляемся от аномалий:
---   - Фантомная запись
 --   - Неповторяемое чтение
 --   - Грязное чтение
--- Достаточно уровня изоляции Snapshot
+-- Достаточно уровня изоляции Repeatable read
+START TRANSACTION READ ONLY ISOLATION LEVEL REPEATABLE READ;
 #+end_src
 
 ** 7
 #+begin_src sql
-START TRANSACTION READ ONLY ISOLATION LEVEL SNAPSHOT;
-
 -- Аномалии:
 --   - Косая запись - нет, изменяем данные только в Tickets
---   - Фантомная запись - есть, может произойти запись в Tickets
+--   - Фантомная запись - нет, читаем один из Tickets
 --   - Неповторяемое чтение - есть, читаем несколько раз из Flights
 --   - Грязное чтение - есть, можем прочитать, к примеру,
 --     что место куплено, хотя транзакция не завершена
 -- Избавляемся от аномалий:
---   - Фантомная запись
 --   - Неповторяемое чтение
 --   - Грязное чтение
--- Достаточно уровня изоляции Snapshot
+-- Достаточно уровня изоляции Repeatable read
+START TRANSACTION READ ONLY ISOLATION LEVEL REPEATABLE READ;
 #+end_src
 
 ** 8
 #+begin_src sql
-START TRANSACTION READ ONLY ISOLATION LEVEL SNAPSHOT;
-
 -- Аномалии:
 --   - Косая запись - нет, изменяем данные только в Tickets
 --   - Фантомная запись - есть, может произойти запись в Tickets
@@ -134,6 +119,7 @@ START TRANSACTION READ ONLY ISOLATION LEVEL SNAPSHOT;
 --   - Неповторяемое чтение
 --   - Грязное чтение
 -- Достаточно уровня изоляции Snapshot
+START TRANSACTION READ WRITE ISOLATION LEVEL SNAPSHOT;
 #+end_src
 * 2
 ** 0
