@@ -1,5 +1,12 @@
-SELECT RunId, SessionId, Letter, SubmitTime
-FROM Sessions
-     NATURAL JOIN Runs
-WHERE Accepted = 1
-      AND ContestId = :ContestId;
+SELECT
+    RunId,
+    TeamId,
+    SubmitTime,
+    Accepted
+FROM
+    Sessions
+    NATURAL JOIN Runs
+WHERE
+    Letter = :Letter
+    AND ContestId = :ContestId;
+

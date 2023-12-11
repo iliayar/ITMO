@@ -1,1 +1,1 @@
-pi{RunId, SessionId, Letter, SubmitTime, Accepted}(sigma{TeamId = :TeamId && ContestId = :ContestId}(Sessions nj Runs))
+pi{TeamName}(sigma{ContestId = :ContestId}(Teams njoin Sessions))

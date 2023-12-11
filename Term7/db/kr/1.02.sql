@@ -1,5 +1,10 @@
-SELECT RunId, SessionId, Letter, SubmitTime, Accepted
-FROM Sessions
-     NATURAL JOIN Runs
-WHERE TeamId = :TeamId
-      AND ContestId = :ContestId;
+SELECT
+    TeamName
+FROM ( SELECT DISTINCT
+        TeamId
+    FROM
+        Sessions
+    WHERE
+        ContestId = :ContestId) sq
+    NATURAL JOIN Teams;
+

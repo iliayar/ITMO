@@ -1,7 +1,7 @@
 UPDATE
     Runs
 SET
-    Accepted = 1
+    Accepted = 0
 WHERE
     Runs.RunId IN (
         SELECT
@@ -9,13 +9,14 @@ WHERE
         FROM (
             SELECT
                 SessionId,
-                MAX(SubmitTime) AS SubmitTime
+                Letter,
+                MIN(SubmitTime) AS SubmitTime
             FROM
                 Runs
-            WHERE
-                Accepted = 0
             GROUP BY
-                SessionId) sq
+                SessionId,
+                Letter) sq
             JOIN Runs ON sq.SessionId = Runs.SessionId
-                AND sq.SubmitTime = Runs.SubmitTime);
+                AND sq.SubmitTime = Runs.SubmitTime
+                AND sq.Letter = Runs.Letter);
 

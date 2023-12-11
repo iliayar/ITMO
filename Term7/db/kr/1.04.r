@@ -1,1 +1,1 @@
-pi{TeamName}(Teams diff pi{TeamId, TeamName}(sigma{Accepted = 1}(Runs nj Sessions nj Teams)))
+pi{RunId, SessionId, Letter, SubmitTime}(sigma{ContestId = :ContestId && Accepted = 0}(Sessions nj Runs))

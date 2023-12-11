@@ -3,4 +3,4 @@ FROM Sessions
      NATURAL JOIN Runs
 WHERE ContestId = :ContestId
       AND Letter = :Letter
-      AND Accepted = 1;
+      AND Accepted = 0;

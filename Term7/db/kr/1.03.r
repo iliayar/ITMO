@@ -1,1 +1,2 @@
-pi{RunId, SessionId, Letter, SubmitTime}(sigma{ContestId = :ContestId && Accepted = 1}(Sessions nj Runs))
+pi{RunId, TeamId, SubmitTime, Accepted}(sigma{Letter = :Letter && ContestId = :ContestId}(Sessions nj Runs))
+
