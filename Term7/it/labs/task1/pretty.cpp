@@ -20,8 +20,6 @@
 
 #define PARAM(expr) #expr "=" << expr << ", "
 
-#define INF 1000000
-
 template <typename K, typename V> struct map_pair {
   K k;
   V v;
@@ -138,36 +136,32 @@ public:
   }
 
   auto operator+=(vector<T> const &other) -> vector<T> & {
-    auto [s] = shape();
-    auto [n] = other.shape();
-    assert(s == n, "cannot add vectors with different size");
-    for (int i = 0; i < s; ++i) {
-      get(i) += other.get(i);
+    assert(size_ == other.size_, "cannot add vectors with different size");
+    for (int i = 0; i < size_; ++i) {
+      data_[i] += other.data_[i];
     }
     return *this;
   }
 
   auto operator*=(vector<T> const &other) -> vector<T> & {
-    auto [s] = shape();
-    auto [n] = other.shape();
-    assert(s == n, "cannot multiply vectors with different size");
-    for (int i = 0; i < s; ++i) {
-      get(i) *= other.get(i);
+    assert(size_ == other.size_, "cannot multiply vectors with different size");
+    for (int i = 0; i < size_; ++i) {
+      data_[i] *= other.data_[i];
     }
     return *this;
   }
 
   auto operator+(vector<T> const &other) const -> vector<T> {
-    auto [s] = shape();
-    vector<T> res = vector<T>::zero(s);
+    assert(size_ == other.size_, "cannot add vectors with different size");
+    vector<T> res = vector<T>::zero(size_);
     res += other;
     res += *this;
     return res;
   }
 
   auto operator*(vector<T> const &other) const -> vector<T> {
-    auto [s] = shape();
-    vector<T> res = vector<T>::one(s);
+    assert(size_ == other.size_, "cannot multiply vectors with different size");
+    vector<T> res = vector<T>::one(size_);
     res *= other;
     res *= *this;
     return res;
@@ -175,13 +169,12 @@ public:
 
   auto operator*(matrix<T> const &m) const -> vector<T> {
     auto [n, k] = m.shape();
-    auto [s] = shape();
-    assert(n == s, "multiply to matrix of invalid shape");
+    assert(n == size_, "multiply to matrix of invalid shape");
 
     vector<T> res = vector<T>::zero(k);
     for (int i = 0; i < k; ++i) {
-      for (int j = 0; j < s; ++j) {
-        res.get(i) += m.get(j, i) * get(j);
+      for (int j = 0; j < size_; ++j) {
+        res.get(i) += m.get(j, i) * data_[j];
       };
     }
 
@@ -189,19 +182,14 @@ public:
   }
 
   auto operator==(vector<T> const &other) const -> bool {
-    auto [n] = shape();
-    for (int i = 0; i < n; i++) {
-      if (get(i) != other.get(i))
-        return false;
-    }
-    return true;
+    return data_ == other.data_;
   }
   auto operator!=(vector<T> const &other) const -> bool {
     return !(*this == other);
   }
 
   friend auto operator<<(std::ostream &out, vector const &v) -> std::ostream & {
-    auto [n] = v.shape();
+    auto [n] = shape();
     out << "|";
     for (int i = 0; i < n; ++i) {
       out << v.get(i);
@@ -213,9 +201,8 @@ public:
   }
 
   friend auto operator>>(std::istream &in, vector &v) -> std::istream & {
-    auto [n] = v.shape();
-    for (int i = 0; i < n; ++i) {
-      in >> v.get(i);
+    for (int i = 0; i < v.size_; ++i) {
+      in >> v.data_[i];
     }
     return in;
   }
@@ -457,9 +444,7 @@ public:
   }
 
   auto operator==(FF<n> const &other) const -> bool { return v_ == other.v_; }
-  auto operator!=(FF<n> const &other) const -> bool {
-    return !(*this == other);
-  }
+  auto operator!=(FF<n> const &other) const -> bool { return !(*this == other); }
 
   void swap(FF<n> &&other) { std::swap(v_, other.v_); }
 
@@ -590,90 +575,10 @@ auto operator<<(std::ostream &out, Edge<T> const &e) -> std::ostream & {
   return out;
 }
 
-class bitvec {
-  using Inner = std::uint64_t;
-
-public:
-  explicit bitvec(Inner data, int size) : data_(data), size_(size) {
-    assert(size_ < sizeof(Inner) * 8, "Size too large for inner type");
-  }
-  static auto zero(int size) -> bitvec { return bitvec(0, size); }
-
-  static auto from_vec(vector<FF<2>> vec) -> bitvec {
-    auto [n] = vec.shape();
-    auto r = bitvec::zero(n);
-    for (int i = 0; i < n; ++i) {
-      r.set(i, vec.get(i));
-    }
-    return r;
-  };
-
-  auto to_vec() -> vector<FF<2>> {
-    auto [n] = shape();
-    auto r = vector<FF<2>>::zero(n);
-    for (int i = 0; i < n; ++i) {
-      r.get(i) = get(i);
-    }
-    return r;
-  }
-
-  auto to_int() const -> int { return data_; }
-
-  auto shape() const -> std::tuple<int> { return {size_}; }
-
-  auto get(int i) const -> FF<2> {
-    assert(i < size_, "bitvec out of range");
-    return FF<2>((data_ >> i) & 0x1);
-  }
-
-  void set(int i, FF<2> val) {
-    assert(i < size_, "bitvec out of range");
-    if (val == 0_f) {
-      data_ &= ~(((Inner)(1)) << i);
-    } else {
-      data_ |= 1 << i;
-    }
-  }
-
-  friend struct std::hash<bitvec>;
-
-  auto operator==(bitvec const &other) const -> bool {
-    return size_ == other.size_ && data_ == other.data_;
-  }
-  auto operator!=(bitvec const &other) const -> bool {
-    return !(*this == other);
-  }
-
-  friend void increment(bitvec &v) {
-    v.data_ += 1;
-    v.data_ &= ((1 << v.size_) - 1);
-  }
-
-  friend auto operator<<(std::ostream &out, bitvec const &v) -> std::ostream & {
-    auto [n] = v.shape();
-    out << "|";
-    for (int i = 0; i < n; ++i) {
-      out << v.get(i);
-      if (i != n - 1)
-        out << " ";
-    }
-    out << "|";
-    return out;
-  }
-
-private:
-  Inner data_;
-  int size_;
-};
-
-template <> struct std::hash<bitvec> {
-  auto operator()(bitvec const &v) const -> std::size_t { return v.data_; }
-};
-
 using vF2 = vector<FF<2>>;
 
 template <typename T>
-using Layer = std::unordered_map<bitvec, std::unordered_map<bitvec, Edge<T>>>;
+using Layer = std::unordered_map<vF2, std::unordered_map<vF2, Edge<T>>>;
 
 template <typename T> using Trellis = std::vector<Layer<T>>;
 
@@ -715,27 +620,27 @@ auto get_active_rows(Spans const &spans, int i) -> Idxs {
   return res;
 }
 
-auto projection(bitvec const &v, Idxs const &idxs) -> bitvec {
+auto projection(vF2 const &v, Idxs const &idxs) -> vF2 {
   auto [n] = v.shape();
   int m = idxs.size();
 
-  auto res = bitvec::zero(m);
+  vF2 res = vF2::zero(m);
 
   for (int i = 0, j = 0; i < n; ++i) {
     if (idxs.find(i) != idxs.end()) {
-      res.set(j++, v.get(i));
+      res.get(j++) = v.get(i);
     }
   }
 
   return res;
 }
 
-auto extend_zeros(bitvec const &v, int n, Idxs const &idxs) -> bitvec {
-  auto res = bitvec::zero(n);
+auto extend_zeros(vF2 const &v, int n, Idxs const &idxs) -> vF2 {
+  vF2 res = vF2::zero(n);
 
   for (int i = 0, j = 0; i < n; ++i) {
     if (idxs.find(i) != idxs.end()) {
-      res.set(i, v.get(j++));
+      res.get(i) = v.get(j++);
     }
   }
 
@@ -764,17 +669,16 @@ auto make_trellis(mF2 mat) -> TF2 {
     auto ten = active_rows[i + 1];
     te.merge(ten);
 
-    auto c = bitvec::zero(te.size());
+    auto c = vF2::zero(te.size());
     auto ce = c;
     do {
       increment(c);
       auto t = extend_zeros(c, n, te);
       auto vp = projection(t, active_rows[i]);
       auto vi = projection(t, active_rows[i + 1]);
-      res[i][vp].insert_or_assign(
-          vi, EF2{
-                  .v = sum(mat.get(all, i).vec() * t.to_vec()),
-              });
+      res[i][vp].insert_or_assign(vi, EF2{
+                                          .v = sum(mat.get(all, i).vec() * t),
+                                      });
     } while (c != ce);
   }
 
@@ -791,7 +695,7 @@ void setup() {
 }
 
 auto count_nodes(TF2 const &trellis, int layer) -> int {
-  std::unordered_set<bitvec> nodes;
+  std::unordered_set<vF2> nodes;
   if (layer > 0) {
     for (auto const &[v, tos] : trellis[layer - 1]) {
       for (auto const &[vto, _] : tos) {
@@ -822,28 +726,17 @@ private:
   matrix<T> m_;
 };
 
-class SoftTrellisDecoder {
+template <typename T> class SoftTrellisDecoder {
 public:
   using ValueType = double;
 
-  SoftTrellisDecoder(Trellis<FF<2>> trellis) : trellis_(std::move(trellis)) {}
+  SoftTrellisDecoder(Trellis<T> trellis) : trellis_(std::move(trellis)) {}
 
   auto length() const -> int { return trellis_.size() - 1; }
 
-  struct RoutePretty {
-    bitvec from;
-    FF<2> value;
-
-    friend auto operator<<(std::ostream &out, RoutePretty const &r)
-        -> std::ostream & {
-      out << r.from << " (" << r.value << ")";
-      return out;
-    }
-  };
-
   struct Route {
-    int from;
-    FF<2> value;
+    vector<T> from;
+    T value;
 
     friend auto operator<<(std::ostream &out, Route const &r)
         -> std::ostream & {
@@ -852,9 +745,9 @@ public:
     }
   };
 
-  auto decode_pretty(vector<ValueType> enc) const -> vector<FF<2>> {
-    std::vector<std::unordered_map<bitvec, double>> cost(trellis_.size());
-    std::vector<std::unordered_map<bitvec, RoutePretty>> path(trellis_.size());
+  auto decode(vector<ValueType> enc) const -> vector<T> {
+    std::vector<std::unordered_map<::vector<T>, double>> cost(trellis_.size());
+    std::vector<std::unordered_map<::vector<T>, Route>> path(trellis_.size());
 
     for (const auto &[from, _] : trellis_[0]) {
       cost[0].insert_or_assign(from, 0);
@@ -868,15 +761,14 @@ public:
           if (cost[i].find(to) == cost[i].end() ||
               cost[i][to] < cost[i - 1][from] + w) {
             cost[i].insert_or_assign(to, cost[i - 1][from] + w);
-            path[i].insert_or_assign(to,
-                                     RoutePretty{.from = from, .value = e.v});
+            path[i].insert_or_assign(to, Route{.from = from, .value = e.v});
           }
         }
       }
     }
 
-    auto s = bitvec::zero(0);
-    auto dec = vector<FF<2>>::zero(path.size() - 1);
+    auto s = vector<T>::zero(0);
+    auto dec = vector<T>::zero(path.size() - 1);
     for (int i = 0; i < path.size() - 1; ++i) {
       auto &r = path[path.size() - i - 1].at(s);
       dec.get(path.size() - i - 2) = r.value;
@@ -886,59 +778,8 @@ public:
     return dec;
   }
 
-  auto decode(vector<ValueType> enc) const -> vector<FF<2>> {
-    int k = 0;
-    for (int i = 0; i < trellis_.size(); ++i) {
-      for (const auto &[from, tos] : trellis_[i]) {
-        auto [sf] = from.shape();
-        if (k < sf)
-          k = sf;
-        for (const auto &[to, _] : tos) {
-          auto [st] = to.shape();
-          if (k < st)
-            k = st;
-        }
-      }
-    }
-
-    std::vector<std::vector<double>> cost(trellis_.size(),
-                                          std::vector<double>(1 << k, -INF));
-    std::vector<std::vector<Route>> path(
-        trellis_.size(),
-        std::vector<Route>(1 << k, Route{.from = -1, .value = 0_f}));
-
-    for (const auto &[from, _] : trellis_[0]) {
-      cost[0][from.to_int()] = 0;
-    }
-
-    for (int i = 1; i < trellis_.size(); ++i) {
-      double wa = enc.get(i - 1);
-      for (const auto &[from, tos] : trellis_[i - 1]) {
-        auto fi = from.to_int();
-        for (const auto &[to, e] : tos) {
-          auto ti = to.to_int();
-          double w = e.v == 1_f ? -wa : wa;
-          if (cost[i][ti] < cost[i - 1][fi] + w) {
-            cost[i][ti] = cost[i - 1][fi] + w;
-            path[i][ti] = Route{.from = fi, .value = e.v};
-          }
-        }
-      }
-    }
-
-    int s = 0;
-    auto dec = vector<FF<2>>::zero(path.size() - 1);
-    for (int i = 0; i < path.size() - 1; ++i) {
-      auto &r = path[path.size() - i - 1][s];
-      dec.get(path.size() - i - 2) = r.value;
-      s = r.from;
-    }
-
-    return dec;
-  }
-
 private:
-  Trellis<FF<2>> trellis_;
+  Trellis<T> trellis_;
 };
 
 auto random_generator() -> auto & {
@@ -950,7 +791,7 @@ auto random_generator() -> auto & {
 
 template <typename T> auto rand_int_uniform_vec(int size) -> vector<T> {
   auto &gen = random_generator();
-  static std::uniform_int_distribution distr;
+  std::uniform_int_distribution distr;
 
   auto res = vector<T>::zero(size);
   for (int i = 0; i < size; ++i) {
@@ -960,26 +801,31 @@ template <typename T> auto rand_int_uniform_vec(int size) -> vector<T> {
   return res;
 }
 
+auto rand_float_normal(double m, double s) {
+  auto &gen = random_generator();
+  std::normal_distribution<double> distr(m, s);
+  return distr(gen);
+}
+
 struct BinWhiteNoiseChannel {
   auto send(vector<F2> in) -> vector<double> {
-    auto &gen = random_generator();
     auto [n] = in.shape();
     auto res = vector<double>::zero(n);
     for (int i = 0; i < n; ++i) {
-      res.get(i) = (in.get(i) == 1_f ? -1. : 1.) + distr_(gen);
+      res.get(i) =
+          (in.get(i) == 1_f ? -1. : 1.) + rand_float_normal(0., sigma_);
     }
     return res;
   }
 
-  std::normal_distribution<double> distr_;
+  double sigma_;
 };
 
 struct BinWhiteNoiseChannelF {
   using ParamType = double;
   BinWhiteNoiseChannel create(double p) const {
     double s = sqrt((0.5 * k_ / n_) * pow(10., -p / 10.));
-    std::normal_distribution<double> distr(0, s);
-    return BinWhiteNoiseChannel{.distr_ = distr};
+    return BinWhiteNoiseChannel{.sigma_ = s};
   }
 
   int n_, k_;
@@ -1032,7 +878,6 @@ void handle_commands(Encoder const &encoder, Decoder const &decoder,
       }
 
       double error_rate = static_cast<double>(errors) / total;
-      // std::cout << std::scientific << error_rate << std::endl;
       std::cout << error_rate << std::endl;
     }
   }
