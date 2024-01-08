@@ -23,13 +23,15 @@
 Для простоты, будем считать \(\mathcal{Y}\) дискретным
 
 * Параметр Бхаттачарьи
+#+NAME: Параметр Бхаттачарьи
+#+begin_definition org
 Рассмотрим приемник по максимуму прадоподобия \(\tilde{c} = \argmax_{c \in {0, 1}} W(y |c )\). Передаваемые символы рановероятны. Вероятность ошибки
 #+begin_export latex
 \begin{center}
 \begin{align*}
 P_c & = P\{c=0\}P\{err | e =0\} + P\{c = 1\} P\{err | c = 1\} = \\
 & = \frac{1}{2} \sum_{y: W(y | 0) < W(y | 1)} W(y | 0) + \frac{1}{2} \sum_{y: W(y | 1) < W(y | 0)} W(y|1) = \\
-& = \frac{1}{2} \sum_{y: \frac{W(y|1)}{W(y|0)} > 1} W(y|0) + \frac{1}{2} \sum_{y: \frac{W(y|0)}{W(y | 1)} > 1} W(y | 1) =
+& = \frac{1}{2} \sum_{y: \frac{W(y|1)}{W(y|0)} > 1} W(y|0) + \frac{1}{2} \sum_{y: \frac{W(y|0)}{W(y | 1)} > 1} W(y | 1) = \\
 & = \frac{1}{2} \sum_{y \in \mathcal{Y}} \sum_{c \in \{0, 1\}} \left( W(y|c) \chi\left(\frac{W(y | 1 - c)}{W(y | c)}\right)\right)
 \end{align*}
 \end{center}
@@ -37,6 +39,7 @@ P_c & = P\{c=0\}P\{err | e =0\} + P\{c = 1\} P\{err | c = 1\} = \\
 
 Индикаторная фунукция \(\chi(z) = \begin{cases} 1 & , z \ge 1 \\ 0 & , z < 1 \end{cases}\)
 \[ P_c \le \frac{1}{2} \sum_{y \in \mathcal{Y}} \sum_{c \in \{0, 1\}} \left( W(y|c) \chi\left(\frac{W(y | 1 - c)}{W(y | c)}\right)\right) = \sum_{y\in\mathcal{Y}} \sqrt{W(y|0)W(y | 1)} = Z(W) \]
+#+end_definition
 
 #+begin_examp org
 Двоичный стирающий канал
@@ -54,12 +57,40 @@ P_c & = P\{c=0\}P\{err | e =0\} + P\{c = 1\} P\{err | c = 1\} = \\
 Сущесутвуют методы сколь угодно надежной передачи данных со скоростью \(R < I(W)\). При передаче данных со скоростью \(R > I(W)\) вероятность ошибки ограничена снизу положительной величиной. Для многих каналов оптимальным распределением символов на входе \(P\{x\}\) является равномерное
 
 * Поляризация канала
-Рассмотрим линейное преобразование, задаваемое \todo (Картинка)
+#+NAME: Поляризация канала
+#+begin_definition org
+Рассмотрим линейное преобразование, задаваемое
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\node (u0) at (0, 1) [draw] {\(u_0\)};
+\node (u1) at (0, -1) [draw] {\(u_1\)};
+\node (p) at (2, 1) [draw, circle] {\(+\)};
+\node (e) at (2, -1) [draw, circle] {\(=\)};
+\node (c0) at (4, 1) [draw] {\(c_0\)};
+\node (c1) at (4, -1) [draw] {\(c_1\)};
+\node (BEC1) at (6, 1) [draw, ellipse] {\(\text{BEC}\)};
+\node (BEC2) at (6, -1) [draw, ellipse] {\(\text{BEC}\)};
+\node (y0) at (8, 1) [draw] {\(y_0\)};
+\node (y1) at (8, -1) [draw] {\(y_1\)};
+\draw (u0) -- (p);
+\draw (u1) -- (p);
+\draw (u1) -- (e);
+\draw (p) -- (c0);
+\draw (e) -- (c1);
+\draw (c0) -- (BEC1);
+\draw (c1) -- (BEC2);
+\draw (BEC1) -- (y0);
+\draw (BEC2) -- (y1);
+\end{tikzpicture}
+\end{center}
+#+end_export
 \[ \begin{pmatrix} c_0 & c_1 \end{pmatrix} = \begin{pmatrix} u_0 & u_1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix} \]
 Двоичный стирающий канал: \(y = \begin{cases} c_i & , \text{с вероятностью } 1 - p \\ e & , \text{с вероятностью } p \end{cases}\)
 
 - \(u_0\) не может быть восстановлен из \(y_0, y_1\) с вероятностью \(1 - (1 - p)^2 = 2p - p^2 \ge p\)
 - \(u_1\) не может быть восстановлен из \(u_0, y_0, y_1\) с вероятностью \(p^2 \le p\)
+#+end_definition
 
 * Битовые подканалы
 Пусть \(A_m = \begin{pmatrix} 1 & 0 u 1 & 1 \end{pmatrix} ^{\otimes m}\), где \(\otimes m\) обозначает \(m\)-кратное произведение Кронекерера матрица с собой. Пусть \(n = 2^m\).
@@ -95,6 +126,7 @@ W_{\lambda}^{(2i + 1)} (y_0^{2^\lambda - 1}, u_0^{2i} | u_{2i + 1}) = \frac{1}{2
 \todo Картинка ez
 
 * Параметры подканалов
+#+NAME: Параметр Бхаттачарьи_def2
 #+begin_definition org
 *Параметры Бхаттачарьи* битовых подканалов \(Z_{m, i} = Z(W_m^{(i)})\)
 \[ Z_{m, 2i + 1} \le Z{m, 2i} \le 2 Z_{m-1, i} - Z_{m-1, i}^2 \]
@@ -102,22 +134,32 @@ W_{\lambda}^{(2i + 1)} (y_0^{2^\lambda - 1}, u_0^{2i} | u_{2i + 1}) = \frac{1}{2
 Строгое равенство в случае двоичного стирающего канала
 #+end_definition
 
+#+NAME: Поляризация канала_rem_th
+#+begin_rem org
 Пропускные способности битовых подканалов \(I_{m, i}  = I(W_m^{(i)})\)
 \[ I_{m ,2i} + I_{m, 2i + 1} = 2 I_{m - 1, i} \]
 \[ I_{m, 2i} \le I_{m, 2i + 1} \]
 \[ \sqrt{1 - Z(W)^2} \ge I(W) \ge \log \frac{2}{1 + Z(W)} \]
 
-Для любого \(\delta \in (0, 1)\) при \(m \to \infty\) доля подканалов с \(I(W_m^{(i)} \in (1 - \delta, 1]\) стермиться к \(I(W_0^{(0)} - I(W)\), а доля подканалов с \(I(W_m^{(i)} \in [0, \delta)\) стремится к \(1 - I(W)\)
+Для любого \(\delta \in (0, 1)\) при \(m \to \infty\) доля подканалов с \(I(W_m^{(i)}) \in (1 - \delta, 1]\) стермиться к \(I(W_0^{(0)}) - I(W)\), а доля подканалов с \(I(W_m^{(i)}) \in [0, \delta)\) стремится к \(1 - I(W)\)
+#+end_rem
 
+#+NAME: Поляризация канала_rem_polar
+#+begin_rem org
 Поляризация каналов:
 \todo Картинка
 # https://youtu.be/TV7berfUX4c?list=PLd7QXkfmSY7YEom7j8DGk8EBw5O5SZDQs&t=394
 - Доля недополяризованных подканалов убывает с увеличением \(m\)
 - Число недополяризованных подканалов растет с увеличением \(m\)
+#+end_rem
 
 * Полярный код и алгоритм последовательного исключения
-Передавать предопределенные значения (например, 0) по плохим подканалам. Кодирование \(c_0^{n - 1} = u_0^{n - 1}A_m, u_i = 0, i \in \mathcal{F}\), где \(\mathcal{F}\) -- множество номером плохих подканалов (замороженных символов). Линейный блоковый код \((2^m, 2^m + |\mathcal{F}|)\)
+#+NAME: Полярные коды
+#+begin_rem org
+Передавать предопределенные значения (например, 0) по плохим подканалам. Кодирование \(c_0^{n - 1} = u_0^{n - 1}A_m, u_i = 0, i \in \mathcal{F}\), где \(\mathcal{F}\) -- множество номеров плохих подканалов (замороженных символов). Линейный блоковый код \((2^m, 2^m + |\mathcal{F}|)\)
+#+end_rem
 
+#+NAME: Алгоритм последовательного исключения_1
 #+begin_export latex
 \begin{enalgo}[H]
 \caption{Алгоритм последовательного исключения}
@@ -159,9 +201,13 @@ L_\lambda^{2i + 1} (y_0^{n - 1}, u_0^{i - 1}) & = \log \frac{W_{\lambda - 1}^{(i
 \[ \tanh \left( \frac{1}{2} L_\lambda^{(2i)} (y_0^{n - 1}, u_0^{2i - 1})\right) = \tanh \left(\frac{1}{2} L_{\lambda - 1}^{(i)} (y_{0, {\rm even}}^{2^\lambda - 1}, u_{0, {\rm even}}^{2i - 1} - u_{0, {\rm odd}}^{2i - 1}) \right) \tanh \left(\frac{1}{2} L_{\lambda - 1}^{(i)} (y_{0, {\rm odd}}^{2^\lambda - 1}, u_{0, {\rm odd}}^{2i - 1}) \right) \]
 \[ L_\lambda^{(2i)}(y_0^{2^\lambda - 1}, u_0^{2i - 1}) = 2 \tanh^{-1} \left(\tanh\left(\frac{1}{2} L_{\lambda - 1}^{(i)} (y_{0, {\rm even}}^{2^\lambda - 1}, u_{0, {\rm even}}^{2i - 1} + u_{0, {\rm odd}}^{2i - 1})\right) \tanh \left(\frac{1}{2} L_{\lambda - 1}^{(i)} (y_{0, {\rm odd}}^{2^\lambda - 1}, u_{0, {\rm odd}}^{2i - 1}) \right) \right) \]
 \[ L_\lambda^{(2i+ 1)}(y_0^{n - 1}, u_0^{2i}) = (-1)^{u_{2i}} L_{\lambda - 1}(y_{0, {\rm even}}^{2^\lambda - 1}, u_{0, {\rm even}}^{2i - 1} + u_{0, {\rm odd}}^{2i - 1}) + L_{\lambda - 1}(y_{0, {\rm odd}}^{2^\lambda - 1}, u_{0, {\rm odd}}^{2i - 1}) \]
+#+end_export
 
+
+#+NAME: Алгоритм последовательного исключения
+#+begin_export latex
 \begin{enalgo}[H]
-\caption{Алгоритм последовательного исключения}
+\caption{Алгоритм последовательного исключения с ЛОПП}
 \begin{algorithmic}[1]
 \FOR{\(i = 0, 1, \dots, 2^m\)}
   \STATE \(\hat{u}_i = \begin{cases} 0 & , i \in \mathcal{F} \\ 0 & , L_m^{(i)} (y_0^{n-1}, \hat{u}_0^{i - 1}) > 0, i \not\in \mathcal{F} \\ 1 & ,  L_m^{(i)} (y_0^{n-1}, \hat{u}_0^{i - 1}) \le 0, i \not\in \mathcal{F} \end{cases}\)
@@ -212,6 +258,7 @@ L_\lambda^{2i + 1} (y_0^{n - 1}, u_0^{i - 1}) & = \log \frac{W_{\lambda - 1}^{(i
 Пусть даны \((n, k_i, d_i)\) коды \(C_i, i=0,1\). \(C = \{(c_1 + c_0, c_1)| c_i \in C_i\}\) -- код \((2n, k_1 + k_0, \min(2d_1, d_0))\)
 #+end_theorem
 
+#+NAME: Коды Рида-Маллера_polar
 #+begin_definition org
 Код Рида-Маллера \(RM(r, m)\) длины \(2^m\) порядка \(r\) -- полярный код с \(\mathcal{F} = \{i | 0 \le i < 2^m , wt(i) < m - r\}\)
 #+end_definition

@@ -1,0 +1,11 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 14
+#+date: 16 декабря
+
+* Кодовая модуляция
+#+begin_rem org
+Пропускная способность канала без памяти с входным алфавитом \(\mathcal{X}\) и выходным алфавитом \(\mathcal{Y}\)
+\[ C = \max_{p_X} \int_{\mathcal{Y}} \int_{\mathcal{X}} p_{XY}(x, y)\log_2\frac{p_{XY}(x,y )}{p_X(x)p_Y(y)} dx dy \]
+#+end_rem
+
+\todo

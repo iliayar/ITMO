@@ -4,13 +4,18 @@
 
 * Циклические коды
 ** Коды Рида-Соломона
-Код Рида-Соломона -- код БЧХ длины \(q - 1\) над \(GF(q)\). Минимальный многочлен \(\beta \in GF(q)\) над \(GF(q): M_\beta(x) = x - \beta\).
+#+NAME: Код Рида-Соломона
+#+begin_definition org
+*Код Рида-Соломона* -- код БЧХ длины \(q - 1\) над \(GF(q)\). Минимальный многочлен \(\beta \in GF(q)\) над \(GF(q): M_\beta(x) = x - \beta\).
 Порождающий многочлен кода Рида-Соломона \(g(x) = \prod_{i= 0}^{\delta - 2} (x - \alpha^{b + i})\).
 Размерность кода \(k = n - \delta + 1\). Минимальное расстояние \(d \ge \delta\).
 Граница Синглтона: \(d \le n - k + 1 = \delta \implies d = n - k + 1\).
 Код с максимальным достижимым расстоянием
+#+end_definition
 
 ** Декодирование кодов БЧХ
+#+NAME: Свойства_BCH_dec
+#+begin_rem org
 Рассмотрии исправление ошибок в векторе \(y = c + e\).
 - \(y(x) = a(x)g(x) + e(x)\)
 - Синдром: \(S_i = y(\alpha^{b + i}) = a(\alpha^{b + i})g(\alpha^{b + i}) + e(\alpha^{b + i}) = e(\alpha^{b + i}), 0 \le i < \delta - 1\)
@@ -19,6 +24,7 @@
 - Значение ошибок \(E_l = e_{j_l}\)
 - Локаторы ошибок \(X_l = \alpha^{j_l}\)
   \[ S_i = \sum_{l = 1}^t E_l X_l^{b+i}, 0 \le i < \delta - 1 \]
+#+end_rem
 
 *** Поиск локаторов ошибок
 Многочлен локаторов ошибок \(\Lambda(x) = \prod_{l = 1}^t (1 - X_lx) = \sum_{l = 0}^t \Lambda_lx^l\)
@@ -136,6 +142,7 @@ S(x) = \sum_{l = 1}^t \frac{E_l X_l^b}{1 - X_lx} \mod x^{\delta - 1}
 Многочлен значений ошибок \(\Gamma(x) = \sum_{l = 1}^t E_l X_l^b \prod_{j \neq l} (1 - X_jx) \equiv \Lambda(x) \sum_{l = 1}^t \frac{E_l X_l^b}{1 - X_lx} \mod x^{b - 1}\).
 \[ \Gamma(x) \equiv \Lambda(x) S(x) \mod x^{\delta - 1}, \deg \Lambda(x) \le \lfloor (\delta - 1) / 2 \rfloor, \deg \Gamma(x) < \lfloor (\delta - 1) / 2 \rfloor \]
 
+#+NAME: Алгоритм Форни
 #+ATTR_LATEX: :options [Алгоритм Форни быстрого поиска значений ошибок]
 #+begin_theorem org
 \(E_i = \frac{X_i^{-b}\Gamma(X_i^{-1})}{\prod_{j \neq i} (1 - X_j X_i^{-1})}, 0 \le i < t\)

@@ -1,0 +1,95 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 13
+#+date: 24 ноября
+
+* Алтернантные коды
+#+begin_theorem org
+\(с = (с_0, \dots, c_{n-1})\) -- кодовое слово кода Рида-Соломона над \(GF(q)\) в узком смысле ттогда, когда \(c_i = f(\alpha_i), 0 \le i < n\) (т.е. \(c = ev(f)\)), где \(\deg f(x) < k, f(x) \in GF(q)[x]\)
+#+end_theorem
+#+begin_proof org
+\todo
+#+end_proof
+
+
+#+NAME: Коды Рида-Соломона и обобщенные коды Рида-Соломона_1
+#+begin_definition org
+\(n, k, n - k + 1\) кодом Рида-Соломона называется множество векторов \(c = (c_0, \dots, c_{n - 1})\),
+где \(c_i = f(a_i), \deg f(x) < k, f(x) \in GF(q)[x], a_i \in GF(q)\) -- различные значения (локаторы)
+#+end_definition
+
+#+NAME: Коды Рида-Соломона и обобщенные коды Рида-Соломона_2
+#+begin_definition org
+Обобщенным \((n, k, d = n - k + 1)\) кодом Рида-Соломона \(GRS(n, k, a, u)\) называется множество
+векторов \((c_0u_0, \dots, c_{n - 1}u_{n - 1})\), где \((c_0, \dots, c_{n - 1})\) -- кодовое слово
+\((n, k , n - k + 1)\) кода Рида-Соломона (т.е. \(c_i = f(a_i), \deg f(x) < k, a_i\) -- различные), и
+\(u_0, \dots, u_{n - 1}\) -- ненулевые константы
+#+end_definition
+
+#+NAME: Альтернантные коды
+#+begin_definition org
+Альтернантным кодом длины \(n\) над полем \(GF(q)\) называется код \(\mathcal{A}(n, r, a, u)\) с проверочной
+матрицей
+
+#+begin_export latex
+\begin{center}
+\begin{align*}
+H = \begin{pmatrix}
+a_0^0 & a_1^0 & \dots & a_{n - 1}^0 \\
+a_0^1 & a_1^1 & \dots & a_{n - 1}^1 \\
+\vdots & \vdots & \ddots & \vdots \\
+a_0^{r - 1} & a_1^{r - 1} & \dots & a_{n - 1}^{r - 1}
+\end{pmatrix} \diag (u_0, u_1, \dots, u_{n - 1}) = (H_{i, j})
+\end{align*}
+\end{center}
+#+end_export
+где \(a_i \in GF(q^m)\) -- различные элементы, \(u_i \in GF(q^m) \setminus {0}\)
+#+end_definition
+
+#+begin_rem org
+\todo
+- Минимальное расстояние \(d \ge r + 1\)
+- Размерность \(n - r \ge k \ge n - mr\)
+#+end_rem
+
+#+begin_theorem org
+Пусть \(m | (n - h)\). Существует альтернантный \((n, k \ge h, d \ge \delta)\) код над \(GF(q)\) такой, что
+\[ \sum_{i = 1}^{\delta - 1} (q - 1)^i C^i_n < (q^m - 1)^{\frac{n - h}{m}} \]
+#+end_theorem
+
+#+begin_rem org
+\-
+- Рассмотрим \(\mathcal{A}(n, (n - h)/m, a, u) = GRS(n, n - (n - h)/m, a, v) \cap GF(q)^n\)
+\todo \\
+Общее количество альтернантных кодом больше чем количество плохих альтернантных кодов, значит есть хорошие альтернантные коды
+#+end_rem
+
+#+begin_rem org
+\[ \sum_{i = 0}^{d - 2} C^i_{n - 1}(q - 1)^i < \underbrace{\sum_{i = 0}^{d - 1} C^i_n (q - 1)^i < (q^m - 1)^{\frac{n - h}{m}}}_{\text{Альтернантные коды}} < q^{n - h}\]
+#+end_rem
+
+** Коды Гоппы
+#+NAME Коды Гоппы
+#+begin_definition org
+Пусть задан многочлен (многочлен Гоппы) \(G(x) \in GF(q^m)[x]\) и \(a_0, \dots, a_{n - 1} \in GF(q^m)\),
+причем \(G(a_i) \neq 0\). Кодом Гоппы называется множество \((c_0, \dots, c_{n - 1}) \in GF(q)^n\).
+\[ \sum_{i = 0}^{n - 1} \frac{c_i}{x - a_i} \equiv 0 \mod G(x) \]
+#+end_definition
+
+#+begin_statement org
+Коды Гоппы являются альтернантными
+#+end_statement
+#+begin_proof org
+\todo
+#+end_proof
+
+#+begin_rem org
+Двоичные коды Гоппы
+\todo
+#+end_rem
+
+** Криптосистема Мак-Элиса
+\todo
+
+
+
+
