@@ -473,17 +473,23 @@ template <typename T> struct vpoly {
   auto operator*(vpoly const &rhs) const -> vpoly {
     assert(s_ == rhs.s_, "Multipling polynoms with different symbols");
 
+    auto z = factory_->zero();
+
     auto ld = deg();
     auto rd = rhs.deg();
 
     auto res = vec<T>::zero(ld + rd + 1, factory_->zero());
     auto res_d = 0;
     for (int i = 0; i <= ld; i++) {
+      if (data_.get(i) == z)
+        continue;
       for (int j = 0; j <= rd; j++) {
+        if (rhs.data_.get(j) == z)
+          continue;
         auto v = res.get(i + j) + data_.get(i) * rhs.data_.get(j);
         res.set(i + j, v);
 
-        if (v != factory_->zero()) {
+        if (v != z) {
           res_d = std::max(res_d, i + j);
         }
       }
@@ -533,10 +539,19 @@ template <typename T> struct vpoly {
   }
 
   auto pow(int p) const -> vpoly {
+    assert(p >= 0, "pow works only with non negatives");
+
+    auto b = *this;
     auto res = vpoly::one(s_, factory_);
-    for (int i = 0; i < p; ++i) {
-      res = *this * res;
+
+    while (p != 0) {
+      if (p % 2 != 0) {
+        res = res * b;
+      }
+      b = b * b;
+      p /= 2;
     }
+
     return res;
   }
 
@@ -804,16 +819,26 @@ struct bitpoly {
 
   auto pow(int p) const -> bitpoly {
     auto res = bitpoly::one(s_, factory_);
-    for (int i = 0; i < p; ++i) {
-      res = *this * res;
+    auto b = *this;
+    while (p != 0) {
+      if (p % 2 != 0) {
+        res = res * b;
+      }
+      b = b * b;
+      p /= 2;
     }
     return res;
   }
 
   auto pow_mod(int p, bitpoly const &mod) const -> bitpoly {
     auto res = bitpoly::one(s_, factory_);
-    for (int i = 0; i < p; ++i) {
-      res = multiply_mod(res, mod);
+    auto b = *this;
+    while (p != 0) {
+      if (p % 2 != 0) {
+        res = res.multiply_mod(b, mod);
+      }
+      b = b.multiply_mod(b, mod);
+      p /= 2;
     }
     return res;
   }
@@ -859,9 +884,8 @@ struct bitpoly {
     if (s_ != other.s_)
       return false;
 
-    for (int i = 0; i <= deg_; ++i) {
-      if (data_.get(i) != other.data_.get(i))
-        return false;
+    if (data_ != other.data_) {
+      return false;
     }
 
     return true;

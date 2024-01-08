@@ -104,6 +104,8 @@ auto assert(bool val, const char *msg = "assertion failed") -> T {
   return *(T *)0xdeadbeef;
 }
 
+///////////////////////////////////////////////////////////
+
 template <typename T> class matrix;
 
 template <typename T> class vector {
@@ -525,6 +527,8 @@ std::tuple<int, int> find_span(mF2 const &m, int row) {
 
   return {begin, end};
 }
+
+////////////////////////////////////////////////////////////////////////
 
 mF2 make_min_span_form(mF2 m) {
   auto [n, k] = m.shape();
