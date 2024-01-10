@@ -3,6 +3,7 @@
 #+date: 24 ноября
 
 * Алтернантные коды
+#+NAME: Альтернантные коды_th
 #+begin_theorem org
 \(с = (с_0, \dots, c_{n-1})\) -- кодовое слово кода Рида-Соломона над \(GF(q)\) в узком смысле ттогда, когда \(c_i = f(\alpha_i), 0 \le i < n\) (т.е. \(c = ev(f)\)), где \(\deg f(x) < k, f(x) \in GF(q)[x]\)
 #+end_theorem
@@ -68,13 +69,14 @@ a_0^{r - 1} & a_1^{r - 1} & \dots & a_{n - 1}^{r - 1}
 #+end_rem
 
 ** Коды Гоппы
-#+NAME Коды Гоппы
+#+NAME: Коды Гоппы
 #+begin_definition org
 Пусть задан многочлен (многочлен Гоппы) \(G(x) \in GF(q^m)[x]\) и \(a_0, \dots, a_{n - 1} \in GF(q^m)\),
 причем \(G(a_i) \neq 0\). Кодом Гоппы называется множество \((c_0, \dots, c_{n - 1}) \in GF(q)^n\).
 \[ \sum_{i = 0}^{n - 1} \frac{c_i}{x - a_i} \equiv 0 \mod G(x) \]
 #+end_definition
 
+#+NAME: Коды Гоппы_st
 #+begin_statement org
 Коды Гоппы являются альтернантными
 #+end_statement

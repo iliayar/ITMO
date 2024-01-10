@@ -2,7 +2,7 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Lectures
-[[https://conspects.iliay.ar/Term7/it/lectures/all_lectures.pdf][All lectures]]
+[[https://conspects.iliay.ar/Term7/it/lectures/all_lectures.pdf][All lectures]] \\
 [[https://conspects.iliay.ar/Term7/it/lectures/questions.pdf][Questions for exam]]
 
 - [[https://conspects.iliay.ar/Term7/it/lectures/1.pdf][Lecture 1]]

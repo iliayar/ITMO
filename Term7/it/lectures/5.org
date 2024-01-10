@@ -216,8 +216,26 @@ T(D) = \frac{D^5}{1 - 2D} = D^5 + 2D^6 + 4 D^7 + 8 D^8
 \end{align*}
 \end{center}
 #+end_export
-\todo Картинка ez
-# https://youtu.be/o7eM7uBfNnY?list=PLd7QXkfmSY7YEom7j8DGk8EBw5O5SZDQs&t=2373
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}
+\node (e) at (0, 0) [draw,fill=blue,circle] {\(00|e\)};
+\node (d) at (3, 0) [draw,fill=blue,circle] {\(01|d\)};
+\node (c) at (6, 0) [draw,fill=blue,circle] {\(11|c\)};
+\node (b) at (6, 3) [draw,fill=blue,circle] {\(10|b\)};
+\node (a) at (3, 3) [draw,fill=blue,circle] {\(00|a\)};
+
+\draw[->] (d) edge node[above] {\(11/D^2\)} (e);
+\draw[->] (c) edge node[above] {\(10/D\)} (d);
+\draw[->] (c) edge[loop below] node[below] {\(01/D\)} (c);
+\draw[->] (b) edge node[right] {\(10/D\)} (c);
+\draw[->] (b) edge[bend right] node[above,left] {\(01/D\)} (d);
+\draw[->] (d) edge node[below,right] {\(00/D^0\)} (b);
+\draw[->] (a) edge node[above] {\(11/D^2\)} (b);
+\end{tikzpicture}
+\end{center}
+#+end_export
+
 #+end_examp
 
 
