@@ -8,3 +8,4 @@
 #+LATEX_HEADER: \DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
 #+LATEX_HEADER: \newcommand{\One}{\mymathbb{1}}
 #+LATEX_HEADER: \newcommand{\Zero}{\mymathbb{0}}
+#+LATEX_HEADER: \usepackage{multirow}
