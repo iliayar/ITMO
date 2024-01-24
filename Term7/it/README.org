@@ -24,3 +24,8 @@
 - [[https://conspects.iliay.ar/Term7/it/practice/1.pdf][Practice 1]]
 - [[https://conspects.iliay.ar/Term7/it/practice/2.pdf][Practice 2]]
 - [[https://conspects.iliay.ar/Term7/it/practice/3.pdf][Practice 3]]
+* Labs
+- [[file:labs/A/][Task A]] -- Алгоритм Витерби мягкого декодирования линейных блоковых кодов 
+- [[file:labs/J/][Task J]] -- Алгоритм Берлекэмпа-Месси декодирования двоичных кодов БЧХ
+- [[file:labs/H/][Task H]] -- Списочное декодирование полярных кодов
+[[file:labs/statements.pdf][Statements]]
