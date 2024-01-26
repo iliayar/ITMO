@@ -11,7 +11,7 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspe
 ** Term7
 *** [[file:Term7/bc/README.org][Blockchain]]
 *** [[file:Term7/sd/README.org][Software Design]] 
-*** Databases
+*** [[file:Term7/db/README.org][Databases]] 
 *** [[file:Term7/it/README.org][Coding Theory]]
 * Year 3
 ** Term 6
