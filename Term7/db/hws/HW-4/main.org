@@ -1,3 +1,4 @@
+#+PUBNOTE: html
 #+title: HW 4
 
 StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark

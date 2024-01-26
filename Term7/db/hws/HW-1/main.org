@@ -10,9 +10,6 @@
 CREATE DATABASE ctd;
 #+end_src
 
-#+RESULTS:
-|---|
-
 * Создание таблиц
 #+header: :engine postgres
 #+header: :database ctd
@@ -23,9 +20,6 @@ create table Groups (
 );
 #+end_src
 
-#+RESULTS:
-|---|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
@@ -35,10 +29,6 @@ create table Students (
     group_id int
 );
 #+end_src
-
-#+RESULTS:
-| CREATE TABLE |
-|--------------|
 
 * Вставка данных
 #+begin_remark org
@@ -56,10 +46,6 @@ insert into Groups
     (2, 'M34391');
 #+end_src
 
-#+RESULTS:
-| INSERT 0 2 |
-|------------|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
@@ -70,11 +56,6 @@ insert into Students
     (3, 'Anna Suris', 1);
 #+end_src
 
-#+RESULTS:
-| INSERT 0 3 |
-|------------|
-
-
 * Получение данных
 #+header: :engine postgres
 #+header: :database ctd
@@ -82,24 +63,11 @@ insert into Students
 SELECT group_id, group_no FROM Groups;
 #+end_src
 
-#+RESULTS:
-| group_id | group_no |
-|----------+----------|
-|        1 | M34371   |
-|        2 | M34391   |
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 SELECT student_id, name, group_id FROM Students;
 #+end_src
-
-#+RESULTS:
-| student_id | name            | group_id |
-|------------+-----------------+----------|
-|          1 | Maksim Alzhanov |        2 |
-|          2 | Artem Koton     |        1 |
-|          3 | Anna Suris      |        1 |
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -107,13 +75,6 @@ SELECT student_id, name, group_id FROM Students;
 SELECT name, group_no
 FROM Students NATURAL JOIN Groups;
 #+end_src
-
-#+RESULTS:
-| name         | group_no |
-|--------------+----------|
-| Ivan Uss     | M34371   |
-| Alex Slastin | M34371   |
-| Ilona Bozhe  | M34391   |
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -124,13 +85,6 @@ FROM Students
      ON Students.group_id = Groups.group_id;
 #+end_src
 
-#+RESULTS:
-| name         | group_no |
-|--------------+----------|
-| Ivan Uss     | M34371   |
-| Alex Slastin | M34371   |
-| Ilona Bozhe  | M34391   |
-
 ** =ORDER BY=
 
 #+header: :engine postgres
@@ -139,23 +93,11 @@ FROM Students
 SELECT group_id, group_no FROM Groups ORDER BY group_id;
 #+end_src
 
-#+RESULTS:
-| group_id | group_no |
-|----------+----------|
-|        1 | M34371   |
-|        2 | M34391   |
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 SELECT group_id, group_no FROM Groups ORDER BY group_no;
 #+end_src
-
-#+RESULTS:
-| group_id | group_no |
-|----------+----------|
-|        1 | M34371   |
-|        2 | M34391   |
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -163,22 +105,12 @@ SELECT group_id, group_no FROM Groups ORDER BY group_no;
 SELECT group_id, group_no FROM Groups ORDER BY group_no DESC;
 #+end_src
 
-#+RESULTS:
-| group_id | group_no |
-|----------+----------|
-|        2 | M34391   |
-|        1 | M34371   |
-
 * Удаление данных
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 DROP TABLE Groups;
 #+end_src
-
-#+RESULTS:
-| DROP TABLE |
-|------------|
 
 * Обновление данных
 #+header: :engine postgres
@@ -189,10 +121,6 @@ update Students
     where student_id = 2;
 #+end_src
 
-#+RESULTS:
-| UPDATE 1 |
-|----------|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
@@ -200,10 +128,6 @@ update Students
     set group_id = 2 
     where name = 'Artem Koton';
 #+end_src
-
-#+RESULTS:
-| UPDATE 1 |
-|----------|
 
 * Повторяющийся идентификатор
 #+header: :engine postgres
@@ -213,21 +137,11 @@ insert into Groups (group_id, group_no) values
     (1, 'M34381');
 #+end_src
 
-#+RESULTS:
-| INSERT 0 1 |
-|------------|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 SELECT group_id, group_no FROM Groups;
 #+end_src
-
-#+RESULTS:
-| group_id | group_no |
-|----------+----------|
-|        1 | M34371   |
-|        2 | M34391   |
 
 Проблемы:
 - Дубли
@@ -239,20 +153,12 @@ SELECT group_id, group_no FROM Groups;
 delete from Groups where group_no = 'M34381';
 #+end_src
 
-#+RESULTS:
-| DELETE 1 |
-|----------|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 alter table Groups
     add constraint group_id_unique unique (group_id);
 #+end_src
-
-#+RESULTS:
-| ALTER TABLE |
-|-------------|
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -261,9 +167,6 @@ INSERT INTO Groups (group_id, group_no)
 VALUES
 	(1, 'M32381');
 #+end_src
-
-#+RESULTS:
-|---|
 
 #+begin_src 
 psql:/tmp/babel-oESQj7/sql-in-jieQhI:4: ERROR:  duplicate key value violates unique constraint "group_id_unique"
@@ -278,10 +181,6 @@ VALUES
 	(3, 'M32381');
 #+end_src
 
-#+RESULTS:
-| INSERT 0 1 |
-|------------|
-
 * Несуществующий идентификатор
 
 #+header: :engine postgres
@@ -289,9 +188,6 @@ VALUES
 #+begin_src sql
 update Students set group_id = 5 where student_id = 1;
 #+end_src
-
-#+RESULTS:
-|---|
 
 Проблемы:
 - Потеря информации
@@ -303,11 +199,6 @@ update Students set group_id = 5 where student_id = 1;
 update Students set group_id = 1 where student_id = 1;
 #+end_src
 
-#+RESULTS:
-| UPDATE 1 |
-|----------|
-
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
@@ -316,18 +207,11 @@ ALTER TABLE Students
       REFERENCES Groups (group_id);
 #+end_src
 
-#+RESULTS:
-| ALTER TABLE |
-|-------------|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 UPDATE Students SET group_id = 5 WHERE student_id = 1;
 #+end_src
-
-#+RESULTS:
-|---|
 
 #+begin_src 
 psql:/tmp/babel-oESQj7/sql-in-bVa0e3:2: ERROR:  insert or update on table "students" violates foreign key constraint "students_group_id_fkey"
@@ -340,9 +224,6 @@ DETAIL:  Key (group_id)=(5) is not present in table "groups".
 UPDATE Students SET group_id = 5 WHERE student_id = 1;
 #+end_src
 
-#+RESULTS:
-|---|
-
 * Проверка русского языка
 #+header: :engine postgres
 #+header: :database ctd
@@ -352,24 +233,12 @@ VALUES
 	(4, 'Илья Ярошевский', 1);
 #+end_src
 
-#+RESULTS:
-| INSERT 0 1 |
-|------------|
-
 
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 SELECT name, group_no FROM Students NATURAL JOIN Groups;
 #+end_src
-
-#+RESULTS:
-| name            | group_no |
-|-----------------+----------|
-| Anna Suris      | M34371   |
-| Artem Koton     | M34391   |
-| Maksim Alzhanov | M34371   |
-
 
 * Тест
 
@@ -384,10 +253,6 @@ VALUES
 	(7, 'Жогова Мария Сергеевна', 2);
 #+end_src
 
-#+RESULTS:
-| INSERT 0 4 |
-|------------|
-
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -395,22 +260,11 @@ VALUES
 select count(*) from Groups;
 #+end_src
 
-#+RESULTS:
-| count |
-|-------|
-|     2 |
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 select count(*) from Students;
 #+end_src
-
-#+RESULTS:
-| count |
-|-------|
-|     7 |
-
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -420,11 +274,6 @@ from Students
 where group_id in (select group_id from Groups where group_no = 'M34391');
 #+end_src
 
-#+RESULTS:
-| count |
-|-------|
-|     5 |
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
@@ -432,12 +281,6 @@ select count(*)
 from Students natural join Groups
 where name like '%зе%' or group_no like '%7%';
 #+end_src
-
-#+RESULTS:
-| count |
-|-------|
-|     3 |
-
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -447,19 +290,11 @@ from Students natural join Groups
 where name like '%v' and group_no like '%7%';
 #+end_src
 
-#+RESULTS:
-| count |
-|-------|
-|     1 |
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 DELETE FROM Groups;
 #+end_src
-
-#+RESULTS:
-|---|
 
 #+begin_src 
 psql:/var/folders/pq/5b7h31wx2hl_q9svrzm49gdmtwncy0/T/babel-sCT3PQ/sql-in-EP5kGq:2: ERROR:  update or delete on table "groups" violates foreign key constraint "students_group_id_fkey" on table "students"
@@ -472,19 +307,11 @@ psql:/var/folders/pq/5b7h31wx2hl_q9svrzm49gdmtwncy0/T/babel-sCT3PQ/sql-in-EP5kGq
 DELETE FROM Students;
 #+end_src
 
-#+RESULTS:
-| DELETE 7 |
-|----------|
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
 DELETE FROM Groups;
 #+end_src
-
-#+RESULTS:
-| DELETE 2 |
-|----------|
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -513,11 +340,6 @@ DELETE FROM Groups;
           (10, 'Student 10', 4),
 #+end_src
 
-#+RESULTS:
-| INSERT 0 4  |
-|-------------|
-| INSERT 0 11 |
-
 #+header: :engine postgres
 #+header: :database ctd
 #+begin_src sql
@@ -526,15 +348,6 @@ from Groups g inner join Students s on g.group_id = s.group_id
 group by group_no
 order by group_no desc;
 #+end_src
-
-#+RESULTS:
-| group_no | count |
-|----------+-------|
-| M34371   |     4 |
-| M34361   |     4 |
-| M34351   |     2 |
-| M34341   |     1 |
-
 
 #+header: :engine postgres
 #+header: :database ctd
@@ -545,11 +358,3 @@ where group_no like '%1'
 group by group_no
 order by group_no;
 #+end_src
-
-#+RESULTS:
- group_no | count 
-----------+-------
- M34341   |    10 
- M34351   |     9 
- M34361   |     7 
- M34371   |     7 
