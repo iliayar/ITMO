@@ -72,7 +72,7 @@ StudentId, LecturerId, StudentName, GroupId, GroupName, LecturerName
 #+end_src
 
 * 4
-*** 1
+** 1
 #+begin_src 
 Есть одна ФЗ в которой в правой части больше 1 аттрибута, расщепляем ее
 #+end_src
