@@ -3,6 +3,24 @@
 
 StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark
 
+* Statements
+Дано отношение с атрибутами StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark. И функциональными зависимостями:
+- StudentId → StudentName, GroupId, GroupName;
+- GroupId → GroupName;
+- GroupName → GroupId;
+- CourseId → CourseName;
+- LecturerId → LecturerName;
+- StudentId, CourseId → Mark;
+- GroupId, CourseId → LecturerId, LecturerName.
+
+
+1. Инкрементально приведите данное отношение в пятую нормальную форму.
+2. Постройте соответствующую модель сущность-связь.
+3. Постройте соответствующую физическую модель.
+4. Реализуйте SQL-скрипты, создающие схему базы данных.
+5. Создайте базу данных по спроектированной модели.
+6. Заполните базу тестовыми данными.
+
 * 1
 ** 1
 Функциональные зависимости:
@@ -655,3 +673,22 @@ CREATE DATABASE hw4;
 #+RESULTS:
 | INSERT 0 4 |
 |------------|
+
+* Comments
+1. НФ-1
+2. НФ-2
+3. НФ-3
+   Не в 3NF: LecturerId -> LecturerName в [CourseId, GroupId, LecturerId, LecturerName] \\
+   Не в 3NF: GroupId -> GroupName в [GroupId, GroupName, StudentId, StudentName] \\
+   Не в 3NF: GroupName -> GroupId в [GroupId, GroupName, StudentId, StudentName]
+4. НФБК
+5. НФ-4
+6. НФ-5
+7. Модели
+   1. Сущность-связь
+   2. Физическая
+7. SQL
+   1. DDL \\
+      Использование serial,autoincrement или identity
+   2. DML \\
+      Предположения о конкретных значениях generated/serial столбцов

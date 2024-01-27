@@ -1,4 +1,3 @@
-#+PUBNOTE: html
 #+title: HW 1
 
 В интерактивном: =psql=

@@ -1,0 +1,93 @@
+#+title: HW 5
+
+* Statements
+Составьте выражения реляционной алгебры и соответствующие SQL-запросы, позволяющие получать
+
+1. Информацию о студентах
+   1. С заданным идентификатором (StudentId, StudentName, GroupId по :StudentId).
+   2. С заданным ФИО (StudentId, StudentName, GroupId по :StudentName).
+2. Полную информацию о студентах
+   1. С заданным идентификатором (StudentId, StudentName, GroupName по :StudentId).
+   2. С заданным ФИО (StudentId, StudentName, GroupName по :StudentName).
+3. Информацию о студентах с заданной оценкой по дисциплине
+   1. С заданным идентификатором (StudentId, StudentName, GroupId по :Mark, :CourseId).
+   2. С заданным названием (StudentId, StudentName, GroupId по :Mark, :CourseName).
+   3. Которую у них вёл лектор заданный идентификатором (StudentId, StudentName, GroupId по :Mark, :LecturerId).
+   4. Которую у них вёл лектор, заданный ФИО (StudentId, StudentName, GroupId по :Mark, :LecturerName).
+   5. Которую вёл лектор, заданный идентификатором (StudentId, StudentName, GroupId по :Mark, :LecturerId).
+   6. Которую вёл лектор, заданный ФИО (StudentId, StudentName, GroupId по :Mark, :LecturerName).
+4. Информацию о студентах не имеющих оценки по дисциплине
+   1. Среди всех студентов (StudentId, StudentName, GroupId по :CourseName).
+   2. Среди студентов, у которых есть эта дисциплина (StudentId, StudentName, GroupId по :CourseName).
+5. Для каждого студента ФИО и названия дисциплин
+   1. Которые у него есть по плану (StudentName, CourseName).
+   2. Есть, но у него нет оценки (StudentName, CourseName).
+   3. Есть, но у него не 4 или 5 (StudentName, CourseName).
+6. Идентификаторы студентов по преподавателю
+   1. Имеющих хотя бы одну оценку у преподавателя (StudentId по :LecturerName).
+   2. Не имеющих ни одной оценки у преподавателя (StudentId по :LecturerName).
+   3. Имеющих оценки по всем дисциплинам преподавателя (StudentId по :LecturerName).
+   4. Имеющих оценки по всем дисциплинам преподавателя, которые он вёл у этого студента (StudentId по :LecturerName).
+7. Группы и дисциплины, такие что все студенты группы имеют оценку по этой дисциплине
+   1. Идентификаторы (GroupId, CourseId).
+   2. Названия (GroupName, CourseName).
+
+Составьте SQL-запросы, позволяющие получать
+8. [@8] Суммарный балл
+   1. Одного студента (SumMark по :StudentId).
+   2. Каждого студента (StudentName, SumMark).
+   3. Каждой группы (GroupName, SumMark).
+9. Средний балл
+   1. Одного студента (AvgMark по :StudentId).
+   2. Каждого студента (StudentName, AvgMark).
+   3. Каждой группы (GroupName, AvgMark).
+   4. Средний балл средних баллов студентов каждой группы (GroupName, AvgAvgMark).
+   5. Для каждого студента: число дисциплин, которые у него были, число сданных дисциплин и число несданных дисциплин (StudentId, Total, Passed, Failed).
+
+* Comments
+1. 
+  1. 
+  2. 
+2. 
+   1. 
+   2. 
+3. 
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+  6. \\
+     Форматирование
+4. 
+   1. 
+   2. \\
+      Форматирование
+5. 
+   1. \\
+      SQL: Слишком много соединений: 4
+   2. \\
+      Форматирование
+   3. \\
+      Форматирование
+6. 
+   1. 
+   2. 
+   3. 
+   4. \\
+      Форматирование
+7. 
+   1. 
+   2. \\
+      SQL: Слишком много соединений: 7
+8. 
+   1. 
+   2. 
+   3. 
+9. 
+   1. 
+   2. 
+   3. 
+   4. 
+10. \\
+    SQL: Слишком много соединений: 5

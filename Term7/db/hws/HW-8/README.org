@@ -1,3 +1,10 @@
+#+title: HW 8
+
+* Statements
+1. Определите, какие индексы требуется добавить к таблицам базы данных «Университет» на основе запросов из ДЗ-5, 6 и 7.
+2. Пусть частым запросом является определение среднего балла студентов группы по дисциплине. Как будет выглядеть запрос и какие индексы могут помочь при его исполнении?
+3. Придумайте три запроса, требующих новых индексов и запишите их. Если в результате, некоторые из старых индексов станут бесполезными, удалите их.
+При выполнении задания считайте, что ФЗ соответствуют полученным в ДЗ-3 и 4.
 
 * 1
 ** 1.S
@@ -354,3 +361,40 @@
 #+RESULTS:
 | CREATE INDEX |
 |--------------|
+
+
+* Comments
+1. Запросы из предыдущих ДЗ
+   - 1.S. Students
+     - Индекс мало/бесполезен: ДЗ-5.6.1 для create index StudentsGroupId on Students using HASH (GroupId);
+   - 1.G. Groups
+   - 1.C. Courses
+     - Индекс мало/бесполезен: ДЗ-5.4.2 для create UNIQUE index CoursesCourseId on Courses using HASH (CourseId);
+     - Индекс мало/бесполезен: ДЗ-5.5.1 для create UNIQUE index CoursesCourseId on Courses using HASH (CourseId);
+     - Индекс мало/бесполезен: ДЗ-5.5.2 для create UNIQUE index CoursesCourseId on Courses using HASH (CourseId);
+   - 1.L. Lecturers
+     - Индекс мало/бесполезен: ДЗ-5.3.6 для create UNIQUE index LecturersLecturerId on Lecturers using HASH (LecturerId);
+     - Индекс мало/бесполезен: ДЗ-5.3.4 для create UNIQUE index LecturersLecturerId on Lecturers using HASH (LecturerId);
+     - Индекс мало/бесполезен: ДЗ-5.6.1 для create UNIQUE index LecturersLecturerId on Lecturers using HASH (LecturerId);
+   - 1.P. Plan
+     - Индекс мало/бесполезен: ДЗ-5.3.4 для create UNIQUE index PlanCourseIdGroupId on Plan using BTREE (CourseId, GroupId);
+     - Индекс мало/бесполезен: ДЗ-5.6.4 для create UNIQUE index PlanCourseIdGroupId on Plan using BTREE (CourseId, GroupId);
+     - Индекс мало/бесполезен: ДЗ-5.3.4 для create UNIQUE index PlanGroupIdCourseId on Plan using BTREE (GroupId, CourseId);
+   - 1.M. Marks
+     - Индекс мало/бесполезен: ДЗ-5.3.6 для create UNIQUE index MarksStudentIdCourseId on Marks using BTREE (StudentId, CourseId);
+     - Индекс мало/бесполезен: ДЗ-5.3.6 для create UNIQUE index MarksMark on Marks using BTREE (Mark, CourseId, StudentId);
+     - Индекс мало/бесполезен: ДЗ-5.5.3 для create UNIQUE index MarksMark on Marks using BTREE (Mark, CourseId, StudentId);
+     - Индекс мало/бесполезен: ДЗ-6.4.1 для create UNIQUE index MarksMark on Marks using BTREE (Mark, CourseId, StudentId);
+2. Средний балл
+   - 2.Q. Запрос
+   - 2.I. Индексы
+3. Новые запросы
+   - 3.1.Q. Запрос
+     - Бесполезно без ограничения множества студентов
+   - 3.1.I. Индексы
+   - 3.2.Q. Запрос
+   - 3.2.I. Индексы
+     - Ожидалось, что такой индекс будет обявлен в первом разделе
+   - 3.3.Q. Запрос
+     - Не хватает пробела в like 'prefix %'
+   - 3.3.I. Индексы
