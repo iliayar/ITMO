@@ -2,10 +2,10 @@
 #+SETUPFILE: ../../level-subj.org
 
 * Labs
-- [[file:hws/HW-1/main.org][Lab 1]]
-- [[file:hws/HW-2/main.org][Lab 2]]
-- [[file:hws/HW-3/main.org][Lab 3]]
-- [[file:hws/HW-4/main.org][Lab 4]]
+- [[file:hws/HW-1/README.org][Lab 1]]
+- [[file:hws/HW-2/README.org][Lab 2]]
+- [[file:hws/HW-3/README.org][Lab 3]]
+- [[file:hws/HW-4/README.org][Lab 4]]
 - [[file:hws/HW-5/][Lab 5]]
 - [[file:hws/HW-6/][Lab 6]]
 - [[file:hws/HW-7/][Lab 7]]
