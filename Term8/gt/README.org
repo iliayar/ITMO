@@ -4,3 +4,4 @@
 [[https://conspects.iliay.ar/Term8/gt/lectures/all_lectures.pdf][All lectures
 
 - [[https://conspects.iliay.ar/Term8/gt/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/Term8/gt/lectures/2.pdf][Lecture 2]]
