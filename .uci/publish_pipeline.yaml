@@ -68,7 +68,9 @@ jobs:
             -v $INPUT:/input \
             --rm \
             typst \
-            /result/bin/typst compile "/input/$RELDIR/$FILENAME.typ" "/output/$RELDIR/$FILENAME.pdf"
+            /result/bin/typst compile \
+            --root "/input" \
+            "/input/$RELDIR/$FILENAME.typ" "/output/$RELDIR/$FILENAME.pdf"
 
           echo "Done compiling $RELPATH"
         done
