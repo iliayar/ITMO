@@ -6,6 +6,13 @@ jobs:
       image: conspects-org-publish
       path: ${project.repos.main.path}/org-publish
 
+  build-typst-image:
+    enabled: ${params.build-org-publish-image}
+    do:
+      type: build
+      image: typst
+      path: ${project.repos.conspects.path}/other/typst
+
   # FIXME: redunant?
   _init_gen_dir:
     do:
@@ -31,6 +38,41 @@ jobs:
         files="/timestamps/org-conspects.cache /timestamps/static-conspects.cache"
         echo "Removing files:\n$files"
         rm $files
+
+  publish-typst:
+    stage: public
+    needs:
+      - _init_gen_dir
+      - build-typst-image
+    do:
+      type: scrit
+      env:
+        INPUT: ${project.repos.conspects.path}
+        OUTPUT: ${project.data_path}/gen-conspects
+      script: |
+        set -e
+
+        FILES=$(find $INPUT -type f -name '*.typ')
+
+        for file in $FILES; do
+          RELPATH=$(realpath --relative-to=$INPUT $file)
+
+          echo "Compiling typst file $RELPATH..."
+
+          FILENAME=$(basename $RELPATH '.typ')
+          RELDIR=$(dirname $RELPATH)
+
+          mkdir -p $OUTPUT/$RELDIR
+
+          docker run \
+            -v $OUTPUT:/output \
+            -v $INPUT:/input \
+            --rm \
+            typst \
+            /result/bin/typst compile "/input/$RELDIR/$FILENAME.typ" "/output/$RELDIR/$FILENAME.pdf"
+
+          echo "Done compiling $RELPATH"
+        done
 
   publish:
     stage: publish
@@ -71,3 +113,4 @@ integrations:
     ui_url: 'https://uci.iliay.ar'
     jobs_to_report:
       - publish
+      - publish-typst
