@@ -45,7 +45,7 @@ jobs:
       - _init_gen_dir
       - build-typst-image
     do:
-      type: scrit
+      type: script
       env:
         INPUT: ${project.repos.conspects.path}
         OUTPUT: ${project.data_path}/gen-conspects
