@@ -7,7 +7,6 @@ jobs:
       path: ${project.repos.main.path}/org-publish
 
   build-typst-image:
-    enabled: ${params.build-org-publish-image}
     do:
       type: build
       image: typst
