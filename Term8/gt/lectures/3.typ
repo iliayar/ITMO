@@ -91,7 +91,6 @@ $ A dot sigma = lambda vec(1, 1, 1), quad lambda = K(sigma, sigma) $
 В частности, если $A$ невырождена, то
 $ sigma = lambda dot A^(-1) vec(1, 1, 1) $ <sim-loc-1>
 и значит, возможно лишь одно такое равновесие, и оно существует ттогда, кода координаты @sim-loc-1 положительны
-$ #text(red)[*Доделать*] $
 
 #example[
   $ A = mat(-a, 1, -1; -1, -a, 1; 1, -1, -a) quad a != 0 $
