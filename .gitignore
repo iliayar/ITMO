@@ -72,3 +72,6 @@ target
 # Cache
 .direnv
 **/*.~undo-tree~
+
+# Publish
+_site

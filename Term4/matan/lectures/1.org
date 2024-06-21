@@ -2,6 +2,7 @@
 #+TITLE: Лекция 1
 #+AUTHOR: Ilya Yaroshevskiy
 
+
 #+begin_export latex
 \renewcommand{\P}{\mathcal{P}}
 \newcommand{\A}{\mathfrak{A}}

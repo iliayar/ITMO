@@ -1,3 +1,6 @@
+-----
+PUBNOTE: html
+-----
 #+PUBNOTE:html
 #+SETUPFILE: ../../../setup.org
 * DONE One

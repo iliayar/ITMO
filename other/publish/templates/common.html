@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="$assets_root$/assets/thirdparty/katex/katex.min.css">
+    <script defer src="$assets_root$/assets/thirdparty/katex/katex.min.js"></script>
+    <script defer src="$assets_root$/assets/thirdparty/katex/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+              // NOTE: These are dollar signs, but conflicts with templating (probably)
+              delimiters: [
+                  {left: '\x24\x24', right: '\x24\x24', display: true},
+                  {left: '\x24', right: '\x24', display: false},
+              ],
+            });
+        });
+    </script>
+
+    <title>$title$</title>
+
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="$assets_root$/assets/css/listing.css">
+    <link rel="stylesheet" href="$assets_root$/assets/css/common.css">
+
+    <link rel="stylesheet" href="$assets_root$/assets/thirdparty/iosevka/Iosevka.css">
+
+    <script src="$assets_root$/assets/js/common.js"></script>
+    
+    <!-- Mermaid -->
+    <script type="module" src="$assets_root$/assets/thirdparty/mermaid.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <span></span>
+      <span class="title"><a href="/">conspects.iliay.ar</a></span>
+      <div class="header-controls">
+          <label class="btn" for="toggle-toc">TOC</label>
+          <input id="toggle-toc" type="checkbox" hidden>
+          <button class="btn" id="toggle-light-btn" type="button">theme</button>
+      </div>
+    </header>
+    <main>
+      $if(toc)$
+      <nav class='toc-wrapper'>
+          <div class='toc'>$toc$</div>
+      </nav>
+      $endif$
+      <div class='content'>$body$</div>
+    </main>
+    <footer>
+      <span></span>
+      <div>
+          Made with <a href="https://jaspervdj.be/hakyll/">Hakyll</a> & <a href="https://orgmode.org">Org mode</a>, © 2019 - $year$ iliayar
+      </div>
+      <div class="links">
+        <strong>Contacts</strong>:
+        <!-- TODO: Links -->
+        <a href="/rss.xml">rss</a>
+        <a href="https://github.com/iliayar">gh</a>
+        <a href="https://t.me/iliayar">tg</a>
+        <a href="https://linkedin.com/in/iliayar">in</a>
+        <a href="mailto:iliayar3@gmail.com">mail</a>
+      </div>
+    </footer>
+  </body>
+</html>
