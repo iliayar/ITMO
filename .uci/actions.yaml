@@ -1,4 +1,23 @@
 actions:
+  publish-hakyll:
+    - on: call
+      run_pipelines:
+        - hakyll-conspects
+
+    - on: changed
+      run_pipelines:
+        - hakyll-conspects
+      repo_id: conspects
+      changes:
+        - '^.*'
+
+    - on: changed
+      run_pipelines:
+        - hakyll-conspects
+      repo_id: main
+      changes:
+        - '^builder/.*'
+
   publish:
     - on: call
       run_pipelines:

@@ -1,0 +1,32 @@
+jobs:
+  publish:
+    stage: publish
+    do:
+      type: script
+      env:
+        INPUT: ${project.repos.conspects.path}
+        HAKYLL_DESTINATION: ${project.data_path}/hakyll/conspects
+        HAKYLL_STORE: ${project.data_path}/hakyll/conspects-store
+        BUILDER: ${project.repos.main.path}/builder
+      script: |
+        set -e
+        . /etc/profile.d/nix.sh
+
+        mkdir -p $HAKYLL_DESTINATION
+        mkdir -p $HAKYLL_STORE
+
+        cd $INPUT
+        nix run $BUILDER#conspects build
+
+stages:
+  publish:
+    on_overlap: cancel
+
+integrations:
+  github:
+    token: ${project.secrets.github_token}
+    repo: 'iliayar/ITMO'
+    rev: ${project.repos.conspects.rev}
+    ui_url: 'https://uci.iliay.ar'
+    jobs_to_report:
+      - publish

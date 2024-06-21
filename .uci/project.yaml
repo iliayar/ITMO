@@ -8,6 +8,7 @@ bind:
     'iliay.ar':
       cnames:
         - 'conspects'
+        - 'new-conspects'
 
 caddy:
   hostnames:
@@ -29,6 +30,21 @@ caddy:
           }
       }
 
+    'new-conspects.iliay.ar': |
+      file_server
+      root * ${project.data_path}/hakyll/conspects
+  
+      route / {
+          redir https://new-conspects.iliay.ar/README.html
+      }
+  
+      handle_errors {
+          @404 expression `{err.status_code} in [404]`
+          handle @404 {
+              redir https://github.com/iliayar/ITMO/tree/master{uri}
+          }
+      }
+
 docker:
   volumes:
     conspects-org-publish-cache: {}
@@ -37,3 +53,4 @@ actions: ${${load(./actions.yaml)}.actions}
 
 pipelines:
   publish-conspects: ${load(./publish_pipeline.yaml)}
+  hakyll-conspects: ${load(./hakyll_pipeline.yaml)}
