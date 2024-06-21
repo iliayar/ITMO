@@ -4,6 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Custom -->
+    <link rel="stylesheet" href="$assets_root$/assets/css/common.css">
+    <link rel="stylesheet" href="$assets_root$/assets/thirdparty/iosevka/Iosevka.css">
+
+    <link rel="stylesheet" href="$assets_root$/assets/css/listing.css">
+
+    <script src="$assets_root$/assets/js/common.js"></script>
+
     <!-- KaTeX -->
     <link rel="stylesheet" href="$assets_root$/assets/thirdparty/katex/katex.min.css">
     <script defer src="$assets_root$/assets/thirdparty/katex/katex.min.js"></script>
@@ -20,19 +28,27 @@
         });
     </script>
 
-    <title>Conspects | $title$</title>
-
-
-    <!-- Custom -->
-    <link rel="stylesheet" href="$assets_root$/assets/css/listing.css">
-    <link rel="stylesheet" href="$assets_root$/assets/css/common.css">
-
-    <link rel="stylesheet" href="$assets_root$/assets/thirdparty/iosevka/Iosevka.css">
-
-    <script src="$assets_root$/assets/js/common.js"></script>
-    
     <!-- Mermaid -->
     <script type="module" src="$assets_root$/assets/thirdparty/mermaid.min.js"></script>
+
+    <!-- Matomo -->
+    <!-- NOTE: It's selfhosted -->
+    $if(matomo_host)$
+    <script>
+      var _paq = window._paq = window._paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//$matomo_host$/";
+	  _paq.push(['setTrackerUrl', u+'matomo.php']);
+	  _paq.push(['setSiteId', '1']);
+	  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	  g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    $endif$
+
+    <title>Conspects | $title$</title>
   </head>
   <body>
     <header>
