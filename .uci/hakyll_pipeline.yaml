@@ -9,7 +9,7 @@ jobs:
         HAKYLL_STORE: ${project.data_path}/hakyll/conspects-store
         BUILDER: ${project.repos.main.path}/builder
 
-        ASSETS_ROOT: 'new.iliay.ar'
+        ASSETS_ROOT: 'https://new.iliay.ar'
       script: |
         set -e
         . /etc/profile.d/nix.sh
