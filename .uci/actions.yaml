@@ -17,20 +17,3 @@ actions:
       repo_id: main
       changes:
         - '^builder/.*'
-
-  publish:
-    - on: call
-      run_pipelines:
-        - publish-conspects
-      params:
-        build-org-publish-image: true
-        clean-html-caches: false
-
-  publish-rebuild-html:
-    - on: call
-      run_pipelines:
-        - publish-conspects
-      params:
-        build-org-publish-image: true
-        clean-html-caches: true
-        
