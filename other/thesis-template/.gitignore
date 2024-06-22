@@ -1,0 +1,21 @@
+# PDFs
+*.pdf
+*.pdfpc
+*.svg
+
+# Generated
+.figures
+notes.txt
+
+thesis-sources.zip
+
+# Patch
+patch.patch
+patch.typ
+patch.pdf
+
+# Nix
+.direnv
+
+# Manual
+docs/*.pdf
