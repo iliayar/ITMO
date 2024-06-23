@@ -1,5 +1,4 @@
 #+TITLE: Information Theory
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term7/it/lectures/all_lectures.pdf][All lectures]] \\

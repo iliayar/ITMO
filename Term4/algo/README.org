@@ -1,5 +1,4 @@
 #+TITLE: Algorithms and data structures
-#+SETUPFILE: ../../level-subj.org
 
 
 * Homeworks

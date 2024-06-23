@@ -1,5 +1,4 @@
 #+TITLE: Math Stat
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term5/ms/lectures/all_lectures.pdf][All lectures]]

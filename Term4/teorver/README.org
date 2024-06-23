@@ -1,5 +1,4 @@
 #+TITLE: Probability theory
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term4/teorver/lectures/all_lectures.pdf][All lectures]]

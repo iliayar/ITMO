@@ -1,5 +1,4 @@
 #+TITLE: Algorithms and data structures
-#+SETUPFILE: ../../level-subj.org
 * Labs
 1. [[file:labs/lab1/][Segment tree]] \\
    [[file:labs/lab1/statements.pdf][Statements]]

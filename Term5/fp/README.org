@@ -1,5 +1,4 @@
 #+TITLE: Functional Programming
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term5/fp/lectures/all_lectures.pdf][All lectures]] \\

@@ -1,7 +1,0 @@
-# #+HTML_HEAD: <link id="style" rel="stylesheet" type="text/css" href="../../../css/style.css"/>
-#+HTML_HEAD: <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css">
-# #+HTML_HEAD_EXTRA: <script type="text/javascript" src="../../../js/script.js"></script>
-# #+HTML_HEAD_EXTRA: <script type="text/javascript" src="../../../../js/main.js"></script>
-#+EMAIL: iliayar3@gmail.com
-#+AUTHOR: Yaroshevskiy Ilya
-#+PRIORITIES: toc:nil

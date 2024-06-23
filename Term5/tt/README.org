@@ -1,5 +1,4 @@
 #+TITLE: Type Theory
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term5/tt/lectures/all_lectures.pdf][All lectures]] \\

@@ -1,5 +1,4 @@
 #+TITLE: ITMO
-#+SETUPFILE: level-0.org
 
 [[https://uci.iliay.ar/api/badge/ghlike.svg?project_id=personal-site&pipeline_id=publish-conspects&job_id=publish]]
 

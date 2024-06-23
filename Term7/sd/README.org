@@ -1,5 +1,4 @@
 #+TITLE: Software Design
-#+SETUPFILE: ../../level-subj.org
 
 * HWs
 [[file:statements.pdf][Tasks]] \\

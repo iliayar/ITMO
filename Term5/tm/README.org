@@ -1,5 +1,4 @@
 #+TITLE: Translation Methods
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term5/tm/lectures/all_lectures.pdf][All lectures]]

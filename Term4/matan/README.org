@@ -1,5 +1,4 @@
 #+TITLE: Mathematical analysis
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term4/matan/lectures/questions.pdf][Questions for exam]] \\

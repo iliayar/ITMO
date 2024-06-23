@@ -1,4 +1,3 @@
 #+TITLE: Discrete math
-#+SETUPFILE: ../../level-subj.org
 
 Some mess here 😞

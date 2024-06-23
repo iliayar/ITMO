@@ -2,7 +2,7 @@
 PUBNOTE: html
 -----
 #+PUBNOTE:html
-#+SETUPFILE: ../../../setup.org
+
 * DONE One
 #+begin_src c
 #include <stdio.h>

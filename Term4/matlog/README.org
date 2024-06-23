@@ -1,5 +1,4 @@
 #+TITLE: Mathematical logic
-#+SETUPFILE: ../../level-subj.org
 * Lectures
 [[https://conspects.iliay.ar/Term4/matlog/lectures/all_lectures.pdf][All lectures]] \\
 [[https://conspects.iliay.ar/Term4/matlog/lectures/colloq1.pdf][First colloq]] \\

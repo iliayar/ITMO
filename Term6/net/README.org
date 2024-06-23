@@ -1,5 +1,4 @@
 #+TITLE: Networks
-#+SETUPFILE: ../../level-subj.org
 
 * Lectures
 [[https://conspects.iliay.ar/Term6/net/Notes.html][Notes for exam]]

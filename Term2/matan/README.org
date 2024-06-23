@@ -1,3 +1,2 @@
 #+TITLE: Mathematical analysis
-#+SETUPFILE: ../../level-subj.org
 [[file:~/Documents/ITMO/Term2/matan][Some lectures]]

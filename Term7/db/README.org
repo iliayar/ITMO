@@ -1,5 +1,4 @@
 #+TITLE: Databases
-#+SETUPFILE: ../../level-subj.org
 
 * Labs
 - [[file:hws/HW-1/README.org][Lab 1]]

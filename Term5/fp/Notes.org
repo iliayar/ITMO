@@ -4,7 +4,6 @@ tocEnabled: true
 numbersEnabled: true
 -----
 #+PUBNOTE:html
-#+SETUPFILE: ../../level-subj.org
 #+title: Заметки к экзамену
 #+OPTIONS: num:nil
 

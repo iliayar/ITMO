@@ -1,5 +1,4 @@
 #+TITLE: Reverse
-#+SETUPFILE: ../../level-subj.org
 
 * Writeups
 - [[file:1/1.org][Week 1]]
