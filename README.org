@@ -6,53 +6,58 @@
 My stuff from ITMO University. \\
 All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspects.iliay.ar/README.html][published here]]
 
-* Year 4
-** Term 8
-*** [[file:Term8/gt/README.org][Game Theory]]
-** Term 7
-*** [[file:Term7/bc/README.org][Blockchain]]
-*** [[file:Term7/sd/README.org][Software Design]] 
-*** [[file:Term7/db/README.org][Databases]] 
-*** [[file:Term7/it/README.org][Coding Theory]]
-* Year 3
-** Term 6
-*** [[file:Term6/sem/README.org][Programming Language Semantic]]
-*** [[file:Term6/ml/README.org][Machine Learning]]
-*** [[https://github.com/iliayar/compilers-supplementary][Compilers]]
-*** [[file:Term6/net/README.org][Networks]]
-** Term 5
-*** [[file:Term5/tm/README.org][Translation Methods]]
-*** [[file:Term5/fp/README.org][Functional Programming]]
-*** [[file:Term5/ms/README.org][Math Stat]]
-*** [[file:Term5/pp/README.org][Parallel Programming]]
-*** [[file:Term5/tt/README.org][Type Theory]]
-*** [[file:Term5/rev/README.org][Reverse]]
-*** [[file:Term5/da/README.org][Data Analysis]]
-* Year 2
-** Term 4
-*** [[file:Term4/matan/README.org][Mathematical analysis]]
-*** [[file:Term4/teorver/README.org][Probability theory]]
-*** [[file:Term4/metopt/README.org][Optimization methods]]
-*** [[file:Term4/matlog/README.org][Mathematical logic]]
-*** [[file:Term4/discrete/README.org][Discrete math]]
-*** [[file:Term4/java/README.org][Java]]
-*** [[file:Term4/algo/README.org][Algorithms and data structures]]
-** Term 3
-*** [[file:Term3/algo/README.org][Algorithms and data structures]]
-*** [[file:Term3/diffur/README.org][Differential equations]]
-*** [[file:Term3/discrete/README.org][Discrete math]]
-*** [[file:Term3/matan/README.org][Mathematical analysis]]
-*** [[https://github.com/iliayar/org-dashboard][Kotlin Client Server]]
-* Year 1
-** Term 2
-*** [[file:Term2/programming/README.org][Programming]]
-*** [[file:Term2/algo/README.org][Algorithms and data structures]]
-*** [[file:Term2/discrete/README.org][Discrete math]]
-*** [[file:Term2/linal/README.org][Linear algebra]]
-*** [[file:Term2/matan/README.org][Mathematical analysis]]
-*** [[file:Term2/CXX/README.org][С++]]
-** Term 1
-*** [[file:Term1/Discrete/README.org][Discrete math]]
-*** [[file:Term1/algo/README.org][Algorithms and data structures]]
-*** [[file:Term1/programming/README.org][Programming]]
-*** [[file:Term1/linal/README.org][Linear algebra]]
+* Master
+** Year 1
+*** Term 1
+**** [[file:MTerm1/dm/README.org][Discrete Math]]
+* Bachelor
+** Year 4
+*** Term 8
+**** [[file:Term8/gt/README.org][Game Theory]]
+*** Term 7
+**** [[file:Term7/bc/README.org][Blockchain]]
+**** [[file:Term7/sd/README.org][Software Design]] 
+**** [[file:Term7/db/README.org][Databases]] 
+**** [[file:Term7/it/README.org][Coding Theory]]
+** Year 3
+*** Term 6
+**** [[file:Term6/sem/README.org][Programming Language Semantic]]
+**** [[file:Term6/ml/README.org][Machine Learning]]
+**** [[https://github.com/iliayar/compilers-supplementary][Compilers]]
+**** [[file:Term6/net/README.org][Networks]]
+*** Term 5
+**** [[file:Term5/tm/README.org][Translation Methods]]
+**** [[file:Term5/fp/README.org][Functional Programming]]
+**** [[file:Term5/ms/README.org][Math Stat]]
+**** [[file:Term5/pp/README.org][Parallel Programming]]
+**** [[file:Term5/tt/README.org][Type Theory]]
+**** [[file:Term5/rev/README.org][Reverse]]
+**** [[file:Term5/da/README.org][Data Analysis]]
+** Year 2
+*** Term 4
+**** [[file:Term4/matan/README.org][Mathematical analysis]]
+**** [[file:Term4/teorver/README.org][Probability theory]]
+**** [[file:Term4/metopt/README.org][Optimization methods]]
+**** [[file:Term4/matlog/README.org][Mathematical logic]]
+**** [[file:Term4/discrete/README.org][Discrete math]]
+**** [[file:Term4/java/README.org][Java]]
+**** [[file:Term4/algo/README.org][Algorithms and data structures]]
+*** Term 3
+**** [[file:Term3/algo/README.org][Algorithms and data structures]]
+**** [[file:Term3/diffur/README.org][Differential equations]]
+**** [[file:Term3/discrete/README.org][Discrete math]]
+**** [[file:Term3/matan/README.org][Mathematical analysis]]
+**** [[https://github.com/iliayar/org-dashboard][Kotlin Client Server]]
+** Year 1
+*** Term 2
+**** [[file:Term2/programming/README.org][Programming]]
+**** [[file:Term2/algo/README.org][Algorithms and data structures]]
+**** [[file:Term2/discrete/README.org][Discrete math]]
+**** [[file:Term2/linal/README.org][Linear algebra]]
+**** [[file:Term2/matan/README.org][Mathematical analysis]]
+**** [[file:Term2/CXX/README.org][С++]]
+*** Term 1
+**** [[file:Term1/Discrete/README.org][Discrete math]]
+**** [[file:Term1/algo/README.org][Algorithms and data structures]]
+**** [[file:Term1/programming/README.org][Programming]]
+**** [[file:Term1/linal/README.org][Linear algebra]]
