@@ -1,0 +1,5 @@
+#+title: Discrete Math
+
+* Lectures
+[[https://conspects.iliay.ar/MTerm1/dm/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.iliay.ar/MTerm1/dm/lectures/1.pdf][Lecture 1]]

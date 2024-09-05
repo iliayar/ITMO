@@ -1,0 +1,95 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 1
+#+date: 5 сентября
+
+* План
+- *Комбинаторика* \\
+  Материалы
+  - чит. Шень
+  - см. Омельченко
+- *Теорю вер.* \\
+  Материалы:
+  - чит. Бородин
+  - см. Храбров
+- *Графы* \\
+  Материалы:
+  - чит. Карпов
+
+
+* Методы доказательства
+** Прямое
+** Индукция
+#+begin_examp org
+\[ \begin{cases}2^K \mapsto 2^{K + 1} \\ K \mapsto K - 1\end{cases} \]
+Неравенство Коши для среднего арфиметического и среднего геометрического
+#+end_examp
+
+** От противного
+\[ (A \Rightarrow B) \Leftrightarrow (\bar{B} \Rightarrow \bar{A}) \]
+
+#+begin_examp org
+\(n^2\) -- чет \( \Rightarrow \) n -- чет?.
+] \(n\) -- нечет. \(n \cdot n\) -- нечет \(= n^2\) _Противоречие_.
+#+end_examp
+
+** Перебор
+#+begin_examp org
+Никакой квадрат не заканчивается на \(7\).
+#+end_examp
+
+** Комбинаторное доказательство
+** Прницп крйнего
+#+begin_examp org
+Множество простых чисел бесконечно?
+] Простых чисел конечное число: \(p_1 < p_2 < \dots < p_n\).
+\(p1 \cdot p_2 \cdot \dots \cdot p_n + 1\) -- простое и больше \(p_i\).
+#+end_examp
+** Принцип Дирихле
+\(n\) ящиков, \(k\) кроликов. \(k > n \Rightarrow \exists\) ящик в
+котором находится хотя бы 2 кролика. \(k > m \cdot n \Rightarrow
+\exists\) ящик в котором находится хотя бы \(m + 1\) кроликов.
+
+#+begin_proof org
+] не так. Тогда в каждом ящике \(\le m\) кроликов. Тогда во всех ящиках \(\le m \cdot n\) кроликов. _Противоречие_. 
+#+end_proof
+
+* Множества
+Множества \(A \coloneq \{7, \text{стул}, \text{Ъ}\}\).
+- \(7 \in A\)
+- \(\{7\} \subset A\)
+- \(|A| = 3\)
+
+Операции над множествами:
+- \(A \cap B \coloneq \{x \big| x \in A \land x \in B\}\)
+  #+begin_rem org
+  \(|A \cap B| \le |A|\), \(|A \cap B| \le |B|\)
+  #+end_rem
+- \(A \cup B \coloneq \{x \big| x \in A \lor x \in B\}\)
+  #+begin_rem org
+  Если \(A \cap B = \varnothing\), то \(|A \cup B| = |A| + |B|\)
+  #+end_rem
+  #+begin_rem org
+  \[ |A \cup B \cup B| = |A| + |B| + |C| - |A \cap B| - |B \cap C| - |A \cap C| + |A \cap B \cap C| \]
+  #+end_rem
+- Разность \(A \setminus B \coloneq \{x \big| x \in A \land x \not\in B\}\)
+  #+begin_rem org
+  \(|A \setminus B| = |A \cup B| - |B| = |A| - |A \cap B|\)
+  #+end_rem
+- Дополнение \(\bar{A} \coloneq \Omega \setminus A\)
+  #+begin_rem org
+  \(|\bar{A}| = |\Omega| - |A|\)
+  #+end_rem
+- Симметрическая разность \(A \triangle B = A \oplus B \coloneq \{x \big| (x \in A \land x \not\in B) \lor (x \not\in A \land x \not\in B)\}\)
+  #+begin_rem org
+  \(|A \oplus B| = |A \cup B| - |A \cap B|\)
+  #+end_rem
+- Декратового произведение \(A \times B \coloneq \{\pair{x, y} \big| x \in A, y \in B\}\)
+  #+begin_symb org
+  \(A \times A = A^2\)
+  #+end_symb
+  #+begin_rem org
+  \(|A \times B| = |A| \cdot |B|\)
+  #+end_rem
+
+
+

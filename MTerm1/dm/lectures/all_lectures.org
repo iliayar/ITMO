@@ -1,0 +1,6 @@
+#+TITLE: Лекции по Дискретной Математике 1 Семестр
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: lectures
+
+* Лекция 1
+#+INCLUDE: "1.org" :lines "4-"
