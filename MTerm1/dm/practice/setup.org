@@ -1,2 +1,2 @@
-#+AUTHOR: Ilya Yaroshevskiy
-#+LATEX_CLASS: general
+#+AUTHOR: \href{https://conspects.iliay.ar}{Конспекты}
+#+LATEX_CLASS: conspect-mse
