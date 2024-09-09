@@ -18,7 +18,7 @@ y_n)\). Целевая функция \(f: X \rightarrow Y\). Приближае
 - Обучение с подкреплением (reinforcement learning)
 
 * Instance-based learning. Lazy learning
-\[ h(x; d) = \argmax_{y \in Y} \underbrace{\sum_{xI-i \in D} [y_i = y] w(x_i, x)}_{\Gamma_y(x)} \]
+\[ h(x; d) = \mathOp{\rm argmax}_{y \in Y} \underbrace{\sum_{x_i \in D} [y_i = y] w(x_i, x)}_{\Gamma_y(x)} \]
 где \(w(x_i, x)\) -- вес \(x_i\) для \(x\), \(\Gamma_y(x)\)
 
 #+begin_symb org
