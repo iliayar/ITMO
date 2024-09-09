@@ -10,6 +10,7 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspe
 ** Year 1
 *** Term 1
 **** [[file:MTerm1/dm/README.org][Discrete Math]]
+**** [[file:MTerm1/ml/README.org][Machine Learning]]
 * Bachelor
 ** Year 4
 *** Term 8
