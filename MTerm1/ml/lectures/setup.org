@@ -1,0 +1,3 @@
+#+AUTHOR: \href{https://conspects.iliay.ar}{Конспекты}
+#+LATEX_CLASS: conspect-mse
+#+LATEX_HEADER: \newcommand{\dvec}{\mathrm{\textbf{x}}}

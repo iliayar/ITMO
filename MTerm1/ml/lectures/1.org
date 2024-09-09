@@ -1,0 +1,53 @@
+#+setupfile: setup.org
+#+TITLE: Лекция 1
+#+date: 9 сентября
+
+* Обучение с учителем
+Имеем входные данные \(X\), и набор соответсвующих меток
+\(Y\). Т.е. наши данные это набор пар \((x_0, y_0), \dots, (x_n,
+y_n)\). Целевая функция \(f: X \rightarrow Y\). Приближаем функцию
+(гипотезу) \(h: X \rightarrow Y\) к целевой.
+
+#+begin_symb org
+Данные \(D = [\dvec_1, \dvec_2, \dots, \dvec_n]\). Вектор \(\dvec_1 = [x, x_2, \dots, x_m]\).
+#+end_symb
+
+* Методы машинного обучения
+- Обучение с частичным привлечением учителя (semi-supervised learning). Используем неразмеченные данные для лучшей производительности.
+- Активное обучение (active learning). Можем попросить больше данных, но не бесплатно.
+- Обучение с подкреплением (reinforcement learning)
+
+* Instance-based learning. Lazy learning
+\[ h(x; d) = \argmax_{y \in Y} \underbrace{\sum_{xI-i \in D} [y_i = y] w(x_i, x)}_{\Gamma_y(x)} \]
+где \(w(x_i, x)\) -- вес \(x_i\) для \(x\), \(\Gamma_y(x)\)
+
+#+begin_symb org
+\([ \cdot ]\) -- индикатор 0 или 1.
+#+end_symb
+
+
+
+** kNN
+k ближайших соседей.
+- \(w(x_i, x) = 1\) -- если \(x_i\) один из \(k\) ближайших соседей
+- \(w(x_i, x) = 1\) -- если \(\rho(x_i, x) < R\)
+
+Как находить оптимальное k. Leave-on-out:
+\[ \mathOp{\rm LOO}(k, D) = \frac{\sum_{x_i \in D} [h(x_i, D \setminus \{x_i\}, k) \neq y_i]}{|D|} \]
+
+** Взвешенный kNN
+Можем использовать разные функции в качестве веса \(w\).
+\[ w_i = \left[ \frac{r - \rho(x_i, x)}{r} \right]_+ \]
+
+#+begin_symb org
+\([ \cdot ]_+ = \max(\cdot, 0)\)
+#+end_symb
+
+
+\[ w_i = q^{-\rho(x, x_i)} \]
+
+Методе окна Парцена (Parzen)
+\[ w(x, x_i) = K\left(\frac{\rho(x, x_i)}{r}\right) \quad w(x, x_i) = K\left(\frac{\rho(x, x_i)}{\rho(x, x_j)}\right) \]
+где \(x_j\) -- \(k + 1\) сосед
+
+
