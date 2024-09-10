@@ -11,6 +11,8 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspe
 *** Term 1
 **** [[file:MTerm1/dm/README.org][Discrete Math]]
 **** [[file:MTerm1/ml/README.org][Machine Learning]]
+**** [[file:MTerm1/ads/README.org][Algorithms and Data Structures]]
+**** [[file:MTerm1/fp/README.org][Functional Programming]]
 * Bachelor
 ** Year 4
 *** Term 8
