@@ -1,0 +1,2 @@
+#+AUTHOR: \href{https://conspects.iliay.ar}{Конспекты}
+#+LATEX_CLASS: conspect-mse

@@ -1,0 +1,105 @@
+#+setupfile: setup.org
+#+TITLE: Функциональное Программирование. Лекция 1
+#+date: 10 сентября
+
+* Чистое \(\lambda\)-исчисление
+
+#+begin_definition org
+Множество *\(\lambda\)-термов* \(\Lambda\) идунктивно строится из перменных \(V = \{x, y, z, \dots\}\) с помощью применения и абстракции:
+\begin{align*}
+x \in V & \Rightarrow x \in \Lambda \\
+M, N \in \Lambda & \Rightarrow (M\ N) \in \Lambda \\
+M \in \Lambda, x \in V & \Rightarrow (\lambda x. M) \in \Lambda
+\end{align*}
+#+end_definition
+
+#+begin_remark org
+В абстрактно синтаксисе
+\[ \Lambda ::= V\ |\ (\Lambda\ \Lambda)\ |\ (\lambda V. \Lambda) \]
+
+#+end_remark
+
+#+begin_symb org
+Произволные термы пишем заглавныыми буквами, переменные -- строчными
+#+end_symb
+
+#+begin_examp org
+\begin{align*}
+& x \\
+( & x\ {\color{red} z}) \\
+({\color{red}\lambda x.}( & x\ z)) \\
+((\lambda x.( & x\ z))\ {\color{red} y})
+\end{align*}
+#+end_examp
+
+#+begin_remark org
+Аппликация лево-ассоциативна. Абстракция ассоциативна вправо и съедает все после точки.
+#+end_remark
+
+#+begin_definition org
+Вычислительное правило *\(\beta\)-редукции:
+\[ (\lambda x. M)\ N \leadsto_\beta [x \mapsto N]\ M \]
+где \([x \mapsto N]\ M\) обозначает подстановку \(N\) вместо \(x\) в \(M\)
+#+end_definition
+
+#+begin_definition org
+Абстракция \(\lambda x. M[x]\) связывает дотоле свободную переменную \(x\) в терме M.
+#+end_definition
+#+begin_examp org
+\[ (\lambda y. (\lambda w. w\ z)\ y)\ x \]
+Переменные \(y\) и \(w\) -- связанные, а \(z\) и \(x\) -- свободные
+#+end_examp
+
+#+begin_remark org
+\[ (\lambda {\color{red} x}. (\lambda {\color{green} x}. {\color{green} x}\ z)\ {\color{red} x})\ {\color{blue} x} \]
+#+end_remark
+
+#+begin_definition org
+Множество \(FV(T)\) *свободных (free) переменных* в терме T:
+\begin{align*}
+FV(x) & = \{x\} \\
+FV(M\ N) & = FV(M) \cup FV(N) \\
+FV(\lambda x. M) & = FV(M) \setminus \{x\} \\
+\end{align*}
+#+end_definition
+
+#+begin_definition org
+Если в терме нет свобоных переменных, то он называется *замкнутым* или *комбинатором*.
+#+end_definition
+#+begin_definition org
+Классические комбинаторы
+\begin{align*}
+I & = \lambda x. x \\
+\omega & = \lambda x. x\ x \\
+\Omega & = \omega\ \omega = (\lambda x. x\ x) (\lambda x.x\ x) \\
+K & = \lambda x\ y. x \\
+K_* & = \lambda x\ y. y \\
+C & = \lambda f\ x\ y. f\ y\ x \\
+B & = \lambda f\ g\ x. f\ (g\ x) \\
+S & = \lambda f\ g\ x. f\ x\ (g\ x)
+\end{align*}
+#+end_definition
+
+#+begin_definition org
+Термы, отличающиеся только именами связанных перменных, называются *\(\alpha\)-эквивалентными*.
+#+end_definition
+
+#+begin_definition org
+Бинарное отношение \(\mathcal{R}\) над \(\Lambda\) называют *совместимым*, если для любых \(M, N, Z \in \Lambda\) и любой
+переменной \(x\)
+\begin{align*}
+M\ \mathcal{R}\ N & \Rightarrow Z\ M\ \mathcal{R}\ Z\ N \\
+M\ \mathcal{R}\ N & \Rightarrow M\ Z\ \mathcal{R}\ N\ Z \\
+M\ \mathcal{R}\ N & \Rightarrow \lambda x. M\ \mathcal{R}\ \lambda x. N \\
+\end{align*}
+#+end_definition
+
+#+begin_definition org
+Наименьшее совместимое отношение \(\leadsto_\beta\), содержащее
+\[ (\lambda x. M)\ N \leadsto [x \mapsto N] M \]
+называется *отношением \(\beta\)-редукции*
+#+end_definition
+
+#+begin_definition org
+Отношение *\(\beta\)-эквивалентности* \(=_\beta\). рефлексивное, симметричное, транзитивное замыкание \( \twoheadrightarrow_\beta \).
+#+end_definition

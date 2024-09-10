@@ -1,0 +1,52 @@
+#+setupfile: setup.org
+#+TITLE: Алгоритмы и структуры данных. Лекция 1
+#+date: 10 сентября
+
+* Время
+
+#+begin_definition org
+\(f \in O(g)\) -- \(\exists N\ \forall n \ge N\ f(n) \e C \cdot g(n)\) \\
+Начиная с какого места \(f \le C \cdot g\)
+#+end_definition
+#+begin_symb org
+\-
+- \(f\) -- это \(O(g)\)
+- \(f = O(g)\)
+#+end_symb
+
+#+begin_definition org
+\(f = \Theta(g)\) -- \(\exists C_1, C_2 > 0\ C_1 \cdot g(n) \le f(n) \le C_2 \cdot g(n)\) \\
+С точностью до \(k\) \(f = g\)
+#+end_definition
+
+#+begin_definition org
+\(f = o(g)\) -- \(\forall C > 0\ \exists N\ \forall n \ge N f(n) \le C \cdot g(n)\)
+#+end_definition
+
+#+begin_examp org
+Пусть \(f = O(g), g = \Theta(h)\). \(f = O(h)\)
+#+end_examp
+#+begin_proof org
+\(\exists N_0\ \forall n \ge N_0\ f(n) \le C_0 \cdot g(n). \\
+\(\exists N_1\ \forall n \ge N_1\ C_1 h(n) \le g(n) \le C_2 h(n)\) \\
+\(\forall n \ge \max(N_0, N_1)\ f(n) \le C_0 \cdot C_2 \cdot h(n) \Rightarrow f = O(h)\)
+#+end_proof
+
+#+begin_lemma org
+\(f = O(g)\ C > 0 \Rightarrow f = O(C \cdot g)\)
+#+end_lemma
+#+begin_proof org
+\(\exists C_1\ f \le C_1 \cdot g\). \\
+\(f \le \frac{C_1}{C} \cdot C \cdot g = C_1 \cdot g\)
+#+end_proof
+
+* Модель памяти
+#+begin_definition org
+*RAM модель* -- все операции с числами выполняются за \(O(1)\).
+#+end_definition
+
+#+begin_definition org
+*RAM-word модель* -- все операции с числами размера не больше машинного слова выполняются за \(O(1)\).
+#+end_definition
+
+

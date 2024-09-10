@@ -1,0 +1,5 @@
+#+title: Algorithms and Data Structures
+
+* Lectures
+[[https://conspects.iliay.ar/MTerm1/ads/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.iliay.ar/MTerm1/ads/lectures/1.pdf][Lecture 1]]
