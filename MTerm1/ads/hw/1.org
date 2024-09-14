@@ -1,0 +1,202 @@
+#+SETUPFILE: setup.org
+#+TITLE: ДЗ 1
+#+LATEX_HEADER: \renewcommand{\O}{\mathcal{O}}
+
+#+begin_task org
+\[ f = \Theta(g) \xLeftrightarrow{?} \exists C, 0 < C < \infty: \lim_{n \to \infty} \frac{f(n)}{g(n)} = C \]
+
+#+end_task
+#+begin_solution org
+\-
+- \(\Leftarrow\) ::
+  \begin{gather}
+    \exists C, 0 < C < \infty : \lim_{n \to \infty} \frac{f(n)}{g(n)} = C \implies \forall \varepsilon > 0: \exists N: \forall n > N: \left|\frac{f(n)}{g(n)} - C\right| < \varepsilon \\
+    -\varepsilon < \frac{f(n)}{g(n)} - C < \varepsilon \\
+    -\varepsilon + C < \frac{f(n)}{g(n)} < \varepsilon + C
+  \end{gather}
+  Пусть \(\varepsilon \coloneqq 1, C_1 \coloneqq C - 1, C_2 \coloneqq C + 1\). Тогда
+  \[ C_1 \cdot g(n) < f(n) < C_2 \cdot g(n) \implies f = \Theta(g) \addtag \]
+- \(\not\Rightarrow\) ::
+  \[ f = \Theta(g) \implies \exists C_1, C_2 > 0, N: \forall n > N: C_1 \cdot g(n) \le f(n) \le C_2 \cdot g(n) \addtag \]
+  Пусть \(g(n) = n, f(n) = \begin{cases} n &, n \bmod 2 = 0 \\ 2 \cdot n &, n \bmod 2 = 1 \end{cases}\). \(f = \Theta(g)\) при \(C_1 = 1, C_2 = 2\). \\
+  Покажем что не существует предела \(\frac{f(n)}{g(n)}\), т.е. \(\forall C, 0 < C < \infty : \exists \varepsilon > 0 : \forall N : \exists n > N : \left|\frac{f(n)}{g(n)} - C\right| \ge \varepsilon\).
+  Пусть \(\varepsilon = \frac{1}{2} \). Рассмотрим произвольные \(n_1, n_2 > N: n_1 \bmod 2 = 0\) и \(n_2 \bmod 2 = 1\).
+  \begin{gather}
+    \frac{f(n_1)}{g(n_1)} = 1 \quad \frac{f(n_2)}{g(n_2)} = 2 \\
+    C \le 1\frac{1}{2}, n \coloneqq n_2 \implies |2 - C| \ge \frac{1}{2} = \varepsilon \\
+    C > 1\frac{1}{2}, n \coloneqq n_1 \implies |1 - C| \ge \frac{1}{2} = \varepsilon
+  \end{gather}
+#+end_solution
+
+
+-----
+
+#+ATTR_LATEX: :options {2.a}[\(\N \to \N, \N \to \R_{> 0}\)]
+#+begin_manualtask org
+\[ \exists C, N > 0: \forall n > N: f(n) \le C\cdot g(n) \xLeftrightarrow{?} \exists C: \forall n \in \N: f(n) \le C \cdot g(n) \]
+#+end_manualtask
+#+begin_solution org
+\-
+- \(\Leftarrow\) :: тривиально для любого \(N\).
+- \(\Rightarrow\) :: \-\\
+  Известно, что \(\exists C, N > 0 : \forall n > N f(n) \le C \cdot g(n)\). Пусть \(C' = \max_{0 < n \le N} \left\lceil\frac{f(n)}{g(n)}\right\rceil\). Тогда
+  \begin{align}
+     0 < n \le N & : f(n) \le C' \cdot g(n) \\
+     n > N       & : f(n) \le C \cdot g(n) \\
+     \forall n \in \N & : f(n) \le \max(C', C) \cdot g(n)
+  \end{align}
+Получается что \(\Leftrightarrow\). Использовали только то, что \(g(n) \neq 0\). Это верно и для \(\R_{>0}\).
+#+end_solution
+
+#+ATTR_LATEX: :options {2.b}[\(\N \to \N, \N \to \R_{>0}\)]
+#+begin_manualtask org
+\[ \forall C > 0: \exists N > 0: \forall n > N: f(n) < C\cdot g(n) \xLeftrightarrow{?} \forall C > 0: \forall n \in \N: f(n) < C \cdot g(n) \]
+#+end_manualtask
+#+begin_solution org
+\-
+- \(\not\Rightarrow\) :: \-\\
+  Пусть \(g(n) = n^2\), а \(f(n) = \begin{cases} n^2 &, n < 10 \\ n &,n \ge 10  \end{cases}\). Дано \(C\), возьмем \(N = \max(10, \left\lceil \frac{1}{C} \right\rceil + 1)\). Тогда
+  \begin{gather}
+    n < C \cdot n^2 < C \cdot \left(\left\lceil\frac{1}{C}\right\rceil + 1 \right) \cdot n \\
+    C + C \cdot \left\lceil\frac{1}{C}\right\rceil > 0
+  \end{gather}
+  Получается что \(f(n) = o(g(n))\). Покажем что \(\exists C > 0, n \in \N: f(n) \ge C \cdot g(n)\). Пусть \(C = \frac{1}{2}, n = 1\):
+  \[ 1^2 \ge \frac{1}{2} \cdot 1^2 \addtag \]
+  Нигде не использовалась натуральность \(f(n), g(n)\).
+Получается что \(\not\Leftrightarrow\).
+#+end_solution
+
+-----
+
+#+ATTR_LATEX: :options {5}
+#+begin_manualtask org
+\[ \forall f, g: (f \preceq g) \lor (g \preceq f) ? \]
+#+end_manualtask
+#+begin_solution org
+Пусть \(f = \begin{cases} n &, n \bmod 2 = 0 \\ n^2 &, n \bmod 2 = 1 \end{cases}, g = \begin{cases} n^2 &, n \bmod 2 = 0 \\ n &, n \bmod 2 = 1 \end{cases} \). Покажем что \((f \not\preceq g) \land (g \not\preceq f)\). Для \(f \neq \O(g)\): \\
+Известно, что \(n = o(n^2)\), т.е. \(\forall C' : \exists N' : \forall n' > N' : n' < C' \cdot n'^2\). Покажем что \(\forall C > 0, N > 0: \exists n > N : f(n) > C \cdot g(n)\). Дано \(C, N\), пусть \(C' \coloneqq \frac{1}{C}\), возьмем \(n \coloneqq n' > \max(N, N')\), такое что \(n' \bmod 2 = 1\). Получим, что:
+\begin{align}
+  n' & < C' \cdot n'^2 \\
+  n & < \frac{1}{C} \cdot n^2 \\
+  C \cdot g(n) & < f(n)
+\end{align}
+Аналогично для \(g \neq \O(f)\). Получается, что \(f \not\preceq g\) и \(g \not\preceq f\), при чем \(f \neq \Theta(g)\), т.к. \(f \neq \O(g)\), т.е \(f, g\) находятся в разных классах эквивалентности и при этом не сравнимы. Значит линейного порядка нет.
+#+end_solution
+
+-----
+#+ATTR_LATEX: :options {6.a}
+#+begin_manualtask org
+\[ g(n) = o(f(n)) \xRightarrow{?} f(n) + g(n) = \Theta(f(n)) \]
+#+end_manualtask
+#+begin_solution org
+\begin{gather}
+  \forall C > 0 : \exists N : \forall n > N : g(n) < C \cdot f(n) \\
+  g(n) + f(n) \le (C + 1) \cdot f(n) \\
+  g(n) \ge 0 \implies f(n) \le f(n) + g(n) \\
+  f(n) \le f(n) + g(n) \le (C + 1) \cdot f(n)
+\end{gather}
+Получается при \(C_1 \coloneqq 1, C_2 \coloneqq C + 1\) \(\forall n > N : C_1 \cdot f(n) \le f(n) + g(n) \le C_2 \cdot f(n)\). То есть \(f(n) + g(n) = \Theta(f(n))\).
+#+end_solution
+
+
+#+ATTR_LATEX: :options {6.b}
+#+begin_manualtask org
+\[ f(n) = \O(g(n)) \xLeftrightarrow{?} f(n) = o(g(n)) \lor f(n) = \Theta(g(n)) \]
+#+end_manualtask
+#+begin_solution org
+Возьмем \(f(n) = \begin{cases} n &, n \bmod 2 = 0 \\ n^2 &, n \bmod 2 = 1  \end{cases}, g(n) = n^2\). Очевидно, что \(f(n) = \O(g(n))\).
+1. Покажем что \(f(n) \neq \Theta(g(n))\), т.е. \(\forall C_1, C_2, N: \exists n > N : C_1 \cdot g(n) > f(n) \lor C_2 \cdot g(n) < f(n)\). Известо что \(n = o(n^2)\), т.е. \(\forall C : \exists N' : \forall n > N' : n < C \cdot n^2\). Дано \(C_1, N\), возьмем \(n > \max(N, N')\), такое что \(n \bmod 2 = 0\), получим что \(n < C_1 \cdot n ^ 2\).
+2. Покажем что \(f(n) \neq o(g(n))\), т.е. \(\exists C : \forall N : \exists n > N : f(n) > C \cdot g(n)\). Пусть \(C \coloneqq \frac{1}{2}\), возьмем \(n > N\), такое что \(n \bmod 2 = 1\). \(f(n) = n^2 > \frac{1}{2} n^2 = C \cdot g(n)\).
+получается что \(f(n) \neq o(g(n)) \land f(n) \neq \Theta(g(n))\), т.е. \(\not\Rightarrow\).
+#+end_solution
+
+# #+begin_solution org
+# \-
+# - \(\Leftarrow\) :: \-\\
+#   Докажем по отдельности:
+#   - \(f(n) = o(g(n))\) ::
+#     \begin{gather}
+#       \forall C : \exists N : \forall n > N : f(n) \le C \cdot g(n) \implies \\
+#       \implies \exists C' \coloneqq C, N' \coloneqq N : \forall n > N' : f(n) \le C' \cdot g(n)
+#     \end{gather}
+#   - \(f(n) = \Theta(g(n))\) ::
+#     \begin{gather}
+#       \exists C_1, C_2, N : \forall n > N : C_1 \cdot g(n) \le f(n) \le C_2 g(n) \implies \\
+#       \implies \exists C' \coloneqq C_2, N' \coloneqq N : \forall n > N' : f(n) \le C' g(n)
+#     \end{gather}
+# - \(\Rightarrow\) :: \-\\
+#   Известно что \(\exists C, N : \forall n > N : f(n) \le C \cdot g(n)\). Пусть \(f(n) \neq o(g(n)) \land f(n) \neq \Theta(g(n))\). То есть:
+#   1. \(\exists C : \forall N : \exists n > N : f(n) > C \cdot g(n)\)
+#   2. \(\forall C_1, C_2, N : \exists n > N : C_1 \cdot g(n) > f(n) \lor f(n) > C_2 \cdot g(n)\)
+# 
+# 
+#   # Тогда должно выполняться одно из двух:
+#   # 1. \(\forall C : \exists N : \forall n > N : f(n) < C \cdot g(n)\). Это значит что \(f = o(g(n))\).
+#   # 2. \(\exists C : \forall N : \exists n > N : f(n) \ge C \cdot g(n)\)
+# #+end_solution
+
+-----
+#+ATTR_LATEX: :options {7}
+#+begin_manualtask org
+#+end_manualtask
+#+begin_solution org
+\-
+#+ATTR_LATEX: :align c|c|c|c|c|c|c|c
+| # | \(A\)          | \(B\)               | \(\O\) | \(o\) | \(\Theta\) | \(\omega\) | \(\Omega\) |
+|---+----------------+---------------------+--------+-------+------------+------------+------------|
+| 1 | \(n\)          | \(n^2\)             | +      | +     | -          | -          | -          |
+| 2 | \(\log^k n\)   | \(n^\epsilon\)      | +      | +     | -          | -          | -          |
+| 3 | \(n^k\)        | \(c^n\)             | +      | +     | -          | -          | -          |
+| 4 | \(\sqrt{n}\)   | \(n^{\sin n}\)      | -      | -     | -          | -          | -          |
+| 5 | \(2^n\)        | \(2^{\frac{n}{2}}\) | -      | -     | -          | +          | +          |
+| 6 | \(n^{\log m}\) | \(m ^ {\log n}\)    | +      | -     | +          | -          | +          |
+| 7 | \(\log n!\)    | \(\log n^n\)        | +      | -     | +          | -          | +          |
+
+2. [@2] По правилу Лопиталя[fn:1] покажем что \(\lim_{n \to \infty} \frac{log^k n}{n^\epsilon} = 0\). Это будет значить что \(\forall \varepsilon > 0 : \exists N : \forall n > N \left|\frac{log^k n}{n^\epsilon}\right| < \varepsilon\), т.е \(log^k n < \varepsilon \cdot n^\epsilon\), что значит что \(log^k n = o(n^\epsilon)\): \\
+   Очевидно что при \(k > 0, \epsilon > 0 : \lim_{n \to \infty} \log^k n = \lim_{n \to \infty} n^\epsilon = \infty\)
+   \begin{align}
+     \lim_{n \to \infty} \frac{log^k n}{n^\epsilon} & = \lim_{n \to \infty} \frac{k \cdot log^{k - 1} n \cdot \frac{1}{n}}{\epsilon \cdot n^{\epsilon - 1}} =  \frac{k}{\epsilon} \cdot \lim_{n \to \infty} \frac{log^{k - 1} n}{n^\varepsilon} = \dots = \\
+     & = \frac{\lceil k \rceil!}{\varepsilon^{\lceil k \rceil}} \cdot \lim_{n \to \infty} \frac{log^{k - \lceil k \rceil} n}{n^\epsilon} = 0
+   \end{align}
+   Очевидно что тогда \(log^k n = \O(k^\epsilon)\)
+3. [@3] Аналогично покажем что \(\lim_{n \to \infty} \frac{n^k}{c^n} = 0\):
+   \begin{align}
+     \lim_{n \to \infty} \frac{n^k}{c^n} & = \lim_{n \to \infty} \frac{k \cdot n^{k - 1}}{c^n \cdot \ln c} = \frac{k}{\ln c} \lim_{n \to \infty} \frac{n^{k - 1}}{c^n} = \dots = \\
+     & = \frac{\lceil k \rceil!}{\ln^{\lceil k \rceil} c} \lim_{n \to \infty} \frac{n ^ {k - \lceil k \rceil}}{c^n} = 0
+   \end{align}
+5. [@5] Аналогично \(\lim_{n \to \infty} \frac{2^{\frac{n}{2}}}{2^n} = \lim \frac{1}{2^{\frac{n}{2}}} = 0 \implies 2^{\frac{n}{2}} = o(2^n) \implies 2^n = \omega(2^{\frac{n}{2}})\).
+6. [@6] \(m ^ {\log n} = m ^ {\log m \cdot \log_m n} = (m ^ {\log_m n})^{\log m} = n^{\log m}\)
+7. [@7] Покажем что \(\log n! = \O(n \log n)\)
+   \begin{align}
+    \log n! & = \underbrace{\log n \cdot (n - 1) \cdot \dots \cdot 1}_n = \underbrace{\log n + \log n - 1 + \dots + \log 1}_n \le \\
+    & \le \underbrace{\log n + \log n + \dots + \log n}_n = n \cdot \log n
+   \end{align}
+   Получается \(C \coloneqq 1, \forall n \in \N : \log n! \le n \cdot \log n \le C \cdot n \log n\). Теперь покажем что \(\log n! = \Omega (n \log n)\)
+   \begin{align}
+     \log n! & = \underbrace{\log n + \log n - 1 + \dots + \log \frac{n}{2}}_{\frac{n}{2}} + \dots + \log 1 \ge \\
+     & \ge \underbrace{\log n + \log n - 1 + \dots + \log \frac{n}{2}}_{\frac{n}{2}} \ge \underbrace{\log \frac{n}{2} + \log \frac{n}{2} + \dots + \log \frac{n}{2}}_{\frac{n}{2}} = \\
+     & = \frac{n}{2} \log \frac{n}{2} \ge \frac{n}{2} \log \sqrt{n} \quad, n \ge 4
+   \end{align}
+   Пусть \(C \coloneqq \frac{1}{4}, N \coloneqq 4\), тогда \(\forall n > N\):
+   \begin{align}
+     \frac{1}{4} \cdot n \log n = \frac{n}{2} \log \sqrt{n} \le \log n!
+   \end{align}
+   Тогда и \(\log n! = \Theta (n^n)\).
+4. [@4]
+   #+begin_lemma org
+   Существует бесконечное множество \(L \subset \N\), такое что \(\forall n \in L : \sin n > \frac{1}{2}\)
+   #+end_lemma
+   #+begin_proof org
+   \(\sin n > \frac{1}{2}\), при \(n \in (2\pi k + \frac{\pi}{6}; 2\pi k + \frac{5 \pi}{6})\). \(\forall k \in \N\):
+   \[ 2\pi k + \frac{\pi}{6} < n \coloneqq \left\lceil 2\pi k + \frac{\pi}{6}\right\rceil + 1 < 2\pi k + \frac{\pi}{6} + 2 < 2\pi k + \frac{5 \pi}{6} \]
+   #+end_proof
+   Покажем что \(\sqrt{n} \neq \omega(n^{\sin n})\). Известно что \(\forall k > \frac{1}{2} : n^{\frac{1}{2}} = o(n^k)\), т.е. \(\forall C : \exists N : \forall n > N : n^{\frac{1}{2}} < C \cdot n^k\).
+   \[ \exists C' \coloneqq C : \forall N' : \exists n > N', n \in L : \sqrt{n} = n^{\frac{1}{2}} \le C \cdot n^k = C' \cdot n^{\sin n}\]
+   Аналогично покажем что \(\sqrt{n} \neq o(n^{\sin n})\). Известно что \(\forall k < \frac{1} : n^{\frac{1}{2}} = \omega(n^k)\), т.е \(\forall C : \exists N : \forall n > N : n^{\frac{1}{2}} > C \cdot n^k\).
+   \[ \exists C' \coloneqq C : \forall N' : \exists n > N', n \not\in L : \sqrt{n} = n^{\frac{1}{2}} \ge C \cdot n^k = C' \cdot n^{\sin n} \]
+   Очевидно также что \(\sqrt{n} \neq O(n^{\sin n})\) и \(\sqrt{n} \neq \Omega(n^{\sin n})\).
+
+#+end_solution
+
+
+[fn:1] https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule

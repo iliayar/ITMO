@@ -1,0 +1,3 @@
+#+AUTHOR: Ярошевский Илья
+#+LATEX_CLASS: hw-mse
+#+OPTIONS: toc:nil
