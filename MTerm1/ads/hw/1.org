@@ -1,6 +1,14 @@
 #+SETUPFILE: setup.org
-#+TITLE: ДЗ 1
-#+LATEX_HEADER: \renewcommand{\O}{\mathcal{O}}
+
+#+begin_export latex
+\begin{tabbing}
+\hspace{11cm} \= Студент: \= Ярошевский Илья \\
+  \> Группа: \> 1  \\
+  \> Дата: \> \today
+\end{tabbing}
+\hrule
+\vspace{1cm}
+#+end_export
 
 #+begin_task org
 \[ f = \Theta(g) \xLeftrightarrow{?} \exists C, 0 < C < \infty: \lim_{n \to \infty} \frac{f(n)}{g(n)} = C \]
