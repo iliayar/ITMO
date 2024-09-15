@@ -1,0 +1,468 @@
+%! suppress = Makeatletter
+%! suppress = TooLargeSection
+%! suppress = MissingLabel
+\documentclass{article}
+
+% Fields
+\usepackage{geometry}
+\geometry{top=25mm}
+\geometry{bottom=35mm}
+\geometry{left=20mm}
+\geometry{right=20mm}
+% ------------------------------------------------
+
+% Graphics
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{blkarray}
+\usepackage{graphicx}
+% ------------------------------------------------
+
+% Math
+\usepackage{amsmath, amsfonts}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{mathrsfs}
+% Crossed-out symbols
+% https://tex.stackexchange.com/questions/75525/how-to-write-crossed-out-math-in-latex
+\usepackage[makeroom]{cancel}
+\usepackage{mathtools}
+% ------------------------------------------------
+
+% Additional font sizes
+% https://www.overleaf.com/learn/latex/Questions/How_do_I_adjust_the_font_size%3F
+\usepackage{moresize}
+% Additional colors
+% https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX
+\usepackage{xcolor}
+% \texttimes
+\usepackage{textcomp}
+% ------------------------------------------------
+
+% Language
+\usepackage[utf8] {inputenc}
+\usepackage[T2A] {fontenc}
+\usepackage[english, russian] {babel}
+\usepackage{indentfirst, verbatim}
+\usetikzlibrary{cd, babel}
+% ------------------------------------------------
+
+% Fonts
+\usepackage{stmaryrd}
+\usepackage{cmbright}
+\usepackage{wasysym}
+% ------------------------------------------------
+
+% Code
+% https://tex.stackexchange.com/questions/99475/how-to-invoke-latex-with-the-shell-escape-flag-in-texstudio-former-texmakerx
+% Colored, requires --shell-escape compiling option
+\usepackage{minted}
+\setminted{xleftmargin=\parindent, autogobble, escapeinside=\#\#}
+\usepackage{listings}
+% ------------------------------------------------
+
+% Custom envs
+% https://tex.stackexchange.com/questions/371286/draw-a-horizontal-line-in-latex
+\newenvironment{proof}{\subparagraph{\hspace{-1em}Решение:\newline}\-}{\par\noindent\rule{\textwidth}{0.4pt}}
+% ------------------------------------------------
+
+% Custom commands
+\newcommand{\comb}[1]{\mathbf{#1}}
+\newcommand{\step}{\rightsquigarrow}
+\newcommand{\term}[1]{\mathbf{#1}}
+\newcommand{\ap}{~}
+\newcommand{\termdef}{\coloneqq}
+\newcommand{\subst}[3]{\left[#2 \mapsto #3 \right] #1}
+\newcommand{\eqbeta}{=_\beta}
+\newcommand{\betastep}{\rightarrow_\beta}
+\newcommand{\betasteps}{\twoheadrightarrow_\beta}
+\newcommand{\eqeta}{=_\eta}
+\newcommand{\tlist}[1]{\term{[}#1\term{]}} % list-term
+\renewcommand{\emph}[1]{{\color{blue} \textit{#1}}}
+% ------------------------------------------------
+
+% Head
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\pagestyle{fancy}
+\fancyhead[R]{Ярошевский Илья}
+\fancyhead[L]{ИТМО MSE, ФП 2024, Дз 1}
+% ------------------------------------------------
+
+% Numbering
+% https://tex.stackexchange.com/questions/80113/hide-section-numbers-but-keep-numbering
+\makeatletter
+\renewcommand\thesubsection{Блок \@arabic\c@subsection.\hspace{-0.8em}}
+\renewcommand\thesubsubsection{Задание \@arabic\c@subsection.\@arabic\c@subsubsection\hspace{-0.8em}}
+% https://tex.stackexchange.com/questions/327689/numbering-subsubsections-with-letters
+\renewcommand\theparagraph{\alph{paragraph})\hspace{-0.8em}}
+% https://tex.stackexchange.com/questions/129208/numbering-paragraphs-in-latex
+\setcounter{secnumdepth}{4}
+\makeatother
+% ------------------------------------------------
+
+\begin{document}
+    \section*{Дз 1. Лямбда-исчисление}
+
+    Глобальный минимум: 8б.
+
+    \subsection{Синтаксис и семантика лямбда-исчисления}
+
+    Локальный минимум: 4б.
+
+    \subsubsection{(1б)}
+
+    Уберите все лишние скобки из выражений.
+
+    Подсказка: можно воспользоваться представлением терма как дерева.
+
+    \paragraph{}
+
+    $(\lambda x\ldotp (x~(x)))$
+
+    \begin{proof}
+        \(\lambda x\ldotp x~x\)
+    \end{proof}
+
+    \paragraph{}
+
+    $(\lambda x~y \ldotp f~((g~x)~y))$
+
+    \begin{proof}
+        \(\lambda x~y~f\ldotp f~(g~x~y)\)
+    \end{proof}
+
+    \paragraph{}
+
+    $x ~ (\lambda y\ldotp (\lambda z \ldotp x~y~z))$
+
+    \begin{proof}
+        x~\lambda y~z\ldotp x~y~z
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Найдите все свободные переменные, а также обозначьте, к какому связывателю относится каждая связанная (это удобнее всего сделать с помощью индексов).
+
+    \paragraph{}
+
+    $\lambda x \ldotp \lambda x \ldotp x~y$
+
+    \begin{proof}
+         Свободные: \(y\)
+
+        \(\lambda x^0\ldotp \lambda x^1\ldotp x^1~y\)
+    \end{proof}
+
+    \paragraph{}
+
+    $\lambda z \ldotp (\lambda x \ldotp x)~(x~z)$
+
+    \begin{proof}
+         Свободные: \(x\)
+
+        \(\lambda z^0 \ldotp (\lambda x^1 \ldotp x^1)~(x~z^0)\)
+    \end{proof}
+
+    \paragraph{}
+
+    $(\lambda x\ldotp y~y~(\lambda y\ldotp x~((\lambda z\ldotp z~y~x)~(\lambda x\ldotp z~x))))$
+
+    \begin{proof}
+         Свободные: \(y\)
+
+        \((\lambda x^0\ldotp y~y~(\lambda y^1\ldotp x^0~((\lambda z^2\ldotp z^2~y^1~x^0)~(\lambda x^3\ldotp z^2~x^3))))\)
+    \end{proof}
+
+    \subsubsection{}
+
+    \paragraph{(1б)}
+
+    Покажите, что $\comb{K}^* \eqbeta \comb{K}~\comb{I}$.
+
+    \begin{proof}
+        \begin{align}
+            \comb{K}~\comb{I} & \equiv (\lambda x~y\ldotp x) \lambda x\ldotp x \betastep \\
+                             & \betastep \lambda y\ldotp \lambda x\ldotp x =_\alpha \\
+                             & =_\alpha \lambda x~y\ldotp y \equiv \comb{K}^*
+        \end{align} 
+    \end{proof}
+
+    \paragraph{(1б)}
+
+    Покажите, что $\comb{B} \eqbeta \comb{S}~(\comb{K}~\comb{S})~\comb{K}$, расписывая и нумеруя промежуточные шаги.
+
+    Подсказка: не спешите сразу раскрывать все определения.
+
+    \begin{proof}
+        \begin{align}
+            \comb{S}~(\comb{K}~\comb{S})~\comb{K} & \equiv (\lambda f~g~x\ldotp f~x~(g~x))~(\comb{K}~\comb{S})~\comb{K} \betastep \\
+                             & \betastep (\lambda g~x\ldotp (\comb{K}~\comb{S})~x~(g~x))~\comb{K} \betastep \\
+                             & \betastep \lambda x\ldotp (\comb{K}~\comb{S})~x~(\comb{K}~x) \equiv \\
+                             & \equiv \lambda x\ldotp ((\lambda x~y\ldotp x)~\comb{S})~x~((\lambda x~y\ldotp x)~x) \betasteps \\
+                             & \betasteps \lambda x\ldotp (\lambda y\ldotp \comb{S})~x~(\lambda y\ldotp x) \betastep \\
+                             & \betastep \lambda x\ldotp \comb{S}~(\lambda y\ldotp x) \equiv \\
+                             & \equiv \lambda x^0\ldotp (\lambda f~g~x^1\ldotp f~x^1~(g~x^1))~(\lambda y\ldotp x^0) \betastep \\
+                             & \betastep \lambda x^0\ldotp \lambda g~x^1\ldotp (\lambda y\ldotp x^0)~x^1~(g~x^1) \betastep \\
+                             & \betastep \lambda x^0\ldotp \lambda g~x^1\ldotp x^0~(g~x^1) =_\alpha \\
+                             & =_\alpha \lambda f~g~x\ldotp f~(g~x) \equiv \comb{B}
+        \end{align} 
+    \end{proof}
+
+    \subsubsection{}
+
+    Осуществите подстановку и приведите к нормальной форме~--- форме, в которой не осталось редексов, указывая при этом основные шаги.
+
+    \paragraph{(1б)}
+
+    $x \termdef \comb{S}$ в $x~(\lambda z~x\ldotp z~x)~(\lambda z~y~x\ldotp x)~x$.
+
+    \begin{proof}
+        \begin{align}
+            & \comb{S}~(\lambda z~x\ldotp z~x)~(\lambda z~y~x\ldotp x)~\comb{S} \equiv \\
+            \equiv~ & (\lambda f~g~x\ldotp f~x~(g~x))~(\lambda z~x\ldotp z~x)~(\lambda z~y~x\ldotp x)~\comb{S} \betasteps \\
+            \betasteps~ & (\lambda z~x\ldotp z~x)~\comb{S}~((\lambda z~y~x\ldotp x)~\comb{S}) \betasteps \\
+            \betasteps~ & \comb{S}~((\lambda z~y~x\ldotp x)~\comb{S}) \equiv \\
+            \equiv~ & (\lambda f~g~x\ldotp f~x~(g~x))~((\lambda z~y~x\ldotp x)~\comb{S}) \betasteps \\
+            \betasteps~ & \lambda g~x\ldotp ((\lambda z~y~x\ldotp x)~\comb{S})~x~(g~x) \betasteps \\
+            \betasteps~ & \lambda g~x\ldotp g~x
+        \end{align} 
+    \end{proof}
+
+    \paragraph{(1б)}
+
+    $x \termdef \comb{K}$ и $y \termdef \comb{B}$ в $y~(\comb{K}~(\lambda z\ldotp x~x~(x~z~x))~y)~(\lambda x\ldotp x~x~x)~\comb{I}$.
+
+    \begin{proof}
+        \begin{align}
+            & \comb{B}~(\comb{K}~(\lambda z\ldotp \comb{K}~\comb{K}~(\comb{K}~z~\comb{K}))~\comb{B})~(\lambda x\ldotp x~x~x)~\comb{I} \equiv \\
+            \equiv~ & (\lambda f~g~x\ldotp f~(g~x))~(\comb{K}~(\lambda z\ldotp \comb{K}~\comb{K}~(\comb{K}~z~\comb{K}))~\comb{B})~(\lambda x\ldotp x~x~x)~\comb{I} \betasteps \\
+            \betasteps~ & (\comb{K}~(\lambda z\ldotp \comb{K}~\comb{K}~(\comb{K}~z~\comb{K}))~\comb{B})~((\lambda x\ldotp x~x~x)~\comb{I}) \equiv \\
+            \equiv~ & ((\lambda x~y\ldotp x)~(\lambda z\ldotp \comb{K}~\comb{K}~(\comb{K}~z~\comb{K}))~\comb{B})~((\lambda x\ldotp x~x~x)~\comb{I}) \betasteps \\
+            \betasteps~ & (\lambda z\ldotp \comb{K}~\comb{K}~(\comb{K}~z~\comb{K}))~((\lambda x\ldotp x~x~x)~\comb{I}) \betasteps~ \\
+            \betasteps~ & \comb{K}~\comb{K}~(\comb{K}~((\lambda x\ldotp x~x~x)~\comb{I})~\comb{K}) \betasteps~ \\
+            \betasteps~ & \comb{K}
+        \end{align}
+    \end{proof}
+
+    \subsection{Программирование в лямбда-исчислении}
+
+    Локальный минимум: 3б.
+
+    \subsubsection{(1б)}
+
+    Задайте лямбда-терм $\textbf{or}~b_1~b_2$, который вычисляет дизъюнкцию двух логических величин.
+
+    \begin{proof}
+        \(\textbf{or} \coloneqq \lambda l~r\ldotp l~\textbf{true}~r\)
+
+        Примеры:
+        \begin{gather}
+            \textbf{or}~\textbf{true}~\textbf{false} \betasteps\textbf{true}~\textbf{true}~\textbf{false}~\betastep(\lambda x\ldotp \textbf{true})~\textbf{false} \betastep\textbf{true} \\
+            \textbf{or}~\textbf{false}~\textbf{true} \betasteps\textbf{false}~\textbf{true}~\textbf{false}~\betastep(\lambda x\ldotp x)~\textbf{true} \betastep\textbf{true}
+        \end{gather}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Задайте лямбда-терм $\term{mult}~a~b$, перемножающий два числа Чёрча, и лямбда-терм $\term{pow}~a~b$, который вычисляет $a^b$.
+
+    \begin{proof}
+        \(\textbf{mult} \coloneqq \lambda a~b\ldotp a~(\term{sum}~b)~\term{0}\)
+
+        Примеры:
+        \begin{gather}
+            \term{mult}~\term{2}~\term{3} \betasteps \term{2}~(\term{sum}~\term{3})~\term{0} \betasteps \\
+            \betasteps (\term{sum}~\term{3})~((\term{sum}~\term{3})~\term{0}) \betasteps \\
+            \betasteps \term{sum}~\term{3}~\term{3} \betasteps \term{6}
+        \end{gather}
+        \begin{gather}
+            \term{mult}~\term{0}~\term{2} \betasteps \term{0}~(\term{sum}~\term{2})~\term{0} \equiv \\
+            \equiv (\lambda s~z\ldotp z)~(\term{sum}~\term{2})~\term{0} \betasteps \term{0}
+        \end{gather}
+        \begin{gather}
+            \term{mult}~\term{1}~\term{0} \betasteps \term{1}~(\term{sum}~\term{0})~\term{0} \equiv \\
+            \equiv (\lambda s~z\ldotp s~z)~(\term{sum}~\term{0})~\term{0} \betasteps \\
+            \betasteps \term{sum}~\term{0}~\term{0} \betasteps \term{0}
+        \end{gather}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Задайте лямбда-терм $\term{isZero}$, который возвращает $\term{true}$, если подать $\term{0}$, и $\term{false}$ в противном случае.
+
+    \begin{proof}
+        \(\textbf{isZero} \coloneqq \lambda n\ldotp n~(\comb{K}~\term{false})~\term{true}\)
+
+        Примеры:
+        \begin{gather}
+            \term{isZero}~\term{2} \betastep \term{2}~(\comb{K}~\term{false})~\term{true} \betasteps \\
+            \betasteps (\comb{K}~\term{false})~((\comb{K}~\term{false})~\term{true}) \betastep \\
+            \betastep (\lambda y\ldotp \term{false})~((\comb{K}~\term{false})~\term{true}) \betastep \term{false}
+        \end{gather}
+        \begin{gather}
+            \term{isZero}~\term{0} \betastep \term{0}~(\comb{K}~\term{false})~\term{true} \betasteps \term{true}
+        \end{gather}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Скорее всего, ваш любимый язык программирования имеет поддержку функций высших порядков.
+    Представьте, что в вашем языке нет структур, классов и т.д., и закодируйте на нём пары в стиле чистого лямбда-исчисления (\emph{не забывайте про каррирование}!).
+
+    Как известно, котики полностью описываются двумя параметрами: именем и мурлычностью.
+    Реализуйте библиотеку функций для работы с котиками, используя пары по Чёрчу как низкоуровневый примитив.
+    Нужно написать функции: для создания котика, просмотра имени и мурлычности по котику.
+    А так же реализовать функцию ``почесать'', которая по котику будет возвращать котика повышенной мурлычности.
+
+    Если у вас статически типизированный язык программирования:
+    \begin{itemize}
+        \item Вам полагается дополнительный балл в случае успеха.
+        \item Достаточно поддержать только хранение интов.
+        \item Напишите вручную типы основных сущностей, для остального можно воспользоваться механизмом вывода типов вашего языка: \texttt{auto} в C++, \texttt{var} в Java\ldots
+    \end{itemize}
+
+    \begin{proof}
+\begin{minted}[frame=lines,linenos=true,mathescape]{ocaml}
+module Pair = struct
+    (* Sorry for using struct, small hack 
+       forall quantifier for return type only in fields *)
+    type ('a, 'b) t = { f : 'r. ('a -> 'b -> 'r) -> 'r }
+
+    let make_pair : 'a -> 'b -> ('a, 'b) t = fun a b -> { f = fun f -> f a b }
+    let fst : ('a, 'b) t -> 'a = fun p -> p.f (fun a b -> a)
+    let snd : ('a, 'b) t -> 'b = fun p -> p.f (fun a b -> b)
+end
+
+module Church = struct
+    (* Same here *)
+    type t = { f : 'a. ('a -> 'a) -> 'a -> 'a }
+
+    let zero : t = { f = fun s z -> z }
+    let succ : t -> t = fun n -> { f = (fun s z -> s @@ n.f s z) }
+
+    let rec from_int = function
+    | 0 -> zero
+    | n -> succ @@ from_int @@ n - 1
+
+    let to_int n = n.f Int.succ 0
+end
+
+module Cat : sig
+    type t
+
+    val make_cat : string -> int -> t
+    val name : t -> string
+    val meowness : t -> int
+    val scratch : t -> t
+end = struct
+    open Pair
+    open Church
+
+    type t = (string, Church.t) Pair.t
+
+    let make_cat_impl name meowness : t = 
+        make_pair name @@ meowness
+
+    let meowness_impl (cat : t) : Church.t = snd cat
+
+    let make_cat name (meowness : int) : t = 
+        make_cat_impl name @@ from_int meowness
+
+    let name (cat : t) : string =
+        fst cat
+
+    let meowness (cat : t) : int =
+        to_int @@ meowness_impl cat
+
+    let scratch (cat) : t =
+        let n = name cat in
+        make_cat_impl n (succ @@ meowness_impl cat)
+end
+
+let main = 
+    (* Check Church numerals *)
+    assert Church.(2 = to_int @@ succ @@ succ @@ zero);
+    assert Church.(10 = to_int @@ from_int 10);
+
+    (* Check Pair *)
+    assert Pair.(1 = fst @@ make_pair 1 2);
+    assert Pair.(2 = snd @@ make_pair 1 2);
+
+    (* Check cat *)
+    let cat = Cat.make_cat "barsik" 2 in
+    assert Cat.("barsik" = name cat);
+    assert Cat.(2 = meowness cat);
+    let cat = Cat.scratch cat in
+    assert Cat.("barsik" = name cat);
+    assert Cat.(3 = meowness cat);
+\end{minted}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Задайте лямбда-терм $\term{divides3}~n$, который возвращает $\term{true}$, если $n$ делится на 3 без остатка, и $\term{false}$ в противном случае.
+
+    \begin{proof}
+        Можно использользовать пары для создания троек, но получится громоздко, поэтому заведен отдельные тройки:
+        \begin{align*}
+            \term{mkTriple}  & \coloneqq \lambda x~y~z~f\ldotp f~x~y~z \\
+            \term{rotTriple} & \coloneqq \lambda t\ldotp t~\lambda x~y~z~f\ldotp f~z~x~y \\
+            \term{fstTriple} & \coloneqq \lambda t\ldotp t~\lambda x~y~z\ldotp x \\
+            \term{divides3}   & \coloneqq \lambda n\ldotp \term{fstTriple}~(n~\term{rotTriple}~(\term{mkTriple}~\term{true}~\term{false}~\term{false}))
+        \end{align}
+        Примеры:
+        \begin{gather}
+            \term{divides3}~\term{2} \betasteps \term{fstTriple}~(\term{rotTriple}~(\term{rotTriple}~(\term{mkTriple}~\term{true}~\term{false}~\term{false}))) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~(\term{rotTriple}~(\lambda f\ldotp f~\term{true}~\term{false}~\term{false}))) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~((\lambda f\ldotp f~\term{true}~\term{false}~\term{false})~\lambda x~y~z~f\ldotp f~z~x~y)) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~((\lambda x~y~z~f\ldotp f~z~x~y)~\term{true}~\term{false}~\term{false})) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~(\lambda f\ldotp f~\term{false}~\term{true}~\term{false})) \betasteps \\
+            \betasteps \term{fstTriple}~(\lambda f\ldotp f~\term{false}~\term{false}~\term{true}) \betasteps \\
+            \betasteps (\lambda f\ldotp f~\term{false}~\term{false}~\term{true})~\lambda x~y~z\ldotp x \betasteps \\
+            \betasteps (\lambda x~y~z\ldotp x)~\term{false}~\term{false}~\term{true} \betasteps \term{false}
+        \end{gather}
+        \begin{gather}
+            \term{divides3}~\term{3} \betasteps \term{fstTriple}~(\term{rotTriple}~(\term{rotTriple}~(\term{rotTriple}~(\term{mkTriple}~\term{true}~\term{false}~\term{false})))) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~(\term{rotTriple}~(\term{rotTriple}~(\lambda f\ldotp f~\term{true}~\term{false}~\term{false})))) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~(\term{rotTriple}~(\lambda f\ldotp f~\term{false}~\term{true}~\term{false}))) \betasteps \\
+            \betasteps \term{fstTriple}~(\term{rotTriple}~(\lambda f\ldotp f~\term{false}~\term{false}~\term{true})) \betasteps \\
+            \betasteps \term{fstTriple}~(\lambda f\ldotp f~\term{true}~\term{false}~\term{false}) \betasteps \term{true}
+        \end{gather}
+    \end{proof}
+         
+
+    \subsubsection{(2б)}
+
+    Задайте лямбда-терм $\term{pred}~n$, который находит предыдущее число Чёрча.
+
+    Подсказка:
+    \begin{lstlisting}[language=Python]
+    def pred(n):
+      prd = 0
+      cur = 0
+      for i in range(0, n):
+        prd = cur
+        cur = cur + 1
+      return prd
+    \end{lstlisting}
+
+    \begin{proof}
+        \begin{align*}
+            \term{pred} \coloneqq \lambda n\ldotp \term{fst}~(n~(\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~(\term{pair}~\term{0}~\term{0}))
+        \end{align}
+        Примеры:
+        \begin{gather}
+            \term{pred}~\term{2} \betasteps \term{fst}~((\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~((\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~(\term{pair}~\term{0}~\term{0}))) \betasteps \\
+            \term{pred}~\term{2} \betasteps \term{fst}~((\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~(\term{pair}~\term{0}~(\term{suc}~\term{0}))) \betasteps \\
+            \term{pred}~\term{2} \betasteps \term{fst}~((\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~(\term{pair}~\term{0}~\term{1})) \betasteps \\
+            \term{pred}~\term{2} \betasteps \term{fst}~(\term{pair}~\term{1}~(\term{suc}~\term{1})) \betasteps \\
+            \term{pred}~\term{2} \betasteps \term{fst}~(\term{pair}~\term{1}~\term{2}) \betasteps \term{1}
+        \end{gather}
+        \begin{gather}
+            \term{pred}~\term{0} \betasteps \term{fst}~(\term{pair}~\term{0}~\term{0}) \betasteps \term{0}
+        \end{gather}
+    \end{proof}
+
+\end{document}
