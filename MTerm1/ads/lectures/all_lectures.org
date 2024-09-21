@@ -1,0 +1,9 @@
+#+TITLE: Лекции по Алгоритмам и структурам данных
+#+DATE: 1 Семестр
+#+SETUPFILE: setup.org
+#+LATEX_CLASS: conspects-book-mse
+
+* Лекция 1
+#+INCLUDE: "1.org" :lines "4-"
+* Лекция 2
+#+INCLUDE: "2.org" :lines "4-"

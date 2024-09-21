@@ -1,2 +1,3 @@
 #+AUTHOR: \href{https://conspects.iliay.ar}{Конспекты}
 #+LATEX_CLASS: conspect-mse
+#+LATEX_HEADER: \renewcommand{\O}{\mathcal{O}}

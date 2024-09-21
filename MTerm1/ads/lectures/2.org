@@ -1,0 +1,79 @@
+#+setupfile: setup.org
+#+TITLE: Алгоритмы и структуры данных. Лекция 2
+#+date: 17 сентября
+#+LATEX_HEADER: \usepackage{algpseudocode}
+
+* TODO Простые структуры данных
+Массив, стек, очередь, дек, вектор, связный список
+
+* Амортизационный Анализ
+
+#+begin_definition org
+\[ \frac{\sum_{i = 1}^n \text{time}_i}{n} = \text{average} \]
+#+end_definition
+
+#+begin_definition org
+Потенциал: \(\forall \varphi_i \in \R\).
+\[ a_i = \text{time}_i + \Delta\varphi \quad \Delta\varphi = \varphi_{i + 1} - \varphi_i \]
+где \(a_i\) -- *амортизированное время*
+#+end_definition
+#+begin_remark org
+\[ \sum_{i = 1}^m a_i = \sum_{i = 1}^m \text{time}_i + (\varphi_m - \varphi_0) \]
+\[ \frac{\sum_{i = 1}^m a_i}{m} = \frac{\sum_{i = 1}^m \text{time}_i}{m} + \frac{\varphi_m - \varphi_0}{m} \]
+#+end_remark
+#+begin_theorem org
+\[ \forall \varphi \quad \frac{\display \sum_{i = 1}^m \text{time}_i}{m} \le \max a_i + \frac{\varphi_0 - \varphi_m}{m} \]
+#+end_theorem
+#+begin_proof org
+Очевидно, учитывая что \(\frac{\Sigma}{m} \le \max\)
+#+end_proof
+
+#+begin_remark org
+\(\varphi_0 = 0, \forall i : \varphi_i \ge 0 \implies \frac{\varphi_0 - \varphi_m}{m} \le 0 \implies\)
+\[ \frac{\sum \text{time}_i}{m} \le \max a_i \]
+#+end_remark
+
+#+begin_examp org
+Рассмотрим вектор. \(\varphi = - \text{capacity}\). Рассмотрим два случая \(a_i = \text{tim}_i + \Delta\varphi\):
+- Не реаллоицировали: \(a_i = 1 + 0 = 1\)
+- Реаллоцировали: \(a_i = n + (-n) = 0\)
+\[ a_i = \Theta(1) \implies \frac{\sum \text{time}_i}{m} = \Theta(1) + \frac{2m}{m} = \O(1) \]
+#+end_examp
+
+** Очередь с минимумами
+Реализуется на 2 стеках с минимумами (\(A, B\)).
+#+begin_export latex
+\begin{enalgo}[H]
+\caption{Push(\(x\))}
+\begin{algorithmic}[1]
+  \State \(A.\text{push}(x)\)
+\end{algorithmic}
+\end{enalgo}
+
+\begin{enalgo}[H]
+\caption{Pop()}
+\begin{algorithmic}[1]
+  \If {\(B.\text{empty}()\)}
+    \While {\(\lnot A.\text{empty}()\)} \Comment{\(\O(|A|)\)}
+      \State \(B.\text{push}(A.\text{pop}())\)
+    \EndWhile
+  \EndIf
+  \State \Return \(B.\text{pop}()\)
+\end{algorithmic}
+\end{enalgo}
+
+\begin{enalgo}[H]
+\caption{Min()}
+\begin{algorithmic}[1]
+  \State \Return \(\min(A.\text{min}(), B.\text{min}())\)
+\end{algorithmic}
+\end{enalgo}
+#+end_export
+
+#+begin_examp org
+\(\varphi = |A|\)
+- Min :: \(a_i = 1 + 0\)
+- Push :: \(a_i = 1 + 1\)
+- Pop :: \( a_i = \begin{cases} 1 + 0 \\ |A| - |A| = 0  \end{cases} \)
+\[ \frac{\sum \text{time}_i}{m} \le \max a_i = \Theta(1) \]
+#+end_examp
