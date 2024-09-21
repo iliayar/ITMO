@@ -9,3 +9,92 @@
 \hrule
 \vspace{1cm}
 #+end_export
+
+
+#+ATTR_LATEX: :options {1}
+#+begin_manualtask org
+#+end_manualtask
+#+begin_proof org
+Возьмем потенциал \(\varphi\) -- количество единиц в \(a\). Пусть \(n_s\) -- количество единиц в начале (с младших битов). Тогда количество итераций будет равно \(n_s + 1\) -- меняем каждую единицу на 0 и меняем последующий 0 на 1. Получается если до прибавления было \(\varphi_i = n_1\) единиц, то после прибавления станет \(\varphi_{i + 1} = n_1 - n_s + 1\). Тогда \(a_i = n_s + 1 + (n_1 - n_s + 1 - n_1) = 2 = \Theta(1)\). Посчитаем среднее время:
+\[ \frac{\display \sum_{i = 0}^m \text{time}_i}{m} \le \Theta(1) + \frac{\varphi_0 - \varphi_m}{m} \le \Theta(1) + \frac{n}{m} \addtag \]
+Тогда \(m\) операций будет выполнены не больше чем за
+\[ m \cdot \Theta(1) + m \cdot \frac{n}{m} = \Theta(m + n) \addtag \]
+То есть за \(\O(m + n)\).
+#+end_proof
+
+-----
+
+#+ATTR_LATEX: :options {2}
+#+begin_manualtask org
+#+end_manualtask
+#+begin_solution org
+\-
+#+begin_src cpp -n
+  // Given:
+  int a[n];
+  query queries[m];
+
+  int inc[n];
+  for (int i = 0; i < m; ++i) { // $\Theta(m)$
+    inc[queries[i].l] += queries[i].x;
+
+    if (queries[i].r < n - 1) {
+      inc[queries[i].r + 1] -= queries[i].x;
+    }
+  }
+
+  int res[n];
+  int cur_inc = 0;
+  for (int i = 0; i < n; ++i) { // $\Theta(n)$
+    cur_inc += inc[i];
+    res[i] = a[i] + cur_inc; // $\label{2curinc}$
+  }
+
+  print(res);
+#+end_src
+
+Рассмотрим для каждого \(i\) чему равен элемент в =res=. Для этого рассмотрим чему равно на \(i\)-й итерации значение =cur_inc= на строчке \ref{2curinc}.
+\begin{gather}
+  \texttt{cur\_inc}_i = \sum_{j = 0}^i \texttt{inc}_j = \sum_{j = 0}^i \sum_{\substack{q \in \texttt{queries} \\ q_l = j}} q_x - \sum_{\substack{q \in \texttt{queries} \\ q_r + 1 = j}} q_x = \\
+   =  \sum_{\substack{q \in \texttt{queries} \\ q_l \le i}} q_x - \sum_{\substack{q \in \texttt{queries} \\ q_r + 1 \le i}} q_x = \sum_{\substack{q \in \texttt{queries} \\ q_l \le i \land q_r + 1 > i}} q_x  = \sum_{\substack{q \in \texttt{queries} \\ q_l \le i \le q_r}} q_x 
+\end{gather}
+Тогда в качестве \(i\)-го элемента будет выведено
+\[ \texttt{a}_i + \sum_{\substack{q \in \texttt{queries} \\ q_l \le i \le q_r}} q_x \addtag \]
+что как раз и является суммой начального значения =a[i]= и всех \(x\) из запросов, включающих этот элемент.
+
+Очевидно что циклы выполняются соответственно за \(\Theta(m)\) и \(\Theta(n)\). Значит итоговое время работы \(\Theta(m + n)\).
+#+end_solution
+
+#+ATTR_LATEX: :options {3}
+#+begin_manualtask org
+#+end_manualtask
+#+begin_solution org
+\-
+#+begin_src cpp -n
+  // Given:
+  int d;
+  int a[n]; // Число, старшие разряды в начале
+  int k;
+
+  stack s;
+  int kn = k;
+  for (int i = 0; i < n - kn; ++i) { // $\O(n)$
+    while (kn > 0 && s.top() < a[i]) {
+      s.pop();
+      kn--;
+    }
+    s.push(a[i]);
+  }
+
+  int res[n - k];
+  for (int i = 0; i < n - k; ++i) { // $\O(n - k)$
+    res[n - k - i - 1] = s.top();
+    s.pop();
+  }
+
+  print(res)
+#+end_src
+Покажем что первый цикл положит в стек ровно \(n - k\) элементов. Количество удаленных на \(i\)-той итерации элементов \(d_i = \texttt{k} - \texttt{kn}_i\). Тогда при условии что больше элементы не будут удаляться, в стеке окажется \((n - \texttt{kn}_i) - d_i = n - \texttt{kn}_i - k + \texttt{kn}_i = n - k\). Это условие выполняется для каждого \(i\). Алгоритм поддерживает максимальное значение подпоследовательности "цифр" на префиксе числа пока это возможно.
+
+Покажем что первый цикл выполняется за \(\O(n)\): для каждого элемента числа может выполниться максимум 2 операции, работающих за \(\O(1)\): добавление в стек и удаление из стека. Второй цикл работает за \(\Theta(n - k)\). Значит общая сложность \(\O(n)\).
+#+end_solution
