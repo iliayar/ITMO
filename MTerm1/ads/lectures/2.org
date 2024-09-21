@@ -44,28 +44,24 @@
 Реализуется на 2 стеках с минимумами (\(A, B\)).
 #+begin_export latex
 \begin{enalgo}[H]
-\caption{Push(\(x\))}
+\caption{Доступные операции}
 \begin{algorithmic}[1]
+\Function{push}{\(x\)}
   \State \(A.\text{push}(x)\)
-\end{algorithmic}
-\end{enalgo}
-
-\begin{enalgo}[H]
-\caption{Pop()}
-\begin{algorithmic}[1]
+\EndFunction
+\State
+\Procedure{pop}{}
   \If {\(B.\text{empty}()\)}
     \While {\(\lnot A.\text{empty}()\)} \Comment{\(\O(|A|)\)}
       \State \(B.\text{push}(A.\text{pop}())\)
     \EndWhile
   \EndIf
   \State \Return \(B.\text{pop}()\)
-\end{algorithmic}
-\end{enalgo}
-
-\begin{enalgo}[H]
-\caption{Min()}
-\begin{algorithmic}[1]
+\EndProcedure
+\State
+\Procedure{min}{}
   \State \Return \(\min(A.\text{min}(), B.\text{min}())\)
+\EndProcedure
 \end{algorithmic}
 \end{enalgo}
 #+end_export
