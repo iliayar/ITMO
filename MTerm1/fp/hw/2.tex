@@ -1,0 +1,475 @@
+%! suppress = Makeatletter
+%! suppress = TooLargeSection
+%! suppress = MissingLabel
+\documentclass{article}
+
+% Fields
+\usepackage{geometry}
+\geometry{top=25mm}
+\geometry{bottom=35mm}
+\geometry{left=20mm}
+\geometry{right=20mm}
+% ------------------------------------------------
+
+% Graphics
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{blkarray}
+\usepackage{graphicx}
+% ------------------------------------------------
+
+% Math
+\usepackage{amsmath, amsfonts}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{mathrsfs}
+% Crossed-out symbols
+% https://tex.stackexchange.com/questions/75525/how-to-write-crossed-out-math-in-latex
+\usepackage[makeroom]{cancel}
+\usepackage{mathtools}
+% ------------------------------------------------
+
+% Additional font sizes
+% https://www.overleaf.com/learn/latex/Questions/How_do_I_adjust_the_font_size%3F
+\usepackage{moresize}
+% Additional colors
+% https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX
+\usepackage{xcolor}
+% \texttimes
+\usepackage{textcomp}
+% ------------------------------------------------
+
+% Language
+\usepackage[utf8] {inputenc}
+\usepackage[T2A] {fontenc}
+\usepackage[english, russian] {babel}
+\usepackage{indentfirst, verbatim}
+\usetikzlibrary{cd, babel}
+% ------------------------------------------------
+
+% Fonts
+\usepackage{stmaryrd}
+\usepackage{cmbright}
+\usepackage{wasysym}
+% ------------------------------------------------
+
+% Code
+% https://tex.stackexchange.com/questions/99475/how-to-invoke-latex-with-the-shell-escape-flag-in-texstudio-former-texmakerx
+% Colored, requires --shell-escape compiling option
+\usepackage{minted}
+\setminted{xleftmargin=\parindent, autogobble, escapeinside=\#\#}
+\usepackage{listings}
+% ------------------------------------------------
+
+% Custom envs
+% https://tex.stackexchange.com/questions/371286/draw-a-horizontal-line-in-latex
+\newenvironment{proof}{\subparagraph{\hspace{-1em}Решение:\newline}\-}{\par\noindent\rule{\textwidth}{0.4pt}}
+% ------------------------------------------------
+
+% Custom commands
+\newcommand{\comb}[1]{\mathbf{#1}}
+\newcommand{\step}{\rightsquigarrow}
+\newcommand{\term}[1]{\mathbf{#1}}
+\newcommand{\ap}{~}
+\newcommand{\termdef}{\coloneqq}
+\newcommand{\subst}[3]{\left[#2 \mapsto #3 \right] #1}
+\newcommand{\eqbeta}{=_\beta}
+\newcommand{\eqbetaeta}{=_{\beta\eta}}
+\newcommand{\betastep}{\rightarrow_\beta}
+\newcommand{\betasteps}{\twoheadrightarrow_\beta}
+\newcommand{\eqeta}{=_\eta}
+\newcommand{\tlist}[1]{\term{[}#1\term{]}} % list-term
+\renewcommand{\emph}[1]{{\color{blue} \textit{#1}}}
+% ------------------------------------------------
+
+% Head
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\pagestyle{fancy}
+\fancyhead[R]{Ярошевский Илья}
+\fancyhead[L]{ИТМО MSE, ФП 2024, Дз 1}
+% ------------------------------------------------
+
+% Numbering
+% https://tex.stackexchange.com/questions/80113/hide-section-numbers-but-keep-numbering
+\makeatletter
+\renewcommand\thesubsection{Блок \@arabic\c@subsection.\hspace{-0.8em}}
+\renewcommand\thesubsubsection{Задание \@arabic\c@subsection.\@arabic\c@subsubsection\hspace{-0.8em}}
+% https://tex.stackexchange.com/questions/327689/numbering-subsubsections-with-letters
+\renewcommand\theparagraph{\alph{paragraph})\hspace{-0.8em}}
+% https://tex.stackexchange.com/questions/129208/numbering-paragraphs-in-latex
+\setcounter{secnumdepth}{4}
+\makeatother
+% ------------------------------------------------
+
+\begin{document}
+    \section*{Дз 2. Больше лямбда-исчисления}
+
+    Глобальный минимум: 9б.
+
+    \subsection{Комбинатор рекурсии}
+
+    Локальный минимум: 2б.
+
+    \subsubsection{}
+
+    Решите следующие уравнения на лямбда-термы и произведите проверку решений.
+
+    \paragraph{(1б)}
+
+    $\forall M\ldotp F~M \eqbeta M~F$
+
+    \begin{proof}
+        \begin{gather}
+            F~M \eqbeta M~F \\
+            F~M \eqbeta \underbrace{(\lambda rec~m\ldotp m~rec)}_{F'}~F~M \\
+            F \eqbetaeta F'~F \\
+            F \coloneqq Y~F' \eqbeta Y~\lambda rec~m\ldotp m~rec
+        \end{gather}
+        Проверка:
+        \begin{align}
+            F M & \eqbeta Y~F'~M \eqbeta (\lambda rec~m\ldotp m~rec)~(Y~F')~M \\
+                & \eqbeta M~(Y~F') \eqbeta M~F
+        \end{align}
+    \end{proof}
+
+    \paragraph{(1б)}
+
+    $\forall M~N\ldotp F~M~N \eqbeta F~N~(M~F)$
+
+    \begin{proof}
+        \begin{gather}
+            F~M~N \eqbeta F~N~(M~F) \\
+            F~M~N \eqbeta \underbrace{(\lambda rec~m~n\ldotp rec~n~(m~rec))}_{F'}~F~M~N \\
+            F \eqbetaeta F'~F \\
+            F \coloneqq Y~F' \eqbeta Y~\lambda rec~m~n\ldotp rec~n~(m~rec)
+        \end{gather}
+        Проверка:
+        \begin{align}
+            F~M~N & \eqbeta Y~F'~M~N \eqbeta (\lambda rec~m~n\ldotp rec~n~(m~rec))~(Y~F')~M~N \eqbeta \\
+                  & \eqbeta (Y~F')~N~(M~(Y~F')) \eqbeta F~N~(M~F)
+        \end{align}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Даны термы $A$ и $B$.
+    Найдите $F$ и $G$ такие, что
+    \[
+        \left\{
+        \begin{aligned}
+            F &\eqbeta A~F~G \\
+            G &\eqbeta B~F~G \\
+        \end{aligned}\right.
+    \]
+
+    Подсказка: сначала подумайте, что из чего нужно выражать.
+
+    \begin{proof}
+        \begin{gather}
+            F \eqbeta A~F~G \eqbeta A~F~(B~F~G) \eqbeta \underbrace{(\lambda f\ldotp A~f~(B~f~G))}_{F'}~F \\
+            F \coloneqq Y~F' \eqbeta Y~\lambda f\ldotp A~f~(B~f~G) \\
+            G \eqbeta B~F~G \eqbeta B~(Y~\lambda f\ldotp A~f~(B~f~G))~G \eqbeta \underbrace{(\lambda g\ldotp B~(Y~\lambda f\ldotp A~f~(B~f~g))~g)}_{G'}~G \\
+            G \coloneqq Y~G' \eqbeta Y~\lambda g\ldotp B~(Y~\lambda f\ldotp A~f~(B~f~g))~g
+        \end{gather}
+    \end{proof}
+
+    \subsubsection{(2б)}
+
+    Как мы уже увидели, в чистом лямбда-исчислении можно производить рекурсивные вычисления.
+    И это при том, что в языке есть только переменные, аппликация и абстракция!
+    Этого достигают с помощью построения комбинатора рекурсии, $\comb{Y}$ или других.
+
+    В вашем любимом языке программирования рекурсия встроена неявно.
+    Достаточно просто в теле функции вызвать её же саму по имени.
+    Но что если имени нет, например, мы хотим заполучить рекурсивную лямбда-функцию?
+
+    Реализуйте комбинатор рекурсии в вашем любимом языке программирования, используя встроенную в язык рекурсию.
+    Ваш язык энергичный, предпримите меры от расходимости.
+
+    С помощью написанного комбинатора реализуйте простейший рекурсивный факториал в виде \\ \texttt{factorial = \ldots}.
+
+    За написание в статически-типизированном языке полагается дополнительный балл (но это может быть не просто).
+
+    Подсказка: воспользуйтесь свойством комбинатора рекурсии: $\comb{Y}~F~M \eqbeta F~(\comb{Y}~F)~M$.
+
+    \begin{proof}
+\begin{minted}[frame=lines,linenos=true,mathescape]{ocaml}
+fn fix<'a, 'b: 'a, T, R>(
+    f: &'b impl Fn(Box<dyn Fn(T) -> R + 'a>, T) -> R,
+) -> Box<dyn Fn(T) -> R + 'a> {
+    return Box::new(move |x| f(fix(f), x));
+}
+
+fn main() {
+    let factorial: Box<dyn Fn(usize) -> u64> = fix(&|f, x| {
+        if x == 0 {
+            1
+        } else {
+            f(x - 1) * (x as u64)
+        }
+    });
+
+    assert!(factorial(0) == 1);
+    assert!(factorial(1) == 1);
+    assert!(factorial(2) == 2);
+    assert!(factorial(3) == 6);
+    assert!(factorial(10) == 3628800);
+
+    println!("Success");
+}
+\end{minted}
+    \end{proof}
+
+    \subsection{Программирование в $\lambda$-исчислении: числа и списки по Чёрчу}
+
+    Локальный минимум: 4б.
+
+    \subsubsection{}
+
+    Задайте \emph{сильно нормализуемые}\footnote{На практике это означает, что нельзя использовать, например, $\comb{Y}$-комбинатор, но можно давать ответ в виде термов не в $\beta$-нормальной форме.} лямбда-термы с описанными свойствами.
+
+    Подсказка: нетривиальный тут только первый пункт.
+
+    \paragraph{(1б)}
+
+    $\term{minus}$: если $n$ и $m$ ~--- числа Чёрча, то $\term{minus}~n~m = k$,
+    если $\term{plus}~m~k = n$, и $\term{minus}~n~m = \term{0}$, если такого $k$
+    нет.
+
+    \begin{proof}
+        \(\term{pred}\) и \(\term{minus}\) из предыдущего ДЗ.
+        \begin{gather}
+            \term{pred} \coloneqq \lambda n\ldotp \term{fst}~(n~(\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~(\term{pair}~\term{0}~\term{0})) \\
+            \term{minus}~n~m \coloneqq m~(\lambda i\ldotp \term{pred}~i)~n
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{minus}~2~1 & \eqbeta 1~(\lambda i\ldotp \term{pred}~i)~2 \eqbeta (\lambda i\ldotp \term{pred}~i)~2 \eqbeta \\
+                             & \eqbeta \term{pred}~2 \eqbeta 1
+        \end{align}
+        \begin{align}
+            \term{minus}~2~1 & \eqbeta 2~(\lambda i\ldotp \term{pred}~i)~1 \eqbeta (\lambda i\ldotp \term{pred}~i)~((\lambda i\ldotp \term{pred}~i)~1) \eqbeta \\
+                             & \eqbeta (\lambda i\ldotp \term{pred}~i)~(\term{pred} 1) \eqbeta (\lambda i\ldotp \term{pred}~i)~0 \eqbeta \\
+                             & \eqbeta \term{pred}~0 \eqbeta 0
+        \end{align}
+    \end{proof}
+
+    \paragraph{(0.5б)}
+
+    $\term{lt}$: если $n$ и $m$ ~--- числа Чёрча, то $\term{lt}~n~m = \term{true}$, если $n < m$, и $\term{false}$ в противном случае.
+
+    \begin{proof}
+        \begin{gather}
+            \term{lt}~n~m \coloneqq \term{not}~(\term{isZero}~(\term{minus}~m~n))
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{lt}~2~1 \eqbeta \term{not}~(\term{isZero}~(\term{minus}~1~2)) \eqbeta \term{not}~(\term{isZero}~0) \eqbeta \term{false}
+        \end{align}
+        \begin{align}
+            \term{lt}~1~1 \eqbeta \term{not}~(\term{isZero}~(\term{minus}~1~1)) \eqbeta \term{not}~(\term{isZero}~0) \eqbeta \term{false}
+        \end{align}
+        \begin{align}
+            \term{lt}~1~2 \eqbeta \term{not}~(\term{isZero}~(\term{minus}~2~1)) \eqbeta \term{not}~(\term{isZero}~1) \eqbeta \term{true}
+        \end{align}
+    \end{proof}
+
+    \paragraph{(0.5б)}
+
+    $\term{equal}$: если $n$ и $m$ ~--- числа Чёрча, то $\term{equal}~n~m = \term{true}$, если $n = m$, и $\term{false}$ в противном случае.
+
+    \begin{proof}
+        \begin{gather}
+            \term{equal}~n~m \coloneqq \term{and}~(\term{isZero}~(\term{minus}~m~n))~(\term{isZero}~(\term{minus}~n~m))
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{equal}~2~1 & \eqbeta \term{and}~(\term{isZero}~(\term{minus}~1~2))~(\term{isZero}~(\term{minus}~2~1)) \eqbeta \\
+                             & \eqbeta \term{and}~(\term{isZero}~0)~(\term{isZero}~1) \eqbeta \term{false}
+        \end{align}
+        \begin{align}
+            \term{equal}~2~2 & \eqbeta \term{and}~(\term{isZero}~(\term{minus}~2~2))~(\term{isZero}~(\term{minus}~2~2)) \eqbeta \\
+                             & \eqbeta \term{and}~(\term{isZero}~0)~(\term{isZero}~0) \eqbeta \term{true}
+        \end{align}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Используя комбинатор примитивной рекурсии, напишите терм, который
+    находит $n$-ое число Фибоначчи.
+
+    \begin{proof}
+        \begin{gather}
+            \term{fib}~n \coloneqq \term{if}~(\term{equal}~n~0)~1~(\term{if}~(\term{equal}~n~1)~1~(\term{add}~(\term{fib}~(\term{minus}~n~1))~(\term{fib}~(\term{minus}~n~2))))
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{fib}~3 & \eqbeta \term{if}~(\term{equal}~3~0)~1~(\term{if}~(\term{equal}~3~1)~1~(\term{add}~(\term{fib}~(\term{minus}~3~1))~(\term{fib}~(\term{minus}~3~2)))) \eqbeta \\
+                         & \eqbeta \term{add}~(\term{fib}~2)~(\term{fib}~1) \eqbeta \term{add}~(\term{add}~(\term{fib}~1)~(\term{fib}~0))~1 \eqbeta \\
+                         & \eqbeta \term{add}~(\term{add}~1~1)~1 \eqbeta 3
+        \end{align}
+    \end{proof}
+
+    \subsubsection{}
+
+    Задайте следующие простые сильно нормализуемые функции над списками.
+
+    Здесь и далее подразумевается, что списки представлены в виде \textbf{списков Чёрча}.
+
+    \paragraph{(0.5б)}
+
+    Напишите функцию $\term{sum}$, суммирующий элементы списка: $\term{sum} \ap \tlist{\term{1}, \term{2}, \term{3}} \eqbeta \term{6}$.
+
+    \begin{proof}
+        \begin{gather}
+            \term{sum}~xs \coloneqq \term{fold}~xs~\term{add}~0
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{sum} [1, 2, 3] \eqbeta \term{add}~1~(\term{add}~2~(\term{add}~3~0)) \eqbeta
+        \end{align}
+    \end{proof}
+
+    \paragraph{(0.5б)}
+
+    Напишите функцию $\term{length}$, вычисляющий длину списка: $\term{length} \ap \tlist{\term{1}, \term{2}} \eqbeta \term{2}$
+
+    \begin{proof}
+        \begin{gather}
+            \term{length}~xs \coloneqq \term{fold}~xs~(\lambda x~l\ldotp \term{add}~1~l)~0
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{length}~[3, 2, 1] & \eqbeta (\lambda i~l\ldotp \term{add}~1~l)~3~(\term{fold}~[2, 1]~(\lambda i~l\ldotp \term{add}~1~l)~0)) \eqbeta \\
+                                    & \eqbeta \term{add}~1~(\term{fold}~[2, 1]~(\lambda i~l\ldotp \term{add}~1~l)~0)) \eqbeta \\
+                                    & \eqbeta \term{add}~1~(\term{add}~1~(\term{add}~1~0)) \eqbeta 3
+        \end{align}
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Напишите функцию, которая сильно нормализуемо возвращает последний элемент непустого списка.
+
+    \begin{proof}
+        \begin{gather}
+            \term{last}~xs \coloneqq \term{snd}~(\term{fold}~xs~(\lambda x~p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~x))~(\term{pair}~\term{false}~0))
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{last}~[1, 2, 3] & \eqbeta \term{snd}~(\term{fold}~xs~(\lambda x~p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~x))~(\term{pair}~\term{false}~0)) \eqbeta \\
+                                  % & \eqbeta \term{snd}~((\lambda p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~1))~((\lambda p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~2))~((\lambda p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~3))~(\term{pair}~\term{false}~0))))
+                                  & \eqbeta \term{snd}~((\dots)~((\dots)~((\lambda p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~3))~(\term{pair}~\term{false}~0)))) \eqbeta \\
+                                  & \eqbeta \term{snd}~((\dots)~((\dots)~(\lambda p\ldotp \term{if}~\term{false}~(\term{pair}~\term{false}~0)~(\term{pair}~\term{true}~3)))) \eqbeta \\
+                                  & \eqbeta \term{snd}~((\dots)~((\lambda p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~2))~(\term{pair}~\term{true}~3))) \eqbeta \\
+                                  & \eqbeta \term{snd}~((\dots)~(\lambda p\ldotp \term{if}~\term{true}~(\term{pair}~\term{true}~3)~(\term{pair}~\term{true}~2))) \eqbeta \\
+                                  & \eqbeta \term{snd}~((\lambda p\ldotp \term{if}~(\term{fst}~p)~p~(\term{pair}~\term{true}~1))~(\term{pair}~\term{true}~3)) \eqbeta \\
+                                  & \eqbeta \term{snd}~(\term{pair}~\term{true}~3) \eqbeta 3
+        \end{align}
+    \end{proof}
+
+    \subsubsection{(2б)}
+
+    Напишите функцию $\term{tail}$, которая сильно нормализуемо возвращает хвост списка, то есть список без первого элемента: например, $\term{tail}~\tlist{~} = \tlist{~}$ и $\term{tail}~\tlist{\term{5},\term{10},\term{13}} = \tlist{\term{10}, \term{13}}$.
+
+    \begin{proof}
+        \begin{gather}
+            \term{tail}~xs \coloneqq \term{snd}~(\term{fold}~xs~(\lambda x~p\ldotp \term{pair}~(\term{cons}~x~(\term{fst}~p))~(\term{fst}~p))~(\term{pair}~[]~[]))
+        \end{gather}
+        Проверка:
+        \begin{align}
+            \term{tail}~[1, 2, 3] & \eqbeta \term{snd}~(\term{fold}~[1, 2, 3]~(\lambda x~p\ldotp \term{pair}~(\term{cons}~x~(\term{fst}~p))~(\term{fst}~p))~(\term{pair}~[]~[])) \eqbeta \\
+            % \term{tail}~[1, 2, 3] \eqbeta \term{snd}~((\lambda p\ldotp \term{pair}~(\term{cons}~1~(\term{fst}~p))~(\term{fst}~p))~((\lambda p\ldotp \term{pair}~(\term{cons}~2~(\term{fst}~p))~(\term{fst}~p))~((\lambda p\ldotp \term{pair}~(\term{cons}~3~(\term{fst}~p))~(\term{fst}~p))~(\term{pair}~[]~[]))))
+                                  & \eqbeta \term{snd}~((\dots)~((\dots)~((\lambda p\ldotp \term{pair}~(\term{cons}~3~(\term{fst}~p))~(\term{fst}~p))~(\term{pair}~[]~[])))) \eqbeta \\
+                                  & \eqbeta \term{snd}~((\dots)~((\dots)~(\term{pair}~(\term{cons}~3~[])~[]))) \eqbeta \\
+                                  & \eqbeta \term{snd}~((\dots)~((\lambda p\ldotp \term{pair}~(\term{cons}~2~(\term{fst}~p))~(\term{fst}~p))~(\term{pair}~[3]~[]))) \eqbeta \\
+                                  & \eqbeta \term{snd}~(\term{pair}~[1, 2, 3]~[2, 3]) \eqbeta [2, 3] \\
+        \end{align}
+    \end{proof}
+
+    \subsubsection{(1.5б)}
+
+    Вспомним определение умножения чисел Чёрча:
+    \[\term{mult} = \lambda n~m~s\ldotp n~(m~s)\]
+    Рассмотрим его аналог для списков:
+    \[\term{listMult} = \lambda n~m~s\ldotp n~(\lambda e\ldotp m~(\term{curry}~s~e))\]
+    Что делает эта функция?
+    Проредуцируйте наглядный пример для проверки предположения.
+
+    \begin{proof}
+        Это декартово произведение списков. То есть получаем список из всех возможных пар \(\langle a, b \rangle\), таких что \(a \in n, b \in m\).
+        \begin{align}
+            \term{listMult}~[1, 2]~[4, 5, 6] & \eqbeta \lambda s~z\ldotp ([4, 5, 6]~(\term{curry}~s~1))~(([4, 5, 6]~(\term{curry}~s~2))~z) \eqbeta \\
+                                             & \eqbeta \lambda s~z\ldotp (\dots)~((\lambda z\ldotp [4, 5, 6]~((\lambda f~x~y\ldotp f~(\term{pair}~x~y))~s~2))~z) \eqbeta \\
+                                             & \eqbeta \lambda s~z\ldotp (\dots)~(([4, 5, 6]~(\lambda y\ldotp s~(\term{pair}~2~y)))~z) \eqbeta \\
+                                             & \eqbeta \lambda s~z\ldotp (\dots)~(s~(\term{pair}~2~4)~(s~(\term{pair}~2~5)~(s~(\term{pair}~2~6)~z))) \eqbeta \\
+                                             & \eqbeta \lambda s~z\ldotp s~(\term{pair}~1~4)~(s~(\term{pair}~1~5)~(s~(\term{pair}~1~6)~(\dots)))) \eqbeta \\
+                                             & \eqbeta [\term{pair}~1~4, \term{pair}~1~5, \term{pair}~1~6, \term{pair}~2~4, \term{pair}~2~5, \term{pair}~2~6]
+        \end{align}
+    \end{proof}
+
+    \subsection{Стратегии редукции и нормальные формы}
+
+    Локальный минимум: 1б.
+
+    \subsubsection{(1б)}
+
+    Дан терм:
+    \[\lambda y\ldotp z~(\lambda x\ldotp \comb{I}~(\comb{I}~\comb{I})~(\comb{I}~\comb{I}))~x~y\]
+
+    Дважды проредуцируйте его до нормальной формы, расписывая каждый шаг редукции: один раз с использованием аппликативной стратегии, во второй ~--- с
+    использованием нормальной стратегии.
+
+    \begin{proof}
+        Аппликативная:
+        \begin{align}
+            & \lambda y\ldotp z~(\lambda x\ldotp \comb{I}~(\comb{I}~\comb{I})~(\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp \comb{I}~\comb{I}~(\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp \comb{I}~(\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp \comb{I}~\comb{I})~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp \comb{I})~x~y
+        \end{align}
+        \begin{align}
+            & \lambda y\ldotp z~(\lambda x\ldotp \comb{I}~(\comb{I}~\comb{I})~(\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp (\comb{I}~\comb{I})~(\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp \comb{I}~(\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp (\comb{I}~\comb{I}))~x~y \betastep \\
+            & \betastep \lambda y\ldotp z~(\lambda x\ldotp \comb{I})~x~y \betastep \\
+        \end{align}
+        Нормальная:
+    \end{proof}
+
+    \subsubsection{}
+
+    Приведите примеры замкнутых термов (и объясните выбор).
+
+    \paragraph{(0.5б)}
+
+    Находится в WHNF, но не в HNF.
+
+    \begin{proof}
+        \(\lambda x\ldotp \comb{I}~x\). Очевидно что находится в WHNF (на верху абстракция). Не находится в HNF, т.к. \(\comb{I}~x\) -- редекс.
+    \end{proof}
+
+    \paragraph{(0.5б)}
+
+    Находится в HNF, но не в NF.
+
+    \begin{proof}
+        \(\lambda x\ldotp x~(\comb{I}~\comb{I})\). Находится в HNF, т.к. нельзя проредуцировать аппликацию \(x\), т.к. это переменная. Не находится в NF т.к. есть редекс \(\comb{I}~\comb{I}\).
+    \end{proof}
+
+    \subsubsection{(3б)}
+
+    Две формулировки одного и того же задания в студию:
+    \begin{itemize}
+        \item Пусть дан терм $M$.
+        Покажите, как подобрать такой терм $N$, что $N$ находится в нормальной форме и $N~\comb{I} =_\beta M$.
+        \item Более привычная математикам формулировка: докажите, что для каждого $M$ существует $N$ в нормальной форме такой, что $N~\comb{I} \eqbeta M$.
+    \end{itemize}
+    \begin{proof}
+        :(
+    \end{proof}
+
+\end{document}
