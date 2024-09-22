@@ -241,7 +241,7 @@ fn main() {
     нет.
 
     \begin{proof}
-        \(\term{pred}\) и \(\term{minus}\) из предыдущего ДЗ.
+        \(\term{pred}\) из предыдущего ДЗ.
         \begin{gather}
             \term{pred} \coloneqq \lambda n\ldotp \term{fst}~(n~(\lambda p\ldotp \term{pair}~(\term{snd}~p)~(\term{suc}~(\term{snd}~p)))~(\term{pair}~\term{0}~\term{0})) \\
             \term{minus}~n~m \coloneqq m~(\lambda i\ldotp \term{pred}~i)~n
