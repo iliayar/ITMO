@@ -195,7 +195,9 @@
     Подсказка: воспользуйтесь свойством комбинатора рекурсии: $\comb{Y}~F~M \eqbeta F~(\comb{Y}~F)~M$.
 
     \begin{proof}
-\begin{minted}[frame=lines,linenos=true,mathescape]{ocaml}
+    См. след. страницу
+    \pagebreak
+\begin{minted}[frame=lines,linenos=true,mathescape]{rust}
 fn fix<'a, 'b: 'a, T, R>(
     f: &'b impl Fn(Box<dyn Fn(T) -> R + 'a>, T) -> R,
 ) -> Box<dyn Fn(T) -> R + 'a> {
