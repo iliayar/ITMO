@@ -1,3 +1,4 @@
 #+AUTHOR: Ярошевский Илья
 #+LATEX_CLASS: hw-mse
 #+OPTIONS: toc:nil
+#+LATEX_HEADER: \def\multiset#1#2{\ensuremath{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
