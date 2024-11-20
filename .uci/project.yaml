@@ -1,19 +1,12 @@
 bind:
   enabled: true
   zones:
-    'ilyay.space':
-      cnames:
-        - 'conspects'
-
     'iliay.ar':
       cnames:
         - 'conspects'
 
 caddy:
   hostnames:
-    'conspects.ilyay.space': |
-      redir https://conspects.iliay.ar{uri}
-
     'conspects.iliay.ar': |
       file_server
       root * ${project.data_path}/hakyll/conspects
