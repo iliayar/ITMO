@@ -8,18 +8,20 @@ jobs:
         HAKYLL_DESTINATION: ${project.data_path}/hakyll/conspects
         HAKYLL_STORE: ${project.data_path}/hakyll/conspects-store
         BUILDER: ${project.repos.main.path}/builder
+        BUILDER_PROFILE: ${project.data_path}/builder-conspects
 
         ASSETS_ROOT: https://iliay.ar
         MATOMO_HOST: matomo.iliay.ar
       script: |
         set -e
         . /etc/profile
+        nix build $BUILDER#conspects --profile $BUILDER_PROFILE --no-link
 
         mkdir -p $HAKYLL_DESTINATION
         mkdir -p $HAKYLL_STORE
 
         cd $INPUT
-        nix run $BUILDER#conspects build
+        $BUILDER_PROFILE/bin/site build
 
 stages:
   publish:
