@@ -13,7 +13,7 @@ jobs:
         MATOMO_HOST: matomo.iliay.ar
       script: |
         set -e
-        . /etc/profile.d/nix.sh
+        . /etc/profile
 
         mkdir -p $HAKYLL_DESTINATION
         mkdir -p $HAKYLL_STORE
