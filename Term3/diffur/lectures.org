@@ -1,11 +1,10 @@
+#+LATEX_CLASS: general
 #+TITLE: Дифференциальные уравнения
 
 #+LaTeX_HEADER: \usepackage[utf8]{inputenc}
 #+LaTeX_HEADER: \usepackage[russian]{babel}
 
 * Дифференциальные уравнения
- Бабушкин Максим Владимирович
- [[mailto:mvbabushkin@itmo.ru][Send Mail]]
 ** Введение. Примеры
 $F(x, y, y', y', y^{(n)}) = 0$ - дифф. ур-е
 /Пример/:
