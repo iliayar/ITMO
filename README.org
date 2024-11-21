@@ -1,6 +1,6 @@
 #+TITLE: ITMO
 
-[[https://uci.iliay.ar/api/badge/ghlike.svg?project_id=personal-site&pipeline_id=publish-conspects&job_id=publish]]
+[[https://uci.iliay.ar/api/badge/ghlike.svg?project_id=personal-site&pipeline_id=hakyll-conspects&job_id=publish]]
 
 ------
 My stuff from ITMO University. \\
