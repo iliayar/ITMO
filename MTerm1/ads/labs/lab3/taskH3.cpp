@@ -1,5 +1,5 @@
 
-// Generated at 2025-06-07 21:59:05.749470 
+// Generated at 2025-06-07 17:02:48.934130 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -105,47 +105,48 @@ ostream &operator<<(ostream &out, set<K> s) {
 }
 
 //##################CODE BEGIN#############
-template <typename F> std::pair<int, int> bs(int l, int r, F pred) {
-  while (r - l > 1) {
-    int m = (l + r) / 2;
+template <typename F> double bs(double l, double r, double delta, F pred) {
+  while (r - l > delta) {
+    double m = (l + r) / 2.;
     if (pred(m)) {
       l = m;
     } else {
       r = m;
     }
   }
-
-  if (!pred(l)) {
-    l--;
-    r--;
-  }
-
-  return {l, r};
+  return (r - l) / 2.;
 }
+
+struct S {
+    int i;
+    int v;
+    int w;
+};
 
 //entry
 void sol() {
-    int x, a, y, b, l; cin >> x >> a >> y >> b >> l;
-    auto [r, _1] = bs(0, a*x + b*y + 1, [&](int k) {
-        vector<vint> dp(l, vint(x + 1, INF));
-        for (int i = 0; i <= x; ++i) {
-            dp[0][i] = max(k - i * a + b - 1, (int)0) / b;
+    int n, k; cin >> n >> k;
+    vector<S> a;
+    for (int i = 0; i < n; ++i) {
+        a.push_back({i+1}); cin >> a.back().v >> a.back().w;
+    }
+
+    auto calc = [&](const S& s, double x) { return s.v - s.w*x; };
+    bs(0, 1e+7, 1e-7, [&](double x) {
+        sort(ALL(a), [&](auto& l, auto& r) {
+            return calc(l, x) > calc(r, x);
+        });
+        double s = 0;
+        for (int i = 0; i < k; ++i) {
+            s += calc(a[i], x);
         }
-        for (int i = 1; i < l; ++i) {
-            for (int j = 0; j <= x; ++j) {
-                for (int q = 0; q <= j; ++q) {
-                    dp[i][j] = min(dp[i][j], dp[i - 1][j - q] + 
-                        max(k - q * a + b - 1, (int)0) / b);
-                }
-            }
-        }
-        for (int i = 0; i <= x; ++i) {
-            if (i * a + dp[l - 1][i] * b < k) exit(1);
-            if (dp[l - 1][i] <= y) return true;
-        }
-        return false;
+        return s > 0;
     });
-    cout << r << endl;
+
+    for (int i = 0; i < k; ++i) {
+        cout << a[i].i << " ";
+    }
+    cout << endl;
 }
 //##################CODE END###############
 #ifdef LOCAL

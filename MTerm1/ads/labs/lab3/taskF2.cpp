@@ -1,5 +1,5 @@
 
-// Generated at 2025-06-07 21:59:05.749470 
+// Generated at 2025-06-05 01:01:27.280118 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -104,7 +104,6 @@ ostream &operator<<(ostream &out, set<K> s) {
   return out;
 }
 
-//##################CODE BEGIN#############
 template <typename F> std::pair<int, int> bs(int l, int r, F pred) {
   while (r - l > 1) {
     int m = (l + r) / 2;
@@ -123,29 +122,94 @@ template <typename F> std::pair<int, int> bs(int l, int r, F pred) {
   return {l, r};
 }
 
-//entry
-void sol() {
-    int x, a, y, b, l; cin >> x >> a >> y >> b >> l;
-    auto [r, _1] = bs(0, a*x + b*y + 1, [&](int k) {
-        vector<vint> dp(l, vint(x + 1, INF));
-        for (int i = 0; i <= x; ++i) {
-            dp[0][i] = max(k - i * a + b - 1, (int)0) / b;
+//##################CODE BEGIN#############
+constexpr int N = 30002;
+constexpr int T = 10 * 60;
+
+void heap_prop_up(vint& heap, int& hs) {
+    int i = hs - 1;
+    while (i > 0) {
+        if (heap[i] < heap[(i - 1) / 2]) {
+            swap(heap[i], heap[(i - 1) / 2]);
+            i = (i - 1) / 2;
         }
-        for (int i = 1; i < l; ++i) {
-            for (int j = 0; j <= x; ++j) {
-                for (int q = 0; q <= j; ++q) {
-                    dp[i][j] = min(dp[i][j], dp[i - 1][j - q] + 
-                        max(k - q * a + b - 1, (int)0) / b);
-                }
+        else {
+            break;
+        }
+    }
+}
+
+void heap_prop_down(vint& heap, int& hs) {
+    int i = 0;
+    while (i < hs) {
+        int ni = -1;
+        if (i*2 + 2 < hs && heap[i] > heap[i*2 + 2]) {
+            ni = i*2 + 2;
+        }
+        if (i*2 + 1 < hs && heap[i] > heap[i*2 + 1] && heap[i*2 + 2] > heap[i*2 + 1]) {
+            ni = i*2 + 1;
+        }
+        if (ni == -1) {
+            break;
+        }
+        swap(heap[i], heap[ni]);
+        i = ni;
+    }
+}
+
+void heap_push(vint& heap, int& hs, int x) {
+    heap[hs++] = x;
+    heap_prop_up(heap, hs);
+}
+
+int heap_pop(vint& heap, int& hs) {
+    int r = heap[0];
+    swap(heap[0], heap[--hs]);
+    heap_prop_down(heap, hs);
+    return r;
+}
+
+// entry
+void sol() {
+    string line;
+    vint exp(N, 0);
+    queue<pair<int, int>> q;
+
+    vint heap(N, 0);
+    int hs = 0;
+
+    for (int i = 0; i < N; ++i) {
+        heap_push(heap, hs, i);
+    }
+
+    while (getline(cin, line)) {
+        stringstream ss(line);
+        int time; ss >> time;
+        char command; ss >> command;
+        int block = 0; if (command == '.') ss >> block; block--;
+
+        while (!q.empty() && q.front().first <= time) {
+            auto i = q.front().second; q.pop();
+            if (exp[i] <= time) {
+                heap_push(heap, hs, i);
             }
         }
-        for (int i = 0; i <= x; ++i) {
-            if (i * a + dp[l - 1][i] * b < k) exit(1);
-            if (dp[l - 1][i] <= y) return true;
+
+        if (command == '+') {
+            int i = heap_pop(heap, hs);
+            cout << i + 1 << endl;
+            exp[i] = time + T;
+            q.push({time + T, i});
+        } else {
+            if (exp[block] > time) {
+                cout << "+" << endl;
+                exp[block] = time + T;
+                q.push({time + T, block});
+            } else {
+                cout << "-" << endl;
+            }
         }
-        return false;
-    });
-    cout << r << endl;
+    }
 }
 //##################CODE END###############
 #ifdef LOCAL

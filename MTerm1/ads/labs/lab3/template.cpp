@@ -101,24 +101,6 @@ ostream &operator<<(ostream &out, set<K> s) {
   return out;
 }
 
-template <typename F> std::pair<int, int> bs(int l, int r, F pred) {
-  while (r - l > 1) {
-    int m = (l + r) / 2;
-    if (pred(m)) {
-      l = m;
-    } else {
-      r = m;
-    }
-  }
-
-  if (!pred(l)) {
-    l--;
-    r--;
-  }
-
-  return {l, r};
-}
-
 // CODE_HERE
 
 #ifdef LOCAL
