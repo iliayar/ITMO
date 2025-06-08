@@ -1,0 +1,47 @@
+#+setupfile: setup.org
+#+TITLE: Алгоритмы и структуры данных. Лекция 4
+#+date: 1 октября
+#+LATEX_HEADER: \usepackage{algpseudocode}
+
+* Нижние оценки
+#+begin_statement org
+\forall сортировка на =<= \(\Omega(n \log n)\)
+#+end_statement
+
+#+begin_proof org
+Пусть делаем \(\le k\) сравнений. Корректная сортировка сортирует как минимум все перестановки, которых \(n!\).
+Докажем что \(2^k \ge n!\): Сравнение возвращает 1 бит информации (меньше или больше или равно). \\
+Пусть сортировка всегда делает \(k\) операций. В результате получилось \(k\) результатов сравнения (\(k\) бит). \\
+Пусть \(2^k < n!\), тогда \(\exists p \neq q\), (\(p, q\) -- перестановки), т.е. у них одинаковые результаты сравнения, значит алгоритм делал одни и те же действия, значит одна из не будет отсортирована. Значит \(2^k \ge n1 \Rightarrow k \ge \log n!\)
+#+end_proof
+
+* Сортировки
+- Selection Sort
+- Insertion Sort
+\todo
+* Кучи
+** Бинарная
+\todo \\
+Построение за \(O(n)\) -- делаем =SiftDown(i)= для \(i \coloneqq n \dots 1\).
+** Skew Heap
+Есть операция =Merge= (Meld), которая объединяет две кучи.
+- =Add= -- сделать =Merge= с кучей из одного элемента
+- =ExtractMin= -- Удалить корень, сделать =Merge= на его детях
+
+
+#+begin_export latex
+\begin{enalgo}[H]
+\caption{Merge}
+\begin{algorithmic}[1]
+\Function{Merge}{\(A, B\)}
+  \If {\(A.value \ge B.value\)}
+    \State \(A.right \gets Merge(A.right, B)\)
+    \State \(Swap(A.right, A.left)\) \Comment{Для балансировки}
+  \Else
+    \State \(B.right \gets Merge(A, B.right)\)
+    \State \(Swap(B.right, B.left)\)
+  \EndIf
+\EndFunction
+\end{algorithmic}
+\end{enalgo}
+#+end_export
