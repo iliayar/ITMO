@@ -1,0 +1,29 @@
+#+setupfile: setup.org
+#+TITLE: Алгоритмы и структуры данных. Лекция 5
+#+date: 8 октября
+#+LATEX_HEADER: \usepackage{algpseudocode}
+
+* Вероятностные алгоритмы
+/Задача/: Нужно найти элемент элемент в массиве, который встречается больше половины раз. \\
+/Решение/: Выбрать случайный элемент и проверить \(x = a[i = \text{Random}\ 0\dots n-1]\).
+#+begin_definition org
+\(\text{Time} = E_{\text{Random}}\)
+#+end_definition
+Посчитаем время: \(E = n + \frac{1}{2} \cdot 0 + \frac{1}{2} \cdot E\) -- всегда проверяем за \(n\), с вероятностью \(\frac{1}{2}\) ничего не делаем т.к. нашли, с вероятностью \(\frac{1}{2}\) не находим и повторяем. \(E = 2n\)
+
+* Qucksort
+\todo
+
+* \(k\)-ая статистика
+Задача: \(k\)-ый элемент в отсортированном массиве
+- Одноветочный Quicksort. Сортируем тольку ту половину, где \(k\)-тый элемент.
+  #+begin_export latex
+  \begin{gather*}
+    T(n) \le n + \frac{1}{2}T\left(\frac{3}{4} n\right) + \frac{1}{2}T(n) \\
+    T(n) \le 2n + T(\frac{3}{4}n) = \Theta(n) \\
+    2n (1 + \frac{3}{4} + \left(\frac{3}{4}\right)^2 + \dots)
+  \end{gather*}
+  #+end_export
+
+* Детерминированная \(k\)-тая статистика
+\todo
