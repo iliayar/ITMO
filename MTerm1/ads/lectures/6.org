@@ -1,0 +1,88 @@
+#+setupfile: setup.org
+#+TITLE: Алгоритмы и структуры данных. Лекция 6
+#+date: 15 октября
+#+LATEX_HEADER: \usepackage{algpseudocode}
+
+* Count sort
+\todo \\
+Можем сортировать пары \(\langle a_i, b_i \rangle\). Сначала отсортируем по \(b\), потом еще раз по \(a\). Т.к. стабильная.
+
+* Radix sort
+
+Сортируем \(\langle a_1, a_2, \dots, a_k \rangle\). Сортируем, начиная с \(a_k\). \(O(k \cdot (n + m))\).
+
+** Числа
+Как сортировать числа с помощью этого: Запишем число в системе счисления \({\rm BASE}\) как кортеж. Получим \(O\left(\log_{\rm BASE} m \cdot (n + {\rm BASE})\right)\).
+#+begin_statement org
+Выгодно брать \({\rm BASE} \approx n\). Чтобы эффективно получать \(i\)-ую цифру надо брать \({\rm BASE} = 2^L\).
+#+end_statement
+
+** Строки
+Пусть суммарная длинна строк \(\sum {\rm size} = L\). Тогда если будет сортировать по элементам, то будет работать за \(O(k \cdot ({\rm size} + m))\), где \(m\) размер алфавита.
+
+** Пачка массивов
+Пусть хотим отсортировать несколько массивов \(A_1, A_2, \dots, A_s\), все элементы которых не больше \(m\). Radix sort сработает за \(\sum (|A_i| + m)\). Как отсортировать за \(\sum |A_i| + m\): Сделаем большой элемент пар из элементов массива вместе с индексом массива \(\langle x, i \rangle\). Отсортируем их за \(\sum |A_i| + m\). Пройдемся по сортированным парам с сложим в соответсвующие места.
+* Bucket sort
+Разобъем числовую прямую на \(n\) кусочков длины \(\frac{{\rm Max} - {\rm Min} + 1}{n}\). \(x\) попадет в бакет \(\left\lfloor\frac{x - {\rm Min}}{{\rm Max} - {\rm Min} + 1} \cdot n\right\rfloor\). Отсортируем каждый бакет:
+- Insertion
+- Quick sort
+- Bucket sort
+#+begin_theorem org
+Если данные равномерно распределены то \(E = \Theta(n)\).
+#+end_theorem
+#+begin_proof org
+\(T = \sum_b {\rm size}_b^2 = \sum_{i, j} [{\rm ind}_i = {\rm ind}_j]\), где \(b\) - бакет, ind -- номер бакета.
+\[ E = \sum_{i, j} P [{\rm ind}_i = {\rm ind}_j] = \]
+, где \(P [{\rm ind}_i = {\rm ind}_j] = \begin{cases} i = j, & 1 \\ i \neq j, & \frac{1}{n} \end{cases}\)
+\[ = n (n - 1) \cdot \frac{1}{n} + n = 2n - 1 \]
+#+end_proof
+
+* Рекурсивный перебор
+\todo
+* V.E.B. (Van Emde Boas) Tree
+Куча за \(O(\log \log n)\).
+#+begin_remark org
+Что такое \(O(\log \log n)\): Извлекаем корни, т.к. длина числа \(\sqrt{C} \sim \frac{\log C}{2}\).
+#+end_remark
+Разбиваем диапазон чисел \([0; C]\) делим на кусочки по \(\sqrt{C}\). В каждом кусочке храним V.E.B \(H\). Глубина \(\log \log C\). Заведем еще V.E.B который хранит номера не пустых кусков \(Ind\). Храним также размер \(size\) и максимальный и минимальный элемент \(min, max\).
+
+#+begin_export latex
+\begin{enalgo}[H]
+\caption{V.E.B}
+\begin{algorithmic}[1]
+\Function{ExtractMin}{}
+  \State \(i \gets \left\lfloor \frac{Min}{\sqrt{C}} \right\rfloor\)
+  \State \(H[i]\) \Comment{Куча в которой минимум}
+  \If {\(H[i].Size = 1\)}
+    \State \(Ind.ExtractMin()\)
+  \EndIf
+  \If {\(H[i].Size \ge 1\)}
+    \State \(H[i].ExtractMin()\)
+  \EndIf
+  \State \(Size \gets size - 1\)
+  \State \(Min \gets H[Ind.Min].Min\)
+\EndFunction
+\end{algorithmic}
+\end{enalgo}
+#+end_export
+
+#+begin_export latex
+\begin{enalgo}[H]
+\caption{V.E.B}
+\begin{algorithmic}[1]
+\Function{Add}{\(x\)}
+  \State \(i \gets \left\lfloor \frac{x}{\sqrt{C}} \right\rfloor\)
+  \If {\(H[i].size = 0\)}
+    \State \(Ind.Add(i)\)
+    \State \(H[i].Size \gets 1\)
+    \State \(H[i].Min \gets x\)
+    \State \(H[i].Max \gets x\)
+  \Else
+    \State \(H[i].Add(x)\)
+  \EndIf
+  \State \(Min \gets min(Min, x)\)
+  \State \(Max \gets max(Max, x)\)
+\EndFunction
+\end{algorithmic}
+\end{enalgo}
+#+end_export
