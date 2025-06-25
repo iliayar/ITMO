@@ -1,4 +1,5 @@
 #import "@preview/tablex:0.0.8": *
+#import "@preview/lovelace:0.3.0": *
 #import "@preview/ctheorems:1.1.0": *
 
 #let lemma = thmbox("lemma", "Лемма")
@@ -15,27 +16,13 @@
 #let task = thmbox("task", [_Задача_])
 #let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: "task")
 
-#let conf_common(doc) = {
+#let todo = () => [#rect(stroke: red)[#text(fill: red, [*Доделать*])]]
+
+#let setup_common(doc) = {
 
 set heading(numbering: "1.")
 
 show: thmrules
-
-set math.equation(numbering: "(1)")
-show ref: it => {
-  let eq = math.equation
-  let el = it.element
-  if el != none and el.func() == eq {
-    // Override equation references.
-    numbering(
-      el.numbering,
-      ..counter(eq).at(el.location())
-    )
-  } else {
-    // Other references as usual.
-    it
-  }
-}
 
 doc
 
