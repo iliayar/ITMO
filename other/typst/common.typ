@@ -1,6 +1,6 @@
-#import "@preview/tablex:0.0.8": *
+#import "@preview/tablex:0.0.9": *
 #import "@preview/lovelace:0.3.0": *
-#import "@preview/ctheorems:1.1.0": *
+#import "@preview/ctheorems:1.1.3": *
 
 #let lemma = thmbox("lemma", "Лемма")
 #let theorem = thmbox("theorem", "Теорема")

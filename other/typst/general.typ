@@ -5,5 +5,5 @@ set document(
   author: "Ilya Yaroshevskiy",
 )
 
-conf_common(doc)
+setup_common(doc)
 }
