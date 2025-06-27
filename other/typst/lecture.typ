@@ -7,6 +7,8 @@
   doc
 ) = {
 
+set heading(numbering: "1.")
+
 set math.equation(numbering: "(1)")
 
 show ref: it => {

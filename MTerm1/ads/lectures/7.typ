@@ -1,7 +1,10 @@
 #import "../../../other/typst/lecture_mse.typ": *
-#show: doc => conf(
-  title: [Алгоритмы и структуры данных. Лекция 7],
+
+#show: doc => lecture(
+  subj: [Алгоритмы и структуры данных],
+  title: [Лекция 7],
   date: [24 февраля],
+  number: 7,
   doc
 )
 
@@ -21,7 +24,7 @@ $ K_0 = 1 $
 Есть массив $a$, выбрать такие элементы что $sum a_i = S$. Перебор за $O(2^n)$
 
 #pseudocode-list()[
-  + _Go_ ($i, "sum"$)
+  + _Go_ ($i, "sum"$):
     + *if* $i = n$ *then*
       + *return*
     + #text(red)[*if* $"mem"[i, "sum"]$]
@@ -35,4 +38,15 @@ $ K_0 = 1 $
 
 Добавили в перебор #text(red)[мемоизацию] -- $O(n dot S)$
 
-// touch: 1
+=== Knapsack (Рюкзак)
+
+Выбрать такие элементы что $sum a_i <= S$ и $sum "cost"_i -> max$.
+#todo()
+
+=== Калькулятор
+Из числа $1$ получить число $N$. Можем делать:
+- $x + 1$
+- $2 dot x$
+- $3 dot x$
+
+Шаг $f_x = min(f_(x + 1), f_(2x), f_(3x) + 1)$, инициализация $f_n = 0, f_(> n) = + infinity$

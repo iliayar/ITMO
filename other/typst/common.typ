@@ -20,8 +20,6 @@
 
 #let setup_common(doc) = {
 
-set heading(numbering: "1.")
-
 show: thmrules
 
 doc

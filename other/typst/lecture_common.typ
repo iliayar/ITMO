@@ -17,17 +17,11 @@ set document(
 )
 
 set page(
-  header: context(if counter(page).at(here()).first() > 1 [
-    #align(right)[Лекция 3]
+  header: context if counter(page).at(here()).first() > 1 [
+    #align(right)[#title]
     #v(-10pt)
     #line(length: 100%)
-  ]),
-  // header: locate(loc =>
-  // if counter(page).at(loc).first() > 1 [
-  //   #align(right)[Лекция 3]
-  //   #v(-10pt)
-  //   #line(length: 100%)
-  // ]),
+  ],
   footer: context [
     #line(length: 100%)
     #v(-10pt)
@@ -46,8 +40,6 @@ set page(
     bottom: 1cm,
   )
 )
-
-set heading(numbering: "1.")
 
 show outline.entry: it => {
   text(blue, it)

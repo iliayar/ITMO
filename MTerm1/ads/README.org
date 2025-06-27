@@ -1,7 +1,8 @@
 #+title: Algorithms and Data Structures
 
 * Lectures
-[[https://conspects.iliay.ar/MTerm1/ads/lectures/all_lectures.pdf][All lectures]]
+[[https://conspects.iliay.ar/MTerm1/ads/lectures/all_lectures.pdf][Lectures \([1; 3), [4; 6)\)]] \\
+[[https://conspects.iliay.ar/MTerm1/ads/lectures/lectures.pdf][Lectures \([7; \infty)\)]] \\
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/1.pdf][Lecture 1]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/2.pdf][Lecture 2]]
 - TODO: Lecture 3
