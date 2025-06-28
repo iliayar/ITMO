@@ -62,12 +62,61 @@ let find_current_heading = () => {
 }
 
 set page(
-  header: context {
-    // No header on title and outline pages
-    if counter(page).at(here()).first() <= counter(page).at(outline).first() {
-      return none
-    }
+  margin: (
+    top: 1cm,
+    bottom: 1cm,
+  )
+)
 
+show outline.entry: it => {
+  text(blue, it)
+}
+show outline.entry.where(level: 1): it => {
+  v(12pt, weak: true)
+  strong(it)
+}
+
+show link: it => [ #underline(it)#super(emoji.chain) ]
+
+set heading(offset: 1, numbering: "1.")
+
+// Title page
+align(center + horizon, [
+  #text(24pt)[#title]
+
+  #link("https://conspects.iliay.ar")[Конспекты] \
+  #date
+])
+
+pagebreak()
+counter(page).update(1)
+
+set page(
+  footer: context [
+    #line(length: 100%)
+    #v(-10pt)
+    ITMO MSE y2024
+    #set align(center)
+    #v(-20pt)
+    #counter(page).display(
+      (..nums) => 
+       "Страница "  + numbering("1", nums.pos().first()) +
+       " из " + numbering("1", nums.pos().last()),
+      both: true
+    )
+  ],
+)
+
+v(48pt)
+outline(indent: auto, title: [
+  #text(24pt)[Оглавление]
+  #v(24pt)
+])
+
+pagebreak()
+
+set page(
+  header: context {
     let heading = find_current_heading()
     // No header on first page of each lecture
     if counter(page).at(heading.location()).first() == counter(page).at(here()).first() {
@@ -83,53 +132,7 @@ set page(
       #line(length: 100%)
     ]
   },
-  footer: context if counter(page).at(here()).first() > 1 [
-    #line(length: 100%)
-    #v(-10pt)
-    ITMO MSE y2024
-    #set align(center)
-    #v(-20pt)
-    #counter(page).display(
-      (..nums) => 
-       "Страница "  + numbering("1", nums.pos().first()) +
-       " из " + numbering("1", nums.pos().last()),
-      both: true
-    )
-  ],
-  margin: (
-    top: 1cm,
-    bottom: 1cm,
-  )
 )
-
-
-show outline.entry: it => {
-  text(blue, it)
-}
-show outline.entry.where(level: 1): it => {
-  v(12pt, weak: true)
-  strong(it)
-}
-
-show link: it => [ #underline(it)#super(emoji.chain) ]
-
-set heading(offset: 1, numbering: "1.")
-
-align(center + horizon, [
-  #text(24pt)[#title]
-
-  #link("https://conspects.iliay.ar")[Конспекты] \
-  #date
-])
-pagebreak()
-
-v(48pt)
-outline(indent: auto, title: [
-  #text(24pt)[Оглавление]
-  #v(24pt)
-])
-pagebreak()
-
 
 setup_common(doc)
 }

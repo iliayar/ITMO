@@ -1,6 +1,7 @@
 #import "@preview/tablex:0.0.9": *
 #import "@preview/lovelace:0.3.0": *
 #import "@preview/ctheorems:1.1.3": *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #let lemma = thmbox("lemma", "Лемма")
 #let theorem = thmbox("theorem", "Теорема")
