@@ -10,3 +10,5 @@
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/5.pdf][Lecture 5]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/6.pdf][Lecture 6]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/7.pdf][Lecture 7]]
+- [[https://conspects.iliay.ar/MTerm1/ads/lectures/8.pdf][Lecture 8]]
+- [[https://conspects.iliay.ar/MTerm1/ads/lectures/9.pdf][Lecture 9]]
