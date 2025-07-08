@@ -19,6 +19,7 @@
 #let remark = thmbox("remark", [_Примечание_]).with(numbering: none)
 #let task = thmbox("task", [_Задача_])
 #let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: "task")
+#let statement = thmplain("statement", [*Утверждение*])
 
 #let todo = () => [#rect(stroke: red)[#text(fill: red, [*Доделать*])]]
 
