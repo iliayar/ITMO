@@ -5,7 +5,7 @@
 [[https://conspects.iliay.ar/MTerm1/ads/lectures/lectures.pdf][Lectures \([7; \infty)\)]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/1.pdf][Lecture 1]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/2.pdf][Lecture 2]]
-- TODO: Lecture 3
+- *TODO*: Lecture 3
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/4.pdf][Lecture 4]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/5.pdf][Lecture 5]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/6.pdf][Lecture 6]]
@@ -14,3 +14,4 @@
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/9.pdf][Lecture 9]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/10.pdf][Lecture 10]]
 - [[https://conspects.iliay.ar/MTerm1/ads/lectures/11.pdf][Lecture 11]]
+- [[https://conspects.iliay.ar/MTerm1/ads/lectures/12.pdf][Lecture 12]]
