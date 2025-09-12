@@ -2,7 +2,7 @@
   description = "Description for the project";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     denv = {
       url = "github:iliayar/env.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,6 +19,9 @@
           denv.packages = with pkgs; [
             rust-bin.stable.latest.default
             rust-analyzer
+
+            fsharp
+            fsautocomplete
           ];
         };
       };

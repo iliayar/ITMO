@@ -87,7 +87,7 @@
 \usepackage{hyperref}
 \pagestyle{fancy}
 \fancyhead[R]{Ярошевский Илья}
-\fancyhead[L]{ИТМО MSE, ФП 2024, Дз 1}
+\fancyhead[L]{ИТМО MSE, ФП 2025, Дз 1}
 % ------------------------------------------------
 
 % Numbering
@@ -170,9 +170,9 @@
     $(\lambda x\ldotp y~y~(\lambda y\ldotp x~((\lambda z\ldotp z~y~x)~(\lambda x\ldotp z~x))))$
 
     \begin{proof}
-         Свободные: \(y\)
+         Свободные: \(y, z\)
 
-        \((\lambda x^0\ldotp y~y~(\lambda y^1\ldotp x^0~((\lambda z^2\ldotp z^2~y^1~x^0)~(\lambda x^3\ldotp z^2~x^3))))\)
+        \((\lambda x^0\ldotp y~y~(\lambda y^1\ldotp x^0~((\lambda z^2\ldotp z^2~y^1~x^0)~(\lambda x^3\ldotp z~x^3))))\)
     \end{proof}
 
     \subsubsection{}
@@ -286,6 +286,25 @@
             \equiv (\lambda s~z\ldotp s~z)~(\term{sum}~\term{0})~\term{0} \betasteps \\
             \betasteps \term{sum}~\term{0}~\term{0} \betasteps \term{0}
         \end{gather}
+
+        \(\textbf{pow} \coloneqq \lambda a~b\ldotp b~(\term{mult}~a)~\term{1}\)
+
+        Примеры:
+        \begin{gather}
+            \term{pow}~\term{3}~\term{2} \betasteps \term{2}~(\term{mult}~\term{3})~\term{1} \betasteps \\
+            \betasteps (\term{mult}~\term{3})~((\term{mult}~\term{3})~\term{1}) \betasteps \\
+            \betasteps (\term{mult}~\term{3})~\term{3} \betasteps \term{9}
+        \end{gather}
+
+        \begin{gather}
+            \term{pow}~\term{2}~\term{0} \betasteps \term{0}~(\term{mult}~\term{2})~\term{1} \betasteps \term{1}
+        \end{gather}
+
+        \begin{gather}
+            \term{pow}~\term{1}~\term{3} \betasteps \term{3}~(\term{mult}~\term{1})~\term{1} \betasteps \\
+            \betasteps (\term{mult}~\term{1})~((\term{mult}~\term{1})~((\term{mult}~\term{1})~\term{1})) \betasteps \\
+            \betasteps (\term{mult}~\term{1})~((\term{mult}~\term{1})~\term{1}) \betasteps \term{1}
+        \end{gather}
     \end{proof}
 
     \subsubsection{(1б)}
@@ -326,8 +345,7 @@
     \begin{proof}
 \begin{minted}[frame=lines,linenos=true,mathescape]{ocaml}
 module Pair = struct
-    (* Sorry for using struct, small hack 
-       forall quantifier for return type only in fields *)
+    (* Sorry for using struct, small hack. forall quantifier only in fields *)
     type ('a, 'b) t = { f : 'r. ('a -> 'b -> 'r) -> 'r }
 
     let make_pair : 'a -> 'b -> ('a, 'b) t = fun a b -> { f = fun f -> f a b }
@@ -342,9 +360,9 @@ module Church = struct
     let zero : t = { f = fun s z -> z }
     let succ : t -> t = fun n -> { f = (fun s z -> s @@ n.f s z) }
 
-    let rec from_int = function
+    let rec of_int = function
     | 0 -> zero
-    | n -> succ @@ from_int @@ n - 1
+    | n -> succ @@ of_int @@ n - 1
 
     let to_int n = n.f Int.succ 0
 end
@@ -368,7 +386,7 @@ end = struct
     let meowness_impl (cat : t) : Church.t = snd cat
 
     let make_cat name (meowness : int) : t = 
-        make_cat_impl name @@ from_int meowness
+        make_cat_impl name @@ of_int meowness
 
     let name (cat : t) : string =
         fst cat
@@ -384,7 +402,7 @@ end
 let main = 
     (* Check Church numerals *)
     assert Church.(2 = to_int @@ succ @@ succ @@ zero);
-    assert Church.(10 = to_int @@ from_int 10);
+    assert Church.(10 = to_int @@ of_int 10);
 
     (* Check Pair *)
     assert Pair.(1 = fst @@ make_pair 1 2);

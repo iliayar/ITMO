@@ -14,9 +14,9 @@ module Church = struct
     let zero : t = { f = fun s z -> z }
     let succ : t -> t = fun n -> { f = (fun s z -> s @@ n.f s z) }
 
-    let rec from_int = function
+    let rec of_int = function
     | 0 -> zero
-    | n -> succ @@ from_int @@ n - 1
+    | n -> succ @@ of_int @@ n - 1
 
     let to_int n = n.f Int.succ 0
 end
@@ -40,7 +40,7 @@ end = struct
     let meowness_impl (cat : t) : Church.t = snd cat
 
     let make_cat name (meowness : int) : t = 
-        make_cat_impl name @@ from_int meowness
+        make_cat_impl name @@ of_int meowness
 
     let name (cat : t) : string =
         fst cat
@@ -56,7 +56,7 @@ end
 let main = 
     (* Check Church numerals *)
     assert Church.(2 = to_int @@ succ @@ succ @@ zero);
-    assert Church.(10 = to_int @@ from_int 10);
+    assert Church.(10 = to_int @@ of_int 10);
 
     (* Check Pair *)
     assert Pair.(1 = fst @@ make_pair 1 2);
