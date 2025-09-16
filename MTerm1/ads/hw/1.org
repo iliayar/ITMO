@@ -76,7 +76,7 @@
 
 -----
 
-#+ATTR_LATEX: :options {5}
+#+ATTR_LATEX: :options {3}
 #+begin_manualtask org
 \[ \forall f, g: (f \preceq g) \lor (g \preceq f) ? \]
 #+end_manualtask
@@ -92,7 +92,7 @@
 #+end_solution
 
 -----
-#+ATTR_LATEX: :options {6.a}
+#+ATTR_LATEX: :options {4.a}
 #+begin_manualtask org
 \[ g(n) = o(f(n)) \xRightarrow{?} f(n) + g(n) = \Theta(f(n)) \]
 #+end_manualtask
@@ -107,7 +107,7 @@
 #+end_solution
 
 
-#+ATTR_LATEX: :options {6.b}
+#+ATTR_LATEX: :options {4.b}
 #+begin_manualtask org
 \[ f(n) = \O(g(n)) \xLeftrightarrow{?} f(n) = o(g(n)) \lor f(n) = \Theta(g(n)) \]
 #+end_manualtask
@@ -118,33 +118,8 @@
 получается что \(f(n) \neq o(g(n)) \land f(n) \neq \Theta(g(n))\), т.е. \(\not\Rightarrow\).
 #+end_solution
 
-# #+begin_solution org
-# \-
-# - \(\Leftarrow\) :: \-\\
-#   Докажем по отдельности:
-#   - \(f(n) = o(g(n))\) ::
-#     \begin{gather}
-#       \forall C : \exists N : \forall n > N : f(n) \le C \cdot g(n) \implies \\
-#       \implies \exists C' \coloneqq C, N' \coloneqq N : \forall n > N' : f(n) \le C' \cdot g(n)
-#     \end{gather}
-#   - \(f(n) = \Theta(g(n))\) ::
-#     \begin{gather}
-#       \exists C_1, C_2, N : \forall n > N : C_1 \cdot g(n) \le f(n) \le C_2 g(n) \implies \\
-#       \implies \exists C' \coloneqq C_2, N' \coloneqq N : \forall n > N' : f(n) \le C' g(n)
-#     \end{gather}
-# - \(\Rightarrow\) :: \-\\
-#   Известно что \(\exists C, N : \forall n > N : f(n) \le C \cdot g(n)\). Пусть \(f(n) \neq o(g(n)) \land f(n) \neq \Theta(g(n))\). То есть:
-#   1. \(\exists C : \forall N : \exists n > N : f(n) > C \cdot g(n)\)
-#   2. \(\forall C_1, C_2, N : \exists n > N : C_1 \cdot g(n) > f(n) \lor f(n) > C_2 \cdot g(n)\)
-# 
-# 
-#   # Тогда должно выполняться одно из двух:
-#   # 1. \(\forall C : \exists N : \forall n > N : f(n) < C \cdot g(n)\). Это значит что \(f = o(g(n))\).
-#   # 2. \(\exists C : \forall N : \exists n > N : f(n) \ge C \cdot g(n)\)
-# #+end_solution
-
 -----
-#+ATTR_LATEX: :options {7}
+#+ATTR_LATEX: :options {5}
 #+begin_manualtask org
 #+end_manualtask
 #+begin_solution org
@@ -172,6 +147,19 @@
      \lim_{n \to \infty} \frac{n^k}{c^n} & = \lim_{n \to \infty} \frac{k \cdot n^{k - 1}}{c^n \cdot \ln c} = \frac{k}{\ln c} \lim_{n \to \infty} \frac{n^{k - 1}}{c^n} = \dots = \\
      & = \frac{\lceil k \rceil!}{\ln^{\lceil k \rceil} c} \lim_{n \to \infty} \frac{n ^ {k - \lceil k \rceil}}{c^n} = 0
    \end{align}
+4. [@4]
+   #+begin_lemma org
+   Существует бесконечное множество \(L \subset \N\), такое что \(\forall n \in L : \sin n > \frac{1}{2}\)
+   #+end_lemma
+   #+begin_proof org
+   \(\sin n > \frac{1}{2}\), при \(n \in (2\pi k + \frac{\pi}{6}; 2\pi k + \frac{5 \pi}{6})\). \(\forall k \in \N\):
+   \[ 2\pi k + \frac{\pi}{6} < n \coloneqq \left\lceil 2\pi k + \frac{\pi}{6}\right\rceil + 1 < 2\pi k + \frac{\pi}{6} + 2 < 2\pi k + \frac{5 \pi}{6} \]
+   #+end_proof
+   Покажем что \(\sqrt{n} \neq \omega(n^{\sin n})\). Известно что \(\forall k > \frac{1}{2} : n^{\frac{1}{2}} = o(n^k)\), т.е. \(\forall C : \exists N : \forall n > N : n^{\frac{1}{2}} < C \cdot n^k\).
+   \[ \exists C' \coloneqq C : \forall N' : \exists n > N', n \in L : \sqrt{n} = n^{\frac{1}{2}} \le C \cdot n^k = C' \cdot n^{\sin n}\]
+   Аналогично покажем что \(\sqrt{n} \neq o(n^{\sin n})\). Известно что \(\forall k < \frac{1} : n^{\frac{1}{2}} = \omega(n^k)\), т.е \(\forall C : \exists N : \forall n > N : n^{\frac{1}{2}} > C \cdot n^k\).
+   \[ \exists C' \coloneqq C : \forall N' : \exists n > N', n \not\in L : \sqrt{n} = n^{\frac{1}{2}} \ge C \cdot n^k = C' \cdot n^{\sin n} \]
+   Очевидно также что \(\sqrt{n} \neq O(n^{\sin n})\) и \(\sqrt{n} \neq \Omega(n^{\sin n})\).
 5. [@5] Аналогично \(\lim_{n \to \infty} \frac{2^{\frac{n}{2}}}{2^n} = \lim \frac{1}{2^{\frac{n}{2}}} = 0 \implies 2^{\frac{n}{2}} = o(2^n) \implies 2^n = \omega(2^{\frac{n}{2}})\).
 6. [@6] \(m ^ {\log n} = m ^ {\log m \cdot \log_m n} = (m ^ {\log_m n})^{\log m} = n^{\log m}\)
 7. [@7] Покажем что \(\log n! = \O(n \log n)\)
@@ -190,19 +178,6 @@
      \frac{1}{4} \cdot n \log n = \frac{n}{2} \log \sqrt{n} \le \log n!
    \end{align}
    Тогда и \(\log n! = \Theta (n^n)\).
-4. [@4]
-   #+begin_lemma org
-   Существует бесконечное множество \(L \subset \N\), такое что \(\forall n \in L : \sin n > \frac{1}{2}\)
-   #+end_lemma
-   #+begin_proof org
-   \(\sin n > \frac{1}{2}\), при \(n \in (2\pi k + \frac{\pi}{6}; 2\pi k + \frac{5 \pi}{6})\). \(\forall k \in \N\):
-   \[ 2\pi k + \frac{\pi}{6} < n \coloneqq \left\lceil 2\pi k + \frac{\pi}{6}\right\rceil + 1 < 2\pi k + \frac{\pi}{6} + 2 < 2\pi k + \frac{5 \pi}{6} \]
-   #+end_proof
-   Покажем что \(\sqrt{n} \neq \omega(n^{\sin n})\). Известно что \(\forall k > \frac{1}{2} : n^{\frac{1}{2}} = o(n^k)\), т.е. \(\forall C : \exists N : \forall n > N : n^{\frac{1}{2}} < C \cdot n^k\).
-   \[ \exists C' \coloneqq C : \forall N' : \exists n > N', n \in L : \sqrt{n} = n^{\frac{1}{2}} \le C \cdot n^k = C' \cdot n^{\sin n}\]
-   Аналогично покажем что \(\sqrt{n} \neq o(n^{\sin n})\). Известно что \(\forall k < \frac{1} : n^{\frac{1}{2}} = \omega(n^k)\), т.е \(\forall C : \exists N : \forall n > N : n^{\frac{1}{2}} > C \cdot n^k\).
-   \[ \exists C' \coloneqq C : \forall N' : \exists n > N', n \not\in L : \sqrt{n} = n^{\frac{1}{2}} \ge C \cdot n^k = C' \cdot n^{\sin n} \]
-   Очевидно также что \(\sqrt{n} \neq O(n^{\sin n})\) и \(\sqrt{n} \neq \Omega(n^{\sin n})\).
 
 #+end_solution
 
