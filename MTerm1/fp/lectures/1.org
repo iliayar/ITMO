@@ -17,6 +17,7 @@ M \in \Lambda, x \in V & \Rightarrow (\lambda x. M) \in \Lambda
 В абстрактно синтаксисе
 \[ \Lambda ::= V\ |\ (\Lambda\ \Lambda)\ |\ (\lambda V. \Lambda) \]
 
+
 #+end_remark
 
 #+begin_symb org
