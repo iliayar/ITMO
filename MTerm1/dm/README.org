@@ -6,3 +6,4 @@
 - [[https://conspects.iliay.ar/MTerm1/dm/lectures/2.pdf][Lecture 2]]
 * Practice
 - [[https://conspects.iliay.ar/MTerm1/dm/practice/1.pdf][Practice 1]]
+- [[https://conspects.iliay.ar/MTerm1/dm/practice/2.pdf][Practice 2]]
