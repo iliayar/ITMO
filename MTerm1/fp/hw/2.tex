@@ -304,13 +304,28 @@ fn main() {
 
     \begin{proof}
         \begin{gather}
-            \term{fib}~n \coloneqq \term{if}~(\term{equal}~n~0)~1~(\term{if}~(\term{equal}~n~1)~1~(\term{add}~(\term{fib}~(\term{minus}~n~1))~(\term{fib}~(\term{minus}~n~2))))
+            \term{fibIter}~i~(\term{pair}~x~y) \coloneqq \term{pair}~(\term{plus}~x~y)~x  \\
+            \term{fib}~n \coloneqq \term{snd}~(\term{rec}~\term{fibIter}~(\term{pair}~0~1)~n)
         \end{gather}
-        Проверка:
         \begin{align}
-            \term{fib}~3 & \eqbeta \term{if}~(\term{equal}~3~0)~1~(\term{if}~(\term{equal}~3~1)~1~(\term{add}~(\term{fib}~(\term{minus}~3~1))~(\term{fib}~(\term{minus}~3~2)))) \eqbeta \\
-                         & \eqbeta \term{add}~(\term{fib}~2)~(\term{fib}~1) \eqbeta \term{add}~(\term{add}~(\term{fib}~1)~(\term{fib}~0))~1 \eqbeta \\
-                         & \eqbeta \term{add}~(\term{add}~1~1)~1 \eqbeta 3
+            \term{fib}~1 & \eqbeta \term{snd}~(\term{fibIter}~0~(\term{pair}~0~1)) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{pair}~(\term{plus}~0~1)~1) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{pair}~1~1) \eqbeta 1
+        \end{align}
+        \begin{align}
+            \term{fib}~2 & \eqbeta \term{snd}~(\term{fibIter}~1~(\term{fibIter}~0~(\term{pair}~0~1))) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{fibIter}~1~(\term{pair}~(\term{plus}~0~1)~1)) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{fibIter}~1~(\term{pair}~1~1)) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{pair}~(\term{plus}~1~1)~1) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{pair}~2~1) \eqbeta 1
+        \end{align}
+        \begin{align}
+            \term{fib}~4 & \eqbeta \term{snd}~(\term{fibIter}~3~(\term{fibIter}~2~(\term{fibIter}~1~(\term{fibIter}~0~(\term{pair}~0~1))))) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{fibIter}~3~(\term{fibIter}~2~(\term{pair}~2~1))) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{fibIter}~3~(\term{pair}~(\term{plus}~2~1)~2)) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{fibIter}~3~(\term{pair}~3~2)) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{pair}~(\term{plus}~3~2)~3) \eqbeta \\
+                         & \eqbeta \term{snd}~(\term{pair}~5~3) \eqbeta 3
         \end{align}
     \end{proof}
 
@@ -326,11 +341,11 @@ fn main() {
 
     \begin{proof}
         \begin{gather}
-            \term{sum}~xs \coloneqq \term{fold}~xs~\term{add}~0
+            \term{sum}~xs \coloneqq \term{fold}~xs~\term{plus}~0
         \end{gather}
         Проверка:
         \begin{align}
-            \term{sum} [1, 2, 3] \eqbeta \term{add}~1~(\term{add}~2~(\term{add}~3~0)) \eqbeta
+            \term{sum} [1, 2, 3] \eqbeta \term{plus}~1~(\term{plus}~2~(\term{plus}~3~0)) \eqbeta
         \end{align}
     \end{proof}
 
@@ -340,13 +355,13 @@ fn main() {
 
     \begin{proof}
         \begin{gather}
-            \term{length}~xs \coloneqq \term{fold}~xs~(\lambda x~l\ldotp \term{add}~1~l)~0
+            \term{length}~xs \coloneqq \term{fold}~xs~(\lambda x~l\ldotp \term{succ}~l)~0
         \end{gather}
         Проверка:
         \begin{align}
-            \term{length}~[3, 2, 1] & \eqbeta (\lambda i~l\ldotp \term{add}~1~l)~3~(\term{fold}~[2, 1]~(\lambda i~l\ldotp \term{add}~1~l)~0)) \eqbeta \\
-                                    & \eqbeta \term{add}~1~(\term{fold}~[2, 1]~(\lambda i~l\ldotp \term{add}~1~l)~0)) \eqbeta \\
-                                    & \eqbeta \term{add}~1~(\term{add}~1~(\term{add}~1~0)) \eqbeta 3
+            \term{length}~[3, 2, 1] & \eqbeta (\lambda i~l\ldotp \term{succ}~l)~3~(\term{fold}~[2, 1]~(\lambda i~l\ldotp \term{succ}~l)~0)) \eqbeta \\
+                                    & \eqbeta \term{succ}~(\term{fold}~[2, 1]~(\lambda i~l\ldotp \term{succ}~l)~0)) \eqbeta \\
+                                    & \eqbeta \term{succ}~(\term{succ}~(\term{succ}~0)) \eqbeta 3
         \end{align}
     \end{proof}
 
@@ -471,7 +486,11 @@ fn main() {
         \item Более привычная математикам формулировка: докажите, что для каждого $M$ существует $N$ в нормальной форме такой, что $N~\comb{I} \eqbeta M$.
     \end{itemize}
     \begin{proof}
-        :(
+        Пусть мета-переменная $\textit{Id}$ --- новая переменная, которая не встречается в терме $M$. Очевидно что терм $M$ содержит конечное количество редексов. Рассмотрим какой-нибудь поддтерм $P$ терма $M$, который является редексом $P \equiv A~B$. Подставим в исходный терм $M$ вместо этого поддетрма терм $(\textit{Id}~A)~B$, который не является редексом, т.к. \textit{Id} это переменная, получим новый терм $M_0$. Получается что терм $M_0$ содержит на 1 меньше редексов. Повторим операцию, но уже с $M_0$, пока не получим терм $M'$ в котором нет редексов.
+
+        Покажем что $N \coloneqq \lambda \textit{Id}\ldotp M'$ удовлетворяет $N~\term{I} \eqbeta M$:
+        \[ N~\term{I} \equiv (\lambda \textit{Id}\ldotp M')~\term{I} \eqbeta [\textit{Id} \mapsto \term{I}]M' \]
+        Рассмотрим все подставленные поддетермы $[\textit{Id} \mapsto \term{I}]((\textit{Id}~A)~B) \equiv (\term{I}~A)~B \eqbeta A~B$. Получается что $N~\term{I} \eqbeta [\textit{Id} \mapsto \term{I}]M' \eqbeta M$.
     \end{proof}
 
 \end{document}
