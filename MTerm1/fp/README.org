@@ -3,3 +3,6 @@
 * Lectures
 [[https://conspects.iliay.ar/MTerm1/fp/lectures/all_lectures.pdf][All lectures]]
 - [[https://conspects.iliay.ar/MTerm1/fp/lectures/1.pdf][Lecture 1]]
+
+* Practice
+- [[https://conspects.iliay.ar/MTerm1/fp/practice/2.pdf][Practice 1]]
