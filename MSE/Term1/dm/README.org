@@ -1,9 +1,9 @@
 #+title: Discrete Math
 
 * Lectures
-[[https://conspects.iliay.ar/MTerm1/dm/lectures/all_lectures.pdf][All lectures]]
-- [[https://conspects.iliay.ar/MTerm1/dm/lectures/1.pdf][Lecture 1]]
-- [[https://conspects.iliay.ar/MTerm1/dm/lectures/2.pdf][Lecture 2]]
+[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/2.pdf][Lecture 2]]
 * Practice
-- [[https://conspects.iliay.ar/MTerm1/dm/practice/1.pdf][Practice 1]]
-- [[https://conspects.iliay.ar/MTerm1/dm/practice/2.pdf][Practice 2]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/practice/1.pdf][Practice 1]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/practice/2.pdf][Practice 2]]

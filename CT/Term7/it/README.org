@@ -1,28 +1,28 @@
 #+TITLE: Information Theory
 
 * Lectures
-[[https://conspects.iliay.ar/Term7/it/lectures/all_lectures.pdf][All lectures]] \\
-[[https://conspects.iliay.ar/Term7/it/lectures/questions.pdf][Questions for exam]]
+[[https://conspects.iliay.ar/CT/Term7/it/lectures/all_lectures.pdf][All lectures]] \\
+[[https://conspects.iliay.ar/CT/Term7/it/lectures/questions.pdf][Questions for exam]]
 
-- [[https://conspects.iliay.ar/Term7/it/lectures/1.pdf][Lecture 1]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/2.pdf][Lecture 2]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/3.pdf][Lecture 3]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/4.pdf][Lecture 4]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/5.pdf][Lecture 5]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/6.pdf][Lecture 6]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/7.pdf][Lecture 7]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/8.pdf][Lecture 8]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/9.pdf][Lecture 9]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/10.pdf][Lecture 10]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/11.pdf][Lecture 11]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/12.pdf][Lecture 12]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/13.pdf][Lecture 13]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/14.pdf][Lecture 14]]
-- [[https://conspects.iliay.ar/Term7/it/lectures/15.pdf][Lecture 15]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/2.pdf][Lecture 2]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/3.pdf][Lecture 3]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/4.pdf][Lecture 4]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/5.pdf][Lecture 5]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/6.pdf][Lecture 6]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/7.pdf][Lecture 7]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/8.pdf][Lecture 8]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/9.pdf][Lecture 9]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/10.pdf][Lecture 10]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/11.pdf][Lecture 11]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/12.pdf][Lecture 12]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/13.pdf][Lecture 13]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/14.pdf][Lecture 14]]
+- [[https://conspects.iliay.ar/CT/Term7/it/lectures/15.pdf][Lecture 15]]
 * Practice
-- [[https://conspects.iliay.ar/Term7/it/practice/1.pdf][Practice 1]]
-- [[https://conspects.iliay.ar/Term7/it/practice/2.pdf][Practice 2]]
-- [[https://conspects.iliay.ar/Term7/it/practice/3.pdf][Practice 3]]
+- [[https://conspects.iliay.ar/CT/Term7/it/practice/1.pdf][Practice 1]]
+- [[https://conspects.iliay.ar/CT/Term7/it/practice/2.pdf][Practice 2]]
+- [[https://conspects.iliay.ar/CT/Term7/it/practice/3.pdf][Practice 3]]
 * Labs
 - [[file:labs/A/][Task A]] -- Алгоритм Витерби мягкого декодирования линейных блоковых кодов 
 - [[file:labs/J/][Task J]] -- Алгоритм Берлекэмпа-Месси декодирования двоичных кодов БЧХ

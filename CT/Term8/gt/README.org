@@ -1,6 +1,6 @@
 #+title: Game Theory
 
 * Lectures
-- [[https://conspects.iliay.ar/Term8/gt/lectures/1.pdf][Lecture 1]]
-- [[https://conspects.iliay.ar/Term8/gt/lectures/2.pdf][Lecture 2]]
-- [[https://conspects.iliay.ar/Term8/gt/lectures/3.pdf][Lecture 3]]
+- [[https://conspects.iliay.ar/CT/Term8/gt/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/CT/Term8/gt/lectures/2.pdf][Lecture 2]]
+- [[https://conspects.iliay.ar/CT/Term8/gt/lectures/3.pdf][Lecture 3]]

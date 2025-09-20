@@ -1,8 +1,8 @@
 #+TITLE: Parallel Programming
 
 * Lectures
-[[https://conspects.iliay.ar/Term5/pp/lectures/all_lectures.pdf][All lectures]]
-- [[https://conspects.iliay.ar/Term5/pp/lectures/1.pdf][Lecture 1]]
+[[https://conspects.iliay.ar/CT/Term5/pp/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.iliay.ar/CT/Term5/pp/lectures/1.pdf][Lecture 1]]
 * HWs
 - [[file:stack-elimination/][Stack with Elimination]]
 - [[file:msqueue/][Michael-Scott Queue]]

@@ -1,5 +1,5 @@
 #+TITLE: Differential equations
 
 
-- Some conspects for [[https://conspects.iliay.ar/Term3/diffur/Test_11_5.pdf][first]] and [[https://conspects.iliay.ar/Term3/diffur/Term3/diffur/Test2.pdf][second]] test
+- Some conspects for [[https://conspects.iliay.ar/CT/Term3/diffur/Test_11_5.pdf][first]] and [[https://conspects.iliay.ar/CT/Term3/diffur/Term3/diffur/Test2.pdf][second]] test
 - [[file:models/][Models for 11 homework]]

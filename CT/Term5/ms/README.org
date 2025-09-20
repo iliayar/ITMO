@@ -1,14 +1,14 @@
 #+TITLE: Math Stat
 
 * Lectures
-[[https://conspects.iliay.ar/Term5/ms/lectures/all_lectures.pdf][All lectures]]
-- [[https://conspects.iliay.ar/Term5/ms/lectures/1.pdf][Lecture 1]]
-- [[https://conspects.iliay.ar/Term5/ms/lectures/2.pdf][Lecture 2]]
-- [[https://conspects.iliay.ar/Term5/ms/lectures/3.pdf][Lecture 3]]
-- [[https://conspects.iliay.ar/Term5/ms/lectures/9.pdf][Lecture 9]]
+[[https://conspects.iliay.ar/CT/Term5/ms/lectures/all_lectures.pdf][All lectures]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/lectures/2.pdf][Lecture 2]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/lectures/3.pdf][Lecture 3]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/lectures/9.pdf][Lecture 9]]
 * Practice
-[[https://conspects.iliay.ar/Term5/ms/practice/all_practice.pdf][All practice]]
-- [[https://conspects.iliay.ar/Term5/ms/practice/2.pdf][Practice 2]]
-- [[https://conspects.iliay.ar/Term5/ms/practice/3.pdf][Practice 3]]
-- [[https://conspects.iliay.ar/Term5/ms/practice/11.pdf][Practice 11]]
-- [[https://conspects.iliay.ar/Term5/ms/practice/13.pdf][Practice 13]]
+[[https://conspects.iliay.ar/CT/Term5/ms/practice/all_practice.pdf][All practice]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/practice/2.pdf][Practice 2]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/practice/3.pdf][Practice 3]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/practice/11.pdf][Practice 11]]
+- [[https://conspects.iliay.ar/CT/Term5/ms/practice/13.pdf][Practice 13]]

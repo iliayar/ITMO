@@ -1,4 +1,4 @@
-#import "../../../other/typst/practice_mse.typ": *
+#import "../../../../other/typst/practice_mse.typ": *
 
 #show: doc => practice(
   subj: [Функциональное програмирование],

@@ -1,4 +1,4 @@
-#import "../../../other/typst/lecture.typ": *
+#import "../../../../other/typst/lecture.typ": *
 #show: doc => conf(
   title: [Лекция 3],
   date: [24 февраля],

@@ -1,4 +1,4 @@
 #+TITLE: Mathematical analysis
 
-[[https://conspects.iliay.ar/Term3/matan/lectures/all_lectures.pdf][All lectures]] \\
-[[https://conspects.iliay.ar/Term3/matan/lectures/questions.pdf][Questions for exam]]
+[[https://conspects.iliay.ar/CT/Term3/matan/lectures/all_lectures.pdf][All lectures]] \\
+[[https://conspects.iliay.ar/CT/Term3/matan/lectures/questions.pdf][Questions for exam]]
