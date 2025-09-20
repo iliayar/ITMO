@@ -1,0 +1,111 @@
+\documentclass{article}
+% \usepackage[utf8]{input`enc}
+% \usepackage[russian, lt]{babel}
+% \usepackage{amsmath, amssymb,latexsym, amsthm}
+% \input{preamble.tex}
+
+\begin{document}
+\section{Обратный оператор}
+\subsection{Единица. Обратный элемент}
+. ,a ..
+$x, y \in A$ \\
+$x * Y = e$
+
+\subsubsection{Опр}
+Еcли x *  y = e, то x называется левым обратным к y \\
+y называется правым обратным к x
+
+\subsubsection{Опр}
+xz = xz = r \\
+x называется обратимый к z и обозначатеся $x = z^{-1}$
+
+\subsubsection{Лемма}
+Если $y, z \in A$ \\
+$\exists x$  - левый обратимый и y - правый обратимый \\
+тогда: \\
+\begin{enumerate}
+\item z - обратим
+\item x = y = z
+\end{enumerate}
+
+
+\subsection{Обратная матрица}
+
+$K^n_n$ - алгебра матриц
+\subsubsection{Опр}
+Единичной матрицой нахывается $E: \forall A \in K^n_n$ \\
+$AE = EA = A$
+
+\subsubsection{Опр}
+Обратной матрице называется $A^{-1}: AA^{-1} = E$
+
+\subsubsection{Теорема}
+$\exists A^{-1} \Leftrightarrow det A \not = 0$
+
+\subsubsection{Способы вычисления $A^{-1}$}
+\begin{description}
+\item Метод Гауса \\
+  $[A \vline E] \sim [E \vline A^{-1}]$
+\item Союзная матрица \\
+  $] A : \tilde{a}^i_j = A^i_j = (-1)^{i+j}M^i_j$ - союзная матрица \\
+  $A^{-1} = \frac{1}{det A}\tilde{A}^T$
+\end{description}
+
+\subsection{Обртаный оператор}
+$\varphi : X \rightarrow X$
+\subsubsection{Опр}
+Обртаным к опреатору $\varphi$ называется оператор $\varphi^{-1}$: \\
+$\varphi^{-1}\varphi = \varphi \varphi^{-1} = I$
+
+\subsubsection{Теорема}
+Оператор $\varphi$ обратим если $\exists$ базис в котором его матрица невырождена
+
+\subsubsection{NB}
+\begin{multline*}
+\begin{aligned}
+\tilde{A} = SAT \\
+det \tilde{A} = det(SAT) = detS \cdot detA \cdot detY
+\end{aligned}
+\end{multline*}
+
+\subsubsection{Опр}
+Ядро $\varphi : Ker \varphi = \{x \ in X: \varphi x = 0\}$ 
+
+\subsubsection{Лемма}
+$Ket \varphi$ - ЛП
+
+\subsubsection{Опр}
+Образ $\varphi : \Im \varphi = \{y \ in Y : \exists x : \varphi(x) = y\}$
+
+\subsubsection{Лемма}
+$\Im \varphi$ - ЛП
+
+\subsubsection{Теорема (о ядре и образе)}
+$\ \varphi : x \rightarrow X$
+$\Rightarrow dim Ker \varphi + dim \Im \varphi = dim X$
+
+
+\subsubsection{Теорема}
+$] \varphi : X \rightarrow X \Rightarrow \exists \varphi^{-1} \Leftrightarrow
+dim \Im \varphi = dim X \Leftrightarrow dim Ker \varphi = 0$
+
+\section{Внешняя степень ЛОп}
+
+\subsubsection{Опр}
+Определителем набора векторов $\{x_i\}_{i=1}^n$  называется число $det[x_1, x_2,
+\dots, x_n]$ такое, что: $x_1 \wedge x_2 \wedge \dots \wedge x_n = det[x_1, x_2,
+\dots, x_n]e_1 \wedge e_2 \wedge \dots \wedge e_n$
+
+\subsubsection{Опр}
+$] \varphi : x \rightarrow X$
+Внешней степенью $\varphi^{\Lambda_p}$ опреатора $\varphi$ называется
+отображение:
+$\varphi^{\Lambda_p}(x_1 \wedge x_2 \wedge \dots \wedge \x_p) = \varphi(x_1)
+\wedge \varphi(x_2) \wedge \dots \wedge \varphi({x_p})$
+
+\subsubsection{Опр}
+Определитель линейного оператора $\varphi$ \\
+$det \varphi = det[\varphi(x_1) \wedge \varphi(x_2) \wedge \dots \wedge
+\varphi({x_p})] = det A_\varphi e_1 \wedge e_2 \wedge \dots \wedge e_n$
+
+\end{document}

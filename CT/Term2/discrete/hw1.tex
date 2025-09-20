@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[lutf8]{luainputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+
+\usetikzlibrary{graphdrawing}
+\usetikzlibrary{graphs}
+\usetikzlibrary{quotes}
+\usetikzlibrary{arrows.meta}
+\usegdlibrary{trees}
+
+\begin{document}
+\section{Задание №67}
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,
+                thick,main node/.style={circle,draw,font=\Large\bfseries}]
+
+  \node[main node] (1) {Start};
+  \node[main node] (2) [below left of=1] {1};
+  \node[main node] (3) [below right of=1] {0};
+  \node[main node] (4) [below right of=3] {00};
+  \node[main node] (5) [right of=4] {000};
+
+  \path
+    (1) edge node[above] {$\frac{1}{2}$} (2)
+        edge node {$\frac{1}{2}$} (3)
+    (2) edge [loop left] node [below]{$\frac{1}{2}$} (2)
+        edge node {$\frac{1}{2}$} (3)
+    (3) edge node {$\frac{1}{2}$} (4)
+        edge [bend left] node {$\frac{1}{2}$} (2)
+    (4) edge node[above] {$\frac{1}{2}$} (5)
+        edge [bend left] node {$\frac{1}{2}$} (2)
+    (5) edge [loop below] node {$1$} (5);
+\end{tikzpicture}
+
+\begin{equation*}
+P =
+\begin{pmatrix}
+        0 & \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+        0 & \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+        0 & \frac{1}{2} & 0 & \frac{1}{2} & 0\\
+        0 & \frac{1}{2} & 0 & 0 & \frac{1}{2}\\
+        0 & 0 & 0 & 0 & 1
+      \end{pmatrix}
+      b^{(0)}=\begin{pmatrix} 1 & 0 & 0  & 0 & 0 \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+Q =
+\begin{pmatrix}
+        0 & \frac{1}{2} & \frac{1}{2} & 0\\
+        0 & \frac{1}{2} & \frac{1}{2} & 0\\
+        0 & \frac{1}{2} & 0 & \frac{1}{2}\\
+        0 & \frac{1}{2} & 0 & 0
+      \end{pmatrix}
+\end{equation*}
+$$N = (I - Q)^{-1}$$
+$$b^{(0)'} = \begin{pmatrix} 1 & 0 & 0 & 0 \end{pmatrix}$$
+$$b^{(0)'}N\begin{pmatrix} 1\\ 1\\ 1\\ 1 \end{pmatrix} = 14$$
+\section{Задача №75}
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,
+                thick,main node/.style={circle,draw,font=\Large\bfseries}]
+
+  \node[main node] (1) {Start};
+  \node[main node] (2) [below left of=1] {-1};
+  \node[main node] (3) [below right of=1] {+1};
+
+  \path
+    (1) edge node[above] {$\frac{1}{2}$} (2)
+        edge node {$\frac{1}{2}$} (3)
+    (2) edge [loop left] node [below]{$\frac{1}{2}$} (2)
+        edge node {$\frac{1}{2}$} (3)
+    (3) edge [loop right] node {$\frac{1}{2}$} (3)
+        edge [bend left] node {$\frac{1}{2}$} (2);
+\end{tikzpicture}
+\begin{equation*}
+P =
+\begin{pmatrix}
+        0 & \frac{1}{2} & \frac{1}{2}\\
+        0 & \frac{1}{2} & \frac{1}{2}\\
+        0 & \frac{1}{2} & \frac{1}{2}\\
+      \end{pmatrix}
+      b^{(0)}=\begin{pmatrix} 1 & 0 & 0 \end{pmatrix}
+\end{equation*}
+По индукции $P^{n}\cdot P = P^{n+1}=P$ \\
+Тогда
+$b^{(0)} \cdot P^{n} = b^{(0)} \cdot P = \begin{pmatrix} 0 & \frac{1}{2} & \frac{1}{2} \end{pmatrix}$
+\end{document}
