@@ -248,7 +248,54 @@
 #+begin_manualtask org
 #+end_manualtask
 #+begin_solution org
-:(
+\-
+#+begin_src cpp -n
+  // Given:
+  int a[n];
+  int R, L, A, B;
+
+  int s[n + 1];
+  s[0] = 0;
+  for (int i = 1; i <= n; ++i) { // $\Theta(n)$
+    s[i] = s[i - 1] + a[i - 1];
+  }
+
+  int m = -INF;
+  int ml = -1, mr = -1;
+  min_queue<pair<int, int>> q;
+
+  // Можно сделать массив размера $2n + 1$
+  map<int, int> cnt;
+  int c = 0;
+  for (int i = 0, l = 0; i <= n; ++i) {
+    if (!q.empty() && s[i] - q.min().first > m) {
+      m = s[i] - q.min().first;
+      ml = q.min().second;
+      mr = i - 1;
+    }
+
+    if (i < n && ++cnt[a[i]] == 1) {
+      c++;
+    }
+    while (l < i - R || (l < i - L && c > B)) {
+      if (--cnt[a[l]] == 0) {
+        c--;
+      }
+      q.pop({s[l], l}); // Если не было, ничего не удалим
+  	l++;
+    }
+    if (c >= A && i - l >= L) {
+      q.push({s[i - L + 1], i - L + 1});
+    }
+  }
+
+  print(ml, mr);
+#+end_src
+Аналогично построим массив частичных сумм. Инвариант:
+1. Аналогично в =m= хранится максимально возможная сумма для префикса \(a\).
+2. Аналогично только интервал \((l; i - L], l \ge i - R \), при этом если интервал не пустой то \(A \le \mathOp{\rm distinct}((l; i - L]) \le B\)
+
+Аналогично ищем минимум, однако не все минимумы подходят, но по прежнему имеем один интервал, т.к. \(\mathOp{\rm distinct}\) не убывающая при фиксированной правой границе.
+1. Аналогично
+2. TODO
 #+end_solution
-
-
