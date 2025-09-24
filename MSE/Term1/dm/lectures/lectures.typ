@@ -1,0 +1,10 @@
+#import "../../../../other/typst/lecture_mse.typ": *
+
+#show: doc => lecture_book(
+  title: [Лекции по Дискретной математике],
+  date: [Осень 2025],
+  doc
+)
+
+#include "2.typ"
+#include "3.typ"

@@ -5,4 +5,5 @@
 - [[https://conspects.iliay.ar/MSE/Term1/fp/lectures/1.pdf][Lecture 1]]
 
 * Practice
-- [[https://conspects.iliay.ar/MSE/Term1/fp/practice/2.pdf][Practice 1]]
+- [[https://conspects.iliay.ar/MSE/Term1/fp/practice/2.pdf][Practice 2]]
+- [[https://conspects.iliay.ar/MSE/Term1/fp/practice/3.pdf][Practice 3]]
