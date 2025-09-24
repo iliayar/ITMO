@@ -1,0 +1,322 @@
+%! suppress = Makeatletter
+%! suppress = TooLargeSection
+%! suppress = MissingLabel
+\documentclass{article}
+
+% Fields
+\usepackage{geometry}
+\geometry{top=25mm}
+\geometry{bottom=35mm}
+\geometry{left=20mm}
+\geometry{right=20mm}
+% ------------------------------------------------
+
+% Graphics
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{blkarray}
+\usepackage{graphicx}
+% ------------------------------------------------
+
+% Math
+\usepackage{amsmath, amsfonts}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{mathrsfs}
+% Crossed-out symbols
+% https://tex.stackexchange.com/questions/75525/how-to-write-crossed-out-math-in-latex
+\usepackage[makeroom]{cancel}
+\usepackage{mathtools}
+% ------------------------------------------------
+
+% Additional font sizes
+% https://www.overleaf.com/learn/latex/Questions/How_do_I_adjust_the_font_size%3F
+\usepackage{moresize}
+% Additional colors
+% https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX
+\usepackage{xcolor}
+% \texttimes
+\usepackage{textcomp}
+% ------------------------------------------------
+
+% Language
+\usepackage[utf8] {inputenc}
+\usepackage[T2A] {fontenc}
+\usepackage[english, russian] {babel}
+\usepackage{indentfirst, verbatim}
+\usetikzlibrary{cd, babel}
+% ------------------------------------------------
+
+% Fonts
+\usepackage{stmaryrd}
+\usepackage{cmbright}
+\usepackage{wasysym}
+% ------------------------------------------------
+
+% Code
+% https://tex.stackexchange.com/questions/99475/how-to-invoke-latex-with-the-shell-escape-flag-in-texstudio-former-texmakerx
+% Colored, requires --shell-escape compiling option
+\usepackage{minted}
+\setminted{xleftmargin=\parindent, autogobble, escapeinside=\#\#}
+\usepackage{listings}
+% ------------------------------------------------
+
+% Custom envs
+% https://tex.stackexchange.com/questions/371286/draw-a-horizontal-line-in-latex
+\newenvironment{proof}{\subparagraph{\hspace{-1em}Решение:\newline}\-}{\par\noindent\rule{\textwidth}{0.4pt}}
+% ------------------------------------------------
+
+% Custom commands
+\newcommand{\comb}[1]{\mathbf{#1}}
+\newcommand{\step}{\rightsquigarrow}
+\newcommand{\term}[1]{\mathbf{#1}}
+\newcommand{\ap}{~}
+\newcommand{\termdef}{\coloneqq}
+\newcommand{\subst}[3]{\left[#2 \mapsto #3 \right] #1}
+\newcommand{\eqbeta}{=_\beta}
+\newcommand{\eqbetaeta}{=_{\beta\eta}}
+\newcommand{\betastep}{\rightarrow_\beta}
+\newcommand{\betasteps}{\twoheadrightarrow_\beta}
+\newcommand{\eqeta}{=_\eta}
+\newcommand{\tlist}[1]{\term{[}#1\term{]}} % list-term
+\renewcommand{\emph}[1]{{\color{blue} \textit{#1}}}
+% ------------------------------------------------
+
+% Head
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\pagestyle{fancy}
+\fancyhead[R]{Ярошевский Илья}
+\fancyhead[L]{ИТМО MSE, ФП 2024, Дз 1}
+% ------------------------------------------------
+
+% Numbering
+% https://tex.stackexchange.com/questions/80113/hide-section-numbers-but-keep-numbering
+\makeatletter
+\renewcommand\thesubsection{Блок \@arabic\c@subsection.\hspace{-0.8em}}
+\renewcommand\thesubsubsection{Задание \@arabic\c@subsection.\@arabic\c@subsubsection\hspace{-0.8em}}
+% https://tex.stackexchange.com/questions/327689/numbering-subsubsections-with-letters
+\renewcommand\theparagraph{\alph{paragraph})\hspace{-0.8em}}
+% https://tex.stackexchange.com/questions/129208/numbering-paragraphs-in-latex
+\setcounter{secnumdepth}{4}
+\makeatother
+% ------------------------------------------------
+
+\begin{document}
+    \section*{Дз 3. Просто-типизированное лямбда-исчисление}
+
+    Глобальный минимум: 8б.
+
+    \subsection{Нахождение наиболее общего типа}
+
+    Локальный минимум: 2б.
+
+    Найдите наиболее общий тип.
+    Например, у $\term{K}$ наиболее общий тип $\alpha \to \beta \to \alpha$: мы знаем, что тип первого аргумента такой же, как и тип возвращаемого значения.
+    $\term{K} : \alpha \to \alpha \to \alpha$~--- это корректная типизация
+    для терма $\term{K}$, но не наиболее общая (она накладывает дополнительное необоснованное ограничение на совпадение типов аргументов).
+    Её можно получить из предыдущей подстановкой $\subst{}{\beta}{\alpha}$.
+
+    \subsubsection{(1б)}
+
+    \paragraph{} $\lambda x\ldotp x$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\lambda x~x\ldotp x$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\lambda x^{\alpha \to \alpha}\ldotp x$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\lambda x~y\ldotp x \ap y$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    \paragraph{} $\lambda x\ldotp x \ap \term{K} \ap \term{I} \ap x$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\lambda f~g~x~y\ldotp f \ap g \ap (g \ap x) \ap (g \ap y)$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\lambda x~y~z\ldotp x~(y~z~(z~x))$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    Возьмите ваш любимый типизированный язык программирования (да, в питоне тоже можно писать типы) и запишите на нём комбинатор $\term{S}$.
+    Сообщите ему наиболее общий тип из возможных.
+    \begin{itemize}
+        \item Проверьте в тесте, что ваш комбинатор справляется с наиболее общим возможным случаем типов его аргументов.
+        \item Проверьте, что ваш код проходит проверку типов (если питон, то с помощью mypy).
+        \item Указание: для реализации воспользуйтесь в вашем языке концепцией дженериков (generics).
+        В C++ она выражается в виде шаблонов (templates).
+    \end{itemize}
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsubsection{}
+
+    Типизируйте по Чёрчу заданные термы.
+    Под типизацией по Чёрчу подразумевается
+    расстановка явным образом типовых аннотаций, то есть расписывание термов в стиле
+    Чёрча.
+    Например, терм $\term{I} \ap \term{K} \ap \term{I}$ типизируется по Чёрчу
+    так:
+
+    \[((\lambda x^{(\alpha \to \alpha) \to \beta \to (\alpha \to \alpha)}\ldotp x) \ap (\lambda x^{\alpha \to \alpha} \ap y^\beta\ldotp x) \ap (\lambda x^\alpha\ldotp x)):
+    \beta \to \alpha \to \alpha\]
+
+    \paragraph{(1б)} $\term{S} \ap \term{K} \ap \term{I}$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{(1б)} $\term{S} \ap \term{K} \ap \term{K}$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsection{Население типов}
+
+    Локальный минимум: 3б.
+
+    Населите как можно большим количеством замкнутых термов типы или покажите, как
+    сконструировать бесконечное их число ($\alpha\beta\eta$-эквивалентные
+    термы перечислять не нужно).
+
+    \subsubsection{(1б)}
+
+    \paragraph{} $\alpha \to \alpha$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\alpha \to \alpha \to \alpha$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\alpha \to \alpha \to \alpha \to \alpha$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\alpha$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    \paragraph{} $\alpha \to \beta \to \alpha$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $\alpha \to \beta \to (\alpha \to \beta \to \gamma) \to \gamma$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsubsection{(1б)}
+
+    \paragraph{} $(\alpha \to \alpha) \to \alpha \to \alpha$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{} $(\alpha \to \beta \to \beta) \to \beta \to \beta$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsubsection{}
+
+    За одного обитателя даётся половина баллов задания, за бесконечно много обитателей --- полный балл.
+
+    \paragraph{(1б)} $((\alpha \to \beta) \to \alpha) \to (\alpha \to \alpha \to \beta) \to \beta$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \paragraph{(1б)} $((((\alpha \to \beta) \to \alpha) \to \alpha) \to \beta) \to \beta$
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+    \subsection{Построение деревьев вывода}
+
+    Локальный минимум: 2б.
+
+    Пример дерева с использованием пакета \texttt{proof}:
+    %! suppress = EscapeAmpersand
+    \[\resizebox{0.8\hsize}{!}{
+        \infer[intro\to]
+        {\emptyset \vdash \lambda f~g~x.~f~(g~x) : (\beta \to \gamma) \to (\alpha \to \beta) \to \alpha \to \gamma}
+        {
+            \infer[intro\to]
+            {\{f: \beta \to \gamma\} \vdash \lambda g~x.~f~(g~x) : (\alpha \to \beta) \to \alpha \to \gamma}
+            {
+                \infer[intro\to]
+                {\{f : \beta \to \gamma, g : \alpha \to \beta\} \vdash \lambda x.~f~(g~x) : \alpha \to \gamma}
+                {
+                    \infer[elim\to]{\{f : \beta \to \gamma, g : \alpha \to \beta, x:  \alpha\} \vdash f~(g~x) : \gamma}
+                    {
+                        \infer[ctx]{\Gamma \vdash f : \beta \to \gamma}{} &
+                        \infer[elim\to]{\Gamma \vdash g~x : \beta}{
+                            \infer[ctx]{\Gamma \vdash g : \alpha \to \beta}{} &
+                            \infer[ctx]{\Gamma \vdash x : \alpha}{}
+                        }
+                    }
+                }
+            }
+        }
+    }\]
+
+    \subsubsection{(2б)}
+
+    Постройте дерево вывода типа $(\alpha \to \beta \to \gamma) \to (\alpha \to \beta) \to \alpha \to \gamma$ для комбинатора $\term{S}$ в стиле Карри.
+    В ответе достаточно одного дерева, промежуточные шаги не нужны.
+
+    \begin{proof}
+        TODO % TODO
+    \end{proof}
+
+\end{document}
