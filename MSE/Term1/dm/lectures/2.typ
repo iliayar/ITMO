@@ -73,6 +73,12 @@
   #todo()
 ]
 
+#definition()[
+  $ (X, phi) quad phi : X -> bb(Z)_+ $
+  ,где $phi$ --- сколько раз взяли элемент. Вся пара характеризует муьтимножество
+  #todo()
+]
+
 #theorem("Формула включения исключений")[
   $A, B subset X$.
   $ |overline(A union B)| = |X| - |A union B| = |X| - |A| - |B| + |A inter B| $
