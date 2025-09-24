@@ -1,4 +1,4 @@
-#import "../../../../other/typst/practice_mse.typ": *
+#import "common.typ": *
 
 #show: doc => practice(
   subj: [Функциональное програмирование],
@@ -7,10 +7,6 @@
   number: 2,
   doc
 )
-
-// FIXME(iliayar): better spaces for lambda terms
-#let term(name) = text(name, weight: "bold")
-#let lam = [$lambda$ #h(0pt)]
 
 #remark()[
   Кодирование по Черчу --- элиминатор ничего не делает
