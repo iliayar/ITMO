@@ -247,13 +247,14 @@
     \paragraph{} $\alpha \to \beta \to \alpha$
 
     \begin{proof}
-        TODO % TODO
+        $\lambda x~y\ldotp x$
+        %% FIXME(iliayar): More?
     \end{proof}
 
     \paragraph{} $\alpha \to \beta \to (\alpha \to \beta \to \gamma) \to \gamma$
 
     \begin{proof}
-        TODO % TODO
+        $\lambda x~y~f\ldotp f \ap x \ap y$
     \end{proof}
 
     \subsubsection{(1б)}
@@ -261,13 +262,13 @@
     \paragraph{} $(\alpha \to \alpha) \to \alpha \to \alpha$
 
     \begin{proof}
-        TODO % TODO
+        $\lambda f~x\ldotp f \ap x \eqeta \lambda f\ldotp f$
     \end{proof}
 
     \paragraph{} $(\alpha \to \beta \to \beta) \to \beta \to \beta$
 
     \begin{proof}
-        TODO % TODO
+        $\lambda f~x\ldotp x$
     \end{proof}
 
     \subsubsection{}
@@ -277,13 +278,26 @@
     \paragraph{(1б)} $((\alpha \to \beta) \to \alpha) \to (\alpha \to \alpha \to \beta) \to \beta$
 
     \begin{proof}
-        TODO % TODO
+        \[ \lambda f^{(\alpha \to \beta) \to \alpha}~g^{\alpha \to \alpha \to \beta}\ldotp g \ap (f \ap (\lambda x\ldotp g \ap x \ap x)) \ap (f \ap (\lambda x\ldotp g \ap x \ap x)) \]
+        Можно получить "новое"\ значение типа \(\alpha\) так: \(f \ap (\lambda x\ldotp g \ap x \ap x)\). Можем подставлять вместо перменной \(x\) внутри этого терма его же и получать новый терм. Этот терм не редуцируется, поэтому весь терм будет отличным от предыдущего.
+        \begin{align}
+            \lambda f~g\ldotp g \ap (f \ap (\lambda x\ldotp g & \ap x \ap x)) \ap (f \ap (\lambda x\ldotp g \ap x \ap x)) \\
+            \lambda f~g\ldotp g \ap (f \ap (\lambda x\ldotp g & \ap (f \ap (\lambda x\ldotp g \ap x \ap x)) \ap x)) \ap (f \ap (\lambda x\ldotp g \ap x \ap x)) \\
+            \lambda f~g\ldotp g \ap (f \ap (\lambda x\ldotp g & \ap (f \ap (\lambda x\ldotp g \ap x \ap x)) \ap (f \ap (\lambda x\ldotp g \ap x \ap x)))) \ap (f \ap (\lambda x\ldotp g \ap x \ap x))
+        \end{align}
     \end{proof}
 
     \paragraph{(1б)} $((((\alpha \to \beta) \to \alpha) \to \alpha) \to \beta) \to \beta$
 
     \begin{proof}
-        TODO % TODO
+        \[ \lambda f\ldotp f \ap \lambda g\ldotp g \ap \lambda x\ldotp f \ap \lambda g'\ldotp x \]
+        Можем получить "новое"\ значение \(x'\), из \(g'\), т.е. подставив вместо \(x\) терм \(g' \ap \lambda x'\ldotp f \ap \lambda g''\ldotp f \ap x'\). Можем получить бесконечное количество термов делая замену \(x^{(n)}\) на \(g^{(n + 1)} \ap \lambda x^{(n + 1)}\ldotp f \ap \lambda g^{(n + 1)}\ldotp f \ap x^{(n + 1)}\).
+
+        \begin{align}
+            & \lambda f\ldotp f \ap \lambda g\ldotp g \ap \lambda x\ldotp f \ap \lambda g'\ldotp x \\
+            & \lambda f\ldotp f \ap \lambda g\ldotp g \ap \lambda x\ldotp f \ap \lambda g'\ldotp g' \ap \lamda x'\ldotp f \ap \lambda g''\ldotp f \ap x' \\
+            & \lambda f\ldotp f \ap \lambda g\ldotp g \ap \lambda x\ldotp f \ap \lambda g'\ldotp g' \ap \lamda x'\ldotp f \ap \lambda g''\ldotp f \ap g'' \ap \lamda x''\ldotp f \ap \lambda g'''\ldotp f \ap x''
+        \end{align}
     \end{proof}
 
     \subsection{Построение деревьев вывода}
@@ -321,7 +335,44 @@
     В ответе достаточно одного дерева, промежуточные шаги не нужны.
 
     \begin{proof}
-        TODO % TODO
+      \[\resizebox{0.8\hsize}{!}{
+          \infer[intro\to]
+          {\emptyset \vdash \lambda f~g~x\ldotp f \ap x \ap (g \ap x) : (\alpha \to \beta \to \gamma) \to (\alpha \to \beta) \to \alpha \to \gamma}
+          {
+              \infer[intro\to]{
+                  \{f : \alpha \to \beta \to \gamma\} \vdash \lambda g~x\ldotp f \ap x \ap (g \ap x) : (\alpha \to \beta) \to \alpha \to \gamma        
+              }{
+                \infer[intro\to]{
+                    \{f : \alpha \to \beta \to \gamma, g : \alpha \to \beta\} \vdash \lambda x\ldotp f \ap x \ap (g \ap x) : \alpha \to \gamma        
+                }{
+                  \infer[elim\to]{
+                      \{f : \alpha \to \beta \to \gamma, g : \alpha \to \beta , x : \alpha\} \vdash f \ap x \ap (g \ap x) : \gamma
+                  }{
+                    \infer[elim\to]{
+                        \Gamma \vdash f \ap x : \beta \to \gamma
+                    }{
+                        \infer[ctx]{
+                            \Gamma \vdash f : \alpha \to \beta \to \gamma
+                        }{} &
+                        \infer[ctx]{
+                            \Gamma \vdash x : \alpha
+                        }{}
+                    } &
+                    \infer[elim\to]{
+                        \Gamma \vdash g \ap x : \beta
+                    }{
+                        \infer[ctx]{
+                            \Gamma \vdash g : \alpha \to \beta
+                        }{} &
+                        \infer[ctx]{
+                            \Gamma \vdash x : \alpha
+                        }{}
+                    }
+                  }
+                }
+              }
+          }
+      }\]
     \end{proof}
 
 \end{document}
