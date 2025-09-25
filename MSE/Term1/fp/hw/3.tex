@@ -445,7 +445,7 @@ main() {
     \paragraph{(1б)} $((((\alpha \to \beta) \to \alpha) \to \alpha) \to \beta) \to \beta$
 
     \begin{proof}
-        \[ \lambda f\ldotp f \ap \lambda g\ldotp g \ap \lambda x\ldotp f \ap \lambda g'\ldotp x \]
+        \[ \lambda f^{(((\alpha \to \beta) \to \alpha) \to \alpha) \to \beta}\ldotp f \ap \lambda g^{(\alpha \to \beta) \to \alpha}\ldotp g \ap \lambda x^\alpha\ldotp f \ap \lambda g'\ldotp x \]
         Можем получить "новое"\ значение \(x'\), из \(g'\), т.е. подставив вместо \(x\) терм \(g' \ap \lambda x'\ldotp f \ap \lambda g''\ldotp f \ap x'\). Можем получить бесконечное количество термов делая замену \(x^{(n)}\) на \(g^{(n + 1)} \ap \lambda x^{(n + 1)}\ldotp f \ap \lambda g^{(n + 1)}\ldotp f \ap x^{(n + 1)}\).
 
         \begin{align}
