@@ -123,29 +123,47 @@
     \paragraph{} $\lambda x\ldotp x$
 
     \begin{proof}
+        \begin{gather}
+            \lambda x^{?_0} \ldotp x \\
+            \tau = ?_0 \to ?_0
+        \end{gather}
         $\lambda x \ldotp x : \alpha \to \alpha$
-        % FIXME: Proof?
     \end{proof}
 
     \paragraph{} $\lambda x~x\ldotp x$
 
     \begin{proof}
+        \begin{gather}
+            \lambda x^{?_0}~x^{?_1}\ldotp x \\
+            \tau = ?_0 \to ?_1 \to ?_1
+        \end{gather}
         $\lambda x~x\ldotp x : \alpha \to \beta \to \beta$
-        % FIXME: Proof?
     \end{proof}
 
     \paragraph{} $\lambda x^{\alpha \to \alpha}\ldotp x$
 
     \begin{proof}
+        \begin{gather}
+            \lambda x^{\alpha \to \alpha}\ldotp x \\
+            \tau = (\alpha \to \alpha) \to (\alpha \to \alpha)
+        \end{gather}
         $\lambda x^{\alpha \to \alpha}\ldotp x : (\alpha \to \alpha) \to (\alpha \to \alpha)$
-        % FIXME: Proof?
     \end{proof}
 
     \paragraph{} $\lambda x~y\ldotp x \ap y$
 
     \begin{proof}
+        \begin{gather}
+            \lambda x^{?_0}~y^{?_1}\ldotp \underbrace{x~y}_{?_2} \\
+            \begin{cases}
+                ?_0 = ?_1 \to ?_2 \\
+                \tau = ?_0 \to ?_1 \to ?_2
+            \end{cases}
+            \begin{cases}
+                \tau = (?_1 \to ?_2) \to ?_1 \to ?_2
+            \end{cases}
+        \end{gather}
         $\lambda x~y\ldotp x~y : (\alpha \to \beta) \to \alpha \to \beta$
-        % FIXME: Proof?
     \end{proof}
 
     \subsubsection{(1б)}
@@ -153,20 +171,80 @@
     \paragraph{} $\lambda x\ldotp x \ap \term{K} \ap \term{I} \ap x$
 
     \begin{proof}
-        $\lambda x\ldotp x \ap \term{K} \ap \term{I} \ap x$
-        % FIXME: Proof?
+        \begin{gather}
+            x^{?_0}\ldotp \underbrace{\underbrace{\underbrace{x^{?_0} \ap \term{K}^{?_1 \to ?_2 \to ?_1}}_{?_4} \ap \term{I}^{?_3 \to ?_3}}_{?_5} \ap x^{?_0}}_{?_6} \\
+            ?_0 = (?_1 \to ?_2 \to ?_1) \to ?_4 \\
+            ?_4 = (?_3 \to ?_3) \to ?_5 \\
+            ?_5 = ?_0 \to ?_6 \\
+            \tau = ?_0 \to ?_6
+        \end{gather}
+        Подставим все что можно:
+        \begin{gather}
+            ?_0 = (?_1 \to ?_2 \to ?_1) \to (?_3 \to ?_3) \to ?_0 \to ?_6 \\
+            \tau = ?_0 \to ?_6
+        \end{gather}
+        \(?_0\) встречается как в левой так и в правой части уравнения, значит этот терм не типизируется
     \end{proof}
 
     \paragraph{} $\lambda f~g~x~y\ldotp f \ap g \ap (g \ap x) \ap (g \ap y)$
 
     \begin{proof}
-        TODO % TODO
+        \begin{gather}
+            \lambda f^{?_0}~g^{?_1}~x^{?_3}~y^{?_6}\ldotp \underbrace{\underbrace{\overbrace{f \ap g}^{?_2} \ap (\overbrace{g \ap x}^{?_4})}_{?_5} \ap (\overbrace{g \ap y}^{?_7})}_{?_8} \\
+            \begin{cases}
+                ?_0 = ?_1 \to ?_2 \\
+                ?_1 = ?_3 \to ?_4 \\
+                ?_2 = ?_4 \to ?_5 \\
+                ?_1 = ?_6 \to ?_7 \\
+                ?_5 = ?_7 \to ?_8 \\
+                \tau = ?_0 \to ?_1 \to ?_3 \to ?_6 \to ?_8
+            \end{cases}
+            \begin{cases}
+                ?_0 = (?_3 \to ?_4) \to ?_2 \\
+                ?_2 = ?_4 \to ?_5 \\
+                ?_6 = ?_3 \\
+                ?_7 = ?_4 \\
+                ?_5 = ?_7 \to ?_8 \\
+                \tau = ?_0 \to (?_3 \to ?_4) \to ?_3 \to ?_6 \to ?_8
+            \end{cases}
+            \begin{cases}
+                ?_0 = (?_3 \to ?_4) \to ?_4 \to ?_5 \\
+                ?_5 = ?_4 \to ?_8 \\
+                \tau = ?_0 \to (?_3 \to ?_4) \to ?_3 \to ?_3 \to ?_8
+            \end{cases} \\
+            \begin{cases}
+                \tau = ((?_3 \to ?_4) \to ?_4 \to ?_4 \to ?_8) \to (?_3 \to ?_4) \to ?_3 \to ?_3 \to ?_8
+            \end{cases}
+        \end{gather}
+        $\lambda f~g~x~y\ldotp f \ap g \ap (g \ap x) \ap (g \ap y) : ((\alpha \to \beta) \to \beta \to \beta \to \gamma) \to (\alpha \to \beta) \to \alpha \to \alpha \to \gamma$
     \end{proof}
 
     \paragraph{} $\lambda x~y~z\ldotp x~(y~z~(z~x))$
 
     \begin{proof}
-        TODO % TODO
+        \begin{gather}
+            \lambda x^{?_0}~y^{?_3}~z^{?_4}\ldotp \overbrace{x~(\underbrace{\overbrace{y~z}^{?_5}~(\overbrace{z~x}^{?_6})}_{?_1})}^{?_2} \\
+            \begin{cases}
+                ?_0 = ?_1 \to ?_2 \\
+                ?_3 = ?_4 \to ?_5 \\
+                ?_4 = ?_0 \to ?_6 \\
+                ?_5 = ?_6 \to ?_1 \\
+                \tau = ?_0 \to ?_3 \to ?_4 \to ?_2
+            \end{cases}
+            \begin{cases}
+                ?_0 = ?_1 \to ?_2 \\
+                ?_3 = (?_0 \to ?_6) \to ?_6 \to ?_1 \\
+                \tau = ?_0 \to ?_3 \to (?_0 \to ?_6) \to ?_2
+            \end{cases}
+            \begin{cases}
+                ?_3 = ((?_1 \to ?_2) \to ?_6) \to ?_6 \to ?_1 \\
+                \tau = (?_1 \to ?_2) \to ?_3 \to ((?_1 \to ?_2) \to ?_6) \to ?_2
+            \end{cases} \\
+            \begin{cases}
+                \tau = (?_1 \to ?_2) \to (((?_1 \to ?_2) \to ?_6) \to ?_6 \to ?_1) \to ((?_1 \to ?_2) \to ?_6) \to ?_2
+            \end{cases}
+        \end{gather}
+        $\lambda x~y~z\ldotp x~(y~z~(z~x)) : (\alpha \to \beta) \to (((\alpha \to \beta) \to \gamma) \to (\gamma \to \alpha)) \to ((\alpha \to \beta) \to \gamma) \to \beta$
     \end{proof}
 
     \subsubsection{(1б)}
@@ -181,7 +259,17 @@
     \end{itemize}
 
     \begin{proof}
-        TODO % TODO
+        \[ S \equiv \lambda x~y~z\ldotp x~z~(y~z) : (\alpha \to \beta \to \gamma) \to (\alpha \to \beta) \to \alpha \to \gamma \]
+\begin{minted}[frame=lines,linenos=true,mathescape]{swift}
+func S<A, B, C>(x: (A) -> (B) -> C): ((A) -> B) -> (A) -> C {
+    { y: (A) -> B => { z: A => x(z)(y(z)) } }
+}
+
+main() {
+    let unit = S<String, Int, Unit> { _: String => { _: Int => () } }({ _: String => 0 })("")
+    println(unit)
+}
+\end{minted}
     \end{proof}
 
     \subsubsection{}
@@ -199,13 +287,73 @@
     \paragraph{(1б)} $\term{S} \ap \term{K} \ap \term{I}$
 
     \begin{proof}
-        TODO % TODO
+        \begin{gather}
+            (\lambda x^{?_0}~y^{?_1}~z^{?_2}\ldotp x~z~(\underbrace{y~z}_{?_6})) \ap (\lambda x^{?_3}~y^{?_4}\ldotp x) \ap (\lambda x^{?_5}\ldotp x) \\
+            \begin{cases}
+                ?_0 = ?_3 \to ?_4 \to ?_3 \\
+                ?_1 = ?_5 \to ?_5 \\
+                ?_1 = ?_2 \to ?_6 \\
+                ?_0 = ?_2 \to ?_6 \to ?_7
+            \end{cases}
+            \begin{cases}
+                ?_3 = ?_2 \\
+                ?_4 = ?_6 \\
+                ?_3 = ?_7 \\
+                ?_5 = ?_2 \\
+                ?_5 = ?_6 \\
+                ?_0 = ?_2 \to ?_6 \to ?_7 \\
+                ?_1 = ?_2 \to ?_6
+            \end{cases}
+            \begin{cases}
+                ?_0 = ?_2 \to ?_2 \to ?_2 \\
+                ?_1 = ?_2 \to ?_2 \\
+                ?_3 = ?_2 \\
+                ?_4 = ?_2 \\
+                ?_5 = ?_2
+            \end{cases}
+        \end{gather}
+        \( (\lambda x^{\alpha \to \alpha \to \alpha}~y^{\alpha \to \alpha}~z^\alpha\ldotp x~z~(y~z)) \ap (\lambda x^\alpha~y^\alpha\ldotp x) \ap (\lambda x^\alpha\ldotp x) : \alpha \to \alpha \)
     \end{proof}
 
     \paragraph{(1б)} $\term{S} \ap \term{K} \ap \term{K}$
 
     \begin{proof}
-        TODO % TODO
+        \begin{gather}
+            (\lambda x^{?_0}~y^{?_1}~z^{?_2}\ldotp \overbrace{\underbrace{x~z}_{?_8}~(\underbrace{y~z}_{?_7})}^{?_9}) \ap (\lambda x^{?_3}~y^{?_4}\ldotp x) \ap (\lambda x^{?_5}~y^{?_6}\ldotp x) \\
+            \begin{cases}
+                ?_0 = ?_3 \to ?_4 \to ?_3 \\
+                ?_0 = ?_2 \to ?_8 \\
+                ?_1 = ?_5 \to ?_6 \to ?_5 \\
+                ?_1 = ?_2 \to ?_7 \\
+                ?_8 = ?_7 \to ?_9
+            \end{cases}
+            \begin{cases}
+                ?_0 = ?_2 \to ?_4 \to ?_2 \\
+                ?_1 = ?_2 \to ?_6 \to ?_2 \\
+                ?_2 = ?_3 \\
+                ?_5 = ?_2 \\
+                ?_7 = ?_6 \to ?_2 \\
+                ?_8 = ?_4 \to ?_2 \\
+                ?_8 = ?_7 \to ?_9
+            \end{cases}
+            \begin{cases}
+                ?_0 = ?_2 \to (?_6 \to ?_2) \to ?_2 \\
+                ?_1 = ?_2 \to ?_6 \to ?_2 \\
+                ?_2 = ?_3 \\
+                ?_5 = ?_2 \\
+                ?_4 = ?_6 \to ?_2
+            \end{cases} \\
+            \begin{cases}
+                ?_0 = \alpha \to (\beta \to \alpha) \to \alpha \\
+                ?_1 = \alpha \to \beta \to \alpha \\
+                ?_2 = \alpha \\
+                ?_3 = \alpha \\
+                ?_4 = \beta \to \alpha \\
+                ?_5 = \alpha \\
+                ?_6 = \beta
+            \end{cases}
+        \end{gather}
+        \( (\lambda x^{\alpha \to (\beta \to \alpha) \to \alpha}~y^{\alpha \to \beta \to \alpha}~z^\alpha\ldotp x~z~(y~z)) \ap (\lambda x^\alpha~y^{\beta \to \alpha}\ldotp x) \ap (\lambda x^\alpha~y^\beta\ldotp x) : \alpha \to \alpha \)
     \end{proof}
 
     \subsection{Население типов}
@@ -221,25 +369,32 @@
     \paragraph{} $\alpha \to \alpha$
 
     \begin{proof}
-        TODO % TODO
+        $\lambda x\ldotp x$
     \end{proof}
 
     \paragraph{} $\alpha \to \alpha \to \alpha$
 
     \begin{proof}
-        TODO % TODO
+        \begin{itemize}
+            \item $\lambda x~y\ldotp x$
+            \item $\lambda x~y\ldotp y$
+        \end{itemize}
     \end{proof}
 
     \paragraph{} $\alpha \to \alpha \to \alpha \to \alpha$
 
     \begin{proof}
-        TODO % TODO
+        \begin{itemize}
+            \item $\lambda x~y~z\ldotp x$
+            \item $\lambda x~y~z\ldotp y$
+            \item $\lambda x~y~z\ldotp z$
+        \end{itemize}
     \end{proof}
 
     \paragraph{} $\alpha$
 
     \begin{proof}
-        TODO % TODO
+        Не существует, т.к. нельзя использовать абстракцию потому что тогда будет стрелочный тип и контекст пустой, т.е. не откуда взять никакой терм типа \(\alpha\)
     \end{proof}
 
     \subsubsection{(1б)}
