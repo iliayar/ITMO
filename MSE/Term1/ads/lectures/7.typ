@@ -5,6 +5,7 @@
   title: [Лекция 7],
   date: [29 октября],
   number: 7,
+  program: "ITMO MSE y2024",
   doc
 )
 

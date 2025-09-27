@@ -9,13 +9,14 @@
   title: none,
   date: none,
   number: none,
+  program:  "ITMO MSE y2025",
   doc
 ) = {
 
 context if not inside_book.get() {
   set heading(numbering: "1.")
   conf_common(
-    organization: "ITMO MSE y2024",
+    organization: program,
     author: link("https://conspects.iliay.ar")[Конспекты],
     meta_author: "Ilya Yaroshevskiy",
     title: [#subj. #title],
@@ -87,7 +88,7 @@ set page(
   footer: context [
     #line(length: 100%)
     #v(-10pt)
-    ITMO MSE y2024
+    #program
     #set align(center)
     #v(-20pt)
     #counter(page).display(
