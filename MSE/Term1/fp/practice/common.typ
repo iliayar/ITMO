@@ -1,4 +1,4 @@
-#import "../../../../other/typst/practice_mse.typ": *
+#import "/other/typst/practice_mse.typ": *
 
 // FIXME(iliayar): better spaces for lambda terms
 #let term(name) = [#math.class("unary", text(name)) #math.thin]

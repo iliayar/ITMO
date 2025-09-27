@@ -1,6 +1,7 @@
 #import "/other/typst/lecture_mse.typ": *
 #import "/MSE/Term1/dm/common.typ": *
 
+
 #show: doc => lecture(
   subj: [Дискретная математика],
   title: [Лекция 3],
