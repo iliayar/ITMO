@@ -18,7 +18,7 @@
 #let symb = thmplain("symbol", [*Обозначение*]).with(numbering: none)
 
 #let example = thmplain("example", "Пример").with(numbering: none)
-#let remark = thmbox("remark", [_Примечание_]).with(numbering: none)
+#let remark = thmbox("remark", [_Примечание_]).with(numbering: none, inset: (x: 1em))
 #let task = thmbox("task", [_Задача_])
 #let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: "task")
 #let statement = thmplain("statement", [*Утверждение*])

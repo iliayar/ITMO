@@ -1,4 +1,4 @@
-#import "../../../../other/typst/lecture_mse.typ": *
+#import "/other/typst/lecture_mse.typ": *
 
 #show: doc => lecture_book(
   title: [Лекции по Алгоритмам и структурам данных],
