@@ -1,5 +1,6 @@
 #import "common.typ": *
 
+
 #show: doc => practice(
   subj: [Алгоритмы и структуры данных],
   title: [Практика 3],
