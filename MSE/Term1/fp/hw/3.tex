@@ -88,7 +88,7 @@
 \usepackage{hyperref}
 \pagestyle{fancy}
 \fancyhead[R]{Ярошевский Илья}
-\fancyhead[L]{ИТМО MSE, ФП 2024, Дз 1}
+\fancyhead[L]{ИТМО MSE, ФП 2024, Дз 3}
 % ------------------------------------------------
 
 % Numbering
@@ -172,7 +172,7 @@
 
     \begin{proof}
         \begin{gather}
-            x^{?_0}\ldotp \underbrace{\underbrace{\underbrace{x^{?_0} \ap \term{K}^{?_1 \to ?_2 \to ?_1}}_{?_4} \ap \term{I}^{?_3 \to ?_3}}_{?_5} \ap x^{?_0}}_{?_6} \\
+            \lambda x^{?_0}\ldotp \underbrace{\underbrace{\underbrace{x^{?_0} \ap \term{K}^{?_1 \to ?_2 \to ?_1}}_{?_4} \ap \term{I}^{?_3 \to ?_3}}_{?_5} \ap x^{?_0}}_{?_6} \\
             ?_0 = (?_1 \to ?_2 \to ?_1) \to ?_4 \\
             ?_4 = (?_3 \to ?_3) \to ?_5 \\
             ?_5 = ?_0 \to ?_6 \\
@@ -183,7 +183,7 @@
             ?_0 = (?_1 \to ?_2 \to ?_1) \to (?_3 \to ?_3) \to ?_0 \to ?_6 \\
             \tau = ?_0 \to ?_6
         \end{gather}
-        \(?_0\) встречается как в левой так и в правой части уравнения, значит этот терм не типизируется
+        \(?_0\) встречается как в левой так и в правой части уравнения, значит не существует конечного типа который можно подставить в качестве \(?_0\), значит весь этот терм не типизируется
     \end{proof}
 
     \paragraph{} $\lambda f~g~x~y\ldotp f \ap g \ap (g \ap x) \ap (g \ap y)$
