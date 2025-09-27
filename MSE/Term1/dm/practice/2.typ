@@ -1,4 +1,5 @@
-#import "../../../../other/typst/practice_mse.typ": *
+#import "/other/typst/practice_mse.typ": *
+#import "/MSE/Term1/dm/common.typ": *
 
 #show: doc => practice(
   subj: [Дискретная математика],

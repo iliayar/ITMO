@@ -1,4 +1,4 @@
-#import "../../../../other/typst/lecture_mse.typ": *
+#import "/other/typst/lecture_mse.typ": *
 
 #show: doc => lecture(
   subj: [Дискретная математика],
