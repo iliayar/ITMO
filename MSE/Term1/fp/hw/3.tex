@@ -417,7 +417,13 @@ main() {
     \paragraph{} $(\alpha \to \alpha) \to \alpha \to \alpha$
 
     \begin{proof}
-        $\lambda f~x\ldotp f \ap x \eqeta \lambda f\ldotp f$
+        \[ \lambda f~x\ldotp x \]
+        Это числа Черча. Можем бесконечно много раз заменять терм $x$ на терм $f \ap x$:
+        \begin{align}
+            & \lambda f~x\ldotp x \\
+            & \lambda f~x\ldotp f \ap x \\
+            & \lambda f~x\ldotp f \ap (f \ap x)
+        \end{align}
     \end{proof}
 
     \paragraph{} $(\alpha \to \beta \to \beta) \to \beta \to \beta$
