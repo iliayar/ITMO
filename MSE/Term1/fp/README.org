@@ -1,7 +1,8 @@
 #+title: Functional Programming
 
 * Lectures
-[[https://conspects.iliay.ar/MSE/Term1/fp/lectures/all_lectures.pdf][All lectures]]
+[[https://conspects.iliay.ar/MSE/Term1/fp/lectures/all_lectures.pdf][All lectures]] \\
+[[https://conspects.iliay.ar/MSE/Term1/fp/lectures/Notes.html][Notes]] \\
 - [[https://conspects.iliay.ar/MSE/Term1/fp/lectures/1.pdf][Lecture 1]]
 
 * Practice
