@@ -1,5 +1,6 @@
 #import "/other/typst/lecture_mse.typ": *
 
+// touch: 1
 
 #show: doc => lecture_book(
   title: [Лекции по Дискретной математике],
