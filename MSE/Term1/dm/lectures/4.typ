@@ -90,7 +90,7 @@ $n$ ящиков, $k$ шариков
 #remark()[Всего биекций $n!$]
 
 #theorem()[
-    $ hat(S)(n, k) = sum_(i = 0)^k (-1)^(k - 1) binom(k, i) i^n $
+    $ hat(S)(n, k) = sum_(i = 0)^k (-1)^(k - i) binom(k, i) i^n $
 ]
 
 #definition()[
@@ -103,14 +103,14 @@ $n$ ящиков, $k$ шариков
 
 = Формула обращения
 #theorem()[
-$ f_k = sum^k_(i = 0) binom(k, i) g_i <==> g_k = sum^k_(i = 0) (-1)^(k - 1)binom(k, i) f_i $, где $f_k$, $g_k$ --- числовые последовательности
+$ f_k = sum^k_(i = 0) binom(k, i) g_i <==> g_k = sum^k_(i = 0) (-1)^(k - i)binom(k, i) f_i $, где $f_k$, $g_k$ --- числовые последовательности
 ]
 #proof()[
   1. $quote.double==>quote.double$ Рассмотрим 
     $ 
-      sum_(i = 0)^k (-1)^(k - i) binom(k, i) f_i = sum_(i = 0)^k (-1)^(k - 1) binom(k, i) sum_(j = 0)^i binom(i, j) g_j = sum_(i = 0)^k sum_(j = 0)^i (-1)^(k - i) binom(k, i) binom(i, j) g_i =  \
+      sum_(i = 0)^k (-1)^(k - i) binom(k, i) f_i = sum_(i = 0)^k (-1)^(k - i) binom(k, i) sum_(j = 0)^i binom(i, j) g_j = sum_(i = 0)^k sum_(j = 0)^i (-1)^(k - i) binom(k, i) binom(i, j) g_i =  \
       = sum_(i = 0)^k sum_(j = 0)^i (-1)^(k - i) binom(k, j) binom(k - j, i - j) g_j = sum_(j = 0)^k sum_(i = j)^k (-1)^(k - i) binom(k, j) binom(k - j, i - j) g_j = \
-      = sum_(j = 0)^k binom(k, j) g_j sum_(i = j)^k (-1)^(k - 1) binom(k - j, i - j) = sum_(j = 0)^k binom(k, j) g_j sum_(l = 0)^(k - j) (-1)^(k - j - l) binom(k - j, l) = #h(5em)#text(gray)[$[l = i - j]$] \
+      = sum_(j = 0)^k binom(k, j) g_j sum_(i = j)^k (-1)^(k - i) binom(k - j, i - j) = sum_(j = 0)^k binom(k, j) g_j sum_(l = 0)^(k - j) (-1)^(k - j - l) binom(k - j, l) = #h(5em)#text(gray)[$[l = i - j]$] \
      = sum_(j = 0)^k binom(k, j) g_j sum_(l = 0)^m (-1)^(m - l) binom(m, k) dot 1^k = binom(k, k) g_j = g_j #h(5em)#text(gray)[$[m = k - j]$]
     $
 ]
