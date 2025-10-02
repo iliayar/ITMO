@@ -31,4 +31,3 @@
 
   setup_common(doc)
 }
-
