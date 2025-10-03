@@ -1,8 +1,6 @@
 #import "common.typ": *
 
-#show: doc => hw(
-  doc
-)
+#show: doc => hw(doc)
 
 #line(length: 100%)
 
