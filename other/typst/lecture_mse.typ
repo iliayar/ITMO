@@ -78,8 +78,6 @@ show outline.entry.where(level: 1): it => {
   strong(it)
 }
 
-show link: it => [ #underline(it)#super(emoji.chain) ]
-
 set heading(offset: 1, numbering: "1.")
 
 // Title page
