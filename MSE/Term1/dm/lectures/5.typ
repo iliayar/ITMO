@@ -59,7 +59,7 @@ $
     (n + 2) lambda_1^(n + 1) = b(n + 1) lambda_1^n + c dot n lambda_1^(n - 1) \
     underbrace((n + 2) lambda^(n + 2), (a_(n + 2))) = b underbrace((n + 1) lambda_1^(n  +1 ), a_(n + 1)) + c underbrace(n lambda_1^n, a_n)
   $
-]
+] <second-case-roots>
 
 #lemma()[
   Формула Муавра
@@ -76,7 +76,7 @@ $
       = r^n ((c_1 + c_2) cos (n phi) + i (c_1 - c_2) sin (n phi) ) = \
       = r^n (tilde(c_1) cos n phi + tilde(c_2) sin n phi)
     $
-  - Если попали в #link(<first-case-roots>)[второй случай]
+  - Если попали во #link(<second-case-roots>)[второй случай]
     $ a_(n + m) = b_1 dot a_(n + m - 1) + dots + b_m a_n + P(n) dot p^n $
     Алгоритм:
     1. Решаем ответствующее однородное уравнение

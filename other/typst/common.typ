@@ -25,9 +25,12 @@
 
 #let todo = (note: none) => [#rect(stroke: red)[#text(fill: red, [*Доделать*])]]
 
+#let web_link(url, content) = [ #underline(link(url, content))#super(emoji.chain) ]
+
 #let setup_common(doc) = {
 
 show: thmrules
+show link: it => [ #text(blue)[#it] ]
 
 doc
 

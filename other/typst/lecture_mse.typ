@@ -17,7 +17,7 @@ context if not inside_book.get() {
   set heading(numbering: "1.")
   conf_common(
     organization: program,
-    author: link("https://conspects.iliay.ar")[Конспекты],
+    author: web_link("https://conspects.iliay.ar")[Конспекты],
     meta_author: "Ilya Yaroshevskiy",
     title: [#subj. #title],
     meta_title: title,
@@ -84,7 +84,7 @@ set heading(offset: 1, numbering: "1.")
 align(center + horizon, [
   #text(24pt)[#title]
 
-  #link("https://conspects.iliay.ar")[Конспекты] \
+  #web_link("https://conspects.iliay.ar")[Конспекты] \
   #date
 ])
 

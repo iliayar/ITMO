@@ -49,8 +49,6 @@ show outline.entry.where(level: 1): it => {
   strong(it)
 }
 
-show link: it => [ #underline(it)#super(emoji.chain) ]
-
 align(center, [
   #text(17pt)[#title]
 
