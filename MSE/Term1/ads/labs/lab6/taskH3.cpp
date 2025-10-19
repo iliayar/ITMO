@@ -1,5 +1,5 @@
 
-// Generated at 2025-07-07 23:04:04.350323 
+// Generated at 2025-08-08 01:15:58.663712 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -105,25 +105,51 @@ ostream &operator<<(ostream &out, set<K> s) {
 }
 
 //##################CODE BEGIN#############
+struct S {
+    int i;
+    int j;
+    int c;
+};
+
 //entry
 void sol() {
-    vector<string> a;
-    string s;
-    while (cin >> s) {
-        a.emplace_back(std::move(s));
+    int n; cin >> n;
+    vint a(n);
+    int s = 0;
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+        s += a[i];
     }
-    int n = a.size();
-    for (int i = 1; i < n; ++i) {
-        for (int j = 0; j < n - i; ++j) {
-            if (a[j + 1] + a[j] > a[j] + a[j + 1]) {
-                swap(a[j + 1], a[j]);
-            }
-        }
+
+    vector<S> res;
+    vint m(n + 1, 0);
+    for (int i = n - 1; i >= 0; --i) {
+        m[i] = max(m[i + 1], a[i]);
     }
     for (int i = 0; i < n; ++i) {
-        cout << a[i];
+        if (a[i] == 0) continue;
+        int j = i + 1;
+        for (; j < n; ++j) {
+            if (a[j] == 0) continue;
+
+            int c = min(a[i], min(a[j], (s + 1) / 2 - m[j + 1]));
+            if (c <= 0) continue;
+
+            a[i] -= c;
+            a[j] -= c;
+            s -= 2 * c;
+            res.emplace_back(i, j, c);
+            if (a[i] == 0) break;
+        }
+        for (; j > i; --j) {
+            m[j] = max(m[j + 1], a[j]);
+        }
     }
-    cout << endl;
+
+    cout << res.size() << endl;
+    for (int i = 0; i < res.size(); ++i) {
+        cout << res[i].i + 1 << " " << res[i].j + 1 << " " << res[i].c << endl;
+    }
 }
 //##################CODE END###############
 #ifdef LOCAL
