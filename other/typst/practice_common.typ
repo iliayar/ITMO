@@ -41,8 +41,6 @@ set page(
   )
 )
 
-show link: it => [ #underline(it)#super(emoji.chain) ]
-
 align(center, [
   #text(17pt)[#title]
 

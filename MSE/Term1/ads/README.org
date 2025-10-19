@@ -19,3 +19,5 @@
 * Practice
 - [[https://conspects.iliay.ar/MSE/Term1/ads/practice/3.pdf][Practice 3]]
 - [[https://conspects.iliay.ar/MSE/Term1/ads/practice/4.pdf][Practice 4]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/practice/5.pdf][Practice 5]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/practice/6.pdf][Practice 6]]
