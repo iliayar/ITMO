@@ -12,3 +12,5 @@
 #include "3.typ"
 #include "4.typ"
 #include "5.typ"
+#include "6.typ"
+#include "7.typ"
