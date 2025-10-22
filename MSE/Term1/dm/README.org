@@ -9,6 +9,7 @@
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/4.pdf][Lecture 4]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/5.pdf][Lecture 5]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/6.pdf][Lecture 6]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/7.pdf][Lecture 7]]
 * Practice
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/1.pdf][Practice 1]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/2.pdf][Practice 2]]

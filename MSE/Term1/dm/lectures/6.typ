@@ -26,6 +26,7 @@
 #remark([Свойства])[
   1. $PP(emptyset) = 0$, $PP(Omega) = 1$, $forall A subset Omega, 0 <= PP(A) <= 1$
   2. $PP(A union B) = PP(A) + PP(B) - PP(A inter B)$
+  Достаточно этих двух свойств
   3. $A inter B = emptyset ==> PP(A union B) = PP(A) + PP(B)$
   4. $PP(A) = 1 - PP(overline(A))$
   5. $PP(A union B) <= PP(A) + PP(B)$
