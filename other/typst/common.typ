@@ -25,7 +25,7 @@
 #let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: "task")
 #let statement = thmplain("statement", [*Утверждение*])
 
-#let todo = () => [#box(stroke: red, inset: 4pt, baseline: 4pt)[#text(fill: red, [*Доделать*])]]
+#let todo = (note: none) => [#box(stroke: red, inset: 4pt, baseline: 4pt)[#text(fill: red, [*Доделать*])]]
 
 #let web_link(url, content) = [ #underline(link(url, content))#super(emoji.chain) ]
 
