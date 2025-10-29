@@ -35,7 +35,7 @@
     $ PP(union.big_(i = 1)^infinity A_i) = sum_(i = 1)^infinity PP(A_i) $
 ]
 
-#remark()[
+#properties()[
   Проверим два свойства которые раньше требовали:
   3. Если $A inter B = emptyset$, то $PP(A union B) = PP(A) + PP(B)$
     #proof()[
@@ -67,8 +67,9 @@
 #remark()[
   $PP(inter.big_(i = 1)^infinity A_i) = product_(i = 1)^infinity PP(A_i)$
   $ PP(inter.big_(i = 10)^infinity A_i) =^1 lim_(n -> infinity) PP(inter.big_(i = 1)^n A_i)) = lim_(n -> + infinity) product_(i = 1)^n PP(A_i) = product_(i = 1)^infinity PP(A_i) $
-  // TODO(iliayar): Align center text
-  1. $ lim_(n -> + infinity) PP(overbrace(inter.big_(i = 1)^n A_i, B_n)) =_#text[по непр. \ меры] PP(inter.big_(i = 1)^infinity B_i) = PP(inter.big_(i = 1)^infinity A_i) $
+  1. 
+    $ lim_(n -> + infinity) PP(overbrace(inter.big_(i = 1)^n A_i, B_n)) =#pin(1) PP(inter.big_(i = 1)^infinity B_i) = PP(inter.big_(i = 1)^infinity A_i) $
+    #pinit-point-from(1)[по непрерывности меры] \
     По непрерывности меры: $lim_(n -> infinity) PP(B_n) = PP(inter.big_(i = 1)^infinity B_i)$
 ]
 
@@ -96,8 +97,7 @@
   $F_xi (t) colon.eq PP(xi <= t)$ называется функцией распределения случайной величины $xi$.
 ]
 
-// TODO(iliayar): Make theorem for properties
-#remark([*Свойства*])[
+#properties()[
   1. Случайная величина однозначно задается своей функцией распределения
   2. $forall t quad 0 <= F_xi (t) <= 1$ --- очевидно
   3. $F_xi (t)$ нестрого возрастает
@@ -117,17 +117,15 @@
     #proof()[
       $t_n$ монотонно убывают к $t$
       $ { xi <= t_n } = B_n quad B_1 supset B_2 supset dots $
-      $ lim_(t_n -> t) PP_(B_n) = lim_(t_n -> t+) F_xi (t_n) $
-      По непрерывности меры $lim_(t_n -> t) PP_(B_n) = PP(inter.big_(i = 1)^infinity B_i) = PP(xi <= t) = F_xi (t)$
+      $ lim_(t_n arrow.br t) PP_(B_n) = lim_(t_n -> t+) F_xi (t_n) $
+      По непрерывности меры $lim_(t_n arrow.br t) PP_(B_n) = PP(inter.big_(i = 1)^infinity B_i) = PP(xi <= t) = F_xi (t)$
     ]
   6. $PP(xi < t) = lim_(x -> t-) F_xi (x)$
     #proof()[
       $t_n$ монотонно возрастают к $t$
       $ {xi <= t_n) = B_n quad B_1 subset B_2 subset dots $
-      // FIXME(iliayar): Arrow pointing from left bottom to right top instead of ->
-      // And the above cases too
-      $ lim_(t_n -> t) PP(B_n) = lim_(x -> t-) F_xi (x) $
-      $ lim_(t_n -> t) PP(B_n) = PP(union.big_(i = 1)^infinity B_i) = PP(xi < t) $
+      $ lim_(t_n arrow.tr t) PP(B_n) = lim_(x -> t) F_xi (x) $
+      $ lim_(t_n arrow.tr t) PP(B_n) = PP(union.big_(i = 1)^infinity B_i) = PP(xi < t) $
     ]
   7. $F_(xi + c) (t) = F_xi (t - c)$
     #proof()[
@@ -164,7 +162,7 @@
     
 ]
 
-#remark([*Свойства*])[
+#properties()[
   1. $PP(xi in A) = integral_A P_xi (t) d t$
   2. $integral_Omega P_xi (t) d t = 1$
   3. $P_xi (t) = F'_xi (t)$ почти во всех $t$

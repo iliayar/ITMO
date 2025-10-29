@@ -3,11 +3,12 @@
 #import "@preview/ctheorems:1.1.3": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 #import "@preview/cetz:0.4.0": canvas, draw
+#import "@preview/pinit:0.2.2": *
 
 #let lemma = thmbox("lemma", "Лемма")
 #let theorem = thmbox("theorem", "Теорема")
 
-#let proof = thmproof("proof", [_Доказательство_])
+#let proof = thmproof("proof", [Доказательство])
 
 #let corollary_of = base => thmbox("corollary", [_Следствие_]).with(base: base)
 #let corollary_def = corollary_of("definition")
@@ -18,12 +19,13 @@
 #let symb = thmplain("symbol", [*Обозначение*]).with(numbering: none)
 
 #let example = thmplain("example", "Пример").with(numbering: none)
-#let remark = thmbox("remark", [_Примечание_]).with(numbering: none, inset: (x: 1em))
-#let task = thmbox("task", [_Задача_])
+#let remark = thmplain("remark", [#underline[Примечание]]).with(numbering: none, inset: (x: 1em))
+#let properties = thmplain("remark", [*Свойство*]).with(numbering: none, inset: (x: 1em))
+#let task = thmbox("task", [Задача])
 #let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: "task")
 #let statement = thmplain("statement", [*Утверждение*])
 
-#let todo = (note: none) => [#rect(stroke: red)[#text(fill: red, [*Доделать*])]]
+#let todo = () => [#box(stroke: red, inset: 4pt, baseline: 4pt)[#text(fill: red, [*Доделать*])]]
 
 #let web_link(url, content) = [ #underline(link(url, content))#super(emoji.chain) ]
 
@@ -31,6 +33,11 @@
 
 show: thmrules
 show link: it => [ #text(blue)[#it] ]
+
+show raw: it => {
+  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
+  it
+}
 
 doc
 
