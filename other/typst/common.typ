@@ -39,6 +39,18 @@
   $ equation $
 )
 
+// FIXME(iliayar): Distinguish display and inline math
+#let hl-math = (body, fill: yellow.transparentize(40%)) => context {
+  // let body = if state("is-display", false).get() { body } else [$display(#body)$]
+  box(
+    [$display(#body)$],
+    fill: fill,
+    inset: (x: 0.5em, y: 0.8em),
+    baseline: 40%,
+    radius: 0.3em
+  )
+}
+
 #let setup_common(doc) = {
 
 show: thmrules
