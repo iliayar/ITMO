@@ -26,7 +26,7 @@
 #let remark = thmplain("remark", [#underline[Примечание]]).with(numbering: none, inset: (x: 1em))
 #let properties = thmplain("remark", [*Свойство*]).with(numbering: none, inset: (x: 1em))
 #let task = thmbox("task", [Задача])
-#let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: task)
+#let solution = thmplain("solution", [*Решение*]).with(numbering: none, base: "task")
 #let statement = thmplain("statement", [*Утверждение*])
 
 #let todo = (note: none) => [#box(stroke: red, inset: 4pt, baseline: 4pt)[#text(fill: red, [*Доделать*])]]
