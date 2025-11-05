@@ -78,6 +78,8 @@ _site
 
 # Codeforces CLI
 .cf
+local.in
+local.out
 
 # Some Mac garbage
 /**/.DS_Store
