@@ -75,3 +75,6 @@ target
 
 # Publish
 _site
+
+# Codeforces CLI
+.cf
