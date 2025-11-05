@@ -164,6 +164,6 @@
 
 #properties()[
   1. $PP(xi in A) = integral_A P_xi (t) d t$
-  2. $integral_Omega P_xi (t) d t = 1$
+  2. $integral_RR P_xi (t) d t = 1$
   3. $P_xi (t) = F'_xi (t)$ почти во всех $t$
 ]
