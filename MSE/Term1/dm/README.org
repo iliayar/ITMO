@@ -1,7 +1,7 @@
 #+title: Discrete Math
 
 * Lectures
-[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/all_lectures.pdf][All lectures (1)]]
+[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/all_lectures.pdf][All lectures (1)]] \\
 [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/lectures.pdf][All lectures]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/1.pdf][Lecture 1]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/2.pdf][Lecture 2]]
@@ -11,6 +11,7 @@
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/6.pdf][Lecture 6]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/7.pdf][lecture 7]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/8.pdf][lecture 8]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/9.pdf][lecture 9]]
 * Practice
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/1.pdf][Practice 1]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/2.pdf][Practice 2]]
@@ -20,3 +21,4 @@
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/6.pdf][Practice 6]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/7.pdf][Practice 7]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/8.pdf][Practice 8]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/practice/9.pdf][Practice 9]]
