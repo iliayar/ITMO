@@ -64,3 +64,6 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspe
 **** [[file:CT/Term1/algo/README.org][Algorithms and data structures]]
 **** [[file:CT/Term1/programming/README.org][Programming]]
 **** [[file:CT/Term1/linal/README.org][Linear algebra]]
+
+* Other Stuff
+- MSE Term1 Hackathon [[file:MSE/Term1/hackathon/README.md][Link]]
