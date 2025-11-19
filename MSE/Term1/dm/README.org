@@ -23,3 +23,4 @@
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/7.pdf][Practice 7]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/8.pdf][Practice 8]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/9.pdf][Practice 9]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/practice/10.pdf][Practice 10]]
