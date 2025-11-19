@@ -34,11 +34,11 @@
   $x_1, dots, xi_n$ независимы $<==>$  $Rho_arrow(xi) = Rho_(xi_1) times Rho_(xi_2) times dots times Rho_(xi_n)$
 ]
 #proof()[
-  - "$==>$"
+  - "$<==$"
     $ Rho_arrow(xi) (B) = PP(arrow(xi) in B) = PP((xi_1, dots, xi_n) in B_1 times B_2 times dots times B_n) = PP(xi_1 in B_1, xi_2 in B_2, dots, xi_n in B_n) = \
       = PP(xi_1 in B_1) dot PP(xi_2 in B_2) dot dots dot PP(xi_n in B_n) = Rho_(xi_1) (B_1) times dots times Rho_(xi_n) (B_n)
     $
-  - "$<==$" проверим на ячейках 
+  - "$==>$" проверим на ячейках 
     $ PP(arrow(xi) in (a; b]) = PP(xi_1 in (a_1; b_1], dots, xi_n in (a_n; b_n]) = PP(xi_1 in (a_1; b_1]) dot dots dot PP(xi_n in (a_n; b_n]) $
     #todo()
 ]
