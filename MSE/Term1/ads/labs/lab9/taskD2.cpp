@@ -1,5 +1,5 @@
 
-// Generated at 2025-07-07 23:04:04.350323 
+// Generated at 2025-11-23 14:44:12.193506 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -107,23 +107,36 @@ ostream &operator<<(ostream &out, set<K> s) {
 //##################CODE BEGIN#############
 //entry
 void sol() {
-    vector<string> a;
-    string s;
-    while (cin >> s) {
-        a.emplace_back(std::move(s));
+    int n; cin >> n;
+    vector<pair<int, int>> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i].first;
     }
-    int n = a.size();
-    for (int i = 1; i < n; ++i) {
-        for (int j = 0; j < n - i; ++j) {
-            if (a[j + 1] + a[j] > a[j] + a[j + 1]) {
-                swap(a[j + 1], a[j]);
-            }
+    vint c(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i].second;
+    }
+
+    sort(ALL(a), [](auto l, auto r) { return l.second < r.second; });
+
+    vector<int> h;
+    int res = 0;
+    int ha = 0;
+    for (int i = 0; i < n; ++i) {
+        h.push_back(a[i].first);
+        push_heap(ALL(h));
+        ha += a[i].first;
+        res++;
+
+        if (ha > a[i].second) {
+            pop_heap(ALL(h));
+            ha -= h.back();
+            h.pop_back();
+            res--;
         }
     }
-    for (int i = 0; i < n; ++i) {
-        cout << a[i];
-    }
-    cout << endl;
+
+    cout << res << endl;
 }
 //##################CODE END###############
 #ifdef LOCAL

@@ -1,5 +1,5 @@
 
-// Generated at 2025-07-08 20:34:49.457804 
+// Generated at 2025-11-23 14:44:12.193506 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -105,57 +105,38 @@ ostream &operator<<(ostream &out, set<K> s) {
 }
 
 //##################CODE BEGIN#############
-struct S {
-    int l;
-    int r;
-    char c = '\0';
-};
-
 //entry
 void sol() {
-    int k, l; cin >> k >> l;
-
-    char __c;
-    vector<S> t;
-    t.push_back({-1, -1});
-    for (int i = 0; i < k; ++i) {
-        char c; cin >> c >> __c;
-        string s; cin >> s;
-
-        int j = 0;
-        for (char c : s) {
-            if (c == '0') {
-                if (t[j].l == -1) {
-                    t.push_back({-1, -1});
-                    t[j].l = t.size() - 1;
-                }
-                j = t[j].l;
-            } else if (c == '1') {
-                if (t[j].r == -1) {
-                    t.push_back({-1, -1});
-                    t[j].r = t.size() - 1;
-                }
-                j = t[j].r;
-            }
-        }
-        t[j].c = c;
+    int n; cin >> n;
+    vector<pair<int, int>> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i].first;
+    }
+    vint c(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i].second;
     }
 
-    int j = 0;
-    string enc; cin >> enc;
-    for (char c : enc) {
-        if (c == '0') {
-            j = t[j].l;
-        } else {
-            j = t[j].r;
-        }
+    sort(ALL(a), [](auto l, auto r) { return l.second < r.second; });
 
-        if (t[j].l == -1 && t[j].r == -1) {
-            cout << t[j].c;
-            j = 0;
+    vector<int> h;
+    int res = 0;
+    int ha = 0;
+    for (int i = 0; i < n; ++i) {
+        h.push_back(a[i].first);
+        push_heap(ALL(h));
+        ha += a[i].first;
+        res++;
+
+        if (ha > a[i].second) {
+            pop_heap(ALL(h));
+            ha -= h.back();
+            h.pop_back();
+            res--;
         }
     }
-    cout << endl;
+
+    cout << res << endl;
 }
 //##################CODE END###############
 #ifdef LOCAL
