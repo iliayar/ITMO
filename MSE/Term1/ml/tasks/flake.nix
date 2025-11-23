@@ -37,6 +37,9 @@
                     matplotlib
                     keras
                     seaborn
+                    ultralytics
+                    speechrecognition
+                    pocketsphinx
 
                     jupyter jupyterlab jupyter-collaboration jupyter-mcp-tools
                 ];
