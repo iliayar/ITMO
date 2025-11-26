@@ -112,7 +112,7 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 
 #definition()[
   $xi_n -->^d xi$ сходимость по распределению
-  $ forall x in C_(F_xi) quad F_(xi_n)(x) --> F_xi(x) $
+  $ forall x in C_(F_xi) quad F_(xi_n)(x) --> F_xi (x) $
   $C_(F_xi)$ --- точки непрерывности $F_xi$.
 ]
 

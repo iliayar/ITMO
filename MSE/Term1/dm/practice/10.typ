@@ -5,7 +5,7 @@
 #show: doc => practice(
   subj: [Дискретная математика],
   title: [Практика 10],
-  date: [10 ноября],
+  date: [19 ноября],
   number: 10,
   doc
 )
