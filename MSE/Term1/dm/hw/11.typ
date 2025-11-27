@@ -50,10 +50,25 @@
 #line(length: 100%)
 #task()[]
 #solution()[
-  #todo()
-  // $ DD S_n / n^alpha = (sum_k DD xi_k) / n^(2 alpha) = n^(1 - 2 alpha) dot DD xi_k $
-  // Для $alpha < 1/2$
-  // $ n^(1 - 2 alpha) dot DD xi_k
+  Для $alpha < 1/2$
+  Пусть $X_n = (S_n - n dot EE xi_k) / sqrt(n sigma^2) = S_n / sqrt(n sigma^2)$. Тогда по ЦПТ, т.к. $D xi_k = sigma^2 < +infinity$
+  $ X_n -->^d cal(N)(0, 1) eq.colon X $
+  Тогда
+  $ PP(lr(|S_n / n^alpha|) < b) = PP((|S_n|) / sqrt(n sigma^2) < (b n^alpha) / sqrt(n sigma^2) ) $
+  Пусть $Y_n = (b n^alpha) / sqrt(n sigma^2)$. Тогда для $alpha < 1/2$
+  $ Y_n = b / sqrt(sigma^2) dot n^(alpha - 1/2) --> 0 $
+  Возьмeм произвольное $epsilon > 0$. Тогда т.к. $X_n -> 0$, то $X_n < epsilon$ начиная с какого-то $N$. Тогда
+  $ overline(lim) PP (|X_n| < Y_n) <= overline(lim) PP(|X_n| < epsilon) = PP(|X| < epsilon) -->_(epsilon --> 0) 0 $
+  $ lim PP(lr(|S_n / n^alpha|) < b) <= PP(|X| < epsilon) --> 0 $
+  Получается что $lim PP(lr(|S_n / n^alpha|) < b) = 0$ при $alpha < 1/2$
+
+  Для $alpha > 1/2$. Тогда $Y_n --> infinity$ и для произвольного $delta > 0$ начиная с какого-то $N$ имеем $Y_n > delta$. Тогда
+  $ {|X_n| < delta} subset {|X_n| < Y_n} \ 
+    PP(|X_n| < delta) <= PP(|X_n| < Y_n) \
+    overline(lim) PP(|X_n| < delta) <= overline(lim) PP(|X_n| < Y_n) \
+    1 <--_(delta -> + infinity) PP(|X| < delta) <= overline(lim) PP(|X_n| < Y_n) = lim PP(lr(|S_n / n^alpha|) < b) \
+  $
+  Значит $lim PP(lr(|S_n / n^alpha|) < b) = 1$ для $alpha > 1/2$
 ]
 
 #line(length: 100%)
