@@ -10,9 +10,10 @@
 
 #let proof = thmproof("proof", [Доказательство])
 
-#let corollary_of = base => thmbox("corollary", [_Следствие_]).with(base: base)
+#let corollary_of = base => thmplain("corollary", [_Следствие_]).with(base: base)
 #let corollary_def = corollary_of("definition")
 #let corollary_lemma = corollary_of("lemma")
+#let corollary_statement = corollary_of("statement")
 #let corollary = corollary_of("theorem")
 
 #let definition = thmbox("definition", "Определение")
