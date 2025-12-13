@@ -58,3 +58,5 @@
   [[file:hw/statements_11.pdf][Statements]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/hw/12.pdf][HW 12]] \\
   [[file:hw/statements_12.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/13.pdf][HW 13]] \\
+  [[file:hw/statements_13.pdf][Statements]]
