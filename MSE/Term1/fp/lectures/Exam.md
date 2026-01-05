@@ -1,6 +1,7 @@
 -----
 title:  Функциональное программирование. Вопросы к экзамену
 tocEnabled: yes
+numbersEnabled: yes
 -----
 
 # Теория
