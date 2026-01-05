@@ -4,14 +4,14 @@
 #+LATEX_CLASS: conspects-book-mse
 
 * Лекция 1
-#+INCLUDE: "1.org" :lines "4-"
+#+INCLUDE: "1_old.org" :lines "4-"
 * Лекция 2
-#+INCLUDE: "2.org" :lines "4-"
+#+INCLUDE: "2_old.org" :lines "4-"
 * Лекция 3
 \todo
 * Лекция 4
-#+INCLUDE: "4.org" :lines "4-"
+#+INCLUDE: "4_old.org" :lines "4-"
 * Лекция 5
-#+INCLUDE: "5.org" :lines "4-"
+#+INCLUDE: "5_old.org" :lines "4-"
 * Лекция 6
-#+INCLUDE: "6.org" :lines "4-"
+#+INCLUDE: "6_old.org" :lines "4-"

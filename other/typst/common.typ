@@ -47,6 +47,8 @@ show raw: it => {
   it
 }
 
+show smallcaps: set text(font: "linux libertine")
+
 doc
 
 }
