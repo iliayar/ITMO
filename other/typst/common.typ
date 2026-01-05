@@ -27,8 +27,15 @@
 #let statement = thmplain("statement", [*Утверждение*])
 
 #let todo = (note: none) => [#box(stroke: red, inset: 4pt, baseline: 4pt)[#text(fill: red, [*Доделать*])]]
+#let fixme = (note: none) => [#box(stroke: orange, inset: 4pt, baseline: 4pt)[#text(fill: orange, [*Но это не точно*])]]
 
 #let web_link(url, content) = [ #underline(link(url, content))#super(emoji.chain) ]
+
+#let xunderline(stroke: black, equation) = block(
+  stroke: (bottom: .5pt + stroke), 
+  outset: (bottom: 1.5pt), 
+  $ equation $
+)
 
 #let setup_common(doc) = {
 

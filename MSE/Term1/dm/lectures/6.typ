@@ -34,13 +34,6 @@
     $ PP(union.big_(i = 1)^m A_i) = sum_(i = 1)^m A_i - sum_(1 <= i < j <= m) PP(A_i inter A_j) + sum_(1 <= i < j < k <= m) PP(A_i inter A_j inter A_k) - dots + (-1)^(m - 1) PP(A_1 inter A_2 inter dots inter A_m) $
 ]
 
-// TODO: Move to common
-#let xunderline(stroke: black, equation) = block(
-  stroke: (bottom: .5pt + stroke), 
-  outset: (bottom: 1.5pt), 
-  $ equation $
-)
-
 // FIXME: Use #ref
 #proof([Свойство 6])[
   По индукции:
@@ -125,7 +118,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
   Если $PP(A inter B) = PP(A) dot PP(B)$, то события $A$ и $B$ *независимы*
 ]
 #definition()[
-  $A_1, A_2, dots, A_m$ --- события. Называются независимыми в совокупности, если для любого поднабора индексов $j$:
+  $A_1, A_2, dots, A_m$ --- события. Называются *независимыми в совокупности*, если для любого поднабора индексов $j$:
   $ PP(A_(j_1) union A_(j_2) union dots union A_(j_k)) = PP(A_(j_1)) dot PP(A_(j_2)) dot dots dot PP(A_(j_k)) $
 ]
 #remark()[

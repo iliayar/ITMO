@@ -22,13 +22,6 @@
   Ковариация $xi$ и $eta$ : $EE ((xi - EE xi) (eta - EE eta)) eq.colon "cov"(xi, eta)$
 ]
 
-// TODO: Move to common
-#let xunderline(stroke: black, equation) = block(
-  stroke: (bottom: .5pt + stroke), 
-  outset: (bottom: 1.5pt), 
-  $ equation $
-)
-
 #properties()[
   1. $"cov"(xi, xi) = DD xi$
   2. $"cov"(xi, eta) = "cov"(eta, xi)$
