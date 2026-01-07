@@ -46,7 +46,7 @@
   $ PP(S_n = k) -->_(n -> + infinity) (lambda ^k dot e^(- lambda)) / k! $
 ]
 #proof()[
-  $ PP(S_n - k) = binom(n, k) p_n^k (1 - p_n)^(n - k) = (n (n - 1)(n-  2) dots (n - k + 1)) / k! dot lambda^k / n^k dot (1 - lambda /n)^n dot (1 - lambda /n)^(-k) = \
+  $ PP(S_n = k) = binom(n, k) p_n^k (1 - p_n)^(n - k) = (n (n - 1)(n-  2) dots (n - k + 1)) / k! dot lambda^k / n^k dot (1 - lambda /n)^n dot (1 - lambda /n)^(-k) = \
     = lambda^k / k! dot n / n dot underbrace((n - 1) / n, -> 1) dot underbrace((n - 2) / n, -> 1) dots (n - k + 1) / n dot underbrace((1 - lambda / n)^n, -> e^(- lambda)) dot underbrace((1 - lambda /n)^(-k), -> 1) --> (lambda^k dot e^(- lambda)) / k!
   $
 ]

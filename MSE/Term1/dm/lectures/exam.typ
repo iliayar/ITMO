@@ -10,20 +10,28 @@
 )
 
 = Вопросы
-== #todo() Методы математического доказательства. Метод математической индукции. Аксиомы индукции. Примеры.
+== Методы математического доказательства. Метод математической индукции. Аксиомы индукции. Примеры.
 1. База $n = 0$, ИП $k mapsto k + 1$
 2. База $n = 0$, ИР $1, dots, k mapsto k + 1$
-   #example()[Сумма углов в прямоугольнике]
+  #example()[Сумма углов в прямоугольнике]
 3. База $n = 0, n = 1, n = 2$, ИП $k mapsto k + 3$.
+  #example()[Докажите, что квадрат можно разрезать на $n$ квадратов (не обязательно одинаковых) для любого $n \ge 6$]
 4. База $n = 1$, ИП $2^k mapsto 2^(k + 1), k mapsto k - 1$.
-#todo(note: "Аксиомы индукции?")
 
-== #todo() Методы математического доказательства. Принцип Дирихле. Примеры применения в комбинаторике.
+Аксиома индукции (Пеано): $P(0) and forall n med (P(n) ==> P(n + 1)) ==> forall n in NN med P(n)$ #fixme()
+
+== Методы математического доказательства. Принцип Дирихле. Примеры применения в комбинаторике.
 #lemma()[
   Есть $n$ клеток и $m$ ($m > (k - 1) dot n$) кроликов (голубей), тогда $exists$ клетка, в которой находятся $>= k$ кролика.
 ]
 #proof()[
   Пусть не так. В каждой клетке $<= k - 1$ кролик. Тогда всего $<= n dot (k - 1)$ кроликов. Противоречие.
+]
+#example()[
+  Макс. кол-во королей, которые можно разместить на доске $8 times 8$, так чтобы они не били друг друга.
+]
+#solution()[
+  Ни в каком квадрате $2 times 2$ не может стоять два короля. По принципу Дирихле верхняя граница --- $(8 / 2)^2 = 16$
 ]
 == #todo() Методы математического доказательства. Остальные методы с примерами.
 1. Примеры и контрпримеры
@@ -36,24 +44,30 @@
 5. Оценка с двух сторон
 6. Комбинаторный метод
 == Комбинаторика. Мощности множеств. Мощность объединения и пересечения множеств. Формула включений-исключений.
-- $|A| <= |A union B|$, $|A| >= |A inter B|$ #fixme(note: "В лекциях нет?")
+- $|A| <= |A union B|$
+- $|A| >= |A inter B|$
+#fixme(note: "В лекциях нет?")
+
 #theorem("Формула включения исключений")[
   $A, B subset X$.
   $ |overline(A union B)| = |X| - |A union B| = |X| - |A| - |B| + |A inter B| $
 ]
-== #todo() Комбинаторика. Правила суммы и произведения.
+
+#remark()[
+  Обобщается
+  $ |overline(A union B union C)| = |X| - |A| - |B| - |C| + |A inter B| + |B inter C| + |C inter A| - |A inter B inter C| $
+]
+
+== Комбинаторика. Правила суммы и произведения.
 #remark()[
   Правило суммы: $A , B : A inter B = emptyset$, $|A union B| = |A| + |B|$
 ]
+#remark()[$|X times Y| = |X| dot |Y|$]
 == Комбинаторика. Размещения с повторениями и без.
 #theorem("Размещения с повторениями")[
-  Количество способов выбрать $k$ элементов и $n$ элментного множества с учетом того что элементы могут повторяться и важен порядок выбора
+  Количество способов выбрать $k$ элементов и $n$ элементного множества с учетом того что элементы могут повторяться и важен порядок выбора
   $ n^k $
 ]
-#example()[
-  Есть 20 учатсников. Сколько возмножных списков результатов из 24 раундов. #todo()
-]
-
 #theorem("Размещения без повторений")[
   Количество способов выбрать $k$ элементов и $n$ элментного множества с учетом того что элементы не могут повторяться, но важен порядок выбора
   $ n dot (n - 1) dot (n - 2) dot ... dot (n - k + 1) = frac(n!, (n - k)!) = A^k_n = n_((k)) $
@@ -74,7 +88,7 @@
   $ binom(n, k_1, k_2, dots, k_l) = frac(n!, k_1! k_2! dots k_l!) $
 ]
 #proof("На примере")[
-  Возьмем $X_1, X_2, X_3, Y_1, Y_2, Z_1, Z_2$. Количество перестановок $n!$. Теперь сотрем индексы у $X$, перестали различать некоторые перестановки. Общее количество уменьшилось в $k_X!$ раз.
+  Возьмем $X_1, X_2, X_3, Y_1, Y_2, Z_1, Z_2$. Количество перестановок $n!$. Теперь сотрем индексы у $X$, перестали различать некоторые перестановки. Общее количество уменьшилось в $k_X !$ раз.
 ]
 == Комбинаторика. Сочетания с повторениями и без.
 #theorem("Сочетания без повторений")[
@@ -102,7 +116,7 @@
   $ multiset(n, k) = binom(n + k - 1, k) = frac((n + k - 1)!, k! (n - 1)!) = frac(n dot (n + 1) dot dots dot (n + k - 1), k!) = frac(n^((k)), k!) $
   , где $n^((k))$ --- возрастающая факториальная степень
 ]
-== Комбинаторика. Биномиальные коэффициенты. Явные и рекуррентные формулы. Свойства.
+== #todo() Комбинаторика. Биномиальные коэффициенты. Явные и рекуррентные формулы. Свойства.
 #lemma()[
   Бином Ньютона
   $ (x + y)^n = sum_(k = 0)^n binom(n, k) x^k y^(n - k) $
@@ -125,6 +139,25 @@
     $ binom(n, 0) = 1 $
 ]
 
+#example()[
+  $ binom(n, k) = binom(n - 1, k) + binom(n - 1,k - 1) $
+  Придумаем два способа решения одной и той же задачи. Формулы для решений будут эквивалентны, т.к.
+  решаем одну и ту же задачу
+]
+#proof()[
+  #task()[
+      В магазине $n$ различных шоколадок, хотим купить $k$ из них. Сколько способов?
+  ]
+  #solution()[
+    По определению $binom(n, k)$
+  ]
+  #solution()[
+    Разобьем на два не пересекающихся подмножества. Пусть есть одна особенная шоколадка. Тогда два случая: купили эту особенную или нет.
+    - Осталось добрать $k - 1$ из оставшихся $n$ --- $binom(n - 1, k - 1)$
+    - $binom(n - 1, k)$
+  ]
+]
+
 == #todo() Комбинаторика. Различные интерпретации биномиальных коэффициентов. Тождество Вандермонда.
 #example()[
   Тождество Вандермонда
@@ -132,7 +165,7 @@
 ]
 #proof()[
   #task()[
-    Есть $n$ мальчиков и $n$ девочек, сколько способов выбрать команду размера $l$.
+    Есть $n$ мальчиков и $m$ девочек, сколько способов выбрать команду размера $l$.
   ]
   #solution()[
     Тривиально правая часть тождества
@@ -166,9 +199,6 @@
 ]
 #remark()[Всего биекций $n!$]
 
-#theorem()[
-    $ hat(S)(n, k) = sum_(i = 0)^k (-1)^(k - i) binom(k, i) i^n $
-]
 == Комбинаторика. Формула обращения.
 #theorem()[
 $ f_k = sum^k_(i = 0) binom(k, i) g_i <==> g_k = sum^k_(i = 0) (-1)^(k - i)binom(k, i) f_i $, где $f_k$, $g_k$ --- числовые последовательности
@@ -205,6 +235,9 @@ $ f_k = sum^k_(i = 0) binom(k, i) g_i <==> g_k = sum^k_(i = 0) (-1)^(k - i)binom
 ]
 #remark()[
   $k! dot S(n, k) = hat(S)(n, k)$
+]
+#theorem()[
+    $ hat(S)(n, k) = sum_(i = 0)^k (-1)^(k - i) binom(k, i) i^n $
 ]
 
 == Комбинаторика. Числа Белла.
@@ -379,7 +412,7 @@ $
   4. $PP(A) = 1 - PP(overline(A))$
   5. $PP(A union B) <= PP(A) + PP(B)$
   6. ~
-    $ PP(union.big_(i = 1)^m A_i) = sum_(i = 1)^m A_i - sum_(1 <= i < j <= m) PP(A_i inter A_j) + sum_(1 <= i < j < k <= m) PP(A_i inter A_j inter A_k) - dots + (-1)^(m - 1) PP(A_1 inter A_2 inter dots inter A_m) $
+    $ PP(union.big_(i = 1)^m A_i) = sum_(i = 1)^m PP(A_i) - sum_(1 <= i < j <= m) PP(A_i inter A_j) + sum_(1 <= i < j < k <= m) PP(A_i inter A_j inter A_k) - dots + (-1)^(m - 1) PP(A_1 inter A_2 inter dots inter A_m) $
 ]
 
 // FIXME: Use #ref
@@ -395,10 +428,8 @@ $
     xunderline(stroke: #red, sum_(i = 1)^(m - 1) PP(A_i)) -
     xunderline(stroke: #blue, sum_(1 <= i < j <= m - 1) PP(A_i inter A_j)) + dots + 
     xunderline(stroke: #red, PP(A_m)) - 
-    overbrace(
       xunderline(stroke: #blue, sum_(i = 1)^(m - 1) PP(A_i inter A_m)) - 
-      sum_(1 <= i < j <= m - 1) PP(A_i inter A_j inter A_m) + dots,
-      #text[По ИП]) = \
+      sum_(1 <= i < j <= m - 1) PP(A_i inter A_j inter A_m) + dots = \
     = sum_(i = 1)^m PP(A_i) - sum_(1 <= i < j <= m) PP(A_i inter A_j) + dots
   $
 ]
@@ -461,7 +492,7 @@ $
 ]
 
 == Теория вероятностей. Независимость событий. Независимость в совокупности. Примеры.
-$ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
+// $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 #definition()[
   Если $PP(A inter B) = PP(A) dot PP(B)$, то события $A$ и $B$ *независимы*
 ]
@@ -502,7 +533,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 
 #remark()[
-  - $Omega = { omega : 9x)1, x_2, dots, x_n) }, x_i in {0, 1}$
+  - $Omega = { omega : (x_1, x_2, dots, x_n) }, x_i in {0, 1}$
   - $p in [0; 1]: PP({omega}) = p^(sum x_i) dot (1 - p)^(sum x_i)$
 
   "0" --- решка, неудача. "1" --- орел, удача. Тогда $S_n = sum x_i$ --- количество успехов в схеме Бурнулли.
@@ -521,7 +552,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
   $ PP(S_n = k) -->_(n -> + infinity) (lambda ^k dot e^(- lambda)) / k! $
 ]
 #proof()[
-  $ PP(S_n - k) = binom(n, k) p_n^k (1 - p_n)^(n - k) = (n (n - 1)(n-  2) dots (n - k + 1)) / k! dot lambda^k / n^k dot (1 - lambda /n)^n dot (1 - lambda /n)^(-k) = \
+  $ PP(S_n = k) = binom(n, k) p_n^k (1 - p_n)^(n - k) = (n (n - 1)(n-  2) dots (n - k + 1)) / k! dot lambda^k / n^k dot (1 - lambda /n)^n dot (1 - lambda /n)^(-k) = \
     = lambda^k / k! dot n / n dot underbrace((n - 1) / n, -> 1) dot underbrace((n - 2) / n, -> 1) dots (n - k + 1) / n dot underbrace((1 - lambda / n)^n, -> e^(- lambda)) dot underbrace((1 - lambda /n)^(-k), -> 1) --> (lambda^k dot e^(- lambda)) / k!
   $
 ]
@@ -543,7 +574,8 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 == Теория вероятностей. Локальная теорема Муавра-Лапласа (б/д). Примеры.
 #theorem("Муавра-Лапласа")[
-  $p in (0; 1)$ --- $"const"$, $1 = 1 - p$, $x_k = (k = n p) / sqrt(n p q)$. Если при $n -> infinity$ $k$ меняется так, что $|x_k| <= T$. Тогда $PP(S_n = k) ~ 1 / sqrt(2 pi n p q) dot 3^(-x^2 / 2)$
+  $p in (0; 1)$ --- $"const"$, $q = 1 - p$, $x_k = (k - n p) / sqrt(n p q)$. Если при $n -> infinity$ $x_k$ меняется так, что $exists T med |x_k| <= T$. Тогда
+  $ PP(S_n = k) ~ 1 / sqrt(2 pi n p q) dot e^(-x_k^2 / 2)  $
 ]
 
 #remark()[
@@ -614,7 +646,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
     ]
   2. Если $A subset B$, то $PP(A) <= PP(B)$.
     #proof()[
-      $B = A union (B \\ A)$, а $A union (B \\ A) = emptyset$
+      $B = A union (B \\ A)$, а $A inter (B \\ A) = emptyset$
       $ PP(B) = PP(A) + underbrace(PP(B \\ A), >= 0) >= PP(A) $
     ]
   3. $forall A in cal(F) quad 0 <= PP(A) <= 1$
@@ -625,7 +657,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
     #proof()[
       $A union B = A union (B \\ A)$, а $A inter (B \\ A) = emptyset$. Можно применить свойство 1.:
       $ PP(A union B) = PP(A) + PP(B \\ A) $
-      $B = (A inter B) union (B \\ A)$, а $(A inter B) union (B \\ A) = emptyset$
+      $B = (A inter B) union (B \\ A)$, а $(A inter B) inter (B \\ A) = emptyset$
       $ PP(B) = PP(A inter B) + PP(B \\ A) ==> PP(B \\ A) = PP(B) - PP(A inter B) \
         PP(A union B) = PP(A) + PP(B) - PP(A inter B)
       $
@@ -637,7 +669,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 #remark()[
   $PP(inter.big_(i = 1)^infinity A_i) = product_(i = 1)^infinity PP(A_i)$
-  $ PP(inter.big_(i = 10)^infinity A_i) =^1 lim_(n -> infinity) PP(inter.big_(i = 1)^n A_i)) = lim_(n -> + infinity) product_(i = 1)^n PP(A_i) = product_(i = 1)^infinity PP(A_i) $
+  $ PP(inter.big_(i = 10)^infinity A_i) =^1 lim_(n -> infinity) PP(inter.big_(i = 1)^n A_i) = lim_(n -> + infinity) product_(i = 1)^n PP(A_i) = product_(i = 1)^infinity PP(A_i) $
   1. 
     $ lim_(n -> + infinity) PP(overbrace(inter.big_(i = 1)^n A_i, B_n)) =#pin(1) PP(inter.big_(i = 1)^infinity B_i) = PP(inter.big_(i = 1)^infinity A_i) $
     #pinit-point-from(1)[по непрерывности меры] \
@@ -645,7 +677,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 == Теория вероятностей. Случайные величины. Распределение. Функция распределения и ее свойства.
 #definition()[
-  *Случайной величиной* (с.в.) называется $xi : Omega -> R$ измеримая
+  *Случайной величиной* (с.в.) называется $xi : Omega -> RR$ измеримая
 ]
 #remark()[
   Измеримая --- если попали в какой-то элемент $sigma$-алгебры в $RR$, то должны попасть в элемент $sigma$-алгебры в $Omega$
@@ -657,8 +689,8 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 
 #remark()[
-  Случайные величины $xi$ и $eta$ совпадают если $P(xi (A) = P_eta (A)$ для любого $A$ --- борелевского. Но на самом деле достаточно совпадения на ячейках $(a; b]$.
-  $ P_xi ((a; b]) = PP(A < xi <= b) = PP(xi <= b) - PP(xi <= a) $
+  Случайные величины $xi$ и $eta$ совпадают если $P_xi (A) = P_eta (A)$ для любого $A$ --- борелевского. Но на самом деле достаточно совпадения на ячейках $(a; b]$.
+  $ P_xi ((a; b]) = PP(a < xi <= b) = PP(xi <= b) - PP(xi <= a) $
   То есть необходимо и достаточно $forall c quad PP(xi <= c) = PP(eta <= c)$
 ]
 
@@ -725,16 +757,16 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 
 #definition()[
-  Если существует $P_xi (t) : RR -> RR$ измеримая:
-  $ F_xi (t) = integral_(-infinity)^t P_xi (t) d t $
-  , то $xi$ называется *абсолютно непрерывной случайной величиной*, а $P_xi (t)$ называется *плотностью распределения*
+  Если существует $p_xi (t) : RR -> RR$ измеримая:
+  $ F_xi (t) = integral_(-infinity)^t p_xi (t) d t $
+  , то $xi$ называется *абсолютно непрерывной случайной величиной*, а $p_xi (t)$ называется *плотностью распределения*
     
 ]
 
 #properties()[
-  1. $PP(xi in A) = integral_A P_xi (t) d t$
-  2. $integral_RR P_xi (t) d t = 1$
-  3. $P_xi (t) = F'_xi (t)$ почти во всех $t$
+  1. $PP(xi in A) = integral_A p_xi (t) d t$
+  2. $integral_RR p_xi (t) d t = 1$
+  3. $p_xi (t) = F'_xi (t)$ почти во всех $t$
 ]
 == #todo() Теория вероятностей. Совместное распределение. Независимые с.в. Равносильные условия независимости.
 #definition()[
@@ -757,7 +789,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 
 #statement()[
-  $x_1, dots, xi_n$ независимы $<==>$  $Rho_arrow(xi) = Rho_(xi_1) times Rho_(xi_2) times dots times Rho_(xi_n)$
+  $xi_1, dots, xi_n$ независимы $<==>$  $Rho_arrow(xi) = Rho_(xi_1) times Rho_(xi_2) times dots times Rho_(xi_n)$
 ]
 #proof()[
   - "$<==$"
@@ -775,14 +807,14 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 
 #definition()[
-  Совместной плотностью $P_arrow(xi) (arrow(x))$ называется измеримая функция $RR^n -> RR_+$ :
-  $ F_arrow(xi) (arrow(x)) = integral_(- infinity)^(x_1) dots integral_(- infinity)^(x_n) P_arrow(xi) (t_1, t_2, dots, t_n) d t_n dots d t_1 $
+  Совместной плотностью $p_arrow(xi) (arrow(x))$ называется измеримая функция $RR^n -> RR_+$ :
+  $ F_arrow(xi) (arrow(x)) = integral_(- infinity)^(x_1) dots integral_(- infinity)^(x_n) p_arrow(xi) (t_1, t_2, dots, t_n) d t_n dots d t_1 $
 ]
 
 #statement()[
   1. $xi_1, dots, xi_n$ --- независимые $<==>$ $F_arrow(xi) (arrow(x)) = F_(xi_1) (x_1) dot F_(xi_2) (x_2) dot dots dot F_(xi_n) (x_n) $
   2. $xi_1, dots, xi_n$ --- абсолютно непрерывны
-  $xi_1, dots, xi_n$ --- независимы $<==>$ совместная плотность существует и $P_arrow(xi) (arrow(x)) = P_(xi_1) (x_1) dot dots dot P_(xi_n) (x_n)$
+  $xi_1, dots, xi_n$ --- независимы $<==>$ совместная плотность существует и $p_arrow(xi) (arrow(x)) = p_(xi_1) (x_1) dot dots dot p_(xi_n) (x_n)$
 ]
 
 #remark()[
@@ -793,7 +825,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
   1. $xi = eta quad (xi, eta) in {(0, 0), (1, 1)}$ с вероятностью $1/2$
   2. $xi != eta quad (xi, eta) in {(1, 0), (0, 1)}$ с вероятностью $1/2$
 ]
-== Теория вероятностей. Математическое ожидание. Свойства. Неравенство Маркова. Примеры. 
+== #todo() Теория вероятностей. Математическое ожидание. Свойства. Неравенство Маркова. Примеры. 
 #definition()[
   Математическое ожидание $EE_xi$
   $ EE xi = integral_Omega xi (omega) d PP(omega) $
@@ -825,7 +857,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
       $
     ]
 ]
-== Теория вероятностей. Дисперсия. Свойства. Неравенство Чебышева. Примеры.
+== #todo() Теория вероятностей. Дисперсия. Свойства. Неравенство Чебышева. Примеры.
 #definition()[
   *Дисперсией* случайной величины называется $DD xi = "Var" xi colon.eq EE (xi - E xi)^2$
 ]
@@ -859,7 +891,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
 ]
 
 #theorem("Неравенство Чебышева")[
-  $ PP(|S_n / n - EE S_n / n| >= epsilon) <= (DD S_n / n) / epsilon^2 --> 0 $
+  $ PP(lr(|S_n / n - EE S_n / n|) >= epsilon) <= (DD S_n / n) / epsilon^2 --> 0 $
   #fixme()
 ]
 == #todo() Теория вероятностей. Медиана. Моменты случайных величин. Примеры.
@@ -896,7 +928,7 @@ $ PP(A inter B) / PP(B) = PP(A | B) = PP(A) $
       $ EE xi = 0 quad EE xi eta = EE xi^3 = EE xi = 0 quad EE xi eta = 0 = EE xi dot EE eta ==> "cov"(xi, eta) = 0 $
     ]
   6. $DD (xi + eta) = DD xi + DD eta + 2 "cov"(xi, eta)$
-  7. $DD (sum_(i = 1)^n xi_i = sum_(i = 1)^n DD xi_1 + 2 sum_(i < j) "cov"(xi_i, xi_j)$
+  7. $DD (sum_(i = 1)^n xi_i) = sum_(i = 1)^n DD xi_1 + 2 sum_(i < j) "cov"(xi_i, xi_j)$
     #proof()[
       $ DD (sum_(i = 1)^n xi_i) = EE (sum_(i = 1)^n xi_i - EE sum_(i = 1)^n xi)^2 = EE((sum_(i = 1)^n xi_i^2) + (EE sum_(i = 1)^n xi)^2 - 2 dot sum xi_i dot EE sum xi_i) = \
         = EE sum xi_i^2 + 2 EE sum_(i < j) xi_i xi_j + (EE sum xi_i)^2 - 2 (EE sum xi_i)^2 = EE sum xi_i^2 + 2 EE sum_(i < j) xi_i xi_j - (sum EE xi_i)^2 = \
@@ -934,12 +966,12 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 
 #definition()[
   $xi_n -> xi$ почти наверное
-  $ PP(omega in Omega : xi_n(omega) -->_(n -> infinity) xi(omega)) = 1 $
+  $ PP(omega in Omega : xi_n (omega) -->_(n -> infinity) xi(omega)) = 1 $
 ]
 
 #definition()[
   $xi_n -->_(n -> infinity)^(L_p) xi$ сходится в среднем порядка $p$
-  $ EE |xi_n - x|^p --> 0 $
+  $ EE |xi_n - xi|^p --> 0 $
 ]
 
 #definition()[
@@ -1011,7 +1043,7 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 ]
 == #todo() Теория вероятностей. Закон больших чисел. Примеры использования. Выводы из ЗБЧ.
 #theorem([Закон больших чисел (ЗБЧ)])[
-$xi_1, xi_2, dots$ --- попарно некоррелируемы. $exists M : forall i quad DD xi_i <= M$. Пусть $S_n = xi_1 + dots + xi_n$. Тогда
+$xi_1, xi_2, dots$ --- попарно некоррелируемы. $exists M med forall i quad DD xi_i <= M$. Пусть $S_n = xi_1 + dots + xi_n$. Тогда
 $ S_n / n - EE S_n / n -->^PP 0 $
 ]
 #proof()[
@@ -1031,9 +1063,9 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 #proof()[
   $ EE S_n / n = 1/ n EE S_n = 1/n EE (xi_1 + dots + xi_n)  = (n m) / n = m $
 ]
-== Теория вероятностей. Усиленный ЗБЧ (б/д). Центральная предельная теорема (б.д.). Примеры использования. Выводы из ЦПТ.
+== #todo() Теория вероятностей. Усиленный ЗБЧ (б/д). Центральная предельная теорема (б.д.). Примеры использования. Выводы из ЦПТ.
 #theorem([Усиленный закон больших чисел (УЗБЧ)])[
-  $x_1, xi_2, dots$ --- независимые. $exists M : forall i quad EE xi_i^4 <= M$. Тогда
+  $x_1, xi_2, dots$ --- независимые. $exists M med forall i quad EE xi_i^4 <= M$. Тогда
   $ S_n / n - EE S_n / n --> 0 #text[п.н.] $
 ]
 
@@ -1116,7 +1148,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 ]
 
 #definition()[
-  Если $"deg"(v) = 0$, то $v$ --- изолированная вершина. Если $"def"(v) = 1$ то $v$ --- висячая вершина.
+  Если $"deg"(v) = 0$, то $v$ --- изолированная вершина. Если $"deg"(v) = 1$ то $v$ --- висячая вершина.
 
 ]
 #symb()[
@@ -1227,7 +1259,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 ]
 
 #statement()[
-  $T$ --- дерево. $|E(T) = |V(T)| - 1$.
+  $T$ --- дерево. $|E(T)| = |V(T)| - 1$.
 ] <stmt-tree-edges-vertices-number>
 #proof()[
   Индукция по $n = |V(T)|$. \
@@ -1269,7 +1301,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 ]
 
 #theorem()[
-  $T$ --- дерево $<==>$ $T$ --- связный и любое ребро $T$ --- лист.
+  $T$ --- дерево $<==>$ $T$ --- связный и любое ребро $T$ --- мост.
 ]
 #proof()[
   - $(==>)$  Связность есть. Пусть найдется ребро $e = u v$, не являющееся мостом. Значит в $T - {e}$ между $u$ и $v$ есть путь $u e_1 dots e_k v$. Тогда в $T$ есть цикл $u e_1 dots e_k v e u$. Значит $T$ --- не дерево. Противоречие.
@@ -1295,7 +1327,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 #theorem([Эйлера])[
   $G$ --- связный (содержит ровно одну нетривиальную компоненту связности)
   1. $G$ --- эйлеров $<==>$ $forall v in V(G): "deg"(v) divides 2$
-  2. $G$ --- полуэйлеров $<==>$ $exists v_1, v_2 : "deg"(v_1) divides.not 2, "deg"(v_2) divides.not 2, forall v in V(G) \\ {v_1, v_2} L "deg"(v) divides 2$. Более того $v_1$ и $v_2$ будут началом и концом эйлерова пути.
+  2. $G$ --- полуэйлеров $<==>$ $exists v_1, v_2 : "deg"(v_1) divides.not 2, "deg"(v_2) divides.not 2, forall v in V(G) \\ {v_1, v_2} med "deg"(v) divides 2$. Более того $v_1$ и $v_2$ будут началом и концом эйлерова пути.
 ]
 #proof()[
   1. #list()[
@@ -1386,11 +1418,11 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 ]
 
 #definition()[
-  $G$, $M$ --- паросочетание $G$, $l$ --- путь в $G$. $l = v_1 e_1 v_2 e_2 v_3 dots e_k v_(k + 1)$, $v_1 != v_(k + 1)$, $l$ называется $M$-чередующимся, если $cases(e_(2k) in M \ e_(2k + 1) in.not M)$ или $cases(e_(2k + 1) in M \ e_(2k) in.not M)$
+  $G$, $M$ --- паросочетание $G$, $l$ --- путь в $G$. $l = v_1 e_1 v_2 e_2 v_3 dots e_k v_(k + 1)$, $v_1 != v_(k + 1)$, $l$ называется $M$-чередующимся, если $cases(e_(2k) in M, e_(2k + 1) in.not M)$ или $cases(e_(2k + 1) in M, e_(2k) in.not M)$
 ]
 
 #definition()[
-  Пусть $l$ --- $M$-чередующийся путь графа $G$. Если $v_1$ и $v_(k + 1)$ не покрыты $M$ (во всем $G$), то $l$ называется *$M$-дополняющим* путем.
+  Пусть $l$ --- $M$-чередующийся путь графа $G$. Если $v_k$ и $v_(k + 1)$ не покрыты $M$ (во всем $G$), то $l$ называется *$M$-дополняющим* путем.
 ]
 
 #theorem([Бержа])[
@@ -1440,7 +1472,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 #definition()[
   Паросочетание которое покрывает все вершины называется *совершенным*.
 ]
-
+== #todo() Графы. Паросочетания. Лемма Холла. Примеры использования.
 #symb[$G[X, Y]$ --- двудольный граф с долями $X$, $Y$]
 
 #definition()[
@@ -1452,7 +1484,6 @@ $ S_n / n - EE S_n / n -->^PP 0 $
   - $N(U) = {u in.not U : exists v in U : u in N(v) }$
 ]
 
-== #todo() Графы. Паросочетания. Лемма Холла. Примеры использования.
 #theorem([Холла])[
   В $G[X, Y]$ существует $X$-насыщенное паросочетание $<==>$ $forall U subset X : |U| <= |N(U)|$ (условие Холла).
 ]
