@@ -90,6 +90,10 @@
 #proof("На примере")[
   Возьмем $X_1, X_2, X_3, Y_1, Y_2, Z_1, Z_2$. Количество перестановок $n!$. Теперь сотрем индексы у $X$, перестали различать некоторые перестановки. Общее количество уменьшилось в $k_X !$ раз.
 ]
+#proof("Альтернативное")[
+  Расставляем элементы одного типа по очереди на $n$ позиций:
+  $ binom(n, k_1) binom(n - k_1, k_2) binom(n - k_1 - k_2, k_3) dots binom(n - k_1 - k_2 - dots - k_(l - 1), k_l) $
+]
 == Комбинаторика. Сочетания с повторениями и без.
 #theorem("Сочетания без повторений")[
   Количество способов выбрать $k$ элементов из $n$-элементного множества без учета порядка, с учетом того что элементы не могут повторяться
@@ -121,13 +125,6 @@
   Бином Ньютона
   $ (x + y)^n = sum_(k = 0)^n binom(n, k) x^k y^(n - k) $
   Коэффициент --- сколько способов тыкнуть в $x$ $k$ раз
-]
-#corollary_lemma()[
-  $ x = y = 1 quad sum_(k = 0)^n = 2^n $
-  Количество подмножеств
-]
-#corollary_lemma()[
-  $ x = -1 thick y = 1 quad 0 = sum_(k = 0)^n binom(n, k) (-1)^k quad n != 0 $
 ]
 #example()[
     Граничное условие
@@ -175,6 +172,15 @@
     $ sum_(k = 0)^l binom(n, k) binom(m, l - k) $
   ]
 ]
+
+#corollary_lemma()[
+  $ x = y = 1 quad sum_(k = 0)^n = 2^n $
+  Количество подмножеств
+]
+#corollary_lemma()[
+  $ x = -1 thick y = 1 quad 0 = sum_(k = 0)^n binom(n, k) (-1)^k quad n != 0 $
+]
+
 == Комбинаторика. Количество отображений. Инъекции и биекции.
 #definition()[
   Отображением $delta$ из $X$ в $Y$ называется некое правило соответствия $forall x in X quad exists! y in Y : f(x) = y$
@@ -199,7 +205,7 @@
 ]
 #remark()[Всего биекций $n!$]
 
-== Комбинаторика. Формула обращения.
+== #todo() Комбинаторика. Формула обращения.
 #theorem()[
 $ f_k = sum^k_(i = 0) binom(k, i) g_i <==> g_k = sum^k_(i = 0) (-1)^(k - i)binom(k, i) f_i $, где $f_k$, $g_k$ --- числовые последовательности
 ]
@@ -209,8 +215,9 @@ $ f_k = sum^k_(i = 0) binom(k, i) g_i <==> g_k = sum^k_(i = 0) (-1)^(k - i)binom
       sum_(i = 0)^k (-1)^(k - i) binom(k, i) f_i = sum_(i = 0)^k (-1)^(k - i) binom(k, i) sum_(j = 0)^i binom(i, j) g_j = sum_(i = 0)^k sum_(j = 0)^i (-1)^(k - i) binom(k, i) binom(i, j) g_i =  \
       = sum_(i = 0)^k sum_(j = 0)^i (-1)^(k - i) binom(k, j) binom(k - j, i - j) g_j = sum_(j = 0)^k sum_(i = j)^k (-1)^(k - i) binom(k, j) binom(k - j, i - j) g_j = \
       = sum_(j = 0)^k binom(k, j) g_j sum_(i = j)^k (-1)^(k - i) binom(k - j, i - j) = sum_(j = 0)^k binom(k, j) g_j sum_(l = 0)^(k - j) (-1)^(k - j - l) binom(k - j, l) = #h(5em)#text(gray)[$[l = i - j]$] \
-     = sum_(j = 0)^k binom(k, j) g_j sum_(l = 0)^m (-1)^(m - l) binom(m, k) dot 1^k = binom(k, k) g_j = g_j #h(5em)#text(gray)[$[m = k - j]$]
+     = sum_(j = 0)^k binom(k, j) g_j sum_(l = 0)^m (-1)^(m - l) binom(m, k) dot 1^l = binom(k, k) g_k = g_k #h(5em)#text(gray)[$[m = k - j]$]
     $
+  2. $quote.double <== quote.double$ #todo()
 ]
 == Комбинаторика. Количество сюръекций. Числа Стирлинга второго рода.
 #definition()[
@@ -644,18 +651,19 @@ $
     #proof()[
       В свойство 3. меры подставляем $A_1 = A, A_2 = B, A_i = emptyset$.
     ]
-  2. Если $A subset B$, то $PP(A) <= PP(B)$.
+  5. Если $A subset B$, то $PP(A) <= PP(B)$.
     #proof()[
       $B = A union (B \\ A)$, а $A inter (B \\ A) = emptyset$
       $ PP(B) = PP(A) + underbrace(PP(B \\ A), >= 0) >= PP(A) $
     ]
-  3. $forall A in cal(F) quad 0 <= PP(A) <= 1$
+
+  1. $forall A in cal(F) quad 0 <= PP(A) <= 1$
     #proof()[
-      $emptyset subset A subset Omega$ + свойство 2.
+      $emptyset subset A subset Omega$ + свойство 5.
     ]
-  4. $PP(A union B) = PP(A) + PP(B) - PP(A inter B)$
+  2. $PP(A union B) = PP(A) + PP(B) - PP(A inter B)$
     #proof()[
-      $A union B = A union (B \\ A)$, а $A inter (B \\ A) = emptyset$. Можно применить свойство 1.:
+      $A union B = A union (B \\ A)$, а $A inter (B \\ A) = emptyset$. Можно применить свойство 1. меры:
       $ PP(A union B) = PP(A) + PP(B \\ A) $
       $B = (A inter B) union (B \\ A)$, а $(A inter B) inter (B \\ A) = emptyset$
       $ PP(B) = PP(A inter B) + PP(B \\ A) ==> PP(B \\ A) = PP(B) - PP(A inter B) \
@@ -718,8 +726,8 @@ $
     #proof()[
       $t_n$ монотонно убывают к $t$
       $ { xi <= t_n } = B_n quad B_1 supset B_2 supset dots $
-      $ lim_(t_n arrow.br t) PP_(B_n) = lim_(t_n -> t+) F_xi (t_n) $
-      По непрерывности меры $lim_(t_n arrow.br t) PP_(B_n) = PP(inter.big_(i = 1)^infinity B_i) = PP(xi <= t) = F_xi (t)$
+      $ lim_(t_n arrow.br t) PP(B_n) = lim_(t_n -> t+) F_xi (t_n) $
+      По непрерывности меры $lim_(t_n arrow.br t) PP(B_n) = PP(inter.big_(i = 1)^infinity B_i) = PP(xi <= t) = F_xi (t)$
     ]
   6. $PP(xi < t) = lim_(x -> t-) F_xi (x)$
     #proof()[
@@ -770,7 +778,7 @@ $
 ]
 == #todo() Теория вероятностей. Совместное распределение. Независимые с.в. Равносильные условия независимости.
 #definition()[
-  Случайные величины $xi_1, xi_2, dots, xi_n$ называются независимыми, если $forall A_1, A_2, dots, A_n$ --- борелевских подмножеств $RR$: события ${xi_1 in A_1}, {xi_2 in A_2}, dots, {xi_n in A_n}$.
+  Случайные величины $xi_1, xi_2, dots, xi_n$ называются независимыми, если $forall A_1, A_2, dots, A_n$ --- борелевских подмножеств $RR$: события ${xi_1 in A_1}, {xi_2 in A_2}, dots, {xi_n in A_n}$ независимы #fixme().
 
   *или* $PP(xi_1 in A_1, xi_2 in A_2, dots, x_n in A_n) = PP(xi_1 in A_1) dot PP(xi_2 in A_2) dot dots dot PP(xi_n in A_n)$
 ]
@@ -800,6 +808,15 @@ $
     $ PP(arrow(xi) in (a; b]) = PP(xi_1 in (a_1; b_1], dots, xi_n in (a_n; b_n]) = PP(xi_1 in (a_1; b_1]) dot dots dot PP(xi_n in (a_n; b_n]) $
     #todo()
 ]
+
+#remark()[
+  По совместному распределению можно найти распределение любой компоненты.
+  $ P_(xi_k) (B_k) = PP(xi_k in B_k) = PP(xi_1 in RR, dots, xi_(k - 1) in RR, xi_k in B_k, dots, xi_n in RR) = PP_arrow(xi) (RR^(k - 1) times B times RR^(n - k)) $
+
+  В обратную сторону неверно $xi, eta in {0, 1}$ с вероятностью $1/2$. $angle.spheric (xi, eta)$:
+  1. $xi = eta quad (xi, eta) in {(0, 0), (1, 1)}$ с вероятностью $1/2$
+  2. $xi != eta quad (xi, eta) in {(1, 0), (0, 1)}$ с вероятностью $1/2$
+]
 == Теория вероятностей. Совместная функция распределения и ее свойства. Совместная плотность.
 #definition()[
   Совместной функцией распределения $F_arrow(xi) (arrow(x))$ называется функция $RR^n -> RR$:
@@ -816,15 +833,6 @@ $
   2. $xi_1, dots, xi_n$ --- абсолютно непрерывны
   $xi_1, dots, xi_n$ --- независимы $<==>$ совместная плотность существует и $p_arrow(xi) (arrow(x)) = p_(xi_1) (x_1) dot dots dot p_(xi_n) (x_n)$
 ]
-
-#remark()[
-  По совместному распределению можно найти распределение любой компоненты.
-  $ P_(xi_k) (B_k) = PP(xi_k in B_k) = PP(xi_1 in RR, dots, xi_(k - 1) in RR, xi_k in B_k, dots, xi_n in RR) = PP_arrow(xi) (RR^(k - 1) times B times RR^(n - k)) $
-
-  В обратную сторону неверно $xi, eta in {0, 1}$ с вероятностью $1/2$. $angle.spheric (xi, eta)$:
-  1. $xi = eta quad (xi, eta) in {(0, 0), (1, 1)}$ с вероятностью $1/2$
-  2. $xi != eta quad (xi, eta) in {(1, 0), (0, 1)}$ с вероятностью $1/2$
-]
 == #todo() Теория вероятностей. Математическое ожидание. Свойства. Неравенство Маркова. Примеры. 
 #definition()[
   Математическое ожидание $EE_xi$
@@ -839,7 +847,7 @@ $
   5. $EE f(xi_1, xi_2, dots, xi_n) = integral_(RR^n) f(t_1, dots, t_n) d P_arrow(xi) (t_1, dots, t_n)$, где $f$ --- измерима
   6. Если $xi$ и $eta$ --- независимы, то $EE xi eta = EE xi dot EE eta$
     #proof()[
-      $ EE xi eta = integral_(R^2) x y d P_((xi, eta)) (x, y) = integral_(R^2) x y d P_xi (x) d P_eta (y) = integral_R x d P_xi (x) dot integral_R y d P_eta (y) = EE xi dot EE eta $
+      $ EE xi eta = integral_(RR^2) x y d P_((xi, eta)) (x, y) = integral_(RR^2) x y d P_xi (x) d P_eta (y) = integral_RR x d P_xi (x) dot integral_RR y d P_eta (y) = EE xi dot EE eta $
     ]
   7. Неравенство Гёльдера $p, q > 1 : 1/p  + 1/q = 1$
     $ EE |xi eta| <= (EE |xi|^p)^(1/p) dot (EE |eta|^q)^(1/q) $
@@ -924,7 +932,7 @@ $
   5. Если $xi$ и $eta$ независимы то $"cov"(xi, eta) = 0$
     #remark()[
       Почему в обратную сторону не верно. $xi = cases(-1 "," 1/3, 0 "," 1/3, 1 "," 1/3)$. $eta = xi^2$.
-      Очевидно что они зависимы. Покажем что ковариация не $0$:
+      Очевидно что они зависимы. Покажем что ковариация $0$:
       $ EE xi = 0 quad EE xi eta = EE xi^3 = EE xi = 0 quad EE xi eta = 0 = EE xi dot EE eta ==> "cov"(xi, eta) = 0 $
     ]
   6. $DD (xi + eta) = DD xi + DD eta + 2 "cov"(xi, eta)$
@@ -961,7 +969,7 @@ $
     ]
 ]
 
-== #todo() Теория вероятностей. Определение видов сходимости с.в. и их связь. Контрпримеры для всех ситуаций, когда «стрелочки» нет.
+== Теория вероятностей. Определение видов сходимости с.в. и их связь. Контрпримеры для всех ситуаций, когда «стрелочки» нет.
 $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 
 #definition()[
@@ -988,8 +996,8 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 #remark()[
 - 1. $arrow.double.not$ 2. (тогда и 3. $arrow.double.not$ 2.)
   #proof()[
-    $Omega : [0; 1] quad xi_n = n^p dot bb(1)_([0; 1/n]) quad xi_n --> 0$ почти наверное
-    $ EE |xi_n - 0|^p = EE n dot bb(1)_([0; 1/n]) = n dot EE bb(1)_([0; 1/n]) = n dot 1 / n = 1 arrow.not 0 $
+    $Omega : [0; 1] quad xi_n = n^p dot bb(1)_((0; 1/n)) quad xi_n --> 0$ почти наверное
+    $ EE |xi_n - 0|^p = EE n dot bb(1)_((0; 1/n)) = n dot EE bb(1)_((0; 1/n)) = n dot 1 / n = 1 arrow.not 0 $
   ]
 - 2. $arrow.double.not$ 1. (тогда и 3. $arrow.double.not$ 1.)
   #proof()[
@@ -1005,23 +1013,18 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 ]
 
 == Теория вероятностей. Вывод сходимости по вероятности из других видов сходимости.
+#theorem("Лебега")[
+  - ${f_n}_(n=1)^infinity$ и $f$ --- измеримая
+  - $f_n (x) -> f(x)$ почти везде
+  Тогда если существует интегрируемая функция $g$, такая что $|f_n (x)| <= |g(x)|$ почти везде, то $f_n$ и $f$ интегрируемы и:
+  $ lim_(n -> infinity) integral_A f_n (x) mu(d x) = integral_A f(x) mu(d x) $
+]
 #remark()[
 - 1. $==>$ 3. по т. Лебега
 - 2. $==>$ 3.
   #proof()[
     $forall epsilon  quad PP(|xi_n - xi| > epsilon) <= (EE |xi_n - xi|^p) / epsilon^p --> 0$ по неравенству Маркова
   ]
-]
-
-#task(numbering: (..) => numbering("1", 3))[
-  Пусть $xi_n -->^d c$. Докажите что тогда $xi_n -->^PP c$
-]
-#solution()[
-  $F_(xi_n) (x) --> F_c (x) quad forall x in C_(F_(xi_n))$. Заметим что $F_c(x) = PP(c <= x)$. При $x < c$ $F_(xi_n) (x) --> 0$, а при $x > c$ $F_(xi_n) (x) --> 1$. Хотим доказать что $forall epsilon > 0 : PP(|xi_n - c| <= epsilon) --> 1$
-  $ PP(-epsilon + c <= xi_n <= xi + c) = underbrace(F_(xi_n) (c + epsilon), --> 1) - underbrace(F(xi_n) (c - epsilon), --> 0) + PP(xi_n = c - epsilon) $
-  $ PP(xi_n <= c - epsilon/2) = PP(xi_n <= (3 epsilon) / 2) + PP(xi_n in (c - (3 epsilon) /2; c - epsilon / 2]) $
-  $ underbrace(PP(xi_n <= c - epsilon/2), --> 0) - underbrace(PP(xi_n <= (3 epsilon) / 2), --> 0) = PP(xi_n in (c - (3 epsilon) /2; c - epsilon / 2]) $
-  $ underbrace(PP(xi_n in (c - (3 epsilon) /2; c - epsilon / 2]), --> 0) <= PP(c - epsilon - xi_n) --> 0 $
 ]
 
 == Теория вероятностей. Связь сходимости по вероятности и сходимости по распределению.
@@ -1034,8 +1037,8 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
         $ underline(lim) PP (xi_n <= x) >= F_xi (x - epsilon) $
       2. ${xi_n > x} supset {xi - epsilon > x} \\ {|xi_n - xi| > epsilon}$
         $ PP(xi_n > x) >= PP(xi - epsilon > x) - PP(|xi_n - xi| > epsilon) $
-        $ 1 - PP(xi_n <= x) >= 1 - F_xi(x + epsilon) - PP(|xi_n - xi| > epsilon) $
-        $ PP(xi_n <= x) <= F_xi(x + epsilon) + PP(|xi_n - xi| > epsilon) $
+        $ 1 - PP(xi_n <= x) >= 1 - F_xi (x + epsilon) - PP(|xi_n - xi| > epsilon) $
+        $ PP(xi_n <= x) <= F_xi (x + epsilon) + PP(|xi_n - xi| > epsilon) $
         $ overline(lim) PP(xi_n <= x) <= F_xi (x + epsilon) $
       $ F_xi (x - epsilon) <= underline(lim) F_(xi_n) (x) <= overline(lim) F_(xi_n) (x) <= F_xi (x + epsilon) $
       $ underline(lim) = overline(lim) = lim = F_xi (x) $
@@ -1157,6 +1160,37 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 #symb()[
   $min_(v in V(G)) "deg"(v) eq.colon delta(G)$
 ]
+
+#definition()[
+  Граф называется *регулярным*, если все степени вершин равны. Если они равны $k$, то говорим что граф $k$-регулярный.
+]
+#remark()[
+  Кубический граф --- $3$-регулярный
+]
+#remark()[
+  Для $k$-регулярного графа
+  $ |E(G)| = (|V(G)| dot k) / 2 $
+]
+
+#definition()[
+  Граф без кратных ребер и петель называется *простым*.
+]
+
+#remark()[
+  С этого момента считаем все графы простыми
+]
+
+#definition()[
+  Граф называется *полным* если две любые его вершины смежны
+]
+#symb()[$K_n$]
+#remark()[$|E(G)| = (n (n - 1)) / 2$, где $n = |V(G)|$]
+
+#definition()[
+  $overline(G)$ --- называется дополнением графа $G = angle.l V(G), E(G) angle.r$, если $V(overline(G)) = V(G)$ и $E(overline(G))$ такое что:
+  - $E(overline(G)) inter E(G) = emptyset$
+  - $E(overline(G)) union E(G) = E(K_n)$, где $n = |V(G)|$
+]
 == Графы. Основные определения (маршруты, пути и простые пути в графах, замкнутые маршруты, циклы и простые циклы). Связность.
 #definition()[
   Последовательность вершин и ребер $v_1 e_1 v_2 e_2 dots e_(n - 1) v_n$, где $v_i in V(G), e_i in E(G)$ и $forall i in [1; n - 1] quad e_i = v_i v_(i + 1)$ называется *маршрутом*. Длина по количеству ребер.
@@ -1194,36 +1228,6 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 
 #symb()[$c(G)$ --- количество компонент связности графа $G$]
 
-#definition()[
-  Граф называется *регулярным*, если все степени вершин равны. Если они равны $k$, то говорим что граф $k$-регулярный.
-]
-#remark()[
-  Кубический граф --- $3$-регулярный
-]
-#remark()[
-  Для $k$-регулярного графа
-  $ |E(G)| = (|V(G)| dot k) / 2 $
-]
-
-#definition()[
-  Граф без кратных ребер и петель называется *простым*.
-]
-
-#remark()[
-  С этого момента считаем все графы простыми
-]
-
-#definition()[
-  Граф называется *полным* если две любые его вершины смежны
-]
-#symb()[$K_n$]
-#remark()[$|E(G)| = (n (n - 1)) / 2$, где $n = |V(G)|$]
-
-#definition()[
-  $overline(G)$ --- называется дополнением графа $G = angle.l V(G), E(G) angle.r$, если $V(overline(G)) = V(G)$ и $E(overline(G))$ такое что:
-  - $E(overline(G)) inter E(G) = emptyset$
-  - $E(overline(G)) union E(G) = E(K_n)$, где $n = |V(G)|$
-]
 == Графы. Деревья. Основные определения. Вспомогательные утверждения.
 #definition()[
   *Дерево* --- связный граф без циклов
@@ -1279,7 +1283,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
   - $(==>)$ уже доказано
   - $(<==)$ Если в $T$ есть цикл, то удалим любое ребро этого цикла. Повторим пока не получим ацикличный граф. Этот граф $T'$ --- дерево. Значит $|E(T')| = |V(T')| - 1$.
   $ |E(T')| = |V(T')| - 1 = |V(T)| - 1 = |E(T)| $
-  Значит не удалили никакие ребра, т.е. применили алогримт удаление ровно 0 раз. Значит изначально было дерево
+  Значит не удалили никакие ребра, т.е. применили алогримт удаления ровно 0 раз. Значит изначально было дерево
 ]
 
 #corollary()[
@@ -1296,7 +1300,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
   - $(==>)$ уже знаем
   - $(<==)$ Если $T$ не связен, то добавим ребро между компонентами связности (циклы не появятся по #ref(<stmt-bridge-no-cycle>, supplement: [утверждению]))
     Повторяем пока получим связный граф. Тогда он будет деревом $T'$.
-    $ |E(T')| = |V(T'| - 1 = |V(T)| - 1 = |E(T)| $
+    $ |E(T')| = |V(T')| - 1 = |V(T)| - 1 = |E(T)| $
     Значит проделали добавление ребер ровно $0$ раз, значит $T'$ и есть $T$.
 ]
 
@@ -1313,7 +1317,7 @@ $ S_n / n - EE S_n / n -->^PP 0 $
 ]
 #proof()[
   - $(==>)$ существование следует из связности. Единственность из ацикличности
-  - $(<==)$ из существования следует связности. Из единственности ацикличность
+  - $(<==)$ из существования следует связность. Из единственности ацикличность
 ]
 == #todo() Графы. Эйлеровы графы. Теорема Эйлера. Примеры использования.
 #definition()[
