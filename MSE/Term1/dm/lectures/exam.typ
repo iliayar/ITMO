@@ -15,7 +15,7 @@
 2. База $n = 0$, ИР $1, dots, k mapsto k + 1$
   #example()[Сумма углов в прямоугольнике]
 3. База $n = 0, n = 1, n = 2$, ИП $k mapsto k + 3$.
-  #example()[Докажите, что квадрат можно разрезать на $n$ квадратов (не обязательно одинаковых) для любого $n \ge 6$]
+  #example()[Докажите, что квадрат можно разрезать на $n$ квадратов (не обязательно одинаковых) для любого $n >= 6$]
 4. База $n = 1$, ИП $2^k mapsto 2^(k + 1), k mapsto k - 1$.
 
 Аксиома индукции (Пеано): $P(0) and forall n med (P(n) ==> P(n + 1)) ==> forall n in NN med P(n)$ #fixme()
@@ -33,10 +33,15 @@
 #solution()[
   Ни в каком квадрате $2 times 2$ не может стоять два короля. По принципу Дирихле верхняя граница --- $(8 / 2)^2 = 16$
 ]
-== #todo() Методы математического доказательства. Остальные методы с примерами.
+== Методы математического доказательства. Остальные методы с примерами.
 1. Примеры и контрпримеры
+  #example()[Можно ли разбить квадрат разрезать на какие-то квадраты $a times a$ и $b times b$, такие что $a != b$, так чтобы квадратов каждого типа было одинаковое количество. Привести пример таких $a$ и $b$ и как разбить]
+  #example()[Доказать что площадь первого прямоугольника $S_1 > S_2$ и периметр $P_1 > P_2$, то из первого можно вырезать второй. Нельзя доказать, есть контрпример]
 2. Прямое доказательство
+  #example()[Доказать что если каждое слагаемое делится на $d$, то и вся сумма делится на $d$]
 3. Обратное доказательство
+  #remark()[$A -> B <==> overline(A) arrow.r.not overline(B)$]
+  #example()[Принцип дирихле]
 4. Оценка + пример
    #example()[
      Какое максимальное количество ферзей можно расставить на шахматной доске, так чтобы они не били друг друга? Больше 8 нельзя, т.к. в каждом столбце максимум 1 (оценка). Покажем как расставить 8 (пример).
@@ -376,28 +381,45 @@ $
 #remark()[
   Характеристическое уравнение имеет $2$ комплексных корня
   $ lambda_(1, 2) = alpha plus.minus beta i = r (cos phi plus.minus i sin phi) $
-  - Если попали в #link(<first-case-roots>)[первый случай]
-    $ 
-      a_n^(#text[общ.]) = c_1 (alpha + beta i)^n + c_2 (alpha - beta i)^n = \
-      = r^n ( c_1 (cos phi + i sin phi)^n  + c_2 (cos phi - i sin phi)^n) = \
-      = r^n ((c_1 + c_2) cos (n phi) + i (c_1 - c_2) sin (n phi) ) = \
-      = r^n (tilde(c_1) cos n phi + tilde(c_2) sin n phi)
-    $
-  - Если попали во #link(<second-case-roots>)[второй случай]
-    $ a_(n + m) = b_1 dot a_(n + m - 1) + dots + b_m a_n + P(n) dot p^n $
-    Алгоритм:
-    1. Решаем ответствующее однородное уравнение
-    2. Находим частное решение(я). Оно ищется в виде
-      $ a_n^(#text[част.]) = Q(n) dot n^l dot p^n $
-      , где $Q(n)$ --- произвольный многочлен такой же степени что и $P(n)$, $l$ --- кратность $p$ как корня характеристического уравнения из шага 1
-    3. $a_n^(#text[общ.]) = a_n^(#text[одн.]) + a_n^(#text[част.]) + dots$
-    4. подбор коэффициентов под начальные условия
+  $ 
+    a_n^(#text[общ.]) = c_1 (alpha + beta i)^n + c_2 (alpha - beta i)^n = \
+    = r^n ( c_1 (cos phi + i sin phi)^n  + c_2 (cos phi - i sin phi)^n) = \
+    = r^n ((c_1 + c_2) cos (n phi) + i (c_1 - c_2) sin (n phi) ) = \
+    = r^n (tilde(c_1) cos n phi + tilde(c_2) sin n phi)
+  $
 ]
-== #todo() Рекуррентные соотношения. Неоднородные рекуррентные соотношения.
+== Рекуррентные соотношения. Неоднородные рекуррентные соотношения.
+
+#remark()[
+  $ a_(n + m) = b_1 dot a_(n + m - 1) + dots + b_m a_n + P(n) dot p^n $
+  Алгоритм:
+  1. Решаем ответствующее однородное уравнение
+  2. Находим частное решение(я). Оно ищется в виде
+    $ a_n^(#text[част.]) = Q(n) dot n^l dot p^n $
+    , где $Q(n)$ --- произвольный многочлен такой же степени что и $P(n)$, $l$ --- кратность $p$ как корня характеристического уравнения из шага 1
+  3. $a_n^(#text[общ.]) = a_n^(#text[одн.]) + a_n^(#text[част.]) + dots$
+  4. подбор коэффициентов под начальные условия
+]
+
 #remark()[
   $u(n) = P(n) dot sin (n phi) dot p^n$
   $ a_n^(#text[част.]) = Q(n) dot n^l (sin n phi + cos n phi) dot p^n $
 ]
+
+#example()[
+  $
+    a_(n + 2) = 5 a_(n + 1) - 4a_n + underbrace(3 dot 2^n, U(n)) \
+    lambda^2 - 5 lambda + 4 = 0 quad lambda_1 = 1, lambda_2 = 4 \
+    a_n = p_n + q_n \
+    p_n = c_1 + c_2 dot 4^n \
+    q_n = c 2^n n^0 #text[[$n$ в степени кратности корня $2$]] \
+    c dot 2^(n + 2) = 5 dot c 2^(n + 1) - 4 c dot 2^n + 3 2^n \
+    c dot 4 = 5 dot c dot 2 - 4 c + 3 \
+    c = - 3 / 2 ==> q_n = -3 dot 2^(n - 1) \ 
+    a_n = c_1 + c_2 dot 4^n - 3 dot 2^(n - 1)
+  $
+]
+
 == Теория вероятностей. Дискретная вероятность. Свойства. Условная вероятность. Примеры.
 #definition()[
   $Omega = {omega_1, omega_2, dots, omega_n}$ --- *множество (пространство) элементарных исходов*.
@@ -542,7 +564,9 @@ $
 #remark()[
   - $Omega = { omega : (x_1, x_2, dots, x_n) }, x_i in {0, 1}$
   - $p in [0; 1]: PP({omega}) = p^(sum x_i) dot (1 - p)^(sum x_i)$
+]
 
+#example()[
   "0" --- решка, неудача. "1" --- орел, удача. Тогда $S_n = sum x_i$ --- количество успехов в схеме Бурнулли.
 ]
 
@@ -938,7 +962,7 @@ $
   6. $DD (xi + eta) = DD xi + DD eta + 2 "cov"(xi, eta)$
   7. $DD (sum_(i = 1)^n xi_i) = sum_(i = 1)^n DD xi_1 + 2 sum_(i < j) "cov"(xi_i, xi_j)$
     #proof()[
-      $ DD (sum_(i = 1)^n xi_i) = EE (sum_(i = 1)^n xi_i - EE sum_(i = 1)^n xi)^2 = EE((sum_(i = 1)^n xi_i^2) + (EE sum_(i = 1)^n xi)^2 - 2 dot sum xi_i dot EE sum xi_i) = \
+      $ DD (sum_(i = 1)^n xi_i) = EE (sum_(i = 1)^n xi_i - EE sum_(i = 1)^n xi)^2 = EE((sum_(i = 1)^n xi_i)^2 + (EE sum_(i = 1)^n xi)^2 - 2 dot sum xi_i dot EE sum xi_i) = \
         = EE sum xi_i^2 + 2 EE sum_(i < j) xi_i xi_j + (EE sum xi_i)^2 - 2 (EE sum xi_i)^2 = EE sum xi_i^2 + 2 EE sum_(i < j) xi_i xi_j - (sum EE xi_i)^2 = \
         = xunderline(stroke: #blue, EE sum xi_i^2) + xunderline(stroke: #green, 2 EE sum_(i < j) xi_i xi_j) - xunderline(stroke: #blue, sum EE^2 xi_i) - xunderline(stroke: #green, 2 sum_(i < j) EE xi_i EE xi_j) = xunderline(stroke: #blue, sum_(i = 1)^n DD xi_i) + xunderline(stroke: #green, 2 sum_(i < j) "cov"(xi_i, xi_j))
       $
@@ -996,7 +1020,7 @@ $xi_1, xi_2, dots$ --- случайные величины : $Omega -> RR$
 #remark()[
 - 1. $arrow.double.not$ 2. (тогда и 3. $arrow.double.not$ 2.)
   #proof()[
-    $Omega : [0; 1] quad xi_n = n^p dot bb(1)_((0; 1/n)) quad xi_n --> 0$ почти наверное
+    $Omega : [0; 1] quad xi_n = n^(1/p) dot bb(1)_((0; 1/n)) quad xi_n --> 0$ почти наверное
     $ EE |xi_n - 0|^p = EE n dot bb(1)_((0; 1/n)) = n dot EE bb(1)_((0; 1/n)) = n dot 1 / n = 1 arrow.not 0 $
   ]
 - 2. $arrow.double.not$ 1. (тогда и 3. $arrow.double.not$ 1.)

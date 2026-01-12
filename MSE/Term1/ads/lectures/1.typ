@@ -44,6 +44,28 @@
 $exists C_1 med f <= C_1 dot g$. $f <= frac(C_1, C) dot C dot g = C_1 dot g$.
 ]
 
+#properties()[
+  - $f = cal(O)(g) <==> g = Omega(f)$
+  - $cal(O)(cal(O)(f)) = cal(O)(f)$
+  - $Omega(Omega(f)) = Omega(f)$
+]
+
+#definition()[
+  $f = o(g)$, тогда
+  $ forall C > 0 med exists N med forall n >= N med f(n) <= C dot g(n) $
+]
+
+#properties()[
+  - $o(o(f)) = o(f)$
+  - $omega(omega(f)) = omega(f)$
+]
+
+#example()[
+  - $f = o(Theta(cal(O)(g)) ==> f = o(g)$
+  - $f = Omega(Omega(Theta(g))) ==> f = Omega(g)$
+  - $f = Theta(omega(omega(g))) ==> f = omega(g)$
+]
+
 = Модель памяти
 #definition()[
   *RAM модель* --- все операции с числами выполняются за $cal(O)(1)$.
@@ -51,4 +73,11 @@ $exists C_1 med f <= C_1 dot g$. $f <= frac(C_1, C) dot C dot g = C_1 dot g$.
 
 #definition()[
   *RAM-word модель* --- все операции с числами размера не больше машинного слова выполняются за $cal(O)(1)$.
+]
+
+#remark()[
+  Как оценить $sum 1/i$:
+  - $sum ~ integral$. $integral 1 / x d x = ln x$
+  - $A dot f(n) <= sum <= B dot f(n)$.
+    $ 1/2 dot log n = 1/1 + 1/2 + 1/4 + 1/4 + 1/8 + 1/8 + 1/8 + 1/8 + dots <= sum 1 / i <= 1 / 1 + 1/2 + 1/2 + 1/4 + 1/4 + 1/4 + dots = log n  $
 ]

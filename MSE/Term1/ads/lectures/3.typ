@@ -31,7 +31,7 @@ $ T(n) = 2 dot T (frac(n, 2)) + n $
 == Мастер Теорема
 
 #example()[
-  $ T(n) = 1 dot T (frac(n, 2)) + n $
+  $ T(n) = w dot T (frac(n, 2)) + n $
   Количество слоев также $log n$, но на каждом слое теперь не $n$, а убывающая геометрическая прогрессия:
   $ n (1 + frac(1, 2) + frac(1, 4) + dots ) = Theta(1) $
 ]
@@ -53,11 +53,19 @@ $ T(n) = 2 dot T (frac(n, 2)) + n $
   3. $a > b^c ==> T(n) = Theta(n^(log_b a))$
 ]
 #proof()[
-  $ T(n) = n^c dot (1 + (frac(a, b^c)) + (frac(a, b^c))^2 + dots) $
-  #todo()
+  $ T(n) = n^c dot (1 + (frac(a, b^c)) + (frac(a, b^c))^2 + dots) = n^c sum_(i=0)^(log n) (a / b^c)^i $
+  1. $a / b^c = 1 ==> T(n) = Theta(n^c log n)$
+  2. $a / b^c < 1 ==> T(n) = Theta(n^c)$, т.к. $sum^infinity alpha^i = "const"$, т.к. при $alpha < 1$ ряд сходится.
+  3. $a/ b^c > 1$. Сумма равна $1 + alpha + alpha^2 + dots = (alpha^(k + 1) - 1) / alpha ~ a^k $. Значит :
+  $ T(n) ~ n^c (a / b^c)^(log_b n) = n^c (a^(log_b n) / undershell((b^(c dot log_b n)), n^c)) = n^(log_b a) $
 ]
 
 == Алгоритм Карацубы
-Умножаем многочлены $A(x) dot B(x)$, где $A$, $B$ --- массивы коэффициентов.
+Умножаем многочлены $A(x) dot B(x)$, где $A$, $B$ --- массивы коэффициентов. н.у.о $n = 2^k$.
 
-#todo()
+Разделим массив $A$ на два $A_1$ и $A_2$. Тогда $A(x) = A_1(x) + x^(n / 2) A_2(x)$
+
+$ A dot B = (A_1 + x^(n / 2) A_2) dot (B_1 + x^(n / 2) B_2) = A_1 dot B_1 + x^(n / 2) (A_1 B_2 + A_2 B_1) + x^n A_2 B_2 $
+Сложения и сдвиги массивов умеем за линию. Тогда $T(n) = 4 T(n / 2) + n = O(n^2)$. Заметим что
+$ A_1 B_2 + B_2 A_1 = (A_1 + A_2) (B_1 + B_2) - A_1 B_1 - A_2 B_2 $
+Получается нужно посчитать только $A_1 B_1$, $A_2 B_2, (A_1 + A_2) (B_1 + B_2)$. Тогда $T(n) = 3 T(n / 2) + n = O(n^(log_2 3))$

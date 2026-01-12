@@ -21,14 +21,17 @@
 ]
 
 = Сортировки
-- Selection Sort
-- Insertion Sort
+- Insertion Sort. Работает за $cal(O)(n + I)$, где $I$ --- количество инверсий.
+- Selection Sort. Делает всего лишь $O(n)$ swap'ов.
 #todo()
 
 = Кучи
 == Бинарная
 #todo()
 Построение за $O(n)$ -- делаем `SiftDown(i)` для $i colon.eq n dots 1$.
+== d-Куча
+#todo()
+Вместо двух детей, $d$ детей
 == Skew Heap
 Есть операция `Merge` (Meld), которая объединяет две кучи.
 - `Add` -- сделать `Merge` с кучей из одного элемента
