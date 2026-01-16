@@ -32,6 +32,15 @@
 == d-Куча
 #todo()
 Вместо двух детей, $d$ детей
+- #smallcaps[SiftUp] $cal(O)(log_d n)$
+- #smallcaps[SiftDown] $cal(O)(d log_d n)$
+- #smallcaps[Insert] $cal(O)(log_d n)$
+- #smallcaps[ExtractMin] $cal(O)(d log_d n)$
+- #smallcaps[BuildHeap] $cal(O)(n)$
+  $ T(n) = sum_(k = 1)^h d k d^(h - k) = d dot d ^h sum_(k = 1)^h k / d^k ~ d n sum_(k = 1)^h k / d^k $
+  $ A = sum_(k = 1)^infinity k / d^k quad B = sum_(k = 1)^infinity 1 / d^k = 1 / d (1 / (1 - 1/d)) = 1/(d - 1) $
+  $ A - B = sum_(k = 2)^infinity = 1/d sum_(k = 1)^infinity k / d^k = 1/d A ==> A - 1/(d - 1) = 1/d A ==> A = d / (d - 1)^2 $
+  $ T(n) = (d / (d - 1))^2 <= 4 n $
 == Skew Heap
 Есть операция `Merge` (Meld), которая объединяет две кучи.
 - `Add` -- сделать `Merge` с кучей из одного элемента

@@ -61,9 +61,9 @@ $exists C_1 med f <= C_1 dot g$. $f <= frac(C_1, C) dot C dot g = C_1 dot g$.
 ]
 
 #example()[
-  - $f = o(Theta(cal(O)(g)) ==> f = o(g)$
-  - $f = Omega(Omega(Theta(g))) ==> f = Omega(g)$
-  - $f = Theta(omega(omega(g))) ==> f = omega(g)$
+  - $f = attach(limits(o), b: <=)(attach(limits(Theta), b: =)(attach(limits(cal(O)), b: <=)(g)) ==> f = o(g)$
+  - $f = attach(limits(Omega), b: >=)(attach(limits(Omega), b: >=)(attach(limits(Theta), b: =)(g))) ==> f = Omega(g)$
+  - $f = attach(limits(Theta), b: =)(attach(limits(omega), b: >=)(attach(limits(omega), b: >=)(g))) ==> f = omega(g)$
 ]
 
 = Модель памяти

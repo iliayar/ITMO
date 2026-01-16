@@ -44,6 +44,12 @@ show link: it => [ #text(blue)[#it] ]
 
 show raw: it => {
   show regex("pin\d"): it => pin(eval(it.text.slice(3)))
+
+  show regex("#\\$.*?\\$"): match => {
+    let inner = match.text.slice(2, -1)
+    eval(inner, mode: "math")
+  }
+
   it
 }
 
