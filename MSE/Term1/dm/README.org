@@ -2,7 +2,8 @@
 
 * Lectures
 [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/all_lectures.pdf][All lectures (1)]] \\
-[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/lectures.pdf][All lectures]]
+[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/lectures.pdf][All lectures]] \\
+[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/exam.pdf][Exam]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/1.pdf][Lecture 1]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/2.pdf][Lecture 2]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/3.pdf][Lecture 3]]
@@ -17,7 +18,6 @@
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/12.pdf][lecture 12]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/13.pdf][lecture 13]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/lectures/14.pdf][lecture 14]]
-[[https://conspects.iliay.ar/MSE/Term1/dm/lectures/exam.pdf][Questions]]
 * Practice
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/1.pdf][Practice 1]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/2.pdf][Practice 2]]
