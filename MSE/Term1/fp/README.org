@@ -3,9 +3,8 @@
 * Lectures
 [[https://conspects.iliay.ar/MSE/Term1/fp/lectures/all_lectures.pdf][All lectures]] \\
 [[https://conspects.iliay.ar/MSE/Term1/fp/lectures/Notes.html][Notes]] \\
+[[https://conspects.iliay.ar/MSE/Term1/fp/lectures/exam.pdf][Exam]]
 - [[https://conspects.iliay.ar/MSE/Term1/fp/lectures/1.pdf][Lecture 1]]
-
-[[https://conspects.iliay.ar/MSE/Term1/fp/lectures/Exam.html][Questions]]
 
 * Practice
 - [[https://conspects.iliay.ar/MSE/Term1/fp/practice/2.pdf][Practice 2]]

@@ -4,6 +4,7 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 #import "@preview/cetz:0.4.0": canvas, draw
 #import "@preview/pinit:0.2.2": *
+#import "@preview/curryst:0.6.0": rule, prooftree, rule-set
 
 #let lemma = thmbox("lemma", "Лемма")
 #let theorem = thmbox("theorem", "Теорема")
