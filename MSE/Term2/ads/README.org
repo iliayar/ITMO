@@ -1,0 +1,8 @@
+#+title: Algorithms and Data Structures
+
+* Lectures
+[[https://conspects.iliay.ar/MSE/Term2/ads/lectures/lectures.pdf][Lectures]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/lectures/1.pdf][Lecture 1]]
+
+* Practice
+- [[https://conspects.iliay.ar/MSE/Term2/ads/practice/1.pdf][Practice 1]]
