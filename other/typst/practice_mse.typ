@@ -9,6 +9,7 @@
   title: none,
   date: none,
   number: none,
+  author: web_link("https://conspects.iliay.ar")[Конспекты],
   program:  "ITMO MSE y2025",
   doc
 ) = {
@@ -17,7 +18,7 @@ context if not inside_book.get() {
   set heading(numbering: "1.")
   conf_common(
     organization: program,
-    author: web_link("https://conspects.iliay.ar")[Конспекты],
+    author: author,
     meta_author: "Ilya Yaroshevskiy",
     title: [#subj. #title],
     meta_title: title,
