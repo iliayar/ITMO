@@ -1,0 +1,5 @@
+#+title: Mathematical logic
+
+* Lectures
+[[https://conspects.iliay.ar/MSE/Term2/matlog/lectures/lectures.pdf][Lectures]]
+- [[https://conspects.iliay.ar/MSE/Term2/matlog/lectures/1.pdf][Lecture 1]]
