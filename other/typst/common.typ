@@ -54,7 +54,7 @@ show raw: it => {
   it
 }
 
-show smallcaps: set text(font: "linux libertine")
+show smallcaps: set text(font: "Linux Libertine O")
 
 doc
 

@@ -1,1 +1,1 @@
-#let eval(b) = $lr(bracket.stroked.l #b bracket.stroked.r)$
+#let eval(b) = $lr(bracket.l.stroked #b bracket.r.stroked)$
