@@ -1,5 +1,5 @@
 
-// Generated at 2026-02-21 01:32:32.126049 
+// Generated at 2026-02-20 21:33:17.123781 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -43,8 +43,6 @@ using namespace std;
 
 #define INF 1e+18
 #define ALL(a) a.begin(), a.end()
-
-#define FUNC(retTy, name, args...) std::function<retTy (args)> name = [&](args) -> retTy
 
 using vint = vector<int>;
 using vint2 = vector<vint>;
@@ -110,92 +108,77 @@ ostream &operator<<(ostream &out, set<K> s) {
 std::function<void()> finish = [](){ exit(0); };
 
 //##################CODE BEGIN#############
-int log2(int n) {
-    int i = 0;
-    while (n > 0) {
-        n /= 2;
-        i++;
-    }
-    return i - 1;
-}
-
-struct V {
-    int v;
-    int idx;
+struct E {
+    int min = INF;
+    int max = -INF;
 };
 
-bool operator<(V const& lhs, V const& rhs) {
-    return lhs.v < rhs.v;
+ostream& operator<<(ostream& out, E const& e) {
+    cout << "{" << e.min << ", " << e.max << "}";
+    return out;
 }
 
+E mconcat(E const& lhs, E const& rhs) {
+    return E{.min = min(lhs.min, rhs.min), .max = max(lhs.max, rhs.max)};
+}
+
+E msingleton(int x) {
+    return E{.min = x, .max = x};
+}
+
+E mzero() {
+    return E{};
+}
+
+vector<E> tree;
+ 
+E st_update(int i, int v, int x, int lx, int rx) {
+    if(lx > i || rx <= i) {
+        return tree[x];
+    }
+    if(rx - lx == 1) {
+        tree[x] = msingleton(v);
+        return tree[x];
+    }
+    int m = (lx + rx)/2;
+    tree[x] = mconcat(st_update(i, v, x*2 + 1, lx, m), st_update(i, v, x*2 + 2, m, rx));
+    return tree[x];
+}
+ 
+E st_get(int l, int r, int x, int lx, int rx) {
+    // DBG() << "st_get [" << l << "; " << r << ") " << x << " [" << lx << "; " << rx << ")" << endl;
+    if(r <= l) {
+        return mzero();
+    }
+    if(l == lx && r == rx) {
+        return tree[x];
+    }
+    int m = (lx+rx)/2;
+    return mconcat(st_get(l,min(m,r),x*2 + 1, lx, m), st_get(max(l,m),r,x*2+2,m,rx));
+ 
+}
+ 
 //entry
 void sol() {
-    int n, m; cin >> n >> m;
-    vint2 g(n, vint{});
-    for (int i = 1; i < n; ++i) {
-        int u; cin >> u;
-        g[u].push_back(i);
+    int N = 100000;
+    tree.resize(N * 4, E{});
+    for (int i = 1; i <= N; ++i) {
+        int v = ((i * i) % 12345) + ((i * i * i) % 23456);
+        st_update(i - 1, v, 0, 0, N);
     }
-
-    vint euler;
-    vint first(n, -1);
-    vint depth(n, -1);
-
-    FUNC(void, dfs1, int u) {
-        first[u] = euler.size();
-        euler.push_back(u);
-        for (int v : g[u]) {
-            depth[v] = depth[u] + 1;
-            dfs1(v);
-            euler.push_back(u);
-        }
-    };
-    depth[0] = 0;
-    dfs1(0);
-
-    vint log(euler.size() + 1, -1);
-    for (int i = 1; i <= euler.size(); ++i) {
-        log[i] = log2(i);
-    }
-
-    vector<vector<V>> f(1 << (log[euler.size()] + 2), vector<V>(log[euler.size()] + 1, V(INF, -1)));
-    for (int i = 0; i < euler.size(); ++i) {
-        f[i][0].v = depth[euler[i]];
-        f[i][0].idx = i;
-    }
-    for (int k = 0; k < log[euler.size()]; ++k) {
-        for (int i = 0; i < euler.size(); ++i) {
-            f[i][k + 1] = min(f[i][k], f[i + (1 << k)][k]);
-        }
-    }
-
-    int a1, a2; cin >> a1 >> a2;
-    int x, y, z; cin >> x >> y >> z;
-
-    int ans = 0;
-    int v = 0;
-    for (int q = 1; q <= m; ++q) {
-        int u = (a1 + v) % n;
-        int w = a2;
-
-        int l = first[u];
-        int r = first[w];
-        if (l > r) swap(l, r);
-        int k = log[r - l];
-        if (k == -1) {
-            v = u;
+    // DBG() << tree << endl;
+    int k; cin >> k;
+    for (int i = 0; i < k; ++i) {
+        int x, y; cin >> x >> y;
+        if (x > 0) {
+            auto e = st_get(x - 1, y, 0, 0, N);
+            // DBG() << e.max << " " << e.min << endl;
+            cout << e.max - e.min << endl;
         } else {
-            auto res = min(f[l][k], f[r - (1 << k)][k]); 
-            DBG() << u << " " << w << " " << r << " " << l << " " << k << " " << res.idx << endl;
-            v = euler[res.idx];
+            x = -x;
+            st_update(x - 1, y, 0, 0, N);
         }
-        ans += v;
-
-        a1 = (x * a1 + y * a2 + z) % n;
-        a2 = (x * a2 + y * a1 + z) % n;
     }
-
-    cout << ans << endl;
 }
 //##################CODE END###############
 #ifdef LOCAL

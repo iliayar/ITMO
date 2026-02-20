@@ -1,5 +1,5 @@
 
-// Generated at 2026-02-21 01:32:32.126049 
+// Generated at 2026-02-20 23:21:25.520039 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -116,86 +116,84 @@ int log2(int n) {
         n /= 2;
         i++;
     }
-    return i - 1;
+    return i;
 }
 
-struct V {
-    int v;
-    int idx;
+struct E {
+    int to;
+    int w;
 };
-
-bool operator<(V const& lhs, V const& rhs) {
-    return lhs.v < rhs.v;
-}
 
 //entry
 void sol() {
-    int n, m; cin >> n >> m;
-    vint2 g(n, vint{});
-    for (int i = 1; i < n; ++i) {
-        int u; cin >> u;
-        g[u].push_back(i);
+    int n; cin >> n;
+    vector<vector<E>> g(n, vector<E>{});
+    for (int u = 1; u < n; ++u) {
+        int v, w; cin >> v >> w; v--;
+        g[u].emplace_back(v, w);
+        g[v].emplace_back(u, w);
     }
-
-    vint euler;
-    vint first(n, -1);
+    int log2n = log2(n);
     vint depth(n, -1);
+    vint2 up(n, vint(log2n + 1, -1));
+    vint2 d(n, vint(log2n + 1, INF));
+    depth[0] = 0;
+    up[0][0] = 0;
 
-    FUNC(void, dfs1, int u) {
-        first[u] = euler.size();
-        euler.push_back(u);
-        for (int v : g[u]) {
-            depth[v] = depth[u] + 1;
-            dfs1(v);
-            euler.push_back(u);
+    FUNC(void, dfs, int u) {
+        for (auto& e : g[u]) {
+            if (up[e.to][0] == -1) {
+                up[e.to][0] = u;
+                d[e.to][0] = e.w;
+                depth[e.to] = depth[u] + 1;
+                dfs(e.to);
+            }
         }
     };
-    depth[0] = 0;
-    dfs1(0);
+    dfs(0);
 
-    vint log(euler.size() + 1, -1);
-    for (int i = 1; i <= euler.size(); ++i) {
-        log[i] = log2(i);
-    }
-
-    vector<vector<V>> f(1 << (log[euler.size()] + 2), vector<V>(log[euler.size()] + 1, V(INF, -1)));
-    for (int i = 0; i < euler.size(); ++i) {
-        f[i][0].v = depth[euler[i]];
-        f[i][0].idx = i;
-    }
-    for (int k = 0; k < log[euler.size()]; ++k) {
-        for (int i = 0; i < euler.size(); ++i) {
-            f[i][k + 1] = min(f[i][k], f[i + (1 << k)][k]);
+    for (int k = 0; k < log2n; ++k) {
+        for (int i = 0; i < n; ++i) {
+            up[i][k + 1] = up[up[i][k]][k];
+            d[i][k + 1] = min(d[i][k], d[up[i][k]][k]);
         }
     }
 
-    int a1, a2; cin >> a1 >> a2;
-    int x, y, z; cin >> x >> y >> z;
+    DBG() << depth << endl;
 
-    int ans = 0;
-    int v = 0;
-    for (int q = 1; q <= m; ++q) {
-        int u = (a1 + v) % n;
-        int w = a2;
 
-        int l = first[u];
-        int r = first[w];
-        if (l > r) swap(l, r);
-        int k = log[r - l];
-        if (k == -1) {
-            v = u;
-        } else {
-            auto res = min(f[l][k], f[r - (1 << k)][k]); 
-            DBG() << u << " " << w << " " << r << " " << l << " " << k << " " << res.idx << endl;
-            v = euler[res.idx];
+    FUNC(int, lca, int u, int v) {
+        if (depth[u] < depth[v]) swap(u, v); 
+        int ud = INF, vd = INF;
+        for (int i = log2n; i >= 0; --i) {
+            if (depth[v] + (1 << i) <= depth[u]) {
+                ud = min(ud, d[u][i]);
+                u = up[u][i];
+            }
         }
-        ans += v;
 
-        a1 = (x * a1 + y * a2 + z) % n;
-        a2 = (x * a2 + y * a1 + z) % n;
+        for (int i = log2n; i >= 0; --i) {
+            if (up[v][i] != up[u][i]) {
+                ud = min(ud, d[u][i]);
+                vd = min(vd, d[v][i]);
+                v = up[v][i];
+                u = up[u][i];
+            }
+        }
+
+        if (u != v) {
+            vd = min(vd, d[v][0]);
+            ud = min(ud, d[u][0]);
+        }
+
+        return min(vd, ud);
+    };
+
+    int m; cin >> m;
+    for (int i = 0; i < m; ++i) {
+        int u, v; cin >> u >> v; u--; v--;
+        cout << lca(u, v) << endl;
     }
-
-    cout << ans << endl;
 }
 //##################CODE END###############
 #ifdef LOCAL

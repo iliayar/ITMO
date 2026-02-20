@@ -8,7 +8,7 @@ run: task
 	./task
 
 submit: task.cpp
-	[ -e .cf ] && cfcli submit task.cpp
+	[ -e .cf ] && cfcli submit task.cpp --no-test
 
 cfcli-task: task.cpp
 	@clang++ -O0 -g task.cpp -o cfcli-task -std=c++23

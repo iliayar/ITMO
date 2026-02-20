@@ -1,5 +1,5 @@
 
-// Generated at 2026-02-21 01:32:32.126049 
+// Generated at 2026-02-20 21:53:33.616259 
 // By iliayar
 #define _USE_MATH_DEFINES
 #pragma comment(linker, "/STACK:36777216")
@@ -43,8 +43,6 @@ using namespace std;
 
 #define INF 1e+18
 #define ALL(a) a.begin(), a.end()
-
-#define FUNC(retTy, name, args...) std::function<retTy (args)> name = [&](args) -> retTy
 
 using vint = vector<int>;
 using vint2 = vector<vint>;
@@ -110,92 +108,43 @@ ostream &operator<<(ostream &out, set<K> s) {
 std::function<void()> finish = [](){ exit(0); };
 
 //##################CODE BEGIN#############
-int log2(int n) {
-    int i = 0;
-    while (n > 0) {
-        n /= 2;
-        i++;
+int t = 0;
+vint tin;
+vint tout;
+vector<vector<int>> g;
+
+void dfs(int v) {
+    tin[v] = t++; 
+    for (int u : g[v]) {
+        dfs(u);
     }
-    return i - 1;
-}
-
-struct V {
-    int v;
-    int idx;
-};
-
-bool operator<(V const& lhs, V const& rhs) {
-    return lhs.v < rhs.v;
+    tout[v] = t++;
 }
 
 //entry
 void sol() {
-    int n, m; cin >> n >> m;
-    vint2 g(n, vint{});
-    for (int i = 1; i < n; ++i) {
-        int u; cin >> u;
-        g[u].push_back(i);
-    }
-
-    vint euler;
-    vint first(n, -1);
-    vint depth(n, -1);
-
-    FUNC(void, dfs1, int u) {
-        first[u] = euler.size();
-        euler.push_back(u);
-        for (int v : g[u]) {
-            depth[v] = depth[u] + 1;
-            dfs1(v);
-            euler.push_back(u);
+    int n; cin >> n; 
+    g.resize(n, vector<int>{});
+    tin.resize(n, -1);
+    tout.resize(n, -1);
+    int root = -1;
+    for (int i = 0; i < n; ++i) {
+        int u; cin >> u; u--;
+        if (u == -1) {
+            root = i;
         }
-    };
-    depth[0] = 0;
-    dfs1(0);
-
-    vint log(euler.size() + 1, -1);
-    for (int i = 1; i <= euler.size(); ++i) {
-        log[i] = log2(i);
-    }
-
-    vector<vector<V>> f(1 << (log[euler.size()] + 2), vector<V>(log[euler.size()] + 1, V(INF, -1)));
-    for (int i = 0; i < euler.size(); ++i) {
-        f[i][0].v = depth[euler[i]];
-        f[i][0].idx = i;
-    }
-    for (int k = 0; k < log[euler.size()]; ++k) {
-        for (int i = 0; i < euler.size(); ++i) {
-            f[i][k + 1] = min(f[i][k], f[i + (1 << k)][k]);
+        else {
+            g[u].push_back(i);
         }
     }
 
-    int a1, a2; cin >> a1 >> a2;
-    int x, y, z; cin >> x >> y >> z;
+    dfs(root);
 
-    int ans = 0;
-    int v = 0;
-    for (int q = 1; q <= m; ++q) {
-        int u = (a1 + v) % n;
-        int w = a2;
-
-        int l = first[u];
-        int r = first[w];
-        if (l > r) swap(l, r);
-        int k = log[r - l];
-        if (k == -1) {
-            v = u;
-        } else {
-            auto res = min(f[l][k], f[r - (1 << k)][k]); 
-            DBG() << u << " " << w << " " << r << " " << l << " " << k << " " << res.idx << endl;
-            v = euler[res.idx];
-        }
-        ans += v;
-
-        a1 = (x * a1 + y * a2 + z) % n;
-        a2 = (x * a2 + y * a1 + z) % n;
+    int m; cin >> m;
+    for (int i = 0; i < m; ++i) {
+        int u, v; cin >> u >> v; u--; v--;
+        cout << (int)(tin[u] <= tin[v] && tout[v] <= tout[u]) << endl;
     }
-
-    cout << ans << endl;
 }
 //##################CODE END###############
 #ifdef LOCAL

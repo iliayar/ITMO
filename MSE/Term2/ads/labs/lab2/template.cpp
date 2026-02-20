@@ -41,6 +41,8 @@ using namespace std;
 #define INF 1e+18
 #define ALL(a) a.begin(), a.end()
 
+#define FUNC(retTy, name, args...) std::function<retTy (args)> name = [&](args) -> retTy
+
 using vint = vector<int>;
 using vint2 = vector<vint>;
 
