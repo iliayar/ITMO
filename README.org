@@ -10,7 +10,8 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspe
 ** Year 1
 *** Term 2
 **** [[file:MSE/Term2/ads/README.org][Algorithms and Data Structures]]
-**** [[file:MSE/Term2/matlog/README.org][Mathematical logic]]
+**** [[file:MSE/Term2/matlog/README.org][Logic]]
+**** [[file:MSE/Term2/ms/README.org][Statistics]]
 *** Term 1
 **** [[file:MSE/Term1/dm/README.org][Discrete Math]]
 **** [[file:MSE/Term1/ml/README.org][Machine Learning]]

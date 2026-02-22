@@ -1,4 +1,4 @@
-#+title: Mathematical logic
+#+title: logic
 
 * Lectures
 [[https://conspects.iliay.ar/MSE/Term2/matlog/lectures/lectures.pdf][Lectures]]
