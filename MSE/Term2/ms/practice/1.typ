@@ -2,7 +2,7 @@
 
 #show: doc => practice(
   subj: [Математическая Статистика],
-  title: [Практика 2],
+  title: [Практика 1],
   date: [19 февраля],
   number: 1,
   doc
