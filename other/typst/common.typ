@@ -6,6 +6,7 @@
 #import "@preview/pinit:0.2.2": *
 #import "@preview/curryst:0.6.0": rule, prooftree, rule-set
 #import "@preview/icu-datetime:0.2.0" as icu
+#import "@preview/finite:0.5.0" as finite: automaton
 
 #let lemma = thmbox("lemma", "Лемма")
 #let theorem = thmbox("theorem", "Теорема")
