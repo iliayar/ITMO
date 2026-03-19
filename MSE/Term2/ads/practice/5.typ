@@ -1,4 +1,3 @@
-
 #import "common.typ": *
 
 #show: doc => practice(
