@@ -1,7 +1,8 @@
 #+title: Statistics
 
 * Lectures
-[[https://conspects.iliay.ar/MSE/Term2/ms/lectures/lectures.pdf][Lectures]]
+[[https://conspects.iliay.ar/MSE/Term2/ms/lectures/lectures.pdf][Lectures]] \\
+[[https://conspects.iliay.ar/MSE/Term2/ms/lectures/test.pdf][Notes]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/1.pdf][Lecture 1]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/2.pdf][Lecture 2]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/3.pdf][Lecture 3]]
