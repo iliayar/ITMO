@@ -15,7 +15,7 @@
       systems =
         [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }: {
-        denvs.default = { langs.cpp.enable = true; langs.python.enable = true; denv.packages = with pkgs; [ lldb ]; };
+        denvs.default = { langs.cpp.enable = true; langs.python.enable = true; denv.packages = with pkgs; [ lldb rustc rustfmt rust-analyzer ]; };
       };
       flake = { };
     };
