@@ -10,6 +10,7 @@
 - [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/5.pdf][Lecture 5]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/6.pdf][Lecture 6]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/7.pdf][Lecture 7]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/lectures/8.pdf][Lecture 8]]
 
 * Practice
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/1.pdf][Practice 1]]
@@ -19,3 +20,4 @@
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/5.pdf][Practice 5]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/6.pdf][Practice 6]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/7.pdf][Practice 7]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/practice/8.pdf][Practice 8]]
