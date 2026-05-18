@@ -14,9 +14,9 @@ struct N {
 
 template <typename g, typename... fs> struct S {
 
-  template <int... xs> using _g = typename g::eval<xs...>;
+  template <int... xs> using _g = typename g::template eval<xs...>;
 
-  template <typename f, int... xs> using _f = typename f::eval<xs...>;
+  template <typename f, int... xs> using _f = typename f::template eval<xs...>;
 
   template <int... xs> struct eval {
     enum { value = _g<_f<fs, xs...>::value...>::value };
@@ -40,9 +40,9 @@ template <int l> struct P {
 
 template <typename f, typename g> struct R {
 
-  template <int... xs> using _g = typename g::eval<xs...>;
+  template <int... xs> using _g = typename g::template eval<xs...>;
 
-  template <int... xs> using _f = typename f::eval<xs...>;
+  template <int... xs> using _f = typename f::template eval<xs...>;
 
   template <int y, int... xs> struct eval {
     enum {
