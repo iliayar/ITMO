@@ -10,6 +10,7 @@
   date: none,
   number: none,
   program:  "ITMO MSE y2025",
+  with_outline: true,
   doc
 ) = {
 
@@ -22,6 +23,7 @@ context if not inside_book.get() {
     title: [#subj. #title],
     meta_title: title,
     date: date,
+    with_outline: with_outline,
     doc
   )
 } else [
@@ -107,11 +109,13 @@ set page(
   ],
 )
 
-v(48pt)
-outline(indent: auto, title: [
-  #text(24pt)[Оглавление]
-  #v(24pt)
-])
+if with_outline {
+  v(48pt)
+  outline(indent: auto, title: [
+    #text(24pt)[Оглавление]
+    #v(24pt)
+  ])
+}
 
 pagebreak()
 

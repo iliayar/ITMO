@@ -8,6 +8,7 @@
   meta_title: none,
   meta_description: none,
   date: none,
+  with_outline: true,
   doc
 ) = {
 set document(
@@ -56,7 +57,9 @@ align(center, [
   #date
 ])
 
-outline(indent: auto, title: [Содержание])
+if with_outline {
+  outline(indent: auto, title: [Содержание])
+}
 
 
 setup_common(doc)
