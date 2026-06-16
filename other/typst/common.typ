@@ -8,10 +8,10 @@
 #import "@preview/icu-datetime:0.2.0" as icu
 #import "@preview/finite:0.5.0" as finite: automaton
 
-#let lemma = thmbox("lemma", "Лемма")
-#let theorem = thmbox("theorem", "Теорема")
+#let lemma = thmbox("lemma", "Лемма").with(inset: (x: 1em, y: 0em))
+#let theorem = thmbox("theorem", "Теорема").with(inset: (x: 1em, y: 0em))
 
-#let proof = thmproof("proof", [Доказательство])
+#let proof = thmproof("proof", [Доказательство]).with(inset: (x: 1em, y: 0em))
 
 #let corollary_of = base => thmplain("corollary", [_Следствие_]).with(base: base)
 #let corollary_def = corollary_of("definition")
@@ -19,7 +19,7 @@
 #let corollary_statement = corollary_of("statement")
 #let corollary = corollary_of("theorem")
 
-#let definition = thmbox("definition", "Определение")
+#let definition = thmbox("definition", "Определение").with(inset: (x: 1em, y: 0em))
 #let symb = thmplain("symbol", [*Обозначение*]).with(numbering: none)
 
 #let example = thmplain("example", "Пример").with(numbering: none)
