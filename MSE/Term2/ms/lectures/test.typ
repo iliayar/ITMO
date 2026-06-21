@@ -9,19 +9,53 @@
   doc
 )
 
+#let practice-color = rgb("#87CEFA")
+
 #definition[
   $cal(P)$ --- распределение на прямой. 
-  - $X_1, dots, X_n$ --- н.о.р.с.в. с распределением $cal(P)$ --- *выборка*. (до эксперимена)
-  - $X_1, dots, X_n$ --- числа --- *выборка*. (после эксперимента)
+  - $X_1, dots, X_n$ --- н.о.р.с.в. с распределением $cal(P)$ --- *выборка*. (до эксперимента) (на генеральном уровне)
+  - $X_1, dots, X_n$ --- числа --- *выборка*. (после эксперимента) (на выборочном уровне)
 ]
 
 #definition[
   *Выборочное (эмпирическое) распределение* --- дискретное равномерное распределение с атомами в точках выборки
-  $ overline(cal(P)_n) = mat(X_1, dots, X_n; 1/n, dots, 1/n) $
+  $ overline(cal(P))_n = mat(X_1, dots, X_n; 1/n, dots, 1/n) $
 ]
 
 #definition[
-  *Выборочная характеристика*. $Pi$ --- множество всех распределение на прямой. $T : Pi -> overline(RR) = RR union {+infinity}$ --- характреистика. $T(cal(P))$ --- генеральная характеристика, $T(overline(cal(P)_n))$ --- эмпирическая характеристика
+  *Выборочная характеристика*. $Pi$ --- множество всех распределение на прямой. $T : Pi -> overline(RR) = RR union {+infinity}$ --- характеристика. $T(cal(P))$ --- генеральная характеристика, $T(overline(cal(P))_n)$ --- эмпирическая характеристика
+]
+
+#example[
+  Характеристики:
+  - Математическое ожидание
+    $ m_1 = T (cal(P)) = integral_RR z cal(P)(d z) $
+    $ overline(X) = overline(m_1) = T(overline(cal(P))_n) = integral_RR z overline(cal(P))_n (d z) = sum_(i = 1)^n X_i 1 / n = 1/n sum_(i = 1)^n X_i $
+  - Дисперсия
+    $ sigma^2 = T(cal(P)) = integral_RR (z - m)^2 cal(P)(d z) = integral_RR z^2 cal(P)(d z) - m_1^2 $
+    $ overline(s)_n^2 = T(overline(cal(P))_n) = 1/n sum_(i = 1)^n (X_i - overline(X))^2 $
+  - Стандартное отклонение $sigma = sqrt(sigma^2)$. $overline(s)_n = sqrt(overline(s)_n^2)$
+  - Момента
+    $ m_k = integral_RR z^k cal(P)(d z) $
+    $ overline(m)_k = 1/n sum_(i = 1)^n X_i^k $
+  - Центральный момент
+    $ m^((0))_k = integral_RR (z - m_1)^k cal(P)(d z) $
+    $ overline(m)^((0))_k = 1/n sum_(i = 1) (X_i - overline(X))^k $
+
+    $ sigma^2 = m_2 - m_1^2 quad overline(s)_n^2 = overline(m)_2 - overline(m)_1^2 $
+  - Ковариация. $(X_i, Y_i)$
+    $ "cov"(X, Y) = integral_RR (u - m_X) (v - m_Y) cal(P)(d u d v) $
+    $ overline("cov")(X, Y) = 1/n sum_(i = 1)^n (X_i - overline(X))(Y_i - overline(Y)) $
+  - Корреляция
+    $ r(X, Y) = "cov"(X, Y) / (sigma_X sigma_Y) $
+  - Функция распределения в точке
+    $ F(z) = T(cal(P)) = PP(X_i < z) = cal(P)((-infinity, z)) $
+    $ overline(F)_n (z) = overline(cal(P))_n ((-infinity, z)) $
+]
+
+#definition[
+  Эмпирическая функция распределения
+    $ overline(F)_n (z) = overline(cal(P))_n ((-infinity, z)) = (\#{X_i < z}) / n $
 ]
 
 #remark(fill: rgb("#FFD580"), inset: 1em)[
@@ -43,7 +77,19 @@
 ]
 
 #definition[
+  $z_p$ --- квантиль уровня $p$, где $0 < p < 1$, если $F(z_p) = p$.
+]
+
+#definition[
   $z_p$ --- *$p$-квантиль* для $cal(P)$, если $z_p = sup { z : F(z) < p }$. Эмпирические квантили $overline(z_p) = sup {z : overline(F_n)(z) <= p}$
+]
+
+#remark[
+  Выборочная медиана:
+  - $n = 2k + 1$ --- $overline(z)_(1 / 2) = X_([k + 1])$
+  - $n = 2k$
+    - $overline(z)_(1 / 2) = X_([k + 1])$
+    - $overline(z)_(1 / 2) = 1/2 (X_([k]) + X_([k + 1]))$
 ]
 
 #definition[
@@ -62,6 +108,18 @@
   - $X_n^((k)) ->^PP z_k = "const"$
   $f$ --- функция $k$ переменных, непрерывная в окрестности $(z_1, dots, z_k)$. $f : RR^n -> RR$. Тогда
   $ f(X_n^((1)), dots, X_n^((k))) ->^PP f(z_1, dots, z_k) $
+]
+
+#example[
+  Хотим показать что $overline(s)_n^2 ->^PP sigma^2$. $overline(s)_n^2 = overline(m)_2 - overline(m)_1^2$. И при этом $overline(m)_2 -> m_2$ и $overline(m)_1 -> m_1$. Тогда если возьмем $f(x, y) = x - y^2$ то можем применить утверждение выше: 
+  $ f(overline(m)_2, overline(m)_1^2) = overline(m)_2 - overline(m)_1^2 -> m_2 - m_1^2 = sigma^2 $
+]
+
+#example[
+  $overline(F)_n (x) ->^PP F(x)$?
+  Введем $Y_i := bb(1)_{X_i < x}$
+  $ PP(Y_i = 1) = PP(X_i < X) = F(x) $
+  $ overline(F)_n (x) = (\#{X_i < X}) / n = 1 / n sum_(i = 1)^n Y_i = overline(Y) $
 ]
 
 #theorem("Гливенко-Кантелли")[
@@ -85,6 +143,19 @@
   - $DD X = (b - a)^2 / 12$
   $ f_X (x) = cases(1 / (b - a)"," quad & x in [a, b], 0"," & x in.not [a, b]) $
   $ F_X (x) equiv PP(X < x) = cases(0"," quad & x < a, (x - a) / (b - a)"," & a <= x < b, 1"," & x >= b) $
+]
+
+#remark(fill: practice-color, inset: 1em)[
+  1. $forall theta thick EE_theta T_n = theta$ --- несмещенность
+  2. $forall theta thick EE_theta T_n ->_(n -> +infinity) theta$ --- ассимптотически несмещенная
+  3. $T_n ->^PP theta$ --- состоятельная оценка
+
+  #remark[
+    Если оценка несмещенная и $DD X_i -> 0$, то оценка состоятельная
+  ]
+  #remark[
+    $ DD (X + Y) <= (sqrt(DD X) + sqrt(DD Y))^2 $
+  ]
 ]
 
 #remark(fill: rgb("#87CEFA"), inset: 1em)[
@@ -544,8 +615,8 @@
   $X_1, dots, X_2 ~ cal(N)(a_1, sigma^2)$, $Y_1, dots, Y_m ~ cal(N)(a_2, sigma^2)$
   - Дисперсии известны и равны.
     $ overline(X) ~ cal(N)(a_1, sigma^2 / n) quad overline(Y) ~ cal(N)(a_2, sigma^2 / m) $
-    $ overline(X) - overline(Y) ~ cal(N)(a_1 - a_2, sigma^2 (1 / n - 1 / m)) $
-    $ T := (overline(X) - overline(Y)) / (sigma sqrt(1/n - 1/m)) ~ cal(N)(a_1 - a_2, 1) $
+    $ overline(X) - overline(Y) ~ cal(N)(a_1 - a_2, sigma^2 (1 / n + 1 / m)) $
+    $ T := (overline(X) - overline(Y)) / (sigma sqrt(1/n + 1/m)) ~ cal(N)(a_1 - a_2, 1) $
     - $H_0 : a_1 = a_2$, $H_1 : a_1 != a_2$. Область принятия $H_0$: $z_(alpha / 2) <= T <= z_(1 - alpha / 2)$
     - $H_1 : a_1 < a_2$: $z_(alpha) <= T$
     - $H_1 : a_2 > a_2$: $T <= z_(1 - alpha)$
