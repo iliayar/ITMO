@@ -3,7 +3,7 @@
 #show: doc => lecture(
   subj: [Математическая статистика],
   title: [Вопросы к экзамену],
-  date: [19 июня],
+  date: [25 июня],
   number: 0,
   program: "ITMO MSE y2025",
   with_outline: false,
@@ -212,7 +212,7 @@
   $ l(theta) = 1/n sum_(i = 1)^n log p_theta / p_(theta_0) (X_i) $
   $ EE l(theta) (X) = integral log p_theta / p_(theta_0) (y) p_theta (y) d y <= 0 $
   Из этого следует что
-  1. $theta_P in Theta^*$, т.е. интеграл равняется $0$.
+  1. $theta_0 in Theta^*$, т.е. интеграл равняется $0$.
 ]
 
 #statement[
@@ -298,9 +298,9 @@
 
 #remark[
   1. Фиксируем $gamma$
-  2. Выбираем $z_1, z_2$: $G_n(z_2) - G_n(z_1) = gamma$
+  2. Выбираем $z_1, z_2$: $G_n (z_2) - G_n (z_1) = gamma$
   3. $
-      gamma = G_n(z_2) - G_n(z_1) = PP(z_1 < g(X_1, dots, X_n; theta) < z_2) = \
+      gamma = G_n (z_2) - G_n (z_1) = PP(z_1 < g(X_1, dots, X_n; theta) < z_2) = \
       = PP(f_1(X_1, dots, X_n; z_1, z_2) < theta < f_1(X_1, dots, X_n; z_1, z_2))
     $
 ]
