@@ -10,3 +10,8 @@
 - [[https://conspects.iliay.ar/MSE/Term1/fp/practice/2.pdf][Practice 2]]
 - [[https://conspects.iliay.ar/MSE/Term1/fp/practice/3.pdf][Practice 3]]
 - [[https://conspects.iliay.ar/MSE/Term1/fp/practice/4.pdf][Practice 4]]
+
+* Homeworks
+- [[https://conspects.iliay.ar/MSE/Term1/fp/hw/1.pdf][HW 1]]
+- [[https://conspects.iliay.ar/MSE/Term1/fp/hw/2.pdf][HW 2]]
+- [[https://conspects.iliay.ar/MSE/Term1/fp/hw/3.pdf][HW 3]]
