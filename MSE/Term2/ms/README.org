@@ -23,3 +23,19 @@
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/7.pdf][Practice 7]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/8.pdf][Practice 8]]
 - [[https://conspects.iliay.ar/MSE/Term2/ms/practice/9.pdf][Practice 9]]
+
+* Homeworks
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/1.pdf][HW 1]] \\
+  [[file:hw/statements_1.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/2.pdf][HW 2]] \\
+  [[file:hw/statements_2.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/3.pdf][HW 3]] \\
+  [[file:hw/statements_3.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/4.pdf][HW 4]] \\
+  [[file:hw/statements_4.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/5.pdf][HW 5]] \\
+  [[file:hw/statements_5.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/6.pdf][HW 6]] \\
+  [[file:hw/statements_6.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ms/hw/7.pdf][HW 7]] \\
+  [[file:hw/statements_7.pdf][Statements]]
