@@ -24,3 +24,44 @@
 - [[https://conspects.iliay.ar/MSE/Term1/ads/practice/6.pdf][Practice 6]]
 - [[https://conspects.iliay.ar/MSE/Term1/ads/practice/7.pdf][Practice 7]]
 - [[https://conspects.iliay.ar/MSE/Term1/ads/practice/8.pdf][Practice 8]]
+
+* Homeworks
+[[https://conspects.iliay.ar/MSE/Term1/ads/hw/statements.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/1.pdf][HW 1]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/2.pdf][HW 2]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/3.pdf][HW 3]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/4.pdf][HW 4]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/5.pdf][HW 5]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/6.pdf][HW 6]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/7.pdf][HW 7]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/8.pdf][HW 8]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/9.pdf][HW 9]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/10.pdf][HW 10]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/11.pdf][HW 11]]
+- [[https://conspects.iliay.ar/MSE/Term1/ads/hw/12.pdf][HW 12]]
+
+* Contests
+- [[file:labs/lab1/][задачи на циклы for]] \\
+  [[file:labs/lab1/statements.pdf][Statements]]
+- [[file:labs/lab2/][циклы и простые структуры данных]] \\
+  [[file:labs/lab2/statements.pdf][Statements]]
+- [[file:labs/lab3/][двоичный поиск]] \\
+  [[file:labs/lab3/statements.pdf][Statements]]
+- [[file:labs/lab4/][куча и сортировки]] \\
+  [[file:labs/lab4/statements.pdf][Statements]]
+- [[file:labs/lab5/][QuickSort]] \\
+  [[file:labs/lab5/statements.pdf][Statements]]
+- [[file:labs/lab6/][сортировки и перебор]] \\
+  [[file:labs/lab6/statements.pdf][Statements]]
+- [[file:labs/lab7/][демоническое программирование]] \\
+  [[file:labs/lab7/statements.pdf][Statements]]
+- [[file:labs/lab8/][динамическое программирование #2]] \\
+  [[file:labs/lab8/statements.pdf][Statements]]
+- [[file:labs/lab9/][жадные алгоритмы]] \\
+  [[file:labs/lab9/statements.pdf][Statements]]
+- [[file:labs/lab10/][DSU, MST]] \\
+  [[file:labs/lab10/statements.pdf][Statements]]
+- [[file:labs/lab11/][DFS]] \\
+  [[file:labs/lab11/statements.pdf][Statements]]
+- [[file:labs/lab12/][кратчайшие пути]] \\
+  [[file:labs/lab12/statements.pdf][Statements]]

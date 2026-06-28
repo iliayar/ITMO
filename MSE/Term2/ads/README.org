@@ -13,3 +13,45 @@
 - [[https://conspects.iliay.ar/MSE/Term2/ads/practice/3.pdf][Practice 3]]
 - [[https://conspects.iliay.ar/MSE/Term2/ads/practice/4.pdf][Practice 4]]
 - [[https://conspects.iliay.ar/MSE/Term2/ads/practice/5.pdf][Practice 5]]
+
+* Homeworks
+[[https://conspects.iliay.ar/MSE/Term2/ads/hw/statements.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/2.pdf][HW 2]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/3.pdf][HW 3]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/4.pdf][HW 4]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/5.pdf][HW 5]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/6.pdf][HW 6]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/7.pdf][HW 7]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/8.pdf][HW 8]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/9.pdf][HW 9]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/10.pdf][HW 10]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/11.pdf][HW 11]]
+- [[https://conspects.iliay.ar/MSE/Term2/ads/hw/12.pdf][HW 12]]
+
+* Contests
+- [[file:labs/lab1/][кратчайшие пути #2]] \\
+  [[file:labs/lab1/statements.pdf][Statements]]
+- [[file:labs/lab2/][RMQ, LCA]] \\
+  [[file:labs/lab2/statements.pdf][Statements]]
+- [[file:labs/lab3/][BST]] \\
+  [[file:labs/lab3/statements.pdf][Statements]]
+- [[file:labs/lab4/][implicit key]] \\
+  [[file:labs/lab4/statements.pdf][Statements]]
+- [[file:labs/lab5/][продвинутое дерево отрезков и корневая декомпозиция]] \\
+  [[file:labs/lab5/statements.pdf][Statements]]
+- [[file:labs/lab6/][хеширование]] \\
+  [[file:labs/lab6/statements.pdf][Statements]]
+- [[file:labs/lab7/][хеширование #2]] \\
+  [[file:labs/lab7/statements.pdf][Statements]]
+- [[file:labs/lab8/][Гаусс, теория чисел, криптография]] \\
+  [[file:labs/lab8/statements.pdf][Statements]]
+- [[file:labs/lab9/][FFT]] \\
+  [[file:labs/lab9/statements.pdf][Statements]]
+- [[file:labs/lab10/][потоки]] \\
+  [[file:labs/lab10/statements.pdf][Statements]]
+- [[file:labs/lab11/][потоки + LP]] \\
+  [[file:labs/lab11/statements.pdf][Statements]]
+- [[file:labs/lab12/][cтроки #1]] \\
+  [[file:labs/lab12/statements.pdf][Statements]]
+- [[file:labs/lab13/][cтроки #2]] \\
+  [[file:labs/lab13/statements.pdf][Statements]]

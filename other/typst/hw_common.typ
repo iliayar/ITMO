@@ -16,6 +16,8 @@
   inset: (top: 0pt),
 )
 
+#let partial-solution = [#box(stroke: red, inset: 4pt, baseline: 4pt)[#text(fill: orange, [*Не полный балл*])]]
+
 #let hw_with_header(header, doc) = {
   set page(
     footer: context [

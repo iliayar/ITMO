@@ -1,3 +1,5 @@
 local.in
 local.out
 .cf
+
+!*.pdf

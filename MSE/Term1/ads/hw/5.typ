@@ -39,7 +39,7 @@
 
 #line(length: 100%)
 #task(numbering: (_, n) => numbering("1", 2))[]
-#lemma(numbering: (_, _, n) => numbering("1.1", 2, n))[
+#lemma(numbering: (..ns) => numbering("1.1", 2, ns.at(0)))[
   Отношение $s_1 prec s_2$ заданное как $s_1 + s_2 < s_2 + s_1$ транзитивно
 ] <str-trans>
 #proof()[
@@ -112,6 +112,8 @@
 
   // #todo()
   // Такой поиск будет работать в $cal(O)(log m)$ раз дольше чем обычный, т.е. в итоге $cal(O)(n log m + m log m)$ 🤷.
+
+  #partial-solution
 ]
 
 #line(length: 100%)
