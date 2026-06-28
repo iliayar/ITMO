@@ -13,6 +13,7 @@ All conspects written in [[https://orgmode.org/][Org Mode]] and [[https://conspe
 **** [[file:MSE/Term2/matlog/README.org][Logic]]
 **** [[file:MSE/Term2/ms/README.org][Statistics]]
 **** [[file:MSE/Term2/fl/README.org][Formal Languages]]
+**** [[file:MSE/Term2/tt/README.org][Types and Programming Languages]]
 *** Term 1
 **** [[file:MSE/Term1/dm/README.org][Discrete Math]]
 **** [[file:MSE/Term1/ml/README.org][Machine Learning]]

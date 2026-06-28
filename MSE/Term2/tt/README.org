@@ -1,0 +1,26 @@
+#+title: Types and Programming Languages
+
+* Practice
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/1.pdf][Practice 1]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/2.pdf][Practice 2]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/3.pdf][Practice 3]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/4.pdf][Practice 4]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/5.pdf][Practice 5]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/6.pdf][Practice 6]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/7.pdf][Practice 7]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/8.pdf][Practice 8]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/9.pdf][Practice 9]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/10.pdf][Practice 10]]
+- [[https://conspects.iliay.ar/MSE/Term2/tt/practice/11.pdf][Practice 11]]
+
+* Howeworks
+- [[file:hw/1/][HW 1]]
+- [[file:hw/2/][HW 2]]
+- [[file:hw/3/][HW 3]]
+- [[file:hw/4/][HW 4]]
+- [[file:hw/5/][HW 5]]
+- [[file:hw/6/][HW 6]]
+- [[file:hw/7/][HW 7]]
+- [[file:hw/8/][HW 8]]
+- [[file:hw/9/][HW 9]]
+- [[file:hw/10/][HW 10]]
