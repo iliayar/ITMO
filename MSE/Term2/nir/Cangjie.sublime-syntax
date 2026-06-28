@@ -1,0 +1,297 @@
+%YAML 1.2
+---
+# Sublime Text syntax definition for the Cangjie programming language.
+# Converted from the Vim syntax file by Wu Junkai (wu.junkai@qq.com).
+#
+# Cangjie (仓颉) is a general-purpose programming language oriented toward
+# full-scenario intelligence, mainly used for HarmonyOS NEXT native and
+# service application development.
+#
+# References:
+#   - https://cangjie-lang.cn/
+#   - https://gitcode.com/Cangjie
+#
+# See https://www.sublimetext.com/docs/syntax.html
+name: Cangjie
+file_extensions:
+  - cj
+scope: source.cangjie
+version: 2
+
+variables:
+  ident: '[A-Za-z_][A-Za-z0-9_]*'
+  int_suffix: '(?:[iIuU](?:8|16|32|64))?'
+  float_suffix: '(?:[fF](?:16|32|64))?'
+
+contexts:
+  main:
+    - include: comments
+    - include: macros
+    - include: keywords
+    - include: declarations
+    - include: types
+    - include: special-identifiers
+    - include: strings
+    - include: numbers
+    - include: operators
+
+  # 1. comments -------------------------------------------------------------
+  comments:
+    - match: '//'
+      scope: punctuation.definition.comment.cangjie
+      push:
+        - meta_scope: comment.line.double-slash.cangjie
+        - match: '$'
+          pop: true
+        - include: comment-tags
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.cangjie
+      push:
+        - meta_scope: comment.block.cangjie
+        - match: '\*/'
+          scope: punctuation.definition.comment.end.cangjie
+          pop: true
+        - include: comment-tags
+
+  comment-tags:
+    - match: '\b(?:TODO|FIXME|XXX|NOTE|BUG)\b'
+      scope: keyword.codetag.notation.cangjie
+
+  # 2. macros / annotations (e.g. @override) --------------------------------
+  macros:
+    - match: '(@){{ident}}'
+      scope: variable.annotation.cangjie
+      captures:
+        1: punctuation.definition.annotation.cangjie
+
+  # 3. keywords -------------------------------------------------------------
+  keywords:
+    - match: '\b(?:as|break|case|catch|continue|do|else|finally|for|if|in|is|match|quote|return|spawn|super|synchronized|throw|try|unsafe|where|while)\b'
+      scope: keyword.control.cangjie
+    - match: '\b(?:true|false)\b'
+      scope: constant.language.boolean.cangjie
+    - match: '\bthis\b'
+      scope: variable.language.this.cangjie
+    - match: '\b(?:init|main)\b'
+      scope: keyword.declaration.cangjie
+    - match: '\b(?:const|let|var)\b'
+      scope: storage.type.cangjie
+    - match: '\bOption\b'
+      scope: support.type.cangjie
+    - match: '\b(?:Some|None)\b'
+      scope: support.constant.cangjie
+
+  # 4. declarations ---------------------------------------------------------
+  declarations:
+    - match: '\bfunc\b'
+      scope: storage.type.function.cangjie
+      push: declaration-function-name
+    - match: '\b(?:class|struct|enum)\b'
+      scope: storage.type.class.cangjie
+      push: declaration-type-name
+    - match: '\binterface\b'
+      scope: storage.type.interface.cangjie
+    - match: '\b(?:import|package)\b'
+      scope: keyword.control.import.cangjie
+      push: declaration-namespace-name
+    - match: '\b(?:macro|extend|type)\b'
+      scope: storage.type.cangjie
+    - match: '\b(?:abstract|foreign|open|operator|override|private|prop|protected|public|redef|static)\b'
+      scope: storage.modifier.cangjie
+
+  declaration-function-name:
+    - match: '{{ident}}'
+      scope: entity.name.function.cangjie
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+
+  declaration-type-name:
+    - match: '{{ident}}'
+      scope: entity.name.type.cangjie
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+
+  declaration-namespace-name:
+    - match: '{{ident}}'
+      scope: entity.name.namespace.cangjie
+      pop: true
+    - match: '(?=\S)'
+      pop: true
+
+  # 5. built-in types -------------------------------------------------------
+  types:
+    - match: '\b(?:Any|Nothing|Range|Unit|Iterable)\b'
+      scope: support.type.cangjie
+    - match: '\b(?:Array|ArrayList|VArray)\b'
+      scope: support.type.cangjie
+    - match: '\b(?:HashMap|HashSet)\b'
+      scope: support.type.cangjie
+    - match: '\b(?:Bool|Byte|Rune|String)\b'
+      scope: support.type.cangjie
+    - match: '\b(?:Float16|Float32|Float64)\b'
+      scope: support.type.cangjie
+    - match: '\b(?:Int8|Int16|Int32|Int64|IntNative)\b'
+      scope: support.type.cangjie
+    - match: '\b(?:UInt8|UInt16|UInt32|UInt64|UIntNative)\b'
+      scope: support.type.cangjie
+
+  # 6. backtick-quoted (special) identifiers --------------------------------
+  special-identifiers:
+    - match: '`'
+      scope: punctuation.definition.identifier.begin.cangjie
+      push:
+        - meta_scope: variable.other.identifier.cangjie
+        - match: '`'
+          scope: punctuation.definition.identifier.end.cangjie
+          pop: true
+        - match: '$'
+          pop: true
+
+  # 7. characters and strings ----------------------------------------------
+  strings:
+    # raw strings: #"..."#, ##"..."##, etc. (no escapes, no interpolation)
+    - match: '(#+)"'
+      scope: punctuation.definition.string.begin.cangjie
+      push:
+        - meta_scope: string.quoted.double.raw.cangjie
+        - match: '"\1'
+          scope: punctuation.definition.string.end.cangjie
+          pop: true
+    - match: "(#+)'"
+      scope: punctuation.definition.string.begin.cangjie
+      push:
+        - meta_scope: string.quoted.single.raw.cangjie
+        - match: "'\\1"
+          scope: punctuation.definition.string.end.cangjie
+          pop: true
+    # triple-quoted (multi-line) strings
+    - match: '"""'
+      scope: punctuation.definition.string.begin.cangjie
+      push:
+        - meta_scope: string.quoted.triple.double.cangjie
+        - match: '"""'
+          scope: punctuation.definition.string.end.cangjie
+          pop: true
+        - include: string-escapes
+        - include: interpolation
+    - match: "'''"
+      scope: punctuation.definition.string.begin.cangjie
+      push:
+        - meta_scope: string.quoted.triple.single.cangjie
+        - match: "'''"
+          scope: punctuation.definition.string.end.cangjie
+          pop: true
+        - include: string-escapes
+        - include: interpolation
+    # rune / byte literals: r'...', b'...' (escapes, no interpolation)
+    - match: "(?<![A-Za-z0-9_])[rb]'"
+      scope: punctuation.definition.character.begin.cangjie
+      push:
+        - meta_scope: constant.character.cangjie
+        - match: "'"
+          scope: punctuation.definition.character.end.cangjie
+          pop: true
+        - match: '$'
+          pop: true
+        - include: string-escapes
+    # ordinary double-quoted strings (single line)
+    - match: '"'
+      scope: punctuation.definition.string.begin.cangjie
+      push:
+        - meta_scope: string.quoted.double.cangjie
+        - match: '"'
+          scope: punctuation.definition.string.end.cangjie
+          pop: true
+        - match: '$'
+          pop: true
+        - include: string-escapes
+        - include: interpolation
+    # ordinary single-quoted strings (single line)
+    - match: "'"
+      scope: punctuation.definition.string.begin.cangjie
+      push:
+        - meta_scope: string.quoted.single.cangjie
+        - match: "'"
+          scope: punctuation.definition.string.end.cangjie
+          pop: true
+        - match: '$'
+          pop: true
+        - include: string-escapes
+        - include: interpolation
+
+  string-escapes:
+    - match: '\\.'
+      scope: constant.character.escape.cangjie
+
+  # string interpolation: ${ ... }
+  interpolation:
+    - match: '\$\{'
+      scope: punctuation.section.interpolation.begin.cangjie
+      push: interpolation-body
+
+  interpolation-body:
+    - meta_scope: meta.interpolation.cangjie
+    - clear_scopes: 1
+    - match: '\}'
+      scope: punctuation.section.interpolation.end.cangjie
+      pop: true
+    - include: interpolation-inner
+
+  interpolation-inner:
+    - match: '\{'
+      push:
+        - match: '\}'
+          pop: true
+        - include: interpolation-inner
+    - include: keywords
+    - include: declarations
+    - include: types
+    - include: special-identifiers
+    - include: strings
+    - include: numbers
+    - include: operators
+
+  # 8. numbers --------------------------------------------------------------
+  numbers:
+    - match: '\b0[xX][0-9a-fA-F][0-9a-fA-F_]*{{int_suffix}}\b'
+      scope: constant.numeric.integer.hexadecimal.cangjie
+    - match: '\b0[oO][0-7][0-7_]*{{int_suffix}}\b'
+      scope: constant.numeric.integer.octal.cangjie
+    - match: '\b0[bB][01][01_]*{{int_suffix}}\b'
+      scope: constant.numeric.integer.binary.cangjie
+    # 1.5, 1.5e3, 1.5f32
+    - match: '\b\d[0-9_]*\.\d[0-9_]*(?:[eEpP][-+]?\d[0-9_]*)?{{float_suffix}}\b'
+      scope: constant.numeric.float.cangjie
+    # 1. or 1.e5 (guard against the .. range operator)
+    - match: '\b\d[0-9_]*\.(?!\.)(?:[eEpP][-+]?\d[0-9_]*)?{{float_suffix}}'
+      scope: constant.numeric.float.cangjie
+    # .5
+    - match: '(?<![\w.])\.\d[0-9_]*(?:[eEpP][-+]?\d[0-9_]*)?{{float_suffix}}\b'
+      scope: constant.numeric.float.cangjie
+    # scientific notation without a fraction: 1e10
+    - match: '\b\d[0-9_]*[eEpP][-+]?\d[0-9_]*{{float_suffix}}\b'
+      scope: constant.numeric.float.cangjie
+    # decimal integer
+    - match: '\b\d[0-9_]*{{int_suffix}}\b'
+      scope: constant.numeric.integer.decimal.cangjie
+
+  # 9. operators ------------------------------------------------------------
+  operators:
+    - match: '\.\.\.'
+      scope: keyword.operator.variadic.cangjie
+    - match: '\.\.'
+      scope: keyword.operator.range.cangjie
+    - match: '(?:<<|>>|&\^)=?'
+      scope: keyword.operator.bitwise.cangjie
+    - match: ':=|\|\||&&|<-|\+\+|--'
+      scope: keyword.operator.cangjie
+    - match: '/=|/(?![/*])'
+      scope: keyword.operator.arithmetic.cangjie
+    - match: '[-+%<>!&|^*=]=?'
+      scope: keyword.operator.cangjie
+    - match: '~'
+      scope: keyword.operator.cangjie
+    - match: ':'
+      scope: keyword.operator.cangjie

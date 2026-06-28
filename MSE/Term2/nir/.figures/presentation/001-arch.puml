@@ -1,0 +1,43 @@
+@startuml
+
+skinparam linetype ortho
+skinparam defaultFontName Arial
+skinparam defaultFontSize 22
+skinparam defaultTextAlignment center
+skinparam componentStyle rectangle
+
+component [libcangjie-lsp.so] #green
+
+component [Исходный код] #line.dashed
+
+component [Итоговый HTML] #line.dashed
+
+component "cjexplore" {
+  component [CompilerInstance] #green
+  [CompilerInstance] .u.> [libcangjie-lsp.so]
+
+  [Исходный код] --> [CompilerInstance]
+
+  component [JSON представление] #line.dashed
+  component [AST] #line.dashed
+  component [Генератор JSON представления] #yellow
+  component [Рассахаренный исходный код] #line.dashed
+
+  [CompilerInstance] --> [AST]
+  [AST] -r-> [cjfmt с сохранением позиций]
+  [AST] --> [Генератор JSON представления]
+
+  [cjfmt с сохранением позиций] --> [Рассахаренный исходный код] 
+  [Рассахаренный исходный код] --> [Генератор JSON представления]
+
+  component [HTML шаблон] #yellow
+
+  [Генератор JSON представления] -r-> [JSON представление]
+
+  [JSON представление] -r-> [Итоговый HTML]
+  [HTML шаблон] --> [Итоговый HTML]
+
+  component [cjfmt с сохранением позиций] #yellow
+}
+
+@enduml
