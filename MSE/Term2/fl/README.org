@@ -1,3 +1,10 @@
 #+title: Formal Languages
 
 [[https://conspects.iliay.ar/MSE/Term2/fl/lectures/exam.pdf][Exam]]
+
+* Homeworks
+- [[https://conspects.iliay.ar/MSE/Term2/fl/hw/1.pdf][HW 1]]
+
+* Labs
+- [[https://git.sr.ht/~iliayar/rlalr][Lexer]] (+ Parser generator)
+- [[https://git.sr.ht/~iliayar/rlalr-ls][IDE Plugin + LSP]] + [[https://git.sr.ht/~iliayar/nvim-rlalr][Neovim plugin + tree-sitter gramma]]
