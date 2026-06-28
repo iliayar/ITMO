@@ -32,3 +32,29 @@
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/11.pdf][Practice 11]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/12.pdf][Practice 12]]
 - [[https://conspects.iliay.ar/MSE/Term1/dm/practice/13.pdf][Practice 13]]
+
+* Homeworks
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/1.pdf][HW 1]] \\
+  [[file:hw/statements_1.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/2.pdf][HW 2]] \\
+  [[file:hw/statements_2.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/3.pdf][HW 3]] \\
+  [[file:hw/statements_3.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/4.pdf][HW 4]] \\
+  [[file:hw/statements_4.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/5.pdf][HW 5]] \\
+  [[file:hw/statements_5.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/6.pdf][HW 6]] \\
+  [[file:hw/statements_6.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/7.pdf][HW 7]] \\
+  [[file:hw/statements_8.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/8.pdf][HW 8]] \\
+  [[file:hw/statements_8.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/9.pdf][HW 9]] \\
+  [[file:hw/statements_9.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/10.pdf][HW 10]] \\
+  [[file:hw/statements_10.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/11.pdf][HW 11]] \\
+  [[file:hw/statements_11.pdf][Statements]]
+- [[https://conspects.iliay.ar/MSE/Term1/dm/hw/12.pdf][HW 12]] \\
+  [[file:hw/statements_12.pdf][Statements]]
