@@ -1,0 +1,48 @@
+thesis-file := "thesis.typ"
+presentation-file := "presentation.typ"
+
+alias t := build-thesis
+alias p := build-presentation
+
+# default: build-thesis build-presentation
+default: build-presentation
+
+archive:
+    git archive --format=zip --output thesis-sources.zip master
+
+build-thesis: (build-figures thesis-file "thesis")
+    typst compile --input 'gen-diagrams=no' {{thesis-file}}
+
+build-presentation: (build-figures presentation-file "presentation")
+    typst compile --input 'gen-diagrams=no' {{presentation-file}}
+    polylux2pdfpc --input 'gen-diagrams=yes' {{presentation-file}}
+    typst query --input 'gen-diagrams=yes' {{presentation-file}} '<notes>' | ./gen_notes.py > notes.txt
+
+build-figures-sources file type:
+    typst query --input 'gen-diagrams=yes' {{file}} '<auto-figure>' | ./gen_diagrams.py {{type}}
+
+build-plantuml src-file type: (build-figures-sources src-file type)
+    #!/usr/bin/env bash
+    compile() {
+      diagram=$1
+      echo "Compile plantuml: $diagram"
+      plantuml -tsvg $diagram
+    }
+    export -f compile
+
+    files=$(find .figures/{{type}} -type f -name *.puml)
+    parallel compile {} ::: $files
+
+build-figures src-file type: (build-plantuml src-file type)
+
+export name path: build-thesis build-presentation archive
+    rm {{path}}/ВКР_{{name}}.pdf
+    [ -e docs/title.pdf ] && pdfunite \
+      docs/title.pdf \
+      docs/task.pdf \
+      docs/abstract.pdf \
+      thesis.pdf \
+      {{path}}/ВКР_{{name}}.pdf
+    [ -e docs/title.pdf ] || cp thesis.pdf {{path}}/ВКР_{{name}}.pdf
+    cp presentation.pdf {{path}}/Презентация_{{name}}.pdf
+    cp thesis-sources.zip {{path}}/thesis-sources_{{name}}.zip
