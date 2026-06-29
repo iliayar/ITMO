@@ -15,7 +15,7 @@ build-thesis: (build-figures thesis-file "thesis")
 
 build-presentation: (build-figures presentation-file "presentation")
     typst compile --input 'gen-diagrams=no' {{presentation-file}}
-    polylux2pdfpc --input 'gen-diagrams=yes' {{presentation-file}}
+    which polylux2pdfpc && polylux2pdfpc --input 'gen-diagrams=yes' {{presentation-file}} || echo "Skiping pdfpc"
     typst query --input 'gen-diagrams=yes' {{presentation-file}} '<notes>' | ./gen_notes.py > notes.txt
 
 build-figures-sources file type:
