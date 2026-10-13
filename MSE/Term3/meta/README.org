@@ -1,0 +1,6 @@
+#+title: Metaevaluation
+
+* Lectures
+[[https://conspects.iliay.ar/MSE/Term3/meta/lectures/lectures.pdf][Lectures]]
+- [[https://conspects.iliay.ar/MSE/Term3/meta/lectures/1.pdf][Lecture 1]]
+- [[https://conspects.iliay.ar/MSE/Term3/meta/lectures/2.pdf][Lecture 2]]
