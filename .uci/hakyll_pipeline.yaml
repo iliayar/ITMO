@@ -9,12 +9,15 @@ jobs:
         HAKYLL_STORE: ${project.data_path}/hakyll/conspects-store
         BUILDER: ${project.repos.main.path}/builder
         BUILDER_PROFILE: ${project.data_path}/builder-conspects
+        BUILDER_ENV_PROFILE: ${project.data_path}/builder-conspects-env
 
         ASSETS_ROOT: https://iliay.ar
         MATOMO_HOST: matomo.iliay.ar
       script: |
         set -e
         . /etc/profile
+
+        nix print-dev-env $BUILDER#conspects.unwrapped --profile $BUILDER_ENV_PROFILE > /dev/null
         nix build $BUILDER#conspects --profile $BUILDER_PROFILE --no-link
 
         mkdir -p $HAKYLL_DESTINATION
